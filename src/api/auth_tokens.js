@@ -20,3 +20,23 @@ export function create(data) {
       return Promise.reject({ error: reason });
     });
 }
+
+export function destroy(auth, id) {
+  return fetch(`${baseURL}/auth_tokens/${id}`, {
+    method: "DELETE",
+    headers: {
+      "x-secret": auth.secret,
+      "x-device-id": auth.device_id
+    }
+  })
+    .then(request => {
+      if (request.ok) {
+        return Promise.resolve();
+      } else {
+        return request.json().then(result => Promise.reject(result));
+      }
+    })
+    .catch(reason => {
+      return Promise.reject({ error: reason });
+    });
+}
