@@ -1,6 +1,7 @@
 <template>
   <div>
-    <VToolbar>
+    <VToolbar app clipped-left dark color="primary">
+      <VToolbarSideIcon @click.stop="drawer = !drawer" />
       <VToolbarTitle>Accentor</VToolbarTitle>
       <VSpacer />
       <VBtn flat @click="logout">Logout</VBtn>
@@ -11,7 +12,23 @@
         {{ value }}
       </div>
     </VAlert>
-    <router-view />
+
+    <VNavigationDrawer v-model="drawer" left clipped app>
+      <VList>
+        <VListTile :to="{ name: 'home' }">
+          <VListTileAction>
+            <VIcon>fas fa-home</VIcon>
+          </VListTileAction>
+          <VListTileContent>
+            <VListTileTitle>Home</VListTileTitle>
+          </VListTileContent>
+        </VListTile>
+      </VList>
+    </VNavigationDrawer>
+
+    <VContent>
+      <router-view />
+    </VContent>
   </div>
 </template>
 
@@ -19,6 +36,7 @@
 export default {
   data: function() {
     return {
+      drawer: null,
       error: {}
     };
   },

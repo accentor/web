@@ -1,28 +1,41 @@
 <template>
-  <div class="login">
-    <VContainer>
-      <VLayout row wrap>
-        <VFlex xs10 sm6 md4 offset-xs1 offset-sm3 offset-md4>
-          <VForm @submit.prevent="submit">
-            <VAlert :value="Object.keys(error).length > 0" color="error">
-              <div v-for="(value, key) in error" :key="key">
-                <strong>{{ key | capitalize }}:</strong>
-                {{ value }}
-              </div>
-            </VAlert>
-            <VTextField label="Name" placeholder="Name" v-model="name" />
-            <VTextField
-              label="Password"
-              placeholder="Password"
-              type="password"
-              v-model="password"
-            />
-            <VBtn type="submit" color="primary">Login</VBtn>
-          </VForm>
+  <VContent>
+    <VContainer fluid fill-height>
+      <VLayout align-center justify-center>
+        <VFlex xs12 sm8 md4>
+          <VCard class="elevation-12">
+            <VToolbar dark color="primary">
+              <VToolbarTitle>Login</VToolbarTitle>
+            </VToolbar>
+            <VCardText>
+              <VForm @submit.prevent="submit">
+                <VAlert :value="Object.keys(error).length > 0" color="error">
+                  <div v-for="(value, key) in error" :key="key">
+                    <strong>{{ key | capitalize }}:</strong>
+                    {{ value }}
+                  </div>
+                </VAlert>
+                <VTextField
+                  prepend-icon="fas fa-user"
+                  label="Name"
+                  placeholder="Name"
+                  v-model="name"
+                />
+                <VTextField
+                  prepend-icon="fas fa-key"
+                  label="Password"
+                  placeholder="Password"
+                  type="password"
+                  v-model="password"
+                />
+                <VBtn type="submit" color="primary">Login</VBtn>
+              </VForm>
+            </VCardText>
+          </VCard>
         </VFlex>
       </VLayout>
     </VContainer>
-  </div>
+  </VContent>
 </template>
 
 <script>
@@ -63,17 +76,3 @@ export default {
   }
 };
 </script>
-
-<style lang="scss">
-.login {
-  background: #dfdfdf;
-  min-height: 100vh;
-  height: 100%;
-
-  form {
-    background: white;
-    margin-top: 4rem;
-    padding: 2rem;
-  }
-}
-</style>
