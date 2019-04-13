@@ -19,8 +19,17 @@ export default new Vuex.Store({
     auth,
     users
   },
-  state: {},
-  mutations: {},
+  state: {
+    errors: []
+  },
+  mutations: {
+    addError(state, error) {
+      state.errors.push(error);
+    },
+    clearErrors(state) {
+      state.errors = [];
+    }
+  },
   actions: {},
   getters: {}
 });

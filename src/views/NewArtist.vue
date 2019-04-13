@@ -34,13 +34,13 @@ export default {
     },
     submit() {
       this.create(this.newArtist).then(id => {
-        this.$router.push({ name: "artist", params: { id } });
+        if (id) {
+          this.$router.push({ name: "artist", params: { id } });
+        }
       });
     }
   }
 };
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

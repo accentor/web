@@ -9,12 +9,7 @@
             </VToolbar>
             <VCardText>
               <VForm @submit.prevent="submit">
-                <VAlert :value="Object.keys(error).length > 0" color="error">
-                  <div v-for="(value, key) in error" :key="key">
-                    <strong>{{ key | capitalize }}:</strong>
-                    {{ value }}
-                  </div>
-                </VAlert>
+                <Errors />
                 <VTextField
                   prepend-icon="mdi-account"
                   label="Name"
@@ -39,10 +34,12 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapMutations } from "vuex";
+import Errors from "../components/Errors";
 
 export default {
   name: "login",
+  components: { Errors },
   data: function() {
     return {
       name: "",
@@ -52,26 +49,21 @@ export default {
   },
   methods: {
     ...mapActions("auth", ["login"]),
+    ...mapMutations(["clearErrors"]),
     submit: function() {
+      this.clearErrors();
       this.login({
         name: this.name,
         password: this.password
-      })
-        .then(() => this.redirect())
-        .catch(error => {
-          this.error = error.error;
-        });
+      }).then(succeeded => {
+        if (succeeded) {
+          this.redirect();
+        }
+      });
     },
     redirect: function() {
       const path = this.$route.query.redirect || "/app/";
       this.$router.push({ path });
-    }
-  },
-  filters: {
-    capitalize: function(value) {
-      if (!value) return "";
-      value = value.toString();
-      return value.charAt(0).toUpperCase() + value.slice(1);
     }
   }
 };

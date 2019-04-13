@@ -10,7 +10,9 @@
         v-on:click:clear="clear"
       />
       <template v-slot:append>
-        <VBtn dark color="primary" @click="passthrough"><slot>Choose file</slot></VBtn>
+        <VBtn dark color="primary" @click="passthrough">
+          <slot>Choose file</slot>
+        </VBtn>
       </template>
     </VInput>
   </div>

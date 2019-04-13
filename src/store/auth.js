@@ -24,16 +24,26 @@ export default {
   },
   actions: {
     login(context, data) {
-      return create(data).then(result => {
-        context.commit("login", result);
-        return Promise.resolve();
-      });
+      return create(data)
+        .then(result => {
+          context.commit("login", result);
+          return Promise.resolve(true);
+        })
+        .catch(({ error }) => {
+          this.commit("addError", error);
+          return Promise.resolve(false);
+        });
     },
     logout({ commit, state }) {
-      return destroy(state, state.id).then(() => {
-        commit("logout");
-        return Promise.resolve();
-      });
+      return destroy(state, state.id)
+        .then(() => {
+          commit("logout");
+          return Promise.resolve(true);
+        })
+        .catch(({ error }) => {
+          this.commit("addError", error);
+          return Promise.resolve(false);
+        });
     }
   },
   getters: {

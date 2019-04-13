@@ -15,10 +15,15 @@ export default {
   },
   actions: {
     index({ commit, rootState }) {
-      return index(rootState.auth).then(result => {
-        commit("setUsers", result);
-        return Promise.resolve();
-      });
+      return index(rootState.auth)
+        .then(result => {
+          commit("setUsers", result);
+          return Promise.resolve(true);
+        })
+        .catch(({ error }) => {
+          this.commit("addError", error);
+          return Promise.resolve(false);
+        });
     }
   }
 };

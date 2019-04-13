@@ -55,9 +55,13 @@ export default {
       this.newArtist.name = this.artist.name;
     },
     submit() {
-      this.update({ id: this.artist.id, newArtist: this.newArtist }).then(() => {
-        this.$router.push({ name: "artists" });
-      });
+      this.update({ id: this.artist.id, newArtist: this.newArtist }).then(
+        succeeded => {
+          if (succeeded) {
+            this.$router.push({ name: "artists" });
+          }
+        }
+      );
     }
   }
 };

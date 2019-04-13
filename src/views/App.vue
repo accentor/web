@@ -12,13 +12,6 @@
       </VBtn>
     </VToolbar>
 
-    <VAlert :value="Object.keys(error).length > 0" color="error">
-      <div v-for="(value, key) in error" :key="key">
-        <strong>{{ key | capitalize }}:</strong>
-        {{ value }}
-      </div>
-    </VAlert>
-
     <VNavigationDrawer v-model="drawer" left clipped app>
       <VList>
         <VListTile :to="{ name: 'home' }" exact>
@@ -29,7 +22,7 @@
             <VListTileTitle>Home</VListTileTitle>
           </VListTileContent>
         </VListTile>
-        <VDivider/>
+        <VDivider />
         <VListTile :to="{ name: 'artists' }" exact>
           <VListTileAction>
             <VIcon>mdi-artist</VIcon>
@@ -43,6 +36,7 @@
 
     <VContent>
       <VContainer>
+        <Errors />
         <VLayout row wrap>
           <VFlex xs12>
             <router-view />
@@ -54,12 +48,14 @@
 </template>
 
 <script>
+import Errors from "../components/Errors";
+
 export default {
   name: "app",
+  components: { Errors },
   data() {
     return {
       drawer: null,
-      error: {},
       loading: false
     };
   },
@@ -78,14 +74,9 @@ export default {
       });
     },
     logout: function() {
-      this.$store
-        .dispatch("auth/logout")
-        .then(() => {
-          this.$router.push({ path: "/login" });
-        })
-        .catch(error => {
-          this.error = error.error;
-        });
+      this.$store.dispatch("auth/logout").then(() => {
+        this.$router.push({ path: "/login" });
+      });
     }
   }
 };

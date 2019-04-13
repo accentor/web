@@ -2,7 +2,7 @@
   <div>
     <VContainer fluid grid-list-xl>
       <VLayout row wrap justify-end>
-        <VBtn :to="{name: 'new-artist'}" color="success">
+        <VBtn :to="{ name: 'new-artist' }" color="success">
           <VIcon left>mdi-plus</VIcon>
           New artist
         </VBtn>
