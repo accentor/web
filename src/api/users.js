@@ -1,12 +1,12 @@
 import baseURL from "./base_url";
 
-export function create(data) {
-  return fetch(`${baseURL}/auth_tokens/`, {
-    method: "POST",
+export function index(auth) {
+  return fetch(`${baseURL}/users`, {
+    method: "GET",
     headers: {
-      "content-type": "application/json"
-    },
-    body: JSON.stringify(data)
+      "x-secret": auth.secret,
+      "x-device-id": auth.device_id
+    }
   })
     .then(request => Promise.all([request.ok, request.json()]))
     .then(([ok, result]) => {
@@ -20,7 +20,7 @@ export function create(data) {
 }
 
 export function destroy(auth, id) {
-  return fetch(`${baseURL}/auth_tokens/${id}`, {
+  return fetch(`${baseURL}/users/${id}`, {
     method: "DELETE",
     headers: {
       "x-secret": auth.secret,

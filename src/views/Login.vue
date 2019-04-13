@@ -16,13 +16,13 @@
                   </div>
                 </VAlert>
                 <VTextField
-                  prepend-icon="fas fa-user"
+                  prepend-icon="mdi-account"
                   label="Name"
                   placeholder="Name"
                   v-model="name"
                 />
                 <VTextField
-                  prepend-icon="fas fa-key"
+                  prepend-icon="mdi-key"
                   label="Password"
                   placeholder="Password"
                   type="password"
@@ -51,7 +51,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["login"]),
+    ...mapActions("auth", ["login"]),
     submit: function() {
       this.login({
         name: this.name,

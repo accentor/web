@@ -5,13 +5,13 @@ import store from "./store/store";
 
 import Vuetify from "vuetify/lib";
 import "roboto-fontface/css/roboto/roboto-fontface.css";
-import "@fortawesome/fontawesome-free/css/all.css";
+import "@mdi/font/css/materialdesignicons.css";
 import "vuetify/src/stylus/app.styl";
 
 Vue.config.productionTip = false;
 
 Vue.use(Vuetify, {
-  iconfont: "fa"
+  iconfont: "mdi"
 });
 
 new Vue({
