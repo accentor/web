@@ -16,7 +16,7 @@ export function index(auth) {
         return Promise.reject(result);
       }
     })
-    .catch(reason => Promise.reject({ error: reason }));
+    .catch(reason => Promise.reject({ error: { error: [reason] } }));
 }
 
 export function create(auth, artist) {
@@ -37,7 +37,7 @@ export function create(auth, artist) {
         return Promise.reject(result);
       }
     })
-    .catch(reason => Promise.reject({ error: reason }));
+    .catch(reason => Promise.reject({ error: { error: [reason] } }));
 }
 
 export function update(auth, id, artist) {
@@ -58,7 +58,7 @@ export function update(auth, id, artist) {
         return Promise.reject(result);
       }
     })
-    .catch(reason => Promise.reject({ error: reason }));
+    .catch(reason => Promise.reject({ error: { error: [reason] } }));
 }
 
 export function destroy(auth, id) {
@@ -76,5 +76,5 @@ export function destroy(auth, id) {
         return request.json().then(result => Promise.reject(result));
       }
     })
-    .catch(reason => Promise.reject({ error: reason }));
+    .catch(reason => Promise.reject({ error: { error: [reason] } }));
 }
