@@ -1,5 +1,6 @@
-import { create, destroy, index, update } from "../api/artists";
 import Vue from "vue";
+import { create, destroy, index, update } from "../api/artists";
+import { compareStrings } from "../comparators";
 
 export default {
   namespaced: true,
@@ -71,6 +72,8 @@ export default {
     }
   },
   getters: {
-    artists: state => Object.values(state.artists)
+    artists: state => Object.values(state.artists),
+    artistsByName: (state, getters) =>
+      getters.artists.sort((a1, a2) => compareStrings(a1.name, a2.name))
   }
 };

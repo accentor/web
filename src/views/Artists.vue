@@ -59,7 +59,9 @@ export default {
   },
   computed: {
     ...mapGetters("auth", ["isModerator"]),
-    ...mapGetters("artists", ["artists"])
+    ...mapGetters("artists", {
+      artists: "artistsByName"
+    })
   }
 };
 </script>
