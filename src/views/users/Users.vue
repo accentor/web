@@ -13,8 +13,8 @@
             <div>
               <div class="headline">{{ user.name }}</div>
               <span class="grey--text">
-                  {{ user.permission | capitalize }}
-                </span>
+                {{ user.permission | capitalize }}
+              </span>
             </div>
           </VCardTitle>
           <VCardActions v-if="isAdmin">
