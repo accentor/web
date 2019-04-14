@@ -4,7 +4,9 @@ import createPersistedState from "vuex-persistedstate";
 import albums from "./albums";
 import artists from "./artists";
 import auth from "./auth";
+import genres from "./genres";
 import rescan from "./rescan";
+import tracks from "./tracks";
 import users from "./users";
 
 Vue.use(Vuex);
@@ -20,7 +22,9 @@ export default new Vuex.Store({
     albums,
     artists,
     auth,
+    genres,
     rescan,
+    tracks,
     users
   },
   state: {
