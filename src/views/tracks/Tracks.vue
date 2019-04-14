@@ -1,12 +1,6 @@
 <template>
-  <VContainer fluid grid-list-xl v-if="artist">
-    <VLayout row wrap>
-      <VFlex lg3 md4 sm6 v-if="artist.image" xs12>
-        <VImg :src="artist.image" />
-      </VFlex>
-      <VFlex lg9 md8 sm6 xs12>
-        <h3>{{ artist.name }}</h3>
-      </VFlex>
+  <VContainer fill-height fluid>
+    <VLayout row>
       <VFlex>
         <VDataTable
           :headers="headers"
@@ -58,10 +52,10 @@
 </template>
 
 <script>
-import { mapGetters, mapState } from "vuex";
+import { mapActions, mapGetters, mapState } from "vuex";
 
 export default {
-  name: "Artist",
+  name: "Tracks",
   data() {
     return {
       headers: [
@@ -104,17 +98,20 @@ export default {
     };
   },
   computed: {
+    ...mapGetters("tracks", {
+      tracks: "tracksByAlbumAndNumber"
+    }),
     ...mapGetters("auth", ["isModerator"]),
     ...mapState("albums", ["albums"]),
     ...mapState("artists", ["artists"]),
-    ...mapState("genres", ["genres"]),
-    tracks: function() {
-      return this.$store.getters["tracks/tracksFilterByArtist"](
-        this.$route.params.id
-      );
-    },
-    artist: function() {
-      return this.artists[this.$route.params.id];
+    ...mapState("genres", ["genres"])
+  },
+  methods: {
+    ...mapActions("tracks", ["destroy"]),
+    deleteTrack: function(id) {
+      if (confirm("Are you sure?")) {
+        this.destroy(id);
+      }
     }
   }
 };

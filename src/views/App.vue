@@ -39,6 +39,14 @@
             <VListTileTitle>Albums</VListTileTitle>
           </VListTileContent>
         </VListTile>
+        <VListTile :to="{ name: 'tracks' }" exact>
+          <VListTileAction>
+            <VIcon>mdi-music</VIcon>
+          </VListTileAction>
+          <VListTileContent>
+            <VListTileTitle>Tracks</VListTileTitle>
+          </VListTileContent>
+        </VListTile>
         <VListTile :to="{ name: 'rescan' }" exact v-if="isModerator">
           <VListTileAction>
             <VIcon>mdi-refresh</VIcon>
@@ -97,6 +105,8 @@ export default {
       Promise.all([
         this.$store.dispatch("albums/index"),
         this.$store.dispatch("artists/index"),
+        this.$store.dispatch("genres/index"),
+        this.$store.dispatch("tracks/index"),
         this.$store.dispatch("users/index").then(() => {
           const promises = [];
           if (this.isModerator) {

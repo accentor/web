@@ -19,6 +19,10 @@ Vue.filter("capitalize", function(value) {
   return value.charAt(0).toUpperCase() + value.slice(1);
 });
 
+Vue.filter("length", function(l) {
+  return `${Math.floor(l / 60)}:${`${l % 60}`.padStart(2, "0")}`;
+});
+
 new Vue({
   router,
   store,

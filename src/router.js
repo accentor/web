@@ -13,6 +13,8 @@ import NewArtist from "./views/artists/NewArtist";
 import Home from "./views/Home";
 import Login from "./views/Login";
 import Rescan from "./views/Rescan";
+import EditTrack from "./views/tracks/EditTrack";
+import Tracks from "./views/tracks/Tracks";
 import EditUser from "./views/users/EditUser";
 import NewUser from "./views/users/NewUser";
 import User from "./views/users/User";
@@ -77,6 +79,16 @@ const router = new Router({
           path: "rescan",
           name: "rescan",
           component: Rescan
+        },
+        {
+          path: "tracks",
+          name: "tracks",
+          component: Tracks
+        },
+        {
+          path: "tracks/:id/edit",
+          name: "edit-track",
+          component: EditTrack
         },
         {
           path: "users",
