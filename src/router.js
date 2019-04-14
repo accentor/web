@@ -1,7 +1,10 @@
 import Vue from "vue";
 import Router from "vue-router";
 import store from "./store/store";
-
+import Album from "./views/albums/Album";
+import Albums from "./views/albums/Albums";
+import EditAlbum from "./views/albums/EditAlbum";
+import NewAlbum from "./views/albums/NewAlbum";
 import App from "./views/App.vue";
 import Artist from "./views/artists/Artist";
 import Artists from "./views/artists/Artists";
@@ -29,6 +32,26 @@ const router = new Router({
           path: "",
           name: "home",
           component: Home
+        },
+        {
+          path: "albums",
+          name: "albums",
+          component: Albums
+        },
+        {
+          path: "albums/new",
+          name: "new-album",
+          component: NewAlbum
+        },
+        {
+          path: "albums/:id",
+          name: "album",
+          component: Album
+        },
+        {
+          path: "albums/:id/edit",
+          name: "edit-album",
+          component: EditAlbum
         },
         {
           path: "artists",

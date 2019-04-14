@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import createPersistedState from "vuex-persistedstate";
+import albums from "./albums";
 import artists from "./artists";
 import auth from "./auth";
 import rescan from "./rescan";
@@ -16,6 +17,7 @@ export default new Vuex.Store({
   ],
   strict: process.env.NODE_ENV !== "production",
   modules: {
+    albums,
     artists,
     auth,
     rescan,
