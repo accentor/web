@@ -31,6 +31,14 @@
             <VListTileTitle>Artists</VListTileTitle>
           </VListTileContent>
         </VListTile>
+        <VListTile :to="{ name: 'albums' }" exact>
+          <VListTileAction>
+            <VIcon>mdi-album</VIcon>
+          </VListTileAction>
+          <VListTileContent>
+            <VListTileTitle>Albums</VListTileTitle>
+          </VListTileContent>
+        </VListTile>
         <VListTile :to="{ name: 'rescan' }" exact v-if="isModerator">
           <VListTileAction>
             <VIcon>mdi-refresh</VIcon>
@@ -87,6 +95,7 @@ export default {
     loadData() {
       this.loading = true;
       Promise.all([
+        this.$store.dispatch("albums/index"),
         this.$store.dispatch("artists/index"),
         this.$store.dispatch("users/index").then(() => {
           const promises = [];

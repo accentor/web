@@ -1,34 +1,44 @@
 <template>
   <VContainer fluid grid-list-xl>
     <VDataIterator
-      :items="artists"
-      :filter="(obj, search) => obj.name.contains(search)"
+      :items="albums"
+      :filter="(obj, search) => obj.title.contains(search)"
       :rows-per-page-items="[12]"
-      v-if="artists.length > 0"
+      v-if="albums.length > 0"
       content-class="layout row wrap"
     >
       <template v-slot:header>
         <VLayout justify-end row wrap>
-          <VBtn :to="{ name: 'new-artist' }" color="success" v-if="isModerator">
+          <VBtn :to="{ name: 'new-album' }" color="success" v-if="isModerator">
             <VIcon left>mdi-plus</VIcon>
-            New artist
+            New album
           </VBtn>
         </VLayout>
       </template>
       <template v-slot:item="props">
         <VFlex lg3 md4 sm6 xl2 xs12>
-          <VCard :to="{ name: 'artist', params: { id: props.item.id } }">
+          <VCard :to="{ name: 'album', params: { id: props.item.id } }">
             <VImg
               :aspect-ratio="1"
               :src="props.item.image"
               v-if="props.item.image"
             />
             <VCardTitle primary-title>
-              <h3>{{ props.item.name }}</h3>
+              <div>
+                <div class="headline">{{ props.item.title }}</div>
+                <span>
+                  {{ props.item.albumartist }}
+                </span>
+              </div>
             </VCardTitle>
+            <VCardText>
+              <span class="grey--text">
+                {{ props.item.release }}
+              </span>
+            </VCardText>
             <VCardActions v-if="isModerator">
               <VBtn
-                @click.stop.prevent="deleteArtist(props.item.id)"
+                @click.stop.prevent="deleteAlbum(props.item.id)"
                 color="red"
                 dark
                 fab
@@ -39,7 +49,7 @@
                 <VIcon>mdi-delete</VIcon>
               </VBtn>
               <VBtn
-                :to="{ name: 'edit-artist', params: { id: props.item.id } }"
+                :to="{ name: 'edit-album', params: { id: props.item.id } }"
                 color="orange"
                 dark
                 fab
@@ -60,10 +70,10 @@
 import { mapActions, mapGetters } from "vuex";
 
 export default {
-  name: "artists",
+  name: "albums",
   methods: {
-    ...mapActions("artists", ["destroy"]),
-    deleteArtist: function(id) {
+    ...mapActions("albums", ["destroy"]),
+    deleteAlbum: function(id) {
       if (confirm("Are you sure?")) {
         this.destroy(id);
       }
@@ -71,8 +81,8 @@ export default {
   },
   computed: {
     ...mapGetters("auth", ["isModerator"]),
-    ...mapGetters("artists", {
-      artists: "artistsByName"
+    ...mapGetters("albums", {
+      albums: "albumsByTitle"
     })
   }
 };
