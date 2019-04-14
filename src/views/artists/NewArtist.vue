@@ -1,11 +1,11 @@
 <template>
-  <VContainer fluid fill-height>
+  <VContainer fill-height fluid>
     <VLayout align-center justify-center>
-      <VFlex xs12 sm8 md4>
+      <VFlex md4 sm8 xs12>
         <VForm @submit.prevent="submit">
-          <VTextField v-model="newArtist.name" label="Name" />
+          <VTextField label="Name" v-model="newArtist.name" />
           <FilePicker v-model="newArtist.image">Choose image</FilePicker>
-          <VBtn type="submit" color="primary">Create artist</VBtn>
+          <VBtn color="primary" type="submit">Create artist</VBtn>
         </VForm>
       </VFlex>
     </VLayout>
@@ -13,8 +13,8 @@
 </template>
 
 <script>
-import FilePicker from "../components/FilePicker";
 import { mapActions } from "vuex";
+import FilePicker from "../../components/FilePicker";
 
 export default {
   name: "NewArtist",
@@ -29,9 +29,6 @@ export default {
   },
   methods: {
     ...mapActions("artists", ["create"]),
-    fillValues() {
-      this.newArtist.name = this.artist.name;
-    },
     submit() {
       this.create(this.newArtist).then(id => {
         if (id) {

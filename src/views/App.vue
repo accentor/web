@@ -1,18 +1,18 @@
 <template>
   <div>
-    <VToolbar app clipped-left dark color="primary">
+    <VToolbar app clipped-left color="primary" dark>
       <VToolbarSideIcon @click.stop="drawer = !drawer" />
       <VToolbarTitle>Accentor</VToolbarTitle>
       <VSpacer />
-      <VBtn icon flat @click="loadData" :disabled="loading">
+      <VBtn :disabled="loading" @click="loadData" flat icon>
         <VIcon>mdi-refresh {{ (loading && "mdi-spin") || "" }}</VIcon>
       </VBtn>
-      <VBtn icon flat @click="logout">
+      <VBtn @click="logout" flat icon>
         <VIcon>mdi-logout-variant</VIcon>
       </VBtn>
     </VToolbar>
 
-    <VNavigationDrawer v-model="drawer" left clipped app>
+    <VNavigationDrawer app clipped left v-model="drawer">
       <VList>
         <VListTile :to="{ name: 'home' }" exact>
           <VListTileAction>
@@ -29,6 +29,15 @@
           </VListTileAction>
           <VListTileContent>
             <VListTileTitle>Artists</VListTileTitle>
+          </VListTileContent>
+        </VListTile>
+        <VDivider />
+        <VListTile :to="{ name: 'users' }" exact>
+          <VListTileAction>
+            <VIcon>mdi-account-multiple</VIcon>
+          </VListTileAction>
+          <VListTileContent>
+            <VListTileTitle>Users</VListTileTitle>
           </VListTileContent>
         </VListTile>
       </VList>
@@ -75,7 +84,7 @@ export default {
     },
     logout: function() {
       this.$store.dispatch("auth/logout").then(() => {
-        this.$router.push({ path: "/login" });
+        this.$router.push({ name: "login" });
       });
     }
   }

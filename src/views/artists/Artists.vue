@@ -1,38 +1,38 @@
 <template>
   <div>
     <VContainer fluid grid-list-xl>
-      <VLayout row wrap justify-end>
-        <VBtn :to="{ name: 'new-artist' }" color="success">
+      <VLayout justify-end row wrap>
+        <VBtn :to="{ name: 'new-artist' }" color="success" v-if="isModerator">
           <VIcon left>mdi-plus</VIcon>
           New artist
         </VBtn>
       </VLayout>
-      <VLayout row wrap v-if="artists.length > 0">
-        <VFlex v-for="artist in artists" :key="artist.id" xs12 sm6 md4 lg3 xl2>
-          <VCard :to="{ path: `/app/artists/${artist.id}` }">
-            <VImg v-if="artist.image" :src="artist.image" :aspect-ratio="1" />
+      <VLayout row v-if="artists.length > 0" wrap>
+        <VFlex :key="artist.id" lg3 md4 sm6 v-for="artist in artists" xl2 xs12>
+          <VCard :to="{ name: 'artist', params: { id: artist.id } }">
+            <VImg :aspect-ratio="1" :src="artist.image" v-if="artist.image" />
             <VCardTitle primary-title>
               <h3>{{ artist.name }}</h3>
             </VCardTitle>
             <VCardActions v-if="isModerator">
               <VBtn
-                fab
-                dark
-                small
-                outline
-                color="red"
-                href="#"
                 @click.stop.prevent="deleteArtist(artist.id)"
+                color="red"
+                dark
+                fab
+                href="#"
+                outline
+                small
               >
                 <VIcon>mdi-delete</VIcon>
               </VBtn>
               <VBtn
-                fab
-                dark
-                small
-                outline
+                :to="{ name: 'edit-artist', params: { id: artist.id } }"
                 color="orange"
-                :to="{ path: `/app/artists/${artist.id}/edit` }"
+                dark
+                fab
+                outline
+                small
               >
                 <VIcon>mdi-pencil</VIcon>
               </VBtn>

@@ -1,9 +1,9 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import createPersistedState from "vuex-persistedstate";
+import artists from "./artists";
 import auth from "./auth";
 import users from "./users";
-import artists from "./artists";
 
 Vue.use(Vuex);
 

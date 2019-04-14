@@ -8,15 +8,11 @@ export function index(auth) {
       "x-device-id": auth.device_id
     }
   })
+    .catch(reason => Promise.reject({ error: [reason] }))
     .then(request => Promise.all([request.ok, request.json()]))
     .then(([ok, result]) => {
-      if (ok) {
-        return Promise.resolve(result);
-      } else {
-        return Promise.reject(result);
-      }
-    })
-    .catch(reason => Promise.reject({ error: { error: [reason] } }));
+      return ok ? Promise.resolve(result) : Promise.reject(result);
+    });
 }
 
 export function create(auth, artist) {
@@ -29,15 +25,11 @@ export function create(auth, artist) {
     },
     body: JSON.stringify({ artist })
   })
+    .catch(reason => Promise.reject({ error: [reason] }))
     .then(request => Promise.all([request.ok, request.json()]))
     .then(([ok, result]) => {
-      if (ok) {
-        return Promise.resolve(result);
-      } else {
-        return Promise.reject(result);
-      }
-    })
-    .catch(reason => Promise.reject({ error: { error: [reason] } }));
+      return ok ? Promise.resolve(result) : Promise.reject(result);
+    });
 }
 
 export function update(auth, id, artist) {
@@ -50,15 +42,11 @@ export function update(auth, id, artist) {
     },
     body: JSON.stringify({ artist })
   })
+    .catch(reason => Promise.reject({ error: [reason] }))
     .then(request => Promise.all([request.ok, request.json()]))
     .then(([ok, result]) => {
-      if (ok) {
-        return Promise.resolve(result);
-      } else {
-        return Promise.reject(result);
-      }
-    })
-    .catch(reason => Promise.reject({ error: { error: [reason] } }));
+      return ok ? Promise.resolve(result) : Promise.reject(result);
+    });
 }
 
 export function destroy(auth, id) {
@@ -69,12 +57,10 @@ export function destroy(auth, id) {
       "x-device-id": auth.device_id
     }
   })
+    .catch(reason => Promise.reject({ error: [reason] }))
     .then(request => {
-      if (request.ok) {
-        return Promise.resolve();
-      } else {
-        return request.json().then(result => Promise.reject(result));
-      }
-    })
-    .catch(reason => Promise.reject({ error: { error: [reason] } }));
+      return request.ok
+        ? Promise.resolve()
+        : request.json().then(result => Promise.reject(result));
+    });
 }

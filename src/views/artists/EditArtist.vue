@@ -1,12 +1,12 @@
 <template>
   <div v-if="artist">
-    <VContainer fluid fill-height>
+    <VContainer fill-height fluid>
       <VLayout align-center justify-center>
-        <VFlex xs12 sm8 md4>
+        <VFlex md4 sm8 xs12>
           <VForm @submit.prevent="submit">
-            <VTextField v-model="newArtist.name" label="Name" />
+            <VTextField label="Name" v-model="newArtist.name" />
             <FilePicker v-model="newArtist.image">Choose image</FilePicker>
-            <VBtn type="submit" color="primary">Update artist</VBtn>
+            <VBtn color="primary" type="submit">Update artist</VBtn>
           </VForm>
         </VFlex>
       </VLayout>
@@ -16,7 +16,7 @@
 
 <script>
 import { mapActions, mapState } from "vuex";
-import FilePicker from "../components/FilePicker";
+import FilePicker from "../../components/FilePicker";
 
 export default {
   name: "EditArtist",

@@ -1,29 +1,29 @@
 <template>
   <VContent>
-    <VContainer fluid fill-height>
+    <VContainer fill-height fluid>
       <VLayout align-center justify-center>
-        <VFlex xs12 sm8 md4>
+        <VFlex md4 sm8 xs12>
           <VCard class="elevation-12">
-            <VToolbar dark color="primary">
+            <VToolbar color="primary" dark>
               <VToolbarTitle>Login</VToolbarTitle>
             </VToolbar>
             <VCardText>
               <VForm @submit.prevent="submit">
                 <Errors />
                 <VTextField
-                  prepend-icon="mdi-account"
                   label="Name"
                   placeholder="Name"
+                  prepend-icon="mdi-account"
                   v-model="name"
                 />
                 <VTextField
-                  prepend-icon="mdi-key"
                   label="Password"
                   placeholder="Password"
+                  prepend-icon="mdi-key"
                   type="password"
                   v-model="password"
                 />
-                <VBtn type="submit" color="primary">Login</VBtn>
+                <VBtn color="primary" type="submit">Login</VBtn>
               </VForm>
             </VCardText>
           </VCard>

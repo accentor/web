@@ -32,29 +32,7 @@ export default {
           commit("setArtists", result);
           return Promise.resolve(true);
         })
-        .catch(({ error }) => {
-          this.commit("addError", error);
-          return Promise.resolve(false);
-        });
-    },
-    destroy({ commit, rootState }, id) {
-      return destroy(rootState.auth, id)
-        .then(() => {
-          commit("removeArtist", id);
-          return Promise.resolve(true);
-        })
-        .catch(({ error }) => {
-          this.commit("addError", error);
-          return Promise.resolve(false);
-        });
-    },
-    update({ commit, rootState }, { id, newArtist }) {
-      return update(rootState.auth, id, newArtist)
-        .then(result => {
-          commit("setArtist", { id, artist: result });
-          return Promise.resolve(true);
-        })
-        .catch(({ error }) => {
+        .catch(error => {
           this.commit("addError", error);
           return Promise.resolve(false);
         });
@@ -65,7 +43,29 @@ export default {
           commit("setArtist", { id: result.id, artist: result });
           return Promise.resolve(result.id);
         })
-        .catch(({ error }) => {
+        .catch(error => {
+          this.commit("addError", error);
+          return Promise.resolve(false);
+        });
+    },
+    update({ commit, rootState }, { id, newArtist }) {
+      return update(rootState.auth, id, newArtist)
+        .then(result => {
+          commit("setArtist", { id, artist: result });
+          return Promise.resolve(true);
+        })
+        .catch(error => {
+          this.commit("addError", error);
+          return Promise.resolve(false);
+        });
+    },
+    destroy({ commit, rootState }, id) {
+      return destroy(rootState.auth, id)
+        .then(() => {
+          commit("removeArtist", id);
+          return Promise.resolve(true);
+        })
+        .catch(error => {
           this.commit("addError", error);
           return Promise.resolve(false);
         });

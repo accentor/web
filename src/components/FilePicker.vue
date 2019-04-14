@@ -1,16 +1,16 @@
 <template>
   <div>
-    <input type="file" ref="picker" @change="interpret" class="hidden" />
+    <input @change="interpret" class="hidden" ref="picker" type="file" />
     <VInput>
       <VTextField
         :value="value ? value.filename : ''"
-        label="Image"
         clearable
+        label="Image"
         readonly
         v-on:click:clear="clear"
       />
       <template v-slot:append>
-        <VBtn dark color="primary" @click="passthrough">
+        <VBtn @click="passthrough" color="primary" dark>
           <slot>Choose file</slot>
         </VBtn>
       </template>

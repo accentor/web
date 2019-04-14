@@ -3,12 +3,16 @@ import Router from "vue-router";
 import store from "./store/store";
 
 import App from "./views/App.vue";
-import Artist from "./views/Artist";
-import Artists from "./views/Artists";
-import EditArtist from "./views/EditArtist";
-import Home from "./views/Home.vue";
-import Login from "./views/Login.vue";
-import NewArtist from "./views/NewArtist";
+import Artist from "./views/artists/Artist";
+import Artists from "./views/artists/Artists";
+import EditArtist from "./views/artists/EditArtist";
+import NewArtist from "./views/artists/NewArtist";
+import Home from "./views/Home";
+import Login from "./views/Login";
+import EditUser from "./views/users/EditUser";
+import NewUser from "./views/users/NewUser";
+import User from "./views/users/User";
+import Users from "./views/users/Users";
 
 Vue.use(Router);
 
@@ -44,6 +48,26 @@ const router = new Router({
           path: "artists/:id/edit",
           name: "edit-artist",
           component: EditArtist
+        },
+        {
+          path: "users",
+          name: "users",
+          component: Users
+        },
+        {
+          path: "users/new",
+          name: "new-user",
+          component: NewUser
+        },
+        {
+          path: "users/:id",
+          name: "user",
+          component: User
+        },
+        {
+          path: "users/:id/edit",
+          name: "edit-user",
+          component: EditUser
         }
       ]
     },
@@ -63,12 +87,12 @@ router.beforeEach((to, from, next) => {
   const onLogin = to.matched.some(record => record.meta.authOptional);
 
   if (onLogin && store.getters["auth/loggedIn"]) {
-    next({ path: "/app/" });
+    next({ name: "home" });
   } else if (onLogin || store.getters["auth/loggedIn"]) {
     next();
   } else {
     next({
-      path: "/login",
+      name: "login",
       query: { redirect: to.fullPath }
     });
   }

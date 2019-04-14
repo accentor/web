@@ -1,13 +1,13 @@
 <template>
   <VAlert
-    dismissible
     :value="errors.length > 0"
-    v-on:input="clearErrors"
+    dismissible
     type="error"
+    v-on:input="clearErrors"
   >
-    <div v-for="(error, index) in errors" :key="index">
-      <div v-for="(value, key) in error" :key="key">
-        <div v-for="(e, index) in value" :key="index">
+    <div :key="index" v-for="(error, index) in errors">
+      <div :key="key" v-for="(value, key) in error">
+        <div :key="index" v-for="(e, index) in value">
           <strong>{{ key | capitalize }}:</strong>
           {{ e }}
         </div>
@@ -25,13 +25,6 @@ export default {
   },
   methods: {
     ...mapMutations(["clearErrors"])
-  },
-  filters: {
-    capitalize: function(value) {
-      if (!value) return "";
-      value = value.toString();
-      return value.charAt(0).toUpperCase() + value.slice(1);
-    }
   }
 };
 </script>

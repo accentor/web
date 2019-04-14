@@ -29,7 +29,7 @@ export default {
           context.commit("login", result);
           return Promise.resolve(true);
         })
-        .catch(({ error }) => {
+        .catch(error => {
           this.commit("addError", error);
           return Promise.resolve(false);
         });
@@ -40,7 +40,7 @@ export default {
           commit("logout");
           return Promise.resolve(true);
         })
-        .catch(({ error }) => {
+        .catch(error => {
           this.commit("addError", error);
           return Promise.resolve(false);
         });
@@ -55,10 +55,12 @@ export default {
     },
     isModerator: (state, getters) => {
       return (
-        getters.currentUser &&
-        (getters.currentUser.permission === "moderator" ||
-          getters.currentUser.permission === "admin")
+        getters.isAdmin ||
+        (getters.currentUser && getters.currentUser.permission === "moderator")
       );
+    },
+    isAdmin: (state, getters) => {
+      return getters.currentUser && getters.currentUser.permission === "admin";
     }
   }
 };
