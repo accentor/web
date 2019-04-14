@@ -9,6 +9,7 @@ import EditArtist from "./views/artists/EditArtist";
 import NewArtist from "./views/artists/NewArtist";
 import Home from "./views/Home";
 import Login from "./views/Login";
+import Rescan from "./views/Rescan";
 import EditUser from "./views/users/EditUser";
 import NewUser from "./views/users/NewUser";
 import User from "./views/users/User";
@@ -48,6 +49,11 @@ const router = new Router({
           path: "artists/:id/edit",
           name: "edit-artist",
           component: EditArtist
+        },
+        {
+          path: "rescan",
+          name: "rescan",
+          component: Rescan
         },
         {
           path: "users",

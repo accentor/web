@@ -5,7 +5,7 @@
       <VToolbarTitle>Accentor</VToolbarTitle>
       <VSpacer />
       <VBtn :disabled="loading" @click="loadData" flat icon>
-        <VIcon>mdi-refresh {{ (loading && "mdi-spin") || "" }}</VIcon>
+        <VIcon>mdi-refresh {{ loading ? "mdi-spin" : "" }}</VIcon>
       </VBtn>
       <VBtn @click="logout" flat icon>
         <VIcon>mdi-logout-variant</VIcon>
@@ -29,6 +29,14 @@
           </VListTileAction>
           <VListTileContent>
             <VListTileTitle>Artists</VListTileTitle>
+          </VListTileContent>
+        </VListTile>
+        <VListTile :to="{ name: 'rescan' }" exact v-if="isModerator">
+          <VListTileAction>
+            <VIcon>mdi-refresh</VIcon>
+          </VListTileAction>
+          <VListTileContent>
+            <VListTileTitle>Rescan</VListTileTitle>
           </VListTileContent>
         </VListTile>
         <VDivider />
@@ -57,6 +65,7 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import Errors from "../components/Errors";
 
 export default {
@@ -71,12 +80,21 @@ export default {
   created() {
     this.loadData();
   },
+  computed: {
+    ...mapGetters("auth", ["isModerator"])
+  },
   methods: {
     loadData() {
       this.loading = true;
       Promise.all([
         this.$store.dispatch("artists/index"),
-        this.$store.dispatch("users/index"),
+        this.$store.dispatch("users/index").then(() => {
+          const promises = [];
+          if (this.isModerator) {
+            promises.push(this.$store.dispatch("rescan/show"));
+          }
+          return Promise.all(promises);
+        }),
         new Promise(resolve => setTimeout(resolve, 1000))
       ]).finally(() => {
         this.loading = false;

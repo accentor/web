@@ -1,31 +1,29 @@
 <template>
-  <div v-if="user">
-    <VContainer fill-height fluid>
-      <VLayout align-center justify-center>
-        <VFlex md4 sm8 xs12>
-          <VForm @submit.prevent="submit">
-            <VTextField label="Name" v-model="newUser.name" />
-            <VTextField
-              label="Password"
-              type="password"
-              v-model="newUser.password"
-            />
-            <VTextField
-              label="Confirm password"
-              type="password"
-              v-model="newUser.password_confirmation"
-            />
-            <VSelect
-              :items="permissionOptions"
-              label="Permission"
-              v-model="newUser.permission"
-            />
-            <VBtn color="primary" type="submit">Update user</VBtn>
-          </VForm>
-        </VFlex>
-      </VLayout>
-    </VContainer>
-  </div>
+  <VContainer fill-height fluid v-if="user">
+    <VLayout align-center justify-center>
+      <VFlex md4 sm8 xs12>
+        <VForm @submit.prevent="submit">
+          <VTextField label="Name" v-model="newUser.name" />
+          <VTextField
+            label="Password"
+            type="password"
+            v-model="newUser.password"
+          />
+          <VTextField
+            label="Confirm password"
+            type="password"
+            v-model="newUser.password_confirmation"
+          />
+          <VSelect
+            :items="permissionOptions"
+            label="Permission"
+            v-model="newUser.permission"
+          />
+          <VBtn color="primary" type="submit">Update user</VBtn>
+        </VForm>
+      </VFlex>
+    </VLayout>
+  </VContainer>
 </template>
 
 <script>
