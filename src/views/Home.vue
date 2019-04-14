@@ -1,11 +1,5 @@
 <template>
-  <VContainer>
-    <VLayout row wrap>
-      <VFlex xs12>
-        <h2>Home</h2>
-      </VFlex>
-    </VLayout>
-  </VContainer>
+  <h2>Home</h2>
 </template>
 
 <script>

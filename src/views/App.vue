@@ -1,55 +1,91 @@
 <template>
   <div>
-    <VToolbar app clipped-left dark color="primary">
+    <VToolbar app clipped-left color="primary" dark>
       <VToolbarSideIcon @click.stop="drawer = !drawer" />
       <VToolbarTitle>Accentor</VToolbarTitle>
       <VSpacer />
-      <VBtn flat @click="logout">Logout</VBtn>
+      <VBtn :disabled="loading" @click="loadData" flat icon>
+        <VIcon>mdi-refresh {{ (loading && "mdi-spin") || "" }}</VIcon>
+      </VBtn>
+      <VBtn @click="logout" flat icon>
+        <VIcon>mdi-logout-variant</VIcon>
+      </VBtn>
     </VToolbar>
-    <VAlert :value="Object.keys(error).length > 0" color="error">
-      <div v-for="(value, key) in error" :key="key">
-        <strong>{{ key | capitalize }}:</strong>
-        {{ value }}
-      </div>
-    </VAlert>
 
-    <VNavigationDrawer v-model="drawer" left clipped app>
+    <VNavigationDrawer app clipped left v-model="drawer">
       <VList>
-        <VListTile :to="{ name: 'home' }">
+        <VListTile :to="{ name: 'home' }" exact>
           <VListTileAction>
-            <VIcon>fas fa-home</VIcon>
+            <VIcon>mdi-home</VIcon>
           </VListTileAction>
           <VListTileContent>
             <VListTileTitle>Home</VListTileTitle>
+          </VListTileContent>
+        </VListTile>
+        <VDivider />
+        <VListTile :to="{ name: 'artists' }" exact>
+          <VListTileAction>
+            <VIcon>mdi-artist</VIcon>
+          </VListTileAction>
+          <VListTileContent>
+            <VListTileTitle>Artists</VListTileTitle>
+          </VListTileContent>
+        </VListTile>
+        <VDivider />
+        <VListTile :to="{ name: 'users' }" exact>
+          <VListTileAction>
+            <VIcon>mdi-account-multiple</VIcon>
+          </VListTileAction>
+          <VListTileContent>
+            <VListTileTitle>Users</VListTileTitle>
           </VListTileContent>
         </VListTile>
       </VList>
     </VNavigationDrawer>
 
     <VContent>
-      <router-view />
+      <VContainer>
+        <Errors />
+        <VLayout row wrap>
+          <VFlex xs12>
+            <router-view />
+          </VFlex>
+        </VLayout>
+      </VContainer>
     </VContent>
   </div>
 </template>
 
 <script>
+import Errors from "../components/Errors";
+
 export default {
-  data: function() {
+  name: "app",
+  components: { Errors },
+  data() {
     return {
       drawer: null,
-      error: {}
+      loading: false
     };
   },
+  created() {
+    this.loadData();
+  },
   methods: {
+    loadData() {
+      this.loading = true;
+      Promise.all([
+        this.$store.dispatch("artists/index"),
+        this.$store.dispatch("users/index"),
+        new Promise(resolve => setTimeout(resolve, 1000))
+      ]).finally(() => {
+        this.loading = false;
+      });
+    },
     logout: function() {
-      this.$store
-        .dispatch("logout")
-        .then(() => {
-          this.$router.push({ path: "/login" });
-        })
-        .catch(error => {
-          this.error = error.error;
-        });
+      this.$store.dispatch("auth/logout").then(() => {
+        this.$router.push({ name: "login" });
+      });
     }
   }
 };
