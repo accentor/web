@@ -6,7 +6,7 @@
         Start scan
       </VBtn>
     </VLayout>
-    <VLayout row v-if="rescan" wrap>
+    <VLayout column v-if="rescan">
       <div><strong>Processed: </strong> {{ rescan.processed }}</div>
       <div v-if="rescan.warning_text">
         <div><h3>Warnings</h3></div>

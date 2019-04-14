@@ -16,7 +16,7 @@ export default {
         .then(result => {
           commit("setRescan", result);
           if (result.running) {
-            setTimeout(dispatch("show"), 1000);
+            setTimeout(() => dispatch("show"), 1000);
           }
           return Promise.resolve(true);
         })
@@ -30,7 +30,7 @@ export default {
         .then(result => {
           result.running = true;
           commit("setRescan", result);
-          setTimeout(dispatch("show"), 2000);
+          setTimeout(() => dispatch("show"), 1000);
           return Promise.resolve(true);
         })
         .catch(error => {
