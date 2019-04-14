@@ -1,17 +1,15 @@
 <template>
-  <div v-if="artist">
-    <VContainer fill-height fluid>
-      <VLayout align-center justify-center>
-        <VFlex md4 sm8 xs12>
-          <VForm @submit.prevent="submit">
-            <VTextField label="Name" v-model="newArtist.name" />
-            <FilePicker v-model="newArtist.image">Choose image</FilePicker>
-            <VBtn color="primary" type="submit">Update artist</VBtn>
-          </VForm>
-        </VFlex>
-      </VLayout>
-    </VContainer>
-  </div>
+  <VContainer fill-height fluid v-if="artist">
+    <VLayout align-center justify-center>
+      <VFlex md4 sm8 xs12>
+        <VForm @submit.prevent="submit">
+          <VTextField label="Name" v-model="newArtist.name" />
+          <FilePicker v-model="newArtist.image">Choose image</FilePicker>
+          <VBtn color="primary" type="submit">Update artist</VBtn>
+        </VForm>
+      </VFlex>
+    </VLayout>
+  </VContainer>
 </template>
 
 <script>

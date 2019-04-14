@@ -1,16 +1,14 @@
 <template>
-  <div v-if="user">
-    <VContainer fluid grid-list-xl>
-      <VLayout row wrap>
-        <div>
-          <div class="headline">{{ user.name }}</div>
-          <span class="grey--text">
+  <VContainer fluid grid-list-xl v-if="user">
+    <VLayout row wrap>
+      <div>
+        <div class="headline">{{ user.name }}</div>
+        <span class="grey--text">
             {{ user.permission | capitalize }}
           </span>
-        </div>
-      </VLayout>
-    </VContainer>
-  </div>
+      </div>
+    </VLayout>
+  </VContainer>
 </template>
 
 <script>

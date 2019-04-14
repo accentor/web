@@ -3,6 +3,7 @@ import Vuex from "vuex";
 import createPersistedState from "vuex-persistedstate";
 import artists from "./artists";
 import auth from "./auth";
+import rescan from "./rescan";
 import users from "./users";
 
 Vue.use(Vuex);
@@ -17,6 +18,7 @@ export default new Vuex.Store({
   modules: {
     artists,
     auth,
+    rescan,
     users
   },
   state: {
