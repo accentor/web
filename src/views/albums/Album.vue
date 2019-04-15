@@ -33,6 +33,16 @@
               {{ props.item.genre_ids.map(id => genres[id].name).join(" / ") }}
             </td>
             <td class="text-xs-right">
+              <VBtn
+                @click="startTrack(props.item.id)"
+                color="primary"
+                dark
+                fab
+                outline
+                small
+              >
+                <VIcon>mdi-play</VIcon>
+              </VBtn>
               <span v-if="isModerator">
                 <VBtn
                   :to="{ name: 'edit-track', params: { id: props.item.id } }"
@@ -125,6 +135,9 @@ export default {
       if (confirm("Are you sure?")) {
         this.destroy(id);
       }
+    },
+    startTrack: function(id) {
+      this.$store.commit("player/playTrack", id);
     }
   }
 };
