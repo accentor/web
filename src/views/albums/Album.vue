@@ -44,7 +44,7 @@
 
 <script>
 import { mapState } from "vuex";
-import TrackActions from "./TrackActions";
+import TrackActions from "../../components/TrackActions";
 
 export default {
   name: "Album",

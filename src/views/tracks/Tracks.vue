@@ -31,7 +31,7 @@
 
 <script>
 import { mapActions, mapGetters, mapState } from "vuex";
-import TrackActions from "../albums/TrackActions";
+import TrackActions from "../../components/TrackActions";
 
 export default {
   name: "Tracks",

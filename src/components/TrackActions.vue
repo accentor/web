@@ -1,15 +1,17 @@
 <template>
   <span>
-    <VBtn @click="startTrack" color="primary" dark fab outline small>
+    <VBtn @click="startTrack" color="primary" flat icon small>
       <VIcon>mdi-play</VIcon>
+    </VBtn>
+    <VBtn @click="addTrack" color="success" flat icon small>
+      <VIcon>mdi-plus</VIcon>
     </VBtn>
     <span v-if="isModerator">
       <VBtn
         :to="{ name: 'edit-track', params: { id: track.id } }"
         color="orange"
-        dark
-        fab
-        outline
+        flat
+        icon
         small
       >
         <VIcon>mdi-pencil</VIcon>
@@ -17,10 +19,9 @@
       <VBtn
         @click.stop.prevent="deleteTrack"
         color="red"
-        dark
-        fab
         href="#"
-        outline
+        flat
+        icon
         small
       >
         <VIcon>mdi-delete</VIcon>
@@ -48,6 +49,9 @@ export default {
     },
     startTrack: function() {
       this.$store.commit("player/playTrack", this.track.id);
+    },
+    addTrack: function() {
+      this.$store.commit("player/addTrack", this.track.id);
     }
   }
 };

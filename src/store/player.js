@@ -21,6 +21,9 @@ export default {
       state.doSeek = true;
       state.playing = true;
     },
+    addTrack(state, id) {
+      state.playlist.push(id);
+    },
     setDoSeek(state) {
       state.doSeek = false;
     },

@@ -95,7 +95,7 @@
 <script>
 import { mapGetters, mapState } from "vuex";
 import { compareStrings } from "../../comparators";
-import TrackActions from "../albums/TrackActions";
+import TrackActions from "../../components/TrackActions";
 
 export default {
   name: "Artist",
