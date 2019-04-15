@@ -33,3 +33,9 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+pre {
+  overflow-x: auto;
+}
+</style>
