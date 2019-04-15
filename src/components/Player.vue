@@ -74,7 +74,7 @@ export default {
     return {
       open: false,
       repeatMode: "off",
-      volume: 50,
+      volume: 100,
       muted: false,
       intervalId: 0,
       localTime: 0,
