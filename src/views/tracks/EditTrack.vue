@@ -26,20 +26,25 @@
           <h4>Artists</h4>
           <VLayout
             :key="index"
-            column
+            row
             v-for="(item, index) of newTrack.track_artists"
           >
-            <VCombobox
-              :items="sortedArtists"
-              item-text="name"
-              item-value="id"
-              label="Artist"
-              return-object
-              v-model="item.artist_id"
-            />
-            <VTextField label="Name" v-model="item.name" />
-            <VAutocomplete :items="roles" label="Role" v-model="item.role" />
-            <VDivider v-if="index !== newTrack.track_artists.length - 1" />
+            <VBtn @click="removeArtist(index)" icon small>
+              <VIcon>mdi-close</VIcon>
+            </VBtn>
+            <VLayout column>
+              <VCombobox
+                :items="sortedArtists"
+                item-text="name"
+                item-value="id"
+                label="Artist"
+                return-object
+                v-model="item.artist_id"
+              />
+              <VTextField label="Name" v-model="item.name" />
+              <VAutocomplete :items="roles" label="Role" v-model="item.role" />
+              <VDivider v-if="index !== newTrack.track_artists.length - 1" />
+            </VLayout>
           </VLayout>
           <VLayout row>
             <VBtn color="primary" type="submit">Update track</VBtn>
@@ -149,6 +154,9 @@ export default {
         name: "",
         role: "main"
       });
+    },
+    removeArtist(index) {
+      this.newTrack.track_artists.splice(index, 1);
     },
     submit() {
       const transformed = {
