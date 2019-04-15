@@ -2,7 +2,7 @@
   <VContainer fluid grid-list-xl v-if="artist">
     <VLayout row wrap>
       <VFlex lg3 md4 sm6 v-if="artist.image" xs12>
-        <VImg :src="artist.image" />
+        <VImg :src="artist.image" class="elevation-3" />
       </VFlex>
       <VFlex lg9 md8 sm6 xs12>
         <h3>{{ artist.name }}</h3>

@@ -2,7 +2,7 @@
   <VContainer fluid grid-list-xl v-if="album">
     <VLayout row wrap>
       <VFlex lg3 md4 sm6 v-if="album.image" xs12>
-        <VImg :src="album.image" />
+        <VImg :src="album.image" class="elevation-3" />
       </VFlex>
       <VFlex lg9 md8 sm6 xs12>
         <div>
