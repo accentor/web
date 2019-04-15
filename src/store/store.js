@@ -8,6 +8,7 @@ import genres from "./genres";
 import rescan from "./rescan";
 import tracks from "./tracks";
 import users from "./users";
+import labels from "./labels";
 
 Vue.use(Vuex);
 
@@ -23,6 +24,7 @@ export default new Vuex.Store({
     artists,
     auth,
     genres,
+    labels,
     rescan,
     tracks,
     users

@@ -106,6 +106,7 @@ export default {
         this.$store.dispatch("albums/index"),
         this.$store.dispatch("artists/index"),
         this.$store.dispatch("genres/index"),
+        this.$store.dispatch("labels/index"),
         this.$store.dispatch("tracks/index"),
         this.$store.dispatch("users/index").then(() => {
           const promises = [];
