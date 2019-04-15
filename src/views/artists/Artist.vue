@@ -83,29 +83,7 @@
               {{ props.item.genre_ids.map(id => genres[id].name).join(" / ") }}
             </td>
             <td class="text-xs-right">
-              <span v-if="isModerator">
-                <VBtn
-                  :to="{ name: 'edit-track', params: { id: props.item.id } }"
-                  color="orange"
-                  dark
-                  fab
-                  outline
-                  small
-                >
-                  <VIcon>mdi-pencil</VIcon>
-                </VBtn>
-                <VBtn
-                  @click.stop.prevent="deleteTrack(props.item.id)"
-                  color="red"
-                  dark
-                  fab
-                  href="#"
-                  outline
-                  small
-                >
-                  <VIcon>mdi-delete</VIcon>
-                </VBtn>
-              </span>
+              <TrackActions :track="props.item" />
             </td>
           </template>
         </VDataTable>
@@ -117,9 +95,13 @@
 <script>
 import { mapGetters, mapState } from "vuex";
 import { compareStrings } from "../../comparators";
+import TrackActions from "../albums/TrackActions";
 
 export default {
   name: "Artist",
+  components: {
+    TrackActions
+  },
   data() {
     return {
       headers: [
