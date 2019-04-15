@@ -12,7 +12,7 @@
       </VBtn>
     </VToolbar>
 
-    <VNavigationDrawer app clipped left v-model="drawer">
+    <VNavigationDrawer :mobile-break-point="1500" app clipped left v-model="drawer">
       <VList>
         <VListTile :to="{ name: 'home' }" exact>
           <VListTileAction>
