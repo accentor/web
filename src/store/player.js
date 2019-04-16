@@ -1,5 +1,7 @@
 import baseURL from "../api/base_url";
 
+const repeatModes = ["off", "all", "single"];
+
 export default {
   namespaced: true,
   state: {
@@ -7,6 +9,7 @@ export default {
     current: -1,
     playing: false,
     doSeek: false,
+    repeatMode: "off",
     seekTime: 0
   },
   mutations: {
@@ -47,8 +50,67 @@ export default {
       state.seekTime = val;
       state.doSeek = true;
     },
-    pausePlay(state) {
-      state.playing = !state.playing;
+    setPlaying(state, val) {
+      state.playing = val;
+    },
+    nextTrack(state) {
+      state.current += 1;
+      if (state.current >= state.playlist.length) {
+        if (state.repeatMode === "all") {
+          state.current = 0;
+          state.seekTime = 0;
+          state.doSeek = true;
+        } else {
+          state.current = -1;
+          state.playing = false;
+          state.seekTime = 0;
+        }
+      } else {
+        state.seekTime = 0;
+        state.doSeek = true;
+      }
+    },
+    prevTrack(state) {
+      state.current -= 1;
+      if (state.current < 0) {
+        if (state.repeatMode === "all") {
+          state.current = state.playlist.length - 1;
+          state.seekTime = 0;
+          state.doSeek = true;
+        } else {
+          state.playing = false;
+          state.seekTime = 0;
+        }
+      } else {
+        state.seekTime = 0;
+        state.doSeek = true;
+      }
+    },
+    trackEnded(state) {
+      if (state.repeatMode === "single") {
+        state.seekTime = 0;
+        state.doSeek = true;
+      } else {
+        this.commit("player/nextTrack");
+      }
+    },
+    nextRepeatMode(state) {
+      const currentIndex = repeatModes.indexOf(state.repeatMode);
+      state.repeatMode = repeatModes[(currentIndex + 1) % repeatModes.length];
+    },
+    shuffle(state) {
+      const newPlaylist = [];
+      if (state.current >= 0) {
+        newPlaylist.push(state.playlist[state.current]);
+        state.playlist.splice(state.current, 1);
+        state.current = 0;
+      }
+      while (state.playlist.length > 0) {
+        const index = Math.floor(Math.random() * state.playlist.length);
+        newPlaylist.push(state.playlist[index]);
+        state.playlist.splice(index, 1);
+      }
+      state.playlist = newPlaylist;
     }
   },
   getters: {

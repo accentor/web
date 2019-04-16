@@ -40,15 +40,15 @@
     <VLayout class="player-controls" row align-center>
       <div class="flex left">
         <div class="content">
-          <VBtn class="not-on-small" icon small>
+          <VBtn @click="prevTrack" class="not-on-small" icon small>
             <VIcon>mdi-skip-previous</VIcon>
           </VBtn>
-          <VBtn @click="pausePlay" icon small>
+          <VBtn @click="setPlaying(!playing)" icon small>
             <VIcon large>
               {{ playing ? "mdi-pause" : "mdi-play" }}
             </VIcon>
           </VBtn>
-          <VBtn class="not-on-small" icon small>
+          <VBtn @click="nextTrack" class="not-on-small" icon small>
             <VIcon>mdi-skip-next</VIcon>
           </VBtn>
         </div>
@@ -75,10 +75,10 @@
       </div>
       <div class="flex right">
         <div class="content">
-          <VBtn :color="repeatModeColor" icon>
+          <VBtn :color="repeatModeColor" @click="nextRepeatMode" flat icon>
             <VIcon>{{ repeatModeIcon }}</VIcon>
           </VBtn>
-          <VBtn icon>
+          <VBtn @click="shuffle" icon>
             <VIcon>mdi-shuffle</VIcon>
           </VBtn>
           <VSlider
@@ -110,19 +110,22 @@ export default {
   data() {
     return {
       open: false,
-      repeatMode: "off",
       volume: 100,
       muted: false,
       intervalId: 0,
-      localTime: 0,
-      inCheck: false
     };
   },
   created() {
     this.intervalId = setInterval(this.checkTime, 100);
+    setTimeout(() =>
+      this.$refs.audio.addEventListener("ended", () => {
+        this.trackEnded();
+      })
+    );
   },
   beforeDestroy() {
     clearInterval(this.intervalId);
+    this.setPlaying(false);
   },
   watch: {
     currentTrackURL() {
@@ -162,7 +165,13 @@ export default {
   computed: {
     ...mapState("albums", ["albums"]),
     ...mapState("artist", ["artists"]),
-    ...mapState("player", ["playing", "seekTime", "doSeek", "current"]),
+    ...mapState("player", [
+      "playing",
+      "seekTime",
+      "doSeek",
+      "current",
+      "repeatMode"
+    ]),
     ...mapGetters("player", [
       "playlistTracks",
       "currentTrack",
@@ -171,7 +180,7 @@ export default {
     repeatModeIcon() {
       switch (this.repeatMode) {
         case "off":
-        case "full":
+        case "all":
           return "mdi-repeat";
         case "single":
           return "mdi-repeat-once";
@@ -183,9 +192,9 @@ export default {
       switch (this.repeatMode) {
         case "off":
           return undefined;
-        case "full":
+        case "all":
         case "single":
-          return "light--blue";
+          return "blue";
         default:
           return undefined;
       }
@@ -205,9 +214,14 @@ export default {
     ...mapMutations("player", [
       "setSeekTime",
       "seek",
-      "pausePlay",
+      "setPlaying",
       "setCurrent",
-      "removeIndex"
+      "removeIndex",
+      "nextTrack",
+      "prevTrack",
+      "trackEnded",
+      "nextRepeatMode",
+      "shuffle"
     ]),
     checkTime() {
       const time = Math.floor(this.$refs.audio.currentTime);
