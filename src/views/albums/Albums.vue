@@ -37,27 +37,7 @@
               </span>
             </VCardText>
             <VCardActions v-if="isModerator">
-              <VBtn
-                @click.stop.prevent="deleteAlbum(props.item.id)"
-                color="red"
-                dark
-                fab
-                href="#"
-                outline
-                small
-              >
-                <VIcon>mdi-delete</VIcon>
-              </VBtn>
-              <VBtn
-                :to="{ name: 'edit-album', params: { id: props.item.id } }"
-                color="orange"
-                dark
-                fab
-                outline
-                small
-              >
-                <VIcon>mdi-pencil</VIcon>
-              </VBtn>
+              <AlbumActions :album="props.item" />
             </VCardActions>
           </VCard>
         </VFlex>
@@ -68,9 +48,11 @@
 
 <script>
 import { mapActions, mapGetters } from "vuex";
+import AlbumActions from "../../components/AlbumActions";
 
 export default {
   name: "albums",
+  components: { AlbumActions },
   methods: {
     ...mapActions("albums", ["destroy"]),
     deleteAlbum: function(id) {

@@ -2,7 +2,7 @@
   <VContainer fluid grid-list-xl v-if="artist">
     <VLayout row wrap>
       <VFlex lg3 md4 sm6 v-if="artist.image" xs12>
-        <VImg :src="artist.image" />
+        <VImg :src="artist.image" class="elevation-3" />
       </VFlex>
       <VFlex lg9 md8 sm6 xs12>
         <h3>{{ artist.name }}</h3>
@@ -37,27 +37,7 @@
               </span>
             </VCardText>
             <VCardActions v-if="isModerator">
-              <VBtn
-                @click.stop.prevent="deleteAlbum(props.item.id)"
-                color="red"
-                dark
-                fab
-                href="#"
-                outline
-                small
-              >
-                <VIcon>mdi-delete</VIcon>
-              </VBtn>
-              <VBtn
-                :to="{ name: 'edit-album', params: { id: props.item.id } }"
-                color="orange"
-                dark
-                fab
-                outline
-                small
-              >
-                <VIcon>mdi-pencil</VIcon>
-              </VBtn>
+              <AlbumActions :album="props.item" />
             </VCardActions>
           </VCard>
         </VFlex>
@@ -83,29 +63,7 @@
               {{ props.item.genre_ids.map(id => genres[id].name).join(" / ") }}
             </td>
             <td class="text-xs-right">
-              <span v-if="isModerator">
-                <VBtn
-                  :to="{ name: 'edit-track', params: { id: props.item.id } }"
-                  color="orange"
-                  dark
-                  fab
-                  outline
-                  small
-                >
-                  <VIcon>mdi-pencil</VIcon>
-                </VBtn>
-                <VBtn
-                  @click.stop.prevent="deleteTrack(props.item.id)"
-                  color="red"
-                  dark
-                  fab
-                  href="#"
-                  outline
-                  small
-                >
-                  <VIcon>mdi-delete</VIcon>
-                </VBtn>
-              </span>
+              <TrackActions :track="props.item" />
             </td>
           </template>
         </VDataTable>
@@ -117,9 +75,15 @@
 <script>
 import { mapGetters, mapState } from "vuex";
 import { compareStrings } from "../../comparators";
+import AlbumActions from "../../components/AlbumActions";
+import TrackActions from "../../components/TrackActions";
 
 export default {
   name: "Artist",
+  components: {
+    AlbumActions,
+    TrackActions
+  },
   data() {
     return {
       headers: [
