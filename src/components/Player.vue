@@ -1,10 +1,43 @@
 <template>
   <div class="footer-container">
     <audio ref="audio" />
-    <VLayout row align-center v-if="open">
-      <VList class="tracks-list"></VList>
-    </VLayout>
-    <VLayout row align-center>
+    <div class="tracks-list-container" v-if="open">
+      <table class="tracks-list">
+        <tr
+          v-for="(track, index) of playlistTracks"
+          :key="track.id"
+          class="track"
+        >
+          <td class="icon">
+            <VBtn small icon flat @click="removeIndex(index)">
+              <VIcon>mdi-close</VIcon>
+            </VBtn>
+          </td>
+          <td class="icon">
+            <VIcon v-if="index === current">mdi-volume-high</VIcon>
+          </td>
+          <td>
+            <a @click.stop.prevent="setCurrent(index)">{{ track.title }}</a>
+          </td>
+          <td>
+            <RouterLink :to="{ name: 'album', params: { id: track.album_id } }">
+              {{ albums[track.album_id].title }}
+            </RouterLink>
+          </td>
+          <td>
+            {{ track.track_artists.map(ta => ta.name).join(" / ") }}
+          </td>
+          <td>
+            {{ albums[track.album_id].release }}
+          </td>
+          <td>
+            {{ track.length | length }}
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <VLayout class="player-controls" row align-center>
       <div class="flex left">
         <div class="content">
           <VBtn class="not-on-small" icon small>
@@ -56,7 +89,11 @@
             id="volumeSlider"
             v-on:click:prepend="muted = !muted"
           />
-          <VBtn @click="open = !open" icon>
+          <VBtn
+            @click="open = !open"
+            icon
+            :disabled="this.playlistTracks.length === 0"
+          >
             <VIcon>{{ open ? "mdi-chevron-down" : "mdi-chevron-up" }}</VIcon>
           </VBtn>
         </div>
@@ -115,9 +152,16 @@ export default {
       } else {
         this.$refs.audio.pause();
       }
+    },
+    playlistTracks() {
+      if (this.playlistTracks.length === 0) {
+        this.open = false;
+      }
     }
   },
   computed: {
+    ...mapState("albums", ["albums"]),
+    ...mapState("artist", ["artists"]),
     ...mapState("player", ["playing", "seekTime", "doSeek", "current"]),
     ...mapGetters("player", [
       "playlistTracks",
@@ -158,7 +202,13 @@ export default {
     }
   },
   methods: {
-    ...mapMutations("player", ["setSeekTime", "seek", "pausePlay"]),
+    ...mapMutations("player", [
+      "setSeekTime",
+      "seek",
+      "pausePlay",
+      "setCurrent",
+      "removeIndex"
+    ]),
     checkTime() {
       const time = Math.floor(this.$refs.audio.currentTime);
       if (time !== this.seekTime) {
@@ -175,68 +225,90 @@ export default {
   border-top: solid thin rgba(0, 0, 0, 0.12);
 }
 
-.flex {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-
-  > .content {
-    display: inline-flex;
+.player-controls {
+  .flex {
+    flex: 1;
+    display: flex;
     justify-content: center;
-    align-items: center;
-  }
 
-  .not-on-small {
-    @media (max-width: 750px) {
-      display: none;
+    > .content {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
     }
-  }
-}
-
-.left {
-  flex-shrink: 0;
-  flex-grow: 2;
-
-  .content {
-    margin-right: auto;
-    padding-right: 20px;
-  }
-}
-
-.center {
-  flex-grow: 3;
-
-  .content {
-    flex-grow: 1;
 
     .not-on-small {
-      flex: 1;
+      @media (max-width: 750px) {
+        display: none;
+      }
     }
+  }
 
-    .play-time {
-      width: 8rem;
-      flex-grow: 0;
-      padding-left: 10px;
-      padding-right: 10px;
+  .left {
+    flex-shrink: 0;
+    flex-grow: 2;
+
+    .content {
+      margin-right: auto;
+      padding-right: 20px;
+    }
+  }
+
+  .center {
+    flex-grow: 3;
+
+    .content {
+      flex-grow: 1;
+
+      .not-on-small {
+        flex: 1;
+      }
+
+      .play-time {
+        width: 8rem;
+        flex-grow: 0;
+        padding-left: 10px;
+        padding-right: 10px;
+      }
+    }
+  }
+
+  .right {
+    flex-shrink: 0;
+    flex-grow: 2;
+
+    .content {
+      margin-left: auto;
+      padding-left: 20px;
+
+      #volumeSlider {
+        min-width: 100px;
+      }
     }
   }
 }
 
-.right {
-  flex-shrink: 0;
-  flex-grow: 2;
-
-  .content {
-    margin-left: auto;
-    padding-left: 20px;
-
-    #volumeSlider {
-      min-width: 100px;
-    }
-  }
-}
-
-.tracks-list {
+.tracks-list-container {
   max-height: 50vh;
+  overflow-y: auto;
+  border-bottom: solid thin rgba(0, 0, 0, 0.12);
+  width: 100%;
+
+  .tracks-list {
+    width: 100%;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+
+    .track {
+      a {
+        text-decoration: none;
+      }
+
+      .icon {
+        width: 40px;
+        max-width: 40px;
+      }
+    }
+  }
 }
 </style>

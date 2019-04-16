@@ -27,6 +27,22 @@ export default {
     setDoSeek(state) {
       state.doSeek = false;
     },
+    setCurrent(state, index) {
+      state.current = index;
+      state.seekTime = 0;
+      state.playing = true;
+      state.doSeek = true;
+    },
+    removeIndex(state, index) {
+      if (index === state.current) {
+        state.current = -1;
+        state.playing = false;
+        state.seekTime = 0;
+      } else if (index < state.current) {
+        state.current -= 1;
+      }
+      state.playlist.splice(index, 1);
+    },
     seek(state, val) {
       state.seekTime = val;
       state.doSeek = true;
