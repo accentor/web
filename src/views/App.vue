@@ -12,7 +12,13 @@
       </VBtn>
     </VToolbar>
 
-    <VNavigationDrawer app clipped left v-model="drawer">
+    <VNavigationDrawer
+      :mobile-break-point="1500"
+      app
+      clipped
+      left
+      v-model="drawer"
+    >
       <VList>
         <VListTile :to="{ name: 'home' }" exact>
           <VListTileAction>
@@ -77,16 +83,21 @@
         </VLayout>
       </VContainer>
     </VContent>
+
+    <VFooter app color="white" inset fixed height="auto">
+      <Player />
+    </VFooter>
   </div>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
 import Errors from "../components/Errors";
+import Player from "../components/Player";
 
 export default {
   name: "app",
-  components: { Errors },
+  components: { Errors, Player },
   data() {
     return {
       drawer: null,

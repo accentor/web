@@ -2,7 +2,7 @@
   <VContainer fluid grid-list-xl v-if="album">
     <VLayout row wrap>
       <VFlex lg3 md4 sm6 v-if="album.image" xs12>
-        <VImg :src="album.image" />
+        <VImg :src="album.image" class="elevation-3" />
       </VFlex>
       <VFlex lg9 md8 sm6 xs12>
         <div>
@@ -33,29 +33,7 @@
               {{ props.item.genre_ids.map(id => genres[id].name).join(" / ") }}
             </td>
             <td class="text-xs-right">
-              <span v-if="isModerator">
-                <VBtn
-                  :to="{ name: 'edit-track', params: { id: props.item.id } }"
-                  color="orange"
-                  dark
-                  fab
-                  outline
-                  small
-                >
-                  <VIcon>mdi-pencil</VIcon>
-                </VBtn>
-                <VBtn
-                  @click.stop.prevent="deleteTrack(props.item.id)"
-                  color="red"
-                  dark
-                  fab
-                  href="#"
-                  outline
-                  small
-                >
-                  <VIcon>mdi-delete</VIcon>
-                </VBtn>
-              </span>
+              <TrackActions :track="props.item" />
             </td>
           </template>
         </VDataTable>
@@ -65,10 +43,12 @@
 </template>
 
 <script>
-import { mapActions, mapGetters, mapState } from "vuex";
+import { mapState } from "vuex";
+import TrackActions from "../../components/TrackActions";
 
 export default {
   name: "Album",
+  components: { TrackActions },
   data() {
     return {
       headers: [
@@ -106,7 +86,6 @@ export default {
     };
   },
   computed: {
-    ...mapGetters("auth", ["isModerator"]),
     ...mapState("albums", ["albums"]),
     ...mapState("artists", ["artists"]),
     ...mapState("genres", ["genres"]),
@@ -117,14 +96,6 @@ export default {
     },
     album: function() {
       return this.albums[this.$route.params.id];
-    }
-  },
-  methods: {
-    ...mapActions("tracks", ["destroy"]),
-    deleteTrack: function(id) {
-      if (confirm("Are you sure?")) {
-        this.destroy(id);
-      }
     }
   }
 };
