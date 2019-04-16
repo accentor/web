@@ -24,8 +24,18 @@ export default {
       state.doSeek = true;
       state.playing = true;
     },
+    playTracks(state, ids) {
+      state.playlist = ids;
+      state.current = 0;
+      state.seekTime = 0;
+      state.doSeek = true;
+      state.playing = true;
+    },
     addTrack(state, id) {
       state.playlist.push(id);
+    },
+    addTracks(state, ids) {
+      state.playlist.push(...ids);
     },
     setDoSeek(state) {
       state.doSeek = false;
