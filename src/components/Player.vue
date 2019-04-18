@@ -112,7 +112,7 @@ export default {
       open: false,
       volume: 100,
       muted: false,
-      intervalId: 0,
+      intervalId: 0
     };
   },
   created() {

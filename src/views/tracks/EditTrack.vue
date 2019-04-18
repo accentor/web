@@ -3,6 +3,7 @@
     <VLayout align-center justify-center>
       <VFlex md6 sm8 xs12>
         <VForm @submit.prevent="submit">
+          <VTextField type="number" label="Number" v-model="newTrack.number" />
           <VTextField label="Title" v-model="newTrack.title" />
           <VAutocomplete
             :items="sortedAlbums"
@@ -65,6 +66,7 @@ export default {
   data() {
     return {
       newTrack: {
+        number: 0,
         title: "",
         album_id: null,
         track_artists: [],
@@ -137,6 +139,7 @@ export default {
       createGenre: "genres/create"
     }),
     fillValues() {
+      this.newTrack.number = this.track.number;
       this.newTrack.title = this.track.title;
       this.newTrack.album_id = this.track.album_id;
       this.newTrack.track_artists = this.track.track_artists.map(ta => {
@@ -160,6 +163,7 @@ export default {
     },
     submit() {
       const transformed = {
+        number: this.newTrack.number,
         title: this.newTrack.title,
         album_id: this.newTrack.album_id,
         genre_ids: [],
