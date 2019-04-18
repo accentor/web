@@ -40,7 +40,8 @@ export default {
   computed: {
     ...mapGetters("auth", ["isModerator"]),
     tracks() {
-      return this.$store.getters["tracks/tracksFilterByAlbum"](this.album.id).map(t => t.id);
+      const getter = this.$store.getters["tracks/tracksFilterByAlbum"];
+      return getter(this.album.id).map(t => t.id);
     }
   },
   methods: {
