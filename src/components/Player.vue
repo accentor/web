@@ -122,6 +122,11 @@ export default {
         this.trackEnded();
       })
     );
+    setTimeout(() =>
+      this.$refs.audio.addEventListener("pause", () => {
+        this.setPlaying(false);
+      })
+    );
   },
   beforeDestroy() {
     clearInterval(this.intervalId);
