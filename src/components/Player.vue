@@ -123,8 +123,11 @@ export default {
       })
     );
     setTimeout(() =>
-      this.$refs.audio.addEventListener("pause", () => {
-        this.setPlaying(false);
+      this.$refs.audio.addEventListener("pause", e => {
+        // Already handled in the ended handler
+        if (!e.target.ended) {
+          this.setPlaying(false);
+        }
       })
     );
   },
