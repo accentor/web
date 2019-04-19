@@ -8,7 +8,11 @@
     </VBtn>
     <span v-if="isModerator">
       <VBtn
-        :to="{ name: 'edit-album', params: { id: album.id } }"
+        :to="{
+          name: 'edit-album',
+          params: { id: album.id },
+          query: { redirect: $route.fullPath }
+        }"
         color="orange"
         flat
         icon

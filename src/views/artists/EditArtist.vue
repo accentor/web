@@ -56,7 +56,9 @@ export default {
       this.update({ id: this.artist.id, newArtist: this.newArtist }).then(
         succeeded => {
           if (succeeded) {
-            this.$router.push({ name: "artists" });
+            this.$router.push(
+              this.$route.query.redirect || { name: "artists" }
+            );
           }
         }
       );

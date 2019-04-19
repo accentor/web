@@ -215,7 +215,9 @@ export default {
         this.update({ id: this.track.id, newTrack: transformed }).then(
           succeeded => {
             if (succeeded) {
-              this.$router.push({ name: "tracks" });
+              this.$router.push(
+                this.$route.query.redirect || { name: "tracks" }
+              );
             }
           }
         );
