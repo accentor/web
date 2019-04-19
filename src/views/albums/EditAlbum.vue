@@ -178,7 +178,9 @@ export default {
         this.update({ id: this.album.id, newAlbum: transformed }).then(
           succeeded => {
             if (succeeded) {
-              this.$router.push({ name: "albums" });
+              this.$router.push(
+                this.$route.query.redirect || { name: "albums" }
+              );
             }
           }
         );

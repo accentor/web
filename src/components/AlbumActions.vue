@@ -8,7 +8,11 @@
     </VBtn>
     <span v-if="isModerator">
       <VBtn
-        :to="{ name: 'edit-album', params: { id: album.id } }"
+        :to="{
+          name: 'edit-album',
+          params: { id: album.id },
+          query: { redirect: $route.fullPath }
+        }"
         color="orange"
         flat
         icon
@@ -40,7 +44,8 @@ export default {
   computed: {
     ...mapGetters("auth", ["isModerator"]),
     tracks() {
-      return this.$store.getters["tracks/tracksFilterByAlbum"](this.album.id).map(t => t.id);
+      const getter = this.$store.getters["tracks/tracksFilterByAlbum"];
+      return getter(this.album.id).map(t => t.id);
     }
   },
   methods: {

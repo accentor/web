@@ -4,6 +4,7 @@
       :items="artists"
       :filter="(obj, search) => obj.name.contains(search)"
       :rows-per-page-items="[12]"
+      :pagination.sync="pagination"
       v-if="artists.length > 0"
       content-class="layout row wrap"
     >
@@ -39,7 +40,11 @@
                 <VIcon>mdi-delete</VIcon>
               </VBtn>
               <VBtn
-                :to="{ name: 'edit-artist', params: { id: props.item.id } }"
+                :to="{
+                  name: 'edit-artist',
+                  params: { id: props.item.id },
+                  query: { redirect: $route.fullPath }
+                }"
                 color="orange"
                 dark
                 fab
@@ -58,9 +63,11 @@
 
 <script>
 import { mapActions, mapGetters } from "vuex";
+import Paginated from "../../mixins/Paginated";
 
 export default {
   name: "artists",
+  mixins: [Paginated],
   methods: {
     ...mapActions("artists", ["destroy"]),
     deleteArtist: function(id) {

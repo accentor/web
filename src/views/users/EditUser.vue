@@ -76,7 +76,7 @@ export default {
       this.update({ id: this.user.id, newUser: this.newUser }).then(
         succeeded => {
           if (succeeded) {
-            this.$router.push({ name: "users" });
+            this.$router.push(this.$route.query.redirect || { name: "users" });
           }
         }
       );
