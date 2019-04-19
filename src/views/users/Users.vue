@@ -30,7 +30,11 @@
               <VIcon>mdi-delete</VIcon>
             </VBtn>
             <VBtn
-              :to="{ name: 'edit-user', params: { id: user.id } }"
+              :to="{
+                name: 'edit-user',
+                params: { id: user.id },
+                query: { redirect: $route.fullPath }
+              }"
               color="orange"
               dark
               fab

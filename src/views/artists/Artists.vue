@@ -39,7 +39,11 @@
                 <VIcon>mdi-delete</VIcon>
               </VBtn>
               <VBtn
-                :to="{ name: 'edit-artist', params: { id: props.item.id } }"
+                :to="{
+                  name: 'edit-artist',
+                  params: { id: props.item.id },
+                  query: { redirect: $route.fullPath }
+                }"
                 color="orange"
                 dark
                 fab
