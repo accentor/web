@@ -20,6 +20,7 @@
           :headers="headers"
           :items="tracks"
           :rows-per-page-items="[30]"
+          :pagination.sync="pagination"
           class="elevation-3"
         >
           <template v-slot:items="props">
@@ -45,10 +46,12 @@
 <script>
 import { mapState } from "vuex";
 import TrackActions from "../../components/TrackActions";
+import Paginated from "../../mixins/Paginated";
 
 export default {
   name: "Album",
   components: { TrackActions },
+  mixins: [Paginated],
   data() {
     return {
       headers: [
