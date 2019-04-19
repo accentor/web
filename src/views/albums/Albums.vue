@@ -4,6 +4,7 @@
       :items="albums"
       :filter="(obj, search) => obj.title.contains(search)"
       :rows-per-page-items="[12]"
+      :pagination.sync="pagination"
       v-if="albums.length > 0"
       content-class="layout row wrap"
     >
@@ -49,10 +50,12 @@
 <script>
 import { mapActions, mapGetters } from "vuex";
 import AlbumActions from "../../components/AlbumActions";
+import Paginated from "../../mixins/Paginated";
 
 export default {
   name: "albums",
   components: { AlbumActions },
+  mixins: [Paginated],
   methods: {
     ...mapActions("albums", ["destroy"]),
     deleteAlbum: function(id) {
