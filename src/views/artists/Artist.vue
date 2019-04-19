@@ -8,47 +8,36 @@
         <h3>{{ artist.name }}</h3>
       </VFlex>
     </VLayout>
-    <VDataIterator
-      :items="artistAlbums"
-      :filter="(obj, search) => obj.title.contains(search)"
-      :rows-per-page-items="[12]"
-      v-if="artistAlbums.length > 0"
-      content-class="layout row wrap"
-    >
-      <template v-slot:item="props">
-        <VFlex lg3 md4 sm6 xl2 xs12>
-          <VCard :to="{ name: 'album', params: { id: props.item.id } }">
-            <VImg
-              :aspect-ratio="1"
-              :src="props.item.image"
-              v-if="props.item.image"
-            />
-            <VCardTitle primary-title>
-              <div>
-                <div class="headline">{{ props.item.title }}</div>
-                <span>
-                  {{ props.item.albumartist }}
-                </span>
-              </div>
-            </VCardTitle>
-            <VCardText>
-              <span class="grey--text">
-                {{ props.item.release }}
+    <VLayout row wrap>
+      <VFlex :key="item.id" lg3 md4 sm6 v-for="item of artistAlbums" xl2 xs12>
+        <VCard :to="{ name: 'album', params: { id: item.id } }">
+          <VImg :aspect-ratio="1" :src="item.image" v-if="item.image" />
+          <VCardTitle primary-title>
+            <div>
+              <div class="headline">{{ item.title }}</div>
+              <span>
+                {{ item.albumartist }}
               </span>
-            </VCardText>
-            <VCardActions v-if="isModerator">
-              <AlbumActions :album="props.item" />
-            </VCardActions>
-          </VCard>
-        </VFlex>
-      </template>
-    </VDataIterator>
+            </div>
+          </VCardTitle>
+          <VCardText>
+            <span class="grey--text">
+              {{ item.release }}
+            </span>
+          </VCardText>
+          <VCardActions v-if="isModerator">
+            <AlbumActions :album="item" />
+          </VCardActions>
+        </VCard>
+      </VFlex>
+    </VLayout>
     <VLayout row wrap>
       <VFlex xs12>
         <VDataTable
           :headers="headers"
           :items="tracks"
           :rows-per-page-items="[30]"
+          :pagination.sync="pagination"
           class="elevation-3"
         >
           <template v-slot:items="props">
@@ -77,6 +66,7 @@ import { mapGetters, mapState } from "vuex";
 import { compareStrings } from "../../comparators";
 import AlbumActions from "../../components/AlbumActions";
 import TrackActions from "../../components/TrackActions";
+import Paginated from "../../mixins/Paginated";
 
 export default {
   name: "Artist",
@@ -84,6 +74,7 @@ export default {
     AlbumActions,
     TrackActions
   },
+  mixins: [Paginated],
   data() {
     return {
       headers: [
