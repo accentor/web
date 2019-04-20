@@ -70,6 +70,20 @@
             <VListTileTitle>Users</VListTileTitle>
           </VListTileContent>
         </VListTile>
+        <VListTile
+          :to="{
+            name: 'settings',
+            query: { redirect: $route.fullPath }
+          }"
+          exact
+        >
+          <VListTileAction>
+            <VIcon>mdi-settings</VIcon>
+          </VListTileAction>
+          <VListTileContent>
+            <VListTileTitle>Settings</VListTileTitle>
+          </VListTileContent>
+        </VListTile>
       </VList>
     </VNavigationDrawer>
 
