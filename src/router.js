@@ -19,6 +19,7 @@ import EditUser from "./views/users/EditUser";
 import NewUser from "./views/users/NewUser";
 import User from "./views/users/User";
 import Users from "./views/users/Users";
+import Settings from "./views/settings/Settings";
 
 Vue.use(Router);
 
@@ -109,6 +110,11 @@ const router = new Router({
           path: "users/:id/edit",
           name: "edit-user",
           component: EditUser
+        },
+        {
+          path: "settings",
+          name: "settings",
+          component: Settings
         }
       ]
     },
