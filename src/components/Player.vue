@@ -122,14 +122,6 @@ export default {
         this.trackEnded();
       })
     );
-    setTimeout(() =>
-      this.$refs.audio.addEventListener("pause", e => {
-        // Already handled in the ended handler
-        if (!e.target.ended) {
-          this.setPlaying(false);
-        }
-      })
-    );
   },
   beforeDestroy() {
     clearInterval(this.intervalId);
