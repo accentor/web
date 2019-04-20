@@ -14,7 +14,7 @@
             type="password"
             v-model="newUser.password_confirmation"
           />
-          <VBtn color="primary" type="submit">Update user</VBtn>
+          <VBtn color="primary" type="submit">Change settings</VBtn>
         </VForm>
       </VFlex>
     </VLayout>
@@ -25,7 +25,7 @@
 import { mapActions, mapGetters } from "vuex";
 
 export default {
-  name: "EditUser",
+  name: "Settings",
   data() {
     return {
       newUser: {
