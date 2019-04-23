@@ -10,25 +10,7 @@
     </VLayout>
     <VLayout row wrap>
       <VFlex :key="item.id" lg3 md4 sm6 v-for="item of artistAlbums" xl2 xs12>
-        <VCard :to="{ name: 'album', params: { id: item.id } }">
-          <VImg :aspect-ratio="1" :src="item.image" v-if="item.image" />
-          <VCardTitle primary-title>
-            <div>
-              <div class="headline">{{ item.title }}</div>
-              <span>
-                {{ item.albumartist }}
-              </span>
-            </div>
-          </VCardTitle>
-          <VCardText>
-            <span class="grey--text">
-              {{ item.release }}
-            </span>
-          </VCardText>
-          <VCardActions v-if="isModerator">
-            <AlbumActions :album="item" />
-          </VCardActions>
-        </VCard>
+        <AlbumCard :album="item" />
       </VFlex>
     </VLayout>
     <VLayout row wrap>
@@ -64,14 +46,14 @@
 <script>
 import { mapGetters, mapState } from "vuex";
 import { compareStrings } from "../../comparators";
-import AlbumActions from "../../components/AlbumActions";
+import AlbumCard from "../../components/AlbumCard";
 import TrackActions from "../../components/TrackActions";
 import Paginated from "../../mixins/Paginated";
 
 export default {
   name: "Artist",
   components: {
-    AlbumActions,
+    AlbumCard,
     TrackActions
   },
   mixins: [Paginated],

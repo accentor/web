@@ -19,9 +19,14 @@ Vue.filter("capitalize", function(value) {
   return value.charAt(0).toUpperCase() + value.slice(1);
 });
 
-Vue.filter("length", function(l) {
-  return `${Math.floor(l / 60)}:${`${l % 60}`.padStart(2, "0")}`;
-});
+Vue.filter(
+  "length",
+  l => `${Math.floor(l / 60)}:${`${l % 60}`.padStart(2, "0")}`
+);
+
+Vue.filter("album_artists", aa =>
+  aa.reduce((acc, val) => `${acc}${val.name}${val.join || ""}`, "")
+);
 
 new Vue({
   router,
