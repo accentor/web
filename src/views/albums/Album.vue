@@ -8,7 +8,7 @@
         <div>
           <div class="headline">{{ album.title }}</div>
           <div>
-            {{ album.albumartist }}
+            {{ album.album_artists | album_artists }}
           </div>
           <div class="grey--text">
             {{ album.release }}

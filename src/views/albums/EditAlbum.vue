@@ -4,7 +4,6 @@
       <VFlex md4 sm8 xs12>
         <VForm @submit.prevent="submit">
           <VTextField label="Title" v-model="newAlbum.title" />
-          <VTextField label="Albumartist" v-model="newAlbum.albumartist" />
           <VDialog
             ref="dialog"
             v-model="releaseModal"
@@ -37,9 +36,52 @@
             </VDatePicker>
           </VDialog>
           <FilePicker v-model="newAlbum.image">Choose image</FilePicker>
+          <VLayout
+            :key="`artist-${index}`"
+            row
+            v-for="(item, index) of newAlbum.album_artists"
+          >
+            <VLayout column class="no-grow">
+              <VBtn
+                @click="moveArtist(index, -1)"
+                icon
+                small
+                :disabled="index === 0"
+              >
+                <VIcon>mdi-menu-up</VIcon>
+              </VBtn>
+              <VBtn
+                @click="moveArtist(index, 1)"
+                icon
+                small
+                :disabled="index === newAlbum.album_artists.length - 1"
+              >
+                <VIcon>mdi-menu-down</VIcon>
+              </VBtn>
+              <VBtn @click="removeArtist(index)" icon small>
+                <VIcon>mdi-close</VIcon>
+              </VBtn>
+            </VLayout>
+            <VLayout column>
+              <VCombobox
+                :items="sortedArtists"
+                item-text="name"
+                item-value="id"
+                label="Artist"
+                return-object
+                v-model="item.artist_id"
+              />
+              <VTextField label="Name" v-model="item.name" />
+              <VTextField
+                label="Separator"
+                v-model="item.separator"
+                v-if="index !== newAlbum.album_artists.length - 1"
+              />
+            </VLayout>
+          </VLayout>
           <h4>Labels</h4>
           <VLayout
-            :key="index"
+            :key="`label-${index}`"
             row
             v-for="(item, index) of newAlbum.album_labels"
           >
@@ -65,6 +107,7 @@
           <VLayout row>
             <VBtn color="primary" type="submit">Update album</VBtn>
             <VSpacer />
+            <VBtn @click="addArtist" color="success">Add artist</VBtn>
             <VBtn @click="addLabel" color="success">Add label</VBtn>
           </VLayout>
         </VForm>
@@ -85,10 +128,10 @@ export default {
       releaseModal: false,
       newAlbum: {
         title: "",
-        albumartist: "",
         release: new Date().toISOString().substr(0, 10),
         image: null,
-        album_labels: []
+        album_labels: [],
+        album_artists: []
       }
     };
   },
@@ -107,8 +150,12 @@ export default {
     }
   },
   computed: {
+    ...mapState("artists", ["artists"]),
     ...mapState("labels", ["labels"]),
     ...mapState("albums", ["albums"]),
+    ...mapGetters("artists", {
+      sortedArtists: "artistsByName"
+    }),
     ...mapGetters("labels", {
       sortedLabels: "labelsByName"
     }),
@@ -118,12 +165,12 @@ export default {
   },
   methods: {
     ...mapActions("albums", ["update"]),
-    ...mapActions("labels", {
-      createLabel: "create"
+    ...mapActions({
+      createArtist: "artists/create",
+      createLabel: "labels/create"
     }),
     fillValues() {
       this.newAlbum.title = this.album.title;
-      this.newAlbum.albumartist = this.album.albumartist;
       this.newAlbum.release = this.album.release;
       this.newAlbum.album_labels = this.album.album_labels.map(l => {
         return {
@@ -131,6 +178,16 @@ export default {
           catalogue_number: l.catalogue_number
         };
       });
+      this.newAlbum.album_artists = this.album.album_artists
+        .sort((a1, a2) => a1.order - a2.order)
+        .map(a => {
+          return {
+            artist_id: this.artists[a.artist_id],
+            name: a.name,
+            separator: a.separator || "",
+            order: a.order
+          };
+        });
     },
     addLabel() {
       this.newAlbum.album_labels.push({
@@ -141,13 +198,31 @@ export default {
     removeLabel(index) {
       this.newAlbum.album_labels.splice(index, 1);
     },
+    addArtist() {
+      this.newAlbum.album_artists.push({
+        artist_id: null,
+        name: "",
+        separator: "",
+        order: 0
+      });
+    },
+    removeArtist(index) {
+      this.newAlbum.album_artists.splice(index, 1);
+    },
+    moveArtist(index, direction) {
+      this.newAlbum.album_artists.splice(
+        index + direction,
+        0,
+        this.newAlbum.album_artists.splice(index, 1)[0]
+      );
+    },
     submit() {
       const transformed = {
         title: this.newAlbum.title,
-        albumartist: this.newAlbum.albumartist,
         release: this.newAlbum.release,
         image: this.newAlbum.image,
-        album_labels: []
+        album_labels: [],
+        album_artists: []
       };
 
       const promises = [];
@@ -174,6 +249,38 @@ export default {
         }
       }
 
+      this.newAlbum.album_artists.forEach((aa, index) => {
+        if (typeof aa.artist_id === "string") {
+          promises.push(
+            this.createArtist({ name: aa.artist_id }).then(id => {
+              if (id) {
+                transformed.album_artists.push({
+                  artist_id: id,
+                  name: aa.name,
+                  separator:
+                    index !== this.newAlbum.album_artists.length - 1
+                      ? aa.separator
+                      : null,
+                  order: index + 1
+                });
+              } else {
+                return Promise.reject();
+              }
+            })
+          );
+        } else {
+          transformed.album_artists.push({
+            artist_id: aa.artist_id.id,
+            name: aa.name,
+            separator:
+              index !== this.newAlbum.album_artists.length - 1
+                ? aa.separator
+                : null,
+            order: index + 1
+          });
+        }
+      });
+
       Promise.all(promises).then(() => {
         this.update({ id: this.album.id, newAlbum: transformed }).then(
           succeeded => {
@@ -189,3 +296,9 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.no-grow {
+  flex-grow: 0;
+}
+</style>
