@@ -25,7 +25,7 @@ Vue.filter(
 );
 
 Vue.filter("album_artists", aa =>
-  aa.reduce((acc, val) => `${acc}${val.name}${val.join || ""}`, "")
+  aa.reduce((acc, val) => `${acc}${val.name}${val.separator || ""}`, "")
 );
 
 new Vue({
