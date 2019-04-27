@@ -75,7 +75,9 @@ export default {
     artistsByName: (state, getters) =>
       getters.artists.sort((a1, a2) => compareStrings(a1.name, a2.name)),
     artistsFlagged: (state, getters) => {
-      return getters.artists.filter(t => t.review_comment !== null);
+      return getters.artists
+        .filter(t => t.review_comment !== null)
+        .sort((a1, a2) => compareStrings(a1.name, a2.name));
     }
   }
 };

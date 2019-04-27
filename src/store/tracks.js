@@ -99,8 +99,16 @@ export default {
         return albumOrder === 0 ? a1.number - a2.number : albumOrder;
       });
     },
-    tracksFlagged: (state, getters) => {
-      return getters.tracks.filter(t => t.review_comment !== null);
+    tracksFlagged: (state, getters, rootState) => {
+      return getters.tracks
+        .filter(t => t.review_comment !== null)
+        .sort((a1, a2) => {
+          const albumOrder = compareStrings(
+            rootState.albums.albums[a1.album_id].title,
+            rootState.albums.albums[a2.album_id].title
+          );
+          return albumOrder === 0 ? a1.number - a2.number : albumOrder;
+        });
     }
   }
 };
