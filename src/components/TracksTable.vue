@@ -16,6 +16,7 @@
       <td>
         {{
           props.item.track_artists
+            .map(a => a)
             .sort((a1, a2) => a1.order - a2.order)
             .map(a => a.name)
             .join(" / ")
