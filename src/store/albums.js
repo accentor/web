@@ -86,7 +86,9 @@ export default {
         );
     },
     albumsFlagged: (state, getters) => {
-      return getters.albums.filter(t => t.review_comment !== null);
+      return getters.albums
+        .filter(t => t.review_comment !== null)
+        .sort((a1, a2) => compareStrings(a1.title, a2.title));
     }
   }
 };
