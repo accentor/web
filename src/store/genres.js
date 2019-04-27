@@ -16,10 +16,9 @@ export default {
     },
     setGenre(state, { id, genre }) {
       if (state.genres[id]) {
-        Object.assign(state.genres[id], genre);
-      } else {
-        Vue.set(state.genres, id, genre);
+        Vue.delete(state.genres, id);
       }
+      Vue.set(state.genres, id, genre);
     },
     removeGenre(state, id) {
       Vue.delete(state.genres, id);

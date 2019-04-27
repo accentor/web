@@ -16,10 +16,9 @@ export default {
     },
     setArtist(state, { id, artist }) {
       if (state.artists[id]) {
-        Object.assign(state.artists[id], artist);
-      } else {
-        Vue.set(state.artists, id, artist);
+        Vue.delete(state.artists, id);
       }
+      Vue.set(state.artists, id, artist);
     },
     removeArtist(state, id) {
       Vue.delete(state.artists, id);
@@ -74,6 +73,9 @@ export default {
   getters: {
     artists: state => Object.values(state.artists),
     artistsByName: (state, getters) =>
-      getters.artists.sort((a1, a2) => compareStrings(a1.name, a2.name))
+      getters.artists.sort((a1, a2) => compareStrings(a1.name, a2.name)),
+    artistsFlagged: (state, getters) => {
+      return getters.artists.filter(t => t.review_comment !== null);
+    }
   }
 };

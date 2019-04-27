@@ -6,6 +6,7 @@
     <VBtn @click.stop.prevent="addTracks" color="success" flat icon small>
       <VIcon>mdi-plus</VIcon>
     </VBtn>
+    <EditReviewComment :item="album" :update="flag" />
     <span v-if="isModerator">
       <VBtn
         :to="{
@@ -35,9 +36,11 @@
 </template>
 <script>
 import { mapActions, mapGetters } from "vuex";
+import EditReviewComment from "./EditReviewComment";
 
 export default {
   name: "AlbumActions",
+  components: { EditReviewComment },
   props: {
     album: {}
   },
@@ -49,7 +52,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions("albums", ["destroy"]),
+    ...mapActions("albums", ["destroy", "update"]),
     deleteAlbum: function() {
       if (confirm("Are you sure?")) {
         this.destroy(this.album.id);
@@ -60,6 +63,12 @@ export default {
     },
     addTracks: function() {
       this.$store.commit("player/addTracks", this.tracks);
+    },
+    flag(id, reviewComment) {
+      return this.update({
+        id,
+        newAlbum: { review_comment: reviewComment }
+      });
     }
   }
 };

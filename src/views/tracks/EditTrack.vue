@@ -2,6 +2,13 @@
   <VContainer fill-height fluid v-if="track">
     <VLayout align-center justify-center>
       <VFlex md6 sm8 xs12>
+        <VAlert
+          :value="track.review_comment !== null"
+          type="warning"
+          icon="mdi-flag"
+        >
+          {{ track.review_comment }}
+        </VAlert>
         <VForm @submit.prevent="submit">
           <VTextField type="number" label="Number" v-model="newTrack.number" />
           <VTextField label="Title" v-model="newTrack.title" />
@@ -30,9 +37,27 @@
             row
             v-for="(item, index) of newTrack.track_artists"
           >
-            <VBtn @click="removeArtist(index)" icon small>
-              <VIcon>mdi-close</VIcon>
-            </VBtn>
+            <VLayout column class="no-grow">
+              <VBtn
+                @click="moveArtist(index, -1)"
+                icon
+                small
+                :disabled="index === 0"
+              >
+                <VIcon>mdi-menu-up</VIcon>
+              </VBtn>
+              <VBtn
+                @click="moveArtist(index, 1)"
+                icon
+                small
+                :disabled="index === newTrack.track_artists.length - 1"
+              >
+                <VIcon>mdi-menu-down</VIcon>
+              </VBtn>
+              <VBtn @click="removeArtist(index)" icon small>
+                <VIcon>mdi-close</VIcon>
+              </VBtn>
+            </VLayout>
             <VLayout column>
               <VCombobox
                 :items="sortedArtists"
@@ -47,6 +72,11 @@
               <VDivider v-if="index !== newTrack.track_artists.length - 1" />
             </VLayout>
           </VLayout>
+          <VCheckbox
+            v-if="track.review_comment !== null"
+            v-model="clear_review_comment"
+            label="Clear review comment"
+          />
           <VLayout row>
             <VBtn color="primary" type="submit">Update track</VBtn>
             <VSpacer />
@@ -69,6 +99,7 @@ export default {
         number: 0,
         title: "",
         album_id: null,
+        review_comment: null,
         track_artists: [],
         genre_ids: []
       },
@@ -97,7 +128,8 @@ export default {
           value: "producer",
           text: "Producer"
         }
-      ]
+      ],
+      clear_review_comment: true
     };
   },
   created() {
@@ -142,13 +174,17 @@ export default {
       this.newTrack.number = this.track.number;
       this.newTrack.title = this.track.title;
       this.newTrack.album_id = this.track.album_id;
-      this.newTrack.track_artists = this.track.track_artists.map(ta => {
-        return {
-          artist_id: this.artists[ta.artist_id],
-          name: ta.name,
-          role: ta.role
-        };
-      });
+      this.newTrack.review_comment = this.track.review_comment;
+      this.newTrack.track_artists = this.track.track_artists
+        .sort((a1, a2) => a1.order - a2.order)
+        .map(ta => {
+          return {
+            artist_id: this.artists[ta.artist_id],
+            name: ta.name,
+            role: ta.role,
+            order: ta.order
+          };
+        });
       this.newTrack.genre_ids = this.track.genre_ids.map(id => this.genres[id]);
     },
     addArtist() {
@@ -161,11 +197,21 @@ export default {
     removeArtist(index) {
       this.newTrack.track_artists.splice(index, 1);
     },
+    moveArtist(index, direction) {
+      this.newTrack.track_artists.splice(
+        index + direction,
+        0,
+        this.newTrack.track_artists.splice(index, 1)[0]
+      );
+    },
     submit() {
       const transformed = {
         number: this.newTrack.number,
         title: this.newTrack.title,
         album_id: this.newTrack.album_id,
+        review_comment: this.clear_review_comment
+          ? null
+          : this.newTrack.review_comment,
         genre_ids: [],
         track_artists: []
       };
@@ -187,7 +233,7 @@ export default {
         }
       }
 
-      for (let ta of this.newTrack.track_artists) {
+      this.newTrack.track_artists.forEach((ta, index) => {
         if (typeof ta.artist_id === "string") {
           promises.push(
             this.createArtist({ name: ta.artist_id }).then(id => {
@@ -195,7 +241,8 @@ export default {
                 transformed.track_artists.push({
                   artist_id: id,
                   name: ta.name,
-                  role: ta.role
+                  role: ta.role,
+                  order: index + 1
                 });
               } else {
                 return Promise.reject();
@@ -206,10 +253,11 @@ export default {
           transformed.track_artists.push({
             artist_id: ta.artist_id.id,
             name: ta.name,
-            role: ta.role
+            role: ta.role,
+            order: index + 1
           });
         }
-      }
+      });
 
       Promise.all(promises).then(() => {
         this.update({ id: this.track.id, newTrack: transformed }).then(

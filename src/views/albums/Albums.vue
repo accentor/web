@@ -18,29 +18,7 @@
       </template>
       <template v-slot:item="props">
         <VFlex lg3 md4 sm6 xl2 xs12>
-          <VCard :to="{ name: 'album', params: { id: props.item.id } }">
-            <VImg
-              :aspect-ratio="1"
-              :src="props.item.image"
-              v-if="props.item.image"
-            />
-            <VCardTitle primary-title>
-              <div>
-                <div class="headline">{{ props.item.title }}</div>
-                <span>
-                  {{ props.item.albumartist }}
-                </span>
-              </div>
-            </VCardTitle>
-            <VCardText>
-              <span class="grey--text">
-                {{ props.item.release }}
-              </span>
-            </VCardText>
-            <VCardActions v-if="isModerator">
-              <AlbumActions :album="props.item" />
-            </VCardActions>
-          </VCard>
+          <AlbumCard :album="props.item" />
         </VFlex>
       </template>
     </VDataIterator>
@@ -49,12 +27,12 @@
 
 <script>
 import { mapActions, mapGetters } from "vuex";
-import AlbumActions from "../../components/AlbumActions";
+import AlbumCard from "../../components/AlbumCard";
 import Paginated from "../../mixins/Paginated";
 
 export default {
   name: "albums",
-  components: { AlbumActions },
+  components: { AlbumCard },
   mixins: [Paginated],
   methods: {
     ...mapActions("albums", ["destroy"]),
