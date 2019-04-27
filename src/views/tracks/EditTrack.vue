@@ -37,9 +37,27 @@
             row
             v-for="(item, index) of newTrack.track_artists"
           >
-            <VBtn @click="removeArtist(index)" icon small>
-              <VIcon>mdi-close</VIcon>
-            </VBtn>
+            <VLayout column class="no-grow">
+              <VBtn
+                @click="moveArtist(index, -1)"
+                icon
+                small
+                :disabled="index === 0"
+              >
+                <VIcon>mdi-menu-up</VIcon>
+              </VBtn>
+              <VBtn
+                @click="moveArtist(index, 1)"
+                icon
+                small
+                :disabled="index === newTrack.track_artists.length - 1"
+              >
+                <VIcon>mdi-menu-down</VIcon>
+              </VBtn>
+              <VBtn @click="removeArtist(index)" icon small>
+                <VIcon>mdi-close</VIcon>
+              </VBtn>
+            </VLayout>
             <VLayout column>
               <VCombobox
                 :items="sortedArtists"
@@ -157,13 +175,16 @@ export default {
       this.newTrack.title = this.track.title;
       this.newTrack.album_id = this.track.album_id;
       this.newTrack.review_comment = this.track.review_comment;
-      this.newTrack.track_artists = this.track.track_artists.map(ta => {
-        return {
-          artist_id: this.artists[ta.artist_id],
-          name: ta.name,
-          role: ta.role
-        };
-      });
+      this.newTrack.track_artists = this.track.track_artists
+        .sort((a1, a2) => a1.order - a2.order)
+        .map(ta => {
+          return {
+            artist_id: this.artists[ta.artist_id],
+            name: ta.name,
+            role: ta.role,
+            order: ta.order
+          };
+        });
       this.newTrack.genre_ids = this.track.genre_ids.map(id => this.genres[id]);
     },
     addArtist() {
@@ -175,6 +196,13 @@ export default {
     },
     removeArtist(index) {
       this.newTrack.track_artists.splice(index, 1);
+    },
+    moveArtist(index, direction) {
+      this.newTrack.track_artists.splice(
+        index + direction,
+        0,
+        this.newTrack.track_artists.splice(index, 1)[0]
+      );
     },
     submit() {
       const transformed = {
@@ -205,7 +233,7 @@ export default {
         }
       }
 
-      for (let ta of this.newTrack.track_artists) {
+      this.newTrack.track_artists.forEach((ta, index) => {
         if (typeof ta.artist_id === "string") {
           promises.push(
             this.createArtist({ name: ta.artist_id }).then(id => {
@@ -213,7 +241,8 @@ export default {
                 transformed.track_artists.push({
                   artist_id: id,
                   name: ta.name,
-                  role: ta.role
+                  role: ta.role,
+                  order: index + 1
                 });
               } else {
                 return Promise.reject();
@@ -224,10 +253,11 @@ export default {
           transformed.track_artists.push({
             artist_id: ta.artist_id.id,
             name: ta.name,
-            role: ta.role
+            role: ta.role,
+            order: index + 1
           });
         }
-      }
+      });
 
       Promise.all(promises).then(() => {
         this.update({ id: this.track.id, newTrack: transformed }).then(
