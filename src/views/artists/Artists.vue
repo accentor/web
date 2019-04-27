@@ -2,7 +2,6 @@
   <VContainer fluid grid-list-xl>
     <VDataIterator
       :items="artists"
-      :filter="(obj, search) => obj.name.contains(search)"
       :rows-per-page-items="[12]"
       :pagination.sync="pagination"
       v-if="artists.length > 0"
@@ -18,43 +17,7 @@
       </template>
       <template v-slot:item="props">
         <VFlex lg3 md4 sm6 xl2 xs12>
-          <VCard :to="{ name: 'artist', params: { id: props.item.id } }">
-            <VImg
-              :aspect-ratio="1"
-              :src="props.item.image"
-              v-if="props.item.image"
-            />
-            <VCardTitle primary-title>
-              <h3>{{ props.item.name }}</h3>
-            </VCardTitle>
-            <VCardActions v-if="isModerator">
-              <VBtn
-                @click.stop.prevent="deleteArtist(props.item.id)"
-                color="red"
-                dark
-                fab
-                href="#"
-                outline
-                small
-              >
-                <VIcon>mdi-delete</VIcon>
-              </VBtn>
-              <VBtn
-                :to="{
-                  name: 'edit-artist',
-                  params: { id: props.item.id },
-                  query: { redirect: $route.fullPath }
-                }"
-                color="orange"
-                dark
-                fab
-                outline
-                small
-              >
-                <VIcon>mdi-pencil</VIcon>
-              </VBtn>
-            </VCardActions>
-          </VCard>
+          <ArtistCard :artist="props.item" />
         </VFlex>
       </template>
     </VDataIterator>
@@ -62,20 +25,14 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
+import { mapGetters } from "vuex";
 import Paginated from "../../mixins/Paginated";
+import ArtistCard from "../../components/ArtistCard";
 
 export default {
   name: "artists",
+  components: { ArtistCard },
   mixins: [Paginated],
-  methods: {
-    ...mapActions("artists", ["destroy"]),
-    deleteArtist: function(id) {
-      if (confirm("Are you sure?")) {
-        this.destroy(id);
-      }
-    }
-  },
   computed: {
     ...mapGetters("auth", ["isModerator"]),
     ...mapGetters("artists", {

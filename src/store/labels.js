@@ -16,10 +16,9 @@ export default {
     },
     setLabel(state, { id, label }) {
       if (state.labels[id]) {
-        Object.assign(state.labels[id], label);
-      } else {
-        Vue.set(state.labels, id, label);
+        Vue.delete(state.labels, id);
       }
+      Vue.set(state.labels, id, label);
     },
     removeLabel(state, id) {
       Vue.delete(state.labels, id);

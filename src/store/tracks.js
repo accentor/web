@@ -16,10 +16,9 @@ export default {
     },
     setTrack(state, { id, track }) {
       if (state.tracks[id]) {
-        Object.assign(state.tracks[id], track);
-      } else {
-        Vue.set(state.tracks, id, track);
+        Vue.delete(state.tracks, id);
       }
+      Vue.set(state.tracks, id, track);
     },
     removeTrack(state, id) {
       Vue.delete(state.tracks, id);
@@ -99,6 +98,9 @@ export default {
         );
         return albumOrder === 0 ? a1.number - a2.number : albumOrder;
       });
+    },
+    tracksFlagged: (state, getters) => {
+      return getters.tracks.filter(t => t.review_comment !== null);
     }
   }
 };

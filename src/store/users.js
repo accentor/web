@@ -16,10 +16,9 @@ export default {
     },
     setUser(state, { id, user }) {
       if (state.users[id]) {
-        Object.assign(state.users[id], user);
-      } else {
-        Vue.set(state.users, id, user);
+        Vue.delete(state.users, id);
       }
+      Vue.set(state.users, id, user);
     },
     removeUser(state, id) {
       Vue.delete(state.users, id);

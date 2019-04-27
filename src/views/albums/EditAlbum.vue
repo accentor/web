@@ -2,6 +2,13 @@
   <VContainer fill-height fluid v-if="album">
     <VLayout align-center justify-center>
       <VFlex md4 sm8 xs12>
+        <VAlert
+          :value="album.review_comment !== null"
+          type="warning"
+          icon="mdi-flag"
+        >
+          {{ album.review_comment }}
+        </VAlert>
         <VForm @submit.prevent="submit">
           <VTextField label="Title" v-model="newAlbum.title" />
           <VDialog
@@ -29,7 +36,7 @@
               <VBtn
                 flat
                 color="primary"
-                @click="$refs.dialog.save(newAlbum.release)"
+                @click="$refs.show.save(newAlbum.release)"
               >
                 OK
               </VBtn>
@@ -104,6 +111,11 @@
               <VDivider v-if="index !== newAlbum.album_labels.length - 1" />
             </VLayout>
           </VLayout>
+          <VCheckbox
+            v-if="album.review_comment !== null"
+            v-model="clear_review_comment"
+            label="Clear review comment"
+          />
           <VLayout row>
             <VBtn color="primary" type="submit">Update album</VBtn>
             <VSpacer />
@@ -130,9 +142,11 @@ export default {
         title: "",
         release: new Date().toISOString().substr(0, 10),
         image: null,
+        review_comment: null,
         album_labels: [],
         album_artists: []
-      }
+      },
+      clear_review_comment: true
     };
   },
   created() {
@@ -172,6 +186,7 @@ export default {
     fillValues() {
       this.newAlbum.title = this.album.title;
       this.newAlbum.release = this.album.release;
+      this.newAlbum.review_comment = this.album.review_comment;
       this.newAlbum.album_labels = this.album.album_labels.map(l => {
         return {
           label_id: this.labels[l.label_id],
@@ -221,6 +236,9 @@ export default {
         title: this.newAlbum.title,
         release: this.newAlbum.release,
         image: this.newAlbum.image,
+        review_comment: this.clear_review_comment
+          ? null
+          : this.newAlbum.review_comment,
         album_labels: [],
         album_artists: []
       };

@@ -30,7 +30,7 @@
               <VBtn
                 flat
                 color="primary"
-                @click="$refs.dialog.save(newAlbum.release)"
+                @click="$refs.show.save(newAlbum.release)"
               >
                 OK
               </VBtn>

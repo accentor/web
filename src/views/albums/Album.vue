@@ -15,83 +15,26 @@
           </div>
         </div>
       </VFlex>
-      <VFlex>
-        <VDataTable
-          :headers="headers"
-          :items="tracks"
-          :rows-per-page-items="[30]"
-          :pagination.sync="pagination"
-          class="elevation-3"
-        >
-          <template v-slot:items="props">
-            <td>{{ props.item.number }}</td>
-            <td>{{ props.item.title }}</td>
-            <td>
-              {{ props.item.length | length }}
-            </td>
-            <td>{{ props.item.track_artists.map(a => a.name).join(" / ") }}</td>
-            <td>
-              {{ props.item.genre_ids.map(id => genres[id].name).join(" / ") }}
-            </td>
-            <td class="text-xs-right">
-              <TrackActions :track="props.item" />
-            </td>
-          </template>
-        </VDataTable>
-      </VFlex>
+      <VLayout row>
+        <VFlex>
+          <TracksTable :tracks="tracks" :show-album="false" />
+        </VFlex>
+      </VLayout>
     </VLayout>
   </VContainer>
 </template>
 
 <script>
 import { mapState } from "vuex";
-import TrackActions from "../../components/TrackActions";
 import Paginated from "../../mixins/Paginated";
+import TracksTable from "../../components/TracksTable";
 
 export default {
   name: "Album",
-  components: { TrackActions },
+  components: { TracksTable },
   mixins: [Paginated],
-  data() {
-    return {
-      headers: [
-        {
-          text: "#",
-          value: "number",
-          sortable: false
-        },
-        {
-          text: "Title",
-          value: "title",
-          sortable: false
-        },
-        {
-          text: "Length",
-          value: "length",
-          sortable: false
-        },
-        {
-          text: "Artist(s)",
-          value: "track_artists",
-          sortable: false
-        },
-        {
-          text: "Genre(s)",
-          value: "genre_ids",
-          sortable: false
-        },
-        {
-          text: "Actions",
-          sortable: false,
-          align: "right"
-        }
-      ]
-    };
-  },
   computed: {
     ...mapState("albums", ["albums"]),
-    ...mapState("artists", ["artists"]),
-    ...mapState("genres", ["genres"]),
     tracks: function() {
       return this.$store.getters["tracks/tracksFilterByAlbum"](
         this.$route.params.id

@@ -14,7 +14,7 @@
         {{ album.release }}
       </span>
     </VCardText>
-    <VCardActions v-if="isModerator">
+    <VCardActions>
       <AlbumActions :album="album" />
     </VCardActions>
   </VCard>
