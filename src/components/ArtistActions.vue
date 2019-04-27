@@ -1,17 +1,11 @@
 <template>
   <span>
-    <VBtn @click="startTrack" color="primary" flat icon small>
-      <VIcon>mdi-play</VIcon>
-    </VBtn>
-    <VBtn @click="addTrack" color="success" flat icon small>
-      <VIcon>mdi-plus</VIcon>
-    </VBtn>
-    <EditReviewComment :item="track" :update="flag" />
+    <EditReviewComment :item="artist" :update="flag" />
     <span v-if="isModerator">
       <VBtn
         :to="{
-          name: 'edit-track',
-          params: { id: track.id },
+          name: 'edit-artist',
+          params: { id: artist.id },
           query: { redirect: $route.fullPath }
         }"
         color="orange"
@@ -22,7 +16,7 @@
         <VIcon>mdi-pencil</VIcon>
       </VBtn>
       <VBtn
-        @click.stop.prevent="deleteTrack"
+        @click.stop.prevent="deleteArtist"
         color="red"
         href="#"
         flat
@@ -34,36 +28,31 @@
     </span>
   </span>
 </template>
+
 <script>
 import { mapActions, mapGetters } from "vuex";
 import EditReviewComment from "./EditReviewComment";
 
 export default {
-  name: "TrackActions",
+  name: "ArtistActions",
   components: { EditReviewComment },
   props: {
-    track: {}
+    artist: {}
   },
   computed: {
     ...mapGetters("auth", ["isModerator"])
   },
   methods: {
-    ...mapActions("tracks", ["destroy", "update"]),
-    deleteTrack: function() {
+    ...mapActions("artists", ["destroy", "update"]),
+    deleteArtist: function() {
       if (confirm("Are you sure?")) {
-        this.destroy(this.track.id);
+        this.destroy(this.artist.id);
       }
-    },
-    startTrack: function() {
-      this.$store.commit("player/playTrack", this.track.id);
-    },
-    addTrack: function() {
-      this.$store.commit("player/addTrack", this.track.id);
     },
     flag(id, reviewComment) {
       return this.update({
         id,
-        newTrack: { review_comment: reviewComment }
+        newArtist: { review_comment: reviewComment }
       });
     }
   }

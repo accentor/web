@@ -62,6 +62,14 @@
           </VListTileContent>
         </VListTile>
         <VDivider />
+        <VListTile :to="{ name: 'flags' }" exact v-if="isModerator">
+          <VListTileAction>
+            <VIcon>mdi-flag</VIcon>
+          </VListTileAction>
+          <VListTileContent>
+            <VListTileTitle>Flags</VListTileTitle>
+          </VListTileContent>
+        </VListTile>
         <VListTile :to="{ name: 'users' }" exact>
           <VListTileAction>
             <VIcon>mdi-account-multiple</VIcon>

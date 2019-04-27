@@ -1,0 +1,45 @@
+<template>
+  <VDialog :value="show" max-width="600px">
+    <template v-slot:activator="{}">
+      <VBtn color="red" flat icon small @click.stop.prevent="show = true">
+        <VIcon>mdi-flag</VIcon>
+      </VBtn>
+    </template>
+    <VCard>
+      <VCardTitle class="headline">Flag for review</VCardTitle>
+      <VCardText>
+        <VTextField label="Comment" v-model="item.review_comment" />
+      </VCardText>
+      <VCardActions>
+        <VLayout row justify-end>
+          <VBtn color="primary" type="submit" @click="flag">
+            Flag for review
+          </VBtn>
+        </VLayout>
+      </VCardActions>
+    </VCard>
+  </VDialog>
+</template>
+<script>
+export default {
+  name: "EditReviewComment",
+  data() {
+    return {
+      show: false
+    };
+  },
+  props: {
+    update: {},
+    item: {}
+  },
+  methods: {
+    flag() {
+      this.update(this.item.id, this.item.review_comment).then(succeeded => {
+        if (succeeded) {
+          this.show = false;
+        }
+      });
+    }
+  }
+};
+</script>

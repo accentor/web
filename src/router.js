@@ -20,6 +20,7 @@ import NewUser from "./views/users/NewUser";
 import User from "./views/users/User";
 import Users from "./views/users/Users";
 import Settings from "./views/settings/Settings";
+import Flags from "./views/flags/Flags";
 
 Vue.use(Router);
 
@@ -77,9 +78,19 @@ const router = new Router({
           component: EditArtist
         },
         {
+          path: "flags",
+          name: "flags",
+          component: Flags
+        },
+        {
           path: "rescan",
           name: "rescan",
           component: Rescan
+        },
+        {
+          path: "settings",
+          name: "settings",
+          component: Settings
         },
         {
           path: "tracks",
@@ -110,11 +121,6 @@ const router = new Router({
           path: "users/:id/edit",
           name: "edit-user",
           component: EditUser
-        },
-        {
-          path: "settings",
-          name: "settings",
-          component: Settings
         }
       ]
     },

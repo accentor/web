@@ -2,6 +2,13 @@
   <VContainer fill-height fluid v-if="track">
     <VLayout align-center justify-center>
       <VFlex md6 sm8 xs12>
+        <VAlert
+          :value="track.review_comment !== null"
+          type="warning"
+          icon="mdi-flag"
+        >
+          {{ track.review_comment }}
+        </VAlert>
         <VForm @submit.prevent="submit">
           <VTextField type="number" label="Number" v-model="newTrack.number" />
           <VTextField label="Title" v-model="newTrack.title" />
@@ -47,6 +54,11 @@
               <VDivider v-if="index !== newTrack.track_artists.length - 1" />
             </VLayout>
           </VLayout>
+          <VCheckbox
+            v-if="track.review_comment !== null"
+            v-model="clear_review_comment"
+            label="Clear review comment"
+          />
           <VLayout row>
             <VBtn color="primary" type="submit">Update track</VBtn>
             <VSpacer />
@@ -69,6 +81,7 @@ export default {
         number: 0,
         title: "",
         album_id: null,
+        review_comment: null,
         track_artists: [],
         genre_ids: []
       },
@@ -97,7 +110,8 @@ export default {
           value: "producer",
           text: "Producer"
         }
-      ]
+      ],
+      clear_review_comment: true
     };
   },
   created() {
@@ -142,6 +156,7 @@ export default {
       this.newTrack.number = this.track.number;
       this.newTrack.title = this.track.title;
       this.newTrack.album_id = this.track.album_id;
+      this.newTrack.review_comment = this.track.review_comment;
       this.newTrack.track_artists = this.track.track_artists.map(ta => {
         return {
           artist_id: this.artists[ta.artist_id],
@@ -166,6 +181,9 @@ export default {
         number: this.newTrack.number,
         title: this.newTrack.title,
         album_id: this.newTrack.album_id,
+        review_comment: this.clear_review_comment
+          ? null
+          : this.newTrack.review_comment,
         genre_ids: [],
         track_artists: []
       };

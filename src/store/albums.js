@@ -16,10 +16,9 @@ export default {
     },
     setAlbum(state, { id, album }) {
       if (state.albums[id]) {
-        Object.assign(state.albums[id], album);
-      } else {
-        Vue.set(state.albums, id, album);
+        Vue.delete(state.albums, id);
       }
+      Vue.set(state.albums, id, album);
     },
     removeAlbum(state, id) {
       Vue.delete(state.albums, id);
@@ -74,6 +73,20 @@ export default {
   getters: {
     albums: state => Object.values(state.albums),
     albumsByTitle: (state, getters) =>
-      getters.albums.sort((a1, a2) => compareStrings(a1.title, a2.title))
+      getters.albums.sort((a1, a2) => compareStrings(a1.title, a2.title)),
+    albumsFilterByArtist: (state, getters) => id => {
+      const aaFilter = a =>
+        a.album_artists.filter(aa => `${aa.artist_id}` === `${id}`).length > 0;
+      return getters.albums
+        .filter(aaFilter)
+        .sort(
+          (a1, a2) =>
+            compareStrings(a1.release, a2.release) ||
+            compareStrings(a1.title, a2.title)
+        );
+    },
+    albumsFlagged: (state, getters) => {
+      return getters.albums.filter(t => t.review_comment !== null);
+    }
   }
 };
