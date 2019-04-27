@@ -13,7 +13,14 @@
         {{ props.item.length | length }}
       </td>
       <td v-if="showAlbum">{{ albums[props.item.album_id].title }}</td>
-      <td>{{ props.item.track_artists.map(a => a.name).join(" / ") }}</td>
+      <td>
+        {{
+          props.item.track_artists
+            .sort((a1, a2) => a1.order - a2.order)
+            .map(a => a.name)
+            .join(" / ")
+        }}
+      </td>
       <td>
         {{ props.item.genre_ids.map(id => genres[id].name).join(" / ") }}
       </td>
