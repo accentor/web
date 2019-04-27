@@ -150,7 +150,6 @@ export default {
     ...mapState("albums", ["albums"]),
     ...mapState("artists", ["artists"]),
     ...mapState("genres", ["genres"]),
-    ...mapState("tracks", ["tracks"]),
     ...mapGetters("albums", {
       sortedAlbums: "albumsByTitle"
     }),
@@ -161,7 +160,10 @@ export default {
       sortedGenres: "genresByName"
     }),
     track: function() {
-      return this.tracks[this.$route.params.id];
+      return (
+        this.$store.state.tracks &&
+        this.$store.state.tracks.tracks[this.$route.params.id]
+      );
     }
   },
   methods: {
