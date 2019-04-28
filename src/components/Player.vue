@@ -25,7 +25,13 @@
             </RouterLink>
           </td>
           <td>
-            {{ track.track_artists.map(ta => ta.name).join(" / ") }}
+            {{
+              track.track_artists
+                .map(a => a)
+                .sort((a1, a2) => a1.order - a2.order)
+                .map(ta => ta.name)
+                .join(" / ")
+            }}
           </td>
           <td>
             {{ albums[track.album_id].release }}
