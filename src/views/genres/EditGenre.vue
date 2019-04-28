@@ -1,0 +1,62 @@
+<template>
+  <VContainer fill-height fluid v-if="genre">
+    <VLayout align-center justify-center>
+      <VFlex md4 sm8 xs12>
+        <VForm @submit.prevent="submit">
+          <VTextField genre="Name" v-model="newGenre.name" />
+          <VBtn color="primary" type="submit">Update genre</VBtn>
+        </VForm>
+      </VFlex>
+    </VLayout>
+  </VContainer>
+</template>
+
+<script>
+import { mapActions, mapState } from "vuex";
+
+export default {
+  name: "EditGenre",
+  data() {
+    return {
+      newGenre: {
+        name: ""
+      }
+    };
+  },
+  created() {
+    setTimeout(() => {
+      if (this.genre) {
+        this.fillValues();
+      }
+    });
+  },
+  watch: {
+    genre: function() {
+      if (this.genre) {
+        this.fillValues();
+      }
+    }
+  },
+  computed: {
+    ...mapState("genres", ["genres"]),
+    genre: function() {
+      return this.genres[this.$route.params.id];
+    }
+  },
+  methods: {
+    ...mapActions("genres", ["update"]),
+    fillValues() {
+      this.newGenre.name = this.genre.name;
+    },
+    submit() {
+      this.update({ id: this.genre.id, newGenre: this.newGenre }).then(
+        succeeded => {
+          if (succeeded) {
+            this.$router.push(this.$route.query.redirect || { name: "genres" });
+          }
+        }
+      );
+    }
+  }
+};
+</script>

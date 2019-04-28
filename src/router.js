@@ -24,6 +24,9 @@ import Flags from "./views/flags/Flags";
 import Labels from "./views/labels/Labels";
 import Label from "./views/labels/Label";
 import EditLabel from "./views/labels/EditLabel";
+import Genres from "./views/genres/Genres";
+import Genre from "./views/genres/Genre";
+import EditGenre from "./views/genres/EditGenre";
 
 Vue.use(Router);
 
@@ -84,6 +87,21 @@ const router = new Router({
           path: "flags",
           name: "flags",
           component: Flags
+        },
+        {
+          path: "genres",
+          name: "genres",
+          component: Genres
+        },
+        {
+          path: "genres/:id",
+          name: "genre",
+          component: Genre
+        },
+        {
+          path: "genres/:id/edit",
+          name: "edit-genre",
+          component: EditGenre
         },
         {
           path: "labels",
