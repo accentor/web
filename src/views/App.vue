@@ -69,6 +69,18 @@
           <VListTileContent>
             <VListTileTitle>Flags</VListTileTitle>
           </VListTileContent>
+          <VListTileAction v-if="numberOfFlaggedItems > 0">
+            <VBtn
+              round
+              small
+              dark
+              color="primary"
+              outline
+              class="min-width-height"
+            >
+              {{ numberOfFlaggedItems }}
+            </VBtn>
+          </VListTileAction>
         </VListTile>
         <VListTile :to="{ name: 'users' }" exact>
           <VListTileAction>
@@ -130,7 +142,8 @@ export default {
     this.loadData();
   },
   computed: {
-    ...mapGetters("auth", ["isModerator"])
+    ...mapGetters("auth", ["isModerator"]),
+    ...mapGetters(["numberOfFlaggedItems"])
   },
   methods: {
     loadData() {
@@ -161,3 +174,10 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.min-width-height {
+  min-width: 28px;
+  padding: 0 7px;
+}
+</style>

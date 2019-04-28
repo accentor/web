@@ -43,5 +43,13 @@ export default new Vuex.Store({
     }
   },
   actions: {},
-  getters: {}
+  getters: {
+    numberOfFlaggedItems(state, getters) {
+      return (
+        getters["artists/artistsFlagged"].length +
+        getters["albums/albumsFlagged"].length +
+        getters["tracks/tracksFlagged"].length
+      );
+    }
+  }
 });
