@@ -7,31 +7,31 @@
       <VIcon>mdi-plus</VIcon>
     </VBtn>
     <EditReviewComment :item="album" :update="flag" />
-    <span v-if="isModerator">
-      <VBtn
-        :to="{
-          name: 'edit-album',
-          params: { id: album.id },
-          query: { redirect: $route.fullPath }
-        }"
-        color="orange"
-        flat
-        icon
-        small
-      >
-        <VIcon>mdi-pencil</VIcon>
-      </VBtn>
-      <VBtn
-        @click.stop.prevent="deleteAlbum"
-        color="red"
-        flat
-        href="#"
-        icon
-        small
-      >
-        <VIcon>mdi-delete</VIcon>
-      </VBtn>
-    </span>
+    <VBtn
+      :to="{
+        name: 'edit-album',
+        params: { id: album.id },
+        query: { redirect: $route.fullPath }
+      }"
+      v-if="isModerator"
+      color="orange"
+      flat
+      icon
+      small
+    >
+      <VIcon>mdi-pencil</VIcon>
+    </VBtn>
+    <VBtn
+      @click.stop.prevent="deleteAlbum"
+      v-if="isModerator"
+      color="red"
+      flat
+      href="#"
+      icon
+      small
+    >
+      <VIcon>mdi-delete</VIcon>
+    </VBtn>
   </span>
 </template>
 <script>
