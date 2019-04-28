@@ -5,7 +5,12 @@
         <VImg :src="artist.image" class="elevation-3" />
       </VFlex>
       <VFlex lg9 md8 sm6 xs12>
-        <h3>{{ artist.name }}</h3>
+        <div>
+          <h3>{{ artist.name }}</h3>
+        </div>
+        <div>
+          <ArtistActions :artist="artist" />
+        </div>
       </VFlex>
     </VLayout>
     <VLayout row wrap>
@@ -24,13 +29,15 @@
 <script>
 import { mapGetters, mapState } from "vuex";
 import AlbumCard from "../../components/AlbumCard";
+import ArtistActions from "../../components/ArtistActions";
 import TracksTable from "../../components/TracksTable";
 
 export default {
   name: "Artist",
   components: {
     TracksTable,
-    AlbumCard
+    AlbumCard,
+    ArtistActions
   },
   computed: {
     ...mapGetters("auth", ["isModerator"]),
