@@ -53,6 +53,14 @@
             <VListTileTitle>Tracks</VListTileTitle>
           </VListTileContent>
         </VListTile>
+        <VListTile :to="{ name: 'genres' }" exact>
+          <VListTileAction>
+            <VIcon>mdi-guitar-acoustic</VIcon>
+          </VListTileAction>
+          <VListTileContent>
+            <VListTileTitle>Genres</VListTileTitle>
+          </VListTileContent>
+        </VListTile>
         <VListTile :to="{ name: 'labels' }" exact>
           <VListTileAction>
             <VIcon>mdi-label</VIcon>
