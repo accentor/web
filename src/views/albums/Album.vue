@@ -13,6 +13,9 @@
           <div class="grey--text">
             {{ album.release }}
           </div>
+          <div>
+            <AlbumActions :album="album" />
+          </div>
         </div>
       </VFlex>
       <VLayout row>
@@ -27,11 +30,12 @@
 <script>
 import { mapState } from "vuex";
 import Paginated from "../../mixins/Paginated";
+import AlbumActions from "../../components/AlbumActions";
 import TracksTable from "../../components/TracksTable";
 
 export default {
   name: "Album",
-  components: { TracksTable },
+  components: { TracksTable, AlbumActions },
   mixins: [Paginated],
   computed: {
     ...mapState("albums", ["albums"]),
