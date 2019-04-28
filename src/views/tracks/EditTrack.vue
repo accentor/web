@@ -245,7 +245,7 @@ export default {
               if (id) {
                 transformed.track_artists.push({
                   artist_id: id,
-                  name: ta.name,
+                  name: ta.name || ta.artist_id,
                   role: ta.role,
                   order: index + 1
                 });
@@ -257,7 +257,7 @@ export default {
         } else {
           transformed.track_artists.push({
             artist_id: ta.artist_id.id,
-            name: ta.name,
+            name: ta.name || ta.artist_id.name,
             role: ta.role,
             order: index + 1
           });
