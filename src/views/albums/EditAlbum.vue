@@ -277,7 +277,7 @@ export default {
               if (id) {
                 transformed.album_artists.push({
                   artist_id: id,
-                  name: aa.name,
+                  name: aa.name || aa.artist_id,
                   separator:
                     index !== this.newAlbum.album_artists.length - 1
                       ? aa.separator
@@ -292,7 +292,7 @@ export default {
         } else {
           transformed.album_artists.push({
             artist_id: aa.artist_id.id,
-            name: aa.name,
+            name: aa.name || aa.artist_id.name,
             separator:
               index !== this.newAlbum.album_artists.length - 1
                 ? aa.separator
