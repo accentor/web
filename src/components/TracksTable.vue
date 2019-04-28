@@ -12,7 +12,13 @@
       <td>
         {{ props.item.length | length }}
       </td>
-      <td v-if="showAlbum">{{ albums[props.item.album_id].title }}</td>
+      <td v-if="showAlbum">
+        <RouterLink
+          :to="{ name: 'album', params: { id: props.item.album_id } }"
+        >
+          {{ albums[props.item.album_id].title }}
+        </RouterLink>
+      </td>
       <td>
         {{
           props.item.track_artists
@@ -96,3 +102,9 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+a {
+  text-decoration: none;
+}
+</style>
