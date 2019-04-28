@@ -238,7 +238,10 @@ export default {
       this.newTrack.track_artists.forEach((ta, index) => {
         if (typeof ta.artist_id === "string") {
           promises.push(
-            this.createArtist({ name: ta.artist_id }).then(id => {
+            this.createArtist({
+              name: ta.artist_id,
+              review_comment: "New artist"
+            }).then(id => {
               if (id) {
                 transformed.track_artists.push({
                   artist_id: id,
