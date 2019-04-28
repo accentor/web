@@ -276,3 +276,9 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.no-grow {
+  flex-grow: 0;
+}
+</style>
