@@ -13,6 +13,16 @@
           <div class="grey--text">
             {{ album.release }}
           </div>
+          <div
+            class="grey--text"
+            v-for="al of album.album_labels"
+            :key="`${al.label_id} ${al.catalogue_number}`"
+          >
+            <RouterLink :to="{ name: 'label', params: { id: al.label_id } }">
+              {{ labels[al.label_id].name }}
+            </RouterLink>
+            - {{ al.catalogue_number }}
+          </div>
           <div>
             <AlbumActions :album="album" />
           </div>
@@ -39,6 +49,7 @@ export default {
   mixins: [Paginated],
   computed: {
     ...mapState("albums", ["albums"]),
+    ...mapState("labels", ["labels"]),
     tracks: function() {
       return this.$store.getters["tracks/tracksFilterByAlbum"](
         this.$route.params.id
@@ -50,3 +61,9 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+a {
+  text-decoration: none;
+}
+</style>

@@ -12,16 +12,12 @@
 
 <script>
 import ArtistActions from "./ArtistActions";
-import { mapGetters } from "vuex";
 
 export default {
   name: "ArtistCard",
   components: { ArtistActions },
   props: {
     artist: { type: Object }
-  },
-  computed: {
-    ...mapGetters("auth", ["isModerator"])
   }
 };
 </script>
