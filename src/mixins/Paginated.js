@@ -4,6 +4,9 @@ export default {
       pagination: {}
     };
   },
+  props: {
+    savePagination: { default: true, type: Boolean }
+  },
   created() {
     const page = parseInt(this.$route.query.page);
     setTimeout(() => {

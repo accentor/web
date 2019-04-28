@@ -20,7 +20,6 @@
   </VCard>
 </template>
 <script>
-import { mapGetters } from "vuex";
 import AlbumActions from "./AlbumActions";
 
 export default {
@@ -28,9 +27,6 @@ export default {
   components: { AlbumActions },
   props: {
     album: { type: Object }
-  },
-  computed: {
-    ...mapGetters("auth", ["isModerator"])
   }
 };
 </script>

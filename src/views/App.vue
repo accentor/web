@@ -53,6 +53,14 @@
             <VListTileTitle>Tracks</VListTileTitle>
           </VListTileContent>
         </VListTile>
+        <VListTile :to="{ name: 'labels' }" exact>
+          <VListTileAction>
+            <VIcon>mdi-label</VIcon>
+          </VListTileAction>
+          <VListTileContent>
+            <VListTileTitle>Labels</VListTileTitle>
+          </VListTileContent>
+        </VListTile>
         <VListTile :to="{ name: 'rescan' }" exact v-if="isModerator">
           <VListTileAction>
             <VIcon>mdi-refresh</VIcon>

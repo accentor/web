@@ -21,6 +21,9 @@ import User from "./views/users/User";
 import Users from "./views/users/Users";
 import Settings from "./views/settings/Settings";
 import Flags from "./views/flags/Flags";
+import Labels from "./views/labels/Labels";
+import Label from "./views/labels/Label";
+import EditLabel from "./views/labels/EditLabel";
 
 Vue.use(Router);
 
@@ -81,6 +84,21 @@ const router = new Router({
           path: "flags",
           name: "flags",
           component: Flags
+        },
+        {
+          path: "labels",
+          name: "labels",
+          component: Labels
+        },
+        {
+          path: "labels/:id",
+          name: "label",
+          component: Label
+        },
+        {
+          path: "labels/:id/edit",
+          name: "edit-label",
+          component: EditLabel
         },
         {
           path: "rescan",
