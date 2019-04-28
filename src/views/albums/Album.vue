@@ -8,7 +8,17 @@
         <div>
           <div class="headline">{{ album.title }}</div>
           <div>
-            {{ album.album_artists | album_artists }}
+            <span
+              v-for="aa of album.album_artists"
+              :key="`${aa.artist_id} ${aa.name}`"
+            >
+              <RouterLink
+                :to="{ name: 'artist', params: { id: aa.artist_id } }"
+              >
+                {{ aa.name }}
+              </RouterLink>
+              {{ aa.separator }}
+            </span>
           </div>
           <div class="grey--text">
             {{ album.release }}
