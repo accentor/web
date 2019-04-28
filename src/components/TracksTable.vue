@@ -50,7 +50,7 @@ export default {
   props: {
     tracks: { default: () => [], type: Array },
     showAlbum: { default: true, type: Boolean },
-    savePagination: { default: false, type: Boolean }
+    savePagination: { default: true, type: Boolean }
   },
   data() {
     const headers = [
