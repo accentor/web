@@ -7,31 +7,31 @@
       <VIcon>mdi-plus</VIcon>
     </VBtn>
     <EditReviewComment :item="track" :update="flag" />
-    <span v-if="isModerator">
-      <VBtn
-        :to="{
-          name: 'edit-track',
-          params: { id: track.id },
-          query: { redirect: $route.fullPath }
-        }"
-        color="orange"
-        flat
-        icon
-        small
-      >
-        <VIcon>mdi-pencil</VIcon>
-      </VBtn>
-      <VBtn
-        @click.stop.prevent="deleteTrack"
-        color="red"
-        href="#"
-        flat
-        icon
-        small
-      >
-        <VIcon>mdi-delete</VIcon>
-      </VBtn>
-    </span>
+    <VBtn
+      :to="{
+        name: 'edit-track',
+        params: { id: track.id },
+        query: { redirect: $route.fullPath }
+      }"
+      v-if="isModerator"
+      color="orange"
+      flat
+      icon
+      small
+    >
+      <VIcon>mdi-pencil</VIcon>
+    </VBtn>
+    <VBtn
+      @click.stop.prevent="deleteTrack"
+      v-if="isModerator"
+      color="red"
+      href="#"
+      flat
+      icon
+      small
+    >
+      <VIcon>mdi-delete</VIcon>
+    </VBtn>
   </span>
 </template>
 <script>
