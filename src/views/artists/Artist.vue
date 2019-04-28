@@ -14,7 +14,7 @@
       </VFlex>
     </VLayout>
     <VLayout row wrap>
-      <VFlex :key="item.id" lg3 md4 sm6 v-for="item of artistAlbums" xl2 xs12>
+      <VFlex :key="item.id" lg3 md4 sm6 v-for="item of albums" xl2 xs12>
         <AlbumCard :album="item" />
       </VFlex>
     </VLayout>
@@ -41,9 +41,8 @@ export default {
   },
   computed: {
     ...mapGetters("auth", ["isModerator"]),
-    ...mapState("albums", ["albums"]),
     ...mapState("artists", ["artists"]),
-    artistAlbums: function() {
+    albums: function() {
       return this.$store.getters["albums/albumsFilterByArtist"](
         this.$route.params.id
       );

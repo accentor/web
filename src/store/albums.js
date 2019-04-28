@@ -85,6 +85,17 @@ export default {
             compareStrings(a1.title, a2.title)
         );
     },
+    albumsFilterByLabel: (state, getters) => id => {
+      const alFilter = a =>
+        a.album_labels.filter(l => `${l.label_id}` === `${id}`).length > 0;
+      return getters.albums
+        .filter(alFilter)
+        .sort(
+          (a1, a2) =>
+            compareStrings(a1.release, a2.release) ||
+            compareStrings(a1.title, a2.title)
+        );
+    },
     albumsFlagged: (state, getters) => {
       return getters.albums
         .filter(t => t.review_comment !== null)
