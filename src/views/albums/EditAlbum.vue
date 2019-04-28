@@ -270,7 +270,10 @@ export default {
       this.newAlbum.album_artists.forEach((aa, index) => {
         if (typeof aa.artist_id === "string") {
           promises.push(
-            this.createArtist({ name: aa.artist_id }).then(id => {
+            this.createArtist({
+              name: aa.artist_id,
+              review_comment: "New artist"
+            }).then(id => {
               if (id) {
                 transformed.album_artists.push({
                   artist_id: id,
