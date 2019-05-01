@@ -11,6 +11,7 @@
     <span>Various Artists</span>
   </div>
 </template>
+
 <script>
 export default {
   name: "AlbumArtists",
@@ -26,8 +27,3 @@ export default {
   }
 };
 </script>
-<style scoped>
-a {
-  text-decoration: none;
-}
-</style>

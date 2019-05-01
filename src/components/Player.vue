@@ -25,13 +25,7 @@
             </RouterLink>
           </td>
           <td>
-            {{
-              track.track_artists
-                .map(a => a)
-                .sort((a1, a2) => a1.order - a2.order)
-                .map(ta => ta.name)
-                .join(" / ")
-            }}
+            <TrackArtists :track="props.item" />
           </td>
           <td>
             {{ albums[track.album_id].release }}
@@ -110,9 +104,11 @@
 
 <script>
 import { mapGetters, mapMutations, mapState } from "vuex";
+import TrackArtists from "./TrackArtists";
 
 export default {
   name: "Player",
+  components: { TrackArtists },
   data() {
     return {
       open: false,
@@ -319,15 +315,9 @@ export default {
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
 
-    .track {
-      a {
-        text-decoration: none;
-      }
-
-      .icon {
-        width: 40px;
-        max-width: 40px;
-      }
+    .track .icon {
+      width: 40px;
+      max-width: 40px;
     }
   }
 }
