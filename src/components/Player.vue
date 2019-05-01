@@ -25,7 +25,7 @@
             </RouterLink>
           </td>
           <td>
-            <TrackArtists :track="props.item" />
+            <TrackArtists :track="track" />
           </td>
           <td>
             {{ albums[track.album_id].release }}
