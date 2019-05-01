@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="album_artists.length !== 0">
     <span v-for="aa of album_artists" :key="`${aa.artist_id} ${aa.name}`"
       ><RouterLink :to="{ name: 'artist', params: { id: aa.artist_id } }">{{
         aa.name
@@ -7,7 +7,11 @@
       >{{ aa.separator }}</span
     >
   </div>
+  <div v-else>
+    <span>Various Artists</span>
+  </div>
 </template>
+
 <script>
 export default {
   name: "AlbumArtists",
@@ -23,8 +27,3 @@ export default {
   }
 };
 </script>
-<style scoped>
-a {
-  text-decoration: none;
-}
-</style>
