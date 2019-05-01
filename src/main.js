@@ -24,13 +24,6 @@ Vue.filter(
   l => `${Math.floor(l / 60)}:${`${l % 60}`.padStart(2, "0")}`
 );
 
-Vue.filter("album_artists", aa =>
-  aa
-    .map(a => a)
-    .sort((aa1, aa2) => aa1.order - aa2.order)
-    .reduce((acc, val) => `${acc}${val.name}${val.separator || ""}`, "")
-);
-
 new Vue({
   router,
   store,
