@@ -4,9 +4,7 @@
     <VCardTitle primary-title>
       <div>
         <div class="headline">{{ album.title }}</div>
-        <span>
-          {{ album.album_artists | album_artists }}
-        </span>
+        <AlbumArtists :album="album" />
       </div>
     </VCardTitle>
     <VCardText>
@@ -21,10 +19,11 @@
 </template>
 <script>
 import AlbumActions from "./AlbumActions";
+import AlbumArtists from "./AlbumArtists";
 
 export default {
   name: "AlbumCard",
-  components: { AlbumActions },
+  components: { AlbumArtists, AlbumActions },
   props: {
     album: { type: Object }
   }
