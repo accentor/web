@@ -7,19 +7,7 @@
       <VFlex lg9 md8 sm6 xs12>
         <div>
           <div class="headline">{{ album.title }}</div>
-          <div>
-            <span
-              v-for="aa of album.album_artists"
-              :key="`${aa.artist_id} ${aa.name}`"
-            >
-              <RouterLink
-                :to="{ name: 'artist', params: { id: aa.artist_id } }"
-              >
-                {{ aa.name }}
-              </RouterLink>
-              {{ aa.separator }}
-            </span>
-          </div>
+          <AlbumArtists :album="album" />
           <div class="grey--text">
             {{ album.release }}
           </div>
@@ -52,10 +40,11 @@ import { mapState } from "vuex";
 import Paginated from "../../mixins/Paginated";
 import AlbumActions from "../../components/AlbumActions";
 import TracksTable from "../../components/TracksTable";
+import AlbumArtists from "../../components/AlbumArtists";
 
 export default {
   name: "Album",
-  components: { TracksTable, AlbumActions },
+  components: { AlbumArtists, TracksTable, AlbumActions },
   mixins: [Paginated],
   computed: {
     ...mapState("albums", ["albums"]),
