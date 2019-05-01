@@ -20,7 +20,11 @@
     </VLayout>
     <VLayout row wrap>
       <VFlex>
-        <TracksTable :tracks="tracks" />
+        <TracksTable
+          :tracks="tracks"
+          :show-search="true"
+          :save-search="false"
+        />
       </VFlex>
     </VLayout>
   </VContainer>

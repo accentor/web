@@ -28,7 +28,11 @@
                 v-on="on"
               ></VTextField>
             </template>
-            <VDatePicker v-model="newAlbum.release" scrollable>
+            <VDatePicker
+              v-model="newAlbum.release"
+              scrollable
+              :first-day-of-week="1"
+            >
               <VSpacer></VSpacer>
               <VBtn flat color="primary" @click="releaseModal = false">
                 Cancel

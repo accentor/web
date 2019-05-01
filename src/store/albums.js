@@ -73,7 +73,9 @@ export default {
   getters: {
     albums: state => Object.values(state.albums),
     albumsByTitle: (state, getters) =>
-      getters.albums.sort((a1, a2) => compareStrings(a1.title, a2.title)),
+      getters.albums.sort((a1, a2) =>
+        compareStrings(a1.title.toLowerCase(), a2.title.toLowerCase())
+      ),
     albumsFilterByArtist: (state, getters) => id => {
       const aaFilter = a =>
         a.album_artists.filter(aa => `${aa.artist_id}` === `${id}`).length > 0;
@@ -82,7 +84,7 @@ export default {
         .sort(
           (a1, a2) =>
             compareStrings(a1.release, a2.release) ||
-            compareStrings(a1.title, a2.title)
+            compareStrings(a1.title.toLowerCase(), a2.title.toLowerCase())
         );
     },
     albumsFilterByLabel: (state, getters) => id => {
@@ -93,13 +95,15 @@ export default {
         .sort(
           (a1, a2) =>
             compareStrings(a1.release, a2.release) ||
-            compareStrings(a1.title, a2.title)
+            compareStrings(a1.title.toLowerCase(), a2.title.toLowerCase())
         );
     },
     albumsFlagged: (state, getters) => {
       return getters.albums
         .filter(t => t.review_comment !== null)
-        .sort((a1, a2) => compareStrings(a1.title, a2.title));
+        .sort((a1, a2) =>
+          compareStrings(a1.title.toLowerCase(), a2.title.toLowerCase())
+        );
     }
   }
 };
