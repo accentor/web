@@ -23,16 +23,20 @@ export default {
   name: "EditReviewComment",
   data() {
     return {
-      show: false
+      show: false,
+      new_review_comment: ""
     };
   },
   props: {
     update: {},
     item: {}
   },
+  created() {
+    this.new_review_comment = this.item.review_comment;
+  },
   methods: {
     flag() {
-      this.update(this.item.id, this.item.review_comment).then(succeeded => {
+      this.update(this.item.id, this.new_review_comment).then(succeeded => {
         if (succeeded) {
           this.show = false;
         }
