@@ -5,7 +5,7 @@
       <VCard>
         <VCardTitle class="headline">Flag for review</VCardTitle>
         <VCardText>
-          <VTextField label="Comment" v-model="item.review_comment" />
+          <VTextField label="Comment" v-model="new_review_comment" />
         </VCardText>
         <VCardActions>
           <VLayout row justify-end>
