@@ -7,7 +7,7 @@
     </VLayout>
     <VLayout row wrap>
       <VFlex>
-        <TracksTable :tracks="tracks" />
+        <TracksTable :tracks="tracks" :show-search="true" />
       </VFlex>
     </VLayout>
   </VContainer>

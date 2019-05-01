@@ -2,7 +2,7 @@
   <VContainer fill-height fluid>
     <VLayout row>
       <VFlex>
-        <TracksTable :tracks="tracks" />
+        <TracksTable :tracks="tracks" :show-search="true" />
       </VFlex>
     </VLayout>
   </VContainer>
