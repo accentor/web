@@ -34,13 +34,7 @@
           </RouterLink>
         </td>
         <td>
-          {{
-            props.item.track_artists
-              .map(a => a)
-              .sort((a1, a2) => a1.order - a2.order)
-              .map(a => a.name)
-              .join(" / ")
-          }}
+          <TrackArtists :track="props.item" />
         </td>
         <td>
           {{ props.item.genre_ids.map(id => genres[id].name).join(" / ") }}
@@ -58,10 +52,11 @@ import TrackActions from "./TrackActions";
 import Paginated from "../mixins/Paginated";
 import { mapState } from "vuex";
 import Searchable from "../mixins/Searchable";
+import TrackArtists from "./TrackArtists";
 
 export default {
   name: "TracksTable",
-  components: { TrackActions },
+  components: { TrackActions, TrackArtists },
   mixins: [Paginated, Searchable],
   props: {
     tracks: { default: () => [], type: Array },
@@ -127,9 +122,3 @@ export default {
   }
 };
 </script>
-
-<style scoped>
-a {
-  text-decoration: none;
-}
-</style>
