@@ -8,4 +8,8 @@
 a {
   text-decoration: none;
 }
+
+.no-grow {
+  flex-grow: 0;
+}
 </style>
