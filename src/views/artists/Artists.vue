@@ -13,6 +13,7 @@
         <VLayout justify-end align-baseline row wrap mb-2>
           <VFlex xs12 sm8 md6 lg4 xl2>
             <VTextField
+              v-if="artists.length > 12"
               v-model="search"
               prepend-inner-icon="mdi-magnify"
               label="Search"

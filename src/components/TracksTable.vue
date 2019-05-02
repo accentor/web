@@ -23,7 +23,7 @@
       <template v-slot:items="props">
         <td>{{ props.item.number }}</td>
         <td>{{ props.item.title }}</td>
-        <td>
+        <td class="length">
           {{ props.item.length | length }}
         </td>
         <td v-if="showAlbum">
