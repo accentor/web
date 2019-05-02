@@ -10,12 +10,13 @@
       content-class="layout row wrap"
     >
       <template v-slot:header>
-        <VLayout justify-end align-baseline row wrap mb-2>
-          <VFlex xs12 md6>
+        <VLayout justify-space-between align-baseline row wrap mb-2>
+          <VFlex xs12 sm4 md6 lg8 xl10>
             <h3>{{ label.name }}</h3>
           </VFlex>
           <VFlex xs12 sm8 md6 lg4 xl2>
             <VTextField
+              v-if="albums.length > 12"
               v-model="search"
               prepend-inner-icon="mdi-magnify"
               label="Search"
