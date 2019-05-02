@@ -30,7 +30,7 @@
           <td>
             {{ albums[track.album_id].release }}
           </td>
-          <td>
+          <td class="length">
             {{ track.length | length }}
           </td>
         </tr>
@@ -309,6 +309,7 @@ export default {
   overflow-y: auto;
   border-bottom: solid thin rgba(0, 0, 0, 0.12);
   width: 100%;
+  padding-right: 0.5rem;
 
   .tracks-list {
     width: 100%;
