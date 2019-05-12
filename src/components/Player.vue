@@ -43,7 +43,7 @@
           <VBtn @click="prevTrack" class="not-on-small" icon small>
             <VIcon>mdi-skip-previous</VIcon>
           </VBtn>
-          <VBtn @click="setPlaying(!playing)" icon small>
+          <VBtn @click="setPlaying(!playing)" icon>
             <VIcon large>
               {{ playing ? "mdi-pause" : "mdi-play" }}
             </VIcon>
