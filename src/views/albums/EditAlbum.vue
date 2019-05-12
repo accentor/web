@@ -12,8 +12,8 @@
         <VForm @submit.prevent="submit">
           <VTextField label="Title" v-model="newAlbum.title" />
           <VDialog
-            ref="dialog"
-            v-model="releaseModal"
+            ref="dialogOriginal"
+            v-model="originalModal"
             :return-value.sync="newAlbum.release"
             persistent
             lazy
@@ -34,18 +34,65 @@
               :first-day-of-week="1"
             >
               <VSpacer></VSpacer>
-              <VBtn flat color="primary" @click="releaseModal = false">
+              <VBtn flat color="primary" @click="originalModal = false">
                 Cancel
               </VBtn>
               <VBtn
                 flat
                 color="primary"
-                @click="$refs.dialog.save(newAlbum.release)"
+                @click="$refs.dialogOriginal.save(newAlbum.release)"
               >
                 OK
               </VBtn>
             </VDatePicker>
           </VDialog>
+          <VCheckbox
+            v-model="editionInformation"
+            label="Add edition information"
+          />
+          <VDialog
+            ref="dialogEdition"
+            v-model="editionModal"
+            v-if="editionInformation"
+            :return-value.sync="newAlbum.edition"
+            persistent
+            lazy
+            full-width
+            width="290px"
+          >
+            <template v-slot:activator="{ on }">
+              <VTextField
+                v-model="newAlbum.edition"
+                label="Edition"
+                readonly
+                v-on="on"
+                clearable
+              ></VTextField>
+            </template>
+            <VDatePicker
+              v-model="newAlbum.edition"
+              scrollable
+              :first-day-of-week="1"
+            >
+              <VSpacer></VSpacer>
+              <VBtn flat color="primary" @click="editionModal = false">
+                Cancel
+              </VBtn>
+              <VBtn
+                flat
+                color="primary"
+                @click="$refs.dialogEdition.save(newAlbum.edition)"
+              >
+                OK
+              </VBtn>
+            </VDatePicker>
+          </VDialog>
+          <VTextField
+            label="Edition Description"
+            v-model="newAlbum.edition_description"
+            v-if="editionInformation"
+            clearable
+          />
           <FilePicker v-model="newAlbum.image">Choose image</FilePicker>
           <VLayout
             :key="`artist-${index}`"
@@ -141,16 +188,20 @@ export default {
   components: { FilePicker },
   data() {
     return {
-      releaseModal: false,
+      originalModal: false,
+      editionModal: false,
       newAlbum: {
         title: "",
         release: new Date().toISOString().substr(0, 10),
+        edition: null,
+        edition_description: null,
         image: null,
         review_comment: null,
         album_labels: [],
         album_artists: []
       },
-      clear_review_comment: true
+      clear_review_comment: true,
+      editionInformation: false
     };
   },
   created() {
@@ -190,6 +241,8 @@ export default {
     fillValues() {
       this.newAlbum.title = this.album.title;
       this.newAlbum.release = this.album.release;
+      this.newAlbum.edition = this.album.edition;
+      this.newAlbum.edition_description = this.album.edition_description;
       this.newAlbum.review_comment = this.album.review_comment;
       this.newAlbum.album_labels = this.album.album_labels.map(l => {
         return {
@@ -207,6 +260,8 @@ export default {
             order: a.order
           };
         });
+      this.editionInformation =
+        this.album.edition !== null || this.album.edition_description !== null;
     },
     addLabel() {
       this.newAlbum.album_labels.push({
@@ -239,6 +294,10 @@ export default {
       const transformed = {
         title: this.newAlbum.title,
         release: this.newAlbum.release,
+        edition: this.editionInformation ? this.newAlbum.edition : null,
+        edition_description: this.editionInformation
+          ? this.newAlbum.edition_description
+          : null,
         image: this.newAlbum.image,
         review_comment: this.clear_review_comment
           ? null
