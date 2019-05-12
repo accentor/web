@@ -3,6 +3,7 @@
     <VLayout justify-end align-baseline row wrap mb-2>
       <VFlex v-if="showSearch" xs12 sm8 md6 lg4 xl2>
         <VTextField
+          v-if="tracks.length > 30"
           v-model="search"
           prepend-inner-icon="mdi-magnify"
           label="Search"

@@ -81,3 +81,20 @@ export function destroy(auth, id) {
         : request.json().then(result => Promise.reject(result));
     });
 }
+
+export function destroyEmpty(auth) {
+  return fetch(`${baseURL}/labels/destroy_empty`, {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+      "x-secret": auth.secret,
+      "x-device-id": auth.device_id
+    }
+  })
+    .catch(reason => Promise.reject({ error: [reason] }))
+    .then(request => {
+      return request.ok
+        ? Promise.resolve()
+        : request.json().then(result => Promise.reject(result));
+    });
+}

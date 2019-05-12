@@ -1,5 +1,5 @@
 import Vue from "vue";
-import { create, destroy, index, update } from "../api/labels";
+import { create, destroy, index, update, destroyEmpty } from "../api/labels";
 import { compareStrings } from "../comparators";
 
 export default {
@@ -63,6 +63,16 @@ export default {
         .then(() => {
           commit("removeLabel", id);
           return Promise.resolve(true);
+        })
+        .catch(error => {
+          this.commit("addError", error);
+          return Promise.resolve(false);
+        });
+    },
+    destroyEmpty({ rootState }) {
+      return destroyEmpty(rootState.auth)
+        .then(() => {
+          return this.dispatch("labels/index");
         })
         .catch(error => {
           this.commit("addError", error);

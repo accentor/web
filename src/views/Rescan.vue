@@ -1,6 +1,8 @@
 <template>
   <VContainer fluid grid-list-xl>
     <VLayout justify-end row wrap>
+      <MaintanceActions />
+
       <VBtn @click="start" color="success">
         <VIcon left>mdi-refresh {{ rescan.running ? "mdi-spin" : "" }}</VIcon>
         Start scan
@@ -22,9 +24,11 @@
 
 <script>
 import { mapActions, mapState } from "vuex";
+import MaintanceActions from "../components/MaintanceActions";
 
 export default {
   name: "Rescan",
+  components: { MaintanceActions },
   computed: {
     ...mapState("rescan", ["rescan"])
   },
