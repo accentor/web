@@ -251,7 +251,6 @@ export default {
         };
       });
       this.newAlbum.album_artists = this.album.album_artists
-        .sort((a1, a2) => a1.order - a2.order)
         .map(a => {
           return {
             artist_id: this.artists[a.artist_id],
@@ -259,7 +258,8 @@ export default {
             separator: a.separator || "",
             order: a.order
           };
-        });
+        })
+        .sort((a1, a2) => a1.order - a2.order);
       this.editionInformation =
         this.album.edition !== null || this.album.edition_description !== null;
     },
