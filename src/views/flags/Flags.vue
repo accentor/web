@@ -8,7 +8,7 @@
       </VLayout>
       <VDataIterator
         :items="artists"
-        :rows-per-page-items="[6]"
+        :rows-per-page-items="[numberOfItems]"
         content-class="layout row wrap"
       >
         <template v-slot:item="props">
@@ -26,7 +26,7 @@
       </VLayout>
       <VDataIterator
         :items="albums"
-        :rows-per-page-items="[6]"
+        :rows-per-page-items="[numberOfItems]"
         content-class="layout row wrap"
       >
         <template v-slot:item="props">
@@ -67,7 +67,17 @@ export default {
       albums: "albums/albumsFlagged",
       artists: "artists/artistsFlagged",
       tracks: "tracks/tracksFlagged"
-    })
+    }),
+    numberOfItems() {
+      switch (this.$vuetify.breakpoint.name) {
+        case "lg":
+          return "8";
+        case "xl":
+          return "12";
+        default:
+          return "6";
+      }
+    }
   }
 };
 </script>

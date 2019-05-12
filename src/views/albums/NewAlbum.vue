@@ -4,10 +4,9 @@
       <VFlex md4 sm8 xs12>
         <VForm @submit.prevent="submit">
           <VTextField label="Title" v-model="newAlbum.title" />
-          <VTextField label="Albumartist" v-model="newAlbum.albumartist" />
           <VDialog
-            ref="dialog"
-            v-model="releaseModal"
+            ref="dialogOriginal"
+            v-model="originalModal"
             :return-value.sync="newAlbum.release"
             persistent
             lazy
@@ -28,22 +27,112 @@
               :first-day-of-week="1"
             >
               <VSpacer></VSpacer>
-              <VBtn flat color="primary" @click="releaseModal = false">
+              <VBtn flat color="primary" @click="originalModal = false">
                 Cancel
               </VBtn>
               <VBtn
                 flat
                 color="primary"
-                @click="$refs.show.save(newAlbum.release)"
+                @click="$refs.dialogOriginal.save(newAlbum.release)"
               >
                 OK
               </VBtn>
             </VDatePicker>
           </VDialog>
+          <VCheckbox
+            v-model="editionInformation"
+            label="Add edition information"
+          />
+          <VDialog
+            ref="dialogEdition"
+            v-model="editionModal"
+            v-if="editionInformation"
+            :return-value.sync="newAlbum.edition"
+            persistent
+            lazy
+            full-width
+            width="290px"
+          >
+            <template v-slot:activator="{ on }">
+              <VTextField
+                v-model="newAlbum.edition"
+                label="Edition"
+                readonly
+                v-on="on"
+                clearable
+              ></VTextField>
+            </template>
+            <VDatePicker
+              v-model="newAlbum.edition"
+              scrollable
+              :first-day-of-week="1"
+            >
+              <VSpacer></VSpacer>
+              <VBtn flat color="primary" @click="editionModal = false">
+                Cancel
+              </VBtn>
+              <VBtn
+                flat
+                color="primary"
+                @click="$refs.dialogEdition.save(newAlbum.edition)"
+              >
+                OK
+              </VBtn>
+            </VDatePicker>
+          </VDialog>
+          <VTextField
+            label="Edition Description"
+            v-model="newAlbum.edition_description"
+            v-if="editionInformation"
+            clearable
+          />
           <FilePicker v-model="newAlbum.image">Choose image</FilePicker>
+          <VLayout
+            :key="`artist-${index}`"
+            row
+            v-for="(item, index) of newAlbum.album_artists"
+          >
+            <VLayout column class="no-grow">
+              <VBtn
+                @click="moveArtist(index, -1)"
+                icon
+                small
+                :disabled="index === 0"
+              >
+                <VIcon>mdi-menu-up</VIcon>
+              </VBtn>
+              <VBtn
+                @click="moveArtist(index, 1)"
+                icon
+                small
+                :disabled="index === newAlbum.album_artists.length - 1"
+              >
+                <VIcon>mdi-menu-down</VIcon>
+              </VBtn>
+              <VBtn @click="removeArtist(index)" icon small>
+                <VIcon>mdi-close</VIcon>
+              </VBtn>
+            </VLayout>
+            <VLayout column>
+              <VCombobox
+                :items="sortedArtists"
+                item-text="name"
+                item-value="id"
+                label="Artist"
+                return-object
+                v-model="item.artist_id"
+              />
+              <VTextField label="Name" v-model="item.name" />
+              <VTextField
+                label="Separator"
+                v-model="item.separator"
+                v-if="index !== newAlbum.album_artists.length - 1"
+              />
+            </VLayout>
+          </VLayout>
           <h4>Labels</h4>
           <VLayout
-            :key="index"
+            :key="`label-${index}`"
             row
             v-for="(item, index) of newAlbum.album_labels"
           >
@@ -69,6 +158,7 @@
           <VLayout row>
             <VBtn color="primary" type="submit">Create album</VBtn>
             <VSpacer />
+            <VBtn @click="addArtist" color="success">Add artist</VBtn>
             <VBtn @click="addLabel" color="success">Add label</VBtn>
           </VLayout>
         </VForm>
@@ -91,6 +181,8 @@ export default {
         title: "",
         albumartist: "",
         release: new Date().toISOString().substr(0, 10),
+        edition: null,
+        edition_description: null,
         image: null,
         album_labels: [
           {
@@ -98,7 +190,8 @@ export default {
             catalogue_number: ""
           }
         ]
-      }
+      },
+      editionInformation: false
     };
   },
   computed: {
@@ -125,6 +218,10 @@ export default {
         title: this.newAlbum.title,
         albumartist: this.newAlbum.albumartist,
         release: this.newAlbum.release,
+        edition: this.editionInformation ? this.newAlbum.edition : null,
+        edition_description: this.editionInformation
+          ? this.newAlbum.edition_description
+          : null,
         image: this.newAlbum.image,
         album_labels: []
       };

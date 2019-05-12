@@ -178,7 +178,6 @@ export default {
       this.newTrack.album_id = this.track.album_id;
       this.newTrack.review_comment = this.track.review_comment;
       this.newTrack.track_artists = this.track.track_artists
-        .sort((a1, a2) => a1.order - a2.order)
         .map(ta => {
           return {
             artist_id: this.artists[ta.artist_id],
@@ -186,7 +185,8 @@ export default {
             role: ta.role,
             order: ta.order
           };
-        });
+        })
+        .sort((a1, a2) => a1.order - a2.order);
       this.newTrack.genre_ids = this.track.genre_ids.map(id => this.genres[id]);
     },
     addArtist() {

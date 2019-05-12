@@ -6,10 +6,19 @@
       </VFlex>
       <VFlex lg9 md8 sm6 xs12>
         <div>
-          <div class="headline">{{ album.title }}</div>
+          <div class="headline">
+            {{ album.title }}
+            <span v-if="album.edition_description !== null" class="grey--text">
+              ({{ album.edition_description }})
+            </span>
+          </div>
           <AlbumArtists :album="album" />
-          <div class="grey--text">
+          <div class="grey--text" v-if="album.edition === null">
             {{ album.release }}
+          </div>
+          <div class="grey--text" v-else>
+            <div>{{ album.release }} (original)</div>
+            <div>{{ album.edition }} (release)</div>
           </div>
           <div
             class="grey--text"
