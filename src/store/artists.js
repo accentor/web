@@ -1,5 +1,5 @@
 import Vue from "vue";
-import { create, destroy, index, update } from "../api/artists";
+import { create, destroy, index, update, destroyEmpty } from "../api/artists";
 import { compareStrings } from "../comparators";
 
 export default {
@@ -63,6 +63,16 @@ export default {
         .then(() => {
           commit("removeArtist", id);
           return Promise.resolve(true);
+        })
+        .catch(error => {
+          this.commit("addError", error);
+          return Promise.resolve(false);
+        });
+    },
+    destroyEmpty({ rootState }) {
+      return destroyEmpty(rootState.auth)
+        .then(() => {
+          return this.dispatch("artists/index");
         })
         .catch(error => {
           this.commit("addError", error);
