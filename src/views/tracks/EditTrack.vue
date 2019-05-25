@@ -109,8 +109,8 @@ export default {
           text: "Main"
         },
         {
-          value: "guest",
-          text: "Guest"
+          value: "performer",
+          text: "Performer"
         },
         {
           value: "composer",
@@ -127,6 +127,10 @@ export default {
         {
           value: "producer",
           text: "Producer"
+        },
+        {
+          value: "arranger",
+          text: "Arranger"
         }
       ],
       clear_review_comment: true
