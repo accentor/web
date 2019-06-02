@@ -4,7 +4,7 @@
       :items="labels"
       :search="search"
       :custom-filter="filter"
-      :rows-per-page-items="[12]"
+      :rows-per-page-items="[numberOfItems]"
       :pagination.sync="pagination"
       v-if="labels.length > 0"
       content-class="layout row wrap"
@@ -13,7 +13,7 @@
         <VLayout justify-end row wrap mb-2>
           <VFlex xs12 sm8 md6 lg4 xl2>
             <VTextField
-              v-if="labels.length > 12"
+              v-if="labels.length > numberOfItems"
               v-model="search"
               prepend-inner-icon="mdi-magnify"
               label="Search"
@@ -55,7 +55,19 @@ export default {
   computed: {
     ...mapGetters("labels", {
       labels: "labelsByName"
-    })
+    }),
+    numberOfItems() {
+      switch (this.$vuetify.breakpoint.name) {
+        case "xl":
+          return "30";
+        case "lg":
+          return "20";
+        case "md":
+          return "15";
+        default:
+          return "12";
+      }
+    }
   }
 };
 </script>

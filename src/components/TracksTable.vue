@@ -15,16 +15,21 @@
     <VDataTable
       :headers="headers"
       :search="search"
-      :custom-filter="filter"
+      :custom-filter="customFilter"
+      :filter="filter"
       :items="tracks"
       :rows-per-page-items="[30]"
       :pagination.sync="pagination"
       class="elevation-3"
+      ref="table"
     >
+      <template v-slot:actions-prepend>
+        <MassEditDialog :tracks="filteredItems" />
+      </template>
       <template v-slot:items="props">
         <td>{{ props.item.number }}</td>
         <td>{{ props.item.title }}</td>
-        <td class="length">
+        <td class="text-xs-right">
           {{ props.item.length | length }}
         </td>
         <td v-if="showAlbum">
@@ -55,10 +60,11 @@ import { mapState } from "vuex";
 import Searchable from "../mixins/Searchable";
 import TrackArtists from "./TrackArtists";
 import TrackGenres from "./TrackGenres";
+import MassEditDialog from "./MassEditDialog";
 
 export default {
   name: "TracksTable",
-  components: { TrackGenres, TrackActions, TrackArtists },
+  components: { TrackGenres, TrackActions, TrackArtists, MassEditDialog },
   mixins: [Paginated, Searchable],
   props: {
     tracks: { default: () => [], type: Array },
@@ -81,7 +87,8 @@ export default {
       {
         text: "Length",
         value: "length",
-        sortable: false
+        sortable: false,
+        align: "right"
       },
       {
         text: "Album",
@@ -109,16 +116,22 @@ export default {
     }
     return {
       headers,
-      filter: (items, search, filter) => {
-        search = search.toString().toLowerCase();
+      customFilter(items, search, filter) {
+        search = search ? search.toString().toLowerCase() : "";
         if (search.trim() === "") return items;
 
         return items.filter(val => filter(val.title, search));
+      },
+      filter(title, search) {
+        return title.toLowerCase().indexOf(search) !== -1;
       }
     };
   },
   computed: {
-    ...mapState("albums", ["albums"])
+    ...mapState("albums", ["albums"]),
+    filteredItems() {
+      return this.customFilter(this.tracks, this.search, this.filter);
+    }
   }
 };
 </script>

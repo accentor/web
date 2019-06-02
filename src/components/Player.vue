@@ -24,14 +24,14 @@
               {{ albums[track.album_id].title }}
             </RouterLink>
           </td>
+          <td class="text-xs-right">
+            {{ track.length | length }}
+          </td>
           <td>
             <TrackArtists :track="track" />
           </td>
           <td>
             {{ albums[track.album_id].release }}
-          </td>
-          <td class="length">
-            {{ track.length | length }}
           </td>
         </tr>
       </table>
@@ -315,6 +315,10 @@ export default {
     width: 100%;
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
+
+    td {
+      padding: 0 24px;
+    }
 
     .track .icon {
       width: 40px;
