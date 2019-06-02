@@ -81,19 +81,25 @@ export default {
       }
     },
     prevTrack(state) {
-      state.current -= 1;
-      if (state.current < 0) {
-        if (state.repeatMode === "all") {
-          state.current = state.playlist.length - 1;
-          state.seekTime = 0;
-          state.doSeek = true;
-        } else {
-          state.playing = false;
-          state.seekTime = 0;
-        }
-      } else {
+      if (state.seekTime > 5) {
         state.seekTime = 0;
         state.doSeek = true;
+      } else {
+        state.current -= 1;
+        if (state.current < 0) {
+          if (state.repeatMode === "all") {
+            state.current = state.playlist.length - 1;
+            state.seekTime = 0;
+            state.doSeek = true;
+          } else {
+            state.current = 0;
+            state.seekTime = 0;
+            state.doSeek = true;
+          }
+        } else {
+          state.seekTime = 0;
+          state.doSeek = true;
+        }
       }
     },
     trackEnded(state) {
