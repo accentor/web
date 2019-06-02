@@ -74,10 +74,18 @@ export default {
     tracks: state => Object.values(state.tracks),
     tracksByAlbumAndNumber: (state, getters, rootState) => {
       return getters.tracks.sort((a1, a2) => {
-        const albumOrder = compareStrings(
+        let albumOrder = compareStrings(
           rootState.albums.albums[a1.album_id].title,
           rootState.albums.albums[a2.album_id].title
         );
+        albumOrder =
+          albumOrder === 0
+            ? compareStrings(
+                rootState.albums.albums[a1.album_id].release,
+                rootState.albums.albums[a2.album_id].release
+              )
+            : albumOrder;
+        albumOrder = albumOrder === 0 ? a2.album_id - a1.album_id : albumOrder;
         return albumOrder === 0 ? a1.number - a2.number : albumOrder;
       });
     },
@@ -92,10 +100,18 @@ export default {
       const taFilter = t =>
         t.track_artists.filter(ta => `${ta.artist_id}` === `${id}`).length > 0;
       return getters.tracks.filter(taFilter).sort((a1, a2) => {
-        const albumOrder = compareStrings(
+        let albumOrder = compareStrings(
           rootState.albums.albums[a1.album_id].title,
           rootState.albums.albums[a2.album_id].title
         );
+        albumOrder =
+          albumOrder === 0
+            ? compareStrings(
+                rootState.albums.albums[a1.album_id].release,
+                rootState.albums.albums[a2.album_id].release
+              )
+            : albumOrder;
+        albumOrder = albumOrder === 0 ? a2.album_id - a1.album_id : albumOrder;
         return albumOrder === 0 ? a1.number - a2.number : albumOrder;
       });
     },
@@ -103,10 +119,18 @@ export default {
       const tgFilter = t =>
         t.genre_ids.filter(gId => `${gId}` === `${id}`).length > 0;
       return getters.tracks.filter(tgFilter).sort((a1, a2) => {
-        const albumOrder = compareStrings(
+        let albumOrder = compareStrings(
           rootState.albums.albums[a1.album_id].title,
           rootState.albums.albums[a2.album_id].title
         );
+        albumOrder =
+          albumOrder === 0
+            ? compareStrings(
+                rootState.albums.albums[a1.album_id].release,
+                rootState.albums.albums[a2.album_id].release
+              )
+            : albumOrder;
+        albumOrder = albumOrder === 0 ? a2.album_id - a1.album_id : albumOrder;
         return albumOrder === 0 ? a1.number - a2.number : albumOrder;
       });
     },
@@ -114,10 +138,19 @@ export default {
       return getters.tracks
         .filter(t => t.review_comment !== null)
         .sort((a1, a2) => {
-          const albumOrder = compareStrings(
+          let albumOrder = compareStrings(
             rootState.albums.albums[a1.album_id].title,
             rootState.albums.albums[a2.album_id].title
           );
+          albumOrder =
+            albumOrder === 0
+              ? compareStrings(
+                  rootState.albums.albums[a1.album_id].release,
+                  rootState.albums.albums[a2.album_id].release
+                )
+              : albumOrder;
+          albumOrder =
+            albumOrder === 0 ? a2.album_id - a1.album_id : albumOrder;
           return albumOrder === 0 ? a1.number - a2.number : albumOrder;
         });
     }
