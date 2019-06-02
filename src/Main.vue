@@ -12,8 +12,4 @@ a {
 .no-grow {
   flex-grow: 0;
 }
-
-.length {
-  text-align: right;
-}
 </style>

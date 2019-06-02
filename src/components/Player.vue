@@ -30,7 +30,7 @@
           <td>
             {{ albums[track.album_id].release }}
           </td>
-          <td class="length">
+          <td class="text-xs-right">
             {{ track.length | length }}
           </td>
         </tr>

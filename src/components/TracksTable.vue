@@ -24,7 +24,7 @@
       <template v-slot:items="props">
         <td>{{ props.item.number }}</td>
         <td>{{ props.item.title }}</td>
-        <td class="length">
+        <td class="text-xs-right">
           {{ props.item.length | length }}
         </td>
         <td v-if="showAlbum">
@@ -81,7 +81,8 @@ export default {
       {
         text: "Length",
         value: "length",
-        sortable: false
+        sortable: false,
+        align: "right"
       },
       {
         text: "Album",
