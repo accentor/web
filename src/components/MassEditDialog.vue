@@ -15,7 +15,9 @@
           <VSpacer></VSpacer>
           <VToolbarItems>
             <VBtn icon @click="saveTracks" :disabled="saving">
-              <VIcon>{{ saving ? "mdi-refresh mdi-spin" : "mdi-content-save" }}</VIcon>
+              <VIcon>
+                {{ saving ? "mdi-refresh mdi-spin" : "mdi-content-save" }}
+              </VIcon>
             </VBtn>
           </VToolbarItems>
         </VToolbar>
