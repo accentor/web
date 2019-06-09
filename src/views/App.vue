@@ -29,7 +29,7 @@
           </VListTileContent>
         </VListTile>
         <VDivider />
-        <VListTile :to="{ name: 'artists' }" exact>
+        <VListTile :to="{ name: 'artists' }">
           <VListTileAction>
             <VIcon>mdi-artist</VIcon>
           </VListTileAction>
@@ -37,7 +37,7 @@
             <VListTileTitle>Artists</VListTileTitle>
           </VListTileContent>
         </VListTile>
-        <VListTile :to="{ name: 'albums' }" exact>
+        <VListTile :to="{ name: 'albums' }">
           <VListTileAction>
             <VIcon>mdi-album</VIcon>
           </VListTileAction>
@@ -45,7 +45,7 @@
             <VListTileTitle>Albums</VListTileTitle>
           </VListTileContent>
         </VListTile>
-        <VListTile :to="{ name: 'tracks' }" exact>
+        <VListTile :to="{ name: 'tracks' }">
           <VListTileAction>
             <VIcon>mdi-music</VIcon>
           </VListTileAction>
@@ -53,7 +53,7 @@
             <VListTileTitle>Tracks</VListTileTitle>
           </VListTileContent>
         </VListTile>
-        <VListTile :to="{ name: 'genres' }" exact>
+        <VListTile :to="{ name: 'genres' }">
           <VListTileAction>
             <VIcon>mdi-guitar-acoustic</VIcon>
           </VListTileAction>
@@ -61,7 +61,7 @@
             <VListTileTitle>Genres</VListTileTitle>
           </VListTileContent>
         </VListTile>
-        <VListTile :to="{ name: 'labels' }" exact>
+        <VListTile :to="{ name: 'labels' }">
           <VListTileAction>
             <VIcon>mdi-label</VIcon>
           </VListTileAction>
@@ -69,16 +69,16 @@
             <VListTileTitle>Labels</VListTileTitle>
           </VListTileContent>
         </VListTile>
-        <VListTile :to="{ name: 'rescan' }" exact v-if="isModerator">
+        <VListTile :to="{ name: 'library' }" v-if="isModerator">
           <VListTileAction>
-            <VIcon>mdi-refresh</VIcon>
+            <VIcon>mdi-tune</VIcon>
           </VListTileAction>
           <VListTileContent>
-            <VListTileTitle>Rescan</VListTileTitle>
+            <VListTileTitle>Library settings</VListTileTitle>
           </VListTileContent>
         </VListTile>
         <VDivider />
-        <VListTile :to="{ name: 'flags' }" exact v-if="isModerator">
+        <VListTile :to="{ name: 'flags' }" v-if="isModerator">
           <VListTileAction>
             <VIcon>mdi-flag</VIcon>
           </VListTileAction>
@@ -111,7 +111,6 @@
             name: 'settings',
             query: { redirect: $route.fullPath }
           }"
-          exact
         >
           <VListTileAction>
             <VIcon>mdi-settings</VIcon>
@@ -174,6 +173,11 @@ export default {
           const promises = [];
           if (this.isModerator) {
             promises.push(this.$store.dispatch("rescan/show"));
+            promises.push(this.$store.dispatch("codecs/index"));
+            promises.push(this.$store.dispatch("codecConversions/index"));
+            promises.push(this.$store.dispatch("coverFilenames/index"));
+            promises.push(this.$store.dispatch("imageTypes/index"));
+            promises.push(this.$store.dispatch("locations/index"));
           }
           return Promise.all(promises);
         }),

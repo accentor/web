@@ -47,7 +47,7 @@ export default {
     };
   },
   created() {
-    setTimeout(() => {
+    this.$nextTick(() => {
       if (this.user) {
         this.fillValues();
       }

@@ -137,7 +137,7 @@ export default {
     };
   },
   created() {
-    setTimeout(() => {
+    this.$nextTick(() => {
       if (this.track) {
         this.fillValues();
       }

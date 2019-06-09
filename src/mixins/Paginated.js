@@ -9,7 +9,7 @@ export default {
   },
   created() {
     const page = parseInt(this.$route.query.page);
-    setTimeout(() => {
+    this.$nextTick(() => {
       if (this.savePagination === undefined || this.savePagination) {
         this.pagination.page = page;
       }

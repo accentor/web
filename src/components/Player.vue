@@ -119,7 +119,7 @@ export default {
   },
   created() {
     this.intervalId = setInterval(this.checkTime, 100);
-    setTimeout(() =>
+    this.$nextTick(() =>
       this.$refs.audio.addEventListener("ended", () => {
         this.trackEnded();
       })

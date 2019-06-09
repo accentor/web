@@ -9,7 +9,7 @@ export default {
   },
   created() {
     const search = this.$route.query.search;
-    setTimeout(() => {
+    this.$nextTick(() => {
       if (this.saveSearch) {
         this.search = search;
       }

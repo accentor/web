@@ -205,7 +205,7 @@ export default {
     };
   },
   created() {
-    setTimeout(() => {
+    this.$nextTick(() => {
       if (this.album) {
         this.fillValues();
       }
