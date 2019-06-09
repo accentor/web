@@ -59,6 +59,7 @@ export default {
     }
   },
   getters: {
-    locations: state => Object.values(state.locations)
+    locations: state =>
+      Object.values(state.locations).sort((l1, l2) => l1.id - l2.id)
   }
 };
