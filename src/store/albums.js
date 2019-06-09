@@ -114,6 +114,16 @@ export default {
         .sort((a1, a2) =>
           compareStrings(a1.title.toLowerCase(), a2.title.toLowerCase())
         );
+    },
+    albumsOnThisDay: (state, getters) => {
+      const today = new Date().toISOString().slice(5, 10);
+      return getters.albums
+        .filter(r => `${r.release.slice(-5)}` === today)
+        .sort(
+          (a1, a2) =>
+            compareStrings(a1.release, a2.release) ||
+            compareStrings(a1.title.toLowerCase(), a2.title.toLowerCase())
+        );
     }
   }
 };
