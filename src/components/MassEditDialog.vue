@@ -2,8 +2,9 @@
   <div>
     <VDialog v-model="dialog" fullscreen scrollable>
       <template v-slot:activator="{ on }">
-        <VBtn icon v-on="on">
-          <VIcon>mdi-pencil</VIcon>
+        <VBtn v-on="on" :disabled="tracks.length === 0">
+          Edit {{ tracks.length }}
+          {{ tracks.length === 1 ? "track" : "tracks" }}
         </VBtn>
       </template>
       <VCard>
@@ -11,7 +12,10 @@
           <VBtn icon dark @click="dialog = false">
             <VIcon>mdi-close</VIcon>
           </VBtn>
-          <VToolbarTitle>Mass edit {{ tracks.length }} tracks</VToolbarTitle>
+          <VToolbarTitle>
+            Edit {{ tracks.length }}
+            {{ tracks.length === 1 ? "track" : "tracks" }}
+          </VToolbarTitle>
           <VSpacer></VSpacer>
           <VToolbarItems>
             <VBtn icon @click="saveTracks" :disabled="saving">
@@ -23,6 +27,51 @@
         </VToolbar>
         <div style="overflow-y: auto; backface-visibility: hidden">
           <VContainer>
+            <Errors />
+            <VContainer
+              fluid
+              grid-list-md
+              v-if="tracks.filter(t => t.review_comment !== null).length > 0"
+            >
+              <VLayout>
+                <VFlex xs12>
+                  <VCheckbox v-model="showReviewComments">
+                    <template v-slot:label>
+                      <span class="black--text">Show review comments</span>
+                    </template>
+                  </VCheckbox>
+                </VFlex>
+              </VLayout>
+              <VLayout>
+                <VFlex xs12>
+                  <VAlert
+                    :value="showReviewComments"
+                    type="warning"
+                    icon="mdi-flag"
+                  >
+                    <table class="review-comment-table">
+                      <tr
+                        v-for="t of tracks.filter(
+                          tr => tr.review_comment !== null
+                        )"
+                        :key="t.id"
+                      >
+                        <td class="text-xs-right">
+                          <strong>{{ t.number }}</strong>
+                        </td>
+                        <td>
+                          <strong>{{ t.title }}</strong>
+                        </td>
+                        <td>{{ t.review_comment }}</td>
+                      </tr>
+                    </table>
+                  </VAlert>
+                </VFlex>
+              </VLayout>
+            </VContainer>
+            <VDivider
+              v-if="tracks.filter(t => t.review_comment !== null).length > 0"
+            />
             <VContainer fluid grid-list-md>
               <VLayout>
                 <VFlex xs12 sm6>
@@ -37,7 +86,7 @@
                     v-model="number.amount"
                     label="Amount"
                     type="number"
-                    :disabled="!number.enabled"
+                    v-if="number.enabled"
                   />
                 </VFlex>
               </VLayout>
@@ -56,7 +105,7 @@
                   <VCheckbox
                     v-model="titleReplacement.regex"
                     label="Use regular expressions"
-                    :disabled="!titleReplacement.enabled"
+                    v-if="titleReplacement.enabled"
                   />
                 </VFlex>
               </VLayout>
@@ -65,14 +114,14 @@
                   <VTextField
                     label="Search"
                     v-model="titleReplacement.search"
-                    :disabled="!titleReplacement.enabled"
+                    v-if="titleReplacement.enabled"
                   />
                 </VFlex>
                 <VFlex xs12 sm6>
                   <VTextField
                     label="Replace"
                     v-model="titleReplacement.replace"
-                    :disabled="!titleReplacement.enabled"
+                    v-if="titleReplacement.enabled"
                   />
                 </VFlex>
               </VLayout>
@@ -94,7 +143,7 @@
                     item-value="id"
                     label="Album"
                     v-model="album.album"
-                    :disabled="!album.enabled"
+                    v-if="album.enabled"
                   />
                 </VFlex>
               </VLayout>
@@ -111,9 +160,9 @@
                 </VFlex>
                 <VFlex xs12 sm6>
                   <VCheckbox
-                    v-model="changeGenres.add"
-                    label="Add genres instead of replacing"
-                    :disabled="!changeGenres.enabled"
+                    v-model="changeGenres.replace"
+                    label="Replace genres instead of adding"
+                    v-if="changeGenres.enabled"
                   />
                 </VFlex>
               </VLayout>
@@ -130,7 +179,7 @@
                     multiple
                     return-object
                     v-model="changeGenres.genres"
-                    :disabled="!changeGenres.enabled"
+                    v-if="changeGenres.enabled"
                   />
                 </VFlex>
               </VLayout>
@@ -147,9 +196,9 @@
                 </VFlex>
                 <VFlex xs12 sm6>
                   <VCheckbox
-                    v-model="changeArtists.add"
-                    label="Add artists instead of replacing"
-                    :disabled="!changeArtists.enabled"
+                    v-model="changeArtists.replace"
+                    label="Replace artists instead of adding"
+                    v-if="changeArtists.enabled"
                   />
                 </VFlex>
               </VLayout>
@@ -158,12 +207,12 @@
                 row
                 v-for="(item, index) of changeArtists.track_artists"
               >
-                <VLayout column class="no-grow">
+                <VLayout column class="no-grow" v-if="changeArtists.enabled">
                   <VBtn
                     @click="moveArtist(index, -1)"
                     icon
                     small
-                    :disabled="index === 0 || !changeArtists.enabled"
+                    :disabled="index === 0"
                   >
                     <VIcon>mdi-menu-up</VIcon>
                   </VBtn>
@@ -171,23 +220,15 @@
                     @click="moveArtist(index, 1)"
                     icon
                     small
-                    :disabled="
-                      index === changeArtists.track_artists.length - 1 ||
-                        !changeArtists.enabled
-                    "
+                    :disabled="index === changeArtists.track_artists.length - 1"
                   >
                     <VIcon>mdi-menu-down</VIcon>
                   </VBtn>
-                  <VBtn
-                    @click="removeArtist(index)"
-                    icon
-                    small
-                    :disabled="!changeArtists.enabled"
-                  >
+                  <VBtn @click="removeArtist(index)" icon small>
                     <VIcon>mdi-close</VIcon>
                   </VBtn>
                 </VLayout>
-                <VLayout column>
+                <VLayout column v-if="changeArtists.enabled">
                   <VCombobox
                     :items="sortedArtists"
                     item-text="name"
@@ -195,18 +236,12 @@
                     label="Artist"
                     return-object
                     v-model="item.artist_id"
-                    :disabled="!changeArtists.enabled"
                   />
-                  <VTextField
-                    label="Name"
-                    v-model="item.name"
-                    :disabled="!changeArtists.enabled"
-                  />
+                  <VTextField label="Name" v-model="item.name" />
                   <VAutocomplete
                     :items="roles"
                     label="Role"
                     v-model="item.role"
-                    :disabled="!changeArtists.enabled"
                   />
                   <VDivider
                     light
@@ -217,7 +252,7 @@
               <VBtn
                 @click="addArtist"
                 color="success"
-                :disabled="!changeArtists.enabled"
+                v-if="changeArtists.enabled"
               >
                 Add artist
               </VBtn>
@@ -243,9 +278,11 @@
 
 <script>
 import { mapActions, mapGetters, mapState } from "vuex";
+import Errors from "./Errors";
 
 export default {
   name: "MassEditDialog",
+  components: { Errors },
   props: {
     tracks: { default: () => [], type: Array }
   },
@@ -290,12 +327,12 @@ export default {
       },
       changeArtists: {
         enabled: false,
-        add: false,
+        replace: false,
         track_artists: []
       },
       changeGenres: {
         enabled: false,
-        add: false,
+        replace: false,
         genres: []
       },
       album: {
@@ -307,6 +344,7 @@ export default {
         amount: 0
       },
       clearReviewComments: false,
+      showReviewComments: false,
       saving: false
     };
   },
@@ -419,7 +457,9 @@ export default {
               }
 
               if (this.changeArtists.enabled) {
-                if (this.changeArtists.add) {
+                if (this.changeArtists.replace) {
+                  transformed.track_artists = transformedArtists;
+                } else {
                   transformedArtists.forEach(a => {
                     if (
                       transformed.track_artists.filter(
@@ -432,20 +472,18 @@ export default {
                       transformed.track_artists.push(a);
                     }
                   });
-                } else {
-                  transformed.track_artists = transformedArtists;
                 }
               }
 
               if (this.changeGenres.enabled) {
-                if (this.changeGenres.add) {
+                if (this.changeGenres.replace) {
+                  transformed.genre_ids = transformedGenres;
+                } else {
                   transformedGenres.forEach(g => {
                     if (!transformed.genre_ids.includes(g)) {
                       transformed.genre_ids.push(g);
                     }
                   });
-                } else {
-                  transformed.genre_ids = transformedGenres;
                 }
               }
 
@@ -458,8 +496,11 @@ export default {
           );
         })
         .then(() => {
-          this.saving = false;
           this.dialog = false;
+          this.resetState();
+        })
+        .finally(() => {
+          this.saving = false;
         });
     },
     addArtist() {
@@ -478,9 +519,41 @@ export default {
         0,
         this.changeArtists.track_artists.splice(index, 1)[0]
       );
+    },
+    resetState() {
+      this.titleReplacement = {
+        enabled: false,
+        search: "",
+        replace: "",
+        regex: false
+      };
+      this.changeArtists = {
+        enabled: false,
+        replace: false,
+        track_artists: []
+      };
+      this.changeGenres = {
+        enabled: false,
+        replace: false,
+        genres: []
+      };
+      this.album = {
+        enabled: false,
+        album: null
+      };
+      this.number = {
+        enabled: false,
+        amount: 0
+      };
+      this.clearReviewComments = false;
+      this.showReviewComments = false;
     }
   }
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.review-comment-table td {
+  padding: 0 0.5rem;
+}
+</style>

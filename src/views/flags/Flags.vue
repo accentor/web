@@ -45,7 +45,11 @@
         </VLayout>
         <VLayout row>
           <VFlex>
-            <TracksTable :tracks="tracks" :save-pagination="false" />
+            <TracksTable
+              :tracks="tracks"
+              :save-pagination="false"
+              :show-mass-edit="false"
+            />
           </VFlex>
         </VLayout>
       </VLayout>
