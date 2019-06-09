@@ -73,6 +73,7 @@ export default {
     }
   },
   getters: {
-    codecConversions: state => Object.values(state.codecConversions)
+    codecConversions: state =>
+      Object.values(state.codecConversions).sort((cc1, cc2) => cc1.id - cc2.id)
   }
 };
