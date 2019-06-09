@@ -1,285 +1,283 @@
 <template>
-  <div>
-    <VDialog v-model="dialog" fullscreen scrollable>
-      <template v-slot:activator="{ on }">
-        <VBtn v-on="on" :disabled="tracks.length === 0">
+  <VDialog v-model="dialog" fullscreen scrollable @update:returnValue="closed">
+    <template v-slot:activator="{ on }">
+      <VBtn v-on="on" :disabled="tracks.length === 0">
+        Edit {{ tracks.length }}
+        {{ tracks.length === 1 ? "track" : "tracks" }}
+      </VBtn>
+    </template>
+    <VCard>
+      <VToolbar dark color="primary">
+        <VBtn icon dark @click="dialog = false">
+          <VIcon>mdi-close</VIcon>
+        </VBtn>
+        <VToolbarTitle>
           Edit {{ tracks.length }}
           {{ tracks.length === 1 ? "track" : "tracks" }}
-        </VBtn>
-      </template>
-      <VCard>
-        <VToolbar dark color="primary">
-          <VBtn icon dark @click="dialog = false">
-            <VIcon>mdi-close</VIcon>
+        </VToolbarTitle>
+        <VSpacer></VSpacer>
+        <VToolbarItems>
+          <VBtn icon @click="saveTracks" :disabled="saving">
+            <VIcon>
+              {{ saving ? "mdi-refresh mdi-spin" : "mdi-content-save" }}
+            </VIcon>
           </VBtn>
-          <VToolbarTitle>
-            Edit {{ tracks.length }}
-            {{ tracks.length === 1 ? "track" : "tracks" }}
-          </VToolbarTitle>
-          <VSpacer></VSpacer>
-          <VToolbarItems>
-            <VBtn icon @click="saveTracks" :disabled="saving">
-              <VIcon>
-                {{ saving ? "mdi-refresh mdi-spin" : "mdi-content-save" }}
-              </VIcon>
-            </VBtn>
-          </VToolbarItems>
-        </VToolbar>
-        <div style="overflow-y: auto; backface-visibility: hidden">
-          <VContainer>
-            <Errors />
-            <VContainer
-              fluid
-              grid-list-md
-              v-if="tracks.filter(t => t.review_comment !== null).length > 0"
-            >
-              <VLayout>
-                <VFlex xs12>
-                  <VCheckbox v-model="showReviewComments">
-                    <template v-slot:label>
-                      <span class="black--text">Show review comments</span>
-                    </template>
-                  </VCheckbox>
-                </VFlex>
-              </VLayout>
-              <VLayout>
-                <VFlex xs12>
-                  <VAlert
-                    :value="showReviewComments"
-                    type="warning"
-                    icon="mdi-flag"
-                  >
-                    <table class="review-comment-table">
-                      <tr
-                        v-for="t of tracks.filter(
-                          tr => tr.review_comment !== null
-                        )"
-                        :key="t.id"
-                      >
-                        <td class="text-xs-right">
-                          <strong>{{ t.number }}</strong>
-                        </td>
-                        <td>
-                          <strong>{{ t.title }}</strong>
-                        </td>
-                        <td>{{ t.review_comment }}</td>
-                      </tr>
-                    </table>
-                  </VAlert>
-                </VFlex>
-              </VLayout>
-            </VContainer>
-            <VDivider
-              v-if="tracks.filter(t => t.review_comment !== null).length > 0"
-            />
-            <VContainer fluid grid-list-md>
-              <VLayout>
-                <VFlex xs12 sm6>
-                  <VCheckbox v-model="number.enabled">
-                    <template v-slot:label>
-                      <span class="black--text">Increase track numbers</span>
-                    </template>
-                  </VCheckbox>
-                </VFlex>
-                <VFlex xs12 sm6>
-                  <VTextField
-                    v-model="number.amount"
-                    label="Amount"
-                    type="number"
-                    v-if="number.enabled"
-                  />
-                </VFlex>
-              </VLayout>
-            </VContainer>
-            <VDivider />
-            <VContainer fluid grid-list-md>
-              <VLayout>
-                <VFlex xs12 sm6>
-                  <VCheckbox v-model="titleReplacement.enabled">
-                    <template v-slot:label>
-                      <span class="black--text">Title search and replace</span>
-                    </template>
-                  </VCheckbox>
-                </VFlex>
-                <VFlex xs12 sm6>
-                  <VCheckbox
-                    v-model="titleReplacement.regex"
-                    label="Use regular expressions"
-                    v-if="titleReplacement.enabled"
-                  />
-                </VFlex>
-              </VLayout>
-              <VLayout>
-                <VFlex xs12 sm6>
-                  <VTextField
-                    label="Search"
-                    v-model="titleReplacement.search"
-                    v-if="titleReplacement.enabled"
-                  />
-                </VFlex>
-                <VFlex xs12 sm6>
-                  <VTextField
-                    label="Replace"
-                    v-model="titleReplacement.replace"
-                    v-if="titleReplacement.enabled"
-                  />
-                </VFlex>
-              </VLayout>
-            </VContainer>
-            <VDivider />
-            <VContainer fluid grid-list-md>
-              <VLayout>
-                <VFlex xs12 sm6>
-                  <VCheckbox v-model="album.enabled">
-                    <template v-slot:label>
-                      <span class="black--text">Set album</span>
-                    </template>
-                  </VCheckbox>
-                </VFlex>
-                <VFlex xs12 sm6>
-                  <VAutocomplete
-                    :items="sortedAlbums"
-                    item-text="title"
-                    item-value="id"
-                    label="Album"
-                    v-model="album.album"
-                    v-if="album.enabled"
-                  />
-                </VFlex>
-              </VLayout>
-            </VContainer>
-            <VDivider />
-            <VContainer fluid grid-list-md>
-              <VLayout>
-                <VFlex xs12 sm6>
-                  <VCheckbox v-model="changeGenres.enabled">
-                    <template v-slot:label>
-                      <span class="black--text">Change genres</span>
-                    </template>
-                  </VCheckbox>
-                </VFlex>
-                <VFlex xs12 sm6>
-                  <VCheckbox
-                    v-model="changeGenres.replace"
-                    label="Replace genres instead of adding"
-                    v-if="changeGenres.enabled"
-                  />
-                </VFlex>
-              </VLayout>
-              <VLayout>
-                <VFlex xs12 sm6>
-                  <VCombobox
-                    :items="sortedGenres"
-                    cache-items
-                    chips
-                    deletable-chips
-                    item-text="name"
-                    item-value="id"
-                    label="Genre(s)"
-                    multiple
-                    return-object
-                    v-model="changeGenres.genres"
-                    v-if="changeGenres.enabled"
-                  />
-                </VFlex>
-              </VLayout>
-            </VContainer>
-            <VDivider />
-            <VContainer fluid grid-list-md>
-              <VLayout>
-                <VFlex xs12 sm6>
-                  <VCheckbox v-model="changeArtists.enabled">
-                    <template v-slot:label>
-                      <span class="black--text">Change artists</span>
-                    </template>
-                  </VCheckbox>
-                </VFlex>
-                <VFlex xs12 sm6>
-                  <VCheckbox
-                    v-model="changeArtists.replace"
-                    label="Replace artists instead of adding"
-                    v-if="changeArtists.enabled"
-                  />
-                </VFlex>
-              </VLayout>
-              <VLayout
-                :key="index"
-                row
-                v-for="(item, index) of changeArtists.track_artists"
-              >
-                <VLayout column class="no-grow" v-if="changeArtists.enabled">
-                  <VBtn
-                    @click="moveArtist(index, -1)"
-                    icon
-                    small
-                    :disabled="index === 0"
-                  >
-                    <VIcon>mdi-menu-up</VIcon>
-                  </VBtn>
-                  <VBtn
-                    @click="moveArtist(index, 1)"
-                    icon
-                    small
-                    :disabled="index === changeArtists.track_artists.length - 1"
-                  >
-                    <VIcon>mdi-menu-down</VIcon>
-                  </VBtn>
-                  <VBtn @click="removeArtist(index)" icon small>
-                    <VIcon>mdi-close</VIcon>
-                  </VBtn>
-                </VLayout>
-                <VLayout column v-if="changeArtists.enabled">
-                  <VCombobox
-                    :items="sortedArtists"
-                    item-text="name"
-                    item-value="id"
-                    label="Artist"
-                    return-object
-                    v-model="item.artist_id"
-                  />
-                  <VTextField label="Name" v-model="item.name" />
-                  <VAutocomplete
-                    :items="roles"
-                    label="Role"
-                    v-model="item.role"
-                  />
-                  <VDivider
-                    light
-                    v-if="index !== changeArtists.track_artists.length - 1"
-                  />
-                </VLayout>
-              </VLayout>
-              <VBtn
-                @click="addArtist"
-                color="success"
-                v-if="changeArtists.enabled"
-              >
-                Add artist
-              </VBtn>
-            </VContainer>
-            <VDivider
-              v-if="tracks.filter(t => t.review_comment !== null).length > 0"
-            />
-            <VContainer
-              fluid
-              grid-list-md
-              v-if="tracks.filter(t => t.review_comment !== null).length > 0"
-            >
-              <VLayout>
-                <VFlex xs12 sm6>
-                  <VCheckbox v-model="clearReviewComments">
-                    <template v-slot:label>
-                      <span class="black--text">Clear review comments</span>
-                    </template>
-                  </VCheckbox>
-                </VFlex>
-              </VLayout>
-            </VContainer>
+        </VToolbarItems>
+      </VToolbar>
+      <div style="overflow-y: auto; backface-visibility: hidden">
+        <VContainer>
+          <Errors />
+          <VContainer
+            fluid
+            grid-list-md
+            v-if="tracks.filter(t => t.review_comment !== null).length > 0"
+          >
+            <VLayout>
+              <VFlex xs12>
+                <VCheckbox v-model="showReviewComments">
+                  <template v-slot:label>
+                    <span class="black--text">Show review comments</span>
+                  </template>
+                </VCheckbox>
+              </VFlex>
+            </VLayout>
+            <VLayout>
+              <VFlex xs12>
+                <VAlert
+                  :value="showReviewComments"
+                  type="warning"
+                  icon="mdi-flag"
+                >
+                  <table class="review-comment-table">
+                    <tr
+                      v-for="t of tracks.filter(
+                        tr => tr.review_comment !== null
+                      )"
+                      :key="t.id"
+                    >
+                      <td class="text-xs-right">
+                        <strong>{{ t.number }}</strong>
+                      </td>
+                      <td>
+                        <strong>{{ t.title }}</strong>
+                      </td>
+                      <td>{{ t.review_comment }}</td>
+                    </tr>
+                  </table>
+                </VAlert>
+              </VFlex>
+            </VLayout>
           </VContainer>
-        </div>
-      </VCard>
-    </VDialog>
-  </div>
+          <VDivider
+            v-if="tracks.filter(t => t.review_comment !== null).length > 0"
+          />
+          <VContainer fluid grid-list-md>
+            <VLayout>
+              <VFlex xs12 sm6>
+                <VCheckbox v-model="number.enabled">
+                  <template v-slot:label>
+                    <span class="black--text">Increase track numbers</span>
+                  </template>
+                </VCheckbox>
+              </VFlex>
+              <VFlex xs12 sm6>
+                <VTextField
+                  v-model="number.amount"
+                  label="Amount"
+                  type="number"
+                  v-if="number.enabled"
+                />
+              </VFlex>
+            </VLayout>
+          </VContainer>
+          <VDivider />
+          <VContainer fluid grid-list-md>
+            <VLayout>
+              <VFlex xs12 sm6>
+                <VCheckbox v-model="titleReplacement.enabled">
+                  <template v-slot:label>
+                    <span class="black--text">Title search and replace</span>
+                  </template>
+                </VCheckbox>
+              </VFlex>
+              <VFlex xs12 sm6>
+                <VCheckbox
+                  v-model="titleReplacement.regex"
+                  label="Use regular expressions"
+                  v-if="titleReplacement.enabled"
+                />
+              </VFlex>
+            </VLayout>
+            <VLayout>
+              <VFlex xs12 sm6>
+                <VTextField
+                  label="Search"
+                  v-model="titleReplacement.search"
+                  v-if="titleReplacement.enabled"
+                />
+              </VFlex>
+              <VFlex xs12 sm6>
+                <VTextField
+                  label="Replace"
+                  v-model="titleReplacement.replace"
+                  v-if="titleReplacement.enabled"
+                />
+              </VFlex>
+            </VLayout>
+          </VContainer>
+          <VDivider />
+          <VContainer fluid grid-list-md>
+            <VLayout>
+              <VFlex xs12 sm6>
+                <VCheckbox v-model="album.enabled">
+                  <template v-slot:label>
+                    <span class="black--text">Set album</span>
+                  </template>
+                </VCheckbox>
+              </VFlex>
+              <VFlex xs12 sm6>
+                <VAutocomplete
+                  :items="sortedAlbums"
+                  item-text="title"
+                  item-value="id"
+                  label="Album"
+                  v-model="album.album"
+                  v-if="album.enabled"
+                />
+              </VFlex>
+            </VLayout>
+          </VContainer>
+          <VDivider />
+          <VContainer fluid grid-list-md>
+            <VLayout>
+              <VFlex xs12 sm6>
+                <VCheckbox v-model="changeGenres.enabled">
+                  <template v-slot:label>
+                    <span class="black--text">Change genres</span>
+                  </template>
+                </VCheckbox>
+              </VFlex>
+              <VFlex xs12 sm6>
+                <VCheckbox
+                  v-model="changeGenres.replace"
+                  label="Replace genres instead of adding"
+                  v-if="changeGenres.enabled"
+                />
+              </VFlex>
+            </VLayout>
+            <VLayout>
+              <VFlex xs12 sm6>
+                <VCombobox
+                  :items="sortedGenres"
+                  cache-items
+                  chips
+                  deletable-chips
+                  item-text="name"
+                  item-value="id"
+                  label="Genre(s)"
+                  multiple
+                  return-object
+                  v-model="changeGenres.genres"
+                  v-if="changeGenres.enabled"
+                />
+              </VFlex>
+            </VLayout>
+          </VContainer>
+          <VDivider />
+          <VContainer fluid grid-list-md>
+            <VLayout>
+              <VFlex xs12 sm6>
+                <VCheckbox v-model="changeArtists.enabled">
+                  <template v-slot:label>
+                    <span class="black--text">Change artists</span>
+                  </template>
+                </VCheckbox>
+              </VFlex>
+              <VFlex xs12 sm6>
+                <VCheckbox
+                  v-model="changeArtists.replace"
+                  label="Replace artists instead of adding"
+                  v-if="changeArtists.enabled"
+                />
+              </VFlex>
+            </VLayout>
+            <VLayout
+              :key="index"
+              row
+              v-for="(item, index) of changeArtists.track_artists"
+            >
+              <VLayout column class="no-grow" v-if="changeArtists.enabled">
+                <VBtn
+                  @click="moveArtist(index, -1)"
+                  icon
+                  small
+                  :disabled="index === 0"
+                >
+                  <VIcon>mdi-menu-up</VIcon>
+                </VBtn>
+                <VBtn
+                  @click="moveArtist(index, 1)"
+                  icon
+                  small
+                  :disabled="index === changeArtists.track_artists.length - 1"
+                >
+                  <VIcon>mdi-menu-down</VIcon>
+                </VBtn>
+                <VBtn @click="removeArtist(index)" icon small>
+                  <VIcon>mdi-close</VIcon>
+                </VBtn>
+              </VLayout>
+              <VLayout column v-if="changeArtists.enabled">
+                <VCombobox
+                  :items="sortedArtists"
+                  item-text="name"
+                  item-value="id"
+                  label="Artist"
+                  return-object
+                  v-model="item.artist_id"
+                />
+                <VTextField label="Name" v-model="item.name" />
+                <VAutocomplete
+                  :items="roles"
+                  label="Role"
+                  v-model="item.role"
+                />
+                <VDivider
+                  light
+                  v-if="index !== changeArtists.track_artists.length - 1"
+                />
+              </VLayout>
+            </VLayout>
+            <VBtn
+              @click="addArtist"
+              color="success"
+              v-if="changeArtists.enabled"
+            >
+              Add artist
+            </VBtn>
+          </VContainer>
+          <VDivider
+            v-if="tracks.filter(t => t.review_comment !== null).length > 0"
+          />
+          <VContainer
+            fluid
+            grid-list-md
+            v-if="tracks.filter(t => t.review_comment !== null).length > 0"
+          >
+            <VLayout>
+              <VFlex xs12 sm6>
+                <VCheckbox v-model="clearReviewComments">
+                  <template v-slot:label>
+                    <span class="black--text">Clear review comments</span>
+                  </template>
+                </VCheckbox>
+              </VFlex>
+            </VLayout>
+          </VContainer>
+        </VContainer>
+      </div>
+    </VCard>
+  </VDialog>
 </template>
 
 <script>
@@ -553,6 +551,9 @@ export default {
       };
       this.clearReviewComments = false;
       this.showReviewComments = false;
+    },
+    closed() {
+      this.$emit("close");
     }
   }
 };
