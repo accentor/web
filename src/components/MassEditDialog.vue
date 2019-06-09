@@ -257,8 +257,14 @@
                 Add artist
               </VBtn>
             </VContainer>
-            <VDivider />
-            <VContainer fluid grid-list-md>
+            <VDivider
+              v-if="tracks.filter(t => t.review_comment !== null).length > 0"
+            />
+            <VContainer
+              fluid
+              grid-list-md
+              v-if="tracks.filter(t => t.review_comment !== null).length > 0"
+            >
               <VLayout>
                 <VFlex xs12 sm6>
                   <VCheckbox v-model="clearReviewComments">
