@@ -70,6 +70,7 @@ export default {
     }
   },
   getters: {
-    coverFilenames: state => Object.values(state.coverFilenames)
+    coverFilenames: state =>
+      Object.values(state.coverFilenames).sort((cf1, cf2) => cf1.id - cf2.id)
   }
 };

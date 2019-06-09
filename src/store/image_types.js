@@ -70,6 +70,7 @@ export default {
     }
   },
   getters: {
-    imageTypes: state => Object.values(state.imageTypes)
+    imageTypes: state =>
+      Object.values(state.imageTypes).sort((i1, i2) => i1.id - i2.id)
   }
 };
