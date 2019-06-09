@@ -26,7 +26,11 @@
       ref="table"
     >
       <template v-slot:actions-prepend>
-        <MassEditDialog :tracks="selected" v-if="isModerator && showMassEdit" />
+        <MassEditDialog
+          :tracks="selected"
+          v-if="isModerator && showMassEdit"
+          @close="reloadSelected"
+        />
       </template>
       <template v-slot:headers="props">
         <tr>
@@ -151,6 +155,9 @@ export default {
   computed: {
     ...mapGetters("auth", ["isModerator"]),
     ...mapState("albums", ["albums"]),
+    ...mapState("tracks", {
+      tracksObj: "tracks"
+    }),
     filteredItems() {
       return this.customFilter(this.tracks, this.search, this.filter);
     }
@@ -171,6 +178,9 @@ export default {
       } else {
         this.selected = this.filteredItems;
       }
+    },
+    reloadSelected() {
+      this.selected = this.selected.map(s => this.tracksObj[s.id]);
     }
   }
 };
