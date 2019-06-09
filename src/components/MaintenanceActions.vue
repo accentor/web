@@ -47,7 +47,7 @@
 import { mapActions } from "vuex";
 
 export default {
-  name: "MaintanceActions",
+  name: "MaintenanceActions",
   data() {
     return {
       albumsDisabled: false,

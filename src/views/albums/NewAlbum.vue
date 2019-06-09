@@ -213,6 +213,24 @@ export default {
     removeLabel(index) {
       this.newAlbum.album_labels.splice(index, 1);
     },
+    addArtist() {
+      this.newAlbum.album_artists.push({
+        artist_id: null,
+        name: "",
+        separator: "",
+        order: 0
+      });
+    },
+    removeArtist(index) {
+      this.newAlbum.album_artists.splice(index, 1);
+    },
+    moveArtist(index, direction) {
+      this.newAlbum.album_artists.splice(
+        index + direction,
+        0,
+        this.newAlbum.album_artists.splice(index, 1)[0]
+      );
+    },
     submit() {
       const transformed = {
         title: this.newAlbum.title,

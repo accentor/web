@@ -12,7 +12,7 @@ import EditArtist from "./views/artists/EditArtist";
 import NewArtist from "./views/artists/NewArtist";
 import Home from "./views/Home";
 import Login from "./views/Login";
-import Rescan from "./views/Rescan";
+import Library from "./views/Library";
 import EditTrack from "./views/tracks/EditTrack";
 import Tracks from "./views/tracks/Tracks";
 import EditUser from "./views/users/EditUser";
@@ -119,9 +119,9 @@ const router = new Router({
           component: EditLabel
         },
         {
-          path: "rescan",
-          name: "rescan",
-          component: Rescan
+          path: "library",
+          name: "library",
+          component: Library
         },
         {
           path: "settings",

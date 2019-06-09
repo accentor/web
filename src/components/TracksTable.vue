@@ -13,6 +13,7 @@
       </VFlex>
     </VLayout>
     <VDataTable
+      v-model="selected"
       :headers="headers"
       :search="search"
       :custom-filter="customFilter"
@@ -20,13 +21,40 @@
       :items="tracks"
       :rows-per-page-items="[30]"
       :pagination.sync="pagination"
+      :select-all="isModerator && showMassEdit"
       class="elevation-3"
       ref="table"
     >
       <template v-slot:actions-prepend>
-        <MassEditDialog :tracks="filteredItems" />
+        <MassEditDialog :tracks="selected" v-if="isModerator && showMassEdit" />
       </template>
-      <template v-slot:items="props">
+      <template v-slot:headers="props">
+        <tr>
+          <th v-if="isModerator && showMassEdit" class="td-no-grow">
+            <VCheckbox
+              :input-value="props.all"
+              :value="props.all"
+              :indeterminate="props.indeterminate"
+              primary
+              hide-details
+              @click.stop="toggleAll"
+            />
+          </th>
+          <th
+            v-for="header in props.headers"
+            :key="header.text"
+            :class="[
+              header.align === 'right' ? 'text-xs-right' : 'text-xs-left'
+            ]"
+          >
+            {{ header.text }}
+          </th>
+        </tr>
+      </template>
+      <template v-slot:items="props" class="td-no-grow">
+        <td v-if="isModerator && showMassEdit">
+          <VCheckbox v-model="props.selected" primary hide-details></VCheckbox>
+        </td>
         <td>{{ props.item.number }}</td>
         <td>{{ props.item.title }}</td>
         <td class="text-xs-right">
@@ -56,7 +84,7 @@
 <script>
 import TrackActions from "./TrackActions";
 import Paginated from "../mixins/Paginated";
-import { mapState } from "vuex";
+import { mapGetters, mapState } from "vuex";
 import Searchable from "../mixins/Searchable";
 import TrackArtists from "./TrackArtists";
 import TrackGenres from "./TrackGenres";
@@ -70,7 +98,8 @@ export default {
     tracks: { default: () => [], type: Array },
     showAlbum: { default: true, type: Boolean },
     showSearch: { default: false, type: Boolean },
-    savePagination: { default: true, type: Boolean }
+    savePagination: { default: true, type: Boolean },
+    showMassEdit: { default: true, type: Boolean }
   },
   data() {
     const headers = [
@@ -116,22 +145,39 @@ export default {
     }
     return {
       headers,
-      customFilter(items, search, filter) {
-        search = search ? search.toString().toLowerCase() : "";
-        if (search.trim() === "") return items;
-
-        return items.filter(val => filter(val.title, search));
-      },
-      filter(title, search) {
-        return title.toLowerCase().indexOf(search) !== -1;
-      }
+      selected: []
     };
   },
   computed: {
+    ...mapGetters("auth", ["isModerator"]),
     ...mapState("albums", ["albums"]),
     filteredItems() {
       return this.customFilter(this.tracks, this.search, this.filter);
     }
+  },
+  methods: {
+    customFilter(items, search, filter) {
+      search = search ? search.toString().toLowerCase() : "";
+      if (search.trim() === "") return items;
+
+      return items.filter(val => filter(val.title, search));
+    },
+    filter(title, search) {
+      return title.toLowerCase().indexOf(search) !== -1;
+    },
+    toggleAll() {
+      if (this.selected.length > 0) {
+        this.selected = [];
+      } else {
+        this.selected = this.filteredItems;
+      }
+    }
   }
 };
 </script>
+
+<style scoped>
+.td-no-grow {
+  width: 1px;
+}
+</style>

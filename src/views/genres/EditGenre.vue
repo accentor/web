@@ -24,7 +24,7 @@ export default {
     };
   },
   created() {
-    setTimeout(() => {
+    this.$nextTick(() => {
       if (this.genre) {
         this.fillValues();
       }
