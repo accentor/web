@@ -53,6 +53,29 @@
     </VContainer>
     <VContainer fluid grid-list-xl>
       <VDataIterator
+        :items="albumsOnThisDay"
+        :custom-sort="releaseSort"
+        :rows-per-page-items="[numberOfItems]"
+        content-class="layout row wrap"
+      >
+        <template v-slot:header>
+          <h2>On this day</h2>
+        </template>
+        <template v-slot:no-data>
+          <v-alert :value="true" color="info" icon="mdi-info">
+            Seems like there are no releases for this day.
+          </v-alert>
+        </template>
+        <template v-slot:item="props">
+          <VFlex lg3 md4 sm6 xl2 xs12>
+            <AlbumCard :album="props.item" />
+          </VFlex>
+        </template>
+      </VDataIterator>
+    </VContainer>
+
+    <VContainer fluid grid-list-xl>
+      <VDataIterator
         :items="albums"
         :custom-sort="randomSort"
         :rows-per-page-items="[numberOfItems]"
@@ -123,6 +146,7 @@ export default {
   computed: {
     ...mapGetters({
       albums: "albums/albums",
+      albumsOnThisDay: "albums/albumsOnThisDay",
       artists: "artists/artists"
     }),
     numberOfItems() {
