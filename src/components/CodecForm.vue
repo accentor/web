@@ -4,12 +4,15 @@
       <VFlex xs6>
         <VTextField
           v-model="newCodec.extension"
-          label="Extension"
+          :label="$t('library.extension')"
           :disabled="codec !== null"
         />
       </VFlex>
       <VFlex xs5>
-        <VTextField v-model="newCodec.mimetype" label="MIME type" />
+        <VTextField
+          v-model="newCodec.mimetype"
+          :label="$t('library.mime-type')"
+        />
       </VFlex>
       <VFlex xs1>
         <VBtn
@@ -77,7 +80,7 @@ export default {
       }
     },
     deleteCodec() {
-      if (confirm("Are you sure?")) {
+      if (confirm(this.$t("common.are-you-sure"))) {
         this.destroy(this.codec.id);
       }
     }

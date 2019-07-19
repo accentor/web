@@ -16,14 +16,14 @@
               v-if="artists.length > 12"
               v-model="search"
               prepend-inner-icon="mdi-magnify"
-              label="Search"
+              :label="$t('common.search')"
               single-line
               hide-details
             />
           </VFlex>
           <VBtn :to="{ name: 'new-artist' }" color="success" v-if="isModerator">
             <VIcon left>mdi-plus</VIcon>
-            New artist
+            {{ $t("music.artist.new") }}
           </VBtn>
         </VLayout>
       </template>

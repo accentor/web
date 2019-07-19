@@ -3,23 +3,28 @@
     <VLayout align-center justify-center>
       <VFlex md4 sm8 xs12>
         <VForm @submit.prevent="submit">
-          <VTextField label="Name" v-model="newUser.name" />
           <VTextField
-            label="Password"
+            :label="$t('common.name')"
+            v-model="newUser.name"
+          />
+          <VTextField
+            :label="$t('users.passwords')"
             type="password"
             v-model="newUser.password"
           />
           <VTextField
-            label="Confirm password"
+            :label="$t('users.confirm-password')"
             type="password"
             v-model="newUser.password_confirmation"
           />
           <VSelect
             :items="permissionOptions"
-            label="Permission"
+            :label="$t('users.permissions')"
             v-model="newUser.permission"
           />
-          <VBtn color="primary" type="submit">Create user</VBtn>
+          <VBtn color="primary" type="submit">
+            {{ $t("users.create") }}
+          </VBtn>
         </VForm>
       </VFlex>
     </VLayout>
@@ -40,9 +45,9 @@ export default {
         permission: ""
       },
       permissionOptions: [
-        { text: "Admin", value: "admin" },
-        { text: "Moderator", value: "moderator" },
-        { text: "User", value: "user" }
+        { text: this.$t("users.permission.admin"), value: "admin" },
+        { text: this.$t("users.permission.moderator"), value: "moderator" },
+        { text: this.$t("users.permission.user"), value: "user" }
       ]
     };
   },

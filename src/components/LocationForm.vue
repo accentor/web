@@ -4,7 +4,7 @@
       <VFlex xs5>
         <VTextField
           v-model="newLocation.path"
-          label="Path"
+          :label="$t('library.path')"
           :disabled="location !== null"
         />
       </VFlex>
@@ -60,7 +60,7 @@ export default {
       });
     },
     deleteLocation() {
-      if (confirm("Are you sure?")) {
+      if (confirm(this.$t("common.are-you-sure"))) {
         this.destroy(this.location.id);
       }
     }

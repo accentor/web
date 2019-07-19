@@ -5,13 +5,15 @@
       <VTextField
         :value="value ? value.filename : ''"
         clearable
-        label="Image"
+        :label="$tc('image.images', 1)"
         readonly
         v-on:click:clear="clear"
       />
       <template v-slot:append>
         <VBtn @click="passthrough" color="primary" dark>
-          <slot>Choose file</slot>
+          <slot>
+            {{ $t("common.choose-file") }}
+          </slot>
         </VBtn>
       </template>
     </VInput>

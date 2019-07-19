@@ -1,0 +1,249 @@
+{
+	"$vuetify": {
+		"dataIterator": {
+			"nextPage": "Volgende pagina",
+			"noResultsText": "Geen overeenkomende resultaten gevonden",
+			"pageText": "{0}-{1} van {2}",
+			"prevPage": "Vorige pagina",
+			"rowsPerPageAll": "Alles",
+			"rowsPerPageText": "Aantal per pagina"
+		},
+		"dataTable": {
+			"rowsPerPageText": "Rijen per pagina"
+		},
+		"noDataText": "Geen gegevens beschikbaar"
+	},
+	"common": {
+		"actions": "Acties",
+		"amount": "Hoeveelheid",
+		"are-you-sure": "Ben je zeker?",
+		"as": "als",
+		"cancel": "Annuleer",
+		"change-settings": "Verander instellingen",
+		"choose-file": "Bestand kiezen",
+		"choose-image": "Afbeelding kiezen",
+		"close": "Sluiten",
+		"errors": "Fouten | Fout | Fouten",
+		"files": "Bestanden | Bestand | Bestanden",
+		"home": "Thuis",
+		"login": "Inloggen",
+		"name": "Naam",
+		"no": "Neen",
+		"ok": "Ok",
+		"replace": "Vervangen",
+		"search": "Zoeken",
+		"settings": "Instellingen",
+		"yes": "Ja"
+	},
+	"errors": {
+		"album_artists": "Album artiesten",
+		"albums": {
+			"title-blank": "Vul aub een albumtitel in."
+		},
+		"aa": {
+			"name-blank": "Vul aub een naam in.",
+			"order-blank": "Artiesten moeten een volgorde hebben."
+		},
+		"aa-separator": "Album artiesten (buiten de laatste) moeten een scheidingsteken hebben.",
+		"aa-last-no-separator": "De laatste album artiest moet geen scheidingsteken hebben.",
+		"al": {
+			"cat-blank": "Vul een catalogus nummer in."
+		},
+		"artist": "Artiest",
+		"artists": {
+			"name-blank": "Vul een artiestennaam in."
+		},
+		"base": "Base",
+		"catalogue_number": "Catalogus nummer",
+		"codec": {
+			"mime-blank": "Vul een MIMEtype in.",
+			"ext-blank": "Vul een extensie in.",
+			"ext-taken": "Deze extensie wordt al gebruikt."
+		},
+		"codecconv": {
+			"name-blank": "Vul een codecnaam in.",
+			"name-taken": "Een codec met deze naam bestaat al.",
+			"ffmepg-blank": "Vul de FFmpeg parameters in.",
+			"result-blank": "Vul een uiteindelijke codec in."
+		},
+		"exception": "Uitzondering",
+		"extension": "Extensie",
+		"ffmpeg": "FFmpeg parameters",
+		"genre": {
+			"name-blank": "Vul een naam voor het genre in.",
+			"name-taken": "Een genre met deze naam bestaat reeds."
+		},
+		"image": {
+			"mime-blank": "Vul een MIMEtype in.",
+			"ext-blank": "Vul een extensie in.",
+			"ext-taken": "Deze extensie wordt al gebruikt."
+		},
+		"label": {
+			"name-blank": "Vul een naam voor het label in."
+		},
+		"location": {
+			"path-blank": "Vul een pad in.",
+			"path-taken": "Dit pad wordt reeds gebruikt."
+		},
+		"mimetype": "MIME type",
+		"name": "Naam",
+		"not-authorized": "Je hebt geen toestemming om dit te doen",
+		"number": "Tracknummer",
+		"order": "Ordening",
+		"password": "Wachtwoord",
+		"path": "Pad",
+		"permission": "Permissie",
+		"resulting_codec": "Uiteindelijke codec",
+		"role": "Rol",
+		"status": "Status",
+		"ta": {
+			"artist-blank": "Vul een artiest in voor dit nummer.",
+			"name-blank": "Vul een naam voor de artiest in.",
+			"name-taken": "Deze naam wordt reeds gebruikt.",
+			"order-blank": "Zet de artiesten in een volgorde.",
+			"role-blank": "Geef de artiest een rol.",
+			"track-blank": "Je kan geen artiest creëren zonder naar een nummer te verwijzen."
+		},
+		"title": "Titel",
+		"track": "Nummer",
+		"tracks": {
+			"number-blank": "Vul een tracknummer in.",
+			"title-blank": "Vul een titel voor het nummer in."
+		},
+		"traces": "Sporen",
+		"unauthorized": "Onbevoegd",
+		"user": {
+			"name": "Gebruikersnaam",
+			"name-blank": "Vul een gebruikersnaam in.",
+			"password-blank": "Vul een wachtwoord in.",
+			"permission-blank": "Selecteer een permissie voor de gebruiker.",
+			"wrong-credentials": "De gebruikersnaam en het wachtwoord komen niet overeen."
+		}
+	},
+	"home": {
+		"on-this-day": "Op deze dag",
+		"on-this-day-empty": "Er zijn op deze dag geen albums uitgekomen.",
+		"random-albums": "Random albums",
+		"random-artists": "Random artiesten",
+		"recently-added-albums": "Recent toegevoegde albums",
+		"recently-added-artists": "Recent toegevoegde artiesten",
+		"recently-released": "Recent uitgebracht"
+	},
+	"image": {
+		"images": "Afbeeldingen | Afbeelding | Afbeeldingen"
+	},
+	"library": {
+		"codec-conversions": "Omzetten codecs ",
+		"codecs": "Codecs",
+		"cover-filenames": "Bestandsnamen albumhoes",
+		"delete-empty-albums": "Verwijder lege albums",
+		"delete-empty-artists": "Verwijder lege artiesten",
+		"delete-empty-genres": "Verwijder lege genres",
+		"delete-empty-labels": "Verwijder lege labels",
+		"errors": "Errors",
+		"extension": "extensie",
+		"ffmpeg-para": "FFmpeg parameters",
+		"filename": "Bestandsnaam",
+		"image-types": "Type afbeelding",
+		"locations": "Plaatsen",
+		"maintenance": "Onderhoud",
+		"mime-type": "MIME type",
+		"path": "Pad",
+		"processed": "Verwerkt",
+		"rescan": "Herscannen",
+		"resulting-codec": "Uiteindelijke codec",
+		"start-scan": "Scannen starten",
+		"warnings": "Waarschuwingen"
+	},
+	"library-settings": "Instellingen bibliotheek",
+	"music": {
+		"album": {
+			"add": "Voeg album toe",
+			"create": "Maak album aan",
+			"edition": "Editie",
+			"edition-description": "Beschrijving editie",
+			"edition-information": "Voeg informatie over deze editie toe",
+			"new": "Nieuw album",
+			"original": "Origineel",
+			"release": "Uitgave",
+			"update": "Werk album bij"
+		},
+		"albums": "Albums | Album | Albums",
+		"artist": {
+			"add": "Voeg artiest toe",
+			"artist-s": "Artiest(en)",
+			"new": "Nieuwe artiest",			
+			"role": "Rol",
+			"roles": {
+				"arranger": "Arrangeur",
+				"composer": "Componist",
+				"conductor": "Dirigent",
+				"main": "Hoofdartiest",
+				"performer": "Performer",
+				"producer": "Producent",
+				"remixer": "Remixer"
+			},
+			"separator": "Scheiding",
+			"update": "Werk artiest bij",
+			"various": "Verschillende Artiesten"
+		},
+		"artists": "Artiesten | Artiest | Artiesten",
+		"flag": {
+			"clear": "Maak opmerkingen leeg | Maak opmerking leeg | Maak opmerkingen leeg",
+			"comment": "Opmerking",
+			"for-review": "Markeer voor evaluatie",
+			"review-comments": "Opmerkingen | Opmerking | Opmerkingen",
+			"show": "Toon opmerkingen | Toon opmerking | Toon opmerkingen"
+		},
+		"flags": "Markeringen | Markering | Markeringen",
+		"genre-s": "Genre(s)",
+		"genres": "Genres | Genre | Genres",
+		"genre": {
+			"add": "Voeg genre toe",
+			"create": "Maak genre aan",
+			"new": "Nieuw genre",
+			"update": "Werk genre bij"
+		},
+		"label": {
+			"add": "Voeg label toe",
+			"catnr": "Catalogus nummer",
+			"create": "Maak label aan",
+			"new": "Nieuw label",
+			"update": "Werk label bij"
+		},
+		"labels": "Labels | Label | Labels",
+		"mass": {
+			"change-artists": "Veranderen artiesten",
+			"change-genres": "Verander genres",
+			"edit-tracks": "Pas 0 nummers aan | Pas 1 nummer aan| Pas {count} nummers aan",
+			"increase-track": "Increase track numbers",
+			"regex": "Gebruik reguliere expressie",
+			"replace-instead-artists": "Vervang artiesten in plaats van toe te voegen",
+			"replace-instead-genres": "Vervang genres in plaats van toe te voegen",
+			"set-album": "Stel album in",
+			"title-search": "Zoek en vervang in titel"
+		},
+		"titles": "Titel",
+		"track": {
+			"length": "Lengte",
+			"number": "Tracknummer",
+			"update": "Werk nummer bij"
+		},
+		"tracks": "Nummers | Nummer | Nummers"
+	},
+	"search": "Zoeken",
+	"users": {
+		"confirm-password": "Bevestig wachtwoord",
+		"create": "Maak gebruiker aan",
+		"name": "Naam",
+		"new": "Nieuwe gebruiker",
+		"passwords": "Wachtwoord",
+		"permission": {
+			"admin": "Admin",
+			"moderator": "Moderator",
+			"user": "Gebruiker"
+		},
+		"permissions": "Machtgingen",
+		"users": "Gebruikers | Gebruiker | Gebruikers"
+	}
+}

@@ -2,19 +2,38 @@
   <VContainer fill-height fluid v-if="user">
     <VLayout align-center justify-center>
       <VFlex md4 sm8 xs12>
-        <VForm @submit.prevent="submit">
-          <VTextField label="Name" v-model="newUser.name" />
+        <VForm @submit.prevent="submitLocale">
+          <VSelect
+            v-model="newLocale"
+            :items="langs"
+            label="Language"
+          ></VSelect>
+          <VBtn color="primary" type="submit">
+            {{ $t("common.change-settings") }}
+          </VBtn>
+        </VForm>
+      </VFlex>
+    </VLayout>
+    <VLayout align-center justify-center>
+      <VFlex md4 sm8 xs12>
+        <VForm @submit.prevent="submitPassword">
           <VTextField
-            label="Password"
+            :label="$t('common.name')"
+            v-model="newUser.name"
+          />
+          <VTextField
+            :label="$t('users.passwords')"
             type="password"
             v-model="newUser.password"
           />
           <VTextField
-            label="Confirm password"
+            :label="$t('users.confirm-password')"
             type="password"
             v-model="newUser.password_confirmation"
           />
-          <VBtn color="primary" type="submit">Change settings</VBtn>
+          <VBtn color="primary" type="submit">
+            {{ $t("common.change-settings") }}
+          </VBtn>
         </VForm>
       </VFlex>
     </VLayout>
@@ -22,7 +41,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
+import { mapActions, mapGetters, mapMutations, mapState } from "vuex";
 
 export default {
   name: "Settings",
@@ -32,32 +51,45 @@ export default {
         name: "",
         password: "",
         password_confirmation: ""
-      }
+      },
+      newLocale: "",
+      langs: [
+        { value: "en", text: "English" },
+        { value: "nl", text: "Nederlands" }
+      ]
     };
   },
   created() {
     this.$nextTick(() => {
-      if (this.user) {
-        this.fillValues();
-      }
+      this.fillValues();
     });
   },
   watch: {
-    user: function() {
-      if (this.user) {
-        this.fillValues();
-      }
+    user() {
+      this.fillValues();
+    },
+    locale() {
+      this.fillValues();
     }
   },
   computed: {
-    ...mapGetters("auth", { user: "currentUser" })
+    ...mapGetters("auth", { user: "currentUser" }),
+    ...mapState("userSettings", ["locale"])
   },
   methods: {
     ...mapActions("users", ["update"]),
+
+    ...mapMutations("userSettings", ["setLocale"]),
     fillValues() {
-      this.newUser.name = this.user.name;
+      if (this.user) this.newUser.name = this.user.name;
+      if (this.locale) this.newLocale = this.locale;
     },
-    submit() {
+    submitLocale: function() {
+      this.setLocale({
+        locale: this.newLocale
+      });
+    },
+    submitPassword() {
       this.update({ id: this.user.id, newUser: this.newUser }).then(
         succeeded => {
           if (succeeded) {

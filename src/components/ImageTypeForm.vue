@@ -4,12 +4,15 @@
       <VFlex xs6>
         <VTextField
           v-model="newImageType.extension"
-          label="Extension"
+          :label="$t('library.extension')"
           :disabled="imageType !== null"
         />
       </VFlex>
       <VFlex xs5>
-        <VTextField v-model="newImageType.mimetype" label="MIME type" />
+        <VTextField
+          v-model="newImageType.mimetype"
+          :label="$t('library.mime-type')"
+        />
       </VFlex>
       <VFlex xs1>
         <VBtn
@@ -83,7 +86,7 @@ export default {
       }
     },
     deleteImageType() {
-      if (confirm("Are you sure?")) {
+      if (confirm(this.$t("common.are-you-sure"))) {
         this.destroy(this.imageType.id);
       }
     }

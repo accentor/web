@@ -3,7 +3,7 @@
     <VContainer fluid grid-list-xl>
       <VLayout row>
         <VFlex>
-          <h2>Artists</h2>
+          <h2>{{ $tc("music.artists", 2) }}</h2>
         </VFlex>
       </VLayout>
       <VDataIterator
@@ -21,7 +21,7 @@
     <VContainer fluid grid-list-xl>
       <VLayout row>
         <VFlex>
-          <h2>Albums</h2>
+          <h2>{{ $tc("music.albums", 2) }}</h2>
         </VFlex>
       </VLayout>
       <VDataIterator
@@ -40,7 +40,7 @@
       <VLayout column>
         <VLayout row>
           <VFlex>
-            <h2>Tracks</h2>
+            <h2>{{ $tc("music.tracks", 2) }}</h2>
           </VFlex>
         </VLayout>
         <VLayout row>

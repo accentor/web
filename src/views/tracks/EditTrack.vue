@@ -10,13 +10,20 @@
           {{ track.review_comment }}
         </VAlert>
         <VForm @submit.prevent="submit">
-          <VTextField type="number" label="Number" v-model="newTrack.number" />
-          <VTextField label="Title" v-model="newTrack.title" />
+          <VTextField
+            type="number"
+            :label="$t('music.track.number')"
+            v-model="newTrack.number"
+          />
+          <VTextField
+            :label="$t('music.title')"
+            v-model="newTrack.title"
+          />
           <VAutocomplete
             :items="sortedAlbums"
             item-text="title"
             item-value="id"
-            label="Album"
+            :label="$tc('music.albums', 1)"
             v-model="newTrack.album_id"
           />
           <VCombobox
@@ -26,12 +33,12 @@
             deletable-chips
             item-text="name"
             item-value="id"
-            label="Genre(s)"
+            :label="$t('music.genre-s')"
             multiple
             return-object
             v-model="newTrack.genre_ids"
           />
-          <h4>Artists</h4>
+          <h4>{{ $tc("music.artists", 2) }}</h4>
           <VLayout
             :key="index"
             row
@@ -63,24 +70,35 @@
                 :items="sortedArtists"
                 item-text="name"
                 item-value="id"
-                label="Artist"
+                :label="$tc('music.artists', 1)"
                 return-object
                 v-model="item.artist_id"
               />
-              <VTextField label="Name" v-model="item.name" />
-              <VAutocomplete :items="roles" label="Role" v-model="item.role" />
+              <VTextField
+                :label="$t('common.name')"
+                v-model="item.name"
+              />
+              <VAutocomplete
+                :items="roles"
+                :label="$t('music.artist.role')"
+                v-model="item.role"
+              />
               <VDivider v-if="index !== newTrack.track_artists.length - 1" />
             </VLayout>
           </VLayout>
           <VCheckbox
             v-if="track.review_comment !== null"
             v-model="clear_review_comment"
-            label="Clear review comment"
+            :label="$tc('music.flag.clear', 1)"
           />
           <VLayout row>
-            <VBtn color="primary" type="submit">Update track</VBtn>
+            <VBtn color="primary" type="submit">
+              {{ $t("music.track.update") }}
+            </VBtn>
             <VSpacer />
-            <VBtn @click="addArtist" color="success">Add artist</VBtn>
+            <VBtn @click="addArtist" color="success">
+              {{ $t("music.artist.add") }}
+            </VBtn>
           </VLayout>
         </VForm>
       </VFlex>
@@ -106,31 +124,31 @@ export default {
       roles: [
         {
           value: "main",
-          text: "Main"
+          text: this.$t("music.artist.roles.main")
         },
         {
           value: "performer",
-          text: "Performer"
+          text: this.$t("music.artist.roles.performer")
         },
         {
           value: "composer",
-          text: "Composer"
+          text: this.$t("music.artist.roles.composer")
         },
         {
           value: "conductor",
-          text: "Conductor"
+          text: this.$t("music.artist.roles.conductor")
         },
         {
           value: "remixer",
-          text: "Remixer"
+          text: this.$t("music.artist.roles.remixer")
         },
         {
           value: "producer",
-          text: "Producer"
+          text: this.$t("music.artist.roles.producer")
         },
         {
           value: "arranger",
-          text: "Arranger"
+          text: this.$t("music.artist.roles.arranger")
         }
       ],
       clear_review_comment: true
