@@ -15,10 +15,7 @@
             :label="$t('music.track.number')"
             v-model="newTrack.number"
           />
-          <VTextField
-            :label="$t('music.title')"
-            v-model="newTrack.title"
-          />
+          <VTextField :label="$t('music.title')" v-model="newTrack.title" />
           <VAutocomplete
             :items="sortedAlbums"
             item-text="title"
@@ -74,10 +71,7 @@
                 return-object
                 v-model="item.artist_id"
               />
-              <VTextField
-                :label="$t('common.name')"
-                v-model="item.name"
-              />
+              <VTextField :label="$t('common.name')" v-model="item.name" />
               <VAutocomplete
                 :items="roles"
                 :label="$t('music.artist.role')"

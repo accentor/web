@@ -3,10 +3,7 @@
     <VLayout align-center justify-center>
       <VFlex md4 sm8 xs12>
         <VForm @submit.prevent="submit">
-          <VTextField
-            :label="$t('common.name')"
-            v-model="newLabel.name"
-          />
+          <VTextField :label="$t('common.name')" v-model="newLabel.name" />
           <VBtn color="primary" type="submit">
             {{ $t("music.label.update") }}
           </VBtn>

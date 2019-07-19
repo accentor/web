@@ -257,10 +257,7 @@
                   return-object
                   v-model="item.artist_id"
                 />
-                <VTextField
-                  :label="$t('common.name')"
-                  v-model="item.name"
-                />
+                <VTextField :label="$t('common.name')" v-model="item.name" />
                 <VAutocomplete
                   :items="roles"
                   :label="$t('music.artist.role')"
@@ -293,7 +290,12 @@
                 <VCheckbox v-model="clearReviewComments">
                   <template v-slot:label>
                     <span class="black--text">
-                      {{ $tc("music.flag.clear", tracks.filter(t => t.review_comment !== null).length) }}
+                      {{
+                        $tc(
+                          "music.flag.clear",
+                          tracks.filter(t => t.review_comment !== null).length
+                        )
+                      }}
                     </span>
                   </template>
                 </VCheckbox>
