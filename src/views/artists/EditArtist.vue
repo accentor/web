@@ -10,10 +10,7 @@
           {{ artist.review_comment }}
         </VAlert>
         <VForm @submit.prevent="submit">
-          <VTextField
-            :label="$t('common.name')"
-            v-model="newArtist.name"
-          />
+          <VTextField :label="$t('common.name')" v-model="newArtist.name" />
           <FilePicker v-model="newArtist.image">
             {{ $t("common.choose-image") }}
           </FilePicker>

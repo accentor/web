@@ -17,10 +17,7 @@
     <VLayout align-center justify-center>
       <VFlex md4 sm8 xs12>
         <VForm @submit.prevent="submitPassword">
-          <VTextField
-            :label="$t('common.name')"
-            v-model="newUser.name"
-          />
+          <VTextField :label="$t('common.name')" v-model="newUser.name" />
           <VTextField
             :label="$t('users.passwords')"
             type="password"

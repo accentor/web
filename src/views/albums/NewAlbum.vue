@@ -3,10 +3,7 @@
     <VLayout align-center justify-center>
       <VFlex lg6 sm8 xs12>
         <VForm @submit.prevent="submit">
-          <VTextField
-            :label="$t('music.title')"
-            v-model="newAlbum.title"
-          />
+          <VTextField :label="$t('music.title')" v-model="newAlbum.title" />
           <VDialog
             ref="dialogOriginal"
             v-model="originalModal"
@@ -129,10 +126,7 @@
                 return-object
                 v-model="item.artist_id"
               />
-              <VTextField
-                :label="$t('common.name')"
-                v-model="item.name"
-              />
+              <VTextField :label="$t('common.name')" v-model="item.name" />
               <VTextField
                 :label="$t('music.artist.separator')"
                 v-model="item.separator"
