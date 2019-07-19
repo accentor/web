@@ -8,7 +8,7 @@
       <VIcon left>
         {{ artistsDisabled ? "mdi-refresh mdi-spin" : "mdi-alert-octagon" }}
       </VIcon>
-      Delete empty artists
+      {{ $t("library.delete-empty-artists") }}
     </VBtn>
     <VBtn
       @click="destroyEmptyAlbums"
@@ -18,7 +18,7 @@
       <VIcon left>
         {{ albumsDisabled ? "mdi-refresh mdi-spin" : "mdi-alert-octagon" }}
       </VIcon>
-      Delete empty albums
+      {{ $t("library.delete-empty-albums") }}
     </VBtn>
     <VBtn
       @click="destroyEmptyGenres"
@@ -28,7 +28,7 @@
       <VIcon left>
         {{ genresDisabled ? "mdi-refresh mdi-spin" : "mdi-alert-octagon" }}
       </VIcon>
-      Delete empty genres
+      {{ $t("library.delete-empty-genres") }}
     </VBtn>
     <VBtn
       @click="destroyEmptyLabels"
@@ -38,7 +38,7 @@
       <VIcon left>
         {{ labelsDisabled ? "mdi-refresh mdi-spin" : "mdi-alert-octagon" }}
       </VIcon>
-      Delete empty labels
+      {{ $t("library.delete-empty-labels") }}
     </VBtn>
   </span>
 </template>
@@ -64,7 +64,7 @@ export default {
       destroyLabels: "labels/destroyEmpty"
     }),
     destroyEmptyArtists: function() {
-      if (confirm("Are you sure?")) {
+      if (confirm(this.$t("common.are-you-sure"))) {
         this.artistsDisabled = true;
         this.destroyArtists().finally(() => {
           this.artistsDisabled = false;
@@ -72,7 +72,7 @@ export default {
       }
     },
     destroyEmptyAlbums: function() {
-      if (confirm("Are you sure?")) {
+      if (confirm(this.$t("common.are-you-sure"))) {
         this.albumsDisabled = true;
         this.destroyAlbums().finally(() => {
           this.albumsDisabled = false;
@@ -80,7 +80,7 @@ export default {
       }
     },
     destroyEmptyGenres: function() {
-      if (confirm("Are you sure?")) {
+      if (confirm(this.$t("common.are-you-sure"))) {
         this.genresDisabled = true;
         this.destroyGenres().finally(() => {
           this.genresDisabled = false;
@@ -88,7 +88,7 @@ export default {
       }
     },
     destroyEmptyLabels: function() {
-      if (confirm("Are you sure?")) {
+      if (confirm(this.$t("common.are-you-sure"))) {
         this.labelsDisabled = true;
         this.destroyLabels().finally(() => {
           this.labelsDisabled = false;

@@ -54,7 +54,7 @@ export default {
   methods: {
     ...mapActions("albums", ["destroy", "update"]),
     deleteAlbum: function() {
-      if (confirm("Are you sure?")) {
+      if (confirm(this.$t("common.are-you-sure"))) {
         this.destroy(this.album.id);
       }
     },

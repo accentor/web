@@ -1,7 +1,7 @@
 <template>
   <VContainer fill-height fluid v-if="album">
     <VLayout align-center justify-center>
-      <VFlex md4 sm8 xs12>
+      <VFlex lg6 sm8 xs12>
         <VAlert
           :value="album.review_comment !== null"
           type="warning"
@@ -10,7 +10,10 @@
           {{ album.review_comment }}
         </VAlert>
         <VForm @submit.prevent="submit">
-          <VTextField label="Title" v-model="newAlbum.title" />
+          <VTextField
+            :label="$t('music.title')"
+            v-model="newAlbum.title"
+          />
           <VDialog
             ref="dialogOriginal"
             v-model="originalModal"
@@ -23,7 +26,7 @@
             <template v-slot:activator="{ on }">
               <VTextField
                 v-model="newAlbum.release"
-                label="Release"
+                :label="$t('music.album.release')"
                 readonly
                 v-on="on"
               ></VTextField>
@@ -32,23 +35,24 @@
               v-model="newAlbum.release"
               scrollable
               :first-day-of-week="1"
+              :locale="locale"
             >
               <VSpacer></VSpacer>
               <VBtn flat color="primary" @click="originalModal = false">
-                Cancel
+                {{ $t("common.cancel") }}
               </VBtn>
               <VBtn
                 flat
                 color="primary"
                 @click="$refs.dialogOriginal.save(newAlbum.release)"
               >
-                OK
+                {{ $t("common.ok") }}
               </VBtn>
             </VDatePicker>
           </VDialog>
           <VCheckbox
             v-model="editionInformation"
-            label="Add edition information"
+            :label="$t('music.album.edition-information')"
           />
           <VDialog
             ref="dialogEdition"
@@ -63,7 +67,7 @@
             <template v-slot:activator="{ on }">
               <VTextField
                 v-model="newAlbum.edition"
-                label="Edition"
+                :label="$t('music.album.edition')"
                 readonly
                 v-on="on"
                 clearable
@@ -73,27 +77,30 @@
               v-model="newAlbum.edition"
               scrollable
               :first-day-of-week="1"
+              :locale="locale"
             >
               <VSpacer></VSpacer>
               <VBtn flat color="primary" @click="editionModal = false">
-                Cancel
+                {{ $t("common.cancel") }}
               </VBtn>
               <VBtn
                 flat
                 color="primary"
                 @click="$refs.dialogEdition.save(newAlbum.edition)"
               >
-                OK
+                {{ $t("common.ok") }}
               </VBtn>
             </VDatePicker>
           </VDialog>
           <VTextField
-            label="Edition Description"
+            :label="$t('music.album.edition-description')"
             v-model="newAlbum.edition_description"
             v-if="editionInformation"
             clearable
           />
-          <FilePicker v-model="newAlbum.image">Choose image</FilePicker>
+          <FilePicker v-model="newAlbum.image">
+            {{ $t("common.choose-image") }}
+          </FilePicker>
           <VLayout
             :key="`artist-${index}`"
             row
@@ -125,19 +132,22 @@
                 :items="sortedArtists"
                 item-text="name"
                 item-value="id"
-                label="Artist"
+                :label="$tc('music.artists', 1)"
                 return-object
                 v-model="item.artist_id"
               />
-              <VTextField label="Name" v-model="item.name" />
               <VTextField
-                label="Separator"
+                :label="$t('common.name')"
+                v-model="item.name"
+              />
+              <VTextField
+                :label="$t('music.artist.separator')"
                 v-model="item.separator"
                 v-if="index !== newAlbum.album_artists.length - 1"
               />
             </VLayout>
           </VLayout>
-          <h4>Labels</h4>
+          <h4>{{ $tc("music.labels", 2) }}</h4>
           <VLayout
             :key="`label-${index}`"
             row
@@ -151,12 +161,12 @@
                 :items="sortedLabels"
                 item-text="name"
                 item-value="id"
-                label="Label"
+                :label="$tc('music.labels', 1)"
                 return-object
                 v-model="item.label_id"
               />
               <VTextField
-                label="Catalogue number"
+                :label="$t('music.label.catnr')"
                 v-model="item.catalogue_number"
               />
               <VDivider v-if="index !== newAlbum.album_labels.length - 1" />
@@ -165,13 +175,19 @@
           <VCheckbox
             v-if="album.review_comment !== null"
             v-model="clear_review_comment"
-            label="Clear review comment"
+            :label="$tc('music.flag.clear', 1)"
           />
-          <VLayout row>
-            <VBtn color="primary" type="submit">Update album</VBtn>
+          <VLayout row justify-center>
+            <VBtn color="primary" type="submit">
+              {{ $t("music.album.update") }}
+            </VBtn>
             <VSpacer />
-            <VBtn @click="addArtist" color="success">Add artist</VBtn>
-            <VBtn @click="addLabel" color="success">Add label</VBtn>
+            <VBtn @click="addArtist" color="success">
+              {{ $t("music.artist.add") }}
+            </VBtn>
+            <VBtn @click="addLabel" color="success">
+              {{ $t("music.label.add") }}
+            </VBtn>
           </VLayout>
         </VForm>
       </VFlex>
@@ -222,6 +238,7 @@ export default {
     ...mapState("artists", ["artists"]),
     ...mapState("labels", ["labels"]),
     ...mapState("albums", ["albums"]),
+    ...mapState("userSettings", ["locale"]),
     ...mapGetters("artists", {
       sortedArtists: "artistsByName"
     }),

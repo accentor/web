@@ -19,7 +19,7 @@
               v-if="albums.length > 12"
               v-model="search"
               prepend-inner-icon="mdi-magnify"
-              label="Search"
+              :label="$t('common.search')"
               single-line
               hide-details
             />

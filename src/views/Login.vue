@@ -5,25 +5,29 @@
         <VFlex md4 sm8 xs12>
           <VCard class="elevation-12">
             <VToolbar color="primary" dark>
-              <VToolbarTitle>Login</VToolbarTitle>
+              <VToolbarTitle>
+                {{ $t("common.login") }}
+              </VToolbarTitle>
             </VToolbar>
             <VCardText>
               <VForm @submit.prevent="submit">
                 <Errors />
                 <VTextField
-                  label="Name"
-                  placeholder="Name"
+                  :label="$t('users.name')"
+                  :placeholder="$t('users.name')"
                   prepend-icon="mdi-account"
                   v-model="name"
                 />
                 <VTextField
-                  label="Password"
-                  placeholder="Password"
+                  :label="$t('users.passwords')"
+                  :placeholder="$t('users.passwords')"
                   prepend-icon="mdi-key"
                   type="password"
                   v-model="password"
                 />
-                <VBtn color="primary" type="submit">Login</VBtn>
+                <VBtn color="primary" type="submit">
+                  {{ $t("common.login") }}
+                </VBtn>
               </VForm>
             </VCardText>
           </VCard>

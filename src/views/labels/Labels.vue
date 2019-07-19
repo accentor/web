@@ -16,7 +16,7 @@
               v-if="labels.length > numberOfItems"
               v-model="search"
               prepend-inner-icon="mdi-magnify"
-              label="Search"
+              :label="$t('common.search')"
               single-line
               hide-details
             />

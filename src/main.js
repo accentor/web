@@ -6,17 +6,15 @@ import "vuetify/src/stylus/app.styl";
 import Main from "./Main.vue";
 import router from "./router";
 import store from "./store/store";
+import i18n from "./i18n";
 
 Vue.config.productionTip = false;
 
 Vue.use(Vuetify, {
-  iconfont: "mdi"
-});
-
-Vue.filter("capitalize", function(value) {
-  if (!value) return "";
-  value = value.toString();
-  return value.charAt(0).toUpperCase() + value.slice(1);
+  iconfont: "mdi",
+  lang: {
+    t: (key, ...params) => i18n.t(key, params)
+  }
 });
 
 Vue.filter(
@@ -27,5 +25,6 @@ Vue.filter(
 new Vue({
   router,
   store,
+  i18n,
   render: h => h(Main)
 }).$mount("#main");

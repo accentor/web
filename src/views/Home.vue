@@ -8,7 +8,7 @@
         content-class="layout row wrap"
       >
         <template v-slot:header>
-          <h2>Recently released</h2>
+          <h2>{{ $t("home.recently-released") }}</h2>
         </template>
         <template v-slot:item="props">
           <VFlex lg3 md4 sm6 xl2 xs12>
@@ -25,7 +25,9 @@
         content-class="layout row wrap"
       >
         <template v-slot:header>
-          <h2>Recently added albums</h2>
+          <h2>
+            {{ $t("home.recently-added-albums") }}
+          </h2>
         </template>
         <template v-slot:item="props">
           <VFlex lg3 md4 sm6 xl2 xs12>
@@ -42,7 +44,9 @@
         content-class="layout row wrap"
       >
         <template v-slot:header>
-          <h2>Recently added artists</h2>
+          <h2>
+            {{ $t("home.recently-added-artists") }}
+          </h2>
         </template>
         <template v-slot:item="props">
           <VFlex lg3 md4 sm6 xl2 xs12>
@@ -59,11 +63,11 @@
         content-class="layout row wrap"
       >
         <template v-slot:header>
-          <h2>On this day</h2>
+          <h2>{{ $t("home.on-this-day") }}</h2>
         </template>
         <template v-slot:no-data>
           <v-alert :value="true" color="info" icon="mdi-info">
-            Seems like there are no releases for this day.
+            {{ $t("home.on-this-day-empty") }}
           </v-alert>
         </template>
         <template v-slot:item="props">
@@ -82,7 +86,9 @@
         content-class="layout row wrap"
       >
         <template v-slot:header>
-          <h2>Random albums</h2>
+          <h2>
+            {{ $t("home.random-albums") }}
+          </h2>
         </template>
         <template v-slot:item="props">
           <VFlex lg3 md4 sm6 xl2 xs12>
@@ -99,7 +105,9 @@
         content-class="layout row wrap"
       >
         <template v-slot:header>
-          <h2>Random artists</h2>
+          <h2>
+            {{ $t("home.random-artists") }}
+          </h2>
         </template>
         <template v-slot:item="props">
           <VFlex lg3 md4 sm6 xl2 xs12>

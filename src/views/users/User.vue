@@ -4,7 +4,7 @@
       <div>
         <div class="headline">{{ user.name }}</div>
         <span class="grey--text">
-          {{ user.permission | capitalize }}
+          {{ user.permission }}
         </span>
       </div>
     </VLayout>

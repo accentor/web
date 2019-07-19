@@ -25,7 +25,9 @@
             <VIcon>mdi-home</VIcon>
           </VListTileAction>
           <VListTileContent>
-            <VListTileTitle>Home</VListTileTitle>
+            <VListTileTitle>
+              {{ $t("common.home") }}
+            </VListTileTitle>
           </VListTileContent>
         </VListTile>
         <VDivider />
@@ -34,7 +36,9 @@
             <VIcon>mdi-artist</VIcon>
           </VListTileAction>
           <VListTileContent>
-            <VListTileTitle>Artists</VListTileTitle>
+            <VListTileTitle>
+              {{ $tc("music.artists", 2) }}
+            </VListTileTitle>
           </VListTileContent>
         </VListTile>
         <VListTile :to="{ name: 'albums' }">
@@ -42,7 +46,9 @@
             <VIcon>mdi-album</VIcon>
           </VListTileAction>
           <VListTileContent>
-            <VListTileTitle>Albums</VListTileTitle>
+            <VListTileTitle>
+              {{ $tc("music.albums", 2) }}
+            </VListTileTitle>
           </VListTileContent>
         </VListTile>
         <VListTile :to="{ name: 'tracks' }">
@@ -50,7 +56,9 @@
             <VIcon>mdi-music</VIcon>
           </VListTileAction>
           <VListTileContent>
-            <VListTileTitle>Tracks</VListTileTitle>
+            <VListTileTitle>
+              {{ $tc("music.tracks", 2) }}
+            </VListTileTitle>
           </VListTileContent>
         </VListTile>
         <VListTile :to="{ name: 'genres' }">
@@ -58,7 +66,9 @@
             <VIcon>mdi-guitar-acoustic</VIcon>
           </VListTileAction>
           <VListTileContent>
-            <VListTileTitle>Genres</VListTileTitle>
+            <VListTileTitle>
+              {{ $tc("music.genres", 2) }}
+            </VListTileTitle>
           </VListTileContent>
         </VListTile>
         <VListTile :to="{ name: 'labels' }">
@@ -66,7 +76,9 @@
             <VIcon>mdi-label</VIcon>
           </VListTileAction>
           <VListTileContent>
-            <VListTileTitle>Labels</VListTileTitle>
+            <VListTileTitle>
+              {{ $tc("music.labels", 2) }}
+            </VListTileTitle>
           </VListTileContent>
         </VListTile>
         <VListTile :to="{ name: 'library' }" v-if="isModerator">
@@ -74,7 +86,9 @@
             <VIcon>mdi-tune</VIcon>
           </VListTileAction>
           <VListTileContent>
-            <VListTileTitle>Library settings</VListTileTitle>
+            <VListTileTitle>
+              {{ $t("library-settings") }}
+            </VListTileTitle>
           </VListTileContent>
         </VListTile>
         <VDivider />
@@ -83,7 +97,9 @@
             <VIcon>mdi-flag</VIcon>
           </VListTileAction>
           <VListTileContent>
-            <VListTileTitle>Flags</VListTileTitle>
+            <VListTileTitle>
+              {{ $tc("music.flags", 2) }}
+            </VListTileTitle>
           </VListTileContent>
           <VListTileAction v-if="numberOfFlaggedItems > 0">
             <VBtn
@@ -103,7 +119,9 @@
             <VIcon>mdi-account-multiple</VIcon>
           </VListTileAction>
           <VListTileContent>
-            <VListTileTitle>Users</VListTileTitle>
+            <VListTileTitle>
+              {{ $tc("users.users", 2) }}
+            </VListTileTitle>
           </VListTileContent>
         </VListTile>
         <VListTile
@@ -116,7 +134,9 @@
             <VIcon>mdi-settings</VIcon>
           </VListTileAction>
           <VListTileContent>
-            <VListTileTitle>Settings</VListTileTitle>
+            <VListTileTitle>
+              {{ $t("common.settings") }}
+            </VListTileTitle>
           </VListTileContent>
         </VListTile>
       </VList>
@@ -140,7 +160,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapState } from "vuex";
 import Errors from "../components/Errors";
 import Player from "../components/Player";
 
@@ -156,9 +176,15 @@ export default {
   created() {
     this.loadData();
   },
+  watch: {
+    locale() {
+      this.$i18n.locale = this.locale;
+    }
+  },
   computed: {
     ...mapGetters("auth", ["isModerator"]),
-    ...mapGetters(["numberOfFlaggedItems"])
+    ...mapGetters(["numberOfFlaggedItems"]),
+    ...mapState("userSettings", ["locale"])
   },
   methods: {
     loadData() {

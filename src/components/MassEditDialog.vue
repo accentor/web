@@ -2,8 +2,9 @@
   <VDialog v-model="dialog" fullscreen scrollable @update:returnValue="closed">
     <template v-slot:activator="{ on }">
       <VBtn v-on="on" :disabled="tracks.length === 0">
-        Edit {{ tracks.length }}
-        {{ tracks.length === 1 ? "track" : "tracks" }}
+        {{
+          $tc("music.mass.edit-tracks", tracks.length, { count: tracks.length })
+        }}
       </VBtn>
     </template>
     <VCard>
@@ -12,8 +13,11 @@
           <VIcon>mdi-close</VIcon>
         </VBtn>
         <VToolbarTitle>
-          Edit {{ tracks.length }}
-          {{ tracks.length === 1 ? "track" : "tracks" }}
+          {{
+            $tc("music.mass.edit-tracks", tracks.length, {
+              count: tracks.length
+            })
+          }}
         </VToolbarTitle>
         <VSpacer></VSpacer>
         <VToolbarItems>
@@ -36,7 +40,14 @@
               <VFlex xs12>
                 <VCheckbox v-model="showReviewComments">
                   <template v-slot:label>
-                    <span class="black--text">Show review comments</span>
+                    <span class="black--text">
+                      {{
+                        $tc(
+                          "music.flag.show",
+                          tracks.filter(t => t.review_comment !== null).length
+                        )
+                      }}
+                    </span>
                   </template>
                 </VCheckbox>
               </VFlex>
@@ -76,14 +87,16 @@
               <VFlex xs12 sm6>
                 <VCheckbox v-model="number.enabled">
                   <template v-slot:label>
-                    <span class="black--text">Increase track numbers</span>
+                    <span class="black--text">
+                      {{ $t("music.mass.increase-track") }}
+                    </span>
                   </template>
                 </VCheckbox>
               </VFlex>
               <VFlex xs12 sm6>
                 <VTextField
                   v-model="number.amount"
-                  label="Amount"
+                  :label="$t('common.amount')"
                   type="number"
                   v-if="number.enabled"
                 />
@@ -96,14 +109,16 @@
               <VFlex xs12 sm6>
                 <VCheckbox v-model="titleReplacement.enabled">
                   <template v-slot:label>
-                    <span class="black--text">Title search and replace</span>
+                    <span class="black--text">
+                      {{ $t("music.mass.title-search") }}
+                    </span>
                   </template>
                 </VCheckbox>
               </VFlex>
               <VFlex xs12 sm6>
                 <VCheckbox
                   v-model="titleReplacement.regex"
-                  label="Use regular expressions"
+                  :label="$t('music.mass.regex')"
                   v-if="titleReplacement.enabled"
                 />
               </VFlex>
@@ -111,14 +126,14 @@
             <VLayout>
               <VFlex xs12 sm6>
                 <VTextField
-                  label="Search"
+                  :label="$t('common.search')"
                   v-model="titleReplacement.search"
                   v-if="titleReplacement.enabled"
                 />
               </VFlex>
               <VFlex xs12 sm6>
                 <VTextField
-                  label="Replace"
+                  :label="$t('common.replace')"
                   v-model="titleReplacement.replace"
                   v-if="titleReplacement.enabled"
                 />
@@ -131,7 +146,9 @@
               <VFlex xs12 sm6>
                 <VCheckbox v-model="album.enabled">
                   <template v-slot:label>
-                    <span class="black--text">Set album</span>
+                    <span class="black--text">
+                      {{ $t("music.mass.set-album") }}
+                    </span>
                   </template>
                 </VCheckbox>
               </VFlex>
@@ -153,14 +170,16 @@
               <VFlex xs12 sm6>
                 <VCheckbox v-model="changeGenres.enabled">
                   <template v-slot:label>
-                    <span class="black--text">Change genres</span>
+                    <span class="black--text">
+                      {{ $t("music.mass.change-genres") }}
+                    </span>
                   </template>
                 </VCheckbox>
               </VFlex>
               <VFlex xs12 sm6>
                 <VCheckbox
                   v-model="changeGenres.replace"
-                  label="Replace genres instead of adding"
+                  :label="$t('music.mass.replace-instead-genres')"
                   v-if="changeGenres.enabled"
                 />
               </VFlex>
@@ -174,7 +193,7 @@
                   deletable-chips
                   item-text="name"
                   item-value="id"
-                  label="Genre(s)"
+                  :label="$t('music.genre-s')"
                   multiple
                   return-object
                   v-model="changeGenres.genres"
@@ -189,14 +208,16 @@
               <VFlex xs12 sm6>
                 <VCheckbox v-model="changeArtists.enabled">
                   <template v-slot:label>
-                    <span class="black--text">Change artists</span>
+                    <span class="black--text">
+                      {{ $t("music.mass.change-artists") }}
+                    </span>
                   </template>
                 </VCheckbox>
               </VFlex>
               <VFlex xs12 sm6>
                 <VCheckbox
                   v-model="changeArtists.replace"
-                  label="Replace artists instead of adding"
+                  :label="$t('music.mass.replace-instead-artists')"
                   v-if="changeArtists.enabled"
                 />
               </VFlex>
@@ -232,14 +253,17 @@
                   :items="sortedArtists"
                   item-text="name"
                   item-value="id"
-                  label="Artist"
+                  :label="$tc('music.artists', 2)"
                   return-object
                   v-model="item.artist_id"
                 />
-                <VTextField label="Name" v-model="item.name" />
+                <VTextField
+                  :label="$t('common.name')"
+                  v-model="item.name"
+                />
                 <VAutocomplete
                   :items="roles"
-                  label="Role"
+                  :label="$t('music.artist.role')"
                   v-model="item.role"
                 />
                 <VDivider
@@ -253,7 +277,7 @@
               color="success"
               v-if="changeArtists.enabled"
             >
-              Add artist
+              {{ $t("music.artist.add") }}
             </VBtn>
           </VContainer>
           <VDivider
@@ -268,7 +292,9 @@
               <VFlex xs12 sm6>
                 <VCheckbox v-model="clearReviewComments">
                   <template v-slot:label>
-                    <span class="black--text">Clear review comments</span>
+                    <span class="black--text">
+                      {{ $tc("music.flag.clear", tracks.filter(t => t.review_comment !== null).length) }}
+                    </span>
                   </template>
                 </VCheckbox>
               </VFlex>
@@ -296,31 +322,31 @@ export default {
       roles: [
         {
           value: "main",
-          text: "Main"
+          text: this.$t("music.artist.roles.main")
         },
         {
           value: "performer",
-          text: "Performer"
+          text: this.$t("music.artist.roles.performer")
         },
         {
           value: "composer",
-          text: "Composer"
+          text: this.$t("music.artist.roles.composer")
         },
         {
           value: "conductor",
-          text: "Conductor"
+          text: this.$t("music.artist.roles.conductor")
         },
         {
           value: "remixer",
-          text: "Remixer"
+          text: this.$t("music.artist.roles.remixer")
         },
         {
           value: "producer",
-          text: "Producer"
+          text: this.$t("music.artist.roles.producer")
         },
         {
           value: "arranger",
-          text: "Arranger"
+          text: this.$t("music.artist.roles.arranger")
         }
       ],
       titleReplacement: {
