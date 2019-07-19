@@ -16,14 +16,14 @@
               v-if="albums.length > 12"
               v-model="search"
               prepend-inner-icon="mdi-magnify"
-              label="Search"
+              :label="$t('common.search')"
               single-line
               hide-details
             />
           </VFlex>
           <VBtn :to="{ name: 'new-album' }" color="success" v-if="isModerator">
             <VIcon left>mdi-plus</VIcon>
-            New album
+            {{ $t("music.album.new") }}
           </VBtn>
         </VLayout>
       </template>
@@ -59,7 +59,7 @@ export default {
   methods: {
     ...mapActions("albums", ["destroy"]),
     deleteAlbum: function(id) {
-      if (confirm("Are you sure?")) {
+      if (confirm(this.$t("common.are-you-sure"))) {
         this.destroy(id);
       }
     }

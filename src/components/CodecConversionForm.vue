@@ -2,18 +2,21 @@
   <VForm>
     <VLayout row>
       <VFlex xs3>
-        <VTextField v-model="newCodecConversion.name" label="Name" />
+        <VTextField
+          v-model="newCodecConversion.name"
+          :label="$t('common.name')"
+        />
       </VFlex>
       <VFlex xs5>
         <VTextField
           v-model="newCodecConversion.ffmpeg_params"
-          label="FFmpeg parameters"
+          :label="$t('library.ffmpeg-para')"
         />
       </VFlex>
       <VFlex xs3>
         <VAutocomplete
           :items="codecs"
-          label="Resulting codec"
+          :label="$t('library.resulting-codec')"
           v-model="newCodecConversion.resulting_codec_id"
           item-value="id"
           item-text="extension"
@@ -100,7 +103,7 @@ export default {
       }
     },
     deleteCodecConversion() {
-      if (confirm("Are you sure?")) {
+      if (confirm(this.$t("common.are-you-sure"))) {
         this.destroy(this.codecConversion.id);
       }
     }

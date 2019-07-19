@@ -8,7 +8,7 @@
     >
   </div>
   <div v-else>
-    <span>Various Artists</span>
+    <span>{{ $t("music.artist.various") }}</span>
   </div>
 </template>
 

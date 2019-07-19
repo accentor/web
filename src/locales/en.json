@@ -1,0 +1,249 @@
+{
+	"$vuetify": {
+		"dataIterator": {
+			"nextPage": "Next page",
+			"noResultsText": "No matching records found",
+			"pageText": "{0}-{1} of {2}",
+			"prevPage": "Previous page",
+			"rowsPerPageAll": "All",
+			"rowsPerPageText": "Items per page"
+		},
+		"dataTable": {
+			"rowsPerPageText": "Rows per page"
+		},
+		"noDataText": "No data available"
+	},
+	"common": {
+		"actions": "Actions",
+		"amount": "Amount",
+		"are-you-sure": "Are you sure?",
+		"as": "as",
+		"cancel": "Cancel",
+		"change-settings": "Change settings",
+		"choose-file": "Choose file",
+		"choose-image": "Choose image",
+		"close": "Close",
+		"errors": "Errors | Error | Errors",
+		"files": "Files | File | Files",
+		"home": "Home",
+		"login": "Login",
+		"name": "Name",
+		"no": "No",
+		"ok": "Ok",
+		"replace": "Replace",
+		"search": "Search",
+		"settings": "Settings",
+		"yes": "Yes"
+	},
+	"errors": {
+		"album_artists": "Album artists",
+		"albums": {
+			"title-blank": "Please fill in an album title."
+		},
+		"aa": {
+			"name-blank": "Please fill in a name for the artist.",
+			"order-blank": "Please put the artists in order."
+		},
+		"aa-separator": "Album artists (except last) should have separator.",
+		"aa-last-no-separator": "Last album artist should not have separator.",
+		"al": {
+			"cat-blank": "Please fill in a catalogue number."
+		},
+		"artist": "Artist",
+		"artists": {
+			"name-blank": "Please fill in artist name."
+		},
+		"base": "Base",
+		"catalogue_number": "Catalogue number",
+		"codec": {
+			"mime-blank": "Please fill in a MIMEtype.",
+			"ext-blank": "Please fill in an extionsion.",
+			"ext-taken": "This extension is already in use."
+		},
+		"codecconv": {
+			"name-blank": "Please fill in codec name.",
+			"name-taken": "A codec with this name already exists. ",
+			"ffmepg-blank": "Please fill in the FFmpeg parameters.",
+			"result-blank": "Please fill in a resulting codec."
+		},
+		"exception": "Exception",
+		"extension": "Extension",
+		"ffmpeg": "FFmpeg parameters",
+		"genre": {
+			"name-blank": "Please fill in a genre name.",
+			"name-taken": "A genre with this name already exists."
+		},
+		"image": {
+			"mime-blank": "Please fill in a MIMEtype.",
+			"ext-blank": "Please fill in an extionsion.",
+			"ext-taken": "This extension is already in use."
+		},
+		"label": {
+			"name-blank": "Please fill in a label name."
+		},
+		"location": {
+			"path-blank": "Please fill in a path.",
+			"path-taken": "This path is already in use."
+		},
+		"mimetype": "MIME type",
+		"name": "Name",
+		"not-authorized": "You are not authorized to do this",
+		"number": "Number",
+		"order": "Order",
+		"password": "Password",
+		"path": "Path",
+		"permission": "Permission",
+		"resulting_codec": "Resulting codec",
+		"role": "Role",
+		"status": "Status",
+		"ta": {
+			"artist-blank": "Please fill in an artist.",
+			"name-blank": "Please fill in a name for the artist.",
+			"name-taken": "This name is already used.",
+			"order-blank": "Please provide an order for the track artists.",
+			"role-blank": "Please fill in a role for the artists.",
+			"track-blank": "You can't create a track artist without a track."
+		},
+		"title": "Title",
+		"track": "Track",
+		"tracks": {
+			"number-blank": "Please provide a track number",
+			"title-blank": "Please provide a track title."
+		},
+		"traces": "Traces",
+		"unauthorized": "Unauthorized",
+		"user": {
+			"name": "Username",
+			"name-blank": "Please fill in a username.",
+			"password-blank": "Please fill in a password.",
+			"permission-blank": "Please give the user a permission.",
+			"wrong-credentials": "Username and password don't match."
+		}
+	},
+	"home": {
+		"on-this-day": "On this day",
+		"on-this-day-empty": "Seems like there are no releases for this day.",
+		"random-albums": "Random albums",
+		"random-artists": "Random artists",
+		"recently-added-albums": "Recently added albums",
+		"recently-added-artists": "Recently added artists",
+		"recently-released": "Recently released"
+	},
+	"image": {
+		"image": "Images | Image | Images"
+	},
+	"library": {
+		"codec-conversions": "Codecs conversions",
+		"codecs": "Codecs",
+		"cover-filenames": "Cover filenames",
+		"delete-empty-albums": "Delete empty albums",
+		"delete-empty-artists": "Delete empty artists",
+		"delete-empty-genres": "Delete empty genres",
+		"delete-empty-labels": "Delete empty labels",
+		"errors": "Errors",
+		"extension": "Extension",
+		"ffmpeg-para": "FFmpeg parameters",
+		"filename": "Filename",
+		"image-types": "Image types",
+		"locations": "Locations",
+		"maintenance": "Maintenance",
+		"mime-type": "MIME type",
+		"path": "Path",
+		"processed": "Processed",
+		"rescan": "Rescan",
+		"resulting-codec": "Resulting codec",
+		"start-scan": "Start scan",
+		"warnings": "Warnings"
+	},
+	"library-settings": "Library settings",
+	"music": {
+		"album": {
+			"add": "Add album",
+			"create": "Create album",
+			"edition": "Release",
+			"edition-description": "Edition description",
+			"edition-information": "Add edition information",
+			"new": "New album",
+			"original": "Original",
+			"release": "Release",
+			"update": "Update album"
+		},
+		"albums": "Albums | Album | Albums",
+		"artist": {
+			"add": "Add artist",
+			"artist-s": "Artist(s)",
+			"new": "New artist",
+			"role": "Role",
+			"roles": {
+				"arranger": "Arranger",
+				"composer": "Composer",
+				"conductor": "Conductor",
+				"main": "Main",
+				"performer": "Performer",
+				"producer": "Producer",
+				"remixer": "Remixer"
+			},
+			"separator": "Separator",
+			"update": "Update artist",
+			"various": "Various Artists"
+		},
+		"artists": "Artists | Artist | Artists",
+		"flag": {
+			"clear": "Clear review comments | Clear review comment | Clear review comments",
+			"comment": "Comment",
+			"for-review": "Flag for review",
+			"review-comments": "Review comments | Review comment | Review comments",
+			"show": "Show review comments | Show review comment | Show review comments"
+		},
+		"flags": "Flags | Flag | Flags",
+		"genre-s": "Genre(s)",
+		"genres": "Genres | Genre | Genres",
+		"genre": {
+			"add": "Add genre",
+			"create": "Create genre",
+			"new": "New genre",
+			"update": "Update genre"
+		},
+		"label": {
+			"add": "Add label",
+			"catnr": "catalogue number",
+			"create": "Create label",
+			"new": "New label",
+			"update": "Update label"
+		},
+		"labels": "Labels | Label | Labels",
+		"mass": {
+			"change-artists": "Change artists",
+			"change-genres": "Change genres",
+			"edit-tracks": "Edit 0 tracks | Edit 1 track | Edit {count} tracks",
+			"increase-track": "Increase track numbers",
+			"regex": "Use regular expression",
+			"replace-instead-artists": "Replace artists instead of adding",
+			"replace-instead-genres": "Replace genres instead of adding",
+			"set-album": "Set album",
+			"title-search": "Search and replace title"
+		},
+		"title": "Title",
+		"track": {
+			"length": "Length",
+			"number": "Number",
+			"update": "Update track"
+		},
+		"tracks": "Tracks | Track | Tracks"
+	},
+	"search": "Search",
+	"users": {		
+		"confirm-password": "Confirm password",
+		"create": "Create user",		
+		"name": "Name",
+		"new": "New user",
+		"passwords": "Password",
+		"permission": {
+			"admin": "Admin",
+			"moderator": "Moderator",
+			"user": "User"
+		},
+		"permissions": "Permissions",
+		"users": "Users | User | Users"
+	}
+}

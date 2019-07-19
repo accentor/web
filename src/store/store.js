@@ -15,13 +15,14 @@ import player from "./player";
 import rescan from "./rescan";
 import tracks from "./tracks";
 import users from "./users";
+import userSettings from "./user_settings";
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   plugins: [
     createPersistedState({
-      paths: ["auth"]
+      paths: ["auth", "userSettings"]
     })
   ],
   strict: process.env.NODE_ENV !== "production",
@@ -39,7 +40,8 @@ export default new Vuex.Store({
     player,
     rescan,
     tracks,
-    users
+    users,
+    userSettings
   },
   state: {
     errors: []

@@ -10,14 +10,21 @@
           {{ artist.review_comment }}
         </VAlert>
         <VForm @submit.prevent="submit">
-          <VTextField label="Name" v-model="newArtist.name" />
-          <FilePicker v-model="newArtist.image">Choose image</FilePicker>
+          <VTextField
+            :label="$t('common.name')"
+            v-model="newArtist.name"
+          />
+          <FilePicker v-model="newArtist.image">
+            {{ $t("common.choose-image") }}
+          </FilePicker>
           <VCheckbox
             v-if="artist.review_comment !== null"
             v-model="clear_review_comment"
-            label="Clear review comment"
+            :label="$tc('music.flag.clear', 1)"
           />
-          <VBtn color="primary" type="submit">Update artist</VBtn>
+          <VBtn color="primary" type="submit">
+            {{ $t("music.artist.update") }}
+          </VBtn>
         </VForm>
       </VFlex>
     </VLayout>

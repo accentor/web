@@ -3,7 +3,7 @@
     <VLayout justify-end row wrap>
       <VBtn :to="{ name: 'new-user' }" color="success" v-if="isAdmin">
         <VIcon left>mdi-plus</VIcon>
-        New user
+        {{ $t("users.new") }}
       </VBtn>
     </VLayout>
     <VLayout row v-if="users.length > 0" wrap>
@@ -13,7 +13,7 @@
             <div>
               <div class="headline">{{ user.name }}</div>
               <span class="grey--text">
-                {{ user.permission | capitalize }}
+                {{ $t(`users.permission.${user.permission}`) }}
               </span>
             </div>
           </VCardTitle>
@@ -58,7 +58,7 @@ export default {
   methods: {
     ...mapActions("users", ["destroy"]),
     deleteUser: function(id) {
-      if (confirm("Are you sure?")) {
+      if (confirm(this.$t("common.are-you-sure"))) {
         this.destroy(id);
       }
     }

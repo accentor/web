@@ -45,7 +45,7 @@ export default {
   methods: {
     ...mapActions("artists", ["destroy", "update"]),
     deleteArtist: function() {
-      if (confirm("Are you sure?")) {
+      if (confirm(this.$t("common.are-you-sure"))) {
         this.destroy(this.artist.id);
       }
     },

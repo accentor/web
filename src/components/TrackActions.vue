@@ -50,7 +50,7 @@ export default {
   methods: {
     ...mapActions("tracks", ["destroy", "update"]),
     deleteTrack: function() {
-      if (confirm("Are you sure?")) {
+      if (confirm(this.$t("common.are-you-sure"))) {
         this.destroy(this.track.id);
       }
     },

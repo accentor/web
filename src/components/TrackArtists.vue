@@ -17,9 +17,9 @@
                 :to="{ name: 'artist', params: { id: ta.artist_id } }"
                 >{{ artists[ta.artist_id].name }}</RouterLink
               >
-              ({{ ta.role | capitalize }})
+              ({{ $t(`music.artist.roles.${ta.role}`) }})
               <span v-if="ta.name !== artists[ta.artist_id].name">
-                as {{ ta.name }}
+                {{ $t("common.as") }} {{ ta.name }}
               </span>
             </span>
           </VListTileContent>

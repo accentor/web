@@ -4,7 +4,9 @@
       <VFlex md4 sm8 xs12>
         <VForm @submit.prevent="submit">
           <VTextField genre="Name" v-model="newGenre.name" />
-          <VBtn color="primary" type="submit">Update genre</VBtn>
+          <VBtn color="primary" type="submit">
+            {{ $t("music.genre.update") }}
+          </VBtn>
         </VForm>
       </VFlex>
     </VLayout>

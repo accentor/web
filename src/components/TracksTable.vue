@@ -6,7 +6,7 @@
           v-if="tracks.length > 30"
           v-model="search"
           prepend-inner-icon="mdi-magnify"
-          label="Search"
+          :label="$t('common.search')"
           single-line
           hide-details
         ></VTextField>
@@ -113,33 +113,33 @@ export default {
         sortable: false
       },
       {
-        text: "Title",
+        text: this.$t("music.title"),
         value: "title",
         sortable: false
       },
       {
-        text: "Length",
+        text: this.$t("music.track.length"),
         value: "length",
         sortable: false,
         align: "right"
       },
       {
-        text: "Album",
+        text: this.$tc("music.albums", 1),
         value: "album_id",
         sortable: false
       },
       {
-        text: "Artist(s)",
+        text: this.$t("music.artist.artist-s"),
         value: "track_artists",
         sortable: false
       },
       {
-        text: "Genre(s)",
+        text: this.$t("music.genre-s"),
         value: "genre_ids",
         sortable: false
       },
       {
-        text: "Actions",
+        text: this.$t("common.actions"),
         sortable: false,
         align: "right"
       }

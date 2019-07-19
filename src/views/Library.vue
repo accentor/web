@@ -1,33 +1,40 @@
 <template>
   <VContainer fluid grid-list-xl v-if="isModerator">
     <VLayout row>
-      <h2>Maintenance</h2>
+      <h2>{{ $t("library.maintenance") }}</h2>
     </VLayout>
     <VLayout row wrap>
       <MaintenanceActions />
     </VLayout>
     <VLayout row>
-      <h2>Rescan</h2>
+      <h2>{{ $t("library.rescan") }}</h2>
     </VLayout>
     <VLayout row wrap v-if="rescan">
       <VBtn @click="start" color="success">
         <VIcon left>mdi-refresh {{ rescan.running ? "mdi-spin" : "" }}</VIcon>
-        Start scan
+        {{ $t("library.start-scan") }}
       </VBtn>
     </VLayout>
     <VLayout column v-if="rescan">
-      <div><strong>Processed: </strong> {{ rescan.processed }}</div>
+      <div>
+        <strong>{{ $t("library.processed") }}: </strong>
+        {{ rescan.processed }}
+      </div>
       <div v-if="rescan.warning_text">
-        <div><h3>Warnings</h3></div>
+        <div>
+          <h3>{{ $t("library.warnings") }}</h3>
+        </div>
         <pre>{{ rescan.warning_text }}</pre>
       </div>
       <div v-if="rescan.error_text">
-        <div><h3>Errors</h3></div>
+        <div>
+          <h3>{{ $t("library.errors") }}</h3>
+        </div>
         <pre>{{ rescan.error_text }}</pre>
       </div>
     </VLayout>
     <VLayout row>
-      <h2>Codecs</h2>
+      <h2>{{ $t("library.codecs") }}</h2>
     </VLayout>
     <VLayout row>
       <VFlex xs12>
@@ -35,7 +42,7 @@
       </VFlex>
     </VLayout>
     <VLayout row>
-      <h2>Codec conversions</h2>
+      <h2>{{ $t("library.codec-conversions") }}</h2>
     </VLayout>
     <VLayout row>
       <VFlex xs12>
@@ -43,7 +50,7 @@
       </VFlex>
     </VLayout>
     <VLayout row>
-      <h2>Cover filenames</h2>
+      <h2>{{ $t("library.cover-filenames") }}</h2>
     </VLayout>
     <VLayout row>
       <VFlex xs12>
@@ -51,7 +58,9 @@
       </VFlex>
     </VLayout>
     <VLayout row>
-      <h2>Image types</h2>
+      <h2>
+        {{ $t("library.image-types") }}
+      </h2>
     </VLayout>
     <VLayout row>
       <VFlex xs12>
@@ -59,7 +68,7 @@
       </VFlex>
     </VLayout>
     <VLayout row>
-      <h2>Locations</h2>
+      <h2>{{ $t("library.locations") }}</h2>
     </VLayout>
     <VLayout row>
       <VFlex xs12>

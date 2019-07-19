@@ -3,14 +3,19 @@
     <VIcon>mdi-flag</VIcon>
     <VDialog v-model="show" max-width="600px">
       <VCard>
-        <VCardTitle class="headline">Flag for review</VCardTitle>
+        <VCardTitle class="headline">
+          {{ $t("music.flag.for-review") }}
+        </VCardTitle>
         <VCardText>
-          <VTextField label="Comment" v-model="new_review_comment" />
+          <VTextField
+            :label="$t('music.flag.comment')"
+            v-model="new_review_comment"
+          />
         </VCardText>
         <VCardActions>
           <VLayout row justify-end>
             <VBtn color="primary" type="submit" @click="flag">
-              Flag for review
+              {{ $t("music.flag.for-review") }}
             </VBtn>
           </VLayout>
         </VCardActions>

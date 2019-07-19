@@ -3,9 +3,16 @@
     <VLayout align-center justify-center>
       <VFlex md4 sm8 xs12>
         <VForm @submit.prevent="submit">
-          <VTextField label="Name" v-model="newArtist.name" />
-          <FilePicker v-model="newArtist.image">Choose image</FilePicker>
-          <VBtn color="primary" type="submit">Create artist</VBtn>
+          <VTextField
+            :label="$t('common.name')"
+            v-model="newArtist.name"
+          />
+          <FilePicker v-model="newArtist.image">
+            {{ $t("common.choose-image") }}
+          </FilePicker>
+          <VBtn color="primary" type="submit">
+            {{ $t("music.artist.add") }}
+          </VBtn>
         </VForm>
       </VFlex>
     </VLayout>

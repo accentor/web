@@ -4,7 +4,7 @@
       <VFlex xs5>
         <VTextField
           v-model="newCoverFilename.filename"
-          label="Filename"
+          :label="$t('library.filename')"
           :disabled="coverFilename !== null"
         />
       </VFlex>
@@ -72,7 +72,7 @@ export default {
       });
     },
     deleteCoverFilename() {
-      if (confirm("Are you sure?")) {
+      if (confirm(this.$t("common.are-you-sure"))) {
         this.destroy(this.coverFilename.id);
       }
     }

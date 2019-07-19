@@ -8,8 +8,8 @@
     <div :key="index" v-for="(error, index) in errors">
       <div :key="key" v-for="(value, key) in error">
         <div :key="index" v-for="(e, index) in value">
-          <strong>{{ key | capitalize }}:</strong>
-          {{ e }}
+          <strong>{{ $t(`errors.${key}`) }}:</strong>
+          {{ $t(`errors.${e}`) }}
         </div>
       </div>
     </div>
