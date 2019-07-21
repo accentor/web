@@ -130,7 +130,7 @@
 		"recently-released": "Recently released"
 	},
 	"image": {
-		"image": "Images | Image | Images"
+		"images": "Images | Image | Images"
 	},
 	"library": {
 		"codec-conversions": "Codecs conversions",
