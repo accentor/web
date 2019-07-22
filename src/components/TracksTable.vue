@@ -48,7 +48,7 @@
             v-for="header in props.headers"
             :key="header.text"
             :class="[
-              header.align === 'right' ? 'text-xs-right' : 'text-xs-left'
+            header.align == null ? 'text-xs-left' : header.align
             ]"
           >
             {{ header.text }}
@@ -59,7 +59,12 @@
         <td v-if="isModerator && showMassEdit">
           <VCheckbox v-model="props.selected" primary hide-details></VCheckbox>
         </td>
-        <td>{{ props.item.number }}</td>
+        <td v-if="currentTrack == null || props.item.id !== currentTrack.id" class="text-xs-center">
+          {{ props.item.number }}
+        </td>
+        <td v-else class="text-xs-center">
+          <VIcon>mdi-volume-high</VIcon>
+        </td>
         <td>{{ props.item.title }}</td>
         <td class="text-xs-right">
           {{ props.item.length | length }}
@@ -110,7 +115,8 @@ export default {
       {
         text: "#",
         value: "number",
-        sortable: false
+        sortable: false,
+        align: "text-xs-center"
       },
       {
         text: this.$t("music.title"),
@@ -121,7 +127,7 @@ export default {
         text: this.$t("music.track.length"),
         value: "length",
         sortable: false,
-        align: "right"
+        align: "text-xs-right"
       },
       {
         text: this.$tc("music.albums", 1),
@@ -141,7 +147,7 @@ export default {
       {
         text: this.$t("common.actions"),
         sortable: false,
-        align: "right"
+        align: "text-xs-right"
       }
     ];
     if (!this.showAlbum) {
@@ -154,6 +160,7 @@ export default {
   },
   computed: {
     ...mapGetters("auth", ["isModerator"]),
+    ...mapGetters("player", ["currentTrack"]),
     ...mapState("albums", ["albums"]),
     ...mapState("tracks", {
       tracksObj: "tracks"
