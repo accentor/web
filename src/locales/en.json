@@ -130,7 +130,7 @@
 		"recently-released": "Recently released"
 	},
 	"image": {
-		"image": "Images | Image | Images"
+		"images": "Images | Image | Images"
 	},
 	"library": {
 		"codec-conversions": "Codecs conversions",
@@ -206,7 +206,7 @@
 		},
 		"label": {
 			"add": "Add label",
-			"catnr": "catalogue number",
+			"catnr": "Catalogue number",
 			"create": "Create label",
 			"new": "New label",
 			"update": "Update label"
