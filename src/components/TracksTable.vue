@@ -47,9 +47,7 @@
           <th
             v-for="header in props.headers"
             :key="header.text"
-            :class="[
-            header.align == null ? 'text-xs-left' : header.align
-            ]"
+            :class="[header.align == null ? 'text-xs-left' : header.align]"
           >
             {{ header.text }}
           </th>
@@ -59,7 +57,10 @@
         <td v-if="isModerator && showMassEdit">
           <VCheckbox v-model="props.selected" primary hide-details></VCheckbox>
         </td>
-        <td v-if="currentTrack == null || props.item.id !== currentTrack.id" class="text-xs-center">
+        <td
+          v-if="currentTrack == null || props.item.id !== currentTrack.id"
+          class="text-xs-center"
+        >
           {{ props.item.number }}
         </td>
         <td v-else class="text-xs-center">
