@@ -19,8 +19,8 @@
                   v-model="name"
                 />
                 <VTextField
-                  :label="$t('users.passwords')"
-                  :placeholder="$t('users.passwords')"
+                  :label="$t('users.password')"
+                  :placeholder="$t('users.password')"
                   prepend-icon="mdi-key"
                   type="password"
                   v-model="password"
