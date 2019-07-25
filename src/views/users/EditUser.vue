@@ -5,7 +5,13 @@
         <VForm @submit.prevent="submit">
           <VTextField :label="$t('common.name')" v-model="newUser.name" />
           <VTextField
-            :label="$t('users.passwords')"
+            v-if="user === currentUser"
+            :label="$t('users.current-password')"
+            type="password"
+            v-model="newUser.current_password"
+          />
+          <VTextField
+            :label="$t('users.password')"
             type="password"
             v-model="newUser.password"
           />
@@ -29,13 +35,14 @@
 </template>
 
 <script>
-import { mapActions, mapState } from "vuex";
+import { mapActions, mapGetters, mapState } from "vuex";
 
 export default {
   name: "EditUser",
   data() {
     return {
       newUser: {
+        current_password: "",
         name: "",
         password: "",
         password_confirmation: "",
@@ -63,6 +70,7 @@ export default {
     }
   },
   computed: {
+    ...mapGetters("auth", ["currentUser"]),
     ...mapState("users", ["users"]),
     user: function() {
       return this.users[this.$route.params.id];
