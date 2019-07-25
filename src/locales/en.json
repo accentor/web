@@ -66,6 +66,7 @@
 			"ffmepg-blank": "Please fill in the FFmpeg parameters.",
 			"result-blank": "Please fill in a resulting codec."
 		},
+		"current_password": "Current Password",
 		"exception": "Exception",
 		"extension": "Extension",
 		"ffmpeg": "FFmpeg parameters",
@@ -113,6 +114,7 @@
 		"traces": "Traces",
 		"unauthorized": "Unauthorized",
 		"user": {
+			"current-password-incorrect": "Your current password was incorrect.",
 			"name": "Username",
 			"name-blank": "Please fill in a username.",
 			"password-blank": "Please fill in a password.",
@@ -234,16 +236,18 @@
 	"search": "Search",
 	"users": {		
 		"confirm-password": "Confirm password",
-		"create": "Create user",		
+		"create": "Create user",
+		"current-password": "Current Password",		
 		"name": "Name",
 		"new": "New user",
-		"passwords": "Password",
+		"password": "Password",
 		"permission": {
 			"admin": "Admin",
 			"moderator": "Moderator",
 			"user": "User"
 		},
 		"permissions": "Permissions",
+		"update": "Update user",
 		"users": "Users | User | Users"
 	}
 }

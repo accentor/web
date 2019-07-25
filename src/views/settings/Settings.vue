@@ -19,7 +19,12 @@
         <VForm @submit.prevent="submitPassword">
           <VTextField :label="$t('common.name')" v-model="newUser.name" />
           <VTextField
-            :label="$t('users.passwords')"
+            :label="$t('users.current-password')"
+            type="password"
+            v-model="newUser.current_password"
+          />
+          <VTextField
+            :label="$t('users.password')"
             type="password"
             v-model="newUser.password"
           />
@@ -45,6 +50,7 @@ export default {
   data() {
     return {
       newUser: {
+        current_password: "",
         name: "",
         password: "",
         password_confirmation: ""

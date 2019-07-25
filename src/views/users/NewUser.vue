@@ -5,7 +5,7 @@
         <VForm @submit.prevent="submit">
           <VTextField :label="$t('common.name')" v-model="newUser.name" />
           <VTextField
-            :label="$t('users.passwords')"
+            :label="$t('users.password')"
             type="password"
             v-model="newUser.password"
           />
