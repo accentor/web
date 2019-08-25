@@ -25,7 +25,7 @@
             :label="$t('users.permissions')"
             v-model="newUser.permission"
           />
-          <VBtn color="primary" type="submit">
+          <VBtn color="primary" class="ma-2" type="submit">
             {{ $t("users.update") }}
           </VBtn>
         </VForm>

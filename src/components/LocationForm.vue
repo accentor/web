@@ -1,6 +1,6 @@
 <template>
   <VForm>
-    <VLayout row>
+    <VLayout>
       <VFlex xs5>
         <VTextField
           v-model="newLocation.path"
@@ -9,11 +9,25 @@
         />
       </VFlex>
       <VFlex xs1>
-        <VBtn icon outline color="green" @click="saveLocation" v-if="!location">
-          <VIcon color="green">mdi-plus</VIcon>
+        <VBtn
+          icon
+          outlined
+          color="success"
+          class="ma-2"
+          @click="saveLocation"
+          v-if="!location"
+        >
+          <VIcon color="success">mdi-plus</VIcon>
         </VBtn>
-        <VBtn icon outline v-if="location" color="red" @click="deleteLocation">
-          <VIcon color="red">mdi-delete</VIcon>
+        <VBtn
+          icon
+          outlined
+          v-if="location"
+          color="danger"
+          class="ma-2"
+          @click="deleteLocation"
+        >
+          <VIcon color="danger">mdi-delete</VIcon>
         </VBtn>
       </VFlex>
     </VLayout>

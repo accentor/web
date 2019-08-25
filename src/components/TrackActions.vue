@@ -1,9 +1,9 @@
 <template>
   <span>
-    <VBtn @click="startTrack" color="primary" flat icon small>
+    <VBtn @click="startTrack" color="primary" class="ma-1" text icon small>
       <VIcon>mdi-play</VIcon>
     </VBtn>
-    <VBtn @click="addTrack" color="success" flat icon small>
+    <VBtn @click="addTrack" color="success" class="ma-1" text icon small>
       <VIcon>mdi-plus</VIcon>
     </VBtn>
     <EditReviewComment :item="track" :update="flag" />
@@ -14,8 +14,9 @@
         query: { redirect: $route.fullPath }
       }"
       v-if="isModerator"
-      color="orange"
-      flat
+      color="edit"
+      class="ma-1"
+      text
       icon
       small
     >
@@ -24,9 +25,10 @@
     <VBtn
       @click.stop.prevent="deleteTrack"
       v-if="isModerator"
-      color="red"
+      color="danger"
+      class="ma-1"
       href="#"
-      flat
+      text
       icon
       small
     >

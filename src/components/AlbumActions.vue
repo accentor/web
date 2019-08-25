@@ -1,9 +1,23 @@
 <template>
   <span>
-    <VBtn @click.stop.prevent="startTracks" color="primary" flat icon small>
+    <VBtn
+      @click.stop.prevent="startTracks"
+      color="primary"
+      class="ma-2"
+      text
+      icon
+      small
+    >
       <VIcon>mdi-play</VIcon>
     </VBtn>
-    <VBtn @click.stop.prevent="addTracks" color="success" flat icon small>
+    <VBtn
+      @click.stop.prevent="addTracks"
+      color="success"
+      class="ma-2"
+      text
+      icon
+      small
+    >
       <VIcon>mdi-plus</VIcon>
     </VBtn>
     <EditReviewComment :item="album" :update="flag" />
@@ -14,8 +28,9 @@
         query: { redirect: $route.fullPath }
       }"
       v-if="isModerator"
-      color="orange"
-      flat
+      color="edit"
+      class="ma-2"
+      text
       icon
       small
     >
@@ -24,8 +39,9 @@
     <VBtn
       @click.stop.prevent="deleteAlbum"
       v-if="isModerator"
-      color="red"
-      flat
+      color="danger"
+      class="ma-2"
+      text
       href="#"
       icon
       small

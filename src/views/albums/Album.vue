@@ -1,12 +1,12 @@
 <template>
   <VContainer fluid grid-list-xl v-if="album">
-    <VLayout row wrap>
+    <VLayout wrap>
       <VFlex lg3 md4 sm6 v-if="album.image" xs12>
         <VImg :src="album.image" class="elevation-3" />
       </VFlex>
       <VFlex lg9 md8 sm6 xs12>
         <div>
-          <div class="headline">
+          <div class="display-1">
             {{ album.title }}
             <span v-if="album.edition_description !== null" class="grey--text">
               ({{ album.edition_description }})
@@ -35,7 +35,7 @@
           </div>
         </div>
       </VFlex>
-      <VLayout row>
+      <VLayout>
         <VFlex>
           <TracksTable :tracks="tracks" :show-album="false" />
         </VFlex>
@@ -46,7 +46,6 @@
 
 <script>
 import { mapState } from "vuex";
-import Paginated from "../../mixins/Paginated";
 import AlbumActions from "../../components/AlbumActions";
 import TracksTable from "../../components/TracksTable";
 import AlbumArtists from "../../components/AlbumArtists";
@@ -54,7 +53,6 @@ import AlbumArtists from "../../components/AlbumArtists";
 export default {
   name: "Album",
   components: { AlbumArtists, TracksTable, AlbumActions },
-  mixins: [Paginated],
   computed: {
     ...mapState("albums", ["albums"]),
     ...mapState("labels", ["labels"]),

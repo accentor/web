@@ -1,8 +1,8 @@
 <template>
   <VContainer fluid grid-list-xl v-if="user">
-    <VLayout row wrap>
+    <VLayout wrap>
       <div>
-        <div class="headline">{{ user.name }}</div>
+        <div class="display-1">{{ user.name }}</div>
         <span class="grey--text">
           {{ user.permission }}
         </span>

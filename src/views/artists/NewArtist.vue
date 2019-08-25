@@ -7,7 +7,7 @@
           <FilePicker v-model="newArtist.image">
             {{ $t("common.choose-image") }}
           </FilePicker>
-          <VBtn color="primary" type="submit">
+          <VBtn color="primary" class="ma-2" type="submit">
             {{ $t("music.artist.add") }}
           </VBtn>
         </VForm>

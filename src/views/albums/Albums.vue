@@ -1,19 +1,15 @@
 <template>
   <VContainer fluid grid-list-xl>
     <VDataIterator
-      :items="albums"
-      :search="search"
-      :custom-filter="filter"
-      :rows-per-page-items="[12]"
-      :pagination.sync="pagination"
-      v-if="albums.length > 0"
-      content-class="layout row wrap"
+      :footer-props="{ disableItemsPerPage: true, itemsPerPageOptions: [12] }"
+      :items="filteredItems"
+      :items-per-page="12"
+      :page.sync="pagination.page"
     >
       <template v-slot:header>
-        <VLayout justify-end align-baseline row wrap mb-2>
+        <VLayout justify-end align-baseline wrap mb-2>
           <VFlex xs12 sm8 md6 lg4 xl2>
             <VTextField
-              v-if="albums.length > 12"
               v-model="search"
               prepend-inner-icon="mdi-magnify"
               :label="$t('common.search')"
@@ -21,16 +17,31 @@
               hide-details
             />
           </VFlex>
-          <VBtn :to="{ name: 'new-album' }" color="success" v-if="isModerator">
+          <VBtn
+            :to="{ name: 'new-album' }"
+            color="success"
+            class="ma-2"
+            v-if="isModerator"
+          >
             <VIcon left>mdi-plus</VIcon>
             {{ $t("music.album.new") }}
           </VBtn>
         </VLayout>
       </template>
-      <template v-slot:item="props">
-        <VFlex lg3 md4 sm6 xl2 xs12>
-          <AlbumCard :album="props.item" />
-        </VFlex>
+      <template v-slot:default="props">
+        <VLayout wrap>
+          <VFlex
+            v-for="item in props.items"
+            :key="item.id"
+            lg3
+            md4
+            sm6
+            xl2
+            xs12
+          >
+            <AlbumCard :album="item" />
+          </VFlex>
+        </VLayout>
       </template>
     </VDataIterator>
   </VContainer>
@@ -46,16 +57,6 @@ export default {
   name: "albums",
   components: { AlbumCard },
   mixins: [Paginated, Searchable],
-  data() {
-    return {
-      filter: (items, search, filter) => {
-        search = search.toString().toLowerCase();
-        if (search.trim() === "") return items;
-
-        return items.filter(val => filter(val.title, search));
-      }
-    };
-  },
   methods: {
     ...mapActions("albums", ["destroy"]),
     deleteAlbum: function(id) {
@@ -68,7 +69,16 @@ export default {
     ...mapGetters("auth", ["isModerator"]),
     ...mapGetters("albums", {
       albums: "albumsByTitle"
-    })
+    }),
+    filteredItems() {
+      return this.albums.filter(
+        item =>
+          !this.search ||
+          item.title
+            .toLocaleLowerCase()
+            .indexOf(this.search.toLocaleLowerCase()) >= 0
+      );
+    }
   }
 };
 </script>

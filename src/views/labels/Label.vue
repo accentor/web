@@ -1,18 +1,16 @@
 <template>
   <VContainer fluid grid-list-xl v-if="label">
     <VDataIterator
-      :items="albums"
-      :search="search"
-      :custom-filter="filter"
+      :footer-props="{ disableItemsPerPage: true, itemsPerPageOptions: [12] }"
+      :items="filteredItems"
       :rows-per-page-items="[12]"
-      :pagination.sync="pagination"
+      :page.sync="pagination.page"
       v-if="albums.length > 0"
-      content-class="layout row wrap"
     >
       <template v-slot:header>
-        <VLayout justify-space-between align-baseline row wrap mb-2>
+        <VLayout justify-space-between align-baseline wrap mb-2>
           <VFlex xs12 sm4 md6 lg8 xl10>
-            <h3>{{ label.name }}</h3>
+            <h2 class="display-1">{{ label.name }}</h2>
           </VFlex>
           <VFlex xs12 sm8 md6 lg4 xl2>
             <VTextField
@@ -26,10 +24,20 @@
           </VFlex>
         </VLayout>
       </template>
-      <template v-slot:item="props">
-        <VFlex lg3 md4 sm6 xl2 xs12>
-          <AlbumCard :album="props.item" />
-        </VFlex>
+      <template v-slot:default="props">
+        <VLayout wrap>
+          <VFlex
+            v-for="item in props.items"
+            :key="item.id"
+            lg3
+            md4
+            sm6
+            xl2
+            xs12
+          >
+            <AlbumCard :album="item" />
+          </VFlex>
+        </VLayout>
       </template>
     </VDataIterator>
   </VContainer>
@@ -45,16 +53,6 @@ export default {
   name: "Label",
   components: { AlbumCard },
   mixins: [Paginated, Searchable],
-  data() {
-    return {
-      filter: (items, search, filter) => {
-        search = search.toString().toLowerCase();
-        if (search.trim() === "") return items;
-
-        return items.filter(val => filter(val.title, search));
-      }
-    };
-  },
   computed: {
     ...mapGetters("auth", ["isModerator"]),
     ...mapState("labels", ["labels"]),
@@ -65,6 +63,15 @@ export default {
     },
     label: function() {
       return this.labels[this.$route.params.id];
+    },
+    filteredItems() {
+      return this.albums.filter(
+        item =>
+          !this.search ||
+          item.title
+            .toLocaleLowerCase()
+            .indexOf(this.search.toLocaleLowerCase()) >= 0
+      );
     }
   }
 };

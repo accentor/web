@@ -1,19 +1,16 @@
 <template>
   <VContainer fluid grid-list-xl>
     <VDataIterator
-      :items="genres"
-      :search="search"
-      :custom-filter="filter"
-      :rows-per-page-items="[numberOfItems]"
-      :pagination.sync="pagination"
+      :footer-props="{ disableItemsPerPage: true, itemsPerPageOptions: [12] }"
+      :items="filteredItems"
+      :items-per-page="12"
+      :page.sync="pagination.page"
       v-if="genres.length > 0"
-      content-class="layout row wrap"
     >
       <template v-slot:header>
-        <VLayout justify-end align-baseline row wrap mb-2>
+        <VLayout justify-end align-baseline wrap mb-2>
           <VFlex xs12 sm8 md6 lg4 xl2>
             <VTextField
-              v-if="genres.length > numberOfItems"
               v-model="search"
               prepend-inner-icon="mdi-magnify"
               :label="$t('common.search')"
@@ -23,10 +20,20 @@
           </VFlex>
         </VLayout>
       </template>
-      <template v-slot:item="props">
-        <VFlex lg3 md4 sm6 xl2 xs12>
-          <GenreCard :genre="props.item" />
-        </VFlex>
+      <template v-slot:default="props">
+        <VLayout wrap>
+          <VFlex
+            v-for="item in props.items"
+            :key="item.name"
+            lg3
+            md4
+            sm6
+            xl2
+            xs12
+          >
+            <GenreCard :genre="item" />
+          </VFlex>
+        </VLayout>
       </template>
     </VDataIterator>
   </VContainer>
@@ -42,31 +49,18 @@ export default {
   name: "genres",
   components: { GenreCard },
   mixins: [Paginated, Searchable],
-  data() {
-    return {
-      filter: (items, search, filter) => {
-        search = search.toString().toLowerCase();
-        if (search.trim() === "") return items;
-
-        return items.filter(val => filter(val.name, search));
-      }
-    };
-  },
   computed: {
     ...mapGetters("genres", {
       genres: "genresByName"
     }),
-    numberOfItems() {
-      switch (this.$vuetify.breakpoint.name) {
-        case "xl":
-          return "30";
-        case "lg":
-          return "20";
-        case "md":
-          return "15";
-        default:
-          return "12";
-      }
+    filteredItems() {
+      return this.genres.filter(
+        item =>
+          !this.search ||
+          item.name
+            .toLocaleLowerCase()
+            .indexOf(this.search.toLocaleLowerCase()) >= 0
+      );
     }
   }
 };

@@ -1,6 +1,6 @@
 <template>
   <VContainer fill-height fluid>
-    <VLayout row>
+    <VLayout>
       <VFlex>
         <TracksTable
           :tracks="tracks"

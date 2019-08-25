@@ -28,12 +28,18 @@
               :locale="locale"
             >
               <VSpacer></VSpacer>
-              <VBtn flat color="primary" @click="originalModal = false">
+              <VBtn
+                text
+                color="primary"
+                class="ma-2"
+                @click="originalModal = false"
+              >
                 {{ $t("common.cancel") }}
               </VBtn>
               <VBtn
-                flat
+                text
                 color="primary"
+                class="ma-2"
                 @click="$refs.dialogOriginal.save(newAlbum.release)"
               >
                 {{ $t("common.ok") }}
@@ -70,12 +76,18 @@
               :locale="locale"
             >
               <VSpacer></VSpacer>
-              <VBtn flat color="primary" @click="editionModal = false">
+              <VBtn
+                text
+                color="primary"
+                class="ma-2"
+                @click="editionModal = false"
+              >
                 {{ $t("common.cancel") }}
               </VBtn>
               <VBtn
-                flat
+                text
                 color="primary"
+                class="ma-2"
                 @click="$refs.dialogEdition.save(newAlbum.edition)"
               >
                 {{ $t("common.ok") }}
@@ -93,7 +105,6 @@
           </FilePicker>
           <VLayout
             :key="`artist-${index}`"
-            row
             v-for="(item, index) of newAlbum.album_artists"
           >
             <VLayout column class="no-grow">
@@ -101,6 +112,7 @@
                 @click="moveArtist(index, -1)"
                 icon
                 small
+                class="ma-2"
                 :disabled="index === 0"
               >
                 <VIcon>mdi-menu-up</VIcon>
@@ -109,11 +121,12 @@
                 @click="moveArtist(index, 1)"
                 icon
                 small
+                class="ma-2"
                 :disabled="index === newAlbum.album_artists.length - 1"
               >
                 <VIcon>mdi-menu-down</VIcon>
               </VBtn>
-              <VBtn @click="removeArtist(index)" icon small>
+              <VBtn @click="removeArtist(index)" icon small class="ma-2">
                 <VIcon>mdi-close</VIcon>
               </VBtn>
             </VLayout>
@@ -134,13 +147,12 @@
               />
             </VLayout>
           </VLayout>
-          <h4>{{ $tc("music.labels", 2) }}</h4>
+          <h4 class="subtitle-1">{{ $tc("music.labels", 2) }}</h4>
           <VLayout
             :key="`label-${index}`"
-            row
             v-for="(item, index) of newAlbum.album_labels"
           >
-            <VBtn @click="removeLabel(index)" icon small>
+            <VBtn @click="removeLabel(index)" icon small class="ma-2">
               <VIcon>mdi-close</VIcon>
             </VBtn>
             <VLayout column>
@@ -159,15 +171,15 @@
               <VDivider v-if="index !== newAlbum.album_labels.length - 1" />
             </VLayout>
           </VLayout>
-          <VLayout row justify-center>
-            <VBtn color="primary" type="submit">
+          <VLayout justify-center>
+            <VBtn color="primary" class="ma-2" type="submit">
               {{ $t("music.album.create") }}
             </VBtn>
             <VSpacer />
-            <VBtn @click="addArtist" color="success">
+            <VBtn @click="addArtist" color="success" class="ma-2">
               {{ $t("music.artist.add") }}
             </VBtn>
-            <VBtn @click="addLabel" color="success">
+            <VBtn @click="addLabel" color="success" class="ma-2">
               {{ $t("music.label.add") }}
             </VBtn>
           </VLayout>

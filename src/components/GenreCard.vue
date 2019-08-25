@@ -1,7 +1,7 @@
 <template>
   <VCard :to="{ name: 'genre', params: { id: genre.id } }">
-    <VCardTitle primary-title>
-      <h3>{{ genre.name }}</h3>
+    <VCardTitle class="pt-5">
+      {{ genre.name }}
     </VCardTitle>
     <VCardActions>
       <GenreActions :genre="genre" />

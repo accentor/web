@@ -25,7 +25,7 @@
                   type="password"
                   v-model="password"
                 />
-                <VBtn color="primary" type="submit">
+                <VBtn color="primary" class="ma-2" type="submit">
                   {{ $t("common.login") }}
                 </VBtn>
               </VForm>

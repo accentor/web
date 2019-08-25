@@ -1,53 +1,74 @@
 <template>
   <div>
     <VContainer fluid grid-list-xl>
-      <VLayout row>
+      <VLayout>
         <VFlex>
-          <h2>{{ $tc("music.artists", 2) }}</h2>
+          <h2 class="display-1">{{ $tc("music.artists", 2) }}</h2>
         </VFlex>
       </VLayout>
       <VDataIterator
+        :footer-props="{ disableItemsPerPage: true, itemsPerPageOptions: [6] }"
         :items="artists"
-        :rows-per-page-items="[numberOfItems]"
-        content-class="layout row wrap"
+        :items-per-page="6"
       >
-        <template v-slot:item="props">
-          <VFlex lg3 md4 sm6 xl2 xs12>
-            <ArtistCard :artist="props.item" />
-          </VFlex>
+        <template v-slot:default="props">
+          <VLayout wrap>
+            <VFlex
+              v-for="item in props.items"
+              :key="item.name"
+              lg3
+              md4
+              sm6
+              xl2
+              xs12
+            >
+              <ArtistCard :artist="item" />
+            </VFlex>
+          </VLayout>
         </template>
       </VDataIterator>
     </VContainer>
     <VContainer fluid grid-list-xl>
-      <VLayout row>
+      <VLayout>
         <VFlex>
-          <h2>{{ $tc("music.albums", 2) }}</h2>
+          <h2 class="display-1">{{ $tc("music.albums", 2) }}</h2>
         </VFlex>
       </VLayout>
       <VDataIterator
+        :footer-props="{ disableItemsPerPage: true, itemsPerPageOptions: [6] }"
         :items="albums"
-        :rows-per-page-items="[numberOfItems]"
-        content-class="layout row wrap"
+        :items-per-page="6"
       >
-        <template v-slot:item="props">
-          <VFlex lg3 md4 sm6 xl2 xs12>
-            <AlbumCard :album="props.item" />
-          </VFlex>
+        <template v-slot:default="props">
+          <VLayout wrap>
+            <VFlex
+              v-for="item in props.items"
+              :key="item.name"
+              lg3
+              md4
+              sm6
+              xl2
+              xs12
+            >
+              <AlbumCard :album="item" />
+            </VFlex>
+          </VLayout>
         </template>
       </VDataIterator>
     </VContainer>
     <VContainer fill-height fluid>
       <VLayout column>
-        <VLayout row>
+        <VLayout>
           <VFlex>
-            <h2>{{ $tc("music.tracks", 2) }}</h2>
+            <h2 class="display-1">{{ $tc("music.tracks", 2) }}</h2>
           </VFlex>
         </VLayout>
-        <VLayout row>
+        <VLayout>
           <VFlex>
             <TracksTable
               :tracks="tracks"
               :save-pagination="false"
+              :save-search="false"
               :show-mass-edit="false"
             />
           </VFlex>
@@ -71,17 +92,7 @@ export default {
       albums: "albums/albumsFlagged",
       artists: "artists/artistsFlagged",
       tracks: "tracks/tracksFlagged"
-    }),
-    numberOfItems() {
-      switch (this.$vuetify.breakpoint.name) {
-        case "lg":
-          return "8";
-        case "xl":
-          return "12";
-        default:
-          return "6";
-      }
-    }
+    })
   }
 };
 </script>

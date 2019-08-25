@@ -1,6 +1,6 @@
 <template>
   <VForm>
-    <VLayout row>
+    <VLayout>
       <VFlex xs6>
         <VTextField
           v-model="newCodec.extension"
@@ -17,16 +17,24 @@
       <VFlex xs1>
         <VBtn
           icon
-          outline
-          :color="(codec && 'blue') || 'green'"
+          outlined
+          :color="(codec && 'info') || 'success'"
+          class="ma-2"
           @click="saveCodec"
         >
-          <VIcon :color="(codec && 'blue') || 'green'">
+          <VIcon :color="(codec && 'info') || 'success'">
             {{ codec !== null ? "mdi-content-save" : "mdi-plus" }}
           </VIcon>
         </VBtn>
-        <VBtn icon outline v-if="codec" color="red" @click="deleteCodec">
-          <VIcon color="red">mdi-delete</VIcon>
+        <VBtn
+          icon
+          outlined
+          v-if="codec"
+          color="danger"
+          class="ma-2"
+          @click="deleteCodec"
+        >
+          <VIcon color="danger">mdi-delete</VIcon>
         </VBtn>
       </VFlex>
     </VLayout>
