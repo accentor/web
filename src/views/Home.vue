@@ -108,7 +108,7 @@
           <h2 class="display-1">{{ $t("home.on-this-day") }}</h2>
         </template>
         <template v-slot:no-data>
-          <v-alert :value="true" color="info" icon="mdi-info">
+          <v-alert :value="true" color="info" icon="mdi-information" dark>
             {{ $t("home.on-this-day-empty") }}
           </v-alert>
         </template>

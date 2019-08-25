@@ -3,7 +3,7 @@
     <VDataIterator
       :footer-props="{ disableItemsPerPage: true, itemsPerPageOptions: [12] }"
       :items="filteredItems"
-      :items-per-page="numberOfItems"
+      :items-per-page="12"
       :page.sync="pagination.page"
       v-if="labels.length > 0"
     >
