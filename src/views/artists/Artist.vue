@@ -1,24 +1,24 @@
 <template>
   <VContainer fluid grid-list-xl v-if="artist">
-    <VLayout row wrap>
+    <VLayout wrap>
       <VFlex lg3 md4 sm6 v-if="artist.image" xs12>
         <VImg :src="artist.image" class="elevation-3" />
       </VFlex>
       <VFlex lg9 md8 sm6 xs12>
         <div>
-          <h3>{{ artist.name }}</h3>
+          <h2 class="display-1">{{ artist.name }}</h2>
         </div>
         <div>
           <ArtistActions :artist="artist" />
         </div>
       </VFlex>
     </VLayout>
-    <VLayout row wrap>
+    <VLayout wrap>
       <VFlex :key="item.id" lg3 md4 sm6 v-for="item of albums" xl2 xs12>
         <AlbumCard :album="item" />
       </VFlex>
     </VLayout>
-    <VLayout row wrap>
+    <VLayout wrap>
       <VFlex>
         <TracksTable
           :tracks="tracks"

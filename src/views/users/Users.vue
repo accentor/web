@@ -1,30 +1,29 @@
 <template>
   <VContainer fluid grid-list-xl>
-    <VLayout justify-end row wrap>
+    <VLayout justify-end wrap>
       <VBtn :to="{ name: 'new-user' }" color="success" v-if="isAdmin">
         <VIcon left>mdi-plus</VIcon>
         {{ $t("users.new") }}
       </VBtn>
     </VLayout>
-    <VLayout row v-if="users.length > 0" wrap>
+    <VLayout v-if="users.length > 0" wrap>
       <VFlex :key="user.id" lg3 md4 sm6 v-for="user in users" xl2 xs12>
         <VCard :to="{ name: 'user', params: { id: user.id } }">
-          <VCardTitle primary-title>
-            <div>
-              <div class="headline">{{ user.name }}</div>
-              <span class="grey--text">
-                {{ $t(`users.permission.${user.permission}`) }}
-              </span>
-            </div>
+          <VCardTitle class="pb-0">
+            {{ user.name }}
           </VCardTitle>
+          <VCardText>
+            {{ $t(`users.permission.${user.permission}`) }}
+          </VCardText>
           <VCardActions v-if="isAdmin">
             <VBtn
               @click.stop.prevent="deleteUser(user.id)"
-              color="red"
+              color="danger"
+              class="ma-2"
               dark
               fab
               href="#"
-              outline
+              outlined
               small
             >
               <VIcon>mdi-delete</VIcon>
@@ -35,10 +34,11 @@
                 params: { id: user.id },
                 query: { redirect: $route.fullPath }
               }"
-              color="orange"
+              color="edit"
+              class="ma-2"
               dark
               fab
-              outline
+              outlined
               small
             >
               <VIcon>mdi-pencil</VIcon>

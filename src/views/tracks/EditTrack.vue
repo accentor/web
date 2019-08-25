@@ -35,17 +35,14 @@
             return-object
             v-model="newTrack.genre_ids"
           />
-          <h4>{{ $tc("music.artists", 2) }}</h4>
-          <VLayout
-            :key="index"
-            row
-            v-for="(item, index) of newTrack.track_artists"
-          >
+          <h4 class="subtitle-1">{{ $tc("music.artists", 2) }}</h4>
+          <VLayout :key="index" v-for="(item, index) of newTrack.track_artists">
             <VLayout column class="no-grow">
               <VBtn
                 @click="moveArtist(index, -1)"
                 icon
                 small
+                class="ma-2"
                 :disabled="index === 0"
               >
                 <VIcon>mdi-menu-up</VIcon>
@@ -54,11 +51,12 @@
                 @click="moveArtist(index, 1)"
                 icon
                 small
+                class="ma-2"
                 :disabled="index === newTrack.track_artists.length - 1"
               >
                 <VIcon>mdi-menu-down</VIcon>
               </VBtn>
-              <VBtn @click="removeArtist(index)" icon small>
+              <VBtn @click="removeArtist(index)" icon small class="ma-2">
                 <VIcon>mdi-close</VIcon>
               </VBtn>
             </VLayout>
@@ -85,12 +83,12 @@
             v-model="clear_review_comment"
             :label="$tc('music.flag.clear', 1)"
           />
-          <VLayout row>
-            <VBtn color="primary" type="submit">
+          <VLayout>
+            <VBtn color="primary" class="ma-2" type="submit">
               {{ $t("music.track.update") }}
             </VBtn>
             <VSpacer />
-            <VBtn @click="addArtist" color="success">
+            <VBtn @click="addArtist" color="success" class="ma-2">
               {{ $t("music.artist.add") }}
             </VBtn>
           </VLayout>

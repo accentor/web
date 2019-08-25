@@ -1,16 +1,16 @@
 <template>
   <div>
-    <VToolbar app clipped-left color="primary" dark>
-      <VToolbarSideIcon @click.stop="drawer = !drawer" />
+    <VAppBar app clipped-left color="primary" dark>
+      <VAppBarNavIcon @click.stop="drawer = !drawer" />
       <VToolbarTitle>Accentor</VToolbarTitle>
       <VSpacer />
-      <VBtn :disabled="loading" @click="loadData" flat icon>
+      <VBtn :disabled="loading" @click="loadData" text icon>
         <VIcon>mdi-refresh {{ loading ? "mdi-spin" : "" }}</VIcon>
       </VBtn>
-      <VBtn @click="logout" flat icon>
+      <VBtn @click="logout" text icon>
         <VIcon>mdi-logout-variant</VIcon>
       </VBtn>
-    </VToolbar>
+    </VAppBar>
 
     <VNavigationDrawer
       :mobile-break-point="1500"
@@ -20,132 +20,132 @@
       v-model="drawer"
     >
       <VList>
-        <VListTile :to="{ name: 'home' }" exact>
-          <VListTileAction>
+        <VListItem :to="{ name: 'home' }" exact>
+          <VListItemAction>
             <VIcon>mdi-home</VIcon>
-          </VListTileAction>
-          <VListTileContent>
-            <VListTileTitle>
+          </VListItemAction>
+          <VListItemContent>
+            <VListItemTitle>
               {{ $t("common.home") }}
-            </VListTileTitle>
-          </VListTileContent>
-        </VListTile>
+            </VListItemTitle>
+          </VListItemContent>
+        </VListItem>
         <VDivider />
-        <VListTile :to="{ name: 'artists' }">
-          <VListTileAction>
+        <VListItem :to="{ name: 'artists' }">
+          <VListItemAction>
             <VIcon>mdi-artist</VIcon>
-          </VListTileAction>
-          <VListTileContent>
-            <VListTileTitle>
+          </VListItemAction>
+          <VListItemContent>
+            <VListItemTitle>
               {{ $tc("music.artists", 2) }}
-            </VListTileTitle>
-          </VListTileContent>
-        </VListTile>
-        <VListTile :to="{ name: 'albums' }">
-          <VListTileAction>
+            </VListItemTitle>
+          </VListItemContent>
+        </VListItem>
+        <VListItem :to="{ name: 'albums' }">
+          <VListItemAction>
             <VIcon>mdi-album</VIcon>
-          </VListTileAction>
-          <VListTileContent>
-            <VListTileTitle>
+          </VListItemAction>
+          <VListItemContent>
+            <VListItemTitle>
               {{ $tc("music.albums", 2) }}
-            </VListTileTitle>
-          </VListTileContent>
-        </VListTile>
-        <VListTile :to="{ name: 'tracks' }">
-          <VListTileAction>
+            </VListItemTitle>
+          </VListItemContent>
+        </VListItem>
+        <VListItem :to="{ name: 'tracks' }">
+          <VListItemAction>
             <VIcon>mdi-music</VIcon>
-          </VListTileAction>
-          <VListTileContent>
-            <VListTileTitle>
+          </VListItemAction>
+          <VListItemContent>
+            <VListItemTitle>
               {{ $tc("music.tracks", 2) }}
-            </VListTileTitle>
-          </VListTileContent>
-        </VListTile>
-        <VListTile :to="{ name: 'genres' }">
-          <VListTileAction>
+            </VListItemTitle>
+          </VListItemContent>
+        </VListItem>
+        <VListItem :to="{ name: 'genres' }">
+          <VListItemAction>
             <VIcon>mdi-guitar-acoustic</VIcon>
-          </VListTileAction>
-          <VListTileContent>
-            <VListTileTitle>
+          </VListItemAction>
+          <VListItemContent>
+            <VListItemTitle>
               {{ $tc("music.genres", 2) }}
-            </VListTileTitle>
-          </VListTileContent>
-        </VListTile>
-        <VListTile :to="{ name: 'labels' }">
-          <VListTileAction>
+            </VListItemTitle>
+          </VListItemContent>
+        </VListItem>
+        <VListItem :to="{ name: 'labels' }">
+          <VListItemAction>
             <VIcon>mdi-label</VIcon>
-          </VListTileAction>
-          <VListTileContent>
-            <VListTileTitle>
+          </VListItemAction>
+          <VListItemContent>
+            <VListItemTitle>
               {{ $tc("music.labels", 2) }}
-            </VListTileTitle>
-          </VListTileContent>
-        </VListTile>
-        <VListTile :to="{ name: 'library' }" v-if="isModerator">
-          <VListTileAction>
+            </VListItemTitle>
+          </VListItemContent>
+        </VListItem>
+        <VListItem :to="{ name: 'library' }" v-if="isModerator">
+          <VListItemAction>
             <VIcon>mdi-tune</VIcon>
-          </VListTileAction>
-          <VListTileContent>
-            <VListTileTitle>
+          </VListItemAction>
+          <VListItemContent>
+            <VListItemTitle>
               {{ $t("library-settings") }}
-            </VListTileTitle>
-          </VListTileContent>
-        </VListTile>
+            </VListItemTitle>
+          </VListItemContent>
+        </VListItem>
         <VDivider />
-        <VListTile :to="{ name: 'flags' }" v-if="isModerator">
-          <VListTileAction>
+        <VListItem :to="{ name: 'flags' }" v-if="isModerator">
+          <VListItemAction>
             <VIcon>mdi-flag</VIcon>
-          </VListTileAction>
-          <VListTileContent>
-            <VListTileTitle>
+          </VListItemAction>
+          <VListItemContent>
+            <VListItemTitle>
               {{ $tc("music.flags", 2) }}
-            </VListTileTitle>
-          </VListTileContent>
-          <VListTileAction v-if="numberOfFlaggedItems > 0">
+            </VListItemTitle>
+          </VListItemContent>
+          <VListItemAction v-if="numberOfFlaggedItems > 0">
             <VBtn
-              round
-              small
+              rounded
+              x-small
               dark
               color="primary"
-              outline
-              class="min-width-height"
+              outlined
+              class="btn-caption"
             >
               {{ numberOfFlaggedItems }}
             </VBtn>
-          </VListTileAction>
-        </VListTile>
-        <VListTile :to="{ name: 'users' }" exact>
-          <VListTileAction>
+          </VListItemAction>
+        </VListItem>
+        <VListItem :to="{ name: 'users' }" exact>
+          <VListItemAction>
             <VIcon>mdi-account-multiple</VIcon>
-          </VListTileAction>
-          <VListTileContent>
-            <VListTileTitle>
+          </VListItemAction>
+          <VListItemContent>
+            <VListItemTitle>
               {{ $tc("users.users", 2) }}
-            </VListTileTitle>
-          </VListTileContent>
-        </VListTile>
-        <VListTile
+            </VListItemTitle>
+          </VListItemContent>
+        </VListItem>
+        <VListItem
           :to="{
             name: 'settings',
             query: { redirect: $route.fullPath }
           }"
         >
-          <VListTileAction>
+          <VListItemAction>
             <VIcon>mdi-settings</VIcon>
-          </VListTileAction>
-          <VListTileContent>
-            <VListTileTitle>
+          </VListItemAction>
+          <VListItemContent>
+            <VListItemTitle>
               {{ $t("common.settings") }}
-            </VListTileTitle>
-          </VListTileContent>
-        </VListTile>
+            </VListItemTitle>
+          </VListItemContent>
+        </VListItem>
       </VList>
     </VNavigationDrawer>
 
     <VContent>
       <VContainer>
         <Errors />
-        <VLayout row wrap>
+        <VLayout wrap>
           <VFlex xs12>
             <router-view />
           </VFlex>
@@ -153,7 +153,7 @@
       </VContainer>
     </VContent>
 
-    <VFooter app color="white" inset fixed height="auto">
+    <VFooter app color="white" inset fixed height="auto" class="pa-0">
       <Player />
     </VFooter>
   </div>
@@ -222,8 +222,10 @@ export default {
 </script>
 
 <style scoped>
-.min-width-height {
-  min-width: 28px;
-  padding: 0 7px;
+.btn-caption {
+  font-size: 0.75rem;
+}
+.v-toolbar__title {
+  font-weight: 500;
 }
 </style>

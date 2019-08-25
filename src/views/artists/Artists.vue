@@ -1,36 +1,48 @@
 <template>
   <VContainer fluid grid-list-xl>
     <VDataIterator
-      :items="artists"
-      :search="search"
-      :custom-filter="filter"
-      :rows-per-page-items="[12]"
-      :pagination.sync="pagination"
+      :footer-props="{ disableItemsPerPage: true, itemsPerPageOptions: [12] }"
+      :items="filteredItems"
+      :items-per-page="12"
+      :page.sync="pagination.page"
       v-if="artists.length > 0"
-      content-class="layout row wrap"
     >
       <template v-slot:header>
-        <VLayout justify-end align-baseline row wrap mb-2>
-          <VFlex xs12 sm8 md6 lg4 xl2>
+        <VLayout align-baseline justify-end mb-2 wrap>
+          <VFlex lg4 md6 sm8 xl2 xs12>
             <VTextField
-              v-if="artists.length > 12"
-              v-model="search"
-              prepend-inner-icon="mdi-magnify"
               :label="$t('common.search')"
-              single-line
+              v-model="search"
               hide-details
+              prepend-inner-icon="mdi-magnify"
+              single-line
             />
           </VFlex>
-          <VBtn :to="{ name: 'new-artist' }" color="success" v-if="isModerator">
+          <VBtn
+            v-if="isModerator"
+            :to="{ name: 'new-artist' }"
+            class="ma-2"
+            color="success"
+          >
             <VIcon left>mdi-plus</VIcon>
             {{ $t("music.artist.new") }}
           </VBtn>
         </VLayout>
       </template>
-      <template v-slot:item="props">
-        <VFlex lg3 md4 sm6 xl2 xs12>
-          <ArtistCard :artist="props.item" />
-        </VFlex>
+      <template v-slot:default="props">
+        <VLayout wrap>
+          <VFlex
+            v-for="item in props.items"
+            :key="item.name"
+            xs12
+            sm6
+            md4
+            lg3
+            xl2
+          >
+            <ArtistCard :artist="item" />
+          </VFlex>
+        </VLayout>
       </template>
     </VDataIterator>
   </VContainer>
@@ -38,29 +50,28 @@
 
 <script>
 import { mapGetters } from "vuex";
-import Paginated from "../../mixins/Paginated";
 import ArtistCard from "../../components/ArtistCard";
+import Paginated from "../../mixins/Paginated";
 import Searchable from "../../mixins/Searchable";
 
 export default {
   name: "artists",
   components: { ArtistCard },
   mixins: [Paginated, Searchable],
-  data() {
-    return {
-      filter: (items, search, filter) => {
-        search = search.toString().toLowerCase();
-        if (search.trim() === "") return items;
-
-        return items.filter(val => filter(val.name, search));
-      }
-    };
-  },
   computed: {
     ...mapGetters("auth", ["isModerator"]),
     ...mapGetters("artists", {
       artists: "artistsByName"
-    })
+    }),
+    filteredItems() {
+      return this.artists.filter(
+        item =>
+          !this.search ||
+          item.name
+            .toLocaleLowerCase()
+            .indexOf(this.search.toLocaleLowerCase()) >= 0
+      );
+    }
   }
 };
 </script>

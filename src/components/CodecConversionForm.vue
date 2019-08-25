@@ -1,6 +1,6 @@
 <template>
   <VForm>
-    <VLayout row>
+    <VLayout>
       <VFlex xs3>
         <VTextField
           v-model="newCodecConversion.name"
@@ -25,22 +25,24 @@
       <VFlex xs1>
         <VBtn
           icon
-          outline
-          :color="(codecConversion && 'blue') || 'green'"
+          outlined
+          :color="(codecConversion && 'info') || 'success'"
+          class="ma-2"
           @click="saveCodecConversion"
         >
-          <VIcon :color="(codecConversion && 'blue') || 'green'">
+          <VIcon :color="(codecConversion && 'info') || 'success'">
             {{ codecConversion !== null ? "mdi-content-save" : "mdi-plus" }}
           </VIcon>
         </VBtn>
         <VBtn
           icon
-          outline
+          outlined
           v-if="codecConversion"
-          color="red"
+          color="danger"
+          class="ma-2"
           @click="deleteCodecConversion"
         >
-          <VIcon color="red">mdi-delete</VIcon>
+          <VIcon color="danger">mdi-delete</VIcon>
         </VBtn>
       </VFlex>
     </VLayout>

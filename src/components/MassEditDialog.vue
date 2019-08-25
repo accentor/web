@@ -1,7 +1,7 @@
 <template>
   <VDialog v-model="dialog" fullscreen scrollable @update:returnValue="closed">
     <template v-slot:activator="{ on }">
-      <VBtn v-on="on" :disabled="tracks.length === 0">
+      <VBtn v-on="on" color="edit" class="ma-2" :disabled="tracks.length === 0">
         {{
           $tc("music.mass.edit-tracks", tracks.length, { count: tracks.length })
         }}
@@ -9,7 +9,7 @@
     </template>
     <VCard>
       <VToolbar dark color="primary">
-        <VBtn icon dark @click="dialog = false">
+        <VBtn icon dark class="ma-2" @click="dialog = false">
           <VIcon>mdi-close</VIcon>
         </VBtn>
         <VToolbarTitle>
@@ -21,7 +21,7 @@
         </VToolbarTitle>
         <VSpacer></VSpacer>
         <VToolbarItems>
-          <VBtn icon @click="saveTracks" :disabled="saving">
+          <VBtn icon class="ma-2" @click="saveTracks" :disabled="saving">
             <VIcon>
               {{ saving ? "mdi-refresh mdi-spin" : "mdi-content-save" }}
             </VIcon>
@@ -66,7 +66,7 @@
                       )"
                       :key="t.id"
                     >
-                      <td class="text-xs-right">
+                      <td class="text-right">
                         <strong>{{ t.number }}</strong>
                       </td>
                       <td>
@@ -224,7 +224,6 @@
             </VLayout>
             <VLayout
               :key="index"
-              row
               v-for="(item, index) of changeArtists.track_artists"
             >
               <VLayout column class="no-grow" v-if="changeArtists.enabled">
@@ -232,6 +231,7 @@
                   @click="moveArtist(index, -1)"
                   icon
                   small
+                  class="ma-2"
                   :disabled="index === 0"
                 >
                   <VIcon>mdi-menu-up</VIcon>
@@ -240,11 +240,12 @@
                   @click="moveArtist(index, 1)"
                   icon
                   small
+                  class="ma-2"
                   :disabled="index === changeArtists.track_artists.length - 1"
                 >
                   <VIcon>mdi-menu-down</VIcon>
                 </VBtn>
-                <VBtn @click="removeArtist(index)" icon small>
+                <VBtn @click="removeArtist(index)" icon small class="ma-2">
                   <VIcon>mdi-close</VIcon>
                 </VBtn>
               </VLayout>
@@ -272,6 +273,7 @@
             <VBtn
               @click="addArtist"
               color="success"
+              class="ma-2"
               v-if="changeArtists.enabled"
             >
               {{ $t("music.artist.add") }}

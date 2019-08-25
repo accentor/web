@@ -7,11 +7,11 @@
         </div>
       </template>
       <VList dense>
-        <VListTile
+        <VListItem
           v-for="ta of track_artists"
           :key="`${ta.artist_id} ${ta.name} ${ta.role}`"
         >
-          <VListTileContent>
+          <VListItemContent>
             <span>
               <RouterLink
                 :to="{ name: 'artist', params: { id: ta.artist_id } }"
@@ -22,8 +22,8 @@
                 {{ $t("common.as") }} {{ ta.name }}
               </span>
             </span>
-          </VListTileContent>
-        </VListTile>
+          </VListItemContent>
+        </VListItem>
       </VList>
     </VMenu>
   </div>

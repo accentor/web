@@ -1,21 +1,19 @@
 <template>
   <VContainer fill-height fluid v-if="user">
     <VLayout align-center justify-center>
-      <VFlex md4 sm8 xs12>
+      <VFlex lg4 md6 sm8 xs12 class="px-3">
         <VForm @submit.prevent="submitLocale">
           <VSelect
             v-model="newLocale"
             :items="langs"
             label="Language"
           ></VSelect>
-          <VBtn color="primary" type="submit">
+          <VBtn color="primary" class="ma-2" type="submit">
             {{ $t("common.change-settings") }}
           </VBtn>
         </VForm>
       </VFlex>
-    </VLayout>
-    <VLayout align-center justify-center>
-      <VFlex md4 sm8 xs12>
+      <VFlex lg4 md6 sm8 xs12 class="px-3">
         <VForm @submit.prevent="submitPassword">
           <VTextField :label="$t('common.name')" v-model="newUser.name" />
           <VTextField
@@ -33,7 +31,7 @@
             type="password"
             v-model="newUser.password_confirmation"
           />
-          <VBtn color="primary" type="submit">
+          <VBtn color="primary" class="ma-2" type="submit">
             {{ $t("common.change-settings") }}
           </VBtn>
         </VForm>

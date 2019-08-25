@@ -1,6 +1,6 @@
 <template>
   <VForm>
-    <VLayout row>
+    <VLayout>
       <VFlex xs6>
         <VTextField
           v-model="newImageType.extension"
@@ -17,22 +17,24 @@
       <VFlex xs1>
         <VBtn
           icon
-          outline
-          :color="(imageType && 'blue') || 'green'"
+          outlined
+          :color="(imageType && 'info') || 'success'"
+          class="ma-2"
           @click="saveImageType"
         >
-          <VIcon :color="(imageType && 'blue') || 'green'">
+          <VIcon :color="(imageType && 'info') || 'success'">
             {{ imageType !== null ? "mdi-content-save" : "mdi-plus" }}
           </VIcon>
         </VBtn>
         <VBtn
           icon
-          outline
+          outlined
           v-if="imageType"
-          color="red"
+          color="danger"
+          class="ma-2"
           @click="deleteImageType"
         >
-          <VIcon color="red">mdi-delete</VIcon>
+          <VIcon color="danger">mdi-delete</VIcon>
         </VBtn>
       </VFlex>
     </VLayout>

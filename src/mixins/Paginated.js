@@ -1,7 +1,7 @@
 export default {
   data() {
     return {
-      pagination: {}
+      pagination: { page: 1 }
     };
   },
   props: {

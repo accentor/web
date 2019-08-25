@@ -19,7 +19,7 @@
             v-model="clear_review_comment"
             :label="$tc('music.flag.clear', 1)"
           />
-          <VBtn color="primary" type="submit">
+          <VBtn color="primary" class="ma-2" type="submit">
             {{ $t("music.artist.update") }}
           </VBtn>
         </VForm>
