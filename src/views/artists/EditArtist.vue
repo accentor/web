@@ -11,9 +11,7 @@
         </VAlert>
         <VForm @submit.prevent="submit">
           <VTextField :label="$t('common.name')" v-model="newArtist.name" />
-          <FilePicker v-model="newArtist.image">
-            {{ $t("common.choose-image") }}
-          </FilePicker>
+          <FilePicker v-model="newArtist.image" />
           <VCheckbox
             v-if="artist.review_comment !== null"
             v-model="clear_review_comment"
