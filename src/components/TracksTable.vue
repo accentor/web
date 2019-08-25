@@ -13,7 +13,11 @@
     </VLayout>
     <VDataTable
       v-model="selected"
-      :footer-props="{ disableItemsPerPage: true, itemsPerPageOptions: [30] }"
+      :footer-props="{
+        disableItemsPerPage: true,
+        itemsPerPageOptions: [30],
+        showFirstLastPage: true
+      }"
       :headers="headers"
       :items="filteredItems"
       :items-per-page="30"

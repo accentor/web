@@ -1,7 +1,11 @@
 <template>
   <VContainer fluid grid-list-xl>
     <VDataIterator
-      :footer-props="{ disableItemsPerPage: true, itemsPerPageOptions: [12] }"
+      :footer-props="{
+        disableItemsPerPage: true,
+        itemsPerPageOptions: [12],
+        showFirstLastPage: true
+      }"
       :items="filteredItems"
       :items-per-page="12"
       :page.sync="pagination.page"
