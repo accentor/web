@@ -5,6 +5,7 @@
       color="danger"
       class="ma-2"
       :disabled="artistsDisabled"
+      dark
     >
       <VIcon left>
         {{ artistsDisabled ? "mdi-refresh mdi-spin" : "mdi-alert-octagon" }}
@@ -16,6 +17,7 @@
       color="danger"
       class="ma-2"
       :disabled="albumsDisabled"
+      dark
     >
       <VIcon left>
         {{ albumsDisabled ? "mdi-refresh mdi-spin" : "mdi-alert-octagon" }}
@@ -27,6 +29,7 @@
       color="danger"
       class="ma-2"
       :disabled="genresDisabled"
+      dark
     >
       <VIcon left>
         {{ genresDisabled ? "mdi-refresh mdi-spin" : "mdi-alert-octagon" }}
@@ -38,6 +41,7 @@
       color="danger"
       class="ma-2"
       :disabled="labelsDisabled"
+      dark
     >
       <VIcon left>
         {{ labelsDisabled ? "mdi-refresh mdi-spin" : "mdi-alert-octagon" }}

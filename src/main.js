@@ -30,7 +30,7 @@ new Vue({
           success: colors.green,
           danger: colors.red,
           edit: colors.orange,
-          flag: colors.red.accent-1
+          flag: colors.red
         }
       }
     }
