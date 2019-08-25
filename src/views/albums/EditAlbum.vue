@@ -107,9 +107,7 @@
             v-if="editionInformation"
             clearable
           />
-          <FilePicker v-model="newAlbum.image">
-            {{ $t("common.choose-image") }}
-          </FilePicker>
+          <FilePicker v-model="newAlbum.image" />
           <VLayout
             :key="`artist-${index}`"
             v-for="(item, index) of newAlbum.album_artists"
