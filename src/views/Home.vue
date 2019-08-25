@@ -2,117 +2,195 @@
   <div>
     <VContainer fluid grid-list-xl>
       <VDataIterator
+        :footer-props="{
+          disableItemsPerPage: true,
+          itemsPerPageOptions: [numberOfItems]
+        }"
         :items="albums"
         :custom-sort="releaseSort"
-        :rows-per-page-items="[numberOfItems]"
-        content-class="layout row wrap"
+        :items-per-page="numberOfItems"
       >
         <template v-slot:header>
-          <h2>{{ $t("home.recently-released") }}</h2>
+          <h2 class="display-1">{{ $t("home.recently-released") }}</h2>
         </template>
-        <template v-slot:item="props">
-          <VFlex lg3 md4 sm6 xl2 xs12>
-            <AlbumCard :album="props.item" />
-          </VFlex>
+        <template v-slot:default="props">
+          <VLayout wrap>
+            <VFlex
+              v-for="item in props.items"
+              :key="item.id"
+              lg3
+              md4
+              sm6
+              xl2
+              xs12
+            >
+              <AlbumCard :album="item" />
+            </VFlex>
+          </VLayout>
         </template>
       </VDataIterator>
     </VContainer>
     <VContainer fluid grid-list-xl>
       <VDataIterator
+        :footer-props="{
+          disableItemsPerPage: true,
+          itemsPerPageOptions: [numberOfItems]
+        }"
         :items="albums"
         :custom-sort="createdSort"
-        :rows-per-page-items="[numberOfItems]"
-        content-class="layout row wrap"
+        :items-per-page="numberOfItems"
       >
         <template v-slot:header>
-          <h2>
+          <h2 class="display-1">
             {{ $t("home.recently-added-albums") }}
           </h2>
         </template>
-        <template v-slot:item="props">
-          <VFlex lg3 md4 sm6 xl2 xs12>
-            <AlbumCard :album="props.item" />
-          </VFlex>
+        <template v-slot:default="props">
+          <VLayout wrap>
+            <VFlex
+              v-for="item in props.items"
+              :key="item.id"
+              lg3
+              md4
+              sm6
+              xl2
+              xs12
+            >
+              <AlbumCard :album="item" />
+            </VFlex>
+          </VLayout>
         </template>
       </VDataIterator>
     </VContainer>
     <VContainer fluid grid-list-xl>
       <VDataIterator
+        :footer-props="{
+          disableItemsPerPage: true,
+          itemsPerPageOptions: [numberOfItems]
+        }"
         :items="artists"
         :custom-sort="createdSort"
-        :rows-per-page-items="[numberOfItems]"
-        content-class="layout row wrap"
+        :items-per-page="numberOfItems"
       >
         <template v-slot:header>
-          <h2>
+          <h2 class="display-1">
             {{ $t("home.recently-added-artists") }}
           </h2>
         </template>
-        <template v-slot:item="props">
-          <VFlex lg3 md4 sm6 xl2 xs12>
-            <ArtistCard :artist="props.item" />
-          </VFlex>
+        <template v-slot:default="props">
+          <VLayout wrap>
+            <VFlex
+              v-for="item in props.items"
+              :key="item.id"
+              lg3
+              md4
+              sm6
+              xl2
+              xs12
+            >
+              <ArtistCard :artist="item" />
+            </VFlex>
+          </VLayout>
         </template>
       </VDataIterator>
     </VContainer>
     <VContainer fluid grid-list-xl>
       <VDataIterator
+        :footer-props="{
+          disableItemsPerPage: true,
+          itemsPerPageOptions: [numberOfItems]
+        }"
         :items="albumsOnThisDay"
         :custom-sort="releaseSort"
-        :rows-per-page-items="[numberOfItems]"
-        content-class="layout row wrap"
+        :items-per-page="numberOfItems"
       >
         <template v-slot:header>
-          <h2>{{ $t("home.on-this-day") }}</h2>
+          <h2 class="display-1">{{ $t("home.on-this-day") }}</h2>
         </template>
         <template v-slot:no-data>
           <v-alert :value="true" color="info" icon="mdi-info">
             {{ $t("home.on-this-day-empty") }}
           </v-alert>
         </template>
-        <template v-slot:item="props">
-          <VFlex lg3 md4 sm6 xl2 xs12>
-            <AlbumCard :album="props.item" />
-          </VFlex>
+        <template v-slot:default="props">
+          <VLayout wrap>
+            <VFlex
+              v-for="item in props.items"
+              :key="item.id"
+              lg3
+              md4
+              sm6
+              xl2
+              xs12
+            >
+              <AlbumCard :album="item" />
+            </VFlex>
+          </VLayout>
         </template>
       </VDataIterator>
     </VContainer>
 
     <VContainer fluid grid-list-xl>
       <VDataIterator
+        :footer-props="{
+          disableItemsPerPage: true,
+          itemsPerPageOptions: [numberOfItems]
+        }"
         :items="albums"
         :custom-sort="randomSort"
-        :rows-per-page-items="[numberOfItems]"
-        content-class="layout row wrap"
+        :items-per-page="numberOfItems"
       >
         <template v-slot:header>
-          <h2>
+          <h2 class="display-1">
             {{ $t("home.random-albums") }}
           </h2>
         </template>
-        <template v-slot:item="props">
-          <VFlex lg3 md4 sm6 xl2 xs12>
-            <AlbumCard :album="props.item" />
-          </VFlex>
+        <template v-slot:default="props">
+          <VLayout wrap>
+            <VFlex
+              v-for="item in props.items"
+              :key="item.id"
+              lg3
+              md4
+              sm6
+              xl2
+              xs12
+            >
+              <AlbumCard :album="item" />
+            </VFlex>
+          </VLayout>
         </template>
       </VDataIterator>
     </VContainer>
     <VContainer fluid grid-list-xl>
       <VDataIterator
+        :footer-props="{
+          disableItemsPerPage: true,
+          itemsPerPageOptions: [numberOfItems]
+        }"
         :items="artists"
         :custom-sort="randomSort"
-        :rows-per-page-items="[numberOfItems]"
-        content-class="layout row wrap"
+        :items-per-page="numberOfItems"
       >
         <template v-slot:header>
-          <h2>
+          <h2 class="display-1">
             {{ $t("home.random-artists") }}
           </h2>
         </template>
-        <template v-slot:item="props">
-          <VFlex lg3 md4 sm6 xl2 xs12>
-            <ArtistCard :artist="props.item" />
-          </VFlex>
+        <template v-slot:default="props">
+          <VLayout wrap>
+            <VFlex
+              v-for="item in props.items"
+              :key="item.id"
+              lg3
+              md4
+              sm6
+              xl2
+              xs12
+            >
+              <ArtistCard :artist="item" />
+            </VFlex>
+          </VLayout>
         </template>
       </VDataIterator>
     </VContainer>
@@ -123,13 +201,11 @@
 import { mapGetters } from "vuex";
 import AlbumCard from "../components/AlbumCard";
 import ArtistCard from "../components/ArtistCard";
-import Paginated from "../mixins/Paginated";
 import { compareStrings } from "../comparators";
 
 export default {
   name: "home",
   components: { AlbumCard, ArtistCard },
-  mixins: [Paginated],
   methods: {
     releaseSort(items) {
       items.sort((a1, a2) => {
@@ -158,13 +234,12 @@ export default {
       artists: "artists/artists"
     }),
     numberOfItems() {
-      switch (this.$vuetify.breakpoint.name) {
-        case "xl":
-          return "6";
-        case "md":
-          return "3";
-        default:
-          return "4";
+      if (this.$vuetify.breakpoint.name === "xl") {
+        return 6;
+      } else if (this.$vuetify.breakpoint.name === "md") {
+        return 3;
+      } else {
+        return 4;
       }
     }
   }

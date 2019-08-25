@@ -1,5 +1,12 @@
 <template>
-  <VBtn color="red" flat icon small @click.stop.prevent="show = true">
+  <VBtn
+    color="flag"
+    class="ma-2"
+    text
+    icon
+    small
+    @click.stop.prevent="show = true"
+  >
     <VIcon>mdi-flag</VIcon>
     <VDialog v-model="show" max-width="600px">
       <VCard>
@@ -13,8 +20,8 @@
           />
         </VCardText>
         <VCardActions>
-          <VLayout row justify-end>
-            <VBtn color="primary" type="submit" @click="flag">
+          <VLayout justify-end>
+            <VBtn color="primary" class="ma-2" type="submit" @click="flag">
               {{ $t("music.flag.for-review") }}
             </VBtn>
           </VLayout>

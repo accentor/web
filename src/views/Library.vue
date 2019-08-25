@@ -1,16 +1,16 @@
 <template>
   <VContainer fluid grid-list-xl v-if="isModerator">
-    <VLayout row>
-      <h2>{{ $t("library.maintenance") }}</h2>
+    <VLayout>
+      <h2 class="headline">{{ $t("library.maintenance") }}</h2>
     </VLayout>
-    <VLayout row wrap>
+    <VLayout wrap>
       <MaintenanceActions />
     </VLayout>
-    <VLayout row>
-      <h2>{{ $t("library.rescan") }}</h2>
+    <VLayout>
+      <h2 class="headline">{{ $t("library.rescan") }}</h2>
     </VLayout>
-    <VLayout row wrap v-if="rescan">
-      <VBtn @click="start" color="success">
+    <VLayout wrap v-if="rescan">
+      <VBtn @click="start" color="success" class="ma-2">
         <VIcon left>mdi-refresh {{ rescan.running ? "mdi-spin" : "" }}</VIcon>
         {{ $t("library.start-scan") }}
       </VBtn>
@@ -22,55 +22,55 @@
       </div>
       <div v-if="rescan.warning_text">
         <div>
-          <h3>{{ $t("library.warnings") }}</h3>
+          <h3 class="title">{{ $t("library.warnings") }}</h3>
         </div>
         <pre>{{ rescan.warning_text }}</pre>
       </div>
       <div v-if="rescan.error_text">
         <div>
-          <h3>{{ $t("library.errors") }}</h3>
+          <h3 class="title">{{ $t("library.errors") }}</h3>
         </div>
         <pre>{{ rescan.error_text }}</pre>
       </div>
     </VLayout>
-    <VLayout row>
-      <h2>{{ $t("library.codecs") }}</h2>
+    <VLayout>
+      <h2 class="headline">{{ $t("library.codecs") }}</h2>
     </VLayout>
-    <VLayout row>
+    <VLayout>
       <VFlex xs12>
         <EditCodecs />
       </VFlex>
     </VLayout>
-    <VLayout row>
-      <h2>{{ $t("library.codec-conversions") }}</h2>
+    <VLayout>
+      <h2 class="headline">{{ $t("library.codec-conversions") }}</h2>
     </VLayout>
-    <VLayout row>
+    <VLayout>
       <VFlex xs12>
         <EditCodecConversions />
       </VFlex>
     </VLayout>
-    <VLayout row>
-      <h2>{{ $t("library.cover-filenames") }}</h2>
+    <VLayout>
+      <h2 class="headline">{{ $t("library.cover-filenames") }}</h2>
     </VLayout>
-    <VLayout row>
+    <VLayout>
       <VFlex xs12>
         <EditCoverFilenames />
       </VFlex>
     </VLayout>
-    <VLayout row>
-      <h2>
+    <VLayout>
+      <h2 class="headline">
         {{ $t("library.image-types") }}
       </h2>
     </VLayout>
-    <VLayout row>
+    <VLayout>
       <VFlex xs12>
         <EditImageTypes />
       </VFlex>
     </VLayout>
-    <VLayout row>
-      <h2>{{ $t("library.locations") }}</h2>
+    <VLayout>
+      <h2 class="headline">{{ $t("library.locations") }}</h2>
     </VLayout>
-    <VLayout row>
+    <VLayout>
       <VFlex xs12>
         <EditLocations />
       </VFlex>

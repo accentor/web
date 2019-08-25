@@ -1,6 +1,6 @@
 <template>
   <VForm>
-    <VLayout row>
+    <VLayout>
       <VFlex xs5>
         <VTextField
           v-model="newCoverFilename.filename"
@@ -11,21 +11,23 @@
       <VFlex xs1>
         <VBtn
           icon
-          outline
-          color="green"
+          outlined
+          color="success"
+          class="ma-2"
           @click="saveCoverFilename"
           v-if="!coverFilename"
         >
-          <VIcon color="green">mdi-plus</VIcon>
+          <VIcon color="success">mdi-plus</VIcon>
         </VBtn>
         <VBtn
           icon
-          outline
+          outlined
           v-if="coverFilename"
-          color="red"
+          color="danger"
+          class="ma-2"
           @click="deleteCoverFilename"
         >
-          <VIcon color="red">mdi-delete</VIcon>
+          <VIcon color="danger">mdi-delete</VIcon>
         </VBtn>
       </VFlex>
     </VLayout>

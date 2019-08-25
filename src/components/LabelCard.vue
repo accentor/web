@@ -1,7 +1,7 @@
 <template>
   <VCard :to="{ name: 'label', params: { id: label.id } }">
-    <VCardTitle primary-title>
-      <h3>{{ label.name }}</h3>
+    <VCardTitle class="pt-5">
+      {{ label.name }}
     </VCardTitle>
     <VCardActions>
       <LabelActions :label="label" />

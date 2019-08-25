@@ -1,9 +1,8 @@
 <template>
   <div>
-    <VLayout justify-end align-baseline row wrap mb-2>
+    <VLayout justify-end align-baseline wrap mb-2>
       <VFlex v-if="showSearch" xs12 sm8 md6 lg4 xl2>
         <VTextField
-          v-if="tracks.length > 30"
           v-model="search"
           prepend-inner-icon="mdi-magnify"
           :label="$t('common.search')"
@@ -14,78 +13,51 @@
     </VLayout>
     <VDataTable
       v-model="selected"
+      :footer-props="{ disableItemsPerPage: true, itemsPerPageOptions: [30] }"
       :headers="headers"
-      :search="search"
-      :custom-filter="customFilter"
-      :filter="filter"
-      :items="tracks"
-      :rows-per-page-items="[30]"
-      :pagination.sync="pagination"
-      :select-all="isModerator && showMassEdit"
+      :items="filteredItems"
+      :items-per-page="30"
+      :page.sync="pagination.page"
+      :show-select="isModerator && showMassEdit"
       class="elevation-3"
       ref="table"
     >
-      <template v-slot:actions-prepend>
-        <MassEditDialog
-          :tracks="selected"
-          v-if="isModerator && showMassEdit"
-          @close="reloadSelected"
+      <template v-slot:header.actions v-if="isModerator && showMassEdit">
+        <MassEditDialog :tracks="selected" @close="reloadSelected" />
+      </template>
+      <template v-slot:header.data-table-select="props">
+        <VCheckbox
+          :input-value="props.props.value"
+          :value="props.props.value"
+          :indeterminate="props.props.indeterminate"
+          hide-details
+          primary
+          @click.stop="toggleAll"
+          class="bottom-padding-fix"
         />
       </template>
-      <template v-slot:headers="props">
-        <tr>
-          <th v-if="isModerator && showMassEdit" class="td-no-grow">
-            <VCheckbox
-              :input-value="props.all"
-              :value="props.all"
-              :indeterminate="props.indeterminate"
-              primary
-              hide-details
-              @click.stop="toggleAll"
-            />
-          </th>
-          <th
-            v-for="header in props.headers"
-            :key="header.text"
-            :class="[header.align == null ? 'text-xs-left' : header.align]"
-          >
-            {{ header.text }}
-          </th>
-        </tr>
-      </template>
-      <template v-slot:items="props" class="td-no-grow">
-        <td v-if="isModerator && showMassEdit">
-          <VCheckbox v-model="props.selected" primary hide-details></VCheckbox>
-        </td>
-        <td
-          v-if="currentTrack == null || props.item.id !== currentTrack.id"
-          class="text-xs-center"
-        >
-          {{ props.item.number }}
-        </td>
-        <td v-else class="text-xs-center">
+      <template v-slot:item.number="props">
+        <span v-if="currentTrack !== null && props.item.id === currentTrack.id">
           <VIcon>mdi-volume-high</VIcon>
-        </td>
-        <td>{{ props.item.title }}</td>
-        <td class="text-xs-right">
-          {{ props.item.length | length }}
-        </td>
-        <td v-if="showAlbum">
-          <RouterLink
-            :to="{ name: 'album', params: { id: props.item.album_id } }"
-          >
-            {{ albums[props.item.album_id].title }}
-          </RouterLink>
-        </td>
-        <td>
-          <TrackArtists :track="props.item" />
-        </td>
-        <td>
-          <TrackGenres :track="props.item" />
-        </td>
-        <td class="text-xs-right">
-          <TrackActions :track="props.item" />
-        </td>
+        </span>
+        <span v-else>{{ props.value }}</span>
+      </template>
+      <template v-slot:item.length="props">
+        {{ props.value | length }}
+      </template>
+      <template v-slot:item.album_id="props">
+        <RouterLink :to="{ name: 'album', params: { id: props.value } }">
+          {{ albums[props.value].title }}
+        </RouterLink>
+      </template>
+      <template v-slot:item.track_artists="props">
+        <TrackArtists :track="props.item" />
+      </template>
+      <template v-slot:item.genre_ids="props">
+        <TrackGenres :track="props.item" />
+      </template>
+      <template v-slot:item.actions="props">
+        <TrackActions :track="props.item" />
       </template>
     </VDataTable>
   </div>
@@ -106,10 +78,10 @@ export default {
   mixins: [Paginated, Searchable],
   props: {
     tracks: { default: () => [], type: Array },
-    showAlbum: { default: true, type: Boolean },
-    showSearch: { default: false, type: Boolean },
     savePagination: { default: true, type: Boolean },
-    showMassEdit: { default: true, type: Boolean }
+    showAlbum: { default: true, type: Boolean },
+    showMassEdit: { default: true, type: Boolean },
+    showSearch: { default: false, type: Boolean }
   },
   data() {
     const headers = [
@@ -117,7 +89,8 @@ export default {
         text: "#",
         value: "number",
         sortable: false,
-        align: "text-xs-center"
+        align: "center",
+        width: "1px"
       },
       {
         text: this.$t("music.title"),
@@ -128,7 +101,7 @@ export default {
         text: this.$t("music.track.length"),
         value: "length",
         sortable: false,
-        align: "text-xs-right"
+        align: "end"
       },
       {
         text: this.$tc("music.albums", 1),
@@ -147,8 +120,9 @@ export default {
       },
       {
         text: this.$t("common.actions"),
+        value: "actions",
         sortable: false,
-        align: "text-xs-right"
+        align: "end"
       }
     ];
     if (!this.showAlbum) {
@@ -163,23 +137,18 @@ export default {
     ...mapGetters("auth", ["isModerator"]),
     ...mapGetters("player", ["currentTrack"]),
     ...mapState("albums", ["albums"]),
-    ...mapState("tracks", {
-      tracksObj: "tracks"
-    }),
+    ...mapState("tracks", { tracksObj: "tracks" }),
     filteredItems() {
-      return this.customFilter(this.tracks, this.search, this.filter);
+      return this.tracks.filter(
+        item =>
+          !this.search ||
+          item.title
+            .toLocaleLowerCase()
+            .indexOf(this.search.toLocaleLowerCase()) >= 0
+      );
     }
   },
   methods: {
-    customFilter(items, search, filter) {
-      search = search ? search.toString().toLowerCase() : "";
-      if (search.trim() === "") return items;
-
-      return items.filter(val => filter(val.title, search));
-    },
-    filter(title, search) {
-      return title.toLowerCase().indexOf(search) !== -1;
-    },
     toggleAll() {
       if (this.selected.length > 0) {
         this.selected = [];
@@ -195,7 +164,7 @@ export default {
 </script>
 
 <style scoped>
-.td-no-grow {
-  width: 1px;
+.bottom-padding-fix {
+  padding-bottom: 16px;
 }
 </style>

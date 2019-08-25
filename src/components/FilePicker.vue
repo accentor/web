@@ -10,7 +10,7 @@
         v-on:click:clear="clear"
       />
       <template v-slot:append>
-        <VBtn @click="passthrough" color="primary" dark>
+        <VBtn @click="passthrough" color="primary" class="ma-2" dark>
           <slot>
             {{ $t("common.choose-file") }}
           </slot>

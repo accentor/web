@@ -1,11 +1,11 @@
 <template>
   <VContainer fluid grid-list-xl v-if="genre">
-    <VLayout row wrap>
+    <VLayout wrap>
       <VFlex xs12>
-        <h3>{{ genre.name }}</h3>
+        <h2 class="display-1">{{ genre.name }}</h2>
       </VFlex>
     </VLayout>
-    <VLayout row wrap>
+    <VLayout wrap>
       <VFlex>
         <TracksTable :tracks="tracks" :show-search="true" />
       </VFlex>

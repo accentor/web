@@ -2,7 +2,8 @@
   <span>
     <VBtn
       @click="destroyEmptyArtists"
-      color="warning"
+      color="danger"
+      class="ma-2"
       :disabled="artistsDisabled"
     >
       <VIcon left>
@@ -12,7 +13,8 @@
     </VBtn>
     <VBtn
       @click="destroyEmptyAlbums"
-      color="warning"
+      color="danger"
+      class="ma-2"
       :disabled="albumsDisabled"
     >
       <VIcon left>
@@ -22,7 +24,8 @@
     </VBtn>
     <VBtn
       @click="destroyEmptyGenres"
-      color="warning"
+      color="danger"
+      class="ma-2"
       :disabled="genresDisabled"
     >
       <VIcon left>
@@ -32,7 +35,8 @@
     </VBtn>
     <VBtn
       @click="destroyEmptyLabels"
-      color="warning"
+      color="danger"
+      class="ma-2"
       :disabled="labelsDisabled"
     >
       <VIcon left>

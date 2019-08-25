@@ -9,7 +9,7 @@
           class="track"
         >
           <td class="icon">
-            <VBtn small icon flat @click="removeIndex(index)">
+            <VBtn small icon text class="ma-2" @click="removeIndex(index)">
               <VIcon>mdi-close</VIcon>
             </VBtn>
           </td>
@@ -24,7 +24,7 @@
               {{ albums[track.album_id].title }}
             </RouterLink>
           </td>
-          <td class="text-xs-right">
+          <td class="text-right">
             {{ track.length | length }}
           </td>
           <td>
@@ -37,18 +37,18 @@
       </table>
     </div>
 
-    <VLayout class="player-controls" row align-center>
-      <div class="flex left">
+    <VLayout class="player-controls" align-center>
+      <div class="flex player-left">
         <div class="content">
-          <VBtn @click="prevTrack" class="not-on-small" icon small>
+          <VBtn @click="prevTrack" class="not-on-small ma-2" icon small>
             <VIcon>mdi-skip-previous</VIcon>
           </VBtn>
-          <VBtn @click="setPlaying(!playing)" icon>
+          <VBtn @click="setPlaying(!playing)" icon class="ma-2">
             <VIcon large>
               {{ playing ? "mdi-pause" : "mdi-play" }}
             </VIcon>
           </VBtn>
-          <VBtn @click="nextTrack" class="not-on-small" icon small>
+          <VBtn @click="nextTrack" class="not-on-small ma-2" icon small>
             <VIcon>mdi-skip-next</VIcon>
           </VBtn>
         </div>
@@ -62,6 +62,7 @@
                 :max="currentTrack ? currentTrack.length : 1"
                 :value="seekTime"
                 v-on:input="seek"
+                hide-details
               />
             </VLayout>
           </div>
@@ -73,26 +74,33 @@
           </VLayout>
         </div>
       </div>
-      <div class="flex right">
+      <div class="flex player-right">
         <div class="content">
-          <VBtn :color="repeatModeColor" @click="nextRepeatMode" flat icon>
+          <VBtn
+            :color="repeatModeColor"
+            @click="nextRepeatMode"
+            text
+            icon
+            class="ma-2"
+          >
             <VIcon>{{ repeatModeIcon }}</VIcon>
           </VBtn>
-          <VBtn @click="shuffle" icon>
+          <VBtn @click="shuffle" icon class="ma-2">
             <VIcon>mdi-shuffle</VIcon>
           </VBtn>
           <VSlider
             :readonly="muted"
             :prepend-icon="audioIcon"
+            hide-details
             v-model="volume"
-            class="not-on-small"
-            id="volumeSlider"
+            class="not-on-small volume-slider ma-2"
             v-on:click:prepend="muted = !muted"
           />
           <VBtn
             @click="open = !open"
             icon
             :disabled="this.playlistTracks.length === 0"
+            class="ma-2"
           >
             <VIcon>{{ open ? "mdi-chevron-down" : "mdi-chevron-up" }}</VIcon>
           </VBtn>
@@ -196,7 +204,7 @@ export default {
           return undefined;
         case "all":
         case "single":
-          return "blue";
+          return "info";
         default:
           return undefined;
       }
@@ -260,7 +268,7 @@ export default {
     }
   }
 
-  .left {
+  .player-left {
     flex-shrink: 0;
     flex-grow: 2;
 
@@ -289,16 +297,19 @@ export default {
     }
   }
 
-  .right {
+  .player-right {
     flex-shrink: 0;
     flex-grow: 2;
 
     .content {
       margin-left: auto;
       padding-left: 20px;
+      justify-content: end;
+      flex-grow: 1;
 
-      #volumeSlider {
+      .volume-slider {
         min-width: 100px;
+        max-width: 250px;
       }
     }
   }

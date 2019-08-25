@@ -8,8 +8,9 @@
         query: { redirect: $route.fullPath }
       }"
       v-if="isModerator"
-      color="orange"
-      flat
+      color="edit"
+      class="ma-2"
+      text
       icon
       small
     >
@@ -18,9 +19,10 @@
     <VBtn
       @click.stop.prevent="deleteArtist"
       v-if="isModerator"
-      color="red"
+      color="danger"
+      class="ma-2"
       href="#"
-      flat
+      text
       icon
       small
     >
