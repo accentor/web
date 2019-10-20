@@ -2,7 +2,7 @@
   <VCard :to="{ name: 'album', params: { id: album.id } }">
     <VImg :aspect-ratio="1" :src="album.image" v-if="album.image" />
     <VCardTitle class="pb-0">
-      {{ album.title }}
+      {{ album.title }}&nbsp;
       <span v-if="album.edition_description !== null" class="grey--text">
         ({{ album.edition_description }})
       </span>

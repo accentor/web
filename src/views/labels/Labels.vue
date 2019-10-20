@@ -3,11 +3,11 @@
     <VDataIterator
       :footer-props="{
         disableItemsPerPage: true,
-        itemsPerPageOptions: [12],
+        itemsPerPageOptions: [numberOfItems],
         showFirstLastPage: true
       }"
       :items="filteredItems"
-      :items-per-page="12"
+      :items-per-page="numberOfItems"
       :page.sync="pagination.page"
       v-if="labels.length > 0"
     >
@@ -66,6 +66,17 @@ export default {
             .toLocaleLowerCase()
             .indexOf(this.search.toLocaleLowerCase()) >= 0
       );
+    },
+    numberOfItems() {
+      if (this.$vuetify.breakpoint.name === "xl") {
+        return 30;
+      } else if (this.$vuetify.breakpoint.name === "lg") {
+        return 20;
+      } else if (this.$vuetify.breakpoint.name === "md") {
+        return 15;
+      } else {
+        return 12;
+      }
     }
   }
 };

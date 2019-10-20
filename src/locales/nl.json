@@ -21,7 +21,8 @@
 			"nextPage": "Volgende pagina",
 			"prevPage": "Vorige pagina",
 			"firstPage": "Eerste pagina",
-			"lastPage": "Laatste pagina"
+			"lastPage": "Laatste pagina",
+			"pageText": "{0}-{1} van {2}"
 		},
 		"datePicker": {
 			"itemsSelected": "{0} geselecteerd"

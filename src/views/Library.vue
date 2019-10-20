@@ -24,13 +24,13 @@
         <div>
           <h3 class="title">{{ $t("library.warnings") }}</h3>
         </div>
-        <pre>{{ rescan.warning_text }}</pre>
+        <pre class="body-2">{{ rescan.warning_text }}</pre>
       </div>
       <div v-if="rescan.error_text">
         <div>
           <h3 class="title">{{ $t("library.errors") }}</h3>
         </div>
-        <pre>{{ rescan.error_text }}</pre>
+        <pre class="body-2">{{ rescan.error_text }}</pre>
       </div>
     </VLayout>
     <VLayout>
