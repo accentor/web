@@ -75,8 +75,8 @@ export default {
     tracksByAlbumAndNumber: (state, getters, rootState) => {
       return getters.tracks.sort((a1, a2) => {
         let albumOrder = compareStrings(
-          rootState.albums.albums[a1.album_id].title,
-          rootState.albums.albums[a2.album_id].title
+          rootState.albums.albums[a1.album_id].title.toLowerCase(),
+          rootState.albums.albums[a2.album_id].title.toLowerCase()
         );
         albumOrder =
           albumOrder === 0
