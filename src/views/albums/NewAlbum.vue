@@ -9,7 +9,6 @@
             v-model="originalModal"
             :return-value.sync="newAlbum.release"
             persistent
-            lazy
             full-width
             width="290px"
           >
@@ -56,7 +55,6 @@
             v-if="editionInformation"
             :return-value.sync="newAlbum.edition"
             persistent
-            lazy
             full-width
             width="290px"
           >
