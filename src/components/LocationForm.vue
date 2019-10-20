@@ -8,7 +8,7 @@
           :disabled="location !== null"
         />
       </VFlex>
-      <VFlex xs1>
+      <VFlex xs2 sm1>
         <VBtn
           icon
           outlined
