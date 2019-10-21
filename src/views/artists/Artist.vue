@@ -1,6 +1,9 @@
 <template>
   <VContainer fluid grid-list-xl v-if="artist">
     <VLayout wrap>
+      <VFlex lg3 md4 sm6 v-if="artist.image500" xs12>
+        <VImg :src="artist.image500" class="elevation-3" />
+      </VFlex>
       <VFlex lg3 md4 sm6 v-if="artist.image" xs12>
         <VImg :src="artist.image" class="elevation-3" />
       </VFlex>
