@@ -258,6 +258,10 @@
 	},
 	"search": "Zoeken",
 	"users": {
+		"auth": {
+			"destroy-selected": "Verwijder geselecteerde",	
+			"user-agent": "User agent"
+		},
 		"confirm-password": "Bevestig wachtwoord",
 		"create": "Maak gebruiker aan",
 		"current-password": "Huidig wachtwoord",
