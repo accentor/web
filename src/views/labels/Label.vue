@@ -7,7 +7,6 @@
         showFirstLastPage: true
       }"
       :items="filteredItems"
-      :rows-per-page-items="[12]"
       :page.sync="pagination.page"
       v-if="albums.length > 0"
     >
