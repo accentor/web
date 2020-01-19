@@ -3,11 +3,7 @@
     <audio ref="audio" />
     <div class="tracks-list-container" v-if="open">
       <table class="tracks-list">
-        <tr
-          v-for="(track, index) of playlistTracks"
-          :key="track.id"
-          class="track"
-        >
+        <tr v-for="(track, index) of playlistTracks" :key="track.id" class="track">
           <td class="icon">
             <VBtn small icon text class="ma-2" @click="removeIndex(index)">
               <VIcon>mdi-close</VIcon>
@@ -22,8 +18,7 @@
           <td>
             <RouterLink
               :to="{ name: 'album', params: { id: track.album_id } }"
-              >{{ albums[track.album_id].title }}</RouterLink
-            >
+            >{{ albums[track.album_id].title }}</RouterLink>
           </td>
           <td class="text-right">{{ track.length | length }}</td>
           <td>
@@ -71,13 +66,7 @@
       </div>
       <div class="flex player-right">
         <div class="content">
-          <VBtn
-            :color="repeatModeColor"
-            @click="nextRepeatMode"
-            text
-            icon
-            class="ma-2"
-          >
+          <VBtn :color="repeatModeColor" @click="nextRepeatMode" text icon class="ma-2">
             <VIcon>{{ repeatModeIcon }}</VIcon>
           </VBtn>
           <VBtn @click="shuffle" icon class="ma-2">
@@ -206,6 +195,7 @@ export default {
           .play()
           .then(() => {
             if ("mediaSession" in navigator) {
+              navigator.mediaSession.playbackState = "playing";
               navigator.mediaSession.metadata = new window.MediaMetadata({
                 title: this.currentTrack.title,
                 artist: this.currentTrack.track_artists
@@ -235,29 +225,6 @@ export default {
           .catch(error => {
             new Error(error);
           });
-      }
-    },
-    volume() {
-      this.$refs.audio.volume = this.volume / 100;
-    },
-    muted() {
-      this.$refs.audio.muted = this.muted;
-    },
-    doSeek() {
-      if (this.doSeek) {
-        this.$store.commit("player/setDoSeek");
-        this.$refs.audio.currentTime = this.seekTime;
-        if (this.playing) {
-          this.$refs.audio.play();
-        }
-      }
-    },
-    playing() {
-      if (this.playing) {
-        this.$refs.audio.play();
-        if ("mediaSession" in navigator) {
-          navigator.mediaSession.playbackState = "playing";
-        }
       } else {
         this.$refs.audio.pause();
         if ("mediaSession" in navigator) {
