@@ -1,7 +1,7 @@
 <template>
-  <VContainer fill-height fluid>
-    <VLayout align-center justify-center>
-      <VFlex lg6 sm8 xs12>
+  <VContainer class="fill-height" fluid>
+    <VRow no-gutters align="center" justify="center">
+      <VCol lg="6" sm="8" cols="12">
         <VForm @submit.prevent="submit">
           <VTextField :label="$t('music.title')" v-model="newAlbum.title" />
           <VDialog
@@ -99,11 +99,11 @@
             clearable
           />
           <FilePicker v-model="newAlbum.image" />
-          <VLayout
+          <VRow
             :key="`artist-${index}`"
             v-for="(item, index) of newAlbum.album_artists"
           >
-            <VLayout column class="no-grow">
+            <VRow class="flex-column no-grow">
               <VBtn
                 @click="moveArtist(index, -1)"
                 icon
@@ -125,8 +125,8 @@
               <VBtn @click="removeArtist(index)" icon small class="ma-2">
                 <VIcon>mdi-close</VIcon>
               </VBtn>
-            </VLayout>
-            <VLayout column>
+            </VRow>
+            <VRow class="flex-column">
               <VCombobox
                 :items="sortedArtists"
                 item-text="name"
@@ -141,17 +141,17 @@
                 v-model="item.separator"
                 v-if="index !== newAlbum.album_artists.length - 1"
               />
-            </VLayout>
-          </VLayout>
+            </VRow>
+          </VRow>
           <h4 class="subtitle-1">{{ $tc("music.labels", 2) }}</h4>
-          <VLayout
+          <VRow
             :key="`label-${index}`"
             v-for="(item, index) of newAlbum.album_labels"
           >
             <VBtn @click="removeLabel(index)" icon small class="ma-2">
               <VIcon>mdi-close</VIcon>
             </VBtn>
-            <VLayout column>
+            <VRow class="flex-column">
               <VCombobox
                 :items="sortedLabels"
                 item-text="name"
@@ -165,9 +165,9 @@
                 v-model="item.catalogue_number"
               />
               <VDivider v-if="index !== newAlbum.album_labels.length - 1" />
-            </VLayout>
-          </VLayout>
-          <VLayout justify-center>
+            </VRow>
+          </VRow>
+          <VRow justify="center">
             <VBtn color="primary" class="ma-2" type="submit">
               {{ $t("music.album.create") }}
             </VBtn>
@@ -178,10 +178,10 @@
             <VBtn @click="addLabel" color="success" class="ma-2">
               {{ $t("music.label.add") }}
             </VBtn>
-          </VLayout>
+          </VRow>
         </VForm>
-      </VFlex>
-    </VLayout>
+      </VCol>
+    </VRow>
   </VContainer>
 </template>
 

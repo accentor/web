@@ -1,7 +1,7 @@
 <template>
-  <VContainer fluid v-if="user">
-    <VLayout align-center justify-center>
-      <VFlex lg4 md6 sm8 xs12 class="px-3">
+  <VContainer class="fill-height" fluid v-if="user">
+    <VRow no-gutters align="center" justify="center">
+      <VCol lg="4" md="6" sm="8" cols="12" class="px-3">
         <VForm @submit.prevent="submitLocale">
           <VSelect
             v-model="newLocale"
@@ -12,8 +12,8 @@
             {{ $t("common.change-settings") }}
           </VBtn>
         </VForm>
-      </VFlex>
-      <VFlex lg4 md6 sm8 xs12 class="px-3">
+      </VCol>
+      <VCol lg="4" md="6" sm="8" cols="12" class="px-3">
         <VForm @submit.prevent="submitPassword">
           <VTextField :label="$t('common.name')" v-model="newUser.name" />
           <VTextField
@@ -35,13 +35,13 @@
             {{ $t("common.change-settings") }}
           </VBtn>
         </VForm>
-      </VFlex>
-    </VLayout>
-    <VLayout>
-      <VFlex>
+      </VCol>
+    </VRow>
+    <VRow>
+      <VCol>
         <AuthTokensTable :authTokens="authTokens" />
-      </VFlex>
-    </VLayout>
+      </VCol>
+    </VRow>
   </VContainer>
 </template>
 

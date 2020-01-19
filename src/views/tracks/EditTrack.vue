@@ -1,7 +1,7 @@
 <template>
-  <VContainer fill-height fluid v-if="track">
-    <VLayout align-center justify-center>
-      <VFlex md6 sm8 xs12>
+  <VContainer class="fill-height" fluid v-if="track">
+    <VRow no-gutters align="center" justify="center">
+      <VCol md="6" sm="8" cols="12">
         <VAlert
           :value="track.review_comment !== null"
           type="warning"
@@ -36,8 +36,8 @@
             v-model="newTrack.genre_ids"
           />
           <h4 class="subtitle-1">{{ $tc("music.artists", 2) }}</h4>
-          <VLayout :key="index" v-for="(item, index) of newTrack.track_artists">
-            <VLayout column class="no-grow">
+          <VRow :key="index" v-for="(item, index) of newTrack.track_artists">
+            <VRow class="no-grow flex-column">
               <VBtn
                 @click="moveArtist(index, -1)"
                 icon
@@ -59,8 +59,8 @@
               <VBtn @click="removeArtist(index)" icon small class="ma-2">
                 <VIcon>mdi-close</VIcon>
               </VBtn>
-            </VLayout>
-            <VLayout column>
+            </VRow>
+            <VRow>
               <VCombobox
                 :items="sortedArtists"
                 item-text="name"
@@ -76,14 +76,14 @@
                 v-model="item.role"
               />
               <VDivider v-if="index !== newTrack.track_artists.length - 1" />
-            </VLayout>
-          </VLayout>
+            </VRow>
+          </VRow>
           <VCheckbox
             v-if="track.review_comment !== null"
             v-model="clear_review_comment"
             :label="$tc('music.flag.clear', 1)"
           />
-          <VLayout>
+          <VRow>
             <VBtn color="primary" class="ma-2" type="submit">
               {{ $t("music.track.update") }}
             </VBtn>
@@ -91,10 +91,10 @@
             <VBtn @click="addArtist" color="success" class="ma-2">
               {{ $t("music.artist.add") }}
             </VBtn>
-          </VLayout>
+          </VRow>
         </VForm>
-      </VFlex>
-    </VLayout>
+      </VCol>
+    </VRow>
   </VContainer>
 </template>
 

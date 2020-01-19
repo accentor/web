@@ -1,7 +1,7 @@
 <template>
-  <VContainer fill-height fluid v-if="user">
-    <VLayout align-center justify-center>
-      <VFlex md4 sm8 xs12>
+  <VContainer class="fill-height" fluid v-if="user">
+    <VRow no-gutters align="center" justify="center">
+      <VCol md="4" sm="8" cols="12">
         <VForm @submit.prevent="submit">
           <VTextField :label="$t('common.name')" v-model="newUser.name" />
           <VTextField
@@ -29,8 +29,8 @@
             {{ $t("users.update") }}
           </VBtn>
         </VForm>
-      </VFlex>
-    </VLayout>
+      </VCol>
+    </VRow>
   </VContainer>
 </template>
 

@@ -1,15 +1,15 @@
 <template>
-  <VContainer fluid grid-list-xl v-if="genre">
-    <VLayout wrap>
-      <VFlex xs12>
+  <VContainer fluid v-if="genre">
+    <VRow>
+      <VCol cols="12">
         <h2 class="display-1">{{ genre.name }}</h2>
-      </VFlex>
-    </VLayout>
-    <VLayout wrap>
-      <VFlex>
+      </VCol>
+    </VRow>
+    <VRow>
+      <VCol>
         <TracksTable :tracks="tracks" :show-search="true" />
-      </VFlex>
-    </VLayout>
+      </VCol>
+    </VRow>
   </VContainer>
 </template>
 

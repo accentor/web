@@ -1,14 +1,14 @@
 <template>
-  <VContainer fill-height fluid>
-    <VLayout>
-      <VFlex>
+  <VContainer class="fill-height" fluid>
+    <VRow no-gutters>
+      <VCol>
         <TracksTable
           :tracks="tracks"
           :show-search="true"
           :show-mass-edit="false"
         />
-      </VFlex>
-    </VLayout>
+      </VCol>
+    </VRow>
   </VContainer>
 </template>
 

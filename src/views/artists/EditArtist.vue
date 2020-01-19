@@ -1,7 +1,7 @@
 <template>
-  <VContainer fill-height fluid v-if="artist">
-    <VLayout align-center justify-center>
-      <VFlex md4 sm8 xs12>
+  <VContainer class="fill-height" fluid v-if="artist">
+    <VRow no-gutters align="center" justify="center">
+      <VCol md="4" sm="8" cols="12">
         <VAlert
           :value="artist.review_comment !== null"
           type="warning"
@@ -21,8 +21,8 @@
             {{ $t("music.artist.update") }}
           </VBtn>
         </VForm>
-      </VFlex>
-    </VLayout>
+      </VCol>
+    </VRow>
   </VContainer>
 </template>
 

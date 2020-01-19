@@ -34,7 +34,7 @@
       </table>
     </div>
 
-    <VLayout class="player-controls" align-center>
+    <VRow class="player-controls" align="center">
       <div class="flex player-left">
         <div class="content">
           <VBtn @click="prevTrack" class="not-on-small ma-2" icon small>
@@ -51,7 +51,7 @@
       <div class="flex center">
         <div class="content">
           <div class="not-on-small">
-            <VLayout column>
+            <VRow class="flex-column">
               <VSlider
                 :always-dirty="!!currentTrack"
                 :max="currentTrack ? currentTrack.length : 1"
@@ -59,14 +59,14 @@
                 v-on:input="seek"
                 hide-details
               />
-            </VLayout>
+            </VRow>
           </div>
-          <VLayout class="play-time" column>
+          <VRow class="play-time flex-column">
             <span>
               {{ seekTime | length }} /
               {{ currentTrack ? currentTrack.length : 0 | length }}
             </span>
-          </VLayout>
+          </VRow>
         </div>
       </div>
       <div class="flex player-right">
@@ -101,7 +101,7 @@
           </VBtn>
         </div>
       </div>
-    </VLayout>
+    </VRow>
   </div>
 </template>
 
