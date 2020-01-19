@@ -1,5 +1,5 @@
 <template>
-  <VContainer fluid grid-list-xl>
+  <VContainer fluid>
     <VDataIterator
       :footer-props="{
         disableItemsPerPage: true,
@@ -12,8 +12,8 @@
       v-if="artists.length > 0"
     >
       <template v-slot:header>
-        <VLayout align-baseline justify-end mb-2 wrap>
-          <VFlex lg4 md6 sm8 xl2 xs12>
+        <VRow class="mb-2" align="baseline" justify="end">
+          <VCol lg="4" md="6" sm="8" xl="2" cols="12">
             <VTextField
               :label="$t('common.search')"
               v-model="search"
@@ -21,7 +21,7 @@
               prepend-inner-icon="mdi-magnify"
               single-line
             />
-          </VFlex>
+          </VCol>
           <VBtn
             v-if="isModerator"
             :to="{ name: 'new-artist' }"
@@ -31,22 +31,22 @@
             <VIcon left>mdi-plus</VIcon>
             {{ $t("music.artist.new") }}
           </VBtn>
-        </VLayout>
+        </VRow>
       </template>
       <template v-slot:default="props">
-        <VLayout wrap>
-          <VFlex
+        <VRow>
+          <VCol
             v-for="item in props.items"
             :key="item.name"
-            xs12
-            sm6
-            md4
-            lg3
-            xl2
+            cols="12"
+            sm="6"
+            md="4"
+            lg="3"
+            xl="2"
           >
             <ArtistCard :artist="item" />
-          </VFlex>
-        </VLayout>
+          </VCol>
+        </VRow>
       </template>
     </VDataIterator>
   </VContainer>

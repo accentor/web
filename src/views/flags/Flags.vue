@@ -1,79 +1,79 @@
 <template>
   <div>
-    <VContainer fluid grid-list-xl>
-      <VLayout>
-        <VFlex>
+    <VContainer fluid>
+      <VRow>
+        <VCol>
           <h2 class="display-1">{{ $tc("music.artists", 2) }}</h2>
-        </VFlex>
-      </VLayout>
+        </VCol>
+      </VRow>
       <VDataIterator
         :footer-props="{ disableItemsPerPage: true, itemsPerPageOptions: [6] }"
         :items="artists"
         :items-per-page="6"
       >
         <template v-slot:default="props">
-          <VLayout wrap>
-            <VFlex
+          <VRow>
+            <VCol
               v-for="item in props.items"
               :key="item.name"
-              lg3
-              md4
-              sm6
-              xl2
-              xs12
+              lg="3"
+              md="4"
+              sm="6"
+              xl="2"
+              cols="12"
             >
               <ArtistCard :artist="item" />
-            </VFlex>
-          </VLayout>
+            </VCol>
+          </VRow>
         </template>
       </VDataIterator>
     </VContainer>
-    <VContainer fluid grid-list-xl>
-      <VLayout>
-        <VFlex>
+    <VContainer fluid>
+      <VRow>
+        <VCol>
           <h2 class="display-1">{{ $tc("music.albums", 2) }}</h2>
-        </VFlex>
-      </VLayout>
+        </VCol>
+      </VRow>
       <VDataIterator
         :footer-props="{ disableItemsPerPage: true, itemsPerPageOptions: [6] }"
         :items="albums"
         :items-per-page="6"
       >
         <template v-slot:default="props">
-          <VLayout wrap>
-            <VFlex
+          <VRow>
+            <VCol
               v-for="item in props.items"
               :key="item.name"
-              lg3
-              md4
-              sm6
-              xl2
-              xs12
+              lg="3"
+              md="4"
+              sm="6"
+              xl="2"
+              cols="12"
             >
               <AlbumCard :album="item" />
-            </VFlex>
-          </VLayout>
+            </VCol>
+          </VRow>
         </template>
       </VDataIterator>
     </VContainer>
-    <VContainer fill-height fluid>
-      <VLayout column>
-        <VLayout>
-          <VFlex>
+    <VContainer class="fill-height" fluid>
+      <VRow class="flex-column">
+        <VRow>
+          <VCol>
             <h2 class="display-1">{{ $tc("music.tracks", 2) }}</h2>
-          </VFlex>
-        </VLayout>
-        <VLayout>
-          <VFlex>
+          </VCol>
+        </VRow>
+        <VRow>
+          <VCol>
             <TracksTable
               :tracks="tracks"
               :save-pagination="false"
               :save-search="false"
               :show-mass-edit="false"
             />
-          </VFlex>
-        </VLayout>
-      </VLayout>
+          </VCol>
+        </VRow>
+      </VRow>
     </VContainer>
   </div>
 </template>

@@ -1,8 +1,8 @@
 <template>
   <VContent>
-    <VContainer fill-height fluid>
-      <VLayout align-center justify-center>
-        <VFlex md4 sm8 xs12>
+    <VContainer class="fill-height" fluid>
+      <VRow no-gutters align="center" justify="center">
+        <VCol md="4" sm="8" cols="12">
           <VCard class="elevation-12">
             <VToolbar color="primary" dark>
               <VToolbarTitle>
@@ -31,8 +31,8 @@
               </VForm>
             </VCardText>
           </VCard>
-        </VFlex>
-      </VLayout>
+        </VCol>
+      </VRow>
     </VContainer>
   </VContent>
 </template>

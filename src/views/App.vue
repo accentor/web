@@ -145,11 +145,11 @@
     <VContent>
       <VContainer>
         <Errors />
-        <VLayout wrap>
-          <VFlex xs12>
+        <VRow no-gutters>
+          <VCol cols="12">
             <router-view />
-          </VFlex>
-        </VLayout>
+          </VCol>
+        </VRow>
       </VContainer>
     </VContent>
 

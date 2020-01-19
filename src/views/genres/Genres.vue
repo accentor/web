@@ -1,5 +1,5 @@
 <template>
-  <VContainer fluid grid-list-xl>
+  <VContainer fluid>
     <VDataIterator
       :footer-props="{
         disableItemsPerPage: true,
@@ -12,8 +12,8 @@
       v-if="genres.length > 0"
     >
       <template v-slot:header>
-        <VLayout justify-end align-baseline wrap mb-2>
-          <VFlex xs12 sm8 md6 lg4 xl2>
+        <VRow class="mb-2" justify="end" align="baseline">
+          <VCol cols="12" sm="8" md="6" lg="4" xl="2">
             <VTextField
               v-model="search"
               prepend-inner-icon="mdi-magnify"
@@ -21,23 +21,23 @@
               single-line
               hide-details
             />
-          </VFlex>
-        </VLayout>
+          </VCol>
+        </VRow>
       </template>
       <template v-slot:default="props">
-        <VLayout wrap>
-          <VFlex
+        <VRow>
+          <VCol
             v-for="item in props.items"
             :key="item.name"
-            lg3
-            md4
-            sm6
-            xl2
-            xs12
+            lg="3"
+            md="4"
+            sm="6"
+            xl="2"
+            cols="12"
           >
             <GenreCard :genre="item" />
-          </VFlex>
-        </VLayout>
+          </VCol>
+        </VRow>
       </template>
     </VDataIterator>
   </VContainer>

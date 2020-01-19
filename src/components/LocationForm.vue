@@ -1,14 +1,14 @@
 <template>
   <VForm>
-    <VLayout>
-      <VFlex xs5>
+    <VRow>
+      <VCol cols="5">
         <VTextField
           v-model="newLocation.path"
           :label="$t('library.path')"
           :disabled="location !== null"
         />
-      </VFlex>
-      <VFlex xs2 sm1>
+      </VCol>
+      <VCol cols="2" sm="1">
         <VBtn
           icon
           outlined
@@ -29,8 +29,8 @@
         >
           <VIcon color="danger">mdi-delete</VIcon>
         </VBtn>
-      </VFlex>
-    </VLayout>
+      </VCol>
+    </VRow>
   </VForm>
 </template>
 

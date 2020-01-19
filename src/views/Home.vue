@@ -1,6 +1,6 @@
 <template>
   <div>
-    <VContainer fluid grid-list-xl>
+    <VContainer fluid>
       <VDataIterator
         :footer-props="{
           disableItemsPerPage: true,
@@ -14,23 +14,23 @@
           <h2 class="display-1">{{ $t("home.recently-released") }}</h2>
         </template>
         <template v-slot:default="props">
-          <VLayout wrap>
-            <VFlex
+          <VRow>
+            <VCol
               v-for="item in props.items"
               :key="item.id"
-              lg3
-              md4
-              sm6
-              xl2
-              xs12
+              lg="3"
+              md="4"
+              sm="6"
+              xl="2"
+              cols="12"
             >
               <AlbumCard :album="item" />
-            </VFlex>
-          </VLayout>
+            </VCol>
+          </VRow>
         </template>
       </VDataIterator>
     </VContainer>
-    <VContainer fluid grid-list-xl>
+    <VContainer fluid>
       <VDataIterator
         :footer-props="{
           disableItemsPerPage: true,
@@ -46,23 +46,23 @@
           </h2>
         </template>
         <template v-slot:default="props">
-          <VLayout wrap>
-            <VFlex
+          <VRow>
+            <VCol
               v-for="item in props.items"
               :key="item.id"
-              lg3
-              md4
-              sm6
-              xl2
-              xs12
+              lg="3"
+              md="4"
+              sm="6"
+              xl="2"
+              cols="12"
             >
               <AlbumCard :album="item" />
-            </VFlex>
-          </VLayout>
+            </VCol>
+          </VRow>
         </template>
       </VDataIterator>
     </VContainer>
-    <VContainer fluid grid-list-xl>
+    <VContainer fluid>
       <VDataIterator
         :footer-props="{
           disableItemsPerPage: true,
@@ -78,23 +78,23 @@
           </h2>
         </template>
         <template v-slot:default="props">
-          <VLayout wrap>
-            <VFlex
+          <VRow>
+            <VCol
               v-for="item in props.items"
               :key="item.id"
-              lg3
-              md4
-              sm6
-              xl2
-              xs12
+              lg="3"
+              md="4"
+              sm="6"
+              xl="2"
+              cols="12"
             >
               <ArtistCard :artist="item" />
-            </VFlex>
-          </VLayout>
+            </VCol>
+          </VRow>
         </template>
       </VDataIterator>
     </VContainer>
-    <VContainer fluid grid-list-xl>
+    <VContainer fluid>
       <VDataIterator
         :footer-props="{
           disableItemsPerPage: true,
@@ -113,24 +113,24 @@
           </v-alert>
         </template>
         <template v-slot:default="props">
-          <VLayout wrap>
-            <VFlex
+          <VRow>
+            <VCol
               v-for="item in props.items"
               :key="item.id"
-              lg3
-              md4
-              sm6
-              xl2
-              xs12
+              lg="3"
+              md="4"
+              sm="6"
+              xl="2"
+              cols="12"
             >
               <AlbumCard :album="item" />
-            </VFlex>
-          </VLayout>
+            </VCol>
+          </VRow>
         </template>
       </VDataIterator>
     </VContainer>
 
-    <VContainer fluid grid-list-xl>
+    <VContainer fluid>
       <VDataIterator
         :footer-props="{
           disableItemsPerPage: true,
@@ -146,23 +146,23 @@
           </h2>
         </template>
         <template v-slot:default="props">
-          <VLayout wrap>
-            <VFlex
+          <VRow>
+            <VCol
               v-for="item in props.items"
               :key="item.id"
-              lg3
-              md4
-              sm6
-              xl2
-              xs12
+              lg="3"
+              md="4"
+              sm="6"
+              xl="2"
+              cols="12"
             >
               <AlbumCard :album="item" />
-            </VFlex>
-          </VLayout>
+            </VCol>
+          </VRow>
         </template>
       </VDataIterator>
     </VContainer>
-    <VContainer fluid grid-list-xl>
+    <VContainer fluid>
       <VDataIterator
         :footer-props="{
           disableItemsPerPage: true,
@@ -178,19 +178,19 @@
           </h2>
         </template>
         <template v-slot:default="props">
-          <VLayout wrap>
-            <VFlex
+          <VRow>
+            <VCol
               v-for="item in props.items"
               :key="item.id"
-              lg3
-              md4
-              sm6
-              xl2
-              xs12
+              lg="3"
+              md="4"
+              sm="6"
+              xl="2"
+              cols="12"
             >
               <ArtistCard :artist="item" />
-            </VFlex>
-          </VLayout>
+            </VCol>
+          </VRow>
         </template>
       </VDataIterator>
     </VContainer>
