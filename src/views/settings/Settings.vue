@@ -1,5 +1,5 @@
 <template>
-  <VContainer fill-height fluid v-if="user">
+  <VContainer fluid v-if="user">
     <VLayout align-center justify-center>
       <VFlex lg4 md6 sm8 xs12 class="px-3">
         <VForm @submit.prevent="submitLocale">
@@ -37,14 +37,21 @@
         </VForm>
       </VFlex>
     </VLayout>
+    <VLayout>
+      <VFlex>
+        <AuthTokensTable :authTokens="authTokens" />
+      </VFlex>
+    </VLayout>
   </VContainer>
 </template>
 
 <script>
 import { mapActions, mapGetters, mapMutations, mapState } from "vuex";
+import AuthTokensTable from "../../components/AuthTokensTable";
 
 export default {
   name: "Settings",
+  components: { AuthTokensTable },
   data() {
     return {
       newUser: {
@@ -75,6 +82,7 @@ export default {
   },
   computed: {
     ...mapGetters("auth", { user: "currentUser" }),
+    ...mapGetters("auth", ["authTokens"]),
     ...mapState("userSettings", ["locale"])
   },
   methods: {

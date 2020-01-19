@@ -190,6 +190,7 @@ export default {
     loadData() {
       this.loading = true;
       Promise.all([
+        this.$store.dispatch("auth/index"),
         this.$store.dispatch("albums/index"),
         this.$store.dispatch("artists/index"),
         this.$store.dispatch("genres/index"),

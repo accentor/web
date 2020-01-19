@@ -257,10 +257,14 @@
 		"tracks": "Tracks | Track | Tracks"
 	},
 	"search": "Search",
-	"users": {		
+	"users": {
+		"auth": {
+			"destroy-selected": "Delete selected",
+			"user-agent": "User agent"
+		},
 		"confirm-password": "Confirm password",
 		"create": "Create user",
-		"current-password": "Current Password",		
+		"current-password": "Current Password",
 		"name": "Name",
 		"new": "New user",
 		"password": "Password",
