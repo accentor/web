@@ -1,10 +1,13 @@
 <template>
-  <VContainer fluid grid-list-xl v-if="album">
-    <VLayout wrap>
-      <VFlex lg3 md4 sm6 v-if="album.image" xs12>
+  <VContainer fluid v-if="album">
+    <VRow>
+      <VCol lg="3" md="4" sm="6" v-if="album.image500" cols="12">
+        <VImg :src="album.image500" class="elevation-3" />
+      </VCol>
+      <VCol lg="3" md="4" sm="6" v-else-if="album.image" cols="12">
         <VImg :src="album.image" class="elevation-3" />
-      </VFlex>
-      <VFlex lg9 md8 sm6 xs12>
+      </VCol>
+      <VCol lg="9" md="8" sm="6" cols="12">
         <div>
           <div class="display-1">
             {{ album.title }}
@@ -34,13 +37,13 @@
             <AlbumActions :album="album" />
           </div>
         </div>
-      </VFlex>
-      <VLayout>
-        <VFlex>
+      </VCol>
+      <VRow>
+        <VCol>
           <TracksTable :tracks="tracks" :show-album="false" />
-        </VFlex>
-      </VLayout>
-    </VLayout>
+        </VCol>
+      </VRow>
+    </VRow>
   </VContainer>
 </template>
 

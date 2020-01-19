@@ -1,18 +1,16 @@
 <template>
-  <VContainer fill-height fluid>
-    <VLayout align-center justify-center>
-      <VFlex md4 sm8 xs12>
+  <VContainer class="fill-height" fluid>
+    <VRow no-gutters align="center" justify="center">
+      <VCol md="4" sm="8" cols="12">
         <VForm @submit.prevent="submit">
           <VTextField :label="$t('common.name')" v-model="newArtist.name" />
-          <FilePicker v-model="newArtist.image">
-            {{ $t("common.choose-image") }}
-          </FilePicker>
+          <FilePicker v-model="newArtist.image" />
           <VBtn color="primary" class="ma-2" type="submit">
             {{ $t("music.artist.add") }}
           </VBtn>
         </VForm>
-      </VFlex>
-    </VLayout>
+      </VCol>
+    </VRow>
   </VContainer>
 </template>
 

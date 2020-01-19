@@ -1,32 +1,43 @@
 <template>
-  <VContainer fluid grid-list-xl v-if="artist">
-    <VLayout wrap>
-      <VFlex lg3 md4 sm6 v-if="artist.image" xs12>
+  <VContainer fluid v-if="artist">
+    <VRow>
+      <VCol lg="3" md="4" sm="6" v-if="artist.image500" cols="12">
+        <VImg :src="artist.image500" class="elevation-3" />
+      </VCol>
+      <VCol lg="3" md="4" sm="6" v-if="artist.image" cols="12">
         <VImg :src="artist.image" class="elevation-3" />
-      </VFlex>
-      <VFlex lg9 md8 sm6 xs12>
+      </VCol>
+      <VCol lg="9" md="8" sm="6" cols="12">
         <div>
           <h2 class="display-1">{{ artist.name }}</h2>
         </div>
         <div>
           <ArtistActions :artist="artist" />
         </div>
-      </VFlex>
-    </VLayout>
-    <VLayout wrap>
-      <VFlex :key="item.id" lg3 md4 sm6 v-for="item of albums" xl2 xs12>
+      </VCol>
+    </VRow>
+    <VRow>
+      <VCol
+        :key="item.id"
+        lg="3"
+        md="4"
+        sm="6"
+        v-for="item of albums"
+        xl="2"
+        cols="12"
+      >
         <AlbumCard :album="item" />
-      </VFlex>
-    </VLayout>
-    <VLayout wrap>
-      <VFlex>
+      </VCol>
+    </VRow>
+    <VRow>
+      <VCol>
         <TracksTable
           :tracks="tracks"
           :show-search="true"
           :save-search="false"
         />
-      </VFlex>
-    </VLayout>
+      </VCol>
+    </VRow>
   </VContainer>
 </template>
 

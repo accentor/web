@@ -1,7 +1,7 @@
 <template>
   <div>
-    <VLayout justify-end align-baseline wrap mb-2>
-      <VFlex v-if="showSearch" xs12 sm8 md6 lg4 xl2>
+    <VRow class="mb-2" justify="end" align="baseline">
+      <VCol v-if="showSearch" cols="12" sm="8" md="6" lg="4" xl="2">
         <VTextField
           v-model="search"
           prepend-inner-icon="mdi-magnify"
@@ -9,11 +9,15 @@
           single-line
           hide-details
         ></VTextField>
-      </VFlex>
-    </VLayout>
+      </VCol>
+    </VRow>
     <VDataTable
       v-model="selected"
-      :footer-props="{ disableItemsPerPage: true, itemsPerPageOptions: [30] }"
+      :footer-props="{
+        disableItemsPerPage: true,
+        itemsPerPageOptions: [30],
+        showFirstLastPage: true
+      }"
       :headers="headers"
       :items="filteredItems"
       :items-per-page="30"

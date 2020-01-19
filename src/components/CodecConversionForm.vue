@@ -1,19 +1,19 @@
 <template>
   <VForm>
-    <VLayout>
-      <VFlex xs3>
+    <VRow>
+      <VCol cols="3">
         <VTextField
           v-model="newCodecConversion.name"
           :label="$t('common.name')"
         />
-      </VFlex>
-      <VFlex xs5>
+      </VCol>
+      <VCol cols="5">
         <VTextField
           v-model="newCodecConversion.ffmpeg_params"
           :label="$t('library.ffmpeg-para')"
         />
-      </VFlex>
-      <VFlex xs3>
+      </VCol>
+      <VCol cols="3">
         <VAutocomplete
           :items="codecs"
           :label="$t('library.resulting-codec')"
@@ -21,8 +21,8 @@
           item-value="id"
           item-text="extension"
         />
-      </VFlex>
-      <VFlex xs1>
+      </VCol>
+      <VCol cols="2" sm="1">
         <VBtn
           icon
           outlined
@@ -44,8 +44,8 @@
         >
           <VIcon color="danger">mdi-delete</VIcon>
         </VBtn>
-      </VFlex>
-    </VLayout>
+      </VCol>
+    </VRow>
   </VForm>
 </template>
 

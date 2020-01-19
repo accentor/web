@@ -1,15 +1,19 @@
 <template>
-  <VContainer fluid grid-list-xl>
+  <VContainer fluid>
     <VDataIterator
-      :footer-props="{ disableItemsPerPage: true, itemsPerPageOptions: [12] }"
+      :footer-props="{
+        disableItemsPerPage: true,
+        itemsPerPageOptions: [numberOfItems],
+        showFirstLastPage: true
+      }"
       :items="filteredItems"
-      :items-per-page="12"
+      :items-per-page="numberOfItems"
       :page.sync="pagination.page"
       v-if="labels.length > 0"
     >
       <template v-slot:header>
-        <VLayout justify-end mb-2 wrap>
-          <VFlex lg4 md6 sm8 xl2 xs12>
+        <VRow class="mb-2" justify="end">
+          <VCol lg="4" md="6" sm="8" xl="2" cols="12">
             <VTextField
               :label="$t('common.search')"
               hide-details
@@ -18,23 +22,23 @@
               v-if="labels.length > numberOfItems"
               v-model="search"
             />
-          </VFlex>
-        </VLayout>
+          </VCol>
+        </VRow>
       </template>
       <template v-slot:default="props">
-        <VLayout wrap>
-          <VFlex
+        <VRow>
+          <VCol
             :key="item.name"
-            lg3
-            md4
-            sm6
+            lg="3"
+            md="4"
+            sm="6"
             v-for="item in props.items"
-            xl2
-            xs12
+            xl="2"
+            cols="12"
           >
             <LabelCard :label="item" />
-          </VFlex>
-        </VLayout>
+          </VCol>
+        </VRow>
       </template>
     </VDataIterator>
   </VContainer>
@@ -62,6 +66,17 @@ export default {
             .toLocaleLowerCase()
             .indexOf(this.search.toLocaleLowerCase()) >= 0
       );
+    },
+    numberOfItems() {
+      if (this.$vuetify.breakpoint.name === "xl") {
+        return 30;
+      } else if (this.$vuetify.breakpoint.name === "lg") {
+        return 20;
+      } else if (this.$vuetify.breakpoint.name === "md") {
+        return 15;
+      } else {
+        return 12;
+      }
     }
   }
 };

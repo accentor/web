@@ -33,11 +33,10 @@
           <Errors />
           <VContainer
             fluid
-            grid-list-md
             v-if="tracks.filter(t => t.review_comment !== null).length > 0"
           >
-            <VLayout>
-              <VFlex xs12>
+            <VRow dense>
+              <VCol cols="12">
                 <VCheckbox v-model="showReviewComments">
                   <template v-slot:label>
                     <span class="black--text">
@@ -50,10 +49,10 @@
                     </span>
                   </template>
                 </VCheckbox>
-              </VFlex>
-            </VLayout>
-            <VLayout>
-              <VFlex xs12>
+              </VCol>
+            </VRow>
+            <VRow>
+              <VCol cols="12">
                 <VAlert
                   :value="showReviewComments"
                   type="warning"
@@ -76,15 +75,15 @@
                     </tr>
                   </table>
                 </VAlert>
-              </VFlex>
-            </VLayout>
+              </VCol>
+            </VRow>
           </VContainer>
           <VDivider
             v-if="tracks.filter(t => t.review_comment !== null).length > 0"
           />
-          <VContainer fluid grid-list-md>
-            <VLayout>
-              <VFlex xs12 sm6>
+          <VContainer fluid>
+            <VRow dense>
+              <VCol cols="12" sm="6">
                 <VCheckbox v-model="number.enabled">
                   <template v-slot:label>
                     <span class="black--text">
@@ -92,21 +91,21 @@
                     </span>
                   </template>
                 </VCheckbox>
-              </VFlex>
-              <VFlex xs12 sm6>
+              </VCol>
+              <VCol cols="12" sm="6">
                 <VTextField
                   v-model="number.amount"
                   :label="$t('common.amount')"
                   type="number"
                   v-if="number.enabled"
                 />
-              </VFlex>
-            </VLayout>
+              </VCol>
+            </VRow>
           </VContainer>
           <VDivider />
-          <VContainer fluid grid-list-md>
-            <VLayout>
-              <VFlex xs12 sm6>
+          <VContainer fluid>
+            <VRow dense>
+              <VCol cols="12" sm="6">
                 <VCheckbox v-model="titleReplacement.enabled">
                   <template v-slot:label>
                     <span class="black--text">
@@ -114,36 +113,36 @@
                     </span>
                   </template>
                 </VCheckbox>
-              </VFlex>
-              <VFlex xs12 sm6>
+              </VCol>
+              <VCol cols="12" sm="6">
                 <VCheckbox
                   v-model="titleReplacement.regex"
                   :label="$t('music.mass.regex')"
                   v-if="titleReplacement.enabled"
                 />
-              </VFlex>
-            </VLayout>
-            <VLayout>
-              <VFlex xs12 sm6>
+              </VCol>
+            </VRow>
+            <VRow>
+              <VCol cols="12" sm="6">
                 <VTextField
                   :label="$t('common.search')"
                   v-model="titleReplacement.search"
                   v-if="titleReplacement.enabled"
                 />
-              </VFlex>
-              <VFlex xs12 sm6>
+              </VCol>
+              <VCol cols="12" sm="6">
                 <VTextField
                   :label="$t('common.replace')"
                   v-model="titleReplacement.replace"
                   v-if="titleReplacement.enabled"
                 />
-              </VFlex>
-            </VLayout>
+              </VCol>
+            </VRow>
           </VContainer>
           <VDivider />
-          <VContainer fluid grid-list-md>
-            <VLayout>
-              <VFlex xs12 sm6>
+          <VContainer fluid>
+            <VRow dense>
+              <VCol cols="12" sm="6">
                 <VCheckbox v-model="album.enabled">
                   <template v-slot:label>
                     <span class="black--text">
@@ -151,8 +150,8 @@
                     </span>
                   </template>
                 </VCheckbox>
-              </VFlex>
-              <VFlex xs12 sm6>
+              </VCol>
+              <VCol cols="12" sm="6">
                 <VAutocomplete
                   :items="sortedAlbums"
                   item-text="title"
@@ -161,13 +160,13 @@
                   v-model="album.album"
                   v-if="album.enabled"
                 />
-              </VFlex>
-            </VLayout>
+              </VCol>
+            </VRow>
           </VContainer>
           <VDivider />
-          <VContainer fluid grid-list-md>
-            <VLayout>
-              <VFlex xs12 sm6>
+          <VContainer fluid>
+            <VRow dense>
+              <VCol cols="12" sm="6">
                 <VCheckbox v-model="changeGenres.enabled">
                   <template v-slot:label>
                     <span class="black--text">
@@ -175,17 +174,17 @@
                     </span>
                   </template>
                 </VCheckbox>
-              </VFlex>
-              <VFlex xs12 sm6>
+              </VCol>
+              <VCol cols="12" sm="6">
                 <VCheckbox
                   v-model="changeGenres.replace"
                   :label="$t('music.mass.replace-instead-genres')"
                   v-if="changeGenres.enabled"
                 />
-              </VFlex>
-            </VLayout>
-            <VLayout>
-              <VFlex xs12 sm6>
+              </VCol>
+            </VRow>
+            <VRow>
+              <VCol cols="12" sm="6">
                 <VCombobox
                   :items="sortedGenres"
                   cache-items
@@ -199,13 +198,13 @@
                   v-model="changeGenres.genres"
                   v-if="changeGenres.enabled"
                 />
-              </VFlex>
-            </VLayout>
+              </VCol>
+            </VRow>
           </VContainer>
           <VDivider />
-          <VContainer fluid grid-list-md>
-            <VLayout>
-              <VFlex xs12 sm6>
+          <VContainer fluid>
+            <VRow dense>
+              <VCol cols="12" sm="6">
                 <VCheckbox v-model="changeArtists.enabled">
                   <template v-slot:label>
                     <span class="black--text">
@@ -213,20 +212,20 @@
                     </span>
                   </template>
                 </VCheckbox>
-              </VFlex>
-              <VFlex xs12 sm6>
+              </VCol>
+              <VCol cols="12" sm="6">
                 <VCheckbox
                   v-model="changeArtists.replace"
                   :label="$t('music.mass.replace-instead-artists')"
                   v-if="changeArtists.enabled"
                 />
-              </VFlex>
-            </VLayout>
-            <VLayout
+              </VCol>
+            </VRow>
+            <VRow
               :key="index"
               v-for="(item, index) of changeArtists.track_artists"
             >
-              <VLayout column class="no-grow" v-if="changeArtists.enabled">
+              <VRow class="flex-column no-grow" v-if="changeArtists.enabled">
                 <VBtn
                   @click="moveArtist(index, -1)"
                   icon
@@ -248,8 +247,8 @@
                 <VBtn @click="removeArtist(index)" icon small class="ma-2">
                   <VIcon>mdi-close</VIcon>
                 </VBtn>
-              </VLayout>
-              <VLayout column v-if="changeArtists.enabled">
+              </VRow>
+              <VRow class="flex-column" v-if="changeArtists.enabled">
                 <VCombobox
                   :items="sortedArtists"
                   item-text="name"
@@ -268,8 +267,8 @@
                   light
                   v-if="index !== changeArtists.track_artists.length - 1"
                 />
-              </VLayout>
-            </VLayout>
+              </VRow>
+            </VRow>
             <VBtn
               @click="addArtist"
               color="success"
@@ -284,11 +283,10 @@
           />
           <VContainer
             fluid
-            grid-list-md
             v-if="tracks.filter(t => t.review_comment !== null).length > 0"
           >
-            <VLayout>
-              <VFlex xs12 sm6>
+            <VRow dense>
+              <VCol cols="12" sm="6">
                 <VCheckbox v-model="clearReviewComments">
                   <template v-slot:label>
                     <span class="black--text">
@@ -301,8 +299,8 @@
                     </span>
                   </template>
                 </VCheckbox>
-              </VFlex>
-            </VLayout>
+              </VCol>
+            </VRow>
           </VContainer>
         </VContainer>
       </div>

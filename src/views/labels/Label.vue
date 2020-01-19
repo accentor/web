@@ -1,18 +1,21 @@
 <template>
-  <VContainer fluid grid-list-xl v-if="label">
+  <VContainer fluid v-if="label">
     <VDataIterator
-      :footer-props="{ disableItemsPerPage: true, itemsPerPageOptions: [12] }"
+      :footer-props="{
+        disableItemsPerPage: true,
+        itemsPerPageOptions: [12],
+        showFirstLastPage: true
+      }"
       :items="filteredItems"
-      :rows-per-page-items="[12]"
       :page.sync="pagination.page"
       v-if="albums.length > 0"
     >
       <template v-slot:header>
-        <VLayout justify-space-between align-baseline wrap mb-2>
-          <VFlex xs12 sm4 md6 lg8 xl10>
+        <VRow class="mb-2" justify="space-between" align="baseline">
+          <VCol cols="12" sm="4" md="6" lg="8" xl="10">
             <h2 class="display-1">{{ label.name }}</h2>
-          </VFlex>
-          <VFlex xs12 sm8 md6 lg4 xl2>
+          </VCol>
+          <VCol cols="12" sm="8" md="6" lg="4" xl="2">
             <VTextField
               v-if="albums.length > 12"
               v-model="search"
@@ -21,23 +24,23 @@
               single-line
               hide-details
             />
-          </VFlex>
-        </VLayout>
+          </VCol>
+        </VRow>
       </template>
       <template v-slot:default="props">
-        <VLayout wrap>
-          <VFlex
+        <VRow>
+          <VCol
             v-for="item in props.items"
             :key="item.id"
-            lg3
-            md4
-            sm6
-            xl2
-            xs12
+            lg="3"
+            md="4"
+            sm="6"
+            xl="2"
+            cols="12"
           >
             <AlbumCard :album="item" />
-          </VFlex>
-        </VLayout>
+          </VCol>
+        </VRow>
       </template>
     </VDataIterator>
   </VContainer>

@@ -1,13 +1,21 @@
 <template>
-  <VContainer fluid grid-list-xl>
-    <VLayout justify-end wrap>
+  <VContainer fluid>
+    <VRow justify="end">
       <VBtn :to="{ name: 'new-user' }" color="success" v-if="isAdmin">
         <VIcon left>mdi-plus</VIcon>
         {{ $t("users.new") }}
       </VBtn>
-    </VLayout>
-    <VLayout v-if="users.length > 0" wrap>
-      <VFlex :key="user.id" lg3 md4 sm6 v-for="user in users" xl2 xs12>
+    </VRow>
+    <VRow v-if="users.length > 0">
+      <VCol
+        :key="user.id"
+        xl="2"
+        lg="3"
+        md="4"
+        sm="6"
+        cols="12"
+        v-for="user in users"
+      >
         <VCard :to="{ name: 'user', params: { id: user.id } }">
           <VCardTitle class="pb-0">
             {{ user.name }}
@@ -45,8 +53,8 @@
             </VBtn>
           </VCardActions>
         </VCard>
-      </VFlex>
-    </VLayout>
+      </VCol>
+    </VRow>
   </VContainer>
 </template>
 

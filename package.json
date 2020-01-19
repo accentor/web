@@ -15,7 +15,7 @@
     "vue": "^2.6.10",
     "vue-i18n": "^8.14.0",
     "vue-router": "^3.1.2",
-    "vuetify": "^2.0.10",
+    "vuetify": "2.2.3",
     "vuex": "^3.1.1",
     "vuex-persistedstate": "^2.5.4"
   },
@@ -30,7 +30,7 @@
     "eslint": "^5.16.0",
     "eslint-plugin-prettier": "^3.1.0",
     "eslint-plugin-vue": "^5.2.3",
-    "eslint-plugin-vuetify": "^1.0.0-beta.3",
+    "eslint-plugin-vuetify": "^1.0.0-beta.6",
     "fibers": "^4.0.1",
     "node-gyp": "5.0.3",
     "prettier": "^1.18.2",

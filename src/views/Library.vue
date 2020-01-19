@@ -1,21 +1,21 @@
 <template>
-  <VContainer fluid grid-list-xl v-if="isModerator">
-    <VLayout>
+  <VContainer fluid v-if="isModerator">
+    <VRow>
       <h2 class="headline">{{ $t("library.maintenance") }}</h2>
-    </VLayout>
-    <VLayout wrap>
+    </VRow>
+    <VRow>
       <MaintenanceActions />
-    </VLayout>
-    <VLayout>
+    </VRow>
+    <VRow>
       <h2 class="headline">{{ $t("library.rescan") }}</h2>
-    </VLayout>
-    <VLayout wrap v-if="rescan">
+    </VRow>
+    <VRow v-if="rescan">
       <VBtn @click="start" color="success" class="ma-2">
         <VIcon left>mdi-refresh {{ rescan.running ? "mdi-spin" : "" }}</VIcon>
         {{ $t("library.start-scan") }}
       </VBtn>
-    </VLayout>
-    <VLayout column v-if="rescan">
+    </VRow>
+    <VRow class="flex-column" v-if="rescan">
       <div>
         <strong>{{ $t("library.processed") }}: </strong>
         {{ rescan.processed }}
@@ -24,57 +24,57 @@
         <div>
           <h3 class="title">{{ $t("library.warnings") }}</h3>
         </div>
-        <pre>{{ rescan.warning_text }}</pre>
+        <pre class="body-2">{{ rescan.warning_text }}</pre>
       </div>
       <div v-if="rescan.error_text">
         <div>
           <h3 class="title">{{ $t("library.errors") }}</h3>
         </div>
-        <pre>{{ rescan.error_text }}</pre>
+        <pre class="body-2">{{ rescan.error_text }}</pre>
       </div>
-    </VLayout>
-    <VLayout>
+    </VRow>
+    <VRow>
       <h2 class="headline">{{ $t("library.codecs") }}</h2>
-    </VLayout>
-    <VLayout>
-      <VFlex xs12>
+    </VRow>
+    <VRow>
+      <VCol cols="12">
         <EditCodecs />
-      </VFlex>
-    </VLayout>
-    <VLayout>
+      </VCol>
+    </VRow>
+    <VRow>
       <h2 class="headline">{{ $t("library.codec-conversions") }}</h2>
-    </VLayout>
-    <VLayout>
-      <VFlex xs12>
+    </VRow>
+    <VRow>
+      <VCol cols="12">
         <EditCodecConversions />
-      </VFlex>
-    </VLayout>
-    <VLayout>
+      </VCol>
+    </VRow>
+    <VRow>
       <h2 class="headline">{{ $t("library.cover-filenames") }}</h2>
-    </VLayout>
-    <VLayout>
-      <VFlex xs12>
+    </VRow>
+    <VRow>
+      <VCol cols="12">
         <EditCoverFilenames />
-      </VFlex>
-    </VLayout>
-    <VLayout>
+      </VCol>
+    </VRow>
+    <VRow>
       <h2 class="headline">
         {{ $t("library.image-types") }}
       </h2>
-    </VLayout>
-    <VLayout>
-      <VFlex xs12>
+    </VRow>
+    <VRow>
+      <VCol cols="12">
         <EditImageTypes />
-      </VFlex>
-    </VLayout>
-    <VLayout>
+      </VCol>
+    </VRow>
+    <VRow>
       <h2 class="headline">{{ $t("library.locations") }}</h2>
-    </VLayout>
-    <VLayout>
-      <VFlex xs12>
+    </VRow>
+    <VRow>
+      <VCol cols="12">
         <EditLocations />
-      </VFlex>
-    </VLayout>
+      </VCol>
+    </VRow>
   </VContainer>
 </template>
 

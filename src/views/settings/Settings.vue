@@ -1,7 +1,7 @@
 <template>
-  <VContainer fill-height fluid v-if="user">
-    <VLayout align-center justify-center>
-      <VFlex lg4 md6 sm8 xs12 class="px-3">
+  <VContainer class="fill-height" fluid v-if="user">
+    <VRow no-gutters align="center" justify="center">
+      <VCol lg="4" md="6" sm="8" cols="12" class="px-3">
         <VForm @submit.prevent="submitLocale">
           <VSelect
             v-model="newLocale"
@@ -12,8 +12,8 @@
             {{ $t("common.change-settings") }}
           </VBtn>
         </VForm>
-      </VFlex>
-      <VFlex lg4 md6 sm8 xs12 class="px-3">
+      </VCol>
+      <VCol lg="4" md="6" sm="8" cols="12" class="px-3">
         <VForm @submit.prevent="submitPassword">
           <VTextField :label="$t('common.name')" v-model="newUser.name" />
           <VTextField
@@ -35,16 +35,23 @@
             {{ $t("common.change-settings") }}
           </VBtn>
         </VForm>
-      </VFlex>
-    </VLayout>
+      </VCol>
+    </VRow>
+    <VRow>
+      <VCol>
+        <AuthTokensTable :authTokens="authTokens" />
+      </VCol>
+    </VRow>
   </VContainer>
 </template>
 
 <script>
 import { mapActions, mapGetters, mapMutations, mapState } from "vuex";
+import AuthTokensTable from "../../components/AuthTokensTable";
 
 export default {
   name: "Settings",
+  components: { AuthTokensTable },
   data() {
     return {
       newUser: {
@@ -75,6 +82,7 @@ export default {
   },
   computed: {
     ...mapGetters("auth", { user: "currentUser" }),
+    ...mapGetters("auth", ["authTokens"]),
     ...mapState("userSettings", ["locale"])
   },
   methods: {

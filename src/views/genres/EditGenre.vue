@@ -1,15 +1,15 @@
 <template>
-  <VContainer fill-height fluid v-if="genre">
-    <VLayout align-center justify-center>
-      <VFlex md4 sm8 xs12>
+  <VContainer class="fill-height" fluid v-if="genre">
+    <VRow no-gutters align="center" justify="center">
+      <VCol md="4" sm="8" cols="12">
         <VForm @submit.prevent="submit">
           <VTextField genre="Name" v-model="newGenre.name" />
           <VBtn color="primary" class="ma-2" type="submit">
             {{ $t("music.genre.update") }}
           </VBtn>
         </VForm>
-      </VFlex>
-    </VLayout>
+      </VCol>
+    </VRow>
   </VContainer>
 </template>
 

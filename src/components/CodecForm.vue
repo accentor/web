@@ -1,20 +1,20 @@
 <template>
   <VForm>
-    <VLayout>
-      <VFlex xs6>
+    <VRow>
+      <VCol cols="6">
         <VTextField
           v-model="newCodec.extension"
           :label="$t('library.extension')"
           :disabled="codec !== null"
         />
-      </VFlex>
-      <VFlex xs5>
+      </VCol>
+      <VCol cols="5">
         <VTextField
           v-model="newCodec.mimetype"
           :label="$t('library.mime-type')"
         />
-      </VFlex>
-      <VFlex xs1>
+      </VCol>
+      <VCol cols="2" sm="1">
         <VBtn
           icon
           outlined
@@ -36,8 +36,8 @@
         >
           <VIcon color="danger">mdi-delete</VIcon>
         </VBtn>
-      </VFlex>
-    </VLayout>
+      </VCol>
+    </VRow>
   </VForm>
 </template>
 

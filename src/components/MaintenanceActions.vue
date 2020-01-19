@@ -3,9 +3,8 @@
     <VBtn
       @click="destroyEmptyArtists"
       color="danger"
-      class="ma-2"
+      class="ma-2 white--text"
       :disabled="artistsDisabled"
-      dark
     >
       <VIcon left>
         {{ artistsDisabled ? "mdi-refresh mdi-spin" : "mdi-alert-octagon" }}
@@ -15,9 +14,8 @@
     <VBtn
       @click="destroyEmptyAlbums"
       color="danger"
-      class="ma-2"
+      class="ma-2 white--text"
       :disabled="albumsDisabled"
-      dark
     >
       <VIcon left>
         {{ albumsDisabled ? "mdi-refresh mdi-spin" : "mdi-alert-octagon" }}
@@ -27,9 +25,8 @@
     <VBtn
       @click="destroyEmptyGenres"
       color="danger"
-      class="ma-2"
+      class="ma-2 white--text"
       :disabled="genresDisabled"
-      dark
     >
       <VIcon left>
         {{ genresDisabled ? "mdi-refresh mdi-spin" : "mdi-alert-octagon" }}
@@ -39,9 +36,8 @@
     <VBtn
       @click="destroyEmptyLabels"
       color="danger"
-      class="ma-2"
+      class="ma-2 white--text"
       :disabled="labelsDisabled"
-      dark
     >
       <VIcon left>
         {{ labelsDisabled ? "mdi-refresh mdi-spin" : "mdi-alert-octagon" }}

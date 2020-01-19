@@ -21,7 +21,8 @@
 			"nextPage": "Next page",
 			"prevPage": "Previous page",
 			"firstPage": "First page",
-			"lastPage": "Last page"
+			"lastPage": "Last page",
+			"pageText": "{0}-{1} of {2}"
 		},
 		"datePicker": {
 			"itemsSelected": "{0} selected"
@@ -256,10 +257,14 @@
 		"tracks": "Tracks | Track | Tracks"
 	},
 	"search": "Search",
-	"users": {		
+	"users": {
+		"auth": {
+			"destroy-selected": "Delete selected",
+			"user-agent": "User agent"
+		},
 		"confirm-password": "Confirm password",
 		"create": "Create user",
-		"current-password": "Current Password",		
+		"current-password": "Current Password",
 		"name": "Name",
 		"new": "New user",
 		"password": "Password",

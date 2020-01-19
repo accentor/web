@@ -20,33 +20,28 @@
             <a @click.stop.prevent="setCurrent(index)">{{ track.title }}</a>
           </td>
           <td>
-            <RouterLink :to="{ name: 'album', params: { id: track.album_id } }">
-              {{ albums[track.album_id].title }}
-            </RouterLink>
+            <RouterLink
+              :to="{ name: 'album', params: { id: track.album_id } }"
+              >{{ albums[track.album_id].title }}</RouterLink
+            >
           </td>
-          <td class="text-right">
-            {{ track.length | length }}
-          </td>
+          <td class="text-right">{{ track.length | length }}</td>
           <td>
             <TrackArtists :track="track" />
           </td>
-          <td>
-            {{ albums[track.album_id].release }}
-          </td>
+          <td>{{ albums[track.album_id].release }}</td>
         </tr>
       </table>
     </div>
 
-    <VLayout class="player-controls" align-center>
+    <VRow class="player-controls" align="center">
       <div class="flex player-left">
         <div class="content">
           <VBtn @click="prevTrack" class="not-on-small ma-2" icon small>
             <VIcon>mdi-skip-previous</VIcon>
           </VBtn>
           <VBtn @click="setPlaying(!playing)" icon class="ma-2">
-            <VIcon large>
-              {{ playing ? "mdi-pause" : "mdi-play" }}
-            </VIcon>
+            <VIcon large>{{ playing ? "mdi-pause" : "mdi-play" }}</VIcon>
           </VBtn>
           <VBtn @click="nextTrack" class="not-on-small ma-2" icon small>
             <VIcon>mdi-skip-next</VIcon>
@@ -56,7 +51,7 @@
       <div class="flex center">
         <div class="content">
           <div class="not-on-small">
-            <VLayout column>
+            <VRow class="flex-column">
               <VSlider
                 :always-dirty="!!currentTrack"
                 :max="currentTrack ? currentTrack.length : 1"
@@ -64,14 +59,14 @@
                 v-on:input="seek"
                 hide-details
               />
-            </VLayout>
+            </VRow>
           </div>
-          <VLayout class="play-time" column>
+          <VRow class="play-time flex-column">
             <span>
               {{ seekTime | length }} /
               {{ currentTrack ? currentTrack.length : 0 | length }}
             </span>
-          </VLayout>
+          </VRow>
         </div>
       </div>
       <div class="flex player-right">
@@ -106,7 +101,7 @@
           </VBtn>
         </div>
       </div>
-    </VLayout>
+    </VRow>
   </div>
 </template>
 
@@ -132,6 +127,20 @@ export default {
         this.trackEnded();
       })
     );
+    if ("mediaSession" in navigator) {
+      navigator.mediaSession.setActionHandler("previoustrack", () => {
+        this.prevTrack();
+      });
+      navigator.mediaSession.setActionHandler("nexttrack", () => {
+        this.nextTrack();
+      });
+      navigator.mediaSession.setActionHandler("play", () => {
+        this.setPlaying(true);
+      });
+      navigator.mediaSession.setActionHandler("pause", () => {
+        this.setPlaying(false);
+      });
+    }
   },
   beforeDestroy() {
     clearInterval(this.intervalId);
@@ -141,7 +150,91 @@ export default {
     currentTrackURL() {
       this.$refs.audio.src = this.currentTrackURL;
       if (this.playing) {
-        this.$refs.audio.play();
+        this.$refs.audio
+          .play()
+          .then(() => {
+            if ("mediaSession" in navigator) {
+              navigator.mediaSession.metadata = new window.MediaMetadata({
+                title: this.currentTrack.title,
+                artist: this.currentTrack.track_artists
+                  .map(a => a.name)
+                  .join(" / "),
+                album: this.albums[this.currentTrack.album_id].title,
+                artwork: [
+                  {
+                    src: this.albums[this.currentTrack.album_id].image100,
+                    sizes: "100x100",
+                    type: this.albums[this.currentTrack.album_id].image_type
+                  },
+                  {
+                    src: this.albums[this.currentTrack.album_id].image250,
+                    sizes: "250x250",
+                    type: this.albums[this.currentTrack.album_id].image_type
+                  },
+                  {
+                    src: this.albums[this.currentTrack.album_id].image500,
+                    sizes: "500x500",
+                    type: this.albums[this.currentTrack.album_id].image_type
+                  }
+                ]
+              });
+            }
+          })
+          .catch(error => {
+            this.commit("addError", error);
+          });
+      }
+    },
+    volume() {
+      this.$refs.audio.volume = this.volume / 100;
+    },
+    muted() {
+      this.$refs.audio.muted = this.muted;
+    },
+    doSeek() {
+      if (this.doSeek) {
+        this.$store.commit("player/setDoSeek");
+        this.$refs.audio.currentTime = this.seekTime;
+        if (this.playing) {
+          this.$refs.audio.play();
+        }
+      }
+    },
+    playing() {
+      if (this.playing) {
+        this.$refs.audio
+          .play()
+          .then(() => {
+            if ("mediaSession" in navigator) {
+              navigator.mediaSession.metadata = new window.MediaMetadata({
+                title: this.currentTrack.title,
+                artist: this.currentTrack.track_artists
+                  .map(a => a.name)
+                  .join(" / "),
+                album: this.albums[this.currentTrack.album_id].title,
+                artwork: [
+                  {
+                    src: this.albums[this.currentTrack.album_id].image100,
+                    sizes: "100x100",
+                    type: this.albums[this.currentTrack.album_id].image_type
+                  },
+                  {
+                    src: this.albums[this.currentTrack.album_id].image250,
+                    sizes: "250x250",
+                    type: this.albums[this.currentTrack.album_id].image_type
+                  },
+                  {
+                    src: this.albums[this.currentTrack.album_id].image500,
+                    sizes: "500x500",
+                    type: this.albums[this.currentTrack.album_id].image_type
+                  }
+                ]
+              });
+            }
+          })
+          .catch(error => {
+            new Error(error);
+          });
       }
     },
     volume() {
@@ -162,8 +255,14 @@ export default {
     playing() {
       if (this.playing) {
         this.$refs.audio.play();
+        if ("mediaSession" in navigator) {
+          navigator.mediaSession.playbackState = "playing";
+        }
       } else {
         this.$refs.audio.pause();
+        if ("mediaSession" in navigator) {
+          navigator.mediaSession.playbackState = "paused";
+        }
       }
     },
     playlistTracks() {
