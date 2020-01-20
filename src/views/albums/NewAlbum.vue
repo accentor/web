@@ -203,6 +203,13 @@ export default {
         edition: null,
         edition_description: null,
         image: null,
+        album_artists: [
+          {
+            artist_id: null,
+            separator: "",
+            order: 0
+          }
+        ],
         album_labels: [
           {
             label_id: null,
