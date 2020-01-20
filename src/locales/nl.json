@@ -46,6 +46,7 @@
 		"choose-file": "Bestand kiezen",
 		"choose-image": "Afbeelding kiezen",
 		"close": "Sluiten",
+		"edit": "Aanpassen",
 		"errors": "Fouten | Fout | Fouten",
 		"files": "Bestanden | Bestand | Bestanden",
 		"home": "Thuis",
@@ -255,6 +256,9 @@
 			"update": "Werk nummer bij"
 		},
 		"tracks": "Nummers | Nummer | Nummers"
+	},
+	"page-titles": {
+		"edit": "{obj} aanpassen"
 	},
 	"search": "Zoeken",
 	"users": {

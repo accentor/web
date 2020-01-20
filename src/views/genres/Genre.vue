@@ -1,5 +1,6 @@
 <template>
   <VContainer fluid v-if="genre">
+    <vue-headful :title="genre.name + ' | Accentor'" />
     <VRow>
       <VCol cols="12">
         <h2 class="display-1">{{ genre.name }}</h2>

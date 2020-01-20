@@ -1,5 +1,6 @@
 <template>
   <VContainer fluid v-if="isModerator">
+    <vue-headful :title="$t('library-settings') + ' | Accentor'" />
     <VRow>
       <h2 class="headline">{{ $t("library.maintenance") }}</h2>
     </VRow>

@@ -1,5 +1,6 @@
 <template>
   <div>
+    <vue-headful :title="$tc('music.flags', 2) + ' | Accentor'" />
     <VContainer fluid>
       <VRow>
         <VCol>

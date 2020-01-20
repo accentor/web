@@ -1,5 +1,6 @@
 <template>
   <VContainer fluid v-if="artist">
+    <vue-headful :title="artist.name + ' | Accentor'" />
     <VRow>
       <VCol lg="3" md="4" sm="6" v-if="artist.image500" cols="12">
         <VImg :src="artist.image500" class="elevation-3" />
