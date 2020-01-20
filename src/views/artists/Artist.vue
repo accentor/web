@@ -4,7 +4,7 @@
       <VCol lg="3" md="4" sm="6" v-if="artist.image500" cols="12">
         <VImg :src="artist.image500" class="elevation-3" />
       </VCol>
-      <VCol lg="3" md="4" sm="6" v-if="artist.image" cols="12">
+      <VCol lg="3" md="4" sm="6" v-else-if="artist.image" cols="12">
         <VImg :src="artist.image" class="elevation-3" />
       </VCol>
       <VCol lg="9" md="8" sm="6" cols="12">
