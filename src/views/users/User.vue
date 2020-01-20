@@ -1,5 +1,6 @@
 <template>
   <VContainer fluid v-if="user">
+    <vue-headful :title="user.name + ' | Accentor'" />
     <VRow>
       <div>
         <div class="display-1">{{ user.name }}</div>

@@ -2,6 +2,7 @@ import "@mdi/font/css/materialdesignicons.css";
 import "roboto-fontface/css/roboto/roboto-fontface.css";
 import Vue from "vue";
 import Vuetify from "vuetify/lib";
+import vueHeadful from "vue-headful";
 import Main from "./Main.vue";
 import router from "./router";
 import store from "./store/store";
@@ -9,6 +10,8 @@ import i18n from "./i18n";
 import colors from "vuetify/lib/util/colors";
 
 Vue.config.productionTip = false;
+
+Vue.component("vue-headful", vueHeadful);
 
 Vue.filter(
   "length",

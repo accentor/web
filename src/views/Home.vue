@@ -1,5 +1,6 @@
 <template>
   <div>
+    <vue-headful :title="$t('common.home') + ' | Accentor'" />
     <VContainer fluid>
       <VDataIterator
         :footer-props="{

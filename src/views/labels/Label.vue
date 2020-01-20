@@ -1,5 +1,6 @@
 <template>
   <VContainer fluid v-if="label">
+    <vue-headful :title="label.name + ' | Accentor'" />
     <VDataIterator
       :footer-props="{
         disableItemsPerPage: true,

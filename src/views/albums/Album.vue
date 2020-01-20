@@ -1,5 +1,6 @@
 <template>
   <VContainer fluid v-if="album">
+    <vue-headful :title="album.title + ' | Accentor'" />
     <VRow>
       <VCol lg="3" md="4" sm="6" v-if="album.image500" cols="12">
         <VImg :src="album.image500" class="elevation-3" />

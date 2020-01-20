@@ -3,7 +3,11 @@
     <audio ref="audio" />
     <div class="tracks-list-container" v-if="open">
       <table class="tracks-list">
-        <tr v-for="(track, index) of playlistTracks" :key="track.id" class="track">
+        <tr
+          v-for="(track, index) of playlistTracks"
+          :key="track.id"
+          class="track"
+        >
           <td class="icon">
             <VBtn small icon text class="ma-2" @click="removeIndex(index)">
               <VIcon>mdi-close</VIcon>
@@ -18,7 +22,8 @@
           <td>
             <RouterLink
               :to="{ name: 'album', params: { id: track.album_id } }"
-            >{{ albums[track.album_id].title }}</RouterLink>
+              >{{ albums[track.album_id].title }}</RouterLink
+            >
           </td>
           <td class="text-right">{{ track.length | length }}</td>
           <td>
@@ -66,7 +71,13 @@
       </div>
       <div class="flex player-right">
         <div class="content">
-          <VBtn :color="repeatModeColor" @click="nextRepeatMode" text icon class="ma-2">
+          <VBtn
+            :color="repeatModeColor"
+            @click="nextRepeatMode"
+            text
+            icon
+            class="ma-2"
+          >
             <VIcon>{{ repeatModeIcon }}</VIcon>
           </VBtn>
           <VBtn @click="shuffle" icon class="ma-2">

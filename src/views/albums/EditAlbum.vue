@@ -1,5 +1,8 @@
 <template>
   <VContainer class="fill-height" fluid v-if="album">
+    <vue-headful
+      :title="$t('page-titles.edit', { obj: album.title }) + ' | Accentor'"
+    />
     <VRow no-gutters align="center" justify="center">
       <VCol lg="6" sm="8" cols="12">
         <VAlert
