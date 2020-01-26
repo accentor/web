@@ -1,6 +1,6 @@
 <template>
   <div v-if="track_artists.length !== 0">
-    <VMenu open-on-hover full-width offset-y>
+    <VMenu open-on-hover offset-y>
       <template v-slot:activator="{ on }">
         <div v-on="on">
           {{ track_artists.map(a => a.name).join(" / ") }}

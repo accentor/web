@@ -351,6 +351,7 @@ export default {
 
     .content {
       margin-right: auto;
+      padding-left: 10px;
       padding-right: 20px;
     }
   }
@@ -368,8 +369,8 @@ export default {
       .play-time {
         width: 8rem;
         flex-grow: 0;
-        padding-left: 10px;
-        padding-right: 10px;
+        padding-left: 20px;
+        padding-right: 20px;
       }
     }
   }
@@ -381,6 +382,7 @@ export default {
     .content {
       margin-left: auto;
       padding-left: 20px;
+      padding-right: 10px;
       justify-content: end;
       flex-grow: 1;
 

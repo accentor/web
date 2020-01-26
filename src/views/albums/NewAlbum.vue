@@ -10,7 +10,6 @@
             v-model="originalModal"
             :return-value.sync="newAlbum.release"
             persistent
-            full-width
             width="290px"
           >
             <template v-slot:activator="{ on }">
@@ -56,7 +55,6 @@
             v-if="editionInformation"
             :return-value.sync="newAlbum.edition"
             persistent
-            full-width
             width="290px"
           >
             <template v-slot:activator="{ on }">
@@ -103,8 +101,9 @@
           <VRow
             :key="`artist-${index}`"
             v-for="(item, index) of newAlbum.album_artists"
+            no-gutters
           >
-            <VRow class="flex-column no-grow">
+            <VCol class="flex-column no-grow">
               <VBtn
                 @click="moveArtist(index, -1)"
                 icon
@@ -126,8 +125,8 @@
               <VBtn @click="removeArtist(index)" icon small class="ma-2">
                 <VIcon>mdi-close</VIcon>
               </VBtn>
-            </VRow>
-            <VRow class="flex-column">
+            </VCol>
+            <VCol class="flex-column">
               <VCombobox
                 :items="sortedArtists"
                 item-text="name"
@@ -142,17 +141,18 @@
                 v-model="item.separator"
                 v-if="index !== newAlbum.album_artists.length - 1"
               />
-            </VRow>
+            </VCol>
           </VRow>
           <h4 class="subtitle-1">{{ $tc("music.labels", 2) }}</h4>
           <VRow
             :key="`label-${index}`"
             v-for="(item, index) of newAlbum.album_labels"
+            no-gutters
           >
             <VBtn @click="removeLabel(index)" icon small class="ma-2">
               <VIcon>mdi-close</VIcon>
             </VBtn>
-            <VRow class="flex-column">
+            <VCol class="flex-column">
               <VCombobox
                 :items="sortedLabels"
                 item-text="name"
@@ -166,7 +166,7 @@
                 v-model="item.catalogue_number"
               />
               <VDivider v-if="index !== newAlbum.album_labels.length - 1" />
-            </VRow>
+            </VCol>
           </VRow>
           <VRow justify="center">
             <VBtn color="primary" class="ma-2" type="submit">
