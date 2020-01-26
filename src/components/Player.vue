@@ -207,30 +207,6 @@ export default {
           .then(() => {
             if ("mediaSession" in navigator) {
               navigator.mediaSession.playbackState = "playing";
-              navigator.mediaSession.metadata = new window.MediaMetadata({
-                title: this.currentTrack.title,
-                artist: this.currentTrack.track_artists
-                  .map(a => a.name)
-                  .join(" / "),
-                album: this.albums[this.currentTrack.album_id].title,
-                artwork: [
-                  {
-                    src: this.albums[this.currentTrack.album_id].image100,
-                    sizes: "100x100",
-                    type: this.albums[this.currentTrack.album_id].image_type
-                  },
-                  {
-                    src: this.albums[this.currentTrack.album_id].image250,
-                    sizes: "250x250",
-                    type: this.albums[this.currentTrack.album_id].image_type
-                  },
-                  {
-                    src: this.albums[this.currentTrack.album_id].image500,
-                    sizes: "500x500",
-                    type: this.albums[this.currentTrack.album_id].image_type
-                  }
-                ]
-              });
             }
           })
           .catch(error => {
