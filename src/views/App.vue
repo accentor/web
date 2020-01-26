@@ -1,5 +1,6 @@
 <template>
   <div>
+    <vue-headful title="Accentor" />
     <VAppBar app clipped-left color="primary" dark>
       <VAppBarNavIcon @click.stop="drawer = !drawer" />
       <VToolbarTitle>Accentor</VToolbarTitle>

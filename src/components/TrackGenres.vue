@@ -1,12 +1,10 @@
 <template>
   <div v-if="genres">
-    <span v-for="genre_id of track.genre_ids" :key="genre_id">
-      <RouterLink :to="{ name: 'genre', params: { id: genre_id } }">
-        {{ genres[genre_id].name }}
+    <span v-for="tg of track_genres" :key="tg.id">
+      <RouterLink :to="{ name: 'genre', params: { id: tg.id } }">
+        {{ tg.name }}
       </RouterLink>
-      <span
-        v-if="track.genre_ids.indexOf(genre_id) !== track.genre_ids.length - 1"
-      >
+      <span v-if="track_genres.indexOf(tg) !== track_genres.length - 1">
         /
       </span>
     </span>
@@ -15,6 +13,7 @@
 
 <script>
 import { mapState } from "vuex";
+import { compareStrings } from "../comparators";
 
 export default {
   name: "TrackGenres",
@@ -22,7 +21,14 @@ export default {
     track: {}
   },
   computed: {
-    ...mapState("genres", ["genres"])
+    ...mapState("genres", ["genres"]),
+    track_genres() {
+      return this.track.genre_ids
+        .map(tg => this.genres[tg])
+        .sort((g1, g2) => {
+          return compareStrings(g1.name.toLowerCase(), g2.name.toLowerCase());
+        });
+    }
   }
 };
 </script>

@@ -1,5 +1,6 @@
 <template>
   <VContainer fluid>
+    <vue-headful :title="$tc('music.albums', 2) + ' | Accentor'" />
     <VDataIterator
       :footer-props="{
         disableItemsPerPage: true,

@@ -1,5 +1,6 @@
 <template>
   <VContainer fluid>
+    <vue-headful :title="$tc('users.users', 2) + ' | Accentor'" />
     <VRow justify="end">
       <VBtn :to="{ name: 'new-user' }" color="success" v-if="isAdmin">
         <VIcon left>mdi-plus</VIcon>

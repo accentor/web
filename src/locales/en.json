@@ -46,6 +46,7 @@
 		"choose-file": "Choose file",
 		"choose-image": "Choose image",
 		"close": "Close",
+		"edit": "Edit",
 		"errors": "Errors | Error | Errors",
 		"files": "Files | File | Files",
 		"home": "Home",
@@ -255,6 +256,9 @@
 			"update": "Update track"
 		},
 		"tracks": "Tracks | Track | Tracks"
+	},
+	"page-titles": {
+		"edit": "Edit {obj}"
 	},
 	"search": "Search",
 	"users": {

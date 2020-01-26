@@ -1,5 +1,6 @@
 <template>
   <VContainer class="fill-height" fluid>
+    <vue-headful :title="$t('music.artist.new') + ' | Accentor'" />
     <VRow no-gutters align="center" justify="center">
       <VCol md="4" sm="8" cols="12">
         <VForm @submit.prevent="submit">
