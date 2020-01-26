@@ -39,8 +39,12 @@
             v-model="newTrack.genre_ids"
           />
           <h4 class="subtitle-1">{{ $tc("music.artists", 2) }}</h4>
-          <VRow :key="index" v-for="(item, index) of newTrack.track_artists">
-            <VRow class="no-grow flex-column">
+          <VRow
+            :key="index"
+            v-for="(item, index) of newTrack.track_artists"
+            no-gutters
+          >
+            <VCol class="no-grow flex-column">
               <VBtn
                 @click="moveArtist(index, -1)"
                 icon
@@ -62,8 +66,8 @@
               <VBtn @click="removeArtist(index)" icon small class="ma-2">
                 <VIcon>mdi-close</VIcon>
               </VBtn>
-            </VRow>
-            <VRow>
+            </VCol>
+            <VCol>
               <VCombobox
                 :items="sortedArtists"
                 item-text="name"
@@ -79,7 +83,7 @@
                 v-model="item.role"
               />
               <VDivider v-if="index !== newTrack.track_artists.length - 1" />
-            </VRow>
+            </VCol>
           </VRow>
           <VCheckbox
             v-if="track.review_comment !== null"

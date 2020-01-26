@@ -4,7 +4,7 @@
       @change="interpret"
       accept="image/*"
       :label="$t('common.choose-image')"
-      prepend-icon="mdi-image"
+      prepend-icon
     />
   </div>
 </template>
