@@ -343,10 +343,10 @@ export default {
       }
 
       .play-time {
-        width: 8rem;
+        width: 12rem;
         flex-grow: 0;
-        padding-left: 20px;
-        padding-right: 20px;
+        padding-left: 30px;
+        padding-right: 30px;
       }
     }
   }
@@ -360,6 +360,7 @@ export default {
       padding-left: 20px;
       padding-right: 10px;
       justify-content: end;
+      flex-direction: row-reverse;
       flex-grow: 1;
 
       .volume-slider {
