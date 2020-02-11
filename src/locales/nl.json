@@ -91,6 +91,7 @@
 			"result-blank": "Vul een uiteindelijke codec in."
 		},
 		"current_password": "Huidig wachtwoord",
+		"error": "Error",
 		"exception": "Uitzondering",
 		"extension": "Extensie",
 		"ffmpeg": "FFmpeg parameters",
@@ -249,7 +250,7 @@
 			"set-album": "Stel album in",
 			"title-search": "Zoek en vervang in titel"
 		},
-		"titles": "Titel",
+		"title": "Titel",
 		"track": {
 			"length": "Lengte",
 			"number": "Tracknummer",

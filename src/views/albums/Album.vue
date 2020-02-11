@@ -21,8 +21,8 @@
             {{ album.release }}
           </div>
           <div class="grey--text" v-else>
-            <div>{{ album.release }} ({{ $t("original") }})</div>
-            <div>{{ album.edition }} ({{ $t("edition") }})</div>
+            <div>{{ album.release }} ({{ $t("music.album.original") }})</div>
+            <div>{{ album.edition }} ({{ $t("music.album.edition") }})</div>
           </div>
           <div
             class="grey--text"
