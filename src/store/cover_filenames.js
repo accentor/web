@@ -1,5 +1,6 @@
 import Vue from "vue";
-import { create, destroy, index, update } from "../api/cover_filenames";
+import { create, destroy, update } from "../api/cover_filenames";
+import { index } from "./commit";
 
 export default {
   namespaced: true,
@@ -8,9 +9,8 @@ export default {
   },
   mutations: {
     setCoverFilenames(state, payload) {
-      state.coverFilenames = {};
       for (let coverFilename of payload) {
-        state.coverFilenames[coverFilename.id] = coverFilename;
+        Vue.set(state.coverFilenames, coverFilename.id, coverFilename);
       }
     },
     setCoverFilename(state, { id, coverFilename }) {
@@ -25,9 +25,11 @@ export default {
   },
   actions: {
     index({ commit, rootState }) {
-      return index(rootState.auth)
-        .then((result) => {
-          commit("setCoverFilenames", result);
+      return index(
+        { commit, auth: rootState.auth },
+        { url: "cover_filenames", commitAction: "setCoverFilenames" }
+      )
+        .then(() => {
           return Promise.resolve(true);
         })
         .catch((error) => {

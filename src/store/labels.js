@@ -1,5 +1,6 @@
 import Vue from "vue";
-import { create, destroy, index, update, destroyEmpty } from "../api/labels";
+import { create, destroy, update, destroyEmpty } from "../api/labels";
+import { index } from "./commit";
 import { compareStrings } from "../comparators";
 
 export default {
@@ -9,9 +10,8 @@ export default {
   },
   mutations: {
     setLabels(state, payload) {
-      state.labels = {};
       for (let label of payload) {
-        state.labels[label.id] = label;
+        Vue.set(state.labels, label.id, label);
       }
     },
     setLabel(state, { id, label }) {
@@ -26,9 +26,11 @@ export default {
   },
   actions: {
     index({ commit, rootState }) {
-      return index(rootState.auth)
-        .then((result) => {
-          commit("setLabels", result);
+      return index(
+        { commit, auth: rootState.auth },
+        { url: "labels", commitAction: "setLabels" }
+      )
+        .then(() => {
           return Promise.resolve(true);
         })
         .catch((error) => {

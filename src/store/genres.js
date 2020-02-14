@@ -1,12 +1,6 @@
 import Vue from "vue";
-import {
-  create,
-  destroy,
-  index,
-  update,
-  destroyEmpty,
-  merge,
-} from "../api/genres";
+import { create, destroy, update, destroyEmpty, merge } from "../api/genres";
+import { index } from "./commit";
 import { compareStrings } from "../comparators";
 
 export default {
@@ -16,9 +10,8 @@ export default {
   },
   mutations: {
     setGenres(state, payload) {
-      state.genres = {};
       for (let genre of payload) {
-        state.genres[genre.id] = genre;
+        Vue.set(state.genres, genre.id, genre);
       }
     },
     setGenre(state, { id, genre }) {
@@ -33,9 +26,11 @@ export default {
   },
   actions: {
     index({ commit, rootState }) {
-      return index(rootState.auth)
-        .then((result) => {
-          commit("setGenres", result);
+      return index(
+        { commit, auth: rootState.auth },
+        { url: "genres", commitAction: "setGenres" }
+      )
+        .then(() => {
           return Promise.resolve(true);
         })
         .catch((error) => {

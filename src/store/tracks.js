@@ -1,5 +1,6 @@
 import Vue from "vue";
-import { create, destroy, index, update } from "../api/tracks";
+import { create, destroy, update } from "../api/tracks";
+import { index } from "./commit";
 import { compareStrings } from "../comparators";
 
 export default {
@@ -9,9 +10,8 @@ export default {
   },
   mutations: {
     setTracks(state, payload) {
-      state.tracks = {};
       for (let track of payload) {
-        state.tracks[track.id] = track;
+        Vue.set(state.tracks, track.id, track);
       }
     },
     setTrack(state, { id, track }) {
@@ -43,9 +43,11 @@ export default {
   },
   actions: {
     index({ commit, rootState }) {
-      return index(rootState.auth)
-        .then((result) => {
-          commit("setTracks", result);
+      return index(
+        { commit, auth: rootState.auth },
+        { url: "tracks", commitAction: "setTracks" }
+      )
+        .then(() => {
           return Promise.resolve(true);
         })
         .catch((error) => {

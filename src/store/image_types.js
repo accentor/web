@@ -1,5 +1,6 @@
 import Vue from "vue";
-import { create, destroy, index, update } from "../api/image_types";
+import { create, destroy, update } from "../api/image_types";
+import { index } from "./commit";
 
 export default {
   namespaced: true,
@@ -8,9 +9,8 @@ export default {
   },
   mutations: {
     setImageTypes(state, payload) {
-      state.imageTypes = {};
       for (let imageType of payload) {
-        state.imageTypes[imageType.id] = imageType;
+        Vue.set(state.imageTypes, imageType.id, imageType);
       }
     },
     setImageType(state, { id, imageType }) {
@@ -25,9 +25,11 @@ export default {
   },
   actions: {
     index({ commit, rootState }) {
-      return index(rootState.auth)
-        .then((result) => {
-          commit("setImageTypes", result);
+      return index(
+        { commit, auth: rootState.auth },
+        { url: "image_types", commitAction: "setImageTypes" }
+      )
+        .then(() => {
           return Promise.resolve(true);
         })
         .catch((error) => {

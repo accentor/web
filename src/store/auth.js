@@ -1,5 +1,6 @@
 import Vue from "vue";
-import { create, destroy, index } from "../api/auth_tokens";
+import { create, destroy } from "../api/auth_tokens";
+import { index } from "./commit";
 
 export default {
   namespaced: true,
@@ -24,9 +25,8 @@ export default {
       state.id = null;
     },
     setAuthTokens(state, payload) {
-      state.authTokens = {};
       for (let authToken of payload) {
-        state.authTokens[authToken.id] = authToken;
+        Vue.set(state.authTokens, authToken.id, authToken);
       }
     },
     removeAuthToken(state, id) {
@@ -57,9 +57,11 @@ export default {
         });
     },
     index({ commit, rootState }) {
-      return index(rootState.auth)
-        .then((result) => {
-          commit("setAuthTokens", result);
+      return index(
+        { commit, auth: rootState.auth },
+        { url: "auth_tokens", commitAction: "setAuthTokens" }
+      )
+        .then(() => {
           return Promise.resolve(true);
         })
         .catch((error) => {

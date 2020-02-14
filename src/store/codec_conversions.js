@@ -1,5 +1,6 @@
 import Vue from "vue";
-import { create, destroy, index, update } from "../api/codec_conversions";
+import { create, destroy, update } from "../api/codec_conversions";
+import { index } from "./commit";
 
 export default {
   namespaced: true,
@@ -8,9 +9,8 @@ export default {
   },
   mutations: {
     setCodecConversions(state, payload) {
-      state.codecConversions = {};
       for (let codecConversion of payload) {
-        state.codecConversions[codecConversion.id] = codecConversion;
+        Vue.set(state.codecConversions, codecConversion.id, codecConversion);
       }
     },
     setCodecConversion(state, { id, codecConversion }) {
@@ -25,9 +25,11 @@ export default {
   },
   actions: {
     index({ commit, rootState }) {
-      return index(rootState.auth)
-        .then((result) => {
-          commit("setCodecConversions", result);
+      return index(
+        { commit, auth: rootState.auth },
+        { url: "codec_conversions", commitAction: "setCodecConversions" }
+      )
+        .then(() => {
           return Promise.resolve(true);
         })
         .catch((error) => {

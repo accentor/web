@@ -1,5 +1,6 @@
 import Vue from "vue";
-import { create, destroy, index, update, destroyEmpty } from "../api/albums";
+import { create, destroy, update, destroyEmpty } from "../api/albums";
+import { index } from "./commit";
 import { compareStrings } from "../comparators";
 
 export default {
@@ -9,9 +10,8 @@ export default {
   },
   mutations: {
     setAlbums(state, payload) {
-      state.albums = {};
       for (let album of payload) {
-        state.albums[album.id] = album;
+        Vue.set(state.albums, album.id, album);
       }
     },
     setAlbum(state, { id, album }) {
@@ -26,9 +26,11 @@ export default {
   },
   actions: {
     index({ commit, rootState }) {
-      return index(rootState.auth)
-        .then((result) => {
-          commit("setAlbums", result);
+      return index(
+        { commit, auth: rootState.auth },
+        { url: "albums", commitAction: "setAlbums" }
+      )
+        .then(() => {
           return Promise.resolve(true);
         })
         .catch((error) => {

@@ -1,5 +1,6 @@
 import Vue from "vue";
-import { create, destroy, index } from "../api/locations";
+import { create, destroy } from "../api/locations";
+import { index } from "./commit";
 
 export default {
   namespaced: true,
@@ -8,9 +9,8 @@ export default {
   },
   mutations: {
     setLocations(state, payload) {
-      state.locations = {};
       for (let location of payload) {
-        state.locations[location.id] = location;
+        Vue.set(state.locations, location.id, location);
       }
     },
     setLocation(state, { id, location }) {
@@ -25,9 +25,11 @@ export default {
   },
   actions: {
     index({ commit, rootState }) {
-      return index(rootState.auth)
-        .then((result) => {
-          commit("setLocations", result);
+      return index(
+        { commit, auth: rootState.auth },
+        { url: "locations", commitAction: "setLocations" }
+      )
+        .then(() => {
           return Promise.resolve(true);
         })
         .catch((error) => {
