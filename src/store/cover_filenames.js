@@ -9,9 +9,7 @@ export default {
   },
   mutations: {
     setCoverFilenames(state, payload) {
-      for (let coverFilename of payload) {
-        Vue.set(state.coverFilenames, coverFilename.id, coverFilename);
-      }
+      state.coverFilenames = Object.assign({}, state.coverFilenames, payload);
     },
     setCoverFilename(state, { id, coverFilename }) {
       if (state.coverFilenames[id]) {

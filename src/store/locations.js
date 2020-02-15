@@ -9,9 +9,7 @@ export default {
   },
   mutations: {
     setLocations(state, payload) {
-      for (let location of payload) {
-        Vue.set(state.locations, location.id, location);
-      }
+      state.locations = Object.assign({}, state.locations, payload);
     },
     setLocation(state, { id, location }) {
       if (state.locations[id]) {

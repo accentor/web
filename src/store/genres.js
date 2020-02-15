@@ -10,9 +10,7 @@ export default {
   },
   mutations: {
     setGenres(state, payload) {
-      for (let genre of payload) {
-        Vue.set(state.genres, genre.id, genre);
-      }
+      state.genres = Object.assign({}, state.genres, payload);
     },
     setGenre(state, { id, genre }) {
       if (state.genres[id]) {

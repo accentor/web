@@ -9,9 +9,7 @@ export default {
   },
   mutations: {
     setImageTypes(state, payload) {
-      for (let imageType of payload) {
-        Vue.set(state.imageTypes, imageType.id, imageType);
-      }
+      state.imageTypes = Object.assign({}, state.imageTypes, payload);
     },
     setImageType(state, { id, imageType }) {
       if (state.imageTypes[id]) {

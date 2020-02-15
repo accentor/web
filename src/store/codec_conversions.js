@@ -9,9 +9,11 @@ export default {
   },
   mutations: {
     setCodecConversions(state, payload) {
-      for (let codecConversion of payload) {
-        Vue.set(state.codecConversions, codecConversion.id, codecConversion);
-      }
+      state.codecConversions = Object.assign(
+        {},
+        state.codecConversions,
+        payload
+      );
     },
     setCodecConversion(state, { id, codecConversion }) {
       if (state.codecConversions[id]) {

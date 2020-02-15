@@ -10,9 +10,7 @@ export default {
   },
   mutations: {
     setArtists(state, payload) {
-      for (let artist of payload) {
-        Vue.set(state.artists, artist.id, artist);
-      }
+      state.artists = Object.assign({}, state.artists, payload);
     },
     setArtist(state, { id, artist }) {
       if (state.artists[id]) {

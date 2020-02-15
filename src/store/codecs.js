@@ -9,9 +9,7 @@ export default {
   },
   mutations: {
     setCodecs(state, payload) {
-      for (let codec of payload) {
-        Vue.set(state.codecs, codec.id, codec);
-      }
+      state.codecs = Object.assign({}, state.codecs, payload);
     },
     setCodec(state, { id, codec }) {
       if (state.codecs[id]) {

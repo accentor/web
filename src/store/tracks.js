@@ -10,9 +10,7 @@ export default {
   },
   mutations: {
     setTracks(state, payload) {
-      for (let track of payload) {
-        Vue.set(state.tracks, track.id, track);
-      }
+      state.tracks = Object.assign({}, state.tracks, payload);
     },
     setTrack(state, { id, track }) {
       if (state.tracks[id]) {

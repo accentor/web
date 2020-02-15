@@ -25,9 +25,7 @@ export default {
       state.id = null;
     },
     setAuthTokens(state, payload) {
-      for (let authToken of payload) {
-        Vue.set(state.authTokens, authToken.id, authToken);
-      }
+      state.authTokens = Object.assign({}, state.authTokens, payload);
     },
     removeAuthToken(state, id) {
       Vue.delete(state.authTokens, id);

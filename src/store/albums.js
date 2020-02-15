@@ -10,9 +10,7 @@ export default {
   },
   mutations: {
     setAlbums(state, payload) {
-      for (let album of payload) {
-        Vue.set(state.albums, album.id, album);
-      }
+      state.albums = Object.assign({}, state.albums, payload);
     },
     setAlbum(state, { id, album }) {
       if (state.albums[id]) {

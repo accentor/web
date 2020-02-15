@@ -10,9 +10,7 @@ export default {
   },
   mutations: {
     setUsers(state, payload) {
-      for (let user of payload) {
-        Vue.set(state.users, user.id, user);
-      }
+      state.users = Object.assign({}, state.users, payload);
     },
     setUser(state, { id, user }) {
       if (state.users[id]) {

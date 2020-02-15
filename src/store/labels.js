@@ -10,9 +10,7 @@ export default {
   },
   mutations: {
     setLabels(state, payload) {
-      for (let label of payload) {
-        Vue.set(state.labels, label.id, label);
-      }
+      state.labels = Object.assign({}, state.labels, payload);
     },
     setLabel(state, { id, label }) {
       if (state.labels[id]) {
