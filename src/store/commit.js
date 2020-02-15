@@ -5,17 +5,17 @@ export function index({ commit, auth }, { url, commitAction }) {
     let page = 1;
 
     function doFetch() {
-      fetchIndex(url, page, auth).then(([ok, result]) => {
-        if (ok && result.length === 0) {
-          resolve(true);
-        } else if (ok) {
-          commit(commitAction, result);
-          page++;
-          doFetch();
-        } else {
-          reject(result);
-        }
-      });
+      fetchIndex(url, page, auth)
+        .then(result => {
+          if (result.length === 0) {
+            resolve(true);
+          } else {
+            commit(commitAction, result);
+            page++;
+            doFetch();
+          }
+        })
+        .catch(result => reject(result));
     }
 
     doFetch();

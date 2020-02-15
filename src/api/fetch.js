@@ -12,11 +12,7 @@ export function fetchIndex(url, page, auth) {
       .catch(reason => reject({ error: [reason] }))
       .then(request => Promise.all([request.ok, request.json()]))
       .then(([ok, result]) => {
-        if (ok) {
-          resolve([ok, result]);
-        } else {
-          reject(result);
-        }
+        return ok ? resolve(result) : reject(result);
       });
   });
 }
