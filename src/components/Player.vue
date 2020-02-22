@@ -72,16 +72,12 @@
       <div class="flex player-right">
         <div class="content">
           <VBtn
-            :color="repeatModeColor"
-            @click="nextRepeatMode"
-            text
+            @click="open = !open"
             icon
+            :disabled="this.playlistTracks.length === 0"
             class="ma-2"
           >
-            <VIcon>{{ repeatModeIcon }}</VIcon>
-          </VBtn>
-          <VBtn @click="shuffle" icon class="ma-2">
-            <VIcon>mdi-shuffle</VIcon>
+            <VIcon>{{ open ? "mdi-chevron-down" : "mdi-chevron-up" }}</VIcon>
           </VBtn>
           <VSlider
             :readonly="muted"
@@ -91,13 +87,17 @@
             class="not-on-small volume-slider ma-2"
             v-on:click:prepend="muted = !muted"
           />
+          <VBtn @click="shuffle" icon class="ma-2">
+            <VIcon>mdi-shuffle</VIcon>
+          </VBtn>
           <VBtn
-            @click="open = !open"
+            :color="repeatModeColor"
+            @click="nextRepeatMode"
+            text
             icon
-            :disabled="this.playlistTracks.length === 0"
             class="ma-2"
           >
-            <VIcon>{{ open ? "mdi-chevron-down" : "mdi-chevron-up" }}</VIcon>
+            <VIcon>{{ repeatModeIcon }}</VIcon>
           </VBtn>
         </div>
       </div>
