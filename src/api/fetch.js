@@ -10,9 +10,9 @@ export function fetchIndex(url, page, auth) {
       }
     })
       .catch(reason => reject({ error: [reason] }))
-      .then(request => Promise.all([request.ok, request.json()]))
-      .then(([ok, result]) => {
-        return ok ? resolve(result) : reject(result);
+      .then(request => Promise.all([request, request.json()]))
+      .then(([request, result]) => {
+        return request.ok ? resolve([request, result]) : reject(result);
       });
   });
 }

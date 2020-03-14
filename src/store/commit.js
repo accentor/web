@@ -7,14 +7,18 @@ export function index({ commit, auth }, { url, commitAction }) {
 
     function doFetch() {
       fetchIndex(url, page, auth)
-        .then(result => {
-          if (result.length === 0) {
+        .then(([request, result]) => {
+          for (let obj of result) {
+            results[obj.id] = obj;
+          }
+          if (
+            (request.headers.has("x-total-pages") &&
+              request.headers.get("x-total-pages") == page) ||
+            result.length === 0
+          ) {
             commit(commitAction, results);
             resolve(true);
           } else {
-            for (let obj of result) {
-              results[obj.id] = obj;
-            }
             if (page % 10 === 0) {
               commit(commitAction, results);
               results = {};
