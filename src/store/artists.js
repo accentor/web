@@ -84,13 +84,13 @@ export default {
     artists: state => Object.values(state.artists),
     artistsByName: (state, getters) =>
       getters.artists.sort((a1, a2) =>
-        compareStrings(a1.name.toLowerCase(), a2.name.toLowerCase())
+        compareStrings(a1.normalized_name, a2.normalized_name)
       ),
     artistsFlagged: (state, getters) => {
       return getters.artists
         .filter(t => t.review_comment !== null)
         .sort((a1, a2) =>
-          compareStrings(a1.name.toLowerCase(), a2.name.toLowerCase())
+          compareStrings(a1.normalized_name, a2.normalized_name)
         );
     }
   }

@@ -84,7 +84,7 @@ export default {
     albums: state => Object.values(state.albums),
     albumsByTitle: (state, getters) =>
       getters.albums.sort((a1, a2) =>
-        compareStrings(a1.title.toLowerCase(), a2.title.toLowerCase())
+        compareStrings(a1.normalized_title, a2.normalized_title)
       ),
     albumsFilterByArtist: (state, getters) => id => {
       const aaFilter = a =>
@@ -94,7 +94,7 @@ export default {
         .sort(
           (a1, a2) =>
             compareStrings(a1.release, a2.release) ||
-            compareStrings(a1.title.toLowerCase(), a2.title.toLowerCase())
+            compareStrings(a1.normalized_title, a2.normalized_title)
         );
     },
     albumsFilterByLabel: (state, getters) => id => {
@@ -105,14 +105,14 @@ export default {
         .sort(
           (a1, a2) =>
             compareStrings(a1.release, a2.release) ||
-            compareStrings(a1.title.toLowerCase(), a2.title.toLowerCase())
+            compareStrings(a1.normalized_title, a2.normalized_title)
         );
     },
     albumsFlagged: (state, getters) => {
       return getters.albums
         .filter(t => t.review_comment !== null)
         .sort((a1, a2) =>
-          compareStrings(a1.title.toLowerCase(), a2.title.toLowerCase())
+          compareStrings(a1.normalized_title, a2.normalized_title)
         );
     },
     albumsOnThisDay: (state, getters) => {
@@ -122,7 +122,7 @@ export default {
         .sort(
           (a1, a2) =>
             compareStrings(a1.release, a2.release) ||
-            compareStrings(a1.title.toLowerCase(), a2.title.toLowerCase())
+            compareStrings(a1.normalized_title, a2.normalized_title)
         );
     }
   }

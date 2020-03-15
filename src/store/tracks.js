@@ -75,8 +75,8 @@ export default {
     tracksByAlbumAndNumber: (state, getters, rootState) => {
       return getters.tracks.sort((a1, a2) => {
         let albumOrder = compareStrings(
-          rootState.albums.albums[a1.album_id].title.toLowerCase(),
-          rootState.albums.albums[a2.album_id].title.toLowerCase()
+          rootState.albums.albums[a1.album_id].normalized_title,
+          rootState.albums.albums[a2.album_id].normalized_title
         );
         albumOrder =
           albumOrder === 0
@@ -101,8 +101,8 @@ export default {
         t.track_artists.filter(ta => `${ta.artist_id}` === `${id}`).length > 0;
       return getters.tracks.filter(taFilter).sort((a1, a2) => {
         let albumOrder = compareStrings(
-          rootState.albums.albums[a1.album_id].title,
-          rootState.albums.albums[a2.album_id].title
+          rootState.albums.albums[a1.album_id].normalized_title,
+          rootState.albums.albums[a2.album_id].normalized_title
         );
         albumOrder =
           albumOrder === 0
@@ -120,8 +120,8 @@ export default {
         t.genre_ids.filter(gId => `${gId}` === `${id}`).length > 0;
       return getters.tracks.filter(tgFilter).sort((a1, a2) => {
         let albumOrder = compareStrings(
-          rootState.albums.albums[a1.album_id].title,
-          rootState.albums.albums[a2.album_id].title
+          rootState.albums.albums[a1.album_id].normalized_title,
+          rootState.albums.albums[a2.album_id].normalized_title
         );
         albumOrder =
           albumOrder === 0
@@ -139,8 +139,8 @@ export default {
         .filter(t => t.review_comment !== null)
         .sort((a1, a2) => {
           let albumOrder = compareStrings(
-            rootState.albums.albums[a1.album_id].title,
-            rootState.albums.albums[a2.album_id].title
+            rootState.albums.albums[a1.album_id].normalized_title,
+            rootState.albums.albums[a2.album_id].normalized_title
           );
           albumOrder =
             albumOrder === 0
