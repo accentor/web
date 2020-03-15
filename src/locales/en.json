@@ -91,6 +91,7 @@
 			"result-blank": "Please fill in a resulting codec."
 		},
 		"current_password": "Current Password",
+		"error": "Error",
 		"exception": "Exception",
 		"extension": "Extension",
 		"ffmpeg": "FFmpeg parameters",
