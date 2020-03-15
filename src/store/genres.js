@@ -84,7 +84,7 @@ export default {
     genres: state => Object.values(state.genres),
     genresByName: (state, getters) =>
       getters.genres.sort((g1, g2) =>
-        compareStrings(g1.name.toLowerCase(), g2.name.toLowerCase())
+        compareStrings(g1.normalized_name, g2.normalized_name)
       )
   }
 };

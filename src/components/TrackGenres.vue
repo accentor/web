@@ -26,7 +26,7 @@ export default {
       return this.track.genre_ids
         .map(tg => this.genres[tg])
         .sort((g1, g2) => {
-          return compareStrings(g1.name.toLowerCase(), g2.name.toLowerCase());
+          return compareStrings(g1.normalized_name, g2.normalized_name);
         });
     }
   }
