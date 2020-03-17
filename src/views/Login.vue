@@ -17,6 +17,7 @@
                   :label="$t('users.name')"
                   :placeholder="$t('users.name')"
                   prepend-icon="mdi-account"
+                  autocomplete="username"
                   v-model="name"
                 />
                 <VTextField
@@ -24,6 +25,7 @@
                   :placeholder="$t('users.password')"
                   prepend-icon="mdi-key"
                   type="password"
+                  autocomplete="current-password"
                   v-model="password"
                 />
                 <VBtn color="primary" class="ma-2" type="submit">

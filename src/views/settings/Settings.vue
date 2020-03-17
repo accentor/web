@@ -16,20 +16,27 @@
       </VCol>
       <VCol lg="4" md="6" sm="8" cols="12" class="px-3">
         <VForm @submit.prevent="submitPassword">
-          <VTextField :label="$t('common.name')" v-model="newUser.name" />
+          <VTextField
+            :label="$t('common.name')"
+            v-model="newUser.name"
+            autocomplete="username"
+          />
           <VTextField
             :label="$t('users.current-password')"
             type="password"
+            autocomplete="current-password"
             v-model="newUser.current_password"
           />
           <VTextField
             :label="$t('users.password')"
             type="password"
+            autocomplete="new-password"
             v-model="newUser.password"
           />
           <VTextField
             :label="$t('users.confirm-password')"
             type="password"
+            autocomplete="new-password"
             v-model="newUser.password_confirmation"
           />
           <VBtn color="primary" class="ma-2" type="submit">
