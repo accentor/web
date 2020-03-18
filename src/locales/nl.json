@@ -233,6 +233,7 @@
 		},
 		"label": {
 			"add": "Voeg label toe",
+			"catalogue-number-nil": "geen",
 			"catnr": "Catalogus nummer",
 			"create": "Maak label aan",
 			"new": "Nieuw label",
