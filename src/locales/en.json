@@ -233,6 +233,7 @@
 		},
 		"label": {
 			"add": "Add label",
+			"catalogue-number-nil": "none",
 			"catnr": "Catalogue number",
 			"create": "Create label",
 			"new": "New label",
