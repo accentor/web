@@ -14,7 +14,7 @@
     <VCardText>
       <div class="grey--text">{{ album.release }}</div>
       <div v-if="labelForCatNr" class="grey--text">
-        {{ catalogueNumber }}
+        {{ catalogueNumber || $t("music.label.catalogue-number-none") }}
       </div>
     </VCardText>
     <VCardActions>
@@ -46,7 +46,7 @@ export default {
           al => al.label_id === this.labelForCatNr.id
         ).catalogue_number;
       } else {
-        return this.$t("music.label.catalogue-number-none");
+        return undefined;
       }
     }
   }
