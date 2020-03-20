@@ -2,7 +2,7 @@ import baseURL from "./base_url";
 
 export function fetchIndex(url, page, auth) {
   return new Promise((resolve, reject) => {
-    fetch(`${baseURL}/${url}?page=${page}&sort_direction=desc`, {
+    fetch(`${baseURL}/${url}?page=${page}`, {
       method: "GET",
       headers: {
         "x-secret": auth.secret,
