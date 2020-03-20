@@ -32,7 +32,7 @@
             <RouterLink :to="{ name: 'label', params: { id: al.label_id } }">
               {{ labels[al.label_id].name }}
             </RouterLink>
-            - {{ al.catalogue_number || $t("music.label.catalogue-number-nil") }}
+            - {{ al.catalogue_number || $t("music.label.catalogue-number-none") }}
           </div>
           <div>
             <AlbumActions :album="album" />

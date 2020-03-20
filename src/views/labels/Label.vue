@@ -39,7 +39,7 @@
             xl="2"
             cols="12"
           >
-            <AlbumCard :album="item" />
+            <AlbumCard :album="item" :labelForCatNr="label" />
           </VCol>
         </VRow>
       </template>
