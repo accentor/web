@@ -19,7 +19,7 @@ export function index({ commit, auth }, { url, commitAction }) {
             commit(commitAction, results);
             resolve(true);
           } else {
-            if (page % 10 === 0) {
+            if (page % 5 === 0) {
               commit(commitAction, results);
               results = {};
             }
