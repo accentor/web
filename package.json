@@ -24,7 +24,7 @@
     "@intlify/vue-i18n-loader": "^0.6.0",
     "@vue/cli-plugin-babel": "^3.11.0",
     "@vue/cli-plugin-eslint": "^4.2.3",
-    "@vue/cli-service": "^3.11.0",
+    "@vue/cli-service": "^4.2.3",
     "@vue/eslint-config-prettier": "^6.0.0",
     "babel-eslint": "^10.0.2",
     "deepmerge": "^4.0.0",
