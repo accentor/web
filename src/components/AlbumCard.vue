@@ -12,9 +12,10 @@
       <AlbumArtists :album="album" />
     </VCardText>
     <VCardText>
-      <span class="grey--text">
-        {{ album.release }}
-      </span>
+      <div class="grey--text">{{ album.release }}</div>
+      <div v-if="labelForCatNr" class="grey--text">
+        {{ catalogueNumber }}
+      </div>
     </VCardText>
     <VCardActions>
       <AlbumActions :album="album" />
@@ -29,7 +30,25 @@ export default {
   name: "AlbumCard",
   components: { AlbumArtists, AlbumActions },
   props: {
-    album: { type: Object }
+    album: {
+      type: Object,
+      required: true
+    },
+    labelForCatNr: {
+      type: Object,
+      required: false
+    }
+  },
+  computed: {
+    catalogueNumber() {
+      if (this.labelForCatNr) {
+        return this.album.album_labels.find(
+          al => al.label_id === this.labelForCatNr.id
+        ).catalogue_number;
+      } else {
+        return this.$t("music.label.catalogue-number-none");
+      }
+    }
   }
 };
 </script>

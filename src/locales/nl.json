@@ -199,7 +199,7 @@
 		"artist": {
 			"add": "Voeg artiest toe",
 			"artist-s": "Artiest(en)",
-			"new": "Nieuwe artiest",			
+			"new": "Nieuwe artiest",
 			"role": "Rol",
 			"roles": {
 				"arranger": "Arrangeur",
@@ -233,7 +233,7 @@
 		},
 		"label": {
 			"add": "Voeg label toe",
-			"catalogue-number-nil": "geen",
+			"catalogue-number-none": "geen",
 			"catnr": "Catalogus nummer",
 			"create": "Maak label aan",
 			"new": "Nieuw label",
@@ -265,7 +265,7 @@
 	"search": "Zoeken",
 	"users": {
 		"auth": {
-			"destroy-selected": "Verwijder geselecteerde",	
+			"destroy-selected": "Verwijder geselecteerde",
 			"user-agent": "User agent"
 		},
 		"confirm-password": "Bevestig wachtwoord",
