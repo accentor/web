@@ -8365,10 +8365,10 @@ vuetify-loader@^1.2.2:
   dependencies:
     loader-utils "^1.2.0"
 
-vuetify@^2.2.3:
-  version "2.2.14"
-  resolved "https://registry.yarnpkg.com/vuetify/-/vuetify-2.2.14.tgz#d846e81812d90b1c7c0684a1eab8bcc9ca0d5ab2"
-  integrity sha512-oaWbhWe6qilAhMMzmqZ+EnSht1UsP9EyW1gKwAipl+89Bwb0ZFjcJBNXNoVJ6INN3vP9cVrLsQjbxHOMFYrI/Q==
+vuetify@^2.2.18:
+  version "2.2.18"
+  resolved "https://registry.yarnpkg.com/vuetify/-/vuetify-2.2.18.tgz#5a43beaf7c8fc66dcfb5876e1619f7e44c7881da"
+  integrity sha512-RXN065xh5xKmTnEH6+1YFZWp67soOJPTIqqPNliSp9eE72Q7a5fmaV1xQsEVVaVA12+5Hvroo7NW7MP/APucGw==
 
 vuex-persistedstate@^2.5.4:
   version "2.7.1"
