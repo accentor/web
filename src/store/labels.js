@@ -83,6 +83,8 @@ export default {
   getters: {
     labels: state => Object.values(state.labels),
     labelsByName: (state, getters) =>
-      getters.labels.sort((g1, g2) => compareStrings(g1.normalized_name, g2.normalized_name))
+      getters.labels.sort((g1, g2) =>
+        compareStrings(g1.normalized_name, g2.normalized_name)
+      )
   }
 };
