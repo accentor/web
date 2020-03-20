@@ -5475,14 +5475,14 @@ mixin-deep@^1.2.0:
     for-in "^1.0.2"
     is-extendable "^1.0.1"
 
-mkdirp@0.5.1, mkdirp@^0.5.0, mkdirp@^0.5.1, mkdirp@~0.5.1, mkdirp@~0.5.x:
+mkdirp@0.5.1:
   version "0.5.1"
   resolved "https://registry.yarnpkg.com/mkdirp/-/mkdirp-0.5.1.tgz#30057438eac6cf7f8c4767f38648d6697d75c903"
   integrity sha1-MAV0OOrGz3+MR2fzhkjWaX11yQM=
   dependencies:
     minimist "0.0.8"
 
-mkdirp@^0.5.3:
+mkdirp@^0.5.0, mkdirp@^0.5.1, mkdirp@^0.5.3, mkdirp@~0.5.1, mkdirp@~0.5.x:
   version "0.5.3"
   resolved "https://registry.yarnpkg.com/mkdirp/-/mkdirp-0.5.3.tgz#5a514b7179259287952881e94410ec5465659f8c"
   integrity sha512-P+2gwrFqx8lhew375MQHHeTlY8AuOJSrGf0R5ddkEndUkmwpgUob/vQuBD1V22/Cw1/lJr4x+EjllSezBThzBg==
@@ -5597,10 +5597,10 @@ node-forge@0.9.0:
   resolved "https://registry.yarnpkg.com/node-forge/-/node-forge-0.9.0.tgz#d624050edbb44874adca12bb9a52ec63cb782579"
   integrity sha512-7ASaDa3pD+lJ3WvXFsxekJQelBKRpne+GOVbLbtHYdd7pFspyeuJHnWfLplGf3SwKGbfs/aYl5V/JCIaHVUKKQ==
 
-node-gyp@^5.0.3:
-  version "5.1.0"
-  resolved "https://registry.yarnpkg.com/node-gyp/-/node-gyp-5.1.0.tgz#8e31260a7af4a2e2f994b0673d4e0b3866156332"
-  integrity sha512-OUTryc5bt/P8zVgNUmC6xdXiDJxLMAW8cF5tLQOT9E5sOQj+UeQxnnPy74K3CLCa/SOjjBlbuzDLR8ANwA+wmw==
+node-gyp@^6.1.0:
+  version "6.1.0"
+  resolved "https://registry.yarnpkg.com/node-gyp/-/node-gyp-6.1.0.tgz#64e31c61a4695ad304c1d5b82cf6b7c79cc79f3f"
+  integrity sha512-h4A2zDlOujeeaaTx06r4Vy+8MZ1679lU+wbCKDS4ZtvY2A37DESo37oejIw0mtmR3+rvNwts5B6Kpt1KrNYdNw==
   dependencies:
     env-paths "^2.2.0"
     glob "^7.1.4"
