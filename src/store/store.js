@@ -48,6 +48,9 @@ export default new Vuex.Store({
   },
   mutations: {
     addError(state, error) {
+      if (error.unauthorized) {
+        this.commit("auth/logout");
+      }
       state.errors.push(error);
     },
     clearErrors(state) {

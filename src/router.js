@@ -172,6 +172,15 @@ const router = new Router({
   ]
 });
 
+store.watch(
+  () => store.getters["auth/loggedIn"],
+  () => {
+    if (!store.getters["auth/loggedIn"]) {
+      router.push({ name: "login" });
+    }
+  }
+);
+
 router.beforeEach((to, from, next) => {
   const onLogin = to.matched.some(record => record.meta.authOptional);
 
