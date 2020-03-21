@@ -34,7 +34,7 @@
         <VDivider />
         <VListItem :to="{ name: 'artists' }">
           <VListItemAction>
-            <VIcon>mdi-artist</VIcon>
+            <VIcon>mdi-account-music</VIcon>
           </VListItemAction>
           <VListItemContent>
             <VListItemTitle>
@@ -132,7 +132,7 @@
           }"
         >
           <VListItemAction>
-            <VIcon>mdi-settings</VIcon>
+            <VIcon>mdi-cog</VIcon>
           </VListItemAction>
           <VListItemContent>
             <VListItemTitle>
