@@ -11,7 +11,7 @@ export default {
       state.lastClick = payload;
     },
     setRescan(state, payload) {
-      state.rescan = Object.assign({}, state.rescan, payload);
+      state.rescan = payload;
     }
   },
   actions: {
