@@ -7,7 +7,7 @@ export default {
   },
   mutations: {
     setRescan(state, payload) {
-      state.rescan = payload;
+      state.rescan = Object.assign({}, state.rescan, payload);
     }
   },
   actions: {
@@ -15,7 +15,7 @@ export default {
       return show(rootState.auth)
         .then(result => {
           commit("setRescan", result);
-          if (result.running) {
+          if (rootState.rescan.rescan.last_click > new Date(result.last_scan)) {
             setTimeout(() => dispatch("show"), 1000);
           }
           return Promise.resolve(true);
@@ -29,6 +29,7 @@ export default {
       return start(rootState.auth)
         .then(result => {
           result.running = true;
+          result.last_click = new Date();
           commit("setRescan", result);
           setTimeout(() => dispatch("show"), 1000);
           return Promise.resolve(true);
