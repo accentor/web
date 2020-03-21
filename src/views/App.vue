@@ -174,8 +174,10 @@ export default {
       loading: false
     };
   },
-  created() {
-    this.loadData();
+  mounted() {
+    if (this.tracks.length === 0) {
+      this.loadData();
+    }
   },
   watch: {
     locale() {
@@ -188,6 +190,7 @@ export default {
     }
   },
   computed: {
+    ...mapGetters("tracks", ["tracks"]),
     ...mapGetters("auth", ["isModerator"]),
     ...mapGetters(["numberOfFlaggedItems"]),
     ...mapGetters("rescan", ["finishedAt"]),

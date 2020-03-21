@@ -1,6 +1,7 @@
+import localforage from "localforage";
 import Vue from "vue";
 import Vuex from "vuex";
-import createPersistedState from "vuex-persistedstate";
+import VuexPersistence from "vuex-persist";
 import albums from "./albums";
 import artists from "./artists";
 import auth from "./auth";
@@ -19,12 +20,30 @@ import userSettings from "./user_settings";
 
 Vue.use(Vuex);
 
+const vuexPersisted = new VuexPersistence({
+  storage: localforage,
+  asyncStorage: true,
+  strictMode: process.env.NODE_ENV !== "production"
+});
+
+const mutations = {
+  addError(state, error) {
+    if (error.unauthorized) {
+      this.commit("auth/logout");
+    }
+    state.errors.push(error);
+  },
+  clearErrors(state) {
+    state.errors = [];
+  }
+};
+
+if (process.env.NODE_ENV !== "production") {
+  mutations.RESTORE_MUTATION = vuexPersisted.RESTORE_MUTATION;
+}
+
 export default new Vuex.Store({
-  plugins: [
-    createPersistedState({
-      paths: ["auth", "userSettings"]
-    })
-  ],
+  plugins: [vuexPersisted.plugin],
   strict: process.env.NODE_ENV !== "production",
   modules: {
     albums,
@@ -46,17 +65,7 @@ export default new Vuex.Store({
   state: {
     errors: []
   },
-  mutations: {
-    addError(state, error) {
-      if (error.unauthorized) {
-        this.commit("auth/logout");
-      }
-      state.errors.push(error);
-    },
-    clearErrors(state) {
-      state.errors = [];
-    }
-  },
+  mutations: mutations,
   actions: {},
   getters: {
     numberOfFlaggedItems(state, getters) {

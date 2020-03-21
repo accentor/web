@@ -181,7 +181,8 @@ store.watch(
   }
 );
 
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
+  await store.restored;
   const onLogin = to.matched.some(record => record.meta.authOptional);
 
   if (onLogin && store.getters["auth/loggedIn"]) {
