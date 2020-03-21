@@ -33,6 +33,7 @@ export default {
       return start(rootState.auth)
         .then(result => {
           result.running = true;
+          result.last_click = new Date();
           commit("setRescan", result);
           commit("setLastClick", new Date());
           setTimeout(() => dispatch("show"), 1000);
