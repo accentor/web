@@ -180,11 +180,17 @@ export default {
   watch: {
     locale() {
       this.$i18n.locale = this.locale;
+    },
+    finishedAt() {
+      if (!this.loading) {
+        this.loadData();
+      }
     }
   },
   computed: {
     ...mapGetters("auth", ["isModerator"]),
     ...mapGetters(["numberOfFlaggedItems"]),
+    ...mapGetters("rescan", ["finishedAt"]),
     ...mapState("userSettings", ["locale"])
   },
   methods: {

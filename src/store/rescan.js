@@ -38,5 +38,8 @@ export default {
           return Promise.resolve(false);
         });
     }
+  },
+  getters: {
+    finishedAt: state => state.rescan?.finished_at
   }
 };
