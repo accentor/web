@@ -14,7 +14,7 @@
       <VBtn @click="start" color="success" class="ma-2">
         <VIcon left
           >mdi-refresh
-          {{ rescan.last_click > rescan.last_scan ? "mdi-spin" : "" }}</VIcon
+          {{ rescan.last_click > rescan.finished_at ? "mdi-spin" : "" }}</VIcon
         >
         {{ $t("library.start-scan") }}
       </VBtn>
@@ -22,7 +22,7 @@
     <VRow class="flex-column" v-if="rescan">
       <div>
         <strong>{{ $t("library.last-scan") }}: </strong>
-        {{ new Date(rescan.last_scan).toLocaleString() }}
+        {{ new Date(rescan.finished_at).toLocaleString() }}
       </div>
       <div>
         <strong>{{ $t("library.processed") }}: </strong>
