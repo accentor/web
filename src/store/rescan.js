@@ -38,5 +38,8 @@ export default {
           return Promise.resolve(false);
         });
     }
+  },
+  getters: {
+    lastScan: state => state.rescan?.last_scan
   }
 };
