@@ -15,7 +15,9 @@ export default {
       return show(rootState.auth)
         .then(result => {
           commit("setRescan", result);
-          if (rootState.rescan.rescan.last_click > new Date(result.finished_at)) {
+          if (
+            rootState.rescan.rescan.last_click > new Date(result.finished_at)
+          ) {
             setTimeout(() => dispatch("show"), 1000);
           }
           return Promise.resolve(true);
