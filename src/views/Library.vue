@@ -11,18 +11,27 @@
       <h2 class="headline">{{ $t("library.rescan") }}</h2>
     </VRow>
     <VRow v-if="rescan">
-      <VBtn @click="start" color="success" class="ma-2">
-        <VIcon left
-          >mdi-refresh
-          {{ rescan.last_click > rescan.finished_at ? "mdi-spin" : "" }}</VIcon
-        >
+      <VBtn
+        @click="start"
+        :disabled="rescanRunning"
+        color="success"
+        class="ma-2"
+      >
+        <VIcon left>
+          mdi-refresh
+          {{ rescanRunning ? "mdi-spin" : "" }}
+        </VIcon>
         {{ $t("library.start-scan") }}
       </VBtn>
     </VRow>
     <VRow class="flex-column" v-if="rescan">
       <div>
-        <strong>{{ $t("library.last-scan") }}: </strong>
-        {{ new Date(rescan.finished_at).toLocaleString() }}
+        <strong>{{ $t("library.finished-at") }}: </strong>
+        {{
+          rescanRunning
+            ? $t("library.currently-running")
+            : $d(new Date(rescan.finished_at), "long")
+        }}
       </div>
       <div>
         <strong>{{ $t("library.processed") }}: </strong>
@@ -107,7 +116,11 @@ export default {
   },
   computed: {
     ...mapGetters("auth", ["isModerator"]),
-    ...mapState("rescan", ["rescan"])
+    ...mapState("rescan", ["rescan"]),
+    ...mapState("rescan", ["lastClick"]),
+    rescanRunning() {
+      return this.lastClick > new Date(this.rescan.finished_at) ? true : false;
+    }
   },
   methods: {
     ...mapActions("rescan", ["start"])
