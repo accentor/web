@@ -12,11 +12,18 @@
     </VRow>
     <VRow v-if="rescan">
       <VBtn @click="start" color="success" class="ma-2">
-        <VIcon left>mdi-refresh {{ rescan.running ? "mdi-spin" : "" }}</VIcon>
+        <VIcon left
+          >mdi-refresh
+          {{ rescan.last_click > rescan.last_scan ? "mdi-spin" : "" }}</VIcon
+        >
         {{ $t("library.start-scan") }}
       </VBtn>
     </VRow>
     <VRow class="flex-column" v-if="rescan">
+      <div>
+        <strong>{{ $t("library.last-scan") }}: </strong>
+        {{ new Date(rescan.last_scan).toLocaleString() }}
+      </div>
       <div>
         <strong>{{ $t("library.processed") }}: </strong>
         {{ rescan.processed }}
