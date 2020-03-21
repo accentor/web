@@ -30,11 +30,11 @@ export default {
         });
     },
     start({ commit, dispatch, rootState }) {
+      commit("setLastClick", new Date());
       return start(rootState.auth)
         .then(result => {
           result.running = true;
           commit("setRescan", result);
-          commit("setLastClick", new Date());
           setTimeout(() => dispatch("show"), 1000);
           return Promise.resolve(true);
         })
