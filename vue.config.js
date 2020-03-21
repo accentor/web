@@ -10,7 +10,7 @@ module.exports = {
   css: {
     loaderOptions: {
       sass: {
-        data: `@import "~@/sass/main.scss"`
+        prependData: `@import "~@/sass/main.scss"`
       }
     }
   },
@@ -21,7 +21,7 @@ module.exports = {
         .oneOf(match)
         .use("sass-loader")
         .tap(opt =>
-          Object.assign(opt, { data: `@import '~@/sass/main.scss';` })
+          Object.assign(opt, { prependData: `@import '~@/sass/main.scss';` })
         );
     });
   }
