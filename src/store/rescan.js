@@ -40,6 +40,6 @@ export default {
     }
   },
   getters: {
-    lastScan: state => state.rescan?.last_scan
+    finishedAt: state => state.rescan?.finished_at
   }
 };

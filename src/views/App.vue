@@ -181,7 +181,7 @@ export default {
     locale() {
       this.$i18n.locale = this.locale;
     },
-    lastScan() {
+    finishedAt() {
       if (!this.loading) {
         this.loadData();
       }
@@ -190,7 +190,7 @@ export default {
   computed: {
     ...mapGetters("auth", ["isModerator"]),
     ...mapGetters(["numberOfFlaggedItems"]),
-    ...mapGetters("rescan", ["lastScan"]),
+    ...mapGetters("rescan", ["finishedAt"]),
     ...mapState("userSettings", ["locale"])
   },
   methods: {
