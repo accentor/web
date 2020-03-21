@@ -3,9 +3,13 @@ import { show, start } from "../api/rescan";
 export default {
   namespaced: true,
   state: {
-    rescan: null
+    rescan: null,
+    lastClick: new Date(0)
   },
   mutations: {
+    setLastClick(state, payload) {
+      state.lastClick = payload;
+    },
     setRescan(state, payload) {
       state.rescan = payload;
     }
@@ -15,7 +19,7 @@ export default {
       return show(rootState.auth)
         .then(result => {
           commit("setRescan", result);
-          if (result.running) {
+          if (rootState.rescan.lastClick > new Date(result.finished_at)) {
             setTimeout(() => dispatch("show"), 1000);
           }
           return Promise.resolve(true);
@@ -26,6 +30,7 @@ export default {
         });
     },
     start({ commit, dispatch, rootState }) {
+      commit("setLastClick", new Date());
       return start(rootState.auth)
         .then(result => {
           result.running = true;
