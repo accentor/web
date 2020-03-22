@@ -52,8 +52,8 @@
         </span>
         <VTooltip v-else bottom>
           <template v-slot:activator="{ on }">
-            <span v-on="on" class="red--text">
-              <VIcon small color="red">mdi-alert</VIcon>--:--
+            <span v-on="on" class="white-space-nowrap">
+              <VIcon small color="red" class="pr-2">mdi-alert</VIcon>--:--
             </span>
           </template>
           <span>
@@ -182,5 +182,9 @@ export default {
 <style scoped>
 .bottom-padding-fix {
   padding-bottom: 16px;
+}
+
+.white-space-nowrap {
+  white-space: nowrap;
 }
 </style>
