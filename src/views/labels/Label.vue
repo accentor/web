@@ -57,6 +57,13 @@ export default {
   name: "Label",
   components: { AlbumCard },
   mixins: [Paginated, Searchable],
+  watch: {
+    label: function() {
+      if (this.label === undefined) {
+        this.$router.push({ name: "labels" });
+      }
+    }
+  },
   computed: {
     ...mapGetters("auth", ["isModerator"]),
     ...mapState("labels", ["labels"]),

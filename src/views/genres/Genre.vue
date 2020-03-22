@@ -21,6 +21,13 @@ import TracksTable from "../../components/TracksTable";
 export default {
   name: "Genre",
   components: { TracksTable },
+  watch: {
+    agenre: function() {
+      if (this.genre === undefined) {
+        this.$router.push({ name: "genres" });
+      }
+    }
+  },
   computed: {
     ...mapGetters("auth", ["isModerator"]),
     ...mapState("genres", ["genres"]),

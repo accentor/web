@@ -17,6 +17,13 @@ import { mapState } from "vuex";
 
 export default {
   name: "User",
+  watch: {
+    user: function() {
+      if (this.user === undefined) {
+        this.$router.push({ name: "users" });
+      }
+    }
+  },
   computed: {
     ...mapState("users", ["users"]),
     user: function() {

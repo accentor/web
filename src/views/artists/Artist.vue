@@ -55,6 +55,13 @@ export default {
     AlbumCard,
     ArtistActions
   },
+  watch: {
+    artist: function() {
+      if (this.artist === undefined) {
+        this.$router.push({ name: "artists" });
+      }
+    }
+  },
   computed: {
     ...mapGetters("auth", ["isModerator"]),
     ...mapState("artists", ["artists"]),
