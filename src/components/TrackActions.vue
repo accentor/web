@@ -59,11 +59,19 @@ export default {
     startTrack: function() {
       if (this.track.length) {
         this.$store.commit("player/playTrack", this.track.id);
+      } else {
+        this.$store.commit("addError", {
+          playlist: ["player.no-tracks-added"]
+        });
       }
     },
     addTrack: function() {
       if (this.track.length) {
         this.$store.commit("player/addTrack", this.track.id);
+      } else {
+        this.$store.commit("addError", {
+          playlist: ["player.no-tracks-added"]
+        });
       }
     },
     flag(id, reviewComment) {

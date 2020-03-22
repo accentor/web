@@ -78,12 +78,20 @@ export default {
       const queue = this.tracks.filter(track => track.length);
       if (queue.length) {
         this.$store.commit("player/playTracks", queue);
+      } else {
+        this.$store.commit("addError", {
+          playlist: ["player.no-tracks-added"]
+        });
       }
     },
     addTracks: function() {
       const queue = this.tracks.filter(track => track.length);
       if (queue.length) {
         this.$store.commit("player/addTracks", queue);
+      } else {
+        this.$store.commit("addError", {
+          playlist: ["player.no-tracks-added"]
+        });
       }
     },
     flag(id, reviewComment) {

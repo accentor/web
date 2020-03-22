@@ -118,6 +118,10 @@
 		"order": "Ordening",
 		"password": "Wachtwoord",
 		"path": "Pad",
+		"player": {
+			"no-tracks-added": "Er zijn geen nummers toegevoegd aan de afspeellijst."
+		},
+		"playlist": "Afspeellijst",
 		"permission": "Permissie",
 		"resulting_codec": "Uiteindelijke codec",
 		"role": "Rol",

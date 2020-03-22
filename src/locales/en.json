@@ -118,6 +118,10 @@
 		"order": "Order",
 		"password": "Password",
 		"path": "Path",
+		"player": {
+			"no-tracks-added": "No tracks were added to the playlist"
+		},
+		"playlist": "Playlist",
 		"permission": "Permission",
 		"resulting_codec": "Resulting codec",
 		"role": "Role",
