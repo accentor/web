@@ -259,7 +259,7 @@
 		},
 		"title": "Title",
 		"track": {
-			"empty": "There is no audio file attached for this track.",
+			"empty": "This track does not have audio.",
 			"length": "Length",
 			"number": "Number",
 			"update": "Update track"

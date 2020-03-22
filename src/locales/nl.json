@@ -259,7 +259,7 @@
 		},
 		"title": "Titel",
 		"track": {
-			"empty": "Er is geen audiobestand verbonden aan dit nummer.",
+			"empty": "Dit nummer heeft geen audio.",
 			"length": "Lengte",
 			"number": "Tracknummer",
 			"update": "Werk nummer bij"
