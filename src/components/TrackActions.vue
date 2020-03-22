@@ -57,10 +57,14 @@ export default {
       }
     },
     startTrack: function() {
-      this.$store.commit("player/playTrack", this.track.id);
+      if (this.track.length) {
+        this.$store.commit("player/playTrack", this.track.id);
+      }
     },
     addTrack: function() {
-      this.$store.commit("player/addTrack", this.track.id);
+      if (this.track.length) {
+        this.$store.commit("player/addTrack", this.track.id);
+      }
     },
     flag(id, reviewComment) {
       return this.update({

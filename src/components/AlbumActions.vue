@@ -75,10 +75,16 @@ export default {
       }
     },
     startTracks: function() {
-      this.$store.commit("player/playTracks", this.tracks);
+      const queue = this.tracks.filter(track => track.length);
+      if (queue.length) {
+        this.$store.commit("player/playTracks", queue);
+      }
     },
     addTracks: function() {
-      this.$store.commit("player/addTracks", this.tracks);
+      const queue = this.tracks.filter(track => track.length);
+      if (queue.length) {
+        this.$store.commit("player/addTracks", queue);
+      }
     },
     flag(id, reviewComment) {
       return this.update({
