@@ -47,7 +47,12 @@
         <span v-else>{{ props.value }}</span>
       </template>
       <template v-slot:item.length="props">
-        {{ props.value | length }}
+        <span v-if="props.value">
+          {{ props.value | length }}
+        </span>
+        <span v-else class="red--text">
+          --:--
+        </span>
       </template>
       <template v-slot:item.album_id="props">
         <RouterLink :to="{ name: 'album', params: { id: props.value } }">
