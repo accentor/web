@@ -3,34 +3,36 @@
     <audio ref="audio" />
     <div class="tracks-list-container" v-if="open">
       <table class="tracks-list">
-        <tr
-          v-for="(track, index) of playlistTracks"
-          :key="track.id"
-          class="track"
-        >
-          <td class="icon">
-            <VBtn small icon text class="ma-2" @click="removeIndex(index)">
-              <VIcon>mdi-close</VIcon>
-            </VBtn>
-          </td>
-          <td class="icon">
-            <VIcon v-if="index === current">mdi-volume-high</VIcon>
-          </td>
-          <td>
-            <a @click.stop.prevent="setCurrent(index)">{{ track.title }}</a>
-          </td>
-          <td>
-            <RouterLink
-              :to="{ name: 'album', params: { id: track.album_id } }"
-              >{{ albums[track.album_id].title }}</RouterLink
-            >
-          </td>
-          <td class="text-right">{{ track.length | length }}</td>
-          <td>
-            <TrackArtists :track="track" />
-          </td>
-          <td>{{ albums[track.album_id].release }}</td>
-        </tr>
+        <Draggable tag="tbody" @end="updatePlaylist">
+          <tr
+            v-for="(track, index) of playlistTracks"
+            :key="track.id"
+            class="track"
+          >
+            <td class="icon">
+              <VBtn small icon text class="ma-2" @click="removeIndex(index)">
+                <VIcon>mdi-close</VIcon>
+              </VBtn>
+            </td>
+            <td class="icon">
+              <VIcon v-if="index === current">mdi-volume-high</VIcon>
+            </td>
+            <td>
+              <a @click.stop.prevent="setCurrent(index)">{{ track.title }}</a>
+            </td>
+            <td>
+              <RouterLink
+                :to="{ name: 'album', params: { id: track.album_id } }"
+                >{{ albums[track.album_id].title }}</RouterLink
+              >
+            </td>
+            <td class="text-right">{{ track.length | length }}</td>
+            <td>
+              <TrackArtists :track="track" />
+            </td>
+            <td>{{ albums[track.album_id].release }}</td>
+          </tr>
+        </Draggable>
       </table>
     </div>
 
@@ -107,11 +109,12 @@
 
 <script>
 import { mapGetters, mapMutations, mapState } from "vuex";
+import Draggable from "vuedraggable";
 import TrackArtists from "./TrackArtists";
 
 export default {
   name: "Player",
-  components: { TrackArtists },
+  components: { Draggable, TrackArtists },
   data() {
     return {
       open: false,
@@ -291,6 +294,9 @@ export default {
       if (time !== this.seekTime) {
         this.setSeekTime(time);
       }
+    },
+    updatePlaylist({ newIndex, oldIndex }) {
+      this.$store.commit("player/updatePlaylist", { newIndex, oldIndex });
     },
   },
 };
