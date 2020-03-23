@@ -21,7 +21,7 @@ export default {
   },
   computed: {
     ...mapGetters("codecConversions", ["codecConversions"]),
-    ...mapGetters("auth", ["isModerator"])
-  }
+    ...mapGetters("auth", ["isModerator"]),
+  },
 };
 </script>

@@ -53,31 +53,31 @@ export default {
   components: {
     TracksTable,
     AlbumCard,
-    ArtistActions
+    ArtistActions,
   },
   watch: {
-    artist: function() {
+    artist: function () {
       if (this.artist === undefined) {
         this.$router.go(-1);
       }
-    }
+    },
   },
   computed: {
     ...mapGetters("auth", ["isModerator"]),
     ...mapState("artists", ["artists"]),
-    albums: function() {
+    albums: function () {
       return this.$store.getters["albums/albumsFilterByArtist"](
         this.$route.params.id
       );
     },
-    tracks: function() {
+    tracks: function () {
       return this.$store.getters["tracks/tracksFilterByArtist"](
         this.$route.params.id
       );
     },
-    artist: function() {
+    artist: function () {
       return this.artists[this.$route.params.id];
-    }
-  }
+    },
+  },
 };
 </script>

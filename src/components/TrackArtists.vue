@@ -3,7 +3,7 @@
     <VMenu open-on-hover offset-y>
       <template v-slot:activator="{ on }">
         <div v-on="on">
-          {{ track_artists.map(a => a.name).join(" / ") }}
+          {{ track_artists.map((a) => a.name).join(" / ") }}
         </div>
       </template>
       <VList dense>
@@ -35,15 +35,15 @@ import { mapState } from "vuex";
 export default {
   name: "TrackArtists",
   props: {
-    track: {}
+    track: {},
   },
   computed: {
     ...mapState("artists", ["artists"]),
     track_artists() {
       return this.track.track_artists
-        .map(ta => ta)
+        .map((ta) => ta)
         .sort((a1, a2) => a1.order - a2.order);
-    }
-  }
+    },
+  },
 };
 </script>

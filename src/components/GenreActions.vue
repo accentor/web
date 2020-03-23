@@ -4,7 +4,7 @@
       :to="{
         name: 'edit-genre',
         params: { id: genre.id },
-        query: { redirect: $route.fullPath }
+        query: { redirect: $route.fullPath },
       }"
       v-if="isModerator"
       color="edit"
@@ -36,18 +36,18 @@ import { mapActions, mapGetters } from "vuex";
 export default {
   name: "LabelActions",
   props: {
-    genre: {}
+    genre: {},
   },
   computed: {
-    ...mapGetters("auth", ["isModerator"])
+    ...mapGetters("auth", ["isModerator"]),
   },
   methods: {
     ...mapActions("genres", ["destroy"]),
-    deleteLabel: function() {
+    deleteLabel: function () {
       if (confirm(this.$t("common.are-you-sure"))) {
         this.destroy(this.genre.id);
       }
-    }
-  }
+    },
+  },
 };
 </script>

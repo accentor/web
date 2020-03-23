@@ -128,7 +128,7 @@
         <VListItem
           :to="{
             name: 'settings',
-            query: { redirect: $route.fullPath }
+            query: { redirect: $route.fullPath },
           }"
         >
           <VListItemAction>
@@ -171,7 +171,7 @@ export default {
   data() {
     return {
       drawer: null,
-      loading: false
+      loading: false,
     };
   },
   created() {
@@ -191,13 +191,13 @@ export default {
       if (!this.loading) {
         this.loadData();
       }
-    }
+    },
   },
   computed: {
     ...mapGetters("auth", ["isModerator"]),
     ...mapGetters(["numberOfFlaggedItems"]),
     ...mapGetters("rescan", ["finishedAt"]),
-    ...mapState("userSettings", ["locale"])
+    ...mapState("userSettings", ["locale"]),
   },
   methods: {
     loadData() {
@@ -221,17 +221,17 @@ export default {
           }
           return Promise.all(promises);
         }),
-        new Promise(resolve => setTimeout(resolve, 1000))
+        new Promise((resolve) => setTimeout(resolve, 1000)),
       ]).finally(() => {
         this.loading = false;
       });
     },
-    logout: function() {
+    logout: function () {
       this.$store.dispatch("auth/logout").then(() => {
         this.$router.push({ name: "login" });
       });
-    }
-  }
+    },
+  },
 };
 </script>
 

@@ -5,7 +5,7 @@
       :footer-props="{
         disableItemsPerPage: true,
         itemsPerPageOptions: [12],
-        showFirstLastPage: true
+        showFirstLastPage: true,
       }"
       :items="filteredItems"
       :items-per-page="12"
@@ -66,17 +66,17 @@ export default {
   computed: {
     ...mapGetters("auth", ["isModerator"]),
     ...mapGetters("artists", {
-      artists: "artistsByName"
+      artists: "artistsByName",
     }),
     filteredItems() {
       return this.artists.filter(
-        item =>
+        (item) =>
           !this.search ||
           item.name
             .toLocaleLowerCase()
             .indexOf(this.search.toLocaleLowerCase()) >= 0
       );
-    }
-  }
+    },
+  },
 };
 </script>

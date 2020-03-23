@@ -4,25 +4,25 @@ module.exports = {
       locale: "en",
       fallbackLocale: "en",
       localeDir: "locales",
-      enableInSFC: true
-    }
+      enableInSFC: true,
+    },
   },
   css: {
     loaderOptions: {
       sass: {
-        prependData: `@import "~@/sass/main.scss"`
-      }
-    }
+        prependData: `@import "~@/sass/main.scss"`,
+      },
+    },
   },
-  chainWebpack: config => {
-    ["vue-modules", "vue", "normal-modules", "normal"].forEach(match => {
+  chainWebpack: (config) => {
+    ["vue-modules", "vue", "normal-modules", "normal"].forEach((match) => {
       config.module
         .rule("scss")
         .oneOf(match)
         .use("sass-loader")
-        .tap(opt =>
+        .tap((opt) =>
           Object.assign(opt, { prependData: `@import '~@/sass/main.scss';` })
         );
     });
-  }
+  },
 };

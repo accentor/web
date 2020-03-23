@@ -57,7 +57,7 @@ export default {
       albumsDisabled: false,
       artistsDisabled: false,
       labelsDisabled: false,
-      genresDisabled: false
+      genresDisabled: false,
     };
   },
   methods: {
@@ -65,9 +65,9 @@ export default {
       destroyArtists: "artists/destroyEmpty",
       destroyAlbums: "albums/destroyEmpty",
       destroyGenres: "genres/destroyEmpty",
-      destroyLabels: "labels/destroyEmpty"
+      destroyLabels: "labels/destroyEmpty",
     }),
-    destroyEmptyArtists: function() {
+    destroyEmptyArtists: function () {
       if (confirm(this.$t("common.are-you-sure"))) {
         this.artistsDisabled = true;
         this.destroyArtists().finally(() => {
@@ -75,7 +75,7 @@ export default {
         });
       }
     },
-    destroyEmptyAlbums: function() {
+    destroyEmptyAlbums: function () {
       if (confirm(this.$t("common.are-you-sure"))) {
         this.albumsDisabled = true;
         this.destroyAlbums().finally(() => {
@@ -83,7 +83,7 @@ export default {
         });
       }
     },
-    destroyEmptyGenres: function() {
+    destroyEmptyGenres: function () {
       if (confirm(this.$t("common.are-you-sure"))) {
         this.genresDisabled = true;
         this.destroyGenres().finally(() => {
@@ -91,14 +91,14 @@ export default {
         });
       }
     },
-    destroyEmptyLabels: function() {
+    destroyEmptyLabels: function () {
       if (confirm(this.$t("common.are-you-sure"))) {
         this.labelsDisabled = true;
         this.destroyLabels().finally(() => {
           this.labelsDisabled = false;
         });
       }
-    }
-  }
+    },
+  },
 };
 </script>

@@ -5,11 +5,11 @@ export function show(auth) {
     method: "GET",
     headers: {
       "x-secret": auth.secret,
-      "x-device-id": auth.device_id
-    }
+      "x-device-id": auth.device_id,
+    },
   })
-    .catch(reason => Promise.reject({ error: [reason] }))
-    .then(request => Promise.all([request.ok, request.json()]))
+    .catch((reason) => Promise.reject({ error: [reason] }))
+    .then((request) => Promise.all([request.ok, request.json()]))
     .then(([ok, result]) => {
       return ok ? Promise.resolve(result) : Promise.reject(result);
     });
@@ -20,11 +20,11 @@ export function start(auth) {
     method: "POST",
     headers: {
       "x-secret": auth.secret,
-      "x-device-id": auth.device_id
-    }
+      "x-device-id": auth.device_id,
+    },
   })
-    .catch(reason => Promise.reject({ error: [reason] }))
-    .then(request => Promise.all([request.ok, request.json()]))
+    .catch((reason) => Promise.reject({ error: [reason] }))
+    .then((request) => Promise.all([request.ok, request.json()]))
     .then(([ok, result]) => {
       return ok ? Promise.resolve(result) : Promise.reject(result);
     });

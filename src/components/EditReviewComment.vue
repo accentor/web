@@ -36,24 +36,24 @@ export default {
   data() {
     return {
       show: false,
-      new_review_comment: ""
+      new_review_comment: "",
     };
   },
   props: {
     update: {},
-    item: {}
+    item: {},
   },
   created() {
     this.new_review_comment = this.item.review_comment;
   },
   methods: {
     flag() {
-      this.update(this.item.id, this.new_review_comment).then(succeeded => {
+      this.update(this.item.id, this.new_review_comment).then((succeeded) => {
         if (succeeded) {
           this.show = false;
         }
       });
-    }
-  }
+    },
+  },
 };
 </script>

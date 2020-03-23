@@ -17,7 +17,7 @@ export default {
   },
   computed: {
     ...mapGetters("locations", ["locations"]),
-    ...mapGetters("auth", ["isModerator"])
-  }
+    ...mapGetters("auth", ["isModerator"]),
+  },
 };
 </script>

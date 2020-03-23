@@ -41,135 +41,135 @@ const router = new Router({
         {
           path: "",
           name: "home",
-          component: Home
+          component: Home,
         },
         {
           path: "albums",
           name: "albums",
-          component: Albums
+          component: Albums,
         },
         {
           path: "albums/new",
           name: "new-album",
-          component: NewAlbum
+          component: NewAlbum,
         },
         {
           path: "albums/:id",
           name: "album",
-          component: Album
+          component: Album,
         },
         {
           path: "albums/:id/edit",
           name: "edit-album",
-          component: EditAlbum
+          component: EditAlbum,
         },
         {
           path: "artists",
           name: "artists",
-          component: Artists
+          component: Artists,
         },
         {
           path: "artists/new",
           name: "new-artist",
-          component: NewArtist
+          component: NewArtist,
         },
         {
           path: "artists/:id",
           name: "artist",
-          component: Artist
+          component: Artist,
         },
         {
           path: "artists/:id/edit",
           name: "edit-artist",
-          component: EditArtist
+          component: EditArtist,
         },
         {
           path: "flags",
           name: "flags",
-          component: Flags
+          component: Flags,
         },
         {
           path: "genres",
           name: "genres",
-          component: Genres
+          component: Genres,
         },
         {
           path: "genres/:id",
           name: "genre",
-          component: Genre
+          component: Genre,
         },
         {
           path: "genres/:id/edit",
           name: "edit-genre",
-          component: EditGenre
+          component: EditGenre,
         },
         {
           path: "labels",
           name: "labels",
-          component: Labels
+          component: Labels,
         },
         {
           path: "labels/:id",
           name: "label",
-          component: Label
+          component: Label,
         },
         {
           path: "labels/:id/edit",
           name: "edit-label",
-          component: EditLabel
+          component: EditLabel,
         },
         {
           path: "library",
           name: "library",
-          component: Library
+          component: Library,
         },
         {
           path: "settings",
           name: "settings",
-          component: Settings
+          component: Settings,
         },
         {
           path: "tracks",
           name: "tracks",
-          component: Tracks
+          component: Tracks,
         },
         {
           path: "tracks/:id/edit",
           name: "edit-track",
-          component: EditTrack
+          component: EditTrack,
         },
         {
           path: "users",
           name: "users",
-          component: Users
+          component: Users,
         },
         {
           path: "users/new",
           name: "new-user",
-          component: NewUser
+          component: NewUser,
         },
         {
           path: "users/:id",
           name: "user",
-          component: User
+          component: User,
         },
         {
           path: "users/:id/edit",
           name: "edit-user",
-          component: EditUser
-        }
-      ]
+          component: EditUser,
+        },
+      ],
     },
     {
       path: "/login",
       name: "login",
       component: Login,
       meta: {
-        authOptional: true
-      }
+        authOptional: true,
+      },
     },
-    { path: "*", redirect: "/app/" }
-  ]
+    { path: "*", redirect: "/app/" },
+  ],
 });
 
 store.watch(
@@ -182,7 +182,7 @@ store.watch(
 );
 
 router.beforeEach((to, from, next) => {
-  const onLogin = to.matched.some(record => record.meta.authOptional);
+  const onLogin = to.matched.some((record) => record.meta.authOptional);
 
   if (onLogin && store.getters["auth/loggedIn"]) {
     next({ name: "home" });
@@ -191,7 +191,7 @@ router.beforeEach((to, from, next) => {
   } else {
     next({
       name: "login",
-      query: { redirect: to.fullPath }
+      query: { redirect: to.fullPath },
     });
   }
 });

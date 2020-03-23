@@ -5,7 +5,7 @@
       :footer-props="{
         disableItemsPerPage: true,
         itemsPerPageOptions: [numberOfItems],
-        showFirstLastPage: true
+        showFirstLastPage: true,
       }"
       :items="filteredItems"
       :items-per-page="numberOfItems"
@@ -57,11 +57,11 @@ export default {
   mixins: [Paginated, Searchable],
   computed: {
     ...mapGetters("labels", {
-      labels: "labelsByName"
+      labels: "labelsByName",
     }),
     filteredItems() {
       return this.labels.filter(
-        item =>
+        (item) =>
           !this.search ||
           item.name
             .toLocaleLowerCase()
@@ -78,7 +78,7 @@ export default {
       } else {
         return 12;
       }
-    }
-  }
+    },
+  },
 };
 </script>

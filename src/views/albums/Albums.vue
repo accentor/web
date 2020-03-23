@@ -5,7 +5,7 @@
       :footer-props="{
         disableItemsPerPage: true,
         itemsPerPageOptions: [12],
-        showFirstLastPage: true
+        showFirstLastPage: true,
       }"
       :items="filteredItems"
       :items-per-page="12"
@@ -64,26 +64,26 @@ export default {
   mixins: [Paginated, Searchable],
   methods: {
     ...mapActions("albums", ["destroy"]),
-    deleteAlbum: function(id) {
+    deleteAlbum: function (id) {
       if (confirm(this.$t("common.are-you-sure"))) {
         this.destroy(id);
       }
-    }
+    },
   },
   computed: {
     ...mapGetters("auth", ["isModerator"]),
     ...mapGetters("albums", {
-      albums: "albumsByTitle"
+      albums: "albumsByTitle",
     }),
     filteredItems() {
       return this.albums.filter(
-        item =>
+        (item) =>
           !this.search ||
           item.title
             .toLocaleLowerCase()
             .indexOf(this.search.toLocaleLowerCase()) >= 0
       );
-    }
-  }
+    },
+  },
 };
 </script>

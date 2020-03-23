@@ -51,8 +51,8 @@ export default {
     return {
       newCodec: {
         mimetype: "",
-        extension: ""
-      }
+        extension: "",
+      },
     };
   },
   created() {
@@ -63,11 +63,11 @@ export default {
     });
   },
   watch: {
-    album: function() {
+    album: function () {
       if (this.codec) {
         this.fillValues();
       }
-    }
+    },
   },
   methods: {
     fillValues() {
@@ -77,7 +77,7 @@ export default {
     ...mapActions("codecs", ["destroy", "update", "create"]),
     saveCodec() {
       if (this.codec === null) {
-        this.create(this.newCodec).then(id => {
+        this.create(this.newCodec).then((id) => {
           if (id) {
             this.newCodec.extension = "";
             this.newCodec.mimetype = "";
@@ -91,7 +91,7 @@ export default {
       if (confirm(this.$t("common.are-you-sure"))) {
         this.destroy(this.codec.id);
       }
-    }
-  }
+    },
+  },
 };
 </script>

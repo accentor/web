@@ -5,7 +5,7 @@
       :to="{
         name: 'edit-artist',
         params: { id: artist.id },
-        query: { redirect: $route.fullPath }
+        query: { redirect: $route.fullPath },
       }"
       v-if="isModerator"
       color="edit"
@@ -39,14 +39,14 @@ export default {
   name: "ArtistActions",
   components: { EditReviewComment },
   props: {
-    artist: {}
+    artist: {},
   },
   computed: {
-    ...mapGetters("auth", ["isModerator"])
+    ...mapGetters("auth", ["isModerator"]),
   },
   methods: {
     ...mapActions("artists", ["destroy", "update"]),
-    deleteArtist: function() {
+    deleteArtist: function () {
       if (confirm(this.$t("common.are-you-sure"))) {
         this.destroy(this.artist.id);
       }
@@ -54,9 +54,9 @@ export default {
     flag(id, reviewComment) {
       return this.update({
         id,
-        newArtist: { review_comment: reviewComment }
+        newArtist: { review_comment: reviewComment },
       });
-    }
-  }
+    },
+  },
 };
 </script>

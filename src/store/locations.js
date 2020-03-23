@@ -4,7 +4,7 @@ import { create, destroy, index } from "../api/locations";
 export default {
   namespaced: true,
   state: {
-    locations: {}
+    locations: {},
   },
   mutations: {
     setLocations(state, payload) {
@@ -21,27 +21,27 @@ export default {
     },
     removeLocation(state, id) {
       Vue.delete(state.locations, id);
-    }
+    },
   },
   actions: {
     index({ commit, rootState }) {
       return index(rootState.auth)
-        .then(result => {
+        .then((result) => {
           commit("setLocations", result);
           return Promise.resolve(true);
         })
-        .catch(error => {
+        .catch((error) => {
           this.commit("addError", error);
           return Promise.resolve(false);
         });
     },
     create({ commit, rootState }, newLocation) {
       return create(rootState.auth, newLocation)
-        .then(result => {
+        .then((result) => {
           commit("setLocation", { id: result.id, location: result });
           return Promise.resolve(result.id);
         })
-        .catch(error => {
+        .catch((error) => {
           this.commit("addError", error);
           return Promise.resolve(false);
         });
@@ -52,14 +52,14 @@ export default {
           commit("removeLocation", id);
           return Promise.resolve(true);
         })
-        .catch(error => {
+        .catch((error) => {
           this.commit("addError", error);
           return Promise.resolve(false);
         });
-    }
+    },
   },
   getters: {
-    locations: state =>
-      Object.values(state.locations).sort((l1, l2) => l1.id - l2.id)
-  }
+    locations: (state) =>
+      Object.values(state.locations).sort((l1, l2) => l1.id - l2.id),
+  },
 };

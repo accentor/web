@@ -21,7 +21,7 @@ export default {
   },
   computed: {
     ...mapGetters("coverFilenames", ["coverFilenames"]),
-    ...mapGetters("auth", ["isModerator"])
-  }
+    ...mapGetters("auth", ["isModerator"]),
+  },
 };
 </script>
