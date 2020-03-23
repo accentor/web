@@ -60,7 +60,7 @@ export default {
   watch: {
     label: function() {
       if (this.label === undefined) {
-        this.$router.push({ name: "labels" });
+        this.$router.go(-1);
       }
     }
   },

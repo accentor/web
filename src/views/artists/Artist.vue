@@ -58,7 +58,7 @@ export default {
   watch: {
     artist: function() {
       if (this.artist === undefined) {
-        this.$router.push({ name: "artists" });
+        this.$router.go(-1);
       }
     }
   },

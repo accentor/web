@@ -24,7 +24,7 @@ export default {
   watch: {
     agenre: function() {
       if (this.genre === undefined) {
-        this.$router.push({ name: "genres" });
+        this.$router.go(-1);
       }
     }
   },

@@ -20,7 +20,7 @@ export default {
   watch: {
     user: function() {
       if (this.user === undefined) {
-        this.$router.push({ name: "users" });
+        this.$router.go(-1);
       }
     }
   },

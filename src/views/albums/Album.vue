@@ -61,7 +61,7 @@ export default {
   watch: {
     album: function() {
       if (this.album === undefined) {
-        this.$router.push({ name: "albums" });
+        this.$router.go(-1);
       }
     }
   },
