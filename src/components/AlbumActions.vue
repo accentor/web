@@ -75,10 +75,24 @@ export default {
       }
     },
     startTracks: function() {
-      this.$store.commit("player/playTracks", this.tracks);
+      const queue = this.tracks.filter(track => track.length);
+      if (queue.length) {
+        this.$store.commit("player/playTracks", queue);
+      } else {
+        this.$store.commit("addError", {
+          playlist: ["player.no-tracks-added"]
+        });
+      }
     },
     addTracks: function() {
-      this.$store.commit("player/addTracks", this.tracks);
+      const queue = this.tracks.filter(track => track.length);
+      if (queue.length) {
+        this.$store.commit("player/addTracks", queue);
+      } else {
+        this.$store.commit("addError", {
+          playlist: ["player.no-tracks-added"]
+        });
+      }
     },
     flag(id, reviewComment) {
       return this.update({

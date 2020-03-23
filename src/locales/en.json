@@ -118,6 +118,10 @@
 		"order": "Order",
 		"password": "Password",
 		"path": "Path",
+		"player": {
+			"no-tracks-added": "No tracks were added to the playlist"
+		},
+		"playlist": "Playlist",
 		"permission": "Permission",
 		"resulting_codec": "Resulting codec",
 		"role": "Role",
@@ -255,6 +259,7 @@
 		},
 		"title": "Title",
 		"track": {
+			"empty": "This track does not have audio.",
 			"length": "Length",
 			"number": "Number",
 			"update": "Update track"

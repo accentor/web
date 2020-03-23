@@ -57,10 +57,22 @@ export default {
       }
     },
     startTrack: function() {
-      this.$store.commit("player/playTrack", this.track.id);
+      if (this.track.length) {
+        this.$store.commit("player/playTrack", this.track.id);
+      } else {
+        this.$store.commit("addError", {
+          playlist: ["player.no-tracks-added"]
+        });
+      }
     },
     addTrack: function() {
-      this.$store.commit("player/addTrack", this.track.id);
+      if (this.track.length) {
+        this.$store.commit("player/addTrack", this.track.id);
+      } else {
+        this.$store.commit("addError", {
+          playlist: ["player.no-tracks-added"]
+        });
+      }
     },
     flag(id, reviewComment) {
       return this.update({
