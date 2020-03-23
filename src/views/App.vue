@@ -176,6 +176,12 @@ export default {
   },
   created() {
     this.loadData();
+    this.$options.interval = setInterval(() => {
+      this.$store.commit("updateCurrentDay");
+    }, 60000);
+  },
+  beforeDestroy() {
+    clearInterval(this.$options.interval);
   },
   watch: {
     locale() {

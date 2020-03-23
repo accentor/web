@@ -116,8 +116,8 @@ export default {
           compareStrings(a1.normalized_title, a2.normalized_title)
         );
     },
-    albumsOnThisDay: (state, getters) => {
-      const today = new Date().toISOString().slice(5, 10);
+    albumsOnThisDay: (state, getters, rootState) => {
+      const today = new Date(rootState.currentDay).toISOString().slice(5, 10);
       return getters.albums
         .filter((r) => `${r.release.slice(-5)}` === today)
         .sort(

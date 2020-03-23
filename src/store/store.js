@@ -45,6 +45,7 @@ export default new Vuex.Store({
   },
   state: {
     errors: [],
+    currentDay: new Date().setHours(0, 0, 0, 0),
   },
   mutations: {
     addError(state, error) {
@@ -55,6 +56,9 @@ export default new Vuex.Store({
     },
     clearErrors(state) {
       state.errors = [];
+    },
+    updateCurrentDay(state) {
+      state.currentDay = new Date().setHours(0, 0, 0, 0);
     },
   },
   actions: {},
