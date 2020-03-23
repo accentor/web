@@ -5,7 +5,7 @@ import { compareStrings } from "../comparators";
 export default {
   namespaced: true,
   state: {
-    users: {}
+    users: {},
   },
   mutations: {
     setUsers(state, payload) {
@@ -22,38 +22,38 @@ export default {
     },
     removeUser(state, id) {
       Vue.delete(state.users, id);
-    }
+    },
   },
   actions: {
     index({ commit, rootState }) {
       return index(rootState.auth)
-        .then(result => {
+        .then((result) => {
           commit("setUsers", result);
           return Promise.resolve(true);
         })
-        .catch(error => {
+        .catch((error) => {
           this.commit("addError", error);
           return Promise.resolve(false);
         });
     },
     create({ commit, rootState }, newUser) {
       return create(rootState.auth, newUser)
-        .then(result => {
+        .then((result) => {
           commit("setUser", { id: result.id, user: result });
           return Promise.resolve(result.id);
         })
-        .catch(error => {
+        .catch((error) => {
           this.commit("addError", error);
           return Promise.resolve(false);
         });
     },
     update({ commit, rootState }, { id, newUser }) {
       return update(rootState.auth, id, newUser)
-        .then(result => {
+        .then((result) => {
           commit("setUser", { id, user: result });
           return Promise.resolve(true);
         })
-        .catch(error => {
+        .catch((error) => {
           this.commit("addError", error);
           return Promise.resolve(false);
         });
@@ -64,15 +64,15 @@ export default {
           commit("removeUser", id);
           return Promise.resolve(true);
         })
-        .catch(error => {
+        .catch((error) => {
           this.commit("addError", error);
           return Promise.resolve(false);
         });
-    }
+    },
   },
   getters: {
-    users: state => Object.values(state.users),
+    users: (state) => Object.values(state.users),
     usersByName: (state, getters) =>
-      getters.users.sort((u1, u2) => compareStrings(u1.name, u2.name))
-  }
+      getters.users.sort((u1, u2) => compareStrings(u1.name, u2.name)),
+  },
 };

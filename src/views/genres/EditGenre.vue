@@ -24,8 +24,8 @@ export default {
   data() {
     return {
       newGenre: {
-        name: ""
-      }
+        name: "",
+      },
     };
   },
   created() {
@@ -36,17 +36,17 @@ export default {
     });
   },
   watch: {
-    genre: function() {
+    genre: function () {
       if (this.genre) {
         this.fillValues();
       }
-    }
+    },
   },
   computed: {
     ...mapState("genres", ["genres"]),
-    genre: function() {
+    genre: function () {
       return this.genres[this.$route.params.id];
-    }
+    },
   },
   methods: {
     ...mapActions("genres", ["update"]),
@@ -55,13 +55,13 @@ export default {
     },
     submit() {
       this.update({ id: this.genre.id, newGenre: this.newGenre }).then(
-        succeeded => {
+        (succeeded) => {
           if (succeeded) {
             this.$router.push(this.$route.query.redirect || { name: "genres" });
           }
         }
       );
-    }
-  }
+    },
+  },
 };
 </script>

@@ -26,20 +26,20 @@ export default {
     return {
       newArtist: {
         name: "",
-        image: null
-      }
+        image: null,
+      },
     };
   },
   methods: {
     ...mapActions("artists", ["create"]),
     submit() {
-      this.create(this.newArtist).then(id => {
+      this.create(this.newArtist).then((id) => {
         if (id) {
           this.$router.push({ name: "artist", params: { id } });
         }
       });
-    }
-  }
+    },
+  },
 };
 </script>
 

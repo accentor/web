@@ -1,11 +1,11 @@
 export default {
   data() {
     return {
-      search: ""
+      search: "",
     };
   },
   props: {
-    saveSearch: { default: true, type: Boolean }
+    saveSearch: { default: true, type: Boolean },
   },
   created() {
     const search = this.$route.query.search;
@@ -16,15 +16,15 @@ export default {
     });
   },
   watch: {
-    search: function() {
+    search: function () {
       if (this.saveSearch) {
         this.$router.replace({
           query: {
             ...this.$route.query,
-            search: this.search
-          }
+            search: this.search,
+          },
         });
       }
-    }
-  }
+    },
+  },
 };

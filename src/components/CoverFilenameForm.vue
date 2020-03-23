@@ -43,8 +43,8 @@ export default {
   data() {
     return {
       newCoverFilename: {
-        filename: ""
-      }
+        filename: "",
+      },
     };
   },
   created() {
@@ -55,11 +55,11 @@ export default {
     });
   },
   watch: {
-    album: function() {
+    album: function () {
       if (this.coverFilename) {
         this.fillValues();
       }
-    }
+    },
   },
   methods: {
     fillValues() {
@@ -67,7 +67,7 @@ export default {
     },
     ...mapActions("coverFilenames", ["destroy", "update", "create"]),
     saveCoverFilename() {
-      this.create(this.newCoverFilename).then(id => {
+      this.create(this.newCoverFilename).then((id) => {
         if (id) {
           this.newCoverFilename.filename = "";
         }
@@ -77,7 +77,7 @@ export default {
       if (confirm(this.$t("common.are-you-sure"))) {
         this.destroy(this.coverFilename.id);
       }
-    }
-  }
+    },
+  },
 };
 </script>

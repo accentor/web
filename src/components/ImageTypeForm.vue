@@ -51,8 +51,8 @@ export default {
     return {
       newImageType: {
         mimetype: "",
-        extension: ""
-      }
+        extension: "",
+      },
     };
   },
   created() {
@@ -63,11 +63,11 @@ export default {
     });
   },
   watch: {
-    album: function() {
+    album: function () {
       if (this.imageType) {
         this.fillValues();
       }
-    }
+    },
   },
   methods: {
     fillValues() {
@@ -77,7 +77,7 @@ export default {
     ...mapActions("imageTypes", ["destroy", "update", "create"]),
     saveImageType() {
       if (this.imageType === null) {
-        this.create(this.newImageType).then(id => {
+        this.create(this.newImageType).then((id) => {
           if (id) {
             this.newImageType.extension = "";
             this.newImageType.mimetype = "";
@@ -91,7 +91,7 @@ export default {
       if (confirm(this.$t("common.are-you-sure"))) {
         this.destroy(this.imageType.id);
       }
-    }
-  }
+    },
+  },
 };
 </script>

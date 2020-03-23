@@ -22,23 +22,23 @@ export default {
   name: "Genre",
   components: { TracksTable },
   watch: {
-    agenre: function() {
+    agenre: function () {
       if (this.genre === undefined) {
         this.$router.go(-1);
       }
-    }
+    },
   },
   computed: {
     ...mapGetters("auth", ["isModerator"]),
     ...mapState("genres", ["genres"]),
-    tracks: function() {
+    tracks: function () {
       return this.$store.getters["tracks/tracksFilterByGenre"](
         this.$route.params.id
       );
     },
-    genre: function() {
+    genre: function () {
       return this.genres[this.$route.params.id];
-    }
-  }
+    },
+  },
 };
 </script>

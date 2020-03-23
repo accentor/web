@@ -41,9 +41,9 @@ export default {
       newArtist: {
         name: "",
         image: null,
-        review_comment: null
+        review_comment: null,
       },
-      clear_review_comment: true
+      clear_review_comment: true,
     };
   },
   created() {
@@ -54,17 +54,17 @@ export default {
     });
   },
   watch: {
-    artist: function() {
+    artist: function () {
       if (this.artist) {
         this.fillValues();
       }
-    }
+    },
   },
   computed: {
     ...mapState("artists", ["artists"]),
-    artist: function() {
+    artist: function () {
       return this.artists[this.$route.params.id];
-    }
+    },
   },
   methods: {
     ...mapActions("artists", ["update"]),
@@ -77,7 +77,7 @@ export default {
         ? null
         : this.newArtist.review_comment;
       this.update({ id: this.artist.id, newArtist: this.newArtist }).then(
-        succeeded => {
+        (succeeded) => {
           if (succeeded) {
             this.$router.push(
               this.$route.query.redirect || { name: "artists" }
@@ -85,7 +85,7 @@ export default {
           }
         }
       );
-    }
-  }
+    },
+  },
 };
 </script>

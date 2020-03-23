@@ -207,33 +207,33 @@ export default {
           {
             artist_id: null,
             separator: "",
-            order: 0
-          }
+            order: 0,
+          },
         ],
         album_labels: [
           {
             label_id: null,
-            catalogue_number: ""
-          }
-        ]
+            catalogue_number: "",
+          },
+        ],
       },
-      editionInformation: false
+      editionInformation: false,
     };
   },
   computed: {
     ...mapGetters("labels", {
-      sortedLabels: "labelsByName"
-    })
+      sortedLabels: "labelsByName",
+    }),
   },
   methods: {
     ...mapActions("albums", ["create"]),
     ...mapActions("labels", {
-      createLabel: "create"
+      createLabel: "create",
     }),
     addLabel() {
       this.newAlbum.album_labels.push({
         label_id: null,
-        catalogue_number: ""
+        catalogue_number: "",
       });
     },
     removeLabel(index) {
@@ -244,7 +244,7 @@ export default {
         artist_id: null,
         name: "",
         separator: "",
-        order: 0
+        order: 0,
       });
     },
     removeArtist(index) {
@@ -267,7 +267,7 @@ export default {
           ? this.newAlbum.edition_description
           : null,
         image: this.newAlbum.image,
-        album_labels: []
+        album_labels: [],
       };
 
       const promises = [];
@@ -275,11 +275,11 @@ export default {
       for (let label of this.newAlbum.album_labels) {
         if (typeof label.label_id === "string") {
           promises.push(
-            this.createLabel({ name: label.label_id }).then(id => {
+            this.createLabel({ name: label.label_id }).then((id) => {
               if (id) {
                 transformed.album_labels.push({
                   label_id: id,
-                  catalogue_number: label.catalogue_number
+                  catalogue_number: label.catalogue_number,
                 });
               } else {
                 return Promise.reject();
@@ -289,19 +289,19 @@ export default {
         } else {
           transformed.album_labels.push({
             label_id: label.label_id.id,
-            catalogue_number: label.catalogue_number
+            catalogue_number: label.catalogue_number,
           });
         }
       }
 
       Promise.all(promises).then(() => {
-        this.create(transformed).then(succeeded => {
+        this.create(transformed).then((succeeded) => {
           if (succeeded) {
             this.$router.push({ name: "albums" });
           }
         });
       });
-    }
-  }
+    },
+  },
 };
 </script>

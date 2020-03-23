@@ -1,11 +1,11 @@
 export default {
   data() {
     return {
-      pagination: { page: 1 }
+      pagination: { page: 1 },
     };
   },
   props: {
-    savePagination: { default: true, type: Boolean }
+    savePagination: { default: true, type: Boolean },
   },
   created() {
     const page = parseInt(this.$route.query.page);
@@ -16,20 +16,20 @@ export default {
     });
   },
   watch: {
-    "pagination.page": function() {
+    "pagination.page": function () {
       if (this.savePagination === undefined || this.savePagination) {
         this.$router.replace({
           query: {
             ...this.$route.query,
-            page: this.pagination.page
-          }
+            page: this.pagination.page,
+          },
         });
       }
     },
-    "$route.query.page": function() {
+    "$route.query.page": function () {
       if (this.savePagination === undefined || this.savePagination) {
         this.pagination.page = parseInt(this.$route.query.page) || 1;
       }
-    }
-  }
+    },
+  },
 };

@@ -16,7 +16,7 @@
       :footer-props="{
         disableItemsPerPage: true,
         itemsPerPageOptions: [30],
-        showFirstLastPage: true
+        showFirstLastPage: true,
       }"
       :headers="headers"
       :items="filteredItems"
@@ -97,7 +97,7 @@ export default {
     savePagination: { default: true, type: Boolean },
     showAlbum: { default: true, type: Boolean },
     showMassEdit: { default: true, type: Boolean },
-    showSearch: { default: false, type: Boolean }
+    showSearch: { default: false, type: Boolean },
   },
   data() {
     const headers = [
@@ -106,47 +106,47 @@ export default {
         value: "number",
         sortable: false,
         align: "center",
-        width: "1px"
+        width: "1px",
       },
       {
         text: this.$t("music.title"),
         value: "title",
-        sortable: false
+        sortable: false,
       },
       {
         text: this.$t("music.track.length"),
         value: "length",
         sortable: false,
-        align: "end"
+        align: "end",
       },
       {
         text: this.$tc("music.albums", 1),
         value: "album_id",
-        sortable: false
+        sortable: false,
       },
       {
         text: this.$t("music.artist.artist-s"),
         value: "track_artists",
-        sortable: false
+        sortable: false,
       },
       {
         text: this.$t("music.genre-s"),
         value: "genre_ids",
-        sortable: false
+        sortable: false,
       },
       {
         text: this.$t("common.actions"),
         value: "actions",
         sortable: false,
-        align: "end"
-      }
+        align: "end",
+      },
     ];
     if (!this.showAlbum) {
       headers.splice(3, 1);
     }
     return {
       headers,
-      selected: []
+      selected: [],
     };
   },
   computed: {
@@ -156,13 +156,13 @@ export default {
     ...mapState("tracks", { tracksObj: "tracks" }),
     filteredItems() {
       return this.tracks.filter(
-        item =>
+        (item) =>
           !this.search ||
           item.title
             .toLocaleLowerCase()
             .indexOf(this.search.toLocaleLowerCase()) >= 0
       );
-    }
+    },
   },
   methods: {
     toggleAll() {
@@ -173,9 +173,9 @@ export default {
       }
     },
     reloadSelected() {
-      this.selected = this.selected.map(s => this.tracksObj[s.id]);
-    }
-  }
+      this.selected = this.selected.map((s) => this.tracksObj[s.id]);
+    },
+  },
 };
 </script>
 

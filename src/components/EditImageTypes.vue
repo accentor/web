@@ -17,7 +17,7 @@ export default {
   },
   computed: {
     ...mapGetters("imageTypes", ["imageTypes"]),
-    ...mapGetters("auth", ["isModerator"])
-  }
+    ...mapGetters("auth", ["isModerator"]),
+  },
 };
 </script>

@@ -22,8 +22,8 @@ export default {
   components: { TracksTable },
   computed: {
     ...mapGetters("tracks", {
-      tracks: "tracksByAlbumAndNumber"
-    })
-  }
+      tracks: "tracksByAlbumAndNumber",
+    }),
+  },
 };
 </script>
