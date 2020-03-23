@@ -47,7 +47,19 @@
         <span v-else>{{ props.value }}</span>
       </template>
       <template v-slot:item.length="props">
-        {{ props.value | length }}
+        <span v-if="props.value !== null">
+          {{ props.value | length }}
+        </span>
+        <VTooltip v-else bottom>
+          <template v-slot:activator="{ on }">
+            <span v-on="on" class="white-space-nowrap">
+              <VIcon small color="red" class="pr-2">mdi-alert</VIcon>--:--
+            </span>
+          </template>
+          <span>
+            {{ $t("music.track.empty") }}
+          </span>
+        </VTooltip>
       </template>
       <template v-slot:item.album_id="props">
         <RouterLink :to="{ name: 'album', params: { id: props.value } }">
@@ -170,5 +182,9 @@ export default {
 <style scoped>
 .bottom-padding-fix {
   padding-bottom: 16px;
+}
+
+.white-space-nowrap {
+  white-space: nowrap;
 }
 </style>

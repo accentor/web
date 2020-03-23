@@ -118,6 +118,10 @@
 		"order": "Ordening",
 		"password": "Wachtwoord",
 		"path": "Pad",
+		"player": {
+			"no-tracks-added": "Er zijn geen nummers toegevoegd aan de afspeellijst."
+		},
+		"playlist": "Afspeellijst",
 		"permission": "Permissie",
 		"resulting_codec": "Uiteindelijke codec",
 		"role": "Rol",
@@ -255,6 +259,7 @@
 		},
 		"title": "Titel",
 		"track": {
+			"empty": "Dit nummer heeft geen audio.",
 			"length": "Lengte",
 			"number": "Tracknummer",
 			"update": "Werk nummer bij"
