@@ -58,6 +58,13 @@ import AlbumArtists from "../../components/AlbumArtists";
 export default {
   name: "Album",
   components: { AlbumArtists, TracksTable, AlbumActions },
+  watch: {
+    album: function() {
+      if (this.album === undefined) {
+        this.$router.go(-1);
+      }
+    }
+  },
   computed: {
     ...mapState("albums", ["albums"]),
     ...mapState("labels", ["labels"]),
