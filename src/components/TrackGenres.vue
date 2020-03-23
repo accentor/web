@@ -18,17 +18,17 @@ import { compareStrings } from "../comparators";
 export default {
   name: "TrackGenres",
   props: {
-    track: {}
+    track: {},
   },
   computed: {
     ...mapState("genres", ["genres"]),
     track_genres() {
       return this.track.genre_ids
-        .map(tg => this.genres[tg])
+        .map((tg) => this.genres[tg])
         .sort((g1, g2) => {
           return compareStrings(g1.normalized_name, g2.normalized_name);
         });
-    }
-  }
+    },
+  },
 };
 </script>

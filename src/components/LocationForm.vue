@@ -43,8 +43,8 @@ export default {
   data() {
     return {
       newLocation: {
-        path: ""
-      }
+        path: "",
+      },
     };
   },
   created() {
@@ -55,11 +55,11 @@ export default {
     });
   },
   watch: {
-    album: function() {
+    album: function () {
       if (this.location) {
         this.fillValues();
       }
-    }
+    },
   },
   methods: {
     fillValues() {
@@ -67,7 +67,7 @@ export default {
     },
     ...mapActions("locations", ["destroy", "update", "create"]),
     saveLocation() {
-      this.create(this.newLocation).then(id => {
+      this.create(this.newLocation).then((id) => {
         if (id) {
           this.newLocation.path = "";
         }
@@ -77,7 +77,7 @@ export default {
       if (confirm(this.$t("common.are-you-sure"))) {
         this.destroy(this.location.id);
       }
-    }
-  }
+    },
+  },
 };
 </script>

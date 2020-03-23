@@ -112,7 +112,7 @@ export default {
     EditCoverFilenames,
     EditImageTypes,
     EditLocations,
-    MaintenanceActions
+    MaintenanceActions,
   },
   computed: {
     ...mapGetters("auth", ["isModerator"]),
@@ -120,11 +120,11 @@ export default {
     ...mapState("rescan", ["lastClick"]),
     rescanRunning() {
       return this.lastClick > new Date(this.rescan.finished_at) ? true : false;
-    }
+    },
   },
   methods: {
-    ...mapActions("rescan", ["start"])
-  }
+    ...mapActions("rescan", ["start"]),
+  },
 };
 </script>
 

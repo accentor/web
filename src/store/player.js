@@ -10,7 +10,7 @@ export default {
     playing: false,
     doSeek: false,
     repeatMode: "off",
-    seekTime: 0
+    seekTime: 0,
   },
   mutations: {
     setSeekTime(state, time) {
@@ -127,11 +127,11 @@ export default {
         state.playlist.splice(index, 1);
       }
       state.playlist = newPlaylist;
-    }
+    },
   },
   getters: {
     playlistTracks(state, getters, rootState) {
-      return state.playlist.map(id => rootState.tracks.tracks[id]);
+      return state.playlist.map((id) => rootState.tracks.tracks[id]);
     },
     currentTrack(state, getters) {
       return state.current >= 0 ? getters.playlistTracks[state.current] : null;
@@ -144,6 +144,6 @@ export default {
       return (
         getters.currentTrack && `${tracks}${getters.currentTrack.id}${params}`
       );
-    }
-  }
+    },
+  },
 };

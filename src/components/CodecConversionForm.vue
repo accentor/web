@@ -60,8 +60,8 @@ export default {
       newCodecConversion: {
         name: "",
         ffmpeg_params: "",
-        resulting_codec_id: null
-      }
+        resulting_codec_id: null,
+      },
     };
   },
   created() {
@@ -72,14 +72,14 @@ export default {
     });
   },
   watch: {
-    album: function() {
+    album: function () {
       if (this.codecConversion) {
         this.fillValues();
       }
-    }
+    },
   },
   computed: {
-    ...mapGetters("codecs", ["codecs"])
+    ...mapGetters("codecs", ["codecs"]),
   },
   methods: {
     fillValues() {
@@ -90,7 +90,7 @@ export default {
     ...mapActions("codecConversions", ["destroy", "update", "create"]),
     saveCodecConversion() {
       if (this.codecConversion === null) {
-        this.create(this.newCodecConversion).then(id => {
+        this.create(this.newCodecConversion).then((id) => {
           if (id) {
             this.newCodecConversion.name = "";
             this.newCodecConversion.ffmpeg_params = "";
@@ -100,7 +100,7 @@ export default {
       } else {
         this.update({
           id: this.codecConversion.id,
-          newCodecConversion: this.newCodecConversion
+          newCodecConversion: this.newCodecConversion,
         });
       }
     },
@@ -108,7 +108,7 @@ export default {
       if (confirm(this.$t("common.are-you-sure"))) {
         this.destroy(this.codecConversion.id);
       }
-    }
-  }
+    },
+  },
 };
 </script>

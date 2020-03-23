@@ -47,31 +47,31 @@ import Errors from "../components/Errors";
 export default {
   name: "login",
   components: { Errors },
-  data: function() {
+  data: function () {
     return {
       name: "",
       password: "",
-      error: {}
+      error: {},
     };
   },
   methods: {
     ...mapActions("auth", ["login"]),
     ...mapMutations(["clearErrors"]),
-    submit: function() {
+    submit: function () {
       this.clearErrors();
       this.login({
         name: this.name,
-        password: this.password
-      }).then(succeeded => {
+        password: this.password,
+      }).then((succeeded) => {
         if (succeeded) {
           this.redirect();
         }
       });
     },
-    redirect: function() {
+    redirect: function () {
       const path = this.$route.query.redirect || "/app/";
       this.$router.push({ path });
-    }
-  }
+    },
+  },
 };
 </script>

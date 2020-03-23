@@ -5,7 +5,7 @@
       :footer-props="{
         disableItemsPerPage: true,
         itemsPerPageOptions: [12],
-        showFirstLastPage: true
+        showFirstLastPage: true,
       }"
       :items="filteredItems"
       :items-per-page="12"
@@ -56,17 +56,17 @@ export default {
   mixins: [Paginated, Searchable],
   computed: {
     ...mapGetters("genres", {
-      genres: "genresByName"
+      genres: "genresByName",
     }),
     filteredItems() {
       return this.genres.filter(
-        item =>
+        (item) =>
           !this.search ||
           item.name
             .toLocaleLowerCase()
             .indexOf(this.search.toLocaleLowerCase()) >= 0
       );
-    }
-  }
+    },
+  },
 };
 </script>

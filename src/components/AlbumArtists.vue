@@ -16,14 +16,14 @@
 export default {
   name: "AlbumArtists",
   props: {
-    album: {}
+    album: {},
   },
   computed: {
     album_artists() {
       return this.album.album_artists
-        .map(aa => aa)
+        .map((aa) => aa)
         .sort((a1, a2) => a1.order - a2.order);
-    }
-  }
+    },
+  },
 };
 </script>

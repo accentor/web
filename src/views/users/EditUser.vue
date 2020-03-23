@@ -49,13 +49,13 @@ export default {
         name: "",
         password: "",
         password_confirmation: "",
-        permission: ""
+        permission: "",
       },
       permissionOptions: [
         { text: this.$t("users.permission.admin"), value: "admin" },
         { text: this.$t("users.permission.moderator"), value: "moderator" },
-        { text: this.$t("users.permission.user"), value: "user" }
-      ]
+        { text: this.$t("users.permission.user"), value: "user" },
+      ],
     };
   },
   created() {
@@ -66,18 +66,18 @@ export default {
     });
   },
   watch: {
-    user: function() {
+    user: function () {
       if (this.user) {
         this.fillValues();
       }
-    }
+    },
   },
   computed: {
     ...mapGetters("auth", ["currentUser"]),
     ...mapState("users", ["users"]),
-    user: function() {
+    user: function () {
       return this.users[this.$route.params.id];
-    }
+    },
   },
   methods: {
     ...mapActions("users", ["update"]),
@@ -87,13 +87,13 @@ export default {
     },
     submit() {
       this.update({ id: this.user.id, newUser: this.newUser }).then(
-        succeeded => {
+        (succeeded) => {
           if (succeeded) {
             this.$router.push(this.$route.query.redirect || { name: "users" });
           }
         }
       );
-    }
-  }
+    },
+  },
 };
 </script>

@@ -34,30 +34,30 @@ import { mapActions } from "vuex";
 
 export default {
   name: "NewUser",
-  data: function() {
+  data: function () {
     return {
       newUser: {
         name: "",
         password: "",
         password_confirmation: "",
-        permission: ""
+        permission: "",
       },
       permissionOptions: [
         { text: this.$t("users.permission.admin"), value: "admin" },
         { text: this.$t("users.permission.moderator"), value: "moderator" },
-        { text: this.$t("users.permission.user"), value: "user" }
-      ]
+        { text: this.$t("users.permission.user"), value: "user" },
+      ],
     };
   },
   methods: {
     ...mapActions("users", ["create"]),
     submit() {
-      this.create(this.newUser).then(id => {
+      this.create(this.newUser).then((id) => {
         if (id) {
           this.$router.push({ name: "user", params: { id } });
         }
       });
-    }
-  }
+    },
+  },
 };
 </script>

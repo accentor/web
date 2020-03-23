@@ -66,13 +66,13 @@ export default {
         current_password: "",
         name: "",
         password: "",
-        password_confirmation: ""
+        password_confirmation: "",
       },
       newLocale: "",
       langs: [
         { value: "en", text: "English" },
-        { value: "nl", text: "Nederlands" }
-      ]
+        { value: "nl", text: "Nederlands" },
+      ],
     };
   },
   created() {
@@ -86,12 +86,12 @@ export default {
     },
     locale() {
       this.fillValues();
-    }
+    },
   },
   computed: {
     ...mapGetters("auth", { user: "currentUser" }),
     ...mapGetters("auth", ["authTokens"]),
-    ...mapState("userSettings", ["locale"])
+    ...mapState("userSettings", ["locale"]),
   },
   methods: {
     ...mapActions("users", ["update"]),
@@ -101,20 +101,20 @@ export default {
       if (this.user) this.newUser.name = this.user.name;
       if (this.locale) this.newLocale = this.locale;
     },
-    submitLocale: function() {
+    submitLocale: function () {
       this.setLocale({
-        locale: this.newLocale
+        locale: this.newLocale,
       });
     },
     submitPassword() {
       this.update({ id: this.user.id, newUser: this.newUser }).then(
-        succeeded => {
+        (succeeded) => {
           if (succeeded) {
             this.$router.push(this.$route.query.redirect || { name: "home" });
           }
         }
       );
-    }
-  }
+    },
+  },
 };
 </script>

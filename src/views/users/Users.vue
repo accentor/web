@@ -41,7 +41,7 @@
               :to="{
                 name: 'edit-user',
                 params: { id: user.id },
-                query: { redirect: $route.fullPath }
+                query: { redirect: $route.fullPath },
               }"
               color="edit"
               class="ma-2"
@@ -66,17 +66,17 @@ export default {
   name: "Users",
   methods: {
     ...mapActions("users", ["destroy"]),
-    deleteUser: function(id) {
+    deleteUser: function (id) {
       if (confirm(this.$t("common.are-you-sure"))) {
         this.destroy(id);
       }
-    }
+    },
   },
   computed: {
     ...mapGetters("auth", ["isAdmin"]),
     ...mapGetters("users", {
-      users: "usersByName"
-    })
-  }
+      users: "usersByName",
+    }),
+  },
 };
 </script>

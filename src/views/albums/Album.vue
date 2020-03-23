@@ -59,23 +59,23 @@ export default {
   name: "Album",
   components: { AlbumArtists, TracksTable, AlbumActions },
   watch: {
-    album: function() {
+    album: function () {
       if (this.album === undefined) {
         this.$router.go(-1);
       }
-    }
+    },
   },
   computed: {
     ...mapState("albums", ["albums"]),
     ...mapState("labels", ["labels"]),
-    tracks: function() {
+    tracks: function () {
       return this.$store.getters["tracks/tracksFilterByAlbum"](
         this.$route.params.id
       );
     },
-    album: function() {
+    album: function () {
       return this.albums[this.$route.params.id];
-    }
-  }
+    },
+  },
 };
 </script>

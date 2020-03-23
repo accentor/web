@@ -5,7 +5,7 @@
       <VDataIterator
         :footer-props="{
           disableItemsPerPage: true,
-          itemsPerPageOptions: [numberOfItems]
+          itemsPerPageOptions: [numberOfItems],
         }"
         :items="albums"
         :custom-sort="releaseSort"
@@ -35,7 +35,7 @@
       <VDataIterator
         :footer-props="{
           disableItemsPerPage: true,
-          itemsPerPageOptions: [numberOfItems]
+          itemsPerPageOptions: [numberOfItems],
         }"
         :items="albums"
         :custom-sort="createdSort"
@@ -67,7 +67,7 @@
       <VDataIterator
         :footer-props="{
           disableItemsPerPage: true,
-          itemsPerPageOptions: [numberOfItems]
+          itemsPerPageOptions: [numberOfItems],
         }"
         :items="artists"
         :custom-sort="createdSort"
@@ -99,7 +99,7 @@
       <VDataIterator
         :footer-props="{
           disableItemsPerPage: true,
-          itemsPerPageOptions: [numberOfItems]
+          itemsPerPageOptions: [numberOfItems],
         }"
         :items="albumsOnThisDay"
         :custom-sort="releaseSort"
@@ -135,7 +135,7 @@
       <VDataIterator
         :footer-props="{
           disableItemsPerPage: true,
-          itemsPerPageOptions: [numberOfItems]
+          itemsPerPageOptions: [numberOfItems],
         }"
         :items="albums"
         :custom-sort="randomSort"
@@ -167,7 +167,7 @@
       <VDataIterator
         :footer-props="{
           disableItemsPerPage: true,
-          itemsPerPageOptions: [numberOfItems]
+          itemsPerPageOptions: [numberOfItems],
         }"
         :items="artists"
         :custom-sort="randomSort"
@@ -226,13 +226,13 @@ export default {
         [items[i], items[j]] = [items[j], items[i]];
       }
       return items;
-    }
+    },
   },
   computed: {
     ...mapGetters({
       albums: "albums/albums",
       albumsOnThisDay: "albums/albumsOnThisDay",
-      artists: "artists/artists"
+      artists: "artists/artists",
     }),
     numberOfItems() {
       if (this.$vuetify.breakpoint.name === "xl") {
@@ -242,7 +242,7 @@ export default {
       } else {
         return 4;
       }
-    }
-  }
+    },
+  },
 };
 </script>

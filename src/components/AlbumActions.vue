@@ -25,7 +25,7 @@
       :to="{
         name: 'edit-album',
         params: { id: album.id },
-        query: { redirect: $route.fullPath }
+        query: { redirect: $route.fullPath },
       }"
       v-if="isModerator"
       color="edit"
@@ -58,48 +58,48 @@ export default {
   name: "AlbumActions",
   components: { EditReviewComment },
   props: {
-    album: {}
+    album: {},
   },
   computed: {
     ...mapGetters("auth", ["isModerator"]),
     tracks() {
       const getter = this.$store.getters["tracks/tracksFilterByAlbum"];
-      return getter(this.album.id).map(t => t.id);
-    }
+      return getter(this.album.id).map((t) => t.id);
+    },
   },
   methods: {
     ...mapActions("albums", ["destroy", "update"]),
-    deleteAlbum: function() {
+    deleteAlbum: function () {
       if (confirm(this.$t("common.are-you-sure"))) {
         this.destroy(this.album.id);
       }
     },
-    startTracks: function() {
-      const queue = this.tracks.filter(track => track.length !== null);
+    startTracks: function () {
+      const queue = this.tracks.filter((track) => track.length !== null);
       if (queue.length > 0) {
         this.$store.commit("player/playTracks", queue);
       } else {
         this.$store.commit("addError", {
-          playlist: ["player.no-tracks-added"]
+          playlist: ["player.no-tracks-added"],
         });
       }
     },
-    addTracks: function() {
-      const queue = this.tracks.filter(track => track.length !== null);
+    addTracks: function () {
+      const queue = this.tracks.filter((track) => track.length !== null);
       if (queue.length > 0) {
         this.$store.commit("player/addTracks", queue);
       } else {
         this.$store.commit("addError", {
-          playlist: ["player.no-tracks-added"]
+          playlist: ["player.no-tracks-added"],
         });
       }
     },
     flag(id, reviewComment) {
       return this.update({
         id,
-        newAlbum: { review_comment: reviewComment }
+        newAlbum: { review_comment: reviewComment },
       });
-    }
-  }
+    },
+  },
 };
 </script>

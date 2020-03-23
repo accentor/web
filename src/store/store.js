@@ -22,8 +22,8 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   plugins: [
     createPersistedState({
-      paths: ["auth", "userSettings"]
-    })
+      paths: ["auth", "userSettings"],
+    }),
   ],
   strict: process.env.NODE_ENV !== "production",
   modules: {
@@ -41,10 +41,10 @@ export default new Vuex.Store({
     rescan,
     tracks,
     users,
-    userSettings
+    userSettings,
   },
   state: {
-    errors: []
+    errors: [],
   },
   mutations: {
     addError(state, error) {
@@ -55,7 +55,7 @@ export default new Vuex.Store({
     },
     clearErrors(state) {
       state.errors = [];
-    }
+    },
   },
   actions: {},
   getters: {
@@ -65,6 +65,6 @@ export default new Vuex.Store({
         getters["albums/albumsFlagged"].length +
         getters["tracks/tracksFlagged"].length
       );
-    }
-  }
+    },
+  },
 });

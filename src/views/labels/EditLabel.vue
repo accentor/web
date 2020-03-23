@@ -24,8 +24,8 @@ export default {
   data() {
     return {
       newLabel: {
-        name: ""
-      }
+        name: "",
+      },
     };
   },
   created() {
@@ -36,17 +36,17 @@ export default {
     });
   },
   watch: {
-    label: function() {
+    label: function () {
       if (this.label) {
         this.fillValues();
       }
-    }
+    },
   },
   computed: {
     ...mapState("labels", ["labels"]),
-    label: function() {
+    label: function () {
       return this.labels[this.$route.params.id];
-    }
+    },
   },
   methods: {
     ...mapActions("labels", ["update"]),
@@ -55,13 +55,13 @@ export default {
     },
     submit() {
       this.update({ id: this.label.id, newLabel: this.newLabel }).then(
-        succeeded => {
+        (succeeded) => {
           if (succeeded) {
             this.$router.push(this.$route.query.redirect || { name: "labels" });
           }
         }
       );
-    }
-  }
+    },
+  },
 };
 </script>

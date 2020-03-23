@@ -21,10 +21,10 @@ import { mapMutations, mapState } from "vuex";
 export default {
   name: "Errors",
   computed: {
-    ...mapState(["errors"])
+    ...mapState(["errors"]),
   },
   methods: {
-    ...mapMutations(["clearErrors"])
-  }
+    ...mapMutations(["clearErrors"]),
+  },
 };
 </script>
