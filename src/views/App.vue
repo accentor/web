@@ -176,6 +176,9 @@ export default {
   },
   created() {
     this.loadData();
+    setInterval(() => {
+      this.$store.commit("updateCurrentDay");
+    }, 60000);
   },
   watch: {
     locale() {
