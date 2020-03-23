@@ -47,7 +47,7 @@
         <span v-else>{{ props.value }}</span>
       </template>
       <template v-slot:item.length="props">
-        <span v-if="props.value">
+        <span v-if="props.value !== null">
           {{ props.value | length }}
         </span>
         <VTooltip v-else bottom>

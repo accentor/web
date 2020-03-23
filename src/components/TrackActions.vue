@@ -57,7 +57,7 @@ export default {
       }
     },
     startTrack: function() {
-      if (this.track.length) {
+      if (this.track.length !== null) {
         this.$store.commit("player/playTrack", this.track.id);
       } else {
         this.$store.commit("addError", {
@@ -66,7 +66,7 @@ export default {
       }
     },
     addTrack: function() {
-      if (this.track.length) {
+      if (this.track.length !== null) {
         this.$store.commit("player/addTrack", this.track.id);
       } else {
         this.$store.commit("addError", {

@@ -75,8 +75,8 @@ export default {
       }
     },
     startTracks: function() {
-      const queue = this.tracks.filter(track => track.length);
-      if (queue.length) {
+      const queue = this.tracks.filter(track => track.length !== null);
+      if (queue.length > 0) {
         this.$store.commit("player/playTracks", queue);
       } else {
         this.$store.commit("addError", {
@@ -85,8 +85,8 @@ export default {
       }
     },
     addTracks: function() {
-      const queue = this.tracks.filter(track => track.length);
-      if (queue.length) {
+      const queue = this.tracks.filter(track => track.length !== null);
+      if (queue.length > 0) {
         this.$store.commit("player/addTracks", queue);
       } else {
         this.$store.commit("addError", {
