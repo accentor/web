@@ -92,8 +92,8 @@ export default {
     ...mapGetters({
       albums: "albums/albumsFlagged",
       artists: "artists/artistsFlagged",
-      tracks: "tracks/tracksFlagged"
-    })
-  }
+      tracks: "tracks/tracksFlagged",
+    }),
+  },
 };
 </script>

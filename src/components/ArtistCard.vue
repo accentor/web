@@ -18,7 +18,7 @@ export default {
   name: "ArtistCard",
   components: { ArtistActions },
   props: {
-    artist: { type: Object }
-  }
+    artist: { type: Object },
+  },
 };
 </script>

@@ -16,7 +16,7 @@ export default {
   name: "LabelCard",
   components: { LabelActions },
   props: {
-    label: { type: Object }
-  }
+    label: { type: Object },
+  },
 };
 </script>

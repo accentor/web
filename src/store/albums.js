@@ -5,7 +5,7 @@ import { compareStrings } from "../comparators";
 export default {
   namespaced: true,
   state: {
-    albums: {}
+    albums: {},
   },
   mutations: {
     setAlbums(state, payload) {
@@ -22,38 +22,38 @@ export default {
     },
     removeAlbum(state, id) {
       Vue.delete(state.albums, id);
-    }
+    },
   },
   actions: {
     index({ commit, rootState }) {
       return index(rootState.auth)
-        .then(result => {
+        .then((result) => {
           commit("setAlbums", result);
           return Promise.resolve(true);
         })
-        .catch(error => {
+        .catch((error) => {
           this.commit("addError", error);
           return Promise.resolve(false);
         });
     },
     create({ commit, rootState }, newAlbum) {
       return create(rootState.auth, newAlbum)
-        .then(result => {
+        .then((result) => {
           commit("setAlbum", { id: result.id, album: result });
           return Promise.resolve(result.id);
         })
-        .catch(error => {
+        .catch((error) => {
           this.commit("addError", error);
           return Promise.resolve(false);
         });
     },
     update({ commit, rootState }, { id, newAlbum }) {
       return update(rootState.auth, id, newAlbum)
-        .then(result => {
+        .then((result) => {
           commit("setAlbum", { id, album: result });
           return Promise.resolve(true);
         })
-        .catch(error => {
+        .catch((error) => {
           this.commit("addError", error);
           return Promise.resolve(false);
         });
@@ -64,7 +64,7 @@ export default {
           commit("removeAlbum", id);
           return Promise.resolve(true);
         })
-        .catch(error => {
+        .catch((error) => {
           this.commit("addError", error);
           return Promise.resolve(false);
         });
@@ -74,21 +74,22 @@ export default {
         .then(() => {
           return this.dispatch("albums/index");
         })
-        .catch(error => {
+        .catch((error) => {
           this.commit("addError", error);
           return Promise.resolve(false);
         });
-    }
+    },
   },
   getters: {
-    albums: state => Object.values(state.albums),
+    albums: (state) => Object.values(state.albums),
     albumsByTitle: (state, getters) =>
       getters.albums.sort((a1, a2) =>
         compareStrings(a1.normalized_title, a2.normalized_title)
       ),
-    albumsFilterByArtist: (state, getters) => id => {
-      const aaFilter = a =>
-        a.album_artists.filter(aa => `${aa.artist_id}` === `${id}`).length > 0;
+    albumsFilterByArtist: (state, getters) => (id) => {
+      const aaFilter = (a) =>
+        a.album_artists.filter((aa) => `${aa.artist_id}` === `${id}`).length >
+        0;
       return getters.albums
         .filter(aaFilter)
         .sort(
@@ -97,9 +98,9 @@ export default {
             compareStrings(a1.normalized_title, a2.normalized_title)
         );
     },
-    albumsFilterByLabel: (state, getters) => id => {
-      const alFilter = a =>
-        a.album_labels.filter(l => `${l.label_id}` === `${id}`).length > 0;
+    albumsFilterByLabel: (state, getters) => (id) => {
+      const alFilter = (a) =>
+        a.album_labels.filter((l) => `${l.label_id}` === `${id}`).length > 0;
       return getters.albums
         .filter(alFilter)
         .sort(
@@ -110,7 +111,7 @@ export default {
     },
     albumsFlagged: (state, getters) => {
       return getters.albums
-        .filter(t => t.review_comment !== null)
+        .filter((t) => t.review_comment !== null)
         .sort((a1, a2) =>
           compareStrings(a1.normalized_title, a2.normalized_title)
         );
@@ -118,12 +119,12 @@ export default {
     albumsOnThisDay: (state, getters) => {
       const today = new Date().toISOString().slice(5, 10);
       return getters.albums
-        .filter(r => `${r.release.slice(-5)}` === today)
+        .filter((r) => `${r.release.slice(-5)}` === today)
         .sort(
           (a1, a2) =>
             compareStrings(a1.release, a2.release) ||
             compareStrings(a1.normalized_title, a2.normalized_title)
         );
-    }
-  }
+    },
+  },
 };

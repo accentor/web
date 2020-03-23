@@ -15,7 +15,7 @@ Vue.component("vue-headful", vueHeadful);
 
 Vue.filter(
   "length",
-  l => `${Math.floor(l / 60)}:${`${l % 60}`.padStart(2, "0")}`
+  (l) => `${Math.floor(l / 60)}:${`${l % 60}`.padStart(2, "0")}`
 );
 
 Vue.use(Vuetify);
@@ -33,10 +33,10 @@ new Vue({
           success: colors.green,
           danger: colors.red,
           edit: colors.orange,
-          flag: colors.red
-        }
-      }
-    }
+          flag: colors.red,
+        },
+      },
+    },
   }),
-  render: h => h(Main)
+  render: (h) => h(Main),
 }).$mount("#main");

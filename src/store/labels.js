@@ -5,7 +5,7 @@ import { compareStrings } from "../comparators";
 export default {
   namespaced: true,
   state: {
-    labels: {}
+    labels: {},
   },
   mutations: {
     setLabels(state, payload) {
@@ -22,38 +22,38 @@ export default {
     },
     removeLabel(state, id) {
       Vue.delete(state.labels, id);
-    }
+    },
   },
   actions: {
     index({ commit, rootState }) {
       return index(rootState.auth)
-        .then(result => {
+        .then((result) => {
           commit("setLabels", result);
           return Promise.resolve(true);
         })
-        .catch(error => {
+        .catch((error) => {
           this.commit("addError", error);
           return Promise.resolve(false);
         });
     },
     create({ commit, rootState }, newLabel) {
       return create(rootState.auth, newLabel)
-        .then(result => {
+        .then((result) => {
           commit("setLabel", { id: result.id, label: result });
           return Promise.resolve(result.id);
         })
-        .catch(error => {
+        .catch((error) => {
           this.commit("addError", error);
           return Promise.resolve(false);
         });
     },
     update({ commit, rootState }, { id, newLabel }) {
       return update(rootState.auth, id, newLabel)
-        .then(result => {
+        .then((result) => {
           commit("setLabel", { id, label: result });
           return Promise.resolve(true);
         })
-        .catch(error => {
+        .catch((error) => {
           this.commit("addError", error);
           return Promise.resolve(false);
         });
@@ -64,7 +64,7 @@ export default {
           commit("removeLabel", id);
           return Promise.resolve(true);
         })
-        .catch(error => {
+        .catch((error) => {
           this.commit("addError", error);
           return Promise.resolve(false);
         });
@@ -74,17 +74,17 @@ export default {
         .then(() => {
           return this.dispatch("labels/index");
         })
-        .catch(error => {
+        .catch((error) => {
           this.commit("addError", error);
           return Promise.resolve(false);
         });
-    }
+    },
   },
   getters: {
-    labels: state => Object.values(state.labels),
+    labels: (state) => Object.values(state.labels),
     labelsByName: (state, getters) =>
       getters.labels.sort((g1, g2) =>
         compareStrings(g1.normalized_name, g2.normalized_name)
-      )
-  }
+      ),
+  },
 };

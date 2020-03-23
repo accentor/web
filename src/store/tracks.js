@@ -5,7 +5,7 @@ import { compareStrings } from "../comparators";
 export default {
   namespaced: true,
   state: {
-    tracks: {}
+    tracks: {},
   },
   mutations: {
     setTracks(state, payload) {
@@ -22,38 +22,38 @@ export default {
     },
     removeTrack(state, id) {
       Vue.delete(state.tracks, id);
-    }
+    },
   },
   actions: {
     index({ commit, rootState }) {
       return index(rootState.auth)
-        .then(result => {
+        .then((result) => {
           commit("setTracks", result);
           return Promise.resolve(true);
         })
-        .catch(error => {
+        .catch((error) => {
           this.commit("addError", error);
           return Promise.resolve(false);
         });
     },
     create({ commit, rootState }, newTrack) {
       return create(rootState.auth, newTrack)
-        .then(result => {
+        .then((result) => {
           commit("setTrack", { id: result.id, track: result });
           return Promise.resolve(result.id);
         })
-        .catch(error => {
+        .catch((error) => {
           this.commit("addError", error);
           return Promise.resolve(false);
         });
     },
     update({ commit, rootState }, { id, newTrack }) {
       return update(rootState.auth, id, newTrack)
-        .then(result => {
+        .then((result) => {
           commit("setTrack", { id, track: result });
           return Promise.resolve(true);
         })
-        .catch(error => {
+        .catch((error) => {
           this.commit("addError", error);
           return Promise.resolve(false);
         });
@@ -64,14 +64,14 @@ export default {
           commit("removeTrack", id);
           return Promise.resolve(true);
         })
-        .catch(error => {
+        .catch((error) => {
           this.commit("addError", error);
           return Promise.resolve(false);
         });
-    }
+    },
   },
   getters: {
-    tracks: state => Object.values(state.tracks),
+    tracks: (state) => Object.values(state.tracks),
     tracksByAlbumAndNumber: (state, getters, rootState) => {
       return getters.tracks.sort((a1, a2) => {
         let albumOrder = compareStrings(
@@ -89,16 +89,17 @@ export default {
         return albumOrder === 0 ? a1.number - a2.number : albumOrder;
       });
     },
-    tracksFilterByAlbum: (state, getters) => id => {
+    tracksFilterByAlbum: (state, getters) => (id) => {
       return getters.tracks
-        .filter(t => `${t.album_id}` === `${id}`)
+        .filter((t) => `${t.album_id}` === `${id}`)
         .sort((a1, a2) => {
           return a1.number - a2.number;
         });
     },
-    tracksFilterByArtist: (state, getters, rootState) => id => {
-      const taFilter = t =>
-        t.track_artists.filter(ta => `${ta.artist_id}` === `${id}`).length > 0;
+    tracksFilterByArtist: (state, getters, rootState) => (id) => {
+      const taFilter = (t) =>
+        t.track_artists.filter((ta) => `${ta.artist_id}` === `${id}`).length >
+        0;
       return getters.tracks.filter(taFilter).sort((a1, a2) => {
         let albumOrder = compareStrings(
           rootState.albums.albums[a1.album_id].normalized_title,
@@ -115,9 +116,9 @@ export default {
         return albumOrder === 0 ? a1.number - a2.number : albumOrder;
       });
     },
-    tracksFilterByGenre: (state, getters, rootState) => id => {
-      const tgFilter = t =>
-        t.genre_ids.filter(gId => `${gId}` === `${id}`).length > 0;
+    tracksFilterByGenre: (state, getters, rootState) => (id) => {
+      const tgFilter = (t) =>
+        t.genre_ids.filter((gId) => `${gId}` === `${id}`).length > 0;
       return getters.tracks.filter(tgFilter).sort((a1, a2) => {
         let albumOrder = compareStrings(
           rootState.albums.albums[a1.album_id].normalized_title,
@@ -136,7 +137,7 @@ export default {
     },
     tracksFlagged: (state, getters, rootState) => {
       return getters.tracks
-        .filter(t => t.review_comment !== null)
+        .filter((t) => t.review_comment !== null)
         .sort((a1, a2) => {
           let albumOrder = compareStrings(
             rootState.albums.albums[a1.album_id].normalized_title,
@@ -153,6 +154,6 @@ export default {
             albumOrder === 0 ? a2.album_id - a1.album_id : albumOrder;
           return albumOrder === 0 ? a1.number - a2.number : albumOrder;
         });
-    }
-  }
+    },
+  },
 };

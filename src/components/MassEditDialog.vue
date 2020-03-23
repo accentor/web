@@ -15,7 +15,7 @@
         <VToolbarTitle>
           {{
             $tc("music.mass.edit-tracks", tracks.length, {
-              count: tracks.length
+              count: tracks.length,
             })
           }}
         </VToolbarTitle>
@@ -28,12 +28,12 @@
           </VBtn>
         </VToolbarItems>
       </VToolbar>
-      <div style="overflow-y: auto; backface-visibility: hidden">
+      <div style="overflow-y: auto; backface-visibility: hidden;">
         <VContainer>
           <Errors />
           <VContainer
             fluid
-            v-if="tracks.filter(t => t.review_comment !== null).length > 0"
+            v-if="tracks.filter((t) => t.review_comment !== null).length > 0"
           >
             <VRow dense>
               <VCol cols="12">
@@ -43,7 +43,7 @@
                       {{
                         $tc(
                           "music.flag.show",
-                          tracks.filter(t => t.review_comment !== null).length
+                          tracks.filter((t) => t.review_comment !== null).length
                         )
                       }}
                     </span>
@@ -61,7 +61,7 @@
                   <table class="review-comment-table">
                     <tr
                       v-for="t of tracks.filter(
-                        tr => tr.review_comment !== null
+                        (tr) => tr.review_comment !== null
                       )"
                       :key="t.id"
                     >
@@ -79,7 +79,7 @@
             </VRow>
           </VContainer>
           <VDivider
-            v-if="tracks.filter(t => t.review_comment !== null).length > 0"
+            v-if="tracks.filter((t) => t.review_comment !== null).length > 0"
           />
           <VContainer fluid>
             <VRow dense>
@@ -279,11 +279,11 @@
             </VBtn>
           </VContainer>
           <VDivider
-            v-if="tracks.filter(t => t.review_comment !== null).length > 0"
+            v-if="tracks.filter((t) => t.review_comment !== null).length > 0"
           />
           <VContainer
             fluid
-            v-if="tracks.filter(t => t.review_comment !== null).length > 0"
+            v-if="tracks.filter((t) => t.review_comment !== null).length > 0"
           >
             <VRow dense>
               <VCol cols="12" sm="6">
@@ -293,7 +293,7 @@
                       {{
                         $tc(
                           "music.flag.clear",
-                          tracks.filter(t => t.review_comment !== null).length
+                          tracks.filter((t) => t.review_comment !== null).length
                         )
                       }}
                     </span>
@@ -316,7 +316,7 @@ export default {
   name: "MassEditDialog",
   components: { Errors },
   props: {
-    tracks: { default: () => [], type: Array }
+    tracks: { default: () => [], type: Array },
   },
   data() {
     return {
@@ -324,60 +324,60 @@ export default {
       roles: [
         {
           value: "main",
-          text: this.$t("music.artist.roles.main")
+          text: this.$t("music.artist.roles.main"),
         },
         {
           value: "performer",
-          text: this.$t("music.artist.roles.performer")
+          text: this.$t("music.artist.roles.performer"),
         },
         {
           value: "composer",
-          text: this.$t("music.artist.roles.composer")
+          text: this.$t("music.artist.roles.composer"),
         },
         {
           value: "conductor",
-          text: this.$t("music.artist.roles.conductor")
+          text: this.$t("music.artist.roles.conductor"),
         },
         {
           value: "remixer",
-          text: this.$t("music.artist.roles.remixer")
+          text: this.$t("music.artist.roles.remixer"),
         },
         {
           value: "producer",
-          text: this.$t("music.artist.roles.producer")
+          text: this.$t("music.artist.roles.producer"),
         },
         {
           value: "arranger",
-          text: this.$t("music.artist.roles.arranger")
-        }
+          text: this.$t("music.artist.roles.arranger"),
+        },
       ],
       titleReplacement: {
         enabled: false,
         search: "",
         replace: "",
-        regex: false
+        regex: false,
       },
       changeArtists: {
         enabled: false,
         replace: false,
-        track_artists: []
+        track_artists: [],
       },
       changeGenres: {
         enabled: false,
         replace: false,
-        genres: []
+        genres: [],
       },
       album: {
         enabled: false,
-        album: null
+        album: null,
       },
       number: {
         enabled: false,
-        amount: 0
+        amount: 0,
       },
       clearReviewComments: false,
       showReviewComments: false,
-      saving: false
+      saving: false,
     };
   },
   computed: {
@@ -385,20 +385,20 @@ export default {
     ...mapState("artists", ["artists"]),
     ...mapState("genres", ["genres"]),
     ...mapGetters("albums", {
-      sortedAlbums: "albumsByTitle"
+      sortedAlbums: "albumsByTitle",
     }),
     ...mapGetters("artists", {
-      sortedArtists: "artistsByName"
+      sortedArtists: "artistsByName",
     }),
     ...mapGetters("genres", {
-      sortedGenres: "genresByName"
-    })
+      sortedGenres: "genresByName",
+    }),
   },
   methods: {
     ...mapActions("tracks", ["update"]),
     ...mapActions({
       createArtist: "artists/create",
-      createGenre: "genres/create"
+      createGenre: "genres/create",
     }),
     saveTracks() {
       this.saving = true;
@@ -412,14 +412,14 @@ export default {
             promises.push(
               this.createArtist({
                 name: ta.artist_id,
-                review_comment: "New artist"
-              }).then(id => {
+                review_comment: "New artist",
+              }).then((id) => {
                 if (id) {
                   transformedArtists.push({
                     artist_id: id,
                     name: ta.name || ta.artist_id,
                     role: ta.role,
-                    order: index + 1
+                    order: index + 1,
                   });
                 } else {
                   return Promise.reject();
@@ -431,7 +431,7 @@ export default {
               artist_id: ta.artist_id.id,
               name: ta.name || ta.artist_id.name,
               role: ta.role,
-              order: index + 1
+              order: index + 1,
             });
           }
         });
@@ -441,7 +441,7 @@ export default {
         for (let genre_id of this.changeGenres.genres) {
           if (typeof genre_id === "string") {
             promises.push(
-              this.createGenre({ name: genre_id }).then(id => {
+              this.createGenre({ name: genre_id }).then((id) => {
                 if (id) {
                   transformedGenres.push(id);
                 } else {
@@ -458,7 +458,7 @@ export default {
       Promise.all(promises)
         .then(() => {
           return Promise.all(
-            this.tracks.map(t => {
+            this.tracks.map((t) => {
               const transformed = {
                 number: t.number,
                 title: t.title,
@@ -467,7 +467,7 @@ export default {
                   ? null
                   : t.review_comment,
                 genre_ids: t.genre_ids,
-                track_artists: t.track_artists
+                track_artists: t.track_artists,
               };
 
               if (this.number.enabled) {
@@ -492,10 +492,10 @@ export default {
                 if (this.changeArtists.replace) {
                   transformed.track_artists = transformedArtists;
                 } else {
-                  transformedArtists.forEach(a => {
+                  transformedArtists.forEach((a) => {
                     if (
                       transformed.track_artists.filter(
-                        ta =>
+                        (ta) =>
                           ta.name === a.name &&
                           ta.role === a.role &&
                           ta.artist_id === a.artist_id
@@ -511,7 +511,7 @@ export default {
                 if (this.changeGenres.replace) {
                   transformed.genre_ids = transformedGenres;
                 } else {
-                  transformedGenres.forEach(g => {
+                  transformedGenres.forEach((g) => {
                     if (!transformed.genre_ids.includes(g)) {
                       transformed.genre_ids.push(g);
                     }
@@ -539,7 +539,7 @@ export default {
       this.changeArtists.track_artists.push({
         artist_id: null,
         name: "",
-        role: "main"
+        role: "main",
       });
     },
     removeArtist(index) {
@@ -557,33 +557,33 @@ export default {
         enabled: false,
         search: "",
         replace: "",
-        regex: false
+        regex: false,
       };
       this.changeArtists = {
         enabled: false,
         replace: false,
-        track_artists: []
+        track_artists: [],
       };
       this.changeGenres = {
         enabled: false,
         replace: false,
-        genres: []
+        genres: [],
       };
       this.album = {
         enabled: false,
-        album: null
+        album: null,
       };
       this.number = {
         enabled: false,
-        amount: 0
+        amount: 0,
       };
       this.clearReviewComments = false;
       this.showReviewComments = false;
     },
     closed() {
       this.$emit("close");
-    }
-  }
+    },
+  },
 };
 </script>
 

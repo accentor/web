@@ -118,39 +118,39 @@ export default {
         album_id: null,
         review_comment: null,
         track_artists: [],
-        genre_ids: []
+        genre_ids: [],
       },
       roles: [
         {
           value: "main",
-          text: this.$t("music.artist.roles.main")
+          text: this.$t("music.artist.roles.main"),
         },
         {
           value: "performer",
-          text: this.$t("music.artist.roles.performer")
+          text: this.$t("music.artist.roles.performer"),
         },
         {
           value: "composer",
-          text: this.$t("music.artist.roles.composer")
+          text: this.$t("music.artist.roles.composer"),
         },
         {
           value: "conductor",
-          text: this.$t("music.artist.roles.conductor")
+          text: this.$t("music.artist.roles.conductor"),
         },
         {
           value: "remixer",
-          text: this.$t("music.artist.roles.remixer")
+          text: this.$t("music.artist.roles.remixer"),
         },
         {
           value: "producer",
-          text: this.$t("music.artist.roles.producer")
+          text: this.$t("music.artist.roles.producer"),
         },
         {
           value: "arranger",
-          text: this.$t("music.artist.roles.arranger")
-        }
+          text: this.$t("music.artist.roles.arranger"),
+        },
       ],
-      clear_review_comment: true
+      clear_review_comment: true,
     };
   },
   created() {
@@ -161,37 +161,37 @@ export default {
     });
   },
   watch: {
-    track: function() {
+    track: function () {
       if (this.track) {
         this.fillValues();
       }
-    }
+    },
   },
   computed: {
     ...mapState("albums", ["albums"]),
     ...mapState("artists", ["artists"]),
     ...mapState("genres", ["genres"]),
     ...mapGetters("albums", {
-      sortedAlbums: "albumsByTitle"
+      sortedAlbums: "albumsByTitle",
     }),
     ...mapGetters("artists", {
-      sortedArtists: "artistsByName"
+      sortedArtists: "artistsByName",
     }),
     ...mapGetters("genres", {
-      sortedGenres: "genresByName"
+      sortedGenres: "genresByName",
     }),
-    track: function() {
+    track: function () {
       return (
         this.$store.state.tracks &&
         this.$store.state.tracks.tracks[this.$route.params.id]
       );
-    }
+    },
   },
   methods: {
     ...mapActions("tracks", ["update"]),
     ...mapActions({
       createArtist: "artists/create",
-      createGenre: "genres/create"
+      createGenre: "genres/create",
     }),
     fillValues() {
       this.newTrack.number = this.track.number;
@@ -199,22 +199,24 @@ export default {
       this.newTrack.album_id = this.track.album_id;
       this.newTrack.review_comment = this.track.review_comment;
       this.newTrack.track_artists = this.track.track_artists
-        .map(ta => {
+        .map((ta) => {
           return {
             artist_id: this.artists[ta.artist_id],
             name: ta.name,
             role: ta.role,
-            order: ta.order
+            order: ta.order,
           };
         })
         .sort((a1, a2) => a1.order - a2.order);
-      this.newTrack.genre_ids = this.track.genre_ids.map(id => this.genres[id]);
+      this.newTrack.genre_ids = this.track.genre_ids.map(
+        (id) => this.genres[id]
+      );
     },
     addArtist() {
       this.newTrack.track_artists.push({
         artist_id: null,
         name: "",
-        role: "main"
+        role: "main",
       });
     },
     removeArtist(index) {
@@ -236,14 +238,14 @@ export default {
           ? null
           : this.newTrack.review_comment,
         genre_ids: [],
-        track_artists: []
+        track_artists: [],
       };
       const promises = [];
 
       for (let genre_id of this.newTrack.genre_ids) {
         if (typeof genre_id === "string") {
           promises.push(
-            this.createGenre({ name: genre_id }).then(id => {
+            this.createGenre({ name: genre_id }).then((id) => {
               if (id) {
                 transformed.genre_ids.push(id);
               } else {
@@ -261,14 +263,14 @@ export default {
           promises.push(
             this.createArtist({
               name: ta.artist_id,
-              review_comment: "New artist"
-            }).then(id => {
+              review_comment: "New artist",
+            }).then((id) => {
               if (id) {
                 transformed.track_artists.push({
                   artist_id: id,
                   name: ta.name || ta.artist_id,
                   role: ta.role,
-                  order: index + 1
+                  order: index + 1,
                 });
               } else {
                 return Promise.reject();
@@ -280,14 +282,14 @@ export default {
             artist_id: ta.artist_id.id,
             name: ta.name || ta.artist_id.name,
             role: ta.role,
-            order: index + 1
+            order: index + 1,
           });
         }
       });
 
       Promise.all(promises).then(() => {
         this.update({ id: this.track.id, newTrack: transformed }).then(
-          succeeded => {
+          (succeeded) => {
             if (succeeded) {
               this.$router.push(
                 this.$route.query.redirect || { name: "tracks" }
@@ -296,7 +298,7 @@ export default {
           }
         );
       });
-    }
-  }
+    },
+  },
 };
 </script>

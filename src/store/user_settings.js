@@ -1,11 +1,11 @@
 export default {
   namespaced: true,
   state: {
-    locale: null
+    locale: null,
   },
   mutations: {
     setLocale(state, payload) {
       state.locale = payload.locale;
-    }
-  }
+    },
+  },
 };

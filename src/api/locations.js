@@ -10,11 +10,11 @@ export function index(auth) {
         method: "GET",
         headers: {
           "x-secret": auth.secret,
-          "x-device-id": auth.device_id
-        }
+          "x-device-id": auth.device_id,
+        },
       })
-        .catch(reason => reject({ error: [reason] }))
-        .then(request => Promise.all([request.ok, request.json()]))
+        .catch((reason) => reject({ error: [reason] }))
+        .then((request) => Promise.all([request.ok, request.json()]))
         .then(([ok, result]) => {
           if (ok && result.length === 0) {
             resolve(results);
@@ -38,12 +38,12 @@ export function create(auth, location) {
     headers: {
       "content-type": "application/json",
       "x-secret": auth.secret,
-      "x-device-id": auth.device_id
+      "x-device-id": auth.device_id,
     },
-    body: JSON.stringify({ location })
+    body: JSON.stringify({ location }),
   })
-    .catch(reason => Promise.reject({ error: [reason] }))
-    .then(request => Promise.all([request.ok, request.json()]))
+    .catch((reason) => Promise.reject({ error: [reason] }))
+    .then((request) => Promise.all([request.ok, request.json()]))
     .then(([ok, result]) => {
       return ok ? Promise.resolve(result) : Promise.reject(result);
     });
@@ -54,13 +54,13 @@ export function destroy(auth, id) {
     method: "DELETE",
     headers: {
       "x-secret": auth.secret,
-      "x-device-id": auth.device_id
-    }
+      "x-device-id": auth.device_id,
+    },
   })
-    .catch(reason => Promise.reject({ error: [reason] }))
-    .then(request => {
+    .catch((reason) => Promise.reject({ error: [reason] }))
+    .then((request) => {
       return request.ok
         ? Promise.resolve()
-        : request.json().then(result => Promise.reject(result));
+        : request.json().then((result) => Promise.reject(result));
     });
 }

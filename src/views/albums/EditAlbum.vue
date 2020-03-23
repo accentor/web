@@ -220,10 +220,10 @@ export default {
         image: null,
         review_comment: null,
         album_labels: [],
-        album_artists: []
+        album_artists: [],
       },
       clear_review_comment: true,
-      editionInformation: false
+      editionInformation: false,
     };
   },
   created() {
@@ -234,11 +234,11 @@ export default {
     });
   },
   watch: {
-    album: function() {
+    album: function () {
       if (this.album) {
         this.fillValues();
       }
-    }
+    },
   },
   computed: {
     ...mapState("artists", ["artists"]),
@@ -246,20 +246,20 @@ export default {
     ...mapState("albums", ["albums"]),
     ...mapState("userSettings", ["locale"]),
     ...mapGetters("artists", {
-      sortedArtists: "artistsByName"
+      sortedArtists: "artistsByName",
     }),
     ...mapGetters("labels", {
-      sortedLabels: "labelsByName"
+      sortedLabels: "labelsByName",
     }),
-    album: function() {
+    album: function () {
       return this.albums[this.$route.params.id];
-    }
+    },
   },
   methods: {
     ...mapActions("albums", ["update"]),
     ...mapActions({
       createArtist: "artists/create",
-      createLabel: "labels/create"
+      createLabel: "labels/create",
     }),
     fillValues() {
       this.newAlbum.title = this.album.title;
@@ -267,19 +267,19 @@ export default {
       this.newAlbum.edition = this.album.edition;
       this.newAlbum.edition_description = this.album.edition_description;
       this.newAlbum.review_comment = this.album.review_comment;
-      this.newAlbum.album_labels = this.album.album_labels.map(l => {
+      this.newAlbum.album_labels = this.album.album_labels.map((l) => {
         return {
           label_id: this.labels[l.label_id],
-          catalogue_number: l.catalogue_number
+          catalogue_number: l.catalogue_number,
         };
       });
       this.newAlbum.album_artists = this.album.album_artists
-        .map(a => {
+        .map((a) => {
           return {
             artist_id: this.artists[a.artist_id],
             name: a.name,
             separator: a.separator || "",
-            order: a.order
+            order: a.order,
           };
         })
         .sort((a1, a2) => a1.order - a2.order);
@@ -289,7 +289,7 @@ export default {
     addLabel() {
       this.newAlbum.album_labels.push({
         label_id: null,
-        catalogue_number: ""
+        catalogue_number: "",
       });
     },
     removeLabel(index) {
@@ -300,7 +300,7 @@ export default {
         artist_id: null,
         name: "",
         separator: "",
-        order: 0
+        order: 0,
       });
     },
     removeArtist(index) {
@@ -326,7 +326,7 @@ export default {
           ? null
           : this.newAlbum.review_comment,
         album_labels: [],
-        album_artists: []
+        album_artists: [],
       };
 
       const promises = [];
@@ -334,11 +334,11 @@ export default {
       for (let label of this.newAlbum.album_labels) {
         if (typeof label.label_id === "string") {
           promises.push(
-            this.createLabel({ name: label.label_id }).then(id => {
+            this.createLabel({ name: label.label_id }).then((id) => {
               if (id) {
                 transformed.album_labels.push({
                   label_id: id,
-                  catalogue_number: label.catalogue_number
+                  catalogue_number: label.catalogue_number,
                 });
               } else {
                 return Promise.reject();
@@ -348,7 +348,7 @@ export default {
         } else {
           transformed.album_labels.push({
             label_id: label.label_id.id,
-            catalogue_number: label.catalogue_number
+            catalogue_number: label.catalogue_number,
           });
         }
       }
@@ -358,8 +358,8 @@ export default {
           promises.push(
             this.createArtist({
               name: aa.artist_id,
-              review_comment: "New artist"
-            }).then(id => {
+              review_comment: "New artist",
+            }).then((id) => {
               if (id) {
                 transformed.album_artists.push({
                   artist_id: id,
@@ -368,7 +368,7 @@ export default {
                     index !== this.newAlbum.album_artists.length - 1
                       ? aa.separator
                       : null,
-                  order: index + 1
+                  order: index + 1,
                 });
               } else {
                 return Promise.reject();
@@ -383,14 +383,14 @@ export default {
               index !== this.newAlbum.album_artists.length - 1
                 ? aa.separator
                 : null,
-            order: index + 1
+            order: index + 1,
           });
         }
       });
 
       Promise.all(promises).then(() => {
         this.update({ id: this.album.id, newAlbum: transformed }).then(
-          succeeded => {
+          (succeeded) => {
             if (succeeded) {
               this.$router.push(
                 this.$route.query.redirect || { name: "albums" }
@@ -399,7 +399,7 @@ export default {
           }
         );
       });
-    }
-  }
+    },
+  },
 };
 </script>

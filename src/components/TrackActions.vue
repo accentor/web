@@ -11,7 +11,7 @@
       :to="{
         name: 'edit-track',
         params: { id: track.id },
-        query: { redirect: $route.fullPath }
+        query: { redirect: $route.fullPath },
       }"
       v-if="isModerator"
       color="edit"
@@ -44,42 +44,42 @@ export default {
   name: "TrackActions",
   components: { EditReviewComment },
   props: {
-    track: {}
+    track: {},
   },
   computed: {
-    ...mapGetters("auth", ["isModerator"])
+    ...mapGetters("auth", ["isModerator"]),
   },
   methods: {
     ...mapActions("tracks", ["destroy", "update"]),
-    deleteTrack: function() {
+    deleteTrack: function () {
       if (confirm(this.$t("common.are-you-sure"))) {
         this.destroy(this.track.id);
       }
     },
-    startTrack: function() {
+    startTrack: function () {
       if (this.track.length !== null) {
         this.$store.commit("player/playTrack", this.track.id);
       } else {
         this.$store.commit("addError", {
-          playlist: ["player.no-tracks-added"]
+          playlist: ["player.no-tracks-added"],
         });
       }
     },
-    addTrack: function() {
+    addTrack: function () {
       if (this.track.length !== null) {
         this.$store.commit("player/addTrack", this.track.id);
       } else {
         this.$store.commit("addError", {
-          playlist: ["player.no-tracks-added"]
+          playlist: ["player.no-tracks-added"],
         });
       }
     },
     flag(id, reviewComment) {
       return this.update({
         id,
-        newTrack: { review_comment: reviewComment }
+        newTrack: { review_comment: reviewComment },
       });
-    }
-  }
+    },
+  },
 };
 </script>

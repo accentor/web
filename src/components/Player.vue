@@ -117,7 +117,7 @@ export default {
       open: false,
       volume: 100,
       muted: false,
-      intervalId: 0
+      intervalId: 0,
     };
   },
   created() {
@@ -157,30 +157,30 @@ export default {
               navigator.mediaSession.metadata = new window.MediaMetadata({
                 title: this.currentTrack.title,
                 artist: this.currentTrack.track_artists
-                  .map(a => a.name)
+                  .map((a) => a.name)
                   .join(" / "),
                 album: this.albums[this.currentTrack.album_id].title,
                 artwork: [
                   {
                     src: this.albums[this.currentTrack.album_id].image100,
                     sizes: "100x100",
-                    type: this.albums[this.currentTrack.album_id].image_type
+                    type: this.albums[this.currentTrack.album_id].image_type,
                   },
                   {
                     src: this.albums[this.currentTrack.album_id].image250,
                     sizes: "250x250",
-                    type: this.albums[this.currentTrack.album_id].image_type
+                    type: this.albums[this.currentTrack.album_id].image_type,
                   },
                   {
                     src: this.albums[this.currentTrack.album_id].image500,
                     sizes: "500x500",
-                    type: this.albums[this.currentTrack.album_id].image_type
-                  }
-                ]
+                    type: this.albums[this.currentTrack.album_id].image_type,
+                  },
+                ],
               });
             }
           })
-          .catch(error => {
+          .catch((error) => {
             this.commit("addError", error);
           });
       }
@@ -209,7 +209,7 @@ export default {
               navigator.mediaSession.playbackState = "playing";
             }
           })
-          .catch(error => {
+          .catch((error) => {
             new Error(error);
           });
       } else {
@@ -223,7 +223,7 @@ export default {
       if (this.playlistTracks.length === 0) {
         this.open = false;
       }
-    }
+    },
   },
   computed: {
     ...mapState("albums", ["albums"]),
@@ -233,12 +233,12 @@ export default {
       "seekTime",
       "doSeek",
       "current",
-      "repeatMode"
+      "repeatMode",
     ]),
     ...mapGetters("player", [
       "playlistTracks",
       "currentTrack",
-      "currentTrackURL"
+      "currentTrackURL",
     ]),
     repeatModeIcon() {
       switch (this.repeatMode) {
@@ -271,7 +271,7 @@ export default {
         return "mdi-volume-medium";
       }
       return "mdi-volume-high";
-    }
+    },
   },
   methods: {
     ...mapMutations("player", [
@@ -284,15 +284,15 @@ export default {
       "prevTrack",
       "trackEnded",
       "nextRepeatMode",
-      "shuffle"
+      "shuffle",
     ]),
     checkTime() {
       const time = Math.floor(this.$refs.audio.currentTime);
       if (time !== this.seekTime) {
         this.setSeekTime(time);
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

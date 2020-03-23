@@ -32,23 +32,23 @@ export default {
   props: {
     album: {
       type: Object,
-      required: true
+      required: true,
     },
     labelForCatNr: {
       type: Object,
-      required: false
-    }
+      required: false,
+    },
   },
   computed: {
     catalogueNumber() {
       if (this.labelForCatNr) {
         return this.album.album_labels.find(
-          al => al.label_id === this.labelForCatNr.id
+          (al) => al.label_id === this.labelForCatNr.id
         ).catalogue_number;
       } else {
         return undefined;
       }
-    }
-  }
+    },
+  },
 };
 </script>

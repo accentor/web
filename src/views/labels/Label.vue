@@ -5,7 +5,7 @@
       :footer-props="{
         disableItemsPerPage: true,
         itemsPerPageOptions: [12],
-        showFirstLastPage: true
+        showFirstLastPage: true,
       }"
       :items="filteredItems"
       :page.sync="pagination.page"
@@ -58,32 +58,32 @@ export default {
   components: { AlbumCard },
   mixins: [Paginated, Searchable],
   watch: {
-    label: function() {
+    label: function () {
       if (this.label === undefined) {
         this.$router.go(-1);
       }
-    }
+    },
   },
   computed: {
     ...mapGetters("auth", ["isModerator"]),
     ...mapState("labels", ["labels"]),
-    albums: function() {
+    albums: function () {
       return this.$store.getters["albums/albumsFilterByLabel"](
         this.$route.params.id
       );
     },
-    label: function() {
+    label: function () {
       return this.labels[this.$route.params.id];
     },
     filteredItems() {
       return this.albums.filter(
-        item =>
+        (item) =>
           !this.search ||
           item.title
             .toLocaleLowerCase()
             .indexOf(this.search.toLocaleLowerCase()) >= 0
       );
-    }
-  }
+    },
+  },
 };
 </script>

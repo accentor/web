@@ -5,7 +5,7 @@ import { compareStrings } from "../comparators";
 export default {
   namespaced: true,
   state: {
-    genres: {}
+    genres: {},
   },
   mutations: {
     setGenres(state, payload) {
@@ -22,38 +22,38 @@ export default {
     },
     removeGenre(state, id) {
       Vue.delete(state.genres, id);
-    }
+    },
   },
   actions: {
     index({ commit, rootState }) {
       return index(rootState.auth)
-        .then(result => {
+        .then((result) => {
           commit("setGenres", result);
           return Promise.resolve(true);
         })
-        .catch(error => {
+        .catch((error) => {
           this.commit("addError", error);
           return Promise.resolve(false);
         });
     },
     create({ commit, rootState }, newGenre) {
       return create(rootState.auth, newGenre)
-        .then(result => {
+        .then((result) => {
           commit("setGenre", { id: result.id, genre: result });
           return Promise.resolve(result.id);
         })
-        .catch(error => {
+        .catch((error) => {
           this.commit("addError", error);
           return Promise.resolve(false);
         });
     },
     update({ commit, rootState }, { id, newGenre }) {
       return update(rootState.auth, id, newGenre)
-        .then(result => {
+        .then((result) => {
           commit("setGenre", { id, genre: result });
           return Promise.resolve(true);
         })
-        .catch(error => {
+        .catch((error) => {
           this.commit("addError", error);
           return Promise.resolve(false);
         });
@@ -64,7 +64,7 @@ export default {
           commit("removeGenre", id);
           return Promise.resolve(true);
         })
-        .catch(error => {
+        .catch((error) => {
           this.commit("addError", error);
           return Promise.resolve(false);
         });
@@ -74,17 +74,17 @@ export default {
         .then(() => {
           return this.dispatch("genres/index");
         })
-        .catch(error => {
+        .catch((error) => {
           this.commit("addError", error);
           return Promise.resolve(false);
         });
-    }
+    },
   },
   getters: {
-    genres: state => Object.values(state.genres),
+    genres: (state) => Object.values(state.genres),
     genresByName: (state, getters) =>
       getters.genres.sort((g1, g2) =>
         compareStrings(g1.normalized_name, g2.normalized_name)
-      )
-  }
+      ),
+  },
 };

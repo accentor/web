@@ -4,7 +4,7 @@
       :footer-props="{
         disableItemsPerPage: true,
         itemsPerPageOptions: [30],
-        showFirstLastPage: true
+        showFirstLastPage: true,
       }"
       v-model="selected"
       :headers="headers"
@@ -50,7 +50,7 @@ export default {
   name: "AuthTokensTable",
   mixins: [Paginated],
   props: {
-    savePagination: { default: true, type: Boolean }
+    savePagination: { default: true, type: Boolean },
   },
   data() {
     const headers = [
@@ -59,24 +59,24 @@ export default {
         value: "id",
         sortable: false,
         align: "center",
-        width: "1px"
+        width: "1px",
       },
       {
         text: this.$t("users.auth.user-agent"),
         value: "user_agent",
-        sortable: false
+        sortable: false,
       },
       {
         text: this.$t("common.actions"),
         value: "actions",
         sortable: false,
-        align: "end"
-      }
+        align: "end",
+      },
     ];
     return {
       destroyAllDisabled: false,
       headers,
-      selected: []
+      selected: [],
     };
   },
   computed: {
@@ -85,24 +85,24 @@ export default {
       const currentSession = this.$store.getters["auth/currentSession"];
       getter.find(({ id }) => id === currentSession).isSelectable = false;
       return getter;
-    }
+    },
   },
   methods: {
     ...mapActions("auth", ["destroy"]),
-    deleteAuthToken: function(item) {
+    deleteAuthToken: function (item) {
       if (confirm(this.$t("common.are-you-sure"))) {
         this.destroy(item.id);
       }
     },
-    deleteAuthTokens: function() {
+    deleteAuthTokens: function () {
       if (confirm(this.$t("common.are-you-sure"))) {
         this.destroyAllDisabled = true;
-        this.selected.forEach(authToken => {
+        this.selected.forEach((authToken) => {
           this.destroy(authToken.id);
         });
         this.destroyAllDisabled = false;
       }
-    }
-  }
+    },
+  },
 };
 </script>

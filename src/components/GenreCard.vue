@@ -16,7 +16,7 @@ export default {
   name: "GenreCard",
   components: { GenreActions },
   props: {
-    genre: { type: Object }
-  }
+    genre: { type: Object },
+  },
 };
 </script>
