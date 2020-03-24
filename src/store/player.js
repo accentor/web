@@ -37,6 +37,16 @@ export default {
     addTracks(state, ids) {
       state.playlist.push(...ids);
     },
+    updatePlaylist(state, { newIndex, oldIndex }) {
+      if (state.current === oldIndex) {
+        state.current = newIndex;
+      } else if (state.current > oldIndex && state.current <= newIndex) {
+        state.current -= 1;
+      } else if (state.current < oldIndex && state.current >= newIndex) {
+        state.current += 1;
+      }
+      state.playlist.splice(newIndex, 0, state.playlist.splice(oldIndex, 1)[0]);
+    },
     setDoSeek(state) {
       state.doSeek = false;
     },
