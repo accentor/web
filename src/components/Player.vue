@@ -331,10 +331,6 @@ export default {
   border-top: solid thin rgba(0, 0, 0, 0.12);
 }
 
-.footer-container:focus-visible {
-  outline: none;
-}
-
 .player-controls {
   .flex {
     flex: 1;
