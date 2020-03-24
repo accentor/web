@@ -360,11 +360,13 @@ export default {
       changeArtists: {
         enabled: false,
         replace: false,
-        track_artists: [{
-          artist_id: null,
-          name: "",
-          role: "main",
-        }],
+        track_artists: [
+          {
+            artist_id: null,
+            name: "",
+            role: "main",
+          },
+        ],
       },
       changeGenres: {
         enabled: false,
