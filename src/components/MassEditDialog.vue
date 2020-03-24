@@ -51,7 +51,7 @@
                 </VCheckbox>
               </VCol>
             </VRow>
-            <VRow>
+            <VRow v-if="showReviewComments">
               <VCol cols="12">
                 <VAlert
                   :value="showReviewComments"
@@ -98,6 +98,7 @@
                   :label="$t('common.amount')"
                   type="number"
                   v-if="number.enabled"
+                  hide-details="true"
                 />
               </VCol>
             </VRow>
@@ -122,19 +123,17 @@
                 />
               </VCol>
             </VRow>
-            <VRow>
+            <VRow v-if="titleReplacement.enabled">
               <VCol cols="12" sm="6">
                 <VTextField
                   :label="$t('common.search')"
                   v-model="titleReplacement.search"
-                  v-if="titleReplacement.enabled"
                 />
               </VCol>
               <VCol cols="12" sm="6">
                 <VTextField
                   :label="$t('common.replace')"
                   v-model="titleReplacement.replace"
-                  v-if="titleReplacement.enabled"
                 />
               </VCol>
             </VRow>
@@ -157,6 +156,7 @@
                   item-text="title"
                   item-value="id"
                   label="Album"
+                  hide-details="true"
                   v-model="album.album"
                   v-if="album.enabled"
                 />
@@ -183,7 +183,7 @@
                 />
               </VCol>
             </VRow>
-            <VRow>
+            <VRow v-if="changeGenres.enabled">
               <VCol cols="12" sm="6">
                 <VCombobox
                   :items="sortedGenres"
@@ -196,7 +196,6 @@
                   multiple
                   return-object
                   v-model="changeGenres.genres"
-                  v-if="changeGenres.enabled"
                 />
               </VCol>
             </VRow>
@@ -224,8 +223,9 @@
             <VRow
               :key="index"
               v-for="(item, index) of changeArtists.track_artists"
+              no-gutters
             >
-              <VRow class="flex-column no-grow" v-if="changeArtists.enabled">
+              <VCol class="flex-column no-grow" v-if="changeArtists.enabled">
                 <VBtn
                   @click="moveArtist(index, -1)"
                   icon
@@ -247,8 +247,8 @@
                 <VBtn @click="removeArtist(index)" icon small class="ma-2">
                   <VIcon>mdi-close</VIcon>
                 </VBtn>
-              </VRow>
-              <VRow class="flex-column" v-if="changeArtists.enabled">
+              </VCol>
+              <VCol v-if="changeArtists.enabled">
                 <VCombobox
                   :items="sortedArtists"
                   item-text="name"
@@ -267,7 +267,7 @@
                   light
                   v-if="index !== changeArtists.track_artists.length - 1"
                 />
-              </VRow>
+              </VCol>
             </VRow>
             <VBtn
               @click="addArtist"
@@ -360,7 +360,11 @@ export default {
       changeArtists: {
         enabled: false,
         replace: false,
-        track_artists: [],
+        track_artists: [{
+          artist_id: null,
+          name: "",
+          role: "main",
+        }],
       },
       changeGenres: {
         enabled: false,
