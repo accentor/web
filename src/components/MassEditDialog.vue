@@ -425,7 +425,7 @@ export default {
                     artist_id: id,
                     name: ta.name || ta.artist_id,
                     role: ta.role,
-                    order: index,
+                    order: index + 1,
                   });
                 } else {
                   return Promise.reject();
@@ -507,7 +507,7 @@ export default {
                           ta.artist_id === a.artist_id
                       ).length === 0
                     ) {
-                      a.order += t.track_artists.length;
+                      a.order += t.track_artists.length - 1;
                       transformed.track_artists.push(a);
                     }
                   });
