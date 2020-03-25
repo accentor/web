@@ -221,6 +221,9 @@ export default {
     };
   },
   computed: {
+    ...mapGetters("artists", {
+      sortedArtists: "artistsByName",
+    }),
     ...mapGetters("labels", {
       sortedLabels: "labelsByName",
     }),
