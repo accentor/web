@@ -117,9 +117,13 @@ export default {
         );
     },
     albumsOnThisDay: (state, getters, rootState) => {
-      const today = new Date(rootState.currentDay).toISOString().slice(5, 10);
+      const today = new Date(rootState.currentDay);
       return getters.albums
-        .filter((r) => `${r.release.slice(-5)}` === today)
+        .filter(
+          (r) =>
+            `${r.release.slice(-5)}` ===
+            `${today.getMonth() + 1}-${today.getDate()}`
+        )
         .sort(
           (a1, a2) =>
             compareStrings(a1.release, a2.release) ||
