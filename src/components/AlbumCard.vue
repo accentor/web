@@ -8,14 +8,14 @@
       v-else
       class="grey lighten-3"
     />
-    <VCardTitle class="pb-0 clamp clamp-2 h-6 minh-6">
+    <VCardTitle class="pb-0 d-block text-truncate">
       {{ album.title }}&nbsp;
       <span v-if="album.edition_description !== null" class="grey--text">
         ({{ album.edition_description }})
       </span>
     </VCardTitle>
-    <VCardText class="clamp clamp-2 h-3 minh-3">
-      <AlbumArtists :album="album" />
+    <VCardText>
+      <AlbumArtists :album="album" :truncate="true" />
     </VCardText>
     <VCardText>
       <div class="grey--text">{{ album.release }}</div>
@@ -58,3 +58,9 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.text-truncate:hover {
+  white-space: normal !important;
+}
+</style>

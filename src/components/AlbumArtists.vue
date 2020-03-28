@@ -1,5 +1,8 @@
 <template>
-  <div v-if="album_artists.length !== 0">
+  <div
+    v-if="album_artists.length !== 0"
+    :class="{ 'd-block text-truncate': truncate }"
+  >
     <span v-for="aa of album_artists" :key="`${aa.artist_id} ${aa.name}`"
       ><RouterLink :to="{ name: 'artist', params: { id: aa.artist_id } }">{{
         aa.name
@@ -16,7 +19,14 @@
 export default {
   name: "AlbumArtists",
   props: {
-    album: {},
+    album: {
+      type: Object,
+      required: true,
+    },
+    truncate: {
+      type: Boolean,
+      required: false,
+    },
   },
   computed: {
     album_artists() {
@@ -27,3 +37,9 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.text-truncate:hover {
+  white-space: normal !important;
+}
+</style>

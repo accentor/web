@@ -8,7 +8,7 @@
       v-else
       class="grey lighten-3"
     />
-    <VCardTitle class="clamp clamp-2 pb-0 mb-4 h-6 minh-6">
+    <VCardTitle class="d-block text-truncate">
       {{ artist.name }}
     </VCardTitle>
     <VCardActions>
@@ -28,3 +28,9 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.text-truncate:hover {
+  white-space: normal !important;
+}
+</style>
