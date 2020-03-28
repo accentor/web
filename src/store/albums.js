@@ -122,7 +122,7 @@ export default {
         .filter(
           (r) =>
             `${r.release.slice(-5)}` ===
-            `${("0" + (today.getMonth() + 1)).slice(-2)}-${today.getDate()}`
+            `0${today.getMonth() + 1}-${today.getDate()}`.slice(-5)
         )
         .sort(
           (a1, a2) =>
