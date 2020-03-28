@@ -8,12 +8,13 @@
       v-else
       class="grey lighten-3"
     />
+    <VCardTitle class="pb-0 clamp clamp-2 h-6 minh-6">
       {{ album.title }}&nbsp;
       <span v-if="album.edition_description !== null" class="grey--text">
         ({{ album.edition_description }})
       </span>
     </VCardTitle>
-    <VCardText>
+    <VCardText class="clamp clamp-2 h-3 minh-3">
       <AlbumArtists :album="album" />
     </VCardText>
     <VCardText>
