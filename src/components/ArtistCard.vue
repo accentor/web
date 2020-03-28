@@ -4,7 +4,7 @@
     <VImg :aspect-ratio="1" :src="artist.image" v-else-if="artist.image" />
     <VImg
       :aspect-ratio="1"
-      :src="require('../assets/svg/account-music.svg')"
+      :src="require('@mdi/svg/svg/account-music.svg')"
       v-else
       class="grey lighten-3"
     />
