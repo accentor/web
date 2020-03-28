@@ -122,8 +122,8 @@ export default {
         .filter(
           (r) =>
             `${r.release.slice(-5, -3)}` ===
-              `0${today.getMonth() + 1}`.slice(-2) &&
-            `${r.release.slice(-2)}` === `0${today.getDate()}`.slice(-2)
+              `${today.getMonth() + 1}`.padStart(2, "0") &&
+            `${r.release.slice(-2)}` === `${today.getDate()}`.padStart(2, "0")
         )
         .sort(
           (a1, a2) =>
