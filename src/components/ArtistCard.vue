@@ -2,7 +2,12 @@
   <VCard :to="{ name: 'artist', params: { id: artist.id } }">
     <VImg :aspect-ratio="1" :src="artist.image500" v-if="artist.image500" />
     <VImg :aspect-ratio="1" :src="artist.image" v-else-if="artist.image" />
-    <VCardTitle class="pt-5">
+    <VImg
+      :aspect-ratio="1"
+      :src="require('../assets/svg/account-music.svg')"
+      v-else
+      class="grey lighten-3"
+    />
       {{ artist.name }}
     </VCardTitle>
     <VCardActions>
