@@ -121,8 +121,9 @@ export default {
       return getters.albums
         .filter(
           (r) =>
-            `${r.release.slice(-5)}` ===
-            `${today.getMonth() + 1}-${today.getDate()}`
+            `${r.release.slice(-5, -3)}` ===
+              `${today.getMonth() + 1}`.padStart(2, "0") &&
+            `${r.release.slice(-2)}` === `${today.getDate()}`.padStart(2, "0")
         )
         .sort(
           (a1, a2) =>
