@@ -27,7 +27,7 @@ export function index({ commit, auth }, { url, commitAction }) {
             doFetch();
           }
         })
-        .catch(result => reject(result));
+        .catch((result) => reject(result));
     }
 
     doFetch();

@@ -6,11 +6,11 @@ export function fetchIndex(url, page, auth) {
       method: "GET",
       headers: {
         "x-secret": auth.secret,
-        "x-device-id": auth.device_id
-      }
+        "x-device-id": auth.device_id,
+      },
     })
-      .catch(reason => reject({ error: [reason] }))
-      .then(request => Promise.all([request, request.json()]))
+      .catch((reason) => reject({ error: [reason] }))
+      .then((request) => Promise.all([request, request.json()]))
       .then(([request, result]) => {
         return request.ok ? resolve([request, result]) : reject(result);
       });
