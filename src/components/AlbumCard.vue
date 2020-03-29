@@ -2,14 +2,20 @@
   <VCard :to="{ name: 'album', params: { id: album.id } }">
     <VImg :aspect-ratio="1" :src="album.image500" v-if="album.image500" />
     <VImg :aspect-ratio="1" :src="album.image" v-else-if="album.image" />
-    <VCardTitle class="pb-0">
+    <VImg
+      :aspect-ratio="1"
+      :src="require('@mdi/svg/svg/album.svg')"
+      v-else
+      class="grey lighten-3"
+    />
+    <VCardTitle class="pb-0 d-block text-truncate">
       {{ album.title }}&nbsp;
       <span v-if="album.edition_description !== null" class="grey--text">
         ({{ album.edition_description }})
       </span>
     </VCardTitle>
     <VCardText>
-      <AlbumArtists :album="album" />
+      <AlbumArtists :album="album" :truncate="true" />
     </VCardText>
     <VCardText>
       <div class="grey--text">{{ album.release }}</div>
@@ -52,3 +58,9 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.text-truncate:hover {
+  white-space: normal !important;
+}
+</style>
