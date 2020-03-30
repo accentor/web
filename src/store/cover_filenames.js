@@ -1,6 +1,7 @@
 import Vue from "vue";
 import { create, destroy, update } from "../api/cover_filenames";
-import { index } from "./commit";
+import { indexGenerator } from "../api/fetch";
+import { fetchAll } from "./commit";
 
 export default {
   namespaced: true,
@@ -22,14 +23,32 @@ export default {
     removeCoverFilename(state, id) {
       Vue.delete(state.coverFilenames, id);
     },
+    removeOld(state, startLoading) {
+      Object.values(state.coverFilenames)
+        .filter((obj) => {
+          return obj.loaded < startLoading;
+        })
+        .forEach((obj) => {
+          Vue.delete(state.coverFilenames, obj.id);
+        });
+    },
   },
   actions: {
     index({ commit, rootState }) {
-      return index(
-        { commit, auth: rootState.auth },
-        { url: "cover_filenames", commitAction: "setCoverFilenames" }
+      const indexCoverFilenames = indexGenerator(
+        "cover_filenames",
+        rootState.auth
+      );
+      const startLoading = new Date();
+      return fetchAll(
+        { commit },
+        {
+          generator: indexCoverFilenames,
+          commitAction: "setCoverFilenames",
+        }
       )
         .then(() => {
+          commit("removeOld", startLoading);
           return Promise.resolve(true);
         })
         .catch((error) => {

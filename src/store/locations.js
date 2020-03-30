@@ -1,6 +1,7 @@
 import Vue from "vue";
 import { create, destroy } from "../api/locations";
-import { index } from "./commit";
+import { indexGenerator } from "../api/fetch";
+import { fetchAll } from "./commit";
 
 export default {
   namespaced: true,
@@ -22,14 +23,29 @@ export default {
     removeLocation(state, id) {
       Vue.delete(state.locations, id);
     },
+    removeOld(state, startLoading) {
+      Object.values(state.locations)
+        .filter((obj) => {
+          return obj.loaded < startLoading;
+        })
+        .forEach((obj) => {
+          Vue.delete(state.locations, obj.id);
+        });
+    },
   },
   actions: {
     index({ commit, rootState }) {
-      return index(
-        { commit, auth: rootState.auth },
-        { url: "locations", commitAction: "setLocations" }
+      const indexLocations = indexGenerator("locations", rootState.auth);
+      const startLoading = new Date();
+      return fetchAll(
+        { commit },
+        {
+          generator: indexLocations,
+          commitAction: "setLocations",
+        }
       )
         .then(() => {
+          commit("removeOld", startLoading);
           return Promise.resolve(true);
         })
         .catch((error) => {

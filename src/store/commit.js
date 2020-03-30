@@ -1,35 +1,29 @@
-import { fetchIndex } from "../api/fetch";
-
-export function index({ commit, auth }, { url, commitAction }) {
+export function fetchAll({ commit }, { generator, commitAction }) {
   return new Promise((resolve, reject) => {
-    let page = 1;
+    let i = 1;
     let results = {};
 
-    function doFetch() {
-      fetchIndex(url, page, auth)
-        .then(([request, result]) => {
-          for (let obj of result) {
-            results[obj.id] = obj;
-          }
-          if (
-            (request.headers.has("x-total-pages") &&
-              request.headers.get("x-total-pages") == page) ||
-            result.length === 0
-          ) {
+    async function fetch() {
+      try {
+        let { value, done } = await generator.next();
+        for (let obj of value) {
+          results[obj.id] = obj;
+        }
+        if (done) {
+          commit(commitAction, results);
+          resolve(true);
+        } else {
+          if (i % 5 === 0) {
             commit(commitAction, results);
-            resolve(true);
-          } else {
-            if (page % 5 === 0) {
-              commit(commitAction, results);
-              results = {};
-            }
-            page++;
-            doFetch();
+            results = {};
           }
-        })
-        .catch((result) => reject(result));
+          i++;
+          fetch();
+        }
+      } catch (error) {
+        reject(error);
+      }
     }
-
-    doFetch();
+    fetch();
   });
 }

@@ -1,6 +1,7 @@
 import Vue from "vue";
 import { create, destroy, update } from "../api/users";
-import { index } from "./commit";
+import { indexGenerator } from "../api/fetch";
+import { fetchAll } from "./commit";
 import { compareStrings } from "../comparators";
 
 export default {
@@ -23,14 +24,29 @@ export default {
     removeUser(state, id) {
       Vue.delete(state.users, id);
     },
+    removeOld(state, startLoading) {
+      Object.values(state.users)
+        .filter((obj) => {
+          return obj.loaded < startLoading;
+        })
+        .forEach((obj) => {
+          Vue.delete(state.users, obj.id);
+        });
+    },
   },
   actions: {
     index({ commit, rootState }) {
-      return index(
-        { commit, auth: rootState.auth },
-        { url: "users", commitAction: "setUsers" }
+      const indexUsers = indexGenerator("users", rootState.auth);
+      const startLoading = new Date();
+      return fetchAll(
+        { commit },
+        {
+          generator: indexUsers,
+          commitAction: "setUsers",
+        }
       )
         .then(() => {
+          commit("removeOld", startLoading);
           return Promise.resolve(true);
         })
         .catch((error) => {

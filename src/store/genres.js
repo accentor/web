@@ -1,6 +1,7 @@
 import Vue from "vue";
 import { create, destroy, update, destroyEmpty, merge } from "../api/genres";
-import { index } from "./commit";
+import { indexGenerator } from "../api/fetch";
+import { fetchAll } from "./commit";
 import { compareStrings } from "../comparators";
 
 export default {
@@ -23,14 +24,29 @@ export default {
     removeGenre(state, id) {
       Vue.delete(state.genres, id);
     },
+    removeOld(state, startLoading) {
+      Object.values(state.genres)
+        .filter((obj) => {
+          return obj.loaded < startLoading;
+        })
+        .forEach((obj) => {
+          Vue.delete(state.genres, obj.id);
+        });
+    },
   },
   actions: {
     index({ commit, rootState }) {
-      return index(
-        { commit, auth: rootState.auth },
-        { url: "genres", commitAction: "setGenres" }
+      const indexGenres = indexGenerator("genres", rootState.auth);
+      const startLoading = new Date();
+      return fetchAll(
+        { commit },
+        {
+          generator: indexGenres,
+          commitAction: "setGenres",
+        }
       )
         .then(() => {
+          commit("removeOld", startLoading);
           return Promise.resolve(true);
         })
         .catch((error) => {

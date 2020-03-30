@@ -1,18 +1,28 @@
 import baseURL from "./base_url";
 
-export function fetchIndex(url, page, auth) {
-  return new Promise((resolve, reject) => {
-    fetch(`${baseURL}/${url}?page=${page}`, {
+export async function* indexGenerator(path, auth, page = 1) {
+  while (path) {
+    const request = await fetch(`${baseURL}/${path}?page=${page}`, {
       method: "GET",
       headers: {
         "x-secret": auth.secret,
         "x-device-id": auth.device_id,
       },
-    })
-      .catch((reason) => reject({ error: [reason] }))
-      .then((request) => Promise.all([request, request.json()]))
-      .then(([request, result]) => {
-        return request.ok ? resolve([request, result]) : reject(result);
-      });
-  });
+    });
+    const result = await request.json();
+    if (request.ok && result) {
+      if (
+        (request.headers.has("x-total-pages") &&
+          request.headers.get("x-total-pages") == page) ||
+        result.length === 0
+      ) {
+        return result;
+      } else {
+        yield result;
+      }
+    } else {
+      return Promise.reject(result);
+    }
+    page++;
+  }
 }

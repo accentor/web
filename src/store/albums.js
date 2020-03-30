@@ -1,6 +1,7 @@
 import Vue from "vue";
 import { create, destroy, update, destroyEmpty } from "../api/albums";
-import { index } from "./commit";
+import { indexGenerator } from "../api/fetch";
+import { fetchAll } from "./commit";
 import { compareStrings } from "../comparators";
 
 export default {
@@ -23,14 +24,29 @@ export default {
     removeAlbum(state, id) {
       Vue.delete(state.albums, id);
     },
+    removeOld(state, startLoading) {
+      Object.values(state.albums)
+        .filter((obj) => {
+          return obj.loaded < startLoading;
+        })
+        .forEach((obj) => {
+          Vue.delete(state.albums, obj.id);
+        });
+    },
   },
   actions: {
     index({ commit, rootState }) {
-      return index(
-        { commit, auth: rootState.auth },
-        { url: "albums", commitAction: "setAlbums" }
+      const indexAlbums = indexGenerator("albums", rootState.auth);
+      const startLoading = new Date();
+      return fetchAll(
+        { commit },
+        {
+          generator: indexAlbums,
+          commitAction: "setAlbums",
+        }
       )
         .then(() => {
+          commit("removeOld", startLoading);
           return Promise.resolve(true);
         })
         .catch((error) => {

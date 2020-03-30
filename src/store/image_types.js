@@ -1,6 +1,7 @@
 import Vue from "vue";
 import { create, destroy, update } from "../api/image_types";
-import { index } from "./commit";
+import { indexGenerator } from "../api/fetch";
+import { fetchAll } from "./commit";
 
 export default {
   namespaced: true,
@@ -22,14 +23,29 @@ export default {
     removeImageType(state, id) {
       Vue.delete(state.imageTypes, id);
     },
+    removeOld(state, startLoading) {
+      Object.values(state.imageTypes)
+        .filter((obj) => {
+          return obj.loaded < startLoading;
+        })
+        .forEach((obj) => {
+          Vue.delete(state.imageTypes, obj.id);
+        });
+    },
   },
   actions: {
     index({ commit, rootState }) {
-      return index(
-        { commit, auth: rootState.auth },
-        { url: "image_types", commitAction: "setImageTypes" }
+      const indexImageTypes = indexGenerator("image_types", rootState.auth);
+      const startLoading = new Date();
+      return fetchAll(
+        { commit },
+        {
+          generator: indexImageTypes,
+          commitAction: "setImageTypes",
+        }
       )
         .then(() => {
+          commit("removeOld", startLoading);
           return Promise.resolve(true);
         })
         .catch((error) => {

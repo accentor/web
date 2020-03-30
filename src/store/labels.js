@@ -1,6 +1,7 @@
 import Vue from "vue";
 import { create, destroy, update, destroyEmpty } from "../api/labels";
-import { index } from "./commit";
+import { indexGenerator } from "../api/fetch";
+import { fetchAll } from "./commit";
 import { compareStrings } from "../comparators";
 
 export default {
@@ -23,14 +24,29 @@ export default {
     removeLabel(state, id) {
       Vue.delete(state.labels, id);
     },
+    removeOld(state, startLoading) {
+      Object.values(state.labels)
+        .filter((obj) => {
+          return obj.loaded < startLoading;
+        })
+        .forEach((obj) => {
+          Vue.delete(state.labels, obj.id);
+        });
+    },
   },
   actions: {
     index({ commit, rootState }) {
-      return index(
-        { commit, auth: rootState.auth },
-        { url: "labels", commitAction: "setLabels" }
+      const indexLabels = indexGenerator("labels", rootState.auth);
+      const startLoading = new Date();
+      return fetchAll(
+        { commit },
+        {
+          generator: indexLabels,
+          commitAction: "setLabels",
+        }
       )
         .then(() => {
+          commit("removeOld", startLoading);
           return Promise.resolve(true);
         })
         .catch((error) => {

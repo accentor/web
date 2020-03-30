@@ -1,6 +1,7 @@
 import Vue from "vue";
 import { create, destroy, update } from "../api/tracks";
-import { index } from "./commit";
+import { indexGenerator } from "../api/fetch";
+import { fetchAll } from "./commit";
 import { compareStrings } from "../comparators";
 
 export default {
@@ -23,6 +24,15 @@ export default {
     removeTrack(state, id) {
       Vue.delete(state.tracks, id);
     },
+    removeOld(state, startLoading) {
+      Object.values(state.tracks)
+        .filter((obj) => {
+          return obj.loaded < startLoading;
+        })
+        .forEach((obj) => {
+          Vue.delete(state.tracks, obj.id);
+        });
+    },
     updateGenreOccurence(state, { newID, oldID }) {
       for (const t in state.tracks) {
         const i = state.tracks[t].genre_ids.findIndex(
@@ -43,11 +53,17 @@ export default {
   },
   actions: {
     index({ commit, rootState }) {
-      return index(
-        { commit, auth: rootState.auth },
-        { url: "tracks", commitAction: "setTracks" }
+      const indexTracks = indexGenerator("tracks", rootState.auth);
+      const startLoading = new Date();
+      return fetchAll(
+        { commit },
+        {
+          generator: indexTracks,
+          commitAction: "setTracks",
+        }
       )
         .then(() => {
+          commit("removeOld", startLoading);
           return Promise.resolve(true);
         })
         .catch((error) => {

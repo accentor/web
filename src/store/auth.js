@@ -1,6 +1,7 @@
 import Vue from "vue";
 import { create, destroy } from "../api/auth_tokens";
-import { index } from "./commit";
+import { indexGenerator } from "../api/fetch";
+import { fetchAll } from "./commit";
 
 export default {
   namespaced: true,
@@ -34,6 +35,15 @@ export default {
     removeAuthToken(state, id) {
       Vue.delete(state.authTokens, id);
     },
+    removeOld(state, startLoading) {
+      Object.values(state.authTokens)
+        .filter((obj) => {
+          return obj.loaded < startLoading;
+        })
+        .forEach((obj) => {
+          Vue.delete(state.authTokens, obj.id);
+        });
+    },
   },
   actions: {
     login(context, data) {
@@ -59,11 +69,17 @@ export default {
         });
     },
     index({ commit, rootState }) {
-      return index(
-        { commit, auth: rootState.auth },
-        { url: "auth_tokens", commitAction: "setAuthTokens" }
+      const indexAuth = indexGenerator("auth_tokens", rootState.auth);
+      const startLoading = new Date();
+      return fetchAll(
+        { commit },
+        {
+          generator: indexAuth,
+          commitAction: "setAuthTokens",
+        }
       )
         .then(() => {
+          commit("removeOld", startLoading);
           return Promise.resolve(true);
         })
         .catch((error) => {

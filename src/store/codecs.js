@@ -1,6 +1,7 @@
 import Vue from "vue";
 import { create, destroy, update } from "../api/codecs";
-import { index } from "./commit";
+import { indexGenerator } from "../api/fetch";
+import { fetchAll } from "./commit";
 
 export default {
   namespaced: true,
@@ -22,14 +23,29 @@ export default {
     removeCodec(state, id) {
       Vue.delete(state.codecs, id);
     },
+    removeOld(state, startLoading) {
+      Object.values(state.codecs)
+        .filter((obj) => {
+          return obj.loaded < startLoading;
+        })
+        .forEach((obj) => {
+          Vue.delete(state.codecs, obj.id);
+        });
+    },
   },
   actions: {
     index({ commit, rootState }) {
-      return index(
-        { commit, auth: rootState.auth },
-        { url: "codecs", commitAction: "setCodecs" }
+      const indexCodecs = indexGenerator("codecs", rootState.auth);
+      const startLoading = new Date();
+      return fetchAll(
+        { commit },
+        {
+          generator: indexCodecs,
+          commitAction: "setCodecs",
+        }
       )
         .then(() => {
+          commit("removeOld", startLoading);
           return Promise.resolve(true);
         })
         .catch((error) => {
