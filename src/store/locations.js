@@ -9,12 +9,14 @@ export default {
   },
   mutations: {
     setLocations(state, payload) {
+      const loaded = new Date();
+      for (let location in payload) {
+        payload[location].loaded = loaded;
+      }
       state.locations = Object.assign({}, state.locations, payload);
     },
     setLocation(state, { id, location }) {
-      if (state.locations[id]) {
-        Vue.delete(state.locations, id);
-      }
+      location.loaded = new Date();
       Vue.set(state.locations, id, location);
     },
     removeLocation(state, id) {

@@ -10,12 +10,14 @@ export default {
   },
   mutations: {
     setArtists(state, payload) {
+      const loaded = new Date();
+      for (let artist in payload) {
+        payload[artist].loaded = loaded;
+      }
       state.artists = Object.assign({}, state.artists, payload);
     },
     setArtist(state, { id, artist }) {
-      if (state.artists[id]) {
-        Vue.delete(state.artists, id);
-      }
+      artist.loaded = new Date();
       Vue.set(state.artists, id, artist);
     },
     removeArtist(state, id) {

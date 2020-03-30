@@ -9,12 +9,14 @@ export default {
   },
   mutations: {
     setCodecs(state, payload) {
+      const loaded = new Date();
+      for (let codec in payload) {
+        payload[codec].loaded = loaded;
+      }
       state.codecs = Object.assign({}, state.codecs, payload);
     },
     setCodec(state, { id, codec }) {
-      if (state.codecs[id]) {
-        Vue.delete(state.codecs, id);
-      }
+      codec.loaded = new Date();
       Vue.set(state.codecs, id, codec);
     },
     removeCodec(state, id) {

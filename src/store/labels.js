@@ -10,12 +10,14 @@ export default {
   },
   mutations: {
     setLabels(state, payload) {
+      const loaded = new Date();
+      for (let label in payload) {
+        payload[label].loaded = loaded;
+      }
       state.labels = Object.assign({}, state.labels, payload);
     },
     setLabel(state, { id, label }) {
-      if (state.labels[id]) {
-        Vue.delete(state.labels, id);
-      }
+      label.loaded = new Date();
       Vue.set(state.labels, id, label);
     },
     removeLabel(state, id) {

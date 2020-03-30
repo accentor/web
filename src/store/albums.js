@@ -10,12 +10,14 @@ export default {
   },
   mutations: {
     setAlbums(state, payload) {
+      const loaded = new Date();
+      for (let album in payload) {
+        payload[album].loaded = loaded;
+      }
       state.albums = Object.assign({}, state.albums, payload);
     },
     setAlbum(state, { id, album }) {
-      if (state.albums[id]) {
-        Vue.delete(state.albums, id);
-      }
+      album.loaded = new Date();
       Vue.set(state.albums, id, album);
     },
     removeAlbum(state, id) {

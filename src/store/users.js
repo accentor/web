@@ -10,12 +10,14 @@ export default {
   },
   mutations: {
     setUsers(state, payload) {
+      const loaded = new Date();
+      for (let user in payload) {
+        payload[user].loaded = loaded;
+      }
       state.users = Object.assign({}, state.users, payload);
     },
     setUser(state, { id, user }) {
-      if (state.users[id]) {
-        Vue.delete(state.users, id);
-      }
+      user.loaded = new Date();
       Vue.set(state.users, id, user);
     },
     removeUser(state, id) {

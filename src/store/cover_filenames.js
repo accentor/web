@@ -9,12 +9,14 @@ export default {
   },
   mutations: {
     setCoverFilenames(state, payload) {
+      const loaded = new Date();
+      for (let coverFilename in payload) {
+        payload[coverFilename].loaded = loaded;
+      }
       state.coverFilenames = Object.assign({}, state.coverFilenames, payload);
     },
     setCoverFilename(state, { id, coverFilename }) {
-      if (state.coverFilenames[id]) {
-        Vue.delete(state.coverFilenames, id);
-      }
+      coverFilename.loaded = new Date();
       Vue.set(state.coverFilenames, id, coverFilename);
     },
     removeCoverFilename(state, id) {

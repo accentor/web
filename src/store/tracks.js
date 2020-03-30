@@ -10,12 +10,14 @@ export default {
   },
   mutations: {
     setTracks(state, payload) {
+      const loaded = new Date();
+      for (let track in payload) {
+        payload[track].loaded = loaded;
+      }
       state.tracks = Object.assign({}, state.tracks, payload);
     },
     setTrack(state, { id, track }) {
-      if (state.tracks[id]) {
-        Vue.delete(state.tracks, id);
-      }
+      track.loaded = new Date();
       Vue.set(state.tracks, id, track);
     },
     removeTrack(state, id) {

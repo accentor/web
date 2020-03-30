@@ -9,6 +9,10 @@ export default {
   },
   mutations: {
     setCodecConversions(state, payload) {
+      const loaded = new Date();
+      for (let codecConversion in payload) {
+        payload[codecConversion].loaded = loaded;
+      }
       state.codecConversions = Object.assign(
         {},
         state.codecConversions,
@@ -16,9 +20,7 @@ export default {
       );
     },
     setCodecConversion(state, { id, codecConversion }) {
-      if (state.codecConversions[id]) {
-        Vue.delete(state.codecConversions, id);
-      }
+      codecConversion.loaded = new Date();
       Vue.set(state.codecConversions, id, codecConversion);
     },
     removeCodecConversion(state, id) {

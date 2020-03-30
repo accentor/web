@@ -9,12 +9,14 @@ export default {
   },
   mutations: {
     setImageTypes(state, payload) {
+      const loaded = new Date();
+      for (let imageType in payload) {
+        payload[imageType].loaded = loaded;
+      }
       state.imageTypes = Object.assign({}, state.imageTypes, payload);
     },
     setImageType(state, { id, imageType }) {
-      if (state.imageTypes[id]) {
-        Vue.delete(state.imageTypes, id);
-      }
+      imageType.loaded = new Date();
       Vue.set(state.imageTypes, id, imageType);
     },
     removeImageType(state, id) {
