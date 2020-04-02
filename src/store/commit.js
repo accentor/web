@@ -1,8 +1,11 @@
-export function fetchAll({ commit }, { generator, commitAction }) {
+import { indexGenerator } from "../api/fetch";
+
+export function fetchAll({ commit, rootState }, { collection, commitAction }) {
   return new Promise((resolve, reject) => {
     let i = 1;
     let results = {};
-
+    const generator = indexGenerator(collection, rootState.auth);
+    commit("setStartLoading");
     async function fetch() {
       try {
         let { value, done } = await generator.next();
@@ -11,6 +14,7 @@ export function fetchAll({ commit }, { generator, commitAction }) {
         }
         if (done) {
           commit(commitAction, results);
+          commit("removeOld");
           resolve(true);
         } else {
           if (i % 5 === 0) {

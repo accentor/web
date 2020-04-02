@@ -1,6 +1,5 @@
 import Vue from "vue";
 import { create, destroy, update } from "../api/codecs";
-import { indexGenerator } from "../api/fetch";
 import { fetchAll } from "./commit";
 
 export default {
@@ -38,18 +37,12 @@ export default {
     },
   },
   actions: {
-    index({ commit, rootState }) {
-      const indexCodecs = indexGenerator("codecs", rootState.auth);
-      const startLoading = new Date();
-      return fetchAll(
-        { commit },
-        {
-          generator: indexCodecs,
-          commitAction: "setCodecs",
-        }
-      )
+    index(context) {
+      return fetchAll(context, {
+        collection: "codecs",
+        commitAction: "setCodecs",
+      })
         .then(() => {
-          commit("removeOld", startLoading);
           return Promise.resolve(true);
         })
         .catch((error) => {

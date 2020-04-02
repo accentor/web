@@ -1,6 +1,5 @@
 import Vue from "vue";
 import { create, destroy, update, destroyEmpty } from "../api/artists";
-import { indexGenerator } from "../api/fetch";
 import { fetchAll } from "./commit";
 import { compareStrings } from "../comparators";
 
@@ -39,18 +38,12 @@ export default {
     },
   },
   actions: {
-    index({ commit, rootState }) {
-      const indexArtists = indexGenerator("artists", rootState.auth);
-      const startLoading = new Date();
-      return fetchAll(
-        { commit },
-        {
-          generator: indexArtists,
-          commitAction: "setArtists",
-        }
-      )
+    index(context) {
+      return fetchAll(context, {
+        collection: "artists",
+        commitAction: "setArtists",
+      })
         .then(() => {
-          commit("removeOld", startLoading);
           return Promise.resolve(true);
         })
         .catch((error) => {

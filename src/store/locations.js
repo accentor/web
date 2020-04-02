@@ -1,6 +1,5 @@
 import Vue from "vue";
 import { create, destroy } from "../api/locations";
-import { indexGenerator } from "../api/fetch";
 import { fetchAll } from "./commit";
 
 export default {
@@ -38,18 +37,12 @@ export default {
     },
   },
   actions: {
-    index({ commit, rootState }) {
-      const indexLocations = indexGenerator("locations", rootState.auth);
-      const startLoading = new Date();
-      return fetchAll(
-        { commit },
-        {
-          generator: indexLocations,
-          commitAction: "setLocations",
-        }
-      )
+    index(context) {
+      return fetchAll(context, {
+        collection: "locations",
+        commitAction: "setLocations",
+      })
         .then(() => {
-          commit("removeOld", startLoading);
           return Promise.resolve(true);
         })
         .catch((error) => {

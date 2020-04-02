@@ -1,6 +1,5 @@
 import Vue from "vue";
 import { create, destroy, update } from "../api/image_types";
-import { indexGenerator } from "../api/fetch";
 import { fetchAll } from "./commit";
 
 export default {
@@ -38,18 +37,12 @@ export default {
     },
   },
   actions: {
-    index({ commit, rootState }) {
-      const indexImageTypes = indexGenerator("imageTypes", rootState.auth);
-      const startLoading = new Date();
-      return fetchAll(
-        { commit },
-        {
-          generator: indexImageTypes,
-          commitAction: "setImageTypes",
-        }
-      )
+    index(context) {
+      return fetchAll(context, {
+        collection: "imageTypes",
+        commitAction: "setImageTypes",
+      })
         .then(() => {
-          commit("removeOld", startLoading);
           return Promise.resolve(true);
         })
         .catch((error) => {
