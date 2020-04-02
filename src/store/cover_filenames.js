@@ -36,7 +36,7 @@ export default {
   actions: {
     index({ commit, rootState }) {
       const indexCoverFilenames = indexGenerator(
-        "cover_filenames",
+        "coverFilenames",
         rootState.auth
       );
       const startLoading = new Date();

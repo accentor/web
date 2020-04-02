@@ -1,6 +1,8 @@
 import baseURL from "./base_url";
+import paths from "./paths";
 
-export async function* indexGenerator(path, auth, page = 1) {
+export async function* indexGenerator(collection, auth, page = 1) {
+  const path = paths[collection];
   while (path) {
     const request = await fetch(`${baseURL}/${path}?page=${page}`, {
       method: "GET",

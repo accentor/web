@@ -35,7 +35,7 @@ export default {
   },
   actions: {
     index({ commit, rootState }) {
-      const indexImageTypes = indexGenerator("image_types", rootState.auth);
+      const indexImageTypes = indexGenerator("imageTypes", rootState.auth);
       const startLoading = new Date();
       return fetchAll(
         { commit },

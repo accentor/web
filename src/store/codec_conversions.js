@@ -40,7 +40,7 @@ export default {
   actions: {
     index({ commit, rootState }) {
       const indexCodecConversions = indexGenerator(
-        "codec_conversions",
+        "codecConversions",
         rootState.auth
       );
       const startLoading = new Date();

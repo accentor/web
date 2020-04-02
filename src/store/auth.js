@@ -69,7 +69,7 @@ export default {
         });
     },
     index({ commit, rootState }) {
-      const indexAuth = indexGenerator("auth_tokens", rootState.auth);
+      const indexAuth = indexGenerator("authTokens", rootState.auth);
       const startLoading = new Date();
       return fetchAll(
         { commit },
