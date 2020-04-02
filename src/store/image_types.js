@@ -7,6 +7,7 @@ export default {
   namespaced: true,
   state: {
     imageTypes: {},
+    startLoading: new Date(0),
   },
   mutations: {
     setImageTypes(state, payload) {
@@ -20,13 +21,16 @@ export default {
       imageType.loaded = new Date();
       Vue.set(state.imageTypes, id, imageType);
     },
+    setStartLoading(state) {
+      state.startLoading = new Date();
+    },
     removeImageType(state, id) {
       Vue.delete(state.imageTypes, id);
     },
-    removeOld(state, startLoading) {
+    removeOld(state) {
       Object.values(state.imageTypes)
         .filter((obj) => {
-          return obj.loaded < startLoading;
+          return obj.loaded < state.startLoading;
         })
         .forEach((obj) => {
           Vue.delete(state.imageTypes, obj.id);

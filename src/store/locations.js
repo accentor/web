@@ -7,6 +7,7 @@ export default {
   namespaced: true,
   state: {
     locations: {},
+    startLoading: new Date(0),
   },
   mutations: {
     setLocations(state, payload) {
@@ -20,13 +21,16 @@ export default {
       location.loaded = new Date();
       Vue.set(state.locations, id, location);
     },
+    setStartLoading(state) {
+      state.startLoading = new Date();
+    },
     removeLocation(state, id) {
       Vue.delete(state.locations, id);
     },
-    removeOld(state, startLoading) {
+    removeOld(state) {
       Object.values(state.locations)
         .filter((obj) => {
-          return obj.loaded < startLoading;
+          return obj.loaded < state.startLoading;
         })
         .forEach((obj) => {
           Vue.delete(state.locations, obj.id);

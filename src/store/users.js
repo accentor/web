@@ -8,6 +8,7 @@ export default {
   namespaced: true,
   state: {
     users: {},
+    startLoading: new Date(0),
   },
   mutations: {
     setUsers(state, payload) {
@@ -21,13 +22,16 @@ export default {
       user.loaded = new Date();
       Vue.set(state.users, id, user);
     },
+    setStartLoading(state) {
+      state.startLoading = new Date();
+    },
     removeUser(state, id) {
       Vue.delete(state.users, id);
     },
-    removeOld(state, startLoading) {
+    removeOld(state) {
       Object.values(state.users)
         .filter((obj) => {
-          return obj.loaded < startLoading;
+          return obj.loaded < state.startLoading;
         })
         .forEach((obj) => {
           Vue.delete(state.users, obj.id);

@@ -7,6 +7,7 @@ export default {
   namespaced: true,
   state: {
     coverFilenames: {},
+    startLoading: new Date(0),
   },
   mutations: {
     setCoverFilenames(state, payload) {
@@ -20,13 +21,16 @@ export default {
       coverFilename.loaded = new Date();
       Vue.set(state.coverFilenames, id, coverFilename);
     },
+    setStartLoading(state) {
+      state.startLoading = new Date();
+    },
     removeCoverFilename(state, id) {
       Vue.delete(state.coverFilenames, id);
     },
-    removeOld(state, startLoading) {
+    removeOld(state) {
       Object.values(state.coverFilenames)
         .filter((obj) => {
-          return obj.loaded < startLoading;
+          return obj.loaded < state.startLoading;
         })
         .forEach((obj) => {
           Vue.delete(state.coverFilenames, obj.id);

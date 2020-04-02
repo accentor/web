@@ -8,6 +8,7 @@ export default {
   namespaced: true,
   state: {
     labels: {},
+    startLoading: new Date(0),
   },
   mutations: {
     setLabels(state, payload) {
@@ -21,13 +22,16 @@ export default {
       label.loaded = new Date();
       Vue.set(state.labels, id, label);
     },
+    setStartLoading(state) {
+      state.startLoading = new Date();
+    },
     removeLabel(state, id) {
       Vue.delete(state.labels, id);
     },
-    removeOld(state, startLoading) {
+    removeOld(state) {
       Object.values(state.labels)
         .filter((obj) => {
-          return obj.loaded < startLoading;
+          return obj.loaded < state.startLoading;
         })
         .forEach((obj) => {
           Vue.delete(state.labels, obj.id);

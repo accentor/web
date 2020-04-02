@@ -7,6 +7,7 @@ export default {
   namespaced: true,
   state: {
     codecs: {},
+    startLoading: new Date(0),
   },
   mutations: {
     setCodecs(state, payload) {
@@ -20,13 +21,16 @@ export default {
       codec.loaded = new Date();
       Vue.set(state.codecs, id, codec);
     },
+    setStartLoading(state) {
+      state.startLoading = new Date();
+    },
     removeCodec(state, id) {
       Vue.delete(state.codecs, id);
     },
-    removeOld(state, startLoading) {
+    removeOld(state) {
       Object.values(state.codecs)
         .filter((obj) => {
-          return obj.loaded < startLoading;
+          return obj.loaded < state.startLoading;
         })
         .forEach((obj) => {
           Vue.delete(state.codecs, obj.id);

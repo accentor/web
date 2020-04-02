@@ -11,6 +11,7 @@ export default {
     secret: null,
     user_id: null,
     id: null,
+    startLoading: new Date(0),
   },
   mutations: {
     login(state, payload) {
@@ -32,13 +33,16 @@ export default {
       }
       state.authTokens = Object.assign({}, state.authTokens, payload);
     },
+    setStartLoading(state) {
+      state.startLoading = new Date();
+    },
     removeAuthToken(state, id) {
       Vue.delete(state.authTokens, id);
     },
-    removeOld(state, startLoading) {
+    removeOld(state) {
       Object.values(state.authTokens)
         .filter((obj) => {
-          return obj.loaded < startLoading;
+          return obj.loaded < state.startLoading;
         })
         .forEach((obj) => {
           Vue.delete(state.authTokens, obj.id);

@@ -7,6 +7,7 @@ export default {
   namespaced: true,
   state: {
     codecConversions: {},
+    startLoading: new Date(0),
   },
   mutations: {
     setCodecConversions(state, payload) {
@@ -24,13 +25,16 @@ export default {
       codecConversion.loaded = new Date();
       Vue.set(state.codecConversions, id, codecConversion);
     },
+    setStartLoading(state) {
+      state.startLoading = new Date();
+    },
     removeCodecConversion(state, id) {
       Vue.delete(state.codecConversions, id);
     },
-    removeOld(state, startLoading) {
+    removeOld(state) {
       Object.values(state.codecConversions)
         .filter((obj) => {
-          return obj.loaded < startLoading;
+          return obj.loaded < state.startLoading;
         })
         .forEach((obj) => {
           Vue.delete(state.codecConversions, obj.id);

@@ -8,6 +8,7 @@ export default {
   namespaced: true,
   state: {
     tracks: {},
+    startLoading: new Date(0),
   },
   mutations: {
     setTracks(state, payload) {
@@ -21,13 +22,16 @@ export default {
       track.loaded = new Date();
       Vue.set(state.tracks, id, track);
     },
+    setStartLoading(state) {
+      state.startLoading = new Date();
+    },
     removeTrack(state, id) {
       Vue.delete(state.tracks, id);
     },
-    removeOld(state, startLoading) {
+    removeOld(state) {
       Object.values(state.tracks)
         .filter((obj) => {
-          return obj.loaded < startLoading;
+          return obj.loaded < state.startLoading;
         })
         .forEach((obj) => {
           Vue.delete(state.tracks, obj.id);

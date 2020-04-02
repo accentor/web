@@ -8,6 +8,7 @@ export default {
   namespaced: true,
   state: {
     genres: {},
+    startLoading: new Date(0),
   },
   mutations: {
     setGenres(state, payload) {
@@ -21,13 +22,16 @@ export default {
       genre.loaded = new Date();
       Vue.set(state.genres, id, genre);
     },
+    setStartLoading(state) {
+      state.startLoading = new Date();
+    },
     removeGenre(state, id) {
       Vue.delete(state.genres, id);
     },
-    removeOld(state, startLoading) {
+    removeOld(state) {
       Object.values(state.genres)
         .filter((obj) => {
-          return obj.loaded < startLoading;
+          return obj.loaded < state.startLoading;
         })
         .forEach((obj) => {
           Vue.delete(state.genres, obj.id);
