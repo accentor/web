@@ -1,5 +1,5 @@
 import Vue from "vue";
-import { create, destroy, index, update } from "../api/tracks";
+import { create, destroy, index, read, update } from "../api/tracks";
 import { compareStrings } from "../comparators";
 
 export default {
@@ -46,6 +46,24 @@ export default {
           this.commit("addError", error);
           return Promise.resolve(false);
         });
+    },
+    read({ commit, rootState }, id) {
+      return read(rootState.auth, id)
+        .then((result) => {
+          commit("setTrack", { id: result.id, track: result });
+          return Promise.resolve(result.id);
+        })
+        .catch((error) => {
+          this.commit("addError", error);
+          return Promise.resolve(false);
+        });
+    },
+    readMultiple({ dispatch }, ids) {
+      const promises = [];
+      ids.forEach((id) => {
+        promises.push(dispatch("read", id));
+      });
+      return Promise.all(promises);
     },
     update({ commit, rootState }, { id, newTrack }) {
       return update(rootState.auth, id, newTrack)

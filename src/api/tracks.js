@@ -49,6 +49,22 @@ export function create(auth, track) {
     });
 }
 
+export function read(auth, id) {
+  return fetch(`${baseURL}/tracks/${id}`, {
+    method: "GET",
+    headers: {
+      "content-type": "application/json",
+      "x-secret": auth.secret,
+      "x-device-id": auth.device_id,
+    },
+  })
+    .catch((reason) => Promise.reject({ error: [reason] }))
+    .then((request) => Promise.all([request.ok, request.json()]))
+    .then(([ok, result]) => {
+      return ok ? Promise.resolve(result) : Promise.reject(result);
+    });
+}
+
 export function update(auth, id, track) {
   return fetch(`${baseURL}/tracks/${id}`, {
     method: "PATCH",

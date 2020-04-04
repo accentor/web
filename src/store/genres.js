@@ -92,6 +92,7 @@ export default {
           const ids = rootGetters["tracks/tracksFilterByGenre"](oldID).map(
             (t) => t.id
           );
+          dispatch("tracks/readMultiple", ids, { root: true });
           commit("removeGenre", oldID);
         })
         .catch((error) => {
