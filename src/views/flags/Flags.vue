@@ -16,7 +16,7 @@
           <VRow>
             <VCol
               v-for="item in props.items"
-              :key="item.name"
+              :key="`artist${item.id}`"
               lg="3"
               md="4"
               sm="6"
@@ -44,7 +44,7 @@
           <VRow>
             <VCol
               v-for="item in props.items"
-              :key="item.name"
+              :key="`album${item.id}`"
               lg="3"
               md="4"
               sm="6"

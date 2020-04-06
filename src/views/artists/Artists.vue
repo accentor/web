@@ -38,7 +38,7 @@
         <VRow>
           <VCol
             v-for="item in props.items"
-            :key="item.name"
+            :key="item.id"
             cols="12"
             sm="6"
             md="4"
