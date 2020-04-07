@@ -32,7 +32,13 @@
             </td>
             <td>{{ albums[track.album_id].release }}</td>
             <td class="px-0 icon">
-              <VBtn small icon text class="ma-2" @click="removeIndex(index)">
+              <VBtn
+                small
+                icon
+                text
+                class="ma-2"
+                @click.stop.prevent="removeIndex(index)"
+              >
                 <VIcon>mdi-close</VIcon>
               </VBtn>
             </td>
