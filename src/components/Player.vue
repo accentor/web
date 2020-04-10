@@ -1,6 +1,6 @@
 <template>
   <div class="footer-container" v-clickoutside="clickOutside">
-    <audio ref="audio" />
+    <audio ref="audio" @error="onAudioError" />
     <div class="tracks-list-container" v-if="open">
       <table class="tracks-list">
         <Draggable tag="tbody" @end="updatePlaylist">
@@ -304,6 +304,11 @@ export default {
       const time = Math.floor(this.$refs.audio.currentTime);
       if (time !== this.seekTime) {
         this.setSeekTime(time);
+      }
+    },
+    onAudioError(event) {
+      if (event.srcElement.networkState === 3) {
+        this.nextTrack();
       }
     },
     updatePlaylist({ newIndex, oldIndex }) {
