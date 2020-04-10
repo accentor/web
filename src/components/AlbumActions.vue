@@ -64,7 +64,7 @@ export default {
     ...mapGetters("auth", ["isModerator"]),
     tracks() {
       const getter = this.$store.getters["tracks/tracksFilterByAlbum"];
-      return getter(this.album.id).map((t) => t.id);
+      return getter(this.album.id);
     },
   },
   methods: {
@@ -75,7 +75,7 @@ export default {
       }
     },
     startTracks: function () {
-      const queue = this.tracks.filter((track) => track.length !== null);
+      const queue = this.filterTracks();
       if (queue.length > 0) {
         this.$store.commit("player/playTracks", queue);
       } else {
@@ -85,7 +85,7 @@ export default {
       }
     },
     addTracks: function () {
-      const queue = this.tracks.filter((track) => track.length !== null);
+      const queue = this.filterTracks();
       if (queue.length > 0) {
         this.$store.commit("player/addTracks", queue);
       } else {
@@ -99,6 +99,14 @@ export default {
         id,
         newAlbum: { review_comment: reviewComment },
       });
+    },
+    filterTracks: function () {
+      return this.tracks.reduce((acc, cur) => {
+        if (cur.length !== null) {
+          acc.push(cur.id);
+        }
+        return acc;
+      }, []);
     },
   },
 };
