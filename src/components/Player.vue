@@ -208,9 +208,11 @@ export default {
     doSeek() {
       if (this.doSeek) {
         this.$store.commit("player/setDoSeek");
-        this.$refs.audio.currentTime = this.seekTime;
-        if (this.playing) {
-          this.$refs.audio.play();
+        if (Number.isFinite(this.seekTime)) {
+          this.$refs.audio.currentTime = this.seekTime;
+          if (this.playing) {
+            this.$refs.audio.play();
+          }
         }
       }
     },
