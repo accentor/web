@@ -11,7 +11,7 @@
   "dependencies": {
     "@mdi/font": "^5.0.45",
     "@mdi/svg": "^5.0.45",
-    "core-js": "^3.2.1",
+    "core-js": "^3.6.5",
     "roboto-fontface": "^0.10.0",
     "vue": "^2.6.10",
     "vue-headful": "^2.1.0",
