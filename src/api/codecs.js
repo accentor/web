@@ -1,4 +1,9 @@
 import baseURL from "./base_url";
+import { indexGenerator } from "./actions";
+
+export function index(auth) {
+  return indexGenerator("codecs", auth);
+}
 
 export function create(auth, codec) {
   return fetch(`${baseURL}/codecs`, {

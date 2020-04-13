@@ -1,4 +1,9 @@
 import baseURL from "./base_url";
+import { indexGenerator } from "./actions";
+
+export function index(auth) {
+  return indexGenerator("locations", auth);
+}
 
 export function create(auth, location) {
   return fetch(`${baseURL}/locations`, {

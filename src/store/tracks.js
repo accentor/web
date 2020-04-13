@@ -1,5 +1,5 @@
 import Vue from "vue";
-import { create, destroy, update } from "../api/tracks";
+import { index, create, destroy, update } from "../api/tracks";
 import { fetchAll } from "./commit";
 import { compareStrings } from "../comparators";
 
@@ -55,11 +55,9 @@ export default {
     },
   },
   actions: {
-    index(context) {
-      return fetchAll(context, {
-        collection: "tracks",
-        commitAction: "setTracks",
-      })
+    index({ commit, rootState }) {
+      const generator = index(rootState.auth);
+      return fetchAll(commit, generator, "setTracks")
         .then(() => {
           return Promise.resolve(true);
         })

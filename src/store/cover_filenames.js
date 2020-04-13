@@ -1,5 +1,5 @@
 import Vue from "vue";
-import { create, destroy, update } from "../api/cover_filenames";
+import { index, create, destroy, update } from "../api/cover_filenames";
 import { fetchAll } from "./commit";
 
 export default {
@@ -37,11 +37,9 @@ export default {
     },
   },
   actions: {
-    index(context) {
-      return fetchAll(context, {
-        collection: "coverFilenames",
-        commitAction: "setCoverFilenames",
-      })
+    index({ commit, rootState }) {
+      const generator = index(rootState.auth);
+      return fetchAll(commit, generator, "setCoverFilenames")
         .then(() => {
           return Promise.resolve(true);
         })

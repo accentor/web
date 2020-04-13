@@ -1,4 +1,9 @@
 import baseURL from "./base_url";
+import { indexGenerator } from "./actions";
+
+export function index(auth) {
+  return indexGenerator("image_types", auth);
+}
 
 export function create(auth, image_type) {
   return fetch(`${baseURL}/image_types`, {

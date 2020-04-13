@@ -1,5 +1,5 @@
 import Vue from "vue";
-import { create, destroy, update, destroyEmpty } from "../api/albums";
+import { index, create, destroy, update, destroyEmpty } from "../api/albums";
 import { fetchAll } from "./commit";
 import { compareStrings } from "../comparators";
 
@@ -38,11 +38,9 @@ export default {
     },
   },
   actions: {
-    index(context) {
-      return fetchAll(context, {
-        collection: "albums",
-        commitAction: "setAlbums",
-      })
+    index({ commit, rootState }) {
+      const generator = index(rootState.auth);
+      return fetchAll(commit, generator, "setAlbums")
         .then(() => {
           return Promise.resolve(true);
         })

@@ -1,5 +1,12 @@
 import Vue from "vue";
-import { create, destroy, update, destroyEmpty, merge } from "../api/genres";
+import {
+  index,
+  create,
+  destroy,
+  update,
+  destroyEmpty,
+  merge,
+} from "../api/genres";
 import { fetchAll } from "./commit";
 import { compareStrings } from "../comparators";
 
@@ -38,11 +45,9 @@ export default {
     },
   },
   actions: {
-    index(context) {
-      return fetchAll(context, {
-        collection: "genres",
-        commitAction: "setGenres",
-      })
+    index({ commit, rootState }) {
+      const generator = index(rootState.auth);
+      return fetchAll(commit, generator, "setGenres")
         .then(() => {
           return Promise.resolve(true);
         })

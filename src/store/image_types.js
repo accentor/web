@@ -1,5 +1,5 @@
 import Vue from "vue";
-import { create, destroy, update } from "../api/image_types";
+import { index, create, destroy, update } from "../api/image_types";
 import { fetchAll } from "./commit";
 
 export default {
@@ -37,11 +37,9 @@ export default {
     },
   },
   actions: {
-    index(context) {
-      return fetchAll(context, {
-        collection: "imageTypes",
-        commitAction: "setImageTypes",
-      })
+    index({ commit, rootState }) {
+      const generator = index(rootState.auth);
+      return fetchAll(commit, generator, "setImageTypes")
         .then(() => {
           return Promise.resolve(true);
         })

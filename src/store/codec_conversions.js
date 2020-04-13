@@ -1,5 +1,5 @@
 import Vue from "vue";
-import { create, destroy, update } from "../api/codec_conversions";
+import { index, create, destroy, update } from "../api/codec_conversions";
 import { fetchAll } from "./commit";
 
 export default {
@@ -41,11 +41,9 @@ export default {
     },
   },
   actions: {
-    index(context) {
-      return fetchAll(context, {
-        collection: "codecConversions",
-        commitAction: "setCodecConversions",
-      })
+    index({ commit, rootState }) {
+      const generator = index(rootState.auth);
+      return fetchAll(commit, generator, "setCodecConversions")
         .then(() => {
           return Promise.resolve(true);
         })

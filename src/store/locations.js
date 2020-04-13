@@ -1,5 +1,5 @@
 import Vue from "vue";
-import { create, destroy } from "../api/locations";
+import { index, create, destroy } from "../api/locations";
 import { fetchAll } from "./commit";
 
 export default {
@@ -37,11 +37,9 @@ export default {
     },
   },
   actions: {
-    index(context) {
-      return fetchAll(context, {
-        collection: "locations",
-        commitAction: "setLocations",
-      })
+    index({ commit, rootState }) {
+      const generator = index(rootState.auth);
+      return fetchAll(commit, generator, "setLocations")
         .then(() => {
           return Promise.resolve(true);
         })

@@ -1,5 +1,5 @@
 import Vue from "vue";
-import { create, destroy } from "../api/auth_tokens";
+import { index, create, destroy } from "../api/auth_tokens";
 import { fetchAll } from "./commit";
 
 export default {
@@ -71,11 +71,9 @@ export default {
           return Promise.resolve(false);
         });
     },
-    index(context) {
-      return fetchAll(context, {
-        collection: "authTokens",
-        commitAction: "setAuthTokens",
-      })
+    index({ commit, rootState }) {
+      const generator = index(rootState.auth);
+      return fetchAll(commit, generator, "setAuthTokens")
         .then(() => {
           return Promise.resolve(true);
         })

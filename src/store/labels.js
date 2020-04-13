@@ -1,5 +1,5 @@
 import Vue from "vue";
-import { create, destroy, update, destroyEmpty } from "../api/labels";
+import { index, create, destroy, update, destroyEmpty } from "../api/labels";
 import { fetchAll } from "./commit";
 import { compareStrings } from "../comparators";
 
@@ -38,11 +38,9 @@ export default {
     },
   },
   actions: {
-    index(context) {
-      return fetchAll(context, {
-        collection: "labels",
-        commitAction: "setLabels",
-      })
+    index({ commit, rootState }) {
+      const generator = index(rootState.auth);
+      return fetchAll(commit, generator, "setLabels")
         .then(() => {
           return Promise.resolve(true);
         })

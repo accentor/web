@@ -1,4 +1,9 @@
 import baseURL from "./base_url";
+import { indexGenerator } from "./actions";
+
+export function index(auth) {
+  return indexGenerator("cover_filenames", auth);
+}
 
 export function create(auth, cover_filename) {
   return fetch(`${baseURL}/cover_filenames`, {
