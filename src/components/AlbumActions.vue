@@ -75,7 +75,9 @@ export default {
       }
     },
     startTracks: function () {
-      const queue = this.filterTracks();
+      const queue = this.tracks
+        .filter((track) => track.length !== null)
+        .map((obj) => obj.id);
       if (queue.length > 0) {
         this.$store.commit("player/playTracks", queue);
       } else {
@@ -85,7 +87,9 @@ export default {
       }
     },
     addTracks: function () {
-      const queue = this.filterTracks();
+      const queue = this.tracks
+        .filter((track) => track.length !== null)
+        .map((obj) => obj.id);
       if (queue.length > 0) {
         this.$store.commit("player/addTracks", queue);
       } else {
@@ -99,14 +103,6 @@ export default {
         id,
         newAlbum: { review_comment: reviewComment },
       });
-    },
-    filterTracks: function () {
-      return this.tracks.reduce((acc, cur) => {
-        if (cur.length !== null) {
-          acc.push(cur.id);
-        }
-        return acc;
-      }, []);
     },
   },
 };
