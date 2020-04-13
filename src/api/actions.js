@@ -1,8 +1,6 @@
 import baseURL from "./base_url";
-import paths from "./paths";
 
-export async function* indexGenerator(collection, auth, page = 1) {
-  const path = paths[collection];
+export async function* indexGenerator(path, auth, page = 1) {
   while (path) {
     const request = await fetch(`${baseURL}/${path}?page=${page}`, {
       method: "GET",
@@ -13,17 +11,13 @@ export async function* indexGenerator(collection, auth, page = 1) {
     });
     const result = await request.json();
     if (request.ok && result) {
-      if (
-        (request.headers.has("x-total-pages") &&
-          request.headers.get("x-total-pages") == page) ||
-        result.length === 0
-      ) {
+      if (request.headers.get("x-total-pages") == page) {
         return result;
       } else {
         yield result;
       }
     } else {
-      return Promise.reject(result);
+      throw result;
     }
     page++;
   }
