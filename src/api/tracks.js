@@ -49,7 +49,7 @@ export function create(auth, track) {
     });
 }
 
-export function read(auth, id) {
+export function get(auth, id) {
   return fetch(`${baseURL}/tracks/${id}`, {
     method: "GET",
     headers: {
