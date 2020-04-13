@@ -114,7 +114,7 @@ export default {
       }
     },
     mergeGenres() {
-      this.merge({ oldID: this.genre.id, newID: this.mergeGenre.id }).finally(
+      this.merge({ newID: this.mergeGenre.id, oldID: this.genre.id }).finally(
         () => {
           this.mergeModal = false;
         }

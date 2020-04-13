@@ -99,7 +99,7 @@ export function destroyEmpty(auth) {
     });
 }
 
-export function merge(auth, oldID, newID) {
+export function merge(auth, newID, oldID) {
   return fetch(`${baseURL}/genres/${newID}/merge?other_genre_id=${oldID}`, {
     method: "POST",
     headers: {

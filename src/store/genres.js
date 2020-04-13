@@ -86,8 +86,8 @@ export default {
           return Promise.resolve(false);
         });
     },
-    merge({ commit, dispatch, rootState, rootGetters }, { oldID, newID }) {
-      return merge(rootState.auth, oldID, newID)
+    merge({ commit, dispatch, rootState, rootGetters }, { newID, oldID }) {
+      return merge(rootState.auth, newID, oldID)
         .then(() => {
           const ids = rootGetters["tracks/tracksFilterByGenre"](oldID).map(
             (t) => t.id
