@@ -80,6 +80,11 @@ export default {
         .map((obj) => obj.id);
       if (queue.length > 0) {
         this.$store.commit("player/playTracks", queue);
+        if (queue.length !== this.tracks.length) {
+          this.$store.commit("addError", {
+            playlist: ["player.not-all-tracks-added"],
+          });
+        }
       } else {
         this.$store.commit("addError", {
           playlist: ["player.no-tracks-added"],
@@ -92,6 +97,11 @@ export default {
         .map((obj) => obj.id);
       if (queue.length > 0) {
         this.$store.commit("player/addTracks", queue);
+        if (queue.length !== this.tracks.length) {
+          this.$store.commit("addError", {
+            playlist: ["player.not-all-tracks-added"],
+          });
+        }
       } else {
         this.$store.commit("addError", {
           playlist: ["player.no-tracks-added"],
