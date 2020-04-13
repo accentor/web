@@ -11,10 +11,6 @@ export default {
   },
   mutations: {
     setUsers(state, payload) {
-      const loaded = new Date();
-      for (let user in payload) {
-        payload[user].loaded = loaded;
-      }
       state.users = Object.assign({}, state.users, payload);
     },
     setUser(state, { id, user }) {

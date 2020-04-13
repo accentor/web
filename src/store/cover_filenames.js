@@ -10,10 +10,6 @@ export default {
   },
   mutations: {
     setCoverFilenames(state, payload) {
-      const loaded = new Date();
-      for (let coverFilename in payload) {
-        payload[coverFilename].loaded = loaded;
-      }
       state.coverFilenames = Object.assign({}, state.coverFilenames, payload);
     },
     setCoverFilename(state, { id, coverFilename }) {

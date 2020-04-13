@@ -10,10 +10,6 @@ export default {
   },
   mutations: {
     setImageTypes(state, payload) {
-      const loaded = new Date();
-      for (let imageType in payload) {
-        payload[imageType].loaded = loaded;
-      }
       state.imageTypes = Object.assign({}, state.imageTypes, payload);
     },
     setImageType(state, { id, imageType }) {

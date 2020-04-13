@@ -18,10 +18,6 @@ export default {
   },
   mutations: {
     setGenres(state, payload) {
-      const loaded = new Date();
-      for (let genre in payload) {
-        payload[genre].loaded = loaded;
-      }
       state.genres = Object.assign({}, state.genres, payload);
     },
     setGenre(state, { id, genre }) {

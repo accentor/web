@@ -26,10 +26,6 @@ export default {
       state.id = null;
     },
     setAuthTokens(state, payload) {
-      const loaded = new Date();
-      for (let token in payload) {
-        payload[token].loaded = loaded;
-      }
       state.authTokens = Object.assign({}, state.authTokens, payload);
     },
     setStartLoading(state) {
