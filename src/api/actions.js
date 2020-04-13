@@ -8,6 +8,8 @@ export async function* indexGenerator(path, auth, page = 1) {
         "x-secret": auth.secret,
         "x-device-id": auth.device_id,
       },
+    }).catch((reason) => {
+      throw { error: [reason] };
     });
     const result = await request.json();
     if (request.ok && result) {
