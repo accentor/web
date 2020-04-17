@@ -58,7 +58,10 @@ export default {
   name: "AlbumActions",
   components: { EditReviewComment },
   props: {
-    album: {},
+    album: {
+      type: Object,
+      required: true,
+    },
   },
   computed: {
     ...mapGetters("auth", ["isModerator"]),

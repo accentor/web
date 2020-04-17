@@ -44,7 +44,7 @@ export default {
   name: "TrackActions",
   components: { EditReviewComment },
   props: {
-    track: {},
+    track: { type: Object, required: true },
   },
   computed: {
     ...mapGetters("auth", ["isModerator"]),
