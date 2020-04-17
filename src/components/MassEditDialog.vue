@@ -8,8 +8,8 @@
       </VBtn>
     </template>
     <VCard>
-      <VToolbar dark color="primary">
-        <VBtn icon dark class="ma-2" @click="dialog = false">
+      <VToolbar dark color="primary" class="flex-grow-0">
+        <VBtn icon dark @click="dialog = false">
           <VIcon>mdi-close</VIcon>
         </VBtn>
         <VToolbarTitle>
@@ -21,7 +21,7 @@
         </VToolbarTitle>
         <VSpacer></VSpacer>
         <VToolbarItems>
-          <VBtn icon class="ma-2" @click="saveTracks" :disabled="saving">
+          <VBtn icon @click="saveTracks" :disabled="saving">
             <VIcon>
               {{ saving ? "mdi-refresh mdi-spin" : "mdi-content-save" }}
             </VIcon>
