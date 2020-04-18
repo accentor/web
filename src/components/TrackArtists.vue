@@ -35,7 +35,10 @@ import { mapState } from "vuex";
 export default {
   name: "TrackArtists",
   props: {
-    track: {},
+    track: {
+      type: Object,
+      required: true,
+    },
   },
   computed: {
     ...mapState("artists", ["artists"]),

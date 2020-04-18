@@ -39,7 +39,10 @@ export default {
   name: "ArtistActions",
   components: { EditReviewComment },
   props: {
-    artist: {},
+    artist: {
+      type: Object,
+      required: true,
+    },
   },
   computed: {
     ...mapGetters("auth", ["isModerator"]),

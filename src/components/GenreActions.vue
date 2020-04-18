@@ -36,7 +36,10 @@ import { mapActions, mapGetters } from "vuex";
 export default {
   name: "LabelActions",
   props: {
-    genre: {},
+    genre: {
+      type: Object,
+      required: true,
+    },
   },
   computed: {
     ...mapGetters("auth", ["isModerator"]),
