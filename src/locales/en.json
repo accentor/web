@@ -119,7 +119,9 @@
 		"password": "Password",
 		"path": "Path",
 		"player": {
-			"no-tracks-added": "No tracks were added to the playlist"
+			"no-tracks-added": "No tracks were added to the playlist",
+			"not-all-tracks-added": "Not all tracks were added to the playlist",
+			"track-skipped": "A track could not be loaded and was skipped."
 		},
 		"playlist": "Playlist",
 		"permission": "Permission",

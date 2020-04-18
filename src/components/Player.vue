@@ -1,6 +1,6 @@
 <template>
   <div class="footer-container" v-clickoutside="clickOutside">
-    <audio ref="audio" />
+    <audio ref="audio" @error="onAudioError" />
     <div class="tracks-list-container" v-if="open">
       <table class="tracks-list">
         <Draggable tag="tbody" @end="updatePlaylist">
@@ -208,9 +208,11 @@ export default {
     doSeek() {
       if (this.doSeek) {
         this.$store.commit("player/setDoSeek");
-        this.$refs.audio.currentTime = this.seekTime;
-        if (this.playing) {
-          this.$refs.audio.play();
+        if (Number.isFinite(this.seekTime)) {
+          this.$refs.audio.currentTime = this.seekTime;
+          if (this.playing) {
+            this.$refs.audio.play();
+          }
         }
       }
     },
@@ -304,6 +306,14 @@ export default {
       const time = Math.floor(this.$refs.audio.currentTime);
       if (time !== this.seekTime) {
         this.setSeekTime(time);
+      }
+    },
+    onAudioError(event) {
+      if (event.srcElement.networkState === 3) {
+        this.nextTrack();
+        this.$store.commit("addError", {
+          playlist: ["player.track-skipped"],
+        });
       }
     },
     updatePlaylist({ newIndex, oldIndex }) {

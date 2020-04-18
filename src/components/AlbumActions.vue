@@ -67,7 +67,7 @@ export default {
     ...mapGetters("auth", ["isModerator"]),
     tracks() {
       const getter = this.$store.getters["tracks/tracksFilterByAlbum"];
-      return getter(this.album.id).map((t) => t.id);
+      return getter(this.album.id);
     },
   },
   methods: {
@@ -78,9 +78,16 @@ export default {
       }
     },
     startTracks: function () {
-      const queue = this.tracks.filter((track) => track.length !== null);
+      const queue = this.tracks
+        .filter((track) => track.length !== null)
+        .map((obj) => obj.id);
       if (queue.length > 0) {
         this.$store.commit("player/playTracks", queue);
+        if (queue.length !== this.tracks.length) {
+          this.$store.commit("addError", {
+            playlist: ["player.not-all-tracks-added"],
+          });
+        }
       } else {
         this.$store.commit("addError", {
           playlist: ["player.no-tracks-added"],
@@ -88,9 +95,16 @@ export default {
       }
     },
     addTracks: function () {
-      const queue = this.tracks.filter((track) => track.length !== null);
+      const queue = this.tracks
+        .filter((track) => track.length !== null)
+        .map((obj) => obj.id);
       if (queue.length > 0) {
         this.$store.commit("player/addTracks", queue);
+        if (queue.length !== this.tracks.length) {
+          this.$store.commit("addError", {
+            playlist: ["player.not-all-tracks-added"],
+          });
+        }
       } else {
         this.$store.commit("addError", {
           playlist: ["player.no-tracks-added"],

@@ -119,7 +119,9 @@
 		"password": "Wachtwoord",
 		"path": "Pad",
 		"player": {
-			"no-tracks-added": "Er zijn geen nummers toegevoegd aan de afspeellijst."
+			"no-tracks-added": "Er zijn geen nummers toegevoegd aan de afspeellijst.",
+			"not-all-tracks-added": "Niet alle nummers zijn toegevoegd aan de afspeellijst.",
+			"track-skipped": "Een nummer kon niet geladen worden en is overgeslagen."
 		},
 		"playlist": "Afspeellijst",
 		"permission": "Permissie",
