@@ -15,7 +15,7 @@
     "roboto-fontface": "^0.10.0",
     "vue": "^2.6.10",
     "vue-headful": "^2.1.0",
-    "vue-i18n": "^8.16.0",
+    "vue-i18n": "^8.17.1",
     "vue-router": "^3.1.6",
     "vuedraggable": "^2.23.2",
     "vuetify": "^2.2.21",
