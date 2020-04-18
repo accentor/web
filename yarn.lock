@@ -941,10 +941,10 @@
   resolved "https://registry.yarnpkg.com/@mdi/font/-/font-5.0.45.tgz#8eda40c41dc7ee9e7a51dbe9191c5c38b8482422"
   integrity sha512-3sOO/UMyQqrmizW5zjvhKJP4FZFO7LblRw4G0alDxK1ekUwNxNXI7hYv8ACAv8H44riBuqlVJ7u39XDqv/Xwuw==
 
-"@mdi/svg@^5.0.45":
-  version "5.0.45"
-  resolved "https://registry.yarnpkg.com/@mdi/svg/-/svg-5.0.45.tgz#4544b114419effd5e1373bf1f07d567c27f44818"
-  integrity sha512-JAsxPV2Um/AxZluJxNnxqgrByQT3wj7f0V0YJI632qUwiU6EDmG1D43FMHlLS5oEPjYB4meiyF4/mPDXqfICSw==
+"@mdi/svg@^5.1.45":
+  version "5.1.45"
+  resolved "https://registry.yarnpkg.com/@mdi/svg/-/svg-5.1.45.tgz#31b6df5547e8ec166bf80747143e0cfe9a4d4928"
+  integrity sha512-NJ1AmjJ454uRUm3QgNFNyW0aYoaZcYKqUS4yjlEMvnQi540/VPNOsXX46O33ZeYWsJzvfB4gJD+iMAx0y1sgrA==
 
 "@mrmlnc/readdir-enhanced@^2.2.1":
   version "2.2.1"
