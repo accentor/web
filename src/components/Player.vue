@@ -309,7 +309,7 @@ export default {
       }
     },
     onAudioError(event) {
-      if (event.srcElement.networkState === 3) {
+      if (this.playing && event.srcElement.networkState === 3) {
         this.nextTrack();
         this.$store.commit("addError", {
           playlist: ["player.track-skipped"],
