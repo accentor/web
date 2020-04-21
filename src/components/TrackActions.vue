@@ -1,11 +1,41 @@
 <template>
   <span>
-    <VBtn @click="startTrack" color="primary" class="ma-1" text icon small>
-      <VIcon>mdi-play</VIcon>
-    </VBtn>
-    <VBtn @click="addTrack" color="success" class="ma-1" text icon small>
-      <VIcon>mdi-plus</VIcon>
-    </VBtn>
+    <VTooltip bottom :disabled="track.length !== null">
+      <template v-slot:activator="{ on }">
+        <span v-on="on">
+          <VBtn
+            @click="startTrack"
+            :disabled="track.length === null"
+            color="primary"
+            class="ma-1"
+            text
+            icon
+            small
+          >
+            <VIcon>mdi-play</VIcon>
+          </VBtn>
+        </span>
+      </template>
+      <span>{{ $t("music.track.empty") }}</span>
+    </VTooltip>
+    <VTooltip bottom :disabled="track.length !== null">
+      <template v-slot:activator="{ on }">
+        <span v-on="on">
+          <VBtn
+            @click="addTrack"
+            :disabled="track.length === null"
+            color="success"
+            class="ma-1"
+            text
+            icon
+            small
+          >
+            <VIcon>mdi-plus</VIcon>
+          </VBtn>
+        </span>
+      </template>
+      <span>{{ $t("music.track.empty") }}</span>
+    </VTooltip>
     <EditReviewComment :item="track" :update="flag" />
     <VBtn
       :to="{
