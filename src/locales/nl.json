@@ -199,6 +199,8 @@
 			"edition-description": "Beschrijving editie",
 			"edition-information": "Voeg informatie over deze editie toe",
 			"new": "Nieuw album",
+			"no-tracks-to-play": "Er zijn geen nummers om af te spelen",
+			"no-tracks-to-add": "Er zijn geen nummers om toe te voegen",
 			"original": "Origineel",
 			"release": "Uitgave",
 			"update": "Werk album bij"
