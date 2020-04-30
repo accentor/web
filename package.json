@@ -37,7 +37,7 @@
     "fibers": "^5.0.0",
     "node-gyp": "^6.1.0",
     "prettier": "^2.0.5",
-    "sass": "^1.26.3",
+    "sass": "^1.26.5",
     "sass-loader": "^8.0.2",
     "stylus": "^0.54.7",
     "stylus-loader": "^3.0.2",
