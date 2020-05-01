@@ -101,8 +101,8 @@ export default {
     },
     startTracks: function () {
       if (this.playableTracks.length > 0) {
-        this.$store.commit("player/playTracks", playableTracks);
-        if (playableTracks.length !== this.tracks.length) {
+        this.$store.commit("player/playTracks", this.playableTracks);
+        if (this.playableTracks.length !== this.tracks.length) {
           this.$store.commit("addError", {
             playlist: ["player.not-all-tracks-added"],
           });
@@ -115,8 +115,8 @@ export default {
     },
     addTracks: function () {
       if (this.playableTracks.length > 0) {
-        this.$store.commit("player/addTracks", playableTracks);
-        if (playableTracks.length !== this.tracks.length) {
+        this.$store.commit("player/addTracks", this.playableTracks);
+        if (this.playableTracks.length !== this.tracks.length) {
           this.$store.commit("addError", {
             playlist: ["player.not-all-tracks-added"],
           });
