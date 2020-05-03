@@ -23,6 +23,25 @@ export default {
     removeTrack(state, id) {
       Vue.delete(state.tracks, id);
     },
+    updateGenreOccurence(state, { newID, oldID }) {
+      for (const t in state.tracks) {
+        const i = state.tracks[t].genre_ids.findIndex(
+          (gId) => `${gId}` === `${oldID}`
+        );
+        if (i >= 0) {
+          state.tracks[t].genre_ids.splice(i, 1);
+          // if newID isn't provided we'll just remove the old genre
+          if (
+            typeof newID !== undefined &&
+            state.tracks[t].genre_ids.findIndex(
+              (gId) => `${gId}` === `${newID}`
+            ) === -1
+          ) {
+            state.tracks[t].genre_ids.push(newID);
+          }
+        }
+      }
+    },
   },
   actions: {
     index({ commit, rootState }) {
@@ -57,13 +76,6 @@ export default {
           this.commit("addError", error);
           return Promise.resolve(false);
         });
-    },
-    readMultiple({ dispatch }, ids) {
-      const promises = [];
-      ids.forEach((id) => {
-        promises.push(dispatch("read", id));
-      });
-      return Promise.all(promises);
     },
     update({ commit, rootState }, { id, newTrack }) {
       return update(rootState.auth, id, newTrack)

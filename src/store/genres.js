@@ -86,13 +86,14 @@ export default {
           return Promise.resolve(false);
         });
     },
-    merge({ commit, dispatch, rootState, rootGetters }, { newID, oldID }) {
+    merge({ commit, rootState }, { newID, oldID }) {
       return merge(rootState.auth, newID, oldID)
         .then(() => {
-          const ids = rootGetters["tracks/tracksFilterByGenre"](oldID).map(
-            (t) => t.id
+          commit(
+            "tracks/updateGenreOccurence",
+            { newID, oldID },
+            { root: true }
           );
-          dispatch("tracks/readMultiple", ids, { root: true });
           commit("removeGenre", oldID);
         })
         .catch((error) => {
