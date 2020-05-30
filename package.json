@@ -9,7 +9,7 @@
     "i18n:report": "vue-cli-service i18n:report --src './src/**/*.?(js|vue)' --locales './src/locales/**/*.json'"
   },
   "dependencies": {
-    "@mdi/font": "^5.2.45",
+    "@mdi/font": "^5.3.45",
     "@mdi/svg": "^5.2.45",
     "core-js": "^3.6.5",
     "roboto-fontface": "^0.10.0",
