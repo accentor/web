@@ -1,5 +1,5 @@
 import Vue from "vue";
-import { create, destroy, index, get, update } from "../api/tracks";
+import { create, destroy, index, update } from "../api/tracks";
 import { compareStrings } from "../comparators";
 
 export default {
@@ -57,17 +57,6 @@ export default {
     },
     create({ commit, rootState }, newTrack) {
       return create(rootState.auth, newTrack)
-        .then((result) => {
-          commit("setTrack", { id: result.id, track: result });
-          return Promise.resolve(result.id);
-        })
-        .catch((error) => {
-          this.commit("addError", error);
-          return Promise.resolve(false);
-        });
-    },
-    read({ commit, rootState }, id) {
-      return get(rootState.auth, id)
         .then((result) => {
           commit("setTrack", { id: result.id, track: result });
           return Promise.resolve(result.id);
