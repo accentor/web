@@ -31,8 +31,6 @@
               <VCombobox
                 :items="sortedGenres"
                 cache-items
-                chips
-                deletable-chips
                 item-text="name"
                 item-value="id"
                 :label="$tc('music.genres', 1)"
