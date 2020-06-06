@@ -1,6 +1,7 @@
 import baseURL from "./base_url";
 
-export async function* indexGenerator(path, auth, page = 1) {
+export async function* indexGenerator(path, auth) {
+  let page = 1;
   while (true) {
     const request = await fetch(`${baseURL}/${path}?page=${page}`, {
       method: "GET",
