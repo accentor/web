@@ -1,24 +1,17 @@
 export async function fetchAll(commit, generator, commitAction) {
-  let i = 1;
-  let results = {};
   commit("setStartLoading");
-  async function fetch() {
-    let { value, done } = await generator.next();
-    for (let obj of value) {
-      results[obj.id] = obj;
-    }
-    if (done) {
+  let done = false;
+  let results = [];
+  let counter = 0;
+  while (!done) {
+    let value = [];
+    ({ value, done } = await generator.next());
+    results.push(...value);
+    if (++counter % 5 === 0) {
       commit(commitAction, results);
-      commit("removeOld");
-      return;
-    } else {
-      if (i % 5 === 0) {
-        commit(commitAction, results);
-        results = {};
-      }
-      i++;
-      await fetch();
+      results = [];
     }
   }
-  await fetch();
+  commit(commitAction, results);
+  commit("removeOld");
 }

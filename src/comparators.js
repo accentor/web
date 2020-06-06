@@ -9,25 +9,18 @@ export function compareStrings(s1, s2) {
 }
 
 export function compareTracks(rootState, t1, t2) {
-  let albumOrder = compareStrings(
-    rootState.albums.albums[t1.album_id] === undefined
-      ? ""
-      : rootState.albums.albums[t1.album_id].normalized_title,
-    rootState.albums.albums[t2.album_id] === undefined
-      ? ""
-      : rootState.albums.albums[t2.album_id].normalized_title
-  );
-  albumOrder =
-    albumOrder === 0
-      ? compareStrings(
-          rootState.albums.albums[t1.album_id] === undefined
-            ? "0000-01-01"
-            : rootState.albums.albums[t1.album_id].release,
-          rootState.albums.albums[t2.album_id] === undefined
-            ? "0000-01-01"
-            : rootState.albums.albums[t2.album_id].release
-        )
-      : albumOrder;
-  albumOrder = albumOrder === 0 ? t2.album_id - t1.album_id : albumOrder;
-  return albumOrder === 0 ? t1.number - t2.number : albumOrder;
+  const a1 = rootState.albums.albums[t1.album_id];
+  const a2 = rootState.albums.albums[t1.album_id];
+  if (a1 === undefined && a2 === undefined) {
+    return t1.number - t2.number;
+  } else if (a1 === undefined) {
+    return 1;
+  } else if (a2 === undefined) {
+    return -1;
+  }
+
+  let albOrd = compareStrings(a1.normalized_title, a2.normalized_title);
+  albOrd = albOrd === 0 ? compareStrings(a1.release, a2.release) : albOrd;
+  albOrd = albOrd === 0 ? compareStrings(a1.id, a2.id) : albOrd;
+  return albOrd === 0 ? t1.number - t2.number : albOrd;
 }

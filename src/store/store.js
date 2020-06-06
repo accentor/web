@@ -65,9 +65,11 @@ export default new Vuex.Store({
   getters: {
     numberOfFlaggedItems(state, getters) {
       return (
-        getters["artists/artistsFlagged"].length +
-        getters["albums/albumsFlagged"].length +
-        getters["tracks/tracksFlagged"].length
+        getters["artists/artists"].filter((a) => a.review_comment !== null)
+          .length +
+        getters["albums/albums"].filter((a) => a.review_comment !== null)
+          .length +
+        getters["tracks/tracks"].filter((t) => t.review_comment !== null).length
       );
     },
   },

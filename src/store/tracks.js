@@ -11,7 +11,11 @@ export default {
   },
   mutations: {
     setTracks(state, payload) {
-      state.tracks = Object.assign({}, state.tracks, payload);
+      let newTracks = { ...state.tracks };
+      for (let track of payload) {
+        newTracks[track.id] = track;
+      }
+      state.tracks = newTracks;
     },
     setTrack(state, { id, track }) {
       track.loaded = new Date();
@@ -101,27 +105,54 @@ export default {
     tracksByAlbumAndNumber: (state, getters, rootState) => {
       return getters.tracks.sort((t1, t2) => compareTracks(rootState, t1, t2));
     },
-    tracksFilterByAlbum: (state, getters) => (id) => {
-      return getters.tracks
-        .filter((t) => `${t.album_id}` === `${id}`)
-        .sort((a1, a2) => {
-          return a1.number - a2.number;
-        });
+    tracksBinnedByAlbum: (state, getters) => {
+      const result = {};
+      for (let track of getters.tracks) {
+        if (!(track.album_id in result)) {
+          result[track.album_id] = [];
+        }
+        result[track.album_id].push(track);
+      }
+      return result;
     },
-    tracksFilterByArtist: (state, getters, rootState) => (id) => {
-      const taFilter = (t) =>
-        t.track_artists.filter((ta) => `${ta.artist_id}` === `${id}`).length >
-        0;
-      return getters.tracks
-        .filter(taFilter)
-        .sort((t1, t2) => compareTracks(rootState, t1, t2));
+    tracksBinnedByGenre: (state, getters) => {
+      const result = {};
+      for (let track of getters.tracks) {
+        for (let genreId of track.genre_ids) {
+          if (!(genreId in result)) {
+            result[genreId] = [];
+          }
+          result[genreId].push(track);
+        }
+      }
+      return result;
+    },
+    tracksBinnedByArtist: (state, getters) => {
+      const result = {};
+      for (let track of getters.tracks) {
+        for (let ta of track.track_artists) {
+          if (!(ta.artist_id in result)) {
+            result[ta.artist_id] = [];
+          }
+          result[ta.artist_id].push(track);
+        }
+      }
+      return result;
+    },
+    tracksFilterByAlbum: (state, getters) => (id) => {
+      return (getters.tracksBinnedByAlbum[id] || []).sort(
+        (t1, t2) => t1.number - t2.number
+      );
     },
     tracksFilterByGenre: (state, getters, rootState) => (id) => {
-      const tgFilter = (t) =>
-        t.genre_ids.filter((gId) => `${gId}` === `${id}`).length > 0;
-      return getters.tracks
-        .filter(tgFilter)
-        .sort((t1, t2) => compareTracks(rootState, t1, t2));
+      return getters.tracksBinnedByGenre[id].sort((t1, t2) =>
+        compareTracks(rootState, t1, t2)
+      );
+    },
+    tracksFilterByArtist: (state, getters, rootState) => (id) => {
+      return getters.tracksBinnedByArtist[id].sort((t1, t2) =>
+        compareTracks(rootState, t1, t2)
+      );
     },
     tracksFlagged: (state, getters, rootState) => {
       return getters.tracks
