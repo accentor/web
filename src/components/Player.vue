@@ -1,6 +1,6 @@
 <template>
   <div class="footer-container" v-clickoutside="clickOutside">
-    <audio ref="audio" />
+    <audio ref="audio" @error="onAudioError" />
     <div class="tracks-list-container" v-if="open">
       <table class="tracks-list">
         <Draggable tag="tbody" @end="updatePlaylist">
@@ -32,7 +32,13 @@
             </td>
             <td>{{ albums[track.album_id].release }}</td>
             <td class="px-0 icon">
-              <VBtn small icon text class="ma-2" @click="removeIndex(index)">
+              <VBtn
+                small
+                icon
+                text
+                class="ma-2"
+                @click.stop.prevent="removeIndex(index)"
+              >
                 <VIcon>mdi-close</VIcon>
               </VBtn>
             </td>
@@ -44,13 +50,34 @@
     <VRow class="player-controls" align="center">
       <div class="flex player-left">
         <div class="content">
-          <VBtn @click="prevTrack" class="not-on-small ma-2" icon small>
+          <VBtn
+            @click="prevTrack"
+            :disabled="!playlistTracks.length || current === -1"
+            class="not-on-small ma-2"
+            icon
+            small
+          >
             <VIcon>mdi-skip-previous</VIcon>
           </VBtn>
-          <VBtn @click="setPlaying(!playing)" icon class="ma-2">
+          <VBtn
+            @click="setPlaying(!playing)"
+            :disabled="!playlistTracks.length"
+            icon
+            class="ma-2"
+          >
             <VIcon large>{{ playing ? "mdi-pause" : "mdi-play" }}</VIcon>
           </VBtn>
-          <VBtn @click="nextTrack" class="not-on-small ma-2" icon small>
+          <VBtn
+            @click="nextTrack"
+            :disabled="
+              !playlistTracks.length ||
+              current === playlistTracks.length - 1 ||
+              current === -1
+            "
+            class="not-on-small ma-2"
+            icon
+            small
+          >
             <VIcon>mdi-skip-next</VIcon>
           </VBtn>
         </div>
@@ -62,6 +89,7 @@
               <VSlider
                 :always-dirty="!!currentTrack"
                 :max="currentTrack ? currentTrack.length : 1"
+                :disabled="!currentTrack || currentTrack.length === null"
                 :value="seekTime"
                 v-on:input="seek"
                 hide-details
@@ -202,9 +230,11 @@ export default {
     doSeek() {
       if (this.doSeek) {
         this.$store.commit("player/setDoSeek");
-        this.$refs.audio.currentTime = this.seekTime;
-        if (this.playing) {
-          this.$refs.audio.play();
+        if (Number.isFinite(this.seekTime)) {
+          this.$refs.audio.currentTime = this.seekTime;
+          if (this.playing) {
+            this.$refs.audio.play();
+          }
         }
       }
     },
@@ -298,6 +328,14 @@ export default {
       const time = Math.floor(this.$refs.audio.currentTime);
       if (time !== this.seekTime) {
         this.setSeekTime(time);
+      }
+    },
+    onAudioError(event) {
+      if (this.playing && event.srcElement.networkState === 3) {
+        this.nextTrack();
+        this.$store.commit("addError", {
+          playlist: ["player.track-skipped"],
+        });
       }
     },
     updatePlaylist({ newIndex, oldIndex }) {

@@ -41,7 +41,10 @@ export default {
     GenreMergeDialog,
   },
   props: {
-    genre: {},
+    genre: {
+      type: Object,
+      required: true,
+    },
   },
   computed: {
     ...mapGetters("auth", ["isModerator"]),

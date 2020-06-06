@@ -40,8 +40,14 @@ export default {
     };
   },
   props: {
-    update: {},
-    item: {},
+    update: {
+      type: Function,
+      required: true,
+    },
+    item: {
+      type: Object,
+      required: true,
+    },
   },
   created() {
     this.new_review_comment = this.item.review_comment;

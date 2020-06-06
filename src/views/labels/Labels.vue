@@ -29,7 +29,7 @@
       <template v-slot:default="props">
         <VRow>
           <VCol
-            :key="item.name"
+            :key="item.id"
             lg="3"
             md="4"
             sm="6"

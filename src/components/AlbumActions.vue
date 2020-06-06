@@ -1,25 +1,42 @@
 <template>
   <span>
-    <VBtn
-      @click.stop.prevent="startTracks"
-      color="primary"
-      class="ma-2"
-      text
-      icon
-      small
-    >
-      <VIcon>mdi-play</VIcon>
-    </VBtn>
-    <VBtn
-      @click.stop.prevent="addTracks"
-      color="success"
-      class="ma-2"
-      text
-      icon
-      small
-    >
-      <VIcon>mdi-plus</VIcon>
-    </VBtn>
+    <VTooltip bottom :disabled="playableTracks.length !== 0">
+      <template v-slot:activator="{ on }">
+        <span v-on="on">
+          <VBtn
+            @click.stop.prevent="startTracks"
+            :disabled="playableTracks.length === 0"
+            color="primary"
+            class="ma-2"
+            text
+            icon
+            small
+          >
+            <VIcon>mdi-play</VIcon>
+          </VBtn>
+        </span>
+      </template>
+      <span>{{ $t("music.album.no-tracks-to-play") }}</span>
+    </VTooltip>
+    <VTooltip bottom :disabled="playableTracks.length !== 0">
+      <template v-slot:activator="{ on }">
+        <span v-on="on">
+          <VBtn
+            @click.stop.prevent="addTracks"
+            :disabled="playableTracks.length === 0"
+            color="success"
+            class="ma-2"
+            text
+            icon
+            small
+            v-on="on"
+          >
+            <VIcon>mdi-plus</VIcon>
+          </VBtn>
+        </span>
+      </template>
+      <span>{{ $t("music.album.no-tracks-to-add") }}</span>
+    </VTooltip>
     <EditReviewComment :item="album" :update="flag" />
     <VBtn
       :to="{
@@ -58,13 +75,21 @@ export default {
   name: "AlbumActions",
   components: { EditReviewComment },
   props: {
-    album: {},
+    album: {
+      type: Object,
+      required: true,
+    },
   },
   computed: {
     ...mapGetters("auth", ["isModerator"]),
     tracks() {
       const getter = this.$store.getters["tracks/tracksFilterByAlbum"];
-      return getter(this.album.id).map((t) => t.id);
+      return getter(this.album.id);
+    },
+    playableTracks() {
+      return this.tracks
+        .filter((track) => track.length !== null)
+        .map((obj) => obj.id);
     },
   },
   methods: {
@@ -75,9 +100,13 @@ export default {
       }
     },
     startTracks: function () {
-      const queue = this.tracks.filter((track) => track.length !== null);
-      if (queue.length > 0) {
-        this.$store.commit("player/playTracks", queue);
+      if (this.playableTracks.length > 0) {
+        this.$store.commit("player/playTracks", this.playableTracks);
+        if (this.playableTracks.length !== this.tracks.length) {
+          this.$store.commit("addError", {
+            playlist: ["player.not-all-tracks-added"],
+          });
+        }
       } else {
         this.$store.commit("addError", {
           playlist: ["player.no-tracks-added"],
@@ -85,9 +114,13 @@ export default {
       }
     },
     addTracks: function () {
-      const queue = this.tracks.filter((track) => track.length !== null);
-      if (queue.length > 0) {
-        this.$store.commit("player/addTracks", queue);
+      if (this.playableTracks.length > 0) {
+        this.$store.commit("player/addTracks", this.playableTracks);
+        if (this.playableTracks.length !== this.tracks.length) {
+          this.$store.commit("addError", {
+            playlist: ["player.not-all-tracks-added"],
+          });
+        }
       } else {
         this.$store.commit("addError", {
           playlist: ["player.no-tracks-added"],

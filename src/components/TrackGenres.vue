@@ -18,7 +18,10 @@ import { compareStrings } from "../comparators";
 export default {
   name: "TrackGenres",
   props: {
-    track: {},
+    track: {
+      type: Object,
+      required: true,
+    },
   },
   computed: {
     ...mapState("genres", ["genres"]),

@@ -12,7 +12,9 @@
 <script>
 export default {
   name: "FilePicker",
-  props: ["value"],
+  props: {
+    value: { type: Object, required: true },
+  },
   methods: {
     interpret(file) {
       const fileReader = new FileReader();
