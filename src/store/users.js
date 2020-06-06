@@ -1,34 +1,43 @@
 import Vue from "vue";
-import { create, destroy, index, update } from "../api/users";
+import { index, create, destroy, update } from "../api/users";
+import { fetchAll } from "./actions";
 import { compareStrings } from "../comparators";
 
 export default {
   namespaced: true,
   state: {
     users: {},
+    startLoading: new Date(0),
   },
   mutations: {
     setUsers(state, payload) {
-      state.users = {};
-      for (let user of payload) {
-        state.users[user.id] = user;
-      }
+      state.users = Object.assign({}, state.users, payload);
     },
     setUser(state, { id, user }) {
-      if (state.users[id]) {
-        Vue.delete(state.users, id);
-      }
+      user.loaded = new Date();
       Vue.set(state.users, id, user);
+    },
+    setStartLoading(state) {
+      state.startLoading = new Date();
     },
     removeUser(state, id) {
       Vue.delete(state.users, id);
     },
+    removeOld(state) {
+      Object.values(state.users)
+        .filter((obj) => {
+          return obj.loaded < state.startLoading;
+        })
+        .forEach((obj) => {
+          Vue.delete(state.users, obj.id);
+        });
+    },
   },
   actions: {
     index({ commit, rootState }) {
-      return index(rootState.auth)
-        .then((result) => {
-          commit("setUsers", result);
+      const generator = index(rootState.auth);
+      return fetchAll(commit, generator, "setUsers")
+        .then(() => {
           return Promise.resolve(true);
         })
         .catch((error) => {

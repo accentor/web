@@ -1,33 +1,46 @@
 import Vue from "vue";
-import { create, destroy, index, update } from "../api/codec_conversions";
+import { index, create, destroy, update } from "../api/codec_conversions";
+import { fetchAll } from "./actions";
 
 export default {
   namespaced: true,
   state: {
     codecConversions: {},
+    startLoading: new Date(0),
   },
   mutations: {
     setCodecConversions(state, payload) {
-      state.codecConversions = {};
-      for (let codecConversion of payload) {
-        state.codecConversions[codecConversion.id] = codecConversion;
-      }
+      state.codecConversions = Object.assign(
+        {},
+        state.codecConversions,
+        payload
+      );
     },
     setCodecConversion(state, { id, codecConversion }) {
-      if (state.codecConversions[id]) {
-        Vue.delete(state.codecConversions, id);
-      }
+      codecConversion.loaded = new Date();
       Vue.set(state.codecConversions, id, codecConversion);
+    },
+    setStartLoading(state) {
+      state.startLoading = new Date();
     },
     removeCodecConversion(state, id) {
       Vue.delete(state.codecConversions, id);
     },
+    removeOld(state) {
+      Object.values(state.codecConversions)
+        .filter((obj) => {
+          return obj.loaded < state.startLoading;
+        })
+        .forEach((obj) => {
+          Vue.delete(state.codecConversions, obj.id);
+        });
+    },
   },
   actions: {
     index({ commit, rootState }) {
-      return index(rootState.auth)
-        .then((result) => {
-          commit("setCodecConversions", result);
+      const generator = index(rootState.auth);
+      return fetchAll(commit, generator, "setCodecConversions")
+        .then(() => {
           return Promise.resolve(true);
         })
         .catch((error) => {

@@ -1,34 +1,43 @@
 import Vue from "vue";
-import { create, destroy, index, update, destroyEmpty } from "../api/labels";
+import { index, create, destroy, update, destroyEmpty } from "../api/labels";
+import { fetchAll } from "./actions";
 import { compareStrings } from "../comparators";
 
 export default {
   namespaced: true,
   state: {
     labels: {},
+    startLoading: new Date(0),
   },
   mutations: {
     setLabels(state, payload) {
-      state.labels = {};
-      for (let label of payload) {
-        state.labels[label.id] = label;
-      }
+      state.labels = Object.assign({}, state.labels, payload);
     },
     setLabel(state, { id, label }) {
-      if (state.labels[id]) {
-        Vue.delete(state.labels, id);
-      }
+      label.loaded = new Date();
       Vue.set(state.labels, id, label);
+    },
+    setStartLoading(state) {
+      state.startLoading = new Date();
     },
     removeLabel(state, id) {
       Vue.delete(state.labels, id);
     },
+    removeOld(state) {
+      Object.values(state.labels)
+        .filter((obj) => {
+          return obj.loaded < state.startLoading;
+        })
+        .forEach((obj) => {
+          Vue.delete(state.labels, obj.id);
+        });
+    },
   },
   actions: {
     index({ commit, rootState }) {
-      return index(rootState.auth)
-        .then((result) => {
-          commit("setLabels", result);
+      const generator = index(rootState.auth);
+      return fetchAll(commit, generator, "setLabels")
+        .then(() => {
           return Promise.resolve(true);
         })
         .catch((error) => {

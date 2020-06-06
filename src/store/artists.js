@@ -1,34 +1,43 @@
 import Vue from "vue";
-import { create, destroy, index, update, destroyEmpty } from "../api/artists";
+import { index, create, destroy, update, destroyEmpty } from "../api/artists";
+import { fetchAll } from "./actions";
 import { compareStrings } from "../comparators";
 
 export default {
   namespaced: true,
   state: {
     artists: {},
+    startLoading: new Date(0),
   },
   mutations: {
     setArtists(state, payload) {
-      state.artists = {};
-      for (let artist of payload) {
-        state.artists[artist.id] = artist;
-      }
+      state.artists = Object.assign({}, state.artists, payload);
     },
     setArtist(state, { id, artist }) {
-      if (state.artists[id]) {
-        Vue.delete(state.artists, id);
-      }
+      artist.loaded = new Date();
       Vue.set(state.artists, id, artist);
+    },
+    setStartLoading(state) {
+      state.startLoading = new Date();
     },
     removeArtist(state, id) {
       Vue.delete(state.artists, id);
     },
+    removeOld(state) {
+      Object.values(state.artists)
+        .filter((obj) => {
+          return obj.loaded < state.startLoading;
+        })
+        .forEach((obj) => {
+          Vue.delete(state.artists, obj.id);
+        });
+    },
   },
   actions: {
     index({ commit, rootState }) {
-      return index(rootState.auth)
-        .then((result) => {
-          commit("setArtists", result);
+      const generator = index(rootState.auth);
+      return fetchAll(commit, generator, "setArtists")
+        .then(() => {
           return Promise.resolve(true);
         })
         .catch((error) => {

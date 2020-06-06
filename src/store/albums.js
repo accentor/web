@@ -1,34 +1,43 @@
 import Vue from "vue";
-import { create, destroy, index, update, destroyEmpty } from "../api/albums";
+import { index, create, destroy, update, destroyEmpty } from "../api/albums";
+import { fetchAll } from "./actions";
 import { compareStrings } from "../comparators";
 
 export default {
   namespaced: true,
   state: {
     albums: {},
+    startLoading: new Date(0),
   },
   mutations: {
     setAlbums(state, payload) {
-      state.albums = {};
-      for (let album of payload) {
-        state.albums[album.id] = album;
-      }
+      state.albums = Object.assign({}, state.albums, payload);
     },
     setAlbum(state, { id, album }) {
-      if (state.albums[id]) {
-        Vue.delete(state.albums, id);
-      }
+      album.loaded = new Date();
       Vue.set(state.albums, id, album);
+    },
+    setStartLoading(state) {
+      state.startLoading = new Date();
     },
     removeAlbum(state, id) {
       Vue.delete(state.albums, id);
     },
+    removeOld(state) {
+      Object.values(state.albums)
+        .filter((obj) => {
+          return obj.loaded < state.startLoading;
+        })
+        .forEach((obj) => {
+          Vue.delete(state.albums, obj.id);
+        });
+    },
   },
   actions: {
     index({ commit, rootState }) {
-      return index(rootState.auth)
-        .then((result) => {
-          commit("setAlbums", result);
+      const generator = index(rootState.auth);
+      return fetchAll(commit, generator, "setAlbums")
+        .then(() => {
           return Promise.resolve(true);
         })
         .catch((error) => {

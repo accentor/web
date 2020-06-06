@@ -1,41 +1,50 @@
 import Vue from "vue";
 import {
+  index,
   create,
   destroy,
-  index,
   update,
   destroyEmpty,
   merge,
 } from "../api/genres";
+import { fetchAll } from "./actions";
 import { compareStrings } from "../comparators";
 
 export default {
   namespaced: true,
   state: {
     genres: {},
+    startLoading: new Date(0),
   },
   mutations: {
     setGenres(state, payload) {
-      state.genres = {};
-      for (let genre of payload) {
-        state.genres[genre.id] = genre;
-      }
+      state.genres = Object.assign({}, state.genres, payload);
     },
     setGenre(state, { id, genre }) {
-      if (state.genres[id]) {
-        Vue.delete(state.genres, id);
-      }
+      genre.loaded = new Date();
       Vue.set(state.genres, id, genre);
+    },
+    setStartLoading(state) {
+      state.startLoading = new Date();
     },
     removeGenre(state, id) {
       Vue.delete(state.genres, id);
     },
+    removeOld(state) {
+      Object.values(state.genres)
+        .filter((obj) => {
+          return obj.loaded < state.startLoading;
+        })
+        .forEach((obj) => {
+          Vue.delete(state.genres, obj.id);
+        });
+    },
   },
   actions: {
     index({ commit, rootState }) {
-      return index(rootState.auth)
-        .then((result) => {
-          commit("setGenres", result);
+      const generator = index(rootState.auth);
+      return fetchAll(commit, generator, "setGenres")
+        .then(() => {
           return Promise.resolve(true);
         })
         .catch((error) => {

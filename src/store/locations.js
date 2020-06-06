@@ -1,33 +1,42 @@
 import Vue from "vue";
-import { create, destroy, index } from "../api/locations";
+import { index, create, destroy } from "../api/locations";
+import { fetchAll } from "./actions";
 
 export default {
   namespaced: true,
   state: {
     locations: {},
+    startLoading: new Date(0),
   },
   mutations: {
     setLocations(state, payload) {
-      state.locations = {};
-      for (let location of payload) {
-        state.locations[location.id] = location;
-      }
+      state.locations = Object.assign({}, state.locations, payload);
     },
     setLocation(state, { id, location }) {
-      if (state.locations[id]) {
-        Vue.delete(state.locations, id);
-      }
+      location.loaded = new Date();
       Vue.set(state.locations, id, location);
+    },
+    setStartLoading(state) {
+      state.startLoading = new Date();
     },
     removeLocation(state, id) {
       Vue.delete(state.locations, id);
     },
+    removeOld(state) {
+      Object.values(state.locations)
+        .filter((obj) => {
+          return obj.loaded < state.startLoading;
+        })
+        .forEach((obj) => {
+          Vue.delete(state.locations, obj.id);
+        });
+    },
   },
   actions: {
     index({ commit, rootState }) {
-      return index(rootState.auth)
-        .then((result) => {
-          commit("setLocations", result);
+      const generator = index(rootState.auth);
+      return fetchAll(commit, generator, "setLocations")
+        .then(() => {
           return Promise.resolve(true);
         })
         .catch((error) => {

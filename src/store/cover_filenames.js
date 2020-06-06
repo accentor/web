@@ -1,33 +1,42 @@
 import Vue from "vue";
-import { create, destroy, index, update } from "../api/cover_filenames";
+import { index, create, destroy, update } from "../api/cover_filenames";
+import { fetchAll } from "./actions";
 
 export default {
   namespaced: true,
   state: {
     coverFilenames: {},
+    startLoading: new Date(0),
   },
   mutations: {
     setCoverFilenames(state, payload) {
-      state.coverFilenames = {};
-      for (let coverFilename of payload) {
-        state.coverFilenames[coverFilename.id] = coverFilename;
-      }
+      state.coverFilenames = Object.assign({}, state.coverFilenames, payload);
     },
     setCoverFilename(state, { id, coverFilename }) {
-      if (state.coverFilenames[id]) {
-        Vue.delete(state.coverFilenames, id);
-      }
+      coverFilename.loaded = new Date();
       Vue.set(state.coverFilenames, id, coverFilename);
+    },
+    setStartLoading(state) {
+      state.startLoading = new Date();
     },
     removeCoverFilename(state, id) {
       Vue.delete(state.coverFilenames, id);
     },
+    removeOld(state) {
+      Object.values(state.coverFilenames)
+        .filter((obj) => {
+          return obj.loaded < state.startLoading;
+        })
+        .forEach((obj) => {
+          Vue.delete(state.coverFilenames, obj.id);
+        });
+    },
   },
   actions: {
     index({ commit, rootState }) {
-      return index(rootState.auth)
-        .then((result) => {
-          commit("setCoverFilenames", result);
+      const generator = index(rootState.auth);
+      return fetchAll(commit, generator, "setCoverFilenames")
+        .then(() => {
           return Promise.resolve(true);
         })
         .catch((error) => {

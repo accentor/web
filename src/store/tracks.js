@@ -1,27 +1,36 @@
 import Vue from "vue";
-import { create, destroy, index, update } from "../api/tracks";
+import { index, create, destroy, update } from "../api/tracks";
+import { fetchAll } from "./actions";
 import { compareStrings } from "../comparators";
 
 export default {
   namespaced: true,
   state: {
     tracks: {},
+    startLoading: new Date(0),
   },
   mutations: {
     setTracks(state, payload) {
-      state.tracks = {};
-      for (let track of payload) {
-        state.tracks[track.id] = track;
-      }
+      state.tracks = Object.assign({}, state.tracks, payload);
     },
     setTrack(state, { id, track }) {
-      if (state.tracks[id]) {
-        Vue.delete(state.tracks, id);
-      }
+      track.loaded = new Date();
       Vue.set(state.tracks, id, track);
+    },
+    setStartLoading(state) {
+      state.startLoading = new Date();
     },
     removeTrack(state, id) {
       Vue.delete(state.tracks, id);
+    },
+    removeOld(state) {
+      Object.values(state.tracks)
+        .filter((obj) => {
+          return obj.loaded < state.startLoading;
+        })
+        .forEach((obj) => {
+          Vue.delete(state.tracks, obj.id);
+        });
     },
     updateGenreOccurence(state, { newID, oldID }) {
       for (const t in state.tracks) {
@@ -43,9 +52,9 @@ export default {
   },
   actions: {
     index({ commit, rootState }) {
-      return index(rootState.auth)
-        .then((result) => {
-          commit("setTracks", result);
+      const generator = index(rootState.auth);
+      return fetchAll(commit, generator, "setTracks")
+        .then(() => {
           return Promise.resolve(true);
         })
         .catch((error) => {

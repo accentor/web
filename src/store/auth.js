@@ -1,5 +1,6 @@
 import Vue from "vue";
-import { create, destroy, index } from "../api/auth_tokens";
+import { index, create, destroy } from "../api/auth_tokens";
+import { fetchAll } from "./actions";
 
 export default {
   namespaced: true,
@@ -9,6 +10,7 @@ export default {
     secret: null,
     user_id: null,
     id: null,
+    startLoading: new Date(0),
   },
   mutations: {
     login(state, payload) {
@@ -24,13 +26,22 @@ export default {
       state.id = null;
     },
     setAuthTokens(state, payload) {
-      state.authTokens = {};
-      for (let authToken of payload) {
-        state.authTokens[authToken.id] = authToken;
-      }
+      state.authTokens = Object.assign({}, state.authTokens, payload);
+    },
+    setStartLoading(state) {
+      state.startLoading = new Date();
     },
     removeAuthToken(state, id) {
       Vue.delete(state.authTokens, id);
+    },
+    removeOld(state) {
+      Object.values(state.authTokens)
+        .filter((obj) => {
+          return obj.loaded < state.startLoading;
+        })
+        .forEach((obj) => {
+          Vue.delete(state.authTokens, obj.id);
+        });
     },
   },
   actions: {
@@ -57,9 +68,9 @@ export default {
         });
     },
     index({ commit, rootState }) {
-      return index(rootState.auth)
-        .then((result) => {
-          commit("setAuthTokens", result);
+      const generator = index(rootState.auth);
+      return fetchAll(commit, generator, "setAuthTokens")
+        .then(() => {
           return Promise.resolve(true);
         })
         .catch((error) => {

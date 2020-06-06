@@ -1,33 +1,42 @@
 import Vue from "vue";
-import { create, destroy, index, update } from "../api/codecs";
+import { index, create, destroy, update } from "../api/codecs";
+import { fetchAll } from "./actions";
 
 export default {
   namespaced: true,
   state: {
     codecs: {},
+    startLoading: new Date(0),
   },
   mutations: {
     setCodecs(state, payload) {
-      state.codecs = {};
-      for (let codec of payload) {
-        state.codecs[codec.id] = codec;
-      }
+      state.codecs = Object.assign({}, state.codecs, payload);
     },
     setCodec(state, { id, codec }) {
-      if (state.codecs[id]) {
-        Vue.delete(state.codecs, id);
-      }
+      codec.loaded = new Date();
       Vue.set(state.codecs, id, codec);
+    },
+    setStartLoading(state) {
+      state.startLoading = new Date();
     },
     removeCodec(state, id) {
       Vue.delete(state.codecs, id);
     },
+    removeOld(state) {
+      Object.values(state.codecs)
+        .filter((obj) => {
+          return obj.loaded < state.startLoading;
+        })
+        .forEach((obj) => {
+          Vue.delete(state.codecs, obj.id);
+        });
+    },
   },
   actions: {
     index({ commit, rootState }) {
-      return index(rootState.auth)
-        .then((result) => {
-          commit("setCodecs", result);
+      const generator = index(rootState.auth);
+      return fetchAll(commit, generator, "setCodecs")
+        .then(() => {
           return Promise.resolve(true);
         })
         .catch((error) => {
