@@ -50,13 +50,34 @@
     <VRow class="player-controls" align="center">
       <div class="flex player-left">
         <div class="content">
-          <VBtn @click="prevTrack" class="not-on-small ma-2" icon small>
+          <VBtn
+            @click="prevTrack"
+            :disabled="!playlistTracks.length || current === -1"
+            class="not-on-small ma-2"
+            icon
+            small
+          >
             <VIcon>mdi-skip-previous</VIcon>
           </VBtn>
-          <VBtn @click="setPlaying(!playing)" icon class="ma-2">
+          <VBtn
+            @click="setPlaying(!playing)"
+            :disabled="!playlistTracks.length"
+            icon
+            class="ma-2"
+          >
             <VIcon large>{{ playing ? "mdi-pause" : "mdi-play" }}</VIcon>
           </VBtn>
-          <VBtn @click="nextTrack" class="not-on-small ma-2" icon small>
+          <VBtn
+            @click="nextTrack"
+            :disabled="
+              !playlistTracks.length ||
+              current === playlistTracks.length - 1 ||
+              current === -1
+            "
+            class="not-on-small ma-2"
+            icon
+            small
+          >
             <VIcon>mdi-skip-next</VIcon>
           </VBtn>
         </div>
@@ -68,6 +89,7 @@
               <VSlider
                 :always-dirty="!!currentTrack"
                 :max="currentTrack ? currentTrack.length : 1"
+                :disabled="!currentTrack || currentTrack.length === null"
                 :value="seekTime"
                 v-on:input="seek"
                 hide-details

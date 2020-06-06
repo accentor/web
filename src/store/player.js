@@ -71,6 +71,9 @@ export default {
       state.doSeek = true;
     },
     setPlaying(state, val) {
+      if (state.current === -1 && state.playlist.length) {
+        state.current = 0;
+      }
       state.playing = val;
     },
     nextTrack(state) {
