@@ -8,6 +8,7 @@
     <template v-slot:activator="{ on }">
       <VBtn
         v-on="on"
+        :disabled="disabled"
         @click.stop.prevent
         class="ma-2"
         color="edit"
@@ -58,6 +59,10 @@ import { mapActions, mapGetters } from "vuex";
 export default {
   name: "GenreMergeDialog",
   props: {
+    disabled: {
+      type: Boolean,
+      required: true,
+    },
     genre: {
       type: Object,
       required: true,

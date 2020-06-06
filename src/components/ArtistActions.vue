@@ -1,38 +1,54 @@
 <template>
   <span>
     <EditReviewComment :item="artist" :update="flag" />
-    <VBtn
-      :to="{
-        name: 'edit-artist',
-        params: { id: artist.id },
-        query: { redirect: $route.fullPath },
-      }"
-      v-if="isModerator"
-      color="edit"
-      class="ma-2"
-      text
-      icon
-      small
-    >
-      <VIcon>mdi-pencil</VIcon>
-    </VBtn>
-    <VBtn
-      @click.stop.prevent="deleteArtist"
-      v-if="isModerator"
-      color="danger"
-      class="ma-2"
-      href="#"
-      text
-      icon
-      small
-    >
-      <VIcon>mdi-delete</VIcon>
-    </VBtn>
+    <VTooltip bottom :disabled="!waitingForReload">
+      <template v-slot:activator="{ on }">
+        <span v-on="on">
+          <VBtn
+            :to="{
+              name: 'edit-artist',
+              params: { id: artist.id },
+              query: { redirect: $route.fullPath },
+            }"
+            v-if="isModerator"
+            :disabled="waitingForReload"
+            color="edit"
+            class="ma-2"
+            text
+            icon
+            small
+          >
+            <VIcon>mdi-pencil</VIcon>
+          </VBtn>
+        </span>
+      </template>
+      <span>{{ $t("common.disabled-while-loading") }}</span>
+    </VTooltip>
+    <VTooltip bottom :disabled="!waitingForReload">
+      <template v-slot:activator="{ on }">
+        <span v-on="on">
+          <VBtn
+            @click.stop.prevent="deleteArtist"
+            v-if="isModerator"
+            :disabled="waitingForReload"
+            color="danger"
+            class="ma-2"
+            href="#"
+            text
+            icon
+            small
+          >
+            <VIcon>mdi-delete</VIcon>
+          </VBtn>
+        </span>
+      </template>
+      <span>{{ $t("common.disabled-while-loading") }}</span>
+    </VTooltip>
   </span>
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
+import { mapActions, mapGetters, mapState } from "vuex";
 import EditReviewComment from "./EditReviewComment";
 
 export default {
@@ -46,6 +62,10 @@ export default {
   },
   computed: {
     ...mapGetters("auth", ["isModerator"]),
+    ...mapState("artists", ["startLoading"]),
+    waitingForReload() {
+      return this.startLoading > this.artist.loaded;
+    },
   },
   methods: {
     ...mapActions("artists", ["destroy", "update"]),
