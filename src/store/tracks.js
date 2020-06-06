@@ -30,9 +30,7 @@ export default {
         );
         if (i >= 0) {
           state.tracks[t].genre_ids.splice(i, 1);
-          // if newID isn't provided we'll just remove the old genre
           if (
-            typeof newID !== undefined &&
             state.tracks[t].genre_ids.findIndex(
               (gId) => `${gId}` === `${newID}`
             ) === -1
