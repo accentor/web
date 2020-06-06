@@ -1,6 +1,6 @@
 import Vue from "vue";
 import { index, create, destroy, update } from "../api/users";
-import { fetchAll } from "./commit";
+import { fetchAll } from "./actions";
 import { compareStrings } from "../comparators";
 
 export default {

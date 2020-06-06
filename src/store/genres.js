@@ -7,7 +7,7 @@ import {
   destroyEmpty,
   merge,
 } from "../api/genres";
-import { fetchAll } from "./commit";
+import { fetchAll } from "./actions";
 import { compareStrings } from "../comparators";
 
 export default {

@@ -1,6 +1,6 @@
 import Vue from "vue";
 import { index, create, destroy, update } from "../api/image_types";
-import { fetchAll } from "./commit";
+import { fetchAll } from "./actions";
 
 export default {
   namespaced: true,
