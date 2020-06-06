@@ -17,7 +17,7 @@ export async function fetchAll(commit, generator, commitAction) {
         results = {};
       }
       i++;
-      fetch();
+      await fetch();
     }
   }
   await fetch();
