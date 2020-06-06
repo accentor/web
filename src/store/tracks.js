@@ -1,7 +1,7 @@
 import Vue from "vue";
 import { index, create, destroy, update } from "../api/tracks";
 import { fetchAll } from "./actions";
-import { compareStrings } from "../comparators";
+import { compareStrings, compareTracks } from "../comparators";
 
 export default {
   namespaced: true,
@@ -99,21 +99,7 @@ export default {
   getters: {
     tracks: (state) => Object.values(state.tracks),
     tracksByAlbumAndNumber: (state, getters, rootState) => {
-      return getters.tracks.sort((a1, a2) => {
-        let albumOrder = compareStrings(
-          rootState.albums.albums[a1.album_id].normalized_title,
-          rootState.albums.albums[a2.album_id].normalized_title
-        );
-        albumOrder =
-          albumOrder === 0
-            ? compareStrings(
-                rootState.albums.albums[a1.album_id].release,
-                rootState.albums.albums[a2.album_id].release
-              )
-            : albumOrder;
-        albumOrder = albumOrder === 0 ? a2.album_id - a1.album_id : albumOrder;
-        return albumOrder === 0 ? a1.number - a2.number : albumOrder;
-      });
+      return getters.tracks.sort((t1, t2) => compareTracks(rootState, t1, t2));
     },
     tracksFilterByAlbum: (state, getters) => (id) => {
       return getters.tracks
@@ -126,60 +112,21 @@ export default {
       const taFilter = (t) =>
         t.track_artists.filter((ta) => `${ta.artist_id}` === `${id}`).length >
         0;
-      return getters.tracks.filter(taFilter).sort((a1, a2) => {
-        let albumOrder = compareStrings(
-          rootState.albums.albums[a1.album_id].normalized_title,
-          rootState.albums.albums[a2.album_id].normalized_title
-        );
-        albumOrder =
-          albumOrder === 0
-            ? compareStrings(
-                rootState.albums.albums[a1.album_id].release,
-                rootState.albums.albums[a2.album_id].release
-              )
-            : albumOrder;
-        albumOrder = albumOrder === 0 ? a2.album_id - a1.album_id : albumOrder;
-        return albumOrder === 0 ? a1.number - a2.number : albumOrder;
-      });
+      return getters.tracks
+        .filter(taFilter)
+        .sort((t1, t2) => compareTracks(rootState, t1, t2));
     },
     tracksFilterByGenre: (state, getters, rootState) => (id) => {
       const tgFilter = (t) =>
         t.genre_ids.filter((gId) => `${gId}` === `${id}`).length > 0;
-      return getters.tracks.filter(tgFilter).sort((a1, a2) => {
-        let albumOrder = compareStrings(
-          rootState.albums.albums[a1.album_id].normalized_title,
-          rootState.albums.albums[a2.album_id].normalized_title
-        );
-        albumOrder =
-          albumOrder === 0
-            ? compareStrings(
-                rootState.albums.albums[a1.album_id].release,
-                rootState.albums.albums[a2.album_id].release
-              )
-            : albumOrder;
-        albumOrder = albumOrder === 0 ? a2.album_id - a1.album_id : albumOrder;
-        return albumOrder === 0 ? a1.number - a2.number : albumOrder;
-      });
+      return getters.tracks
+        .filter(tgFilter)
+        .sort((t1, t2) => compareTracks(rootState, t1, t2));
     },
     tracksFlagged: (state, getters, rootState) => {
       return getters.tracks
         .filter((t) => t.review_comment !== null)
-        .sort((a1, a2) => {
-          let albumOrder = compareStrings(
-            rootState.albums.albums[a1.album_id].normalized_title,
-            rootState.albums.albums[a2.album_id].normalized_title
-          );
-          albumOrder =
-            albumOrder === 0
-              ? compareStrings(
-                  rootState.albums.albums[a1.album_id].release,
-                  rootState.albums.albums[a2.album_id].release
-                )
-              : albumOrder;
-          albumOrder =
-            albumOrder === 0 ? a2.album_id - a1.album_id : albumOrder;
-          return albumOrder === 0 ? a1.number - a2.number : albumOrder;
-        });
+        .sort((t1, t2) => compareTracks(rootState, t1, t2));
     },
   },
 };
