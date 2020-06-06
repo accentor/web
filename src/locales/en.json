@@ -238,6 +238,8 @@
 		"genre": {
 			"add": "Add genre",
 			"create": "Create genre",
+			"merge": "Merge genres",
+			"merge-into": "Merge {obj} into",
 			"new": "New genre",
 			"update": "Update genre"
 		},

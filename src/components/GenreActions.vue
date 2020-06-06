@@ -15,8 +15,9 @@
     >
       <VIcon>mdi-pencil</VIcon>
     </VBtn>
+    <GenreMergeDialog :genre="genre" />
     <VBtn
-      @click.stop.prevent="deleteLabel"
+      @click.stop.prevent="deleteGenre"
       v-if="isModerator"
       color="danger"
       class="ma-2"
@@ -32,9 +33,13 @@
 
 <script>
 import { mapActions, mapGetters } from "vuex";
+import GenreMergeDialog from "./GenreMergeDialog";
 
 export default {
-  name: "LabelActions",
+  name: "GenreActions",
+  components: {
+    GenreMergeDialog,
+  },
   props: {
     genre: {
       type: Object,
@@ -45,8 +50,8 @@ export default {
     ...mapGetters("auth", ["isModerator"]),
   },
   methods: {
-    ...mapActions("genres", ["destroy"]),
-    deleteLabel: function () {
+    ...mapActions("genres", ["destroy", "merge"]),
+    deleteGenre: function () {
       if (confirm(this.$t("common.are-you-sure"))) {
         this.destroy(this.genre.id);
       }

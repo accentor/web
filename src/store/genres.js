@@ -1,5 +1,12 @@
 import Vue from "vue";
-import { create, destroy, index, update, destroyEmpty } from "../api/genres";
+import {
+  create,
+  destroy,
+  index,
+  update,
+  destroyEmpty,
+  merge,
+} from "../api/genres";
 import { compareStrings } from "../comparators";
 
 export default {
@@ -73,6 +80,21 @@ export default {
       return destroyEmpty(rootState.auth)
         .then(() => {
           return this.dispatch("genres/index");
+        })
+        .catch((error) => {
+          this.commit("addError", error);
+          return Promise.resolve(false);
+        });
+    },
+    merge({ commit, rootState }, { newID, oldID }) {
+      return merge(rootState.auth, newID, oldID)
+        .then(() => {
+          commit(
+            "tracks/updateGenreOccurence",
+            { newID, oldID },
+            { root: true }
+          );
+          commit("removeGenre", oldID);
         })
         .catch((error) => {
           this.commit("addError", error);

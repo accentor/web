@@ -98,3 +98,20 @@ export function destroyEmpty(auth) {
         : request.json().then((result) => Promise.reject(result));
     });
 }
+
+export function merge(auth, newID, oldID) {
+  return fetch(`${baseURL}/genres/${newID}/merge?other_genre_id=${oldID}`, {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+      "x-secret": auth.secret,
+      "x-device-id": auth.device_id,
+    },
+  })
+    .catch((reason) => Promise.reject({ error: [reason] }))
+    .then((request) => {
+      return request.ok
+        ? Promise.resolve()
+        : request.json().then((result) => Promise.reject(result));
+    });
+}
