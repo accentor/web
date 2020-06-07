@@ -26,6 +26,14 @@
     <VTooltip bottom :disabled="!waitingForReload">
       <template v-slot:activator="{ on }">
         <span v-on="on">
+          <LabelMergeDialog :label="label" :disabled="waitingForReload" />
+        </span>
+      </template>
+      <span>{{ $t("common.disabled-while-loading") }}</span>
+    </VTooltip>
+    <VTooltip bottom :disabled="!waitingForReload">
+      <template v-slot:activator="{ on }">
+        <span v-on="on">
           <VBtn
             @click.stop.prevent="deleteLabel"
             v-if="isModerator"
@@ -48,9 +56,13 @@
 
 <script>
 import { mapActions, mapGetters, mapState } from "vuex";
+import LabelMergeDialog from "./LabelMergeDialog";
 
 export default {
   name: "LabelActions",
+  components: {
+    LabelMergeDialog,
+  },
   props: {
     label: {
       type: Object,

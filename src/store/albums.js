@@ -32,6 +32,23 @@ export default {
           Vue.delete(state.albums, obj.id);
         });
     },
+    updateLabelOccurence(state, { newID, oldID }) {
+      for (const a in state.albums) {
+        const i = state.albums[a].label_ids.findIndex(
+          (lId) => `${lId}` === `${oldID}`
+        );
+        if (i >= 0) {
+          state.albums[a].label_ids.splice(i, 1);
+          if (
+            state.albums[a].label_ids.findIndex(
+              (lId) => `${lId}` === `${newID}`
+            ) === -1
+          ) {
+            state.albums[t].label_ids.push(newID);
+          }
+        }
+      }
+    },
   },
   actions: {
     index({ commit, rootState }) {

@@ -1,5 +1,12 @@
 import Vue from "vue";
-import { index, create, destroy, update, destroyEmpty } from "../api/labels";
+import {
+  index,
+  create,
+  destroy,
+  update,
+  destroyEmpty,
+  merge,
+} from "../api/labels";
 import { fetchAll } from "./actions";
 import { compareStrings } from "../comparators";
 
@@ -82,6 +89,21 @@ export default {
       return destroyEmpty(rootState.auth)
         .then(() => {
           return this.dispatch("labels/index");
+        })
+        .catch((error) => {
+          this.commit("addError", error);
+          return Promise.resolve(false);
+        });
+    },
+    merge({ commit, rootState }, { newID, oldID }) {
+      return merge(rootState.auth, newID, oldID)
+        .then(() => {
+          commit(
+            "albums/updateLabelOccurence",
+            { newID, oldID },
+            { root: true }
+          );
+          commit("removeLabel", oldID);
         })
         .catch((error) => {
           this.commit("addError", error);
