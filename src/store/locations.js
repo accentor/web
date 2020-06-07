@@ -10,7 +10,11 @@ export default {
   },
   mutations: {
     setLocations(state, payload) {
-      state.locations = Object.assign({}, state.locations, payload);
+      let newLocations = { ...state.locations };
+      for (let location of payload) {
+        newLocations[location.id] = location;
+      }
+      state.locations = newLocations;
     },
     setLocation(state, { id, location }) {
       location.loaded = new Date();

@@ -11,7 +11,11 @@ export default {
   },
   mutations: {
     setArtists(state, payload) {
-      state.artists = Object.assign({}, state.artists, payload);
+      let newArtists = { ...state.artists };
+      for (let artist of payload) {
+        newArtists[artist.id] = artist;
+      }
+      state.artists = newArtists;
     },
     setArtist(state, { id, artist }) {
       artist.loaded = new Date();

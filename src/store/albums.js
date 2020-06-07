@@ -11,7 +11,11 @@ export default {
   },
   mutations: {
     setAlbums(state, payload) {
-      state.albums = Object.assign({}, state.albums, payload);
+      let newAlbums = { ...state.albums };
+      for (let album of payload) {
+        newAlbums[album.id] = album;
+      }
+      state.albums = newAlbums;
     },
     setAlbum(state, { id, album }) {
       album.loaded = new Date();

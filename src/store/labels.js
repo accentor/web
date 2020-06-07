@@ -18,7 +18,11 @@ export default {
   },
   mutations: {
     setLabels(state, payload) {
-      state.labels = Object.assign({}, state.labels, payload);
+      let newLabels = { ...state.labels };
+      for (let label of payload) {
+        newLabels[label.id] = label;
+      }
+      state.labels = newLabels;
     },
     setLabel(state, { id, label }) {
       label.loaded = new Date();

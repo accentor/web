@@ -10,11 +10,11 @@ export default {
   },
   mutations: {
     setCodecConversions(state, payload) {
-      state.codecConversions = Object.assign(
-        {},
-        state.codecConversions,
-        payload
-      );
+      let newCodecConversions = { ...state.codecConversions };
+      for (let codecConversion of payload) {
+        newCodecConversions[codecConversion.id] = codecConversion;
+      }
+      state.codecConversions = newCodecConversions;
     },
     setCodecConversion(state, { id, codecConversion }) {
       codecConversion.loaded = new Date();

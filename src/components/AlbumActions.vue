@@ -100,8 +100,7 @@ export default {
     ...mapGetters("auth", ["isModerator"]),
     ...mapState("albums", ["startLoading"]),
     tracks() {
-      const getter = this.$store.getters["tracks/tracksFilterByAlbum"];
-      return getter(this.album.id);
+      return this.$store.getters["tracks/tracksFilterByAlbum"](this.album.id);
     },
     playableTracks() {
       return this.tracks
