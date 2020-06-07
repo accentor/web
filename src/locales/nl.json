@@ -249,6 +249,8 @@
 			"catalogue-number-none": "geen",
 			"catnr": "Catalogus nummer",
 			"create": "Maak label aan",
+			"merge": "Voeg labels samen",
+			"merge-into": "Voeg {obj} samen met",
 			"new": "Nieuw label",
 			"update": "Werk label bij"
 		},

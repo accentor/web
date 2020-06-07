@@ -249,6 +249,8 @@
 			"catalogue-number-none": "none",
 			"catnr": "Catalogue number",
 			"create": "Create label",
+			"merge": "Merge labels",
+			"merge-into": "Merge {obj} into",
 			"new": "New label",
 			"update": "Update label"
 		},
