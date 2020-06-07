@@ -14,7 +14,12 @@
       <template v-slot:header>
         <VRow class="mb-2" justify="space-between" align="baseline">
           <VCol cols="12" sm="4" md="6" lg="8" xl="10">
-            <h2 class="display-1">{{ label.name }}</h2>
+            <div>
+              <h2 class="display-1">{{ label.name }}</h2>
+            </div>
+            <div>
+              <LabelActions :label="label" />
+            </div>
           </VCol>
           <VCol cols="12" sm="8" md="6" lg="4" xl="2">
             <VTextField
@@ -50,12 +55,13 @@
 <script>
 import { mapGetters, mapState } from "vuex";
 import AlbumCard from "../../components/AlbumCard";
+import LabelActions from "@/components/LabelActions";
 import Paginated from "../../mixins/Paginated";
 import Searchable from "../../mixins/Searchable";
 
 export default {
   name: "Label",
-  components: { AlbumCard },
+  components: { AlbumCard, LabelActions },
   mixins: [Paginated, Searchable],
   watch: {
     label: function () {

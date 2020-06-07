@@ -3,7 +3,12 @@
     <vue-headful :title="genre.name + ' | Accentor'" />
     <VRow>
       <VCol cols="12">
-        <h2 class="display-1">{{ genre.name }}</h2>
+        <div>
+          <h2 class="display-1">{{ genre.name }}</h2>
+        </div>
+        <div>
+          <GenreActions :genre="genre" />
+        </div>
       </VCol>
     </VRow>
     <VRow>
@@ -16,11 +21,12 @@
 
 <script>
 import { mapGetters, mapState } from "vuex";
+import GenreActions from "@/components/GenreActions";
 import TracksTable from "../../components/TracksTable";
 
 export default {
   name: "Genre",
-  components: { TracksTable },
+  components: { GenreActions, TracksTable },
   watch: {
     agenre: function () {
       if (this.genre === undefined) {
