@@ -239,6 +239,8 @@
 		"genre": {
 			"add": "Voeg genre toe",
 			"create": "Maak genre aan",
+			"merge": "Voeg genres samen",
+			"merge-into": "Voeg {obj} samen met",
 			"new": "Nieuw genre",
 			"update": "Werk genre bij"
 		},
