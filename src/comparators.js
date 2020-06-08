@@ -10,7 +10,7 @@ export function compareStrings(s1, s2) {
 
 export function compareTracks(rootState, t1, t2) {
   const a1 = rootState.albums.albums[t1.album_id];
-  const a2 = rootState.albums.albums[t1.album_id];
+  const a2 = rootState.albums.albums[t2.album_id];
   if (a1 === undefined && a2 === undefined) {
     return t1.number - t2.number;
   } else if (a1 === undefined) {
