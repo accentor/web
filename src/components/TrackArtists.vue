@@ -15,10 +15,10 @@
             <span>
               <RouterLink
                 :to="{ name: 'artist', params: { id: ta.artist_id } }"
-                >{{ artists[ta.artist_id].name }}</RouterLink
+                >{{ artist_name(ta) }}</RouterLink
               >
               ({{ $t(`music.artist.roles.${ta.role}`) }})
-              <span v-if="ta.name !== artists[ta.artist_id].name">
+              <span v-if="ta.name !== artist_name(ta)">
                 {{ $t("common.as") }} {{ ta.name }}
               </span>
             </span>
@@ -46,6 +46,14 @@ export default {
       return this.track.track_artists
         .map((ta) => ta)
         .sort((a1, a2) => a1.order - a2.order);
+    },
+  },
+  methods: {
+    artist_name(ta) {
+      return typeof this.artists !== undefined &&
+        this.artists.hasOwnProperty(`${ta.artist_id}`)
+        ? this.artists[ta.artist_id].name
+        : ta.name;
     },
   },
 };

@@ -26,7 +26,7 @@
           </div>
           <div
             class="grey--text"
-            v-for="al of album.album_labels"
+            v-for="al of album_labels"
             :key="`${al.label_id} ${al.catalogue_number}`"
           >
             <RouterLink :to="{ name: 'label', params: { id: al.label_id } }">
@@ -75,6 +75,11 @@ export default {
     },
     album: function () {
       return this.albums[this.$route.params.id];
+    },
+    album_labels: function () {
+      return this.album.album_labels.filter((al) =>
+        this.labels.hasOwnProperty(`${al.label_id}`)
+      );
     },
   },
 };
