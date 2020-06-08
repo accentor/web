@@ -1,8 +1,35 @@
 import baseURL from "./base_url";
-import { indexGenerator } from "./fetch";
 
 export function index(auth) {
-  return indexGenerator("tracks", auth);
+  return new Promise((resolve, reject) => {
+    let page = 1;
+    let results = [];
+
+    function doFetch() {
+      fetch(`${baseURL}/tracks?page=${page}`, {
+        method: "GET",
+        headers: {
+          "x-secret": auth.secret,
+          "x-device-id": auth.device_id,
+        },
+      })
+        .catch((reason) => reject({ error: [reason] }))
+        .then((request) => Promise.all([request.ok, request.json()]))
+        .then(([ok, result]) => {
+          if (ok && result.length === 0) {
+            resolve(results);
+          } else if (ok) {
+            results.push(...result);
+            page++;
+            doFetch();
+          } else {
+            reject(result);
+          }
+        });
+    }
+
+    doFetch();
+  });
 }
 
 export function create(auth, track) {
