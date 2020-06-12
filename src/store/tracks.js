@@ -11,15 +11,18 @@ export default {
   },
   mutations: {
     setTracks(state, payload) {
-      let newTracks = { ...state.tracks };
-      for (let track of payload) {
-        newTracks[track.id] = track;
+      let oldTracks = { ...state.tracks };
+      state.tracks = {};
+      for (let id in oldTracks) {
+        state.tracks[id] = oldTracks[id];
       }
-      state.tracks = newTracks;
+      for (let track of payload) {
+        state.tracks[track.id] = track;
+      }
     },
     setTrack(state, { id, track }) {
       track.loaded = new Date();
-      Vue.set(state.tracks, id, track);
+      Vue.set(state.tracks, id, Object.freeze(track));
     },
     setStartLoading(state) {
       state.startLoading = new Date();

@@ -10,15 +10,18 @@ export default {
   },
   mutations: {
     setCodecs(state, payload) {
-      let newCodecs = { ...state.codecs };
-      for (let codec of payload) {
-        newCodecs[codec.id] = codec;
+      let oldCodecs = { ...state.codecs };
+      state.codecs = {};
+      for (let id in oldCodecs) {
+        state.codecs[id] = oldCodecs[id];
       }
-      state.codecs = newCodecs;
+      for (let obj of payload) {
+        state.codecs[obj.id] = obj;
+      }
     },
     setCodec(state, { id, codec }) {
       codec.loaded = new Date();
-      Vue.set(state.codecs, id, codec);
+      Vue.set(state.codecs, id, Object.freeze(codec));
     },
     setStartLoading(state) {
       state.startLoading = new Date();

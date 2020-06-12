@@ -18,15 +18,18 @@ export default {
   },
   mutations: {
     setGenres(state, payload) {
-      let newGenres = { ...state.genres };
-      for (let genre of payload) {
-        newGenres[genre.id] = genre;
+      let oldGenres = { ...state.genres };
+      state.genres = {};
+      for (let id in oldGenres) {
+        state.genres[id] = oldGenres[id];
       }
-      state.genres = newGenres;
+      for (let obj of payload) {
+        state.genres[obj.id] = obj;
+      }
     },
     setGenre(state, { id, genre }) {
       genre.loaded = new Date();
-      Vue.set(state.genres, id, genre);
+      Vue.set(state.genres, id, Object.freeze(genre));
     },
     setStartLoading(state) {
       state.startLoading = new Date();

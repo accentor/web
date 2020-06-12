@@ -18,15 +18,18 @@ export default {
   },
   mutations: {
     setLabels(state, payload) {
-      let newLabels = { ...state.labels };
-      for (let label of payload) {
-        newLabels[label.id] = label;
+      let oldLabels = { ...state.labels };
+      state.labels = {};
+      for (let id in oldLabels) {
+        state.labels[id] = oldLabels[id];
       }
-      state.labels = newLabels;
+      for (let obj of payload) {
+        state.labels[obj.id] = obj;
+      }
     },
     setLabel(state, { id, label }) {
       label.loaded = new Date();
-      Vue.set(state.labels, id, label);
+      Vue.set(state.labels, id, Object.freeze(label));
     },
     setStartLoading(state) {
       state.startLoading = new Date();

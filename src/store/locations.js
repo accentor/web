@@ -10,15 +10,18 @@ export default {
   },
   mutations: {
     setLocations(state, payload) {
-      let newLocations = { ...state.locations };
-      for (let location of payload) {
-        newLocations[location.id] = location;
+      let oldLocations = { ...state.locations };
+      state.locations = {};
+      for (let id in oldLocations) {
+        state.locations[id] = oldLocations[id];
       }
-      state.locations = newLocations;
+      for (let obj of payload) {
+        state.locations[obj.id] = obj;
+      }
     },
     setLocation(state, { id, location }) {
       location.loaded = new Date();
-      Vue.set(state.locations, id, location);
+      Vue.set(state.locations, id, Object.freeze(location));
     },
     setStartLoading(state) {
       state.startLoading = new Date();

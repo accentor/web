@@ -10,15 +10,18 @@ export default {
   },
   mutations: {
     setCodecConversions(state, payload) {
-      let newCodecConversions = { ...state.codecConversions };
-      for (let codecConversion of payload) {
-        newCodecConversions[codecConversion.id] = codecConversion;
+      let oldCodecConversions = { ...state.codecConversions };
+      state.codecConversions = {};
+      for (let id in oldCodecConversions) {
+        state.codecConversions[id] = oldCodecConversions[id];
       }
-      state.codecConversions = newCodecConversions;
+      for (let obj of payload) {
+        state.codecConversions[obj.id] = obj;
+      }
     },
     setCodecConversion(state, { id, codecConversion }) {
       codecConversion.loaded = new Date();
-      Vue.set(state.codecConversions, id, codecConversion);
+      Vue.set(state.codecConversions, id, Object.freeze(codecConversion));
     },
     setStartLoading(state) {
       state.startLoading = new Date();

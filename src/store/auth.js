@@ -26,11 +26,14 @@ export default {
       state.id = null;
     },
     setAuthTokens(state, payload) {
-      let newAuthTokens = { ...state.authTokens };
-      for (let authToken of payload) {
-        newAuthTokens[authToken.id] = authToken;
+      let oldAuthTokens = { ...state.authTokens };
+      state.authTokens = {};
+      for (let id in oldAuthTokens) {
+        state.authTokens[id] = oldAuthTokens[id];
       }
-      state.authTokens = newAuthTokens;
+      for (let obj of payload) {
+        state.authTokens[obj.id] = obj;
+      }
     },
     setStartLoading(state) {
       state.startLoading = new Date();

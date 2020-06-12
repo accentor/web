@@ -10,15 +10,18 @@ export default {
   },
   mutations: {
     setCoverFilenames(state, payload) {
-      let newCoverFilenames = { ...state.coverFilenames };
-      for (let coverFilename of payload) {
-        newCoverFilenames[coverFilename.id] = coverFilename;
+      let oldCoverFilenames = { ...state.coverFilenames };
+      state.coverFilenames = {};
+      for (let id in oldCoverFilenames) {
+        state.coverFilenames[id] = oldCoverFilenames[id];
       }
-      state.coverFilenames = newCoverFilenames;
+      for (let obj of payload) {
+        state.coverFilenames[obj.id] = obj;
+      }
     },
     setCoverFilename(state, { id, coverFilename }) {
       coverFilename.loaded = new Date();
-      Vue.set(state.coverFilenames, id, coverFilename);
+      Vue.set(state.coverFilenames, id, Object.freeze(coverFilename));
     },
     setStartLoading(state) {
       state.startLoading = new Date();

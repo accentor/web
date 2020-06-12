@@ -11,15 +11,18 @@ export default {
   },
   mutations: {
     setAlbums(state, payload) {
-      let newAlbums = { ...state.albums };
-      for (let album of payload) {
-        newAlbums[album.id] = album;
+      let oldAlbums = { ...state.albums };
+      state.albums = {};
+      for (let id in oldAlbums) {
+        state.albums[id] = oldAlbums[id];
       }
-      state.albums = newAlbums;
+      for (let album of payload) {
+        state.albums[album.id] = album;
+      }
     },
     setAlbum(state, { id, album }) {
       album.loaded = new Date();
-      Vue.set(state.albums, id, album);
+      Vue.set(state.albums, id, Object.freeze(album));
     },
     setStartLoading(state) {
       state.startLoading = new Date();

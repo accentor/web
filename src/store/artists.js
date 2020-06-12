@@ -11,15 +11,18 @@ export default {
   },
   mutations: {
     setArtists(state, payload) {
-      let newArtists = { ...state.artists };
-      for (let artist of payload) {
-        newArtists[artist.id] = artist;
+      let oldArtists = { ...state.artists };
+      state.artists = {};
+      for (let id in oldArtists) {
+        state.artists[id] = oldArtists[id];
       }
-      state.artists = newArtists;
+      for (let artist of payload) {
+        state.artists[artist.id] = artist;
+      }
     },
     setArtist(state, { id, artist }) {
       artist.loaded = new Date();
-      Vue.set(state.artists, id, artist);
+      Vue.set(state.artists, id, Object.freeze(artist));
     },
     setStartLoading(state) {
       state.startLoading = new Date();

@@ -10,15 +10,18 @@ export default {
   },
   mutations: {
     setImageTypes(state, payload) {
-      let newImageTypes = { ...state.imageTypes };
-      for (let imageType of payload) {
-        newImageTypes[imageType.id] = imageType;
+      let oldImageTypes = { ...state.imageTypes };
+      state.imageTypes = {};
+      for (let id in oldImageTypes) {
+        state.imageTypes[id] = oldImageTypes[id];
       }
-      state.imageTypes = newImageTypes;
+      for (let obj of payload) {
+        state.imageTypes[obj.id] = obj;
+      }
     },
     setImageType(state, { id, imageType }) {
       imageType.loaded = new Date();
-      Vue.set(state.imageTypes, id, imageType);
+      Vue.set(state.imageTypes, id, Object.freeze(imageType));
     },
     setStartLoading(state) {
       state.startLoading = new Date();

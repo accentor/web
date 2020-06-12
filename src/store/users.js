@@ -11,15 +11,18 @@ export default {
   },
   mutations: {
     setUsers(state, payload) {
-      let newUsers = { ...state.users };
-      for (let user of payload) {
-        newUsers[user.id] = user;
+      let oldUsers = { ...state.users };
+      state.users = {};
+      for (let id in oldUsers) {
+        state.users[id] = oldUsers[id];
       }
-      state.users = newUsers;
+      for (let user of payload) {
+        state.users[user.id] = user;
+      }
     },
     setUser(state, { id, user }) {
       user.loaded = new Date();
-      Vue.set(state.users, id, user);
+      Vue.set(state.users, id, Object.freeze(user));
     },
     setStartLoading(state) {
       state.startLoading = new Date();
