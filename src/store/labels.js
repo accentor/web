@@ -89,6 +89,11 @@ export default {
     destroy({ commit, rootState }, id) {
       return destroy(rootState.auth, id)
         .then(() => {
+          commit(
+            "albums/removeOrMergeLabelOccurence",
+            { oldID: id },
+            { root: true }
+          );
           commit("removeLabel", id);
           return Promise.resolve(true);
         })
@@ -111,7 +116,7 @@ export default {
       return merge(rootState.auth, newID, oldID)
         .then(() => {
           commit(
-            "albums/updateLabelOccurence",
+            "albums/removeOrMergeLabelOccurence",
             { newID, oldID },
             { root: true }
           );

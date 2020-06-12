@@ -44,13 +44,16 @@ export default {
         }
       }
     },
-    updateLabelOccurence(state, { oldID, newID }) {
+    removeOrMergeLabelOccurence(state, { oldID, newID }) {
       const oldAlbums = state.albums;
       state.albums = {};
       for (let album of Object.values(oldAlbums)) {
         const i = albums.album_labels.findIndex((l) => l.label_id === oldID);
         if (i >= 0) {
-          if (album.album_labels.some((l) => l.label_id === newID)) {
+          if (
+            typeof newID !== undefined &&
+            album.album_labels.some((l) => l.label_id === newID)
+          ) {
             album.album_labels.splice(i, 1);
           } else {
             album.album_labels[i].label_id = newID;
