@@ -44,6 +44,18 @@ export default {
         }
       }
     },
+    removeArtistOccurence(state, { oldID }) {
+      const oldTracks = state.tracks;
+      state.tracks = {};
+      for (let track in Object.values(oldTracks)) {
+        if (track.track_artists.some((ta) => ta.artist_id === oldID)) {
+          track.track_artists = track.track_artists.filter(
+            (ta) => ta.artist_id !== oldID
+          );
+        }
+        state.tracks[track.id] = track;
+      }
+    },
     removeOrMergeGenreOccurence(state, { newID, oldID }) {
       const oldTracks = state.tracks;
       state.tracks = {};
