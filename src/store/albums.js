@@ -21,8 +21,13 @@ export default {
       }
     },
     setAlbum(state, { id, album }) {
+      const oldAlbums = { ...state.albums };
+      state.albums = {};
+      for (let id in oldAlbums) {
+        state.albums[id] = oldAlbums[id];
+      }
       album.loaded = new Date();
-      Vue.set(state.albums, id, Object.freeze(album));
+      state.albums[id] = album;
     },
     setStartLoading(state) {
       state.startLoading = new Date();

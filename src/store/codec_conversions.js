@@ -20,8 +20,13 @@ export default {
       }
     },
     setCodecConversion(state, { id, codecConversion }) {
+      const oldCodecConversions = { ...state.codecConversions };
+      state.codecConversions = {};
+      for (let id in oldCodecConversions) {
+        state.codecConversions[id] = oldCodecConversions[id];
+      }
       codecConversion.loaded = new Date();
-      Vue.set(state.codecConversions, id, Object.freeze(codecConversion));
+      state.codecConversions[id] = codecConversion;
     },
     setStartLoading(state) {
       state.startLoading = new Date();

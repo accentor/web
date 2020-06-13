@@ -20,8 +20,13 @@ export default {
       }
     },
     setLocation(state, { id, location }) {
+      const oldLocations = { ...state.locations };
+      state.locations = {};
+      for (let id in oldLocations) {
+        state.locations[id] = oldLocations[id];
+      }
       location.loaded = new Date();
-      Vue.set(state.locations, id, Object.freeze(location));
+      state.locations[id] = location;
     },
     setStartLoading(state) {
       state.startLoading = new Date();

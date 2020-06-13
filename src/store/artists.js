@@ -21,8 +21,13 @@ export default {
       }
     },
     setArtist(state, { id, artist }) {
+      const oldArtists = { ...state.artists };
+      state.artists = {};
+      for (let id in oldArtists) {
+        state.artists[id] = oldArtists[id];
+      }
       artist.loaded = new Date();
-      Vue.set(state.artists, id, Object.freeze(artist));
+      state.artists[id] = artist;
     },
     setStartLoading(state) {
       state.startLoading = new Date();

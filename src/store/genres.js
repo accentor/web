@@ -28,8 +28,13 @@ export default {
       }
     },
     setGenre(state, { id, genre }) {
+      const oldGenres = { ...state.genres };
+      state.genres = {};
+      for (let id in oldGenres) {
+        state.genres[id] = oldGenres[id];
+      }
       genre.loaded = new Date();
-      Vue.set(state.genres, id, Object.freeze(genre));
+      state.genres[id] = genre;
     },
     setStartLoading(state) {
       state.startLoading = new Date();

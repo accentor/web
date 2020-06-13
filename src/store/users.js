@@ -21,8 +21,13 @@ export default {
       }
     },
     setUser(state, { id, user }) {
+      const oldUsers = { ...state.users };
+      state.users = {};
+      for (let id in oldUsers) {
+        state.users[id] = oldUsers[id];
+      }
       user.loaded = new Date();
-      Vue.set(state.users, id, Object.freeze(user));
+      state.users[id] = user;
     },
     setStartLoading(state) {
       state.startLoading = new Date();

@@ -21,8 +21,13 @@ export default {
       }
     },
     setTrack(state, { id, track }) {
+      const oldTracks = { ...state.tracks };
+      state.tracks = {};
+      for (let id in oldTracks) {
+        state.tracks[id] = oldTracks[id];
+      }
       track.loaded = new Date();
-      Vue.set(state.tracks, id, Object.freeze(track));
+      state.tracks[id] = track;
     },
     setStartLoading(state) {
       state.startLoading = new Date();

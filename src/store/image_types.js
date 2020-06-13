@@ -20,8 +20,13 @@ export default {
       }
     },
     setImageType(state, { id, imageType }) {
+      const oldImageTypes = { ...state.imageTypes };
+      state.imageTypes = {};
+      for (let id in oldImageTypes) {
+        state.imageTypes[id] = oldImageTypes[id];
+      }
       imageType.loaded = new Date();
-      Vue.set(state.imageTypes, id, Object.freeze(imageType));
+      state.imageTypes[id] = imageType;
     },
     setStartLoading(state) {
       state.startLoading = new Date();

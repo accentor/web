@@ -28,8 +28,13 @@ export default {
       }
     },
     setLabel(state, { id, label }) {
+      const oldLabels = { ...state.labels };
+      state.labels = {};
+      for (let id in oldLabels) {
+        state.labels[id] = oldLabels[id];
+      }
       label.loaded = new Date();
-      Vue.set(state.labels, id, Object.freeze(label));
+      state.labels[id] = label;
     },
     setStartLoading(state) {
       state.startLoading = new Date();

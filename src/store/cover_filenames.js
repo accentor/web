@@ -20,8 +20,13 @@ export default {
       }
     },
     setCoverFilename(state, { id, coverFilename }) {
+      const oldCoverFilenames = { ...state.coverFilenames };
+      state.coverFilenames = {};
+      for (let id in oldCoverFilenames) {
+        state.coverFilenames[id] = oldCoverFilenames[id];
+      }
       coverFilename.loaded = new Date();
-      Vue.set(state.coverFilenames, id, Object.freeze(coverFilename));
+      state.coverFilenames[id] = coverFilename;
     },
     setStartLoading(state) {
       state.startLoading = new Date();
