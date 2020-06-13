@@ -45,20 +45,17 @@ export default {
       }
     },
     updateGenreOccurence(state, { newID, oldID }) {
-      for (const t in state.tracks) {
-        const i = state.tracks[t].genre_ids.findIndex(
-          (gId) => `${gId}` === `${oldID}`
-        );
+      const oldTracks = state.tracks;
+      state.tracks = {};
+      for (const track of Object.values(oldTracks)) {
+        const i = track.genre_ids.findIndex((gId) => `${gId}` === `${oldID}`);
         if (i >= 0) {
-          state.tracks[t].genre_ids.splice(i, 1);
-          if (
-            state.tracks[t].genre_ids.findIndex(
-              (gId) => `${gId}` === `${newID}`
-            ) === -1
-          ) {
-            state.tracks[t].genre_ids.push(newID);
+          track.genre_ids.splice(i, 1);
+          if (!track.genre_ids.includes(newID)) {
+            track.genre_ids.push(newID);
           }
         }
+        state.tracks[track.id] = track;
       }
     },
   },
