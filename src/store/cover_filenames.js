@@ -35,13 +35,13 @@ export default {
       Vue.delete(state.coverFilenames, id);
     },
     removeOld(state) {
-      Object.values(state.coverFilenames)
-        .filter((obj) => {
-          return obj.loaded < state.startLoading;
-        })
-        .forEach((obj) => {
-          Vue.delete(state.coverFilenames, obj.id);
-        });
+      const oldCoverFilenames = { ...state.coverFilenames };
+      state.coverFilenames = {};
+      for (let id in oldCoverFilenames) {
+        if (oldCoverFilenames[id].loaded > state.startLoading) {
+          state.coverFilenames[id] = oldCoverFilenames[id];
+        }
+      }
     },
   },
   actions: {

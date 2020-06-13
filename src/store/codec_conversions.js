@@ -35,13 +35,13 @@ export default {
       Vue.delete(state.codecConversions, id);
     },
     removeOld(state) {
-      Object.values(state.codecConversions)
-        .filter((obj) => {
-          return obj.loaded < state.startLoading;
-        })
-        .forEach((obj) => {
-          Vue.delete(state.codecConversions, obj.id);
-        });
+      const oldCodecConversions = { ...state.codecConversions };
+      state.codecConversions = {};
+      for (let id in oldCodecConversions) {
+        if (oldCodecConversions[id].loaded > state.startLoading) {
+          state.codecConversions[id] = oldCodecConversions[id];
+        }
+      }
     },
   },
   actions: {

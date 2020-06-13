@@ -36,13 +36,13 @@ export default {
       Vue.delete(state.tracks, id);
     },
     removeOld(state) {
-      Object.values(state.tracks)
-        .filter((obj) => {
-          return obj.loaded < state.startLoading;
-        })
-        .forEach((obj) => {
-          Vue.delete(state.tracks, obj.id);
-        });
+      const oldTracks = { ...state.tracks };
+      state.tracks = {};
+      for (let id in oldTracks) {
+        if (oldTracks[id].loaded > state.startLoading) {
+          state.tracks[id] = oldTracks[id];
+        }
+      }
     },
     updateGenreOccurence(state, { newID, oldID }) {
       for (const t in state.tracks) {

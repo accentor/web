@@ -42,13 +42,13 @@ export default {
       Vue.delete(state.authTokens, id);
     },
     removeOld(state) {
-      Object.values(state.authTokens)
-        .filter((obj) => {
-          return obj.loaded < state.startLoading;
-        })
-        .forEach((obj) => {
-          Vue.delete(state.authTokens, obj.id);
-        });
+      const oldAuthTokens = { ...state.authTokens };
+      state.authTokens = {};
+      for (let id in oldAuthTokens) {
+        if (oldAuthTokens[id].loaded > state.startLoading) {
+          state.authTokens[id] = oldAuthTokens[id];
+        }
+      }
     },
   },
   actions: {

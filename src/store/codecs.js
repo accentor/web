@@ -35,13 +35,13 @@ export default {
       Vue.delete(state.codecs, id);
     },
     removeOld(state) {
-      Object.values(state.codecs)
-        .filter((obj) => {
-          return obj.loaded < state.startLoading;
-        })
-        .forEach((obj) => {
-          Vue.delete(state.codecs, obj.id);
-        });
+      const oldCodecs = { ...state.codecs };
+      state.codecs = {};
+      for (let id in oldCodecs) {
+        if (oldCodecs[id].loaded > state.startLoading) {
+          state.codecs[id] = oldCodecs[id];
+        }
+      }
     },
   },
   actions: {

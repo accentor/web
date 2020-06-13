@@ -35,13 +35,13 @@ export default {
       Vue.delete(state.imageTypes, id);
     },
     removeOld(state) {
-      Object.values(state.imageTypes)
-        .filter((obj) => {
-          return obj.loaded < state.startLoading;
-        })
-        .forEach((obj) => {
-          Vue.delete(state.imageTypes, obj.id);
-        });
+      const oldImageTypes = { ...state.imageTypes };
+      state.imageTypes = {};
+      for (let id in oldImageTypes) {
+        if (oldImageTypes[id].loaded > state.startLoading) {
+          state.imageTypes[id] = oldImageTypes[id];
+        }
+      }
     },
   },
   actions: {

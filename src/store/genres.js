@@ -43,13 +43,13 @@ export default {
       Vue.delete(state.genres, id);
     },
     removeOld(state) {
-      Object.values(state.genres)
-        .filter((obj) => {
-          return obj.loaded < state.startLoading;
-        })
-        .forEach((obj) => {
-          Vue.delete(state.genres, obj.id);
-        });
+      const oldGenres = { ...state.genres };
+      state.genres = {};
+      for (let id in oldGenres) {
+        if (oldGenres[id].loaded > state.startLoading) {
+          state.genres[id] = oldGenres[id];
+        }
+      }
     },
   },
   actions: {

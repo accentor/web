@@ -43,13 +43,13 @@ export default {
       Vue.delete(state.labels, id);
     },
     removeOld(state) {
-      Object.values(state.labels)
-        .filter((obj) => {
-          return obj.loaded < state.startLoading;
-        })
-        .forEach((obj) => {
-          Vue.delete(state.labels, obj.id);
-        });
+      const oldLabels = { ...state.labels };
+      state.labels = {};
+      for (let id in oldLabels) {
+        if (oldLabels[id].loaded > state.startLoading) {
+          state.labels[id] = oldLabels[id];
+        }
+      }
     },
   },
   actions: {

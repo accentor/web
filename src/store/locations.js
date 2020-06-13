@@ -35,13 +35,13 @@ export default {
       Vue.delete(state.locations, id);
     },
     removeOld(state) {
-      Object.values(state.locations)
-        .filter((obj) => {
-          return obj.loaded < state.startLoading;
-        })
-        .forEach((obj) => {
-          Vue.delete(state.locations, obj.id);
-        });
+      const oldLocations = { ...state.locations };
+      state.locations = {};
+      for (let id in oldLocations) {
+        if (oldLocations[id].loaded > state.startLoading) {
+          state.locations[id] = oldLocations[id];
+        }
+      }
     },
   },
   actions: {

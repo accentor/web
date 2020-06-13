@@ -36,13 +36,13 @@ export default {
       Vue.delete(state.albums, id);
     },
     removeOld(state) {
-      Object.values(state.albums)
-        .filter((obj) => {
-          return obj.loaded < state.startLoading;
-        })
-        .forEach((obj) => {
-          Vue.delete(state.albums, obj.id);
-        });
+      const oldAlbums = { ...state.albums };
+      state.albums = {};
+      for (let id in oldAlbums) {
+        if (oldAlbums[id].loaded > state.startLoading) {
+          state.albums[id] = oldAlbums[id];
+        }
+      }
     },
     updateLabelOccurence(state, { newID, oldID }) {
       for (const a in state.albums) {

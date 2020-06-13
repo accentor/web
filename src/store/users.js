@@ -36,13 +36,13 @@ export default {
       Vue.delete(state.users, id);
     },
     removeOld(state) {
-      Object.values(state.users)
-        .filter((obj) => {
-          return obj.loaded < state.startLoading;
-        })
-        .forEach((obj) => {
-          Vue.delete(state.users, obj.id);
-        });
+      const oldUsers = { ...state.users };
+      state.users = {};
+      for (let id in oldUsers) {
+        if (oldUsers[id].loaded > state.startLoading) {
+          state.users[id] = oldUsers[id];
+        }
+      }
     },
   },
   actions: {
