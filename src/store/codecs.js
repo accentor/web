@@ -10,15 +10,23 @@ export default {
   },
   mutations: {
     setCodecs(state, payload) {
-      let newCodecs = { ...state.codecs };
-      for (let codec of payload) {
-        newCodecs[codec.id] = codec;
+      const oldCodecs = state.codecs;
+      state.codecs = {};
+      for (let id in oldCodecs) {
+        state.codecs[id] = oldCodecs[id];
       }
-      state.codecs = newCodecs;
+      for (let obj of payload) {
+        state.codecs[obj.id] = obj;
+      }
     },
     setCodec(state, { id, codec }) {
+      const oldCodecs = state.codecs;
+      state.codecs = {};
+      for (let id in oldCodecs) {
+        state.codecs[id] = oldCodecs[id];
+      }
       codec.loaded = new Date();
-      Vue.set(state.codecs, id, codec);
+      state.codecs[id] = codec;
     },
     setStartLoading(state) {
       state.startLoading = new Date();
@@ -27,13 +35,13 @@ export default {
       Vue.delete(state.codecs, id);
     },
     removeOld(state) {
-      Object.values(state.codecs)
-        .filter((obj) => {
-          return obj.loaded < state.startLoading;
-        })
-        .forEach((obj) => {
-          Vue.delete(state.codecs, obj.id);
-        });
+      const oldCodecs = state.codecs;
+      state.codecs = {};
+      for (let id in oldCodecs) {
+        if (oldCodecs[id].loaded > state.startLoading) {
+          state.codecs[id] = oldCodecs[id];
+        }
+      }
     },
   },
   actions: {

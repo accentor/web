@@ -1,5 +1,6 @@
 import Vue from "vue";
 import { index, create, destroy, update } from "../api/tracks";
+import { fetchAll } from "./actions";
 import { compareStrings, compareTracks } from "../comparators";
 
 export default {
@@ -10,15 +11,23 @@ export default {
   },
   mutations: {
     setTracks(state, payload) {
+      const oldTracks = state.tracks;
       state.tracks = {};
+      for (let id in oldTracks) {
+        state.tracks[id] = oldTracks[id];
+      }
       for (let track of payload) {
-        track.loaded = new Date();
         state.tracks[track.id] = track;
       }
     },
     setTrack(state, { id, track }) {
+      const oldTracks = state.tracks;
+      state.tracks = {};
+      for (let id in oldTracks) {
+        state.tracks[id] = oldTracks[id];
+      }
       track.loaded = new Date();
-      Vue.set(state.tracks, id, track);
+      state.tracks[id] = track;
     },
     setStartLoading(state) {
       state.startLoading = new Date();
@@ -26,30 +35,35 @@ export default {
     removeTrack(state, id) {
       Vue.delete(state.tracks, id);
     },
+    removeOld(state) {
+      const oldTracks = state.tracks;
+      state.tracks = {};
+      for (let id in oldTracks) {
+        if (oldTracks[id].loaded > state.startLoading) {
+          state.tracks[id] = oldTracks[id];
+        }
+      }
+    },
     updateGenreOccurence(state, { newID, oldID }) {
-      for (const t in state.tracks) {
-        const i = state.tracks[t].genre_ids.findIndex(
-          (gId) => `${gId}` === `${oldID}`
-        );
+      const oldTracks = state.tracks;
+      state.tracks = {};
+      for (const track of Object.values(oldTracks)) {
+        const i = track.genre_ids.findIndex((gId) => `${gId}` === `${oldID}`);
         if (i >= 0) {
-          state.tracks[t].genre_ids.splice(i, 1);
-          if (
-            state.tracks[t].genre_ids.findIndex(
-              (gId) => `${gId}` === `${newID}`
-            ) === -1
-          ) {
-            state.tracks[t].genre_ids.push(newID);
+          track.genre_ids.splice(i, 1);
+          if (!track.genre_ids.includes(newID)) {
+            track.genre_ids.push(newID);
           }
         }
+        state.tracks[track.id] = track;
       }
     },
   },
   actions: {
     index({ commit, rootState }) {
-      commit("setStartLoading");
-      return index(rootState.auth)
-        .then((result) => {
-          commit("setTracks", result);
+      const generator = index(rootState.auth);
+      return fetchAll(commit, generator, "setTracks")
+        .then(() => {
           return Promise.resolve(true);
         })
         .catch((error) => {

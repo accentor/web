@@ -10,15 +10,23 @@ export default {
   },
   mutations: {
     setLocations(state, payload) {
-      let newLocations = { ...state.locations };
-      for (let location of payload) {
-        newLocations[location.id] = location;
+      const oldLocations = state.locations;
+      state.locations = {};
+      for (let id in oldLocations) {
+        state.locations[id] = oldLocations[id];
       }
-      state.locations = newLocations;
+      for (let obj of payload) {
+        state.locations[obj.id] = obj;
+      }
     },
     setLocation(state, { id, location }) {
+      const oldLocations = state.locations;
+      state.locations = {};
+      for (let id in oldLocations) {
+        state.locations[id] = oldLocations[id];
+      }
       location.loaded = new Date();
-      Vue.set(state.locations, id, location);
+      state.locations[id] = location;
     },
     setStartLoading(state) {
       state.startLoading = new Date();
@@ -27,13 +35,13 @@ export default {
       Vue.delete(state.locations, id);
     },
     removeOld(state) {
-      Object.values(state.locations)
-        .filter((obj) => {
-          return obj.loaded < state.startLoading;
-        })
-        .forEach((obj) => {
-          Vue.delete(state.locations, obj.id);
-        });
+      const oldLocations = state.locations;
+      state.locations = {};
+      for (let id in oldLocations) {
+        if (oldLocations[id].loaded > state.startLoading) {
+          state.locations[id] = oldLocations[id];
+        }
+      }
     },
   },
   actions: {

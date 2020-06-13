@@ -11,15 +11,23 @@ export default {
   },
   mutations: {
     setArtists(state, payload) {
-      let newArtists = { ...state.artists };
-      for (let artist of payload) {
-        newArtists[artist.id] = artist;
+      const oldArtists = state.artists;
+      state.artists = {};
+      for (let id in oldArtists) {
+        state.artists[id] = oldArtists[id];
       }
-      state.artists = newArtists;
+      for (let artist of payload) {
+        state.artists[artist.id] = artist;
+      }
     },
     setArtist(state, { id, artist }) {
+      const oldArtists = state.artists;
+      state.artists = {};
+      for (let id in oldArtists) {
+        state.artists[id] = oldArtists[id];
+      }
       artist.loaded = new Date();
-      Vue.set(state.artists, id, artist);
+      state.artists[id] = artist;
     },
     setStartLoading(state) {
       state.startLoading = new Date();
@@ -28,13 +36,13 @@ export default {
       Vue.delete(state.artists, id);
     },
     removeOld(state) {
-      Object.values(state.artists)
-        .filter((obj) => {
-          return obj.loaded < state.startLoading;
-        })
-        .forEach((obj) => {
-          Vue.delete(state.artists, obj.id);
-        });
+      const oldArtists = state.artists;
+      state.artists = {};
+      for (let id in oldArtists) {
+        if (oldArtists[id].loaded > state.startLoading) {
+          state.artists[id] = oldArtists[id];
+        }
+      }
     },
   },
   actions: {

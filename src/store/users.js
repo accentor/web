@@ -11,15 +11,23 @@ export default {
   },
   mutations: {
     setUsers(state, payload) {
-      let newUsers = { ...state.users };
-      for (let user of payload) {
-        newUsers[user.id] = user;
+      const oldUsers = state.users;
+      state.users = {};
+      for (let id in oldUsers) {
+        state.users[id] = oldUsers[id];
       }
-      state.users = newUsers;
+      for (let user of payload) {
+        state.users[user.id] = user;
+      }
     },
     setUser(state, { id, user }) {
+      const oldUsers = state.users;
+      state.users = {};
+      for (let id in oldUsers) {
+        state.users[id] = oldUsers[id];
+      }
       user.loaded = new Date();
-      Vue.set(state.users, id, user);
+      state.users[id] = user;
     },
     setStartLoading(state) {
       state.startLoading = new Date();
@@ -28,13 +36,13 @@ export default {
       Vue.delete(state.users, id);
     },
     removeOld(state) {
-      Object.values(state.users)
-        .filter((obj) => {
-          return obj.loaded < state.startLoading;
-        })
-        .forEach((obj) => {
-          Vue.delete(state.users, obj.id);
-        });
+      const oldUsers = state.users;
+      state.users = {};
+      for (let id in oldUsers) {
+        if (oldUsers[id].loaded > state.startLoading) {
+          state.users[id] = oldUsers[id];
+        }
+      }
     },
   },
   actions: {

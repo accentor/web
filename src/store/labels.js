@@ -18,15 +18,23 @@ export default {
   },
   mutations: {
     setLabels(state, payload) {
-      let newLabels = { ...state.labels };
-      for (let label of payload) {
-        newLabels[label.id] = label;
+      const oldLabels = state.labels;
+      state.labels = {};
+      for (let id in oldLabels) {
+        state.labels[id] = oldLabels[id];
       }
-      state.labels = newLabels;
+      for (let obj of payload) {
+        state.labels[obj.id] = obj;
+      }
     },
     setLabel(state, { id, label }) {
+      const oldLabels = state.labels;
+      state.labels = {};
+      for (let id in oldLabels) {
+        state.labels[id] = oldLabels[id];
+      }
       label.loaded = new Date();
-      Vue.set(state.labels, id, label);
+      state.labels[id] = label;
     },
     setStartLoading(state) {
       state.startLoading = new Date();
@@ -35,13 +43,13 @@ export default {
       Vue.delete(state.labels, id);
     },
     removeOld(state) {
-      Object.values(state.labels)
-        .filter((obj) => {
-          return obj.loaded < state.startLoading;
-        })
-        .forEach((obj) => {
-          Vue.delete(state.labels, obj.id);
-        });
+      const oldLabels = state.labels;
+      state.labels = {};
+      for (let id in oldLabels) {
+        if (oldLabels[id].loaded > state.startLoading) {
+          state.labels[id] = oldLabels[id];
+        }
+      }
     },
   },
   actions: {

@@ -10,15 +10,23 @@ export default {
   },
   mutations: {
     setCodecConversions(state, payload) {
-      let newCodecConversions = { ...state.codecConversions };
-      for (let codecConversion of payload) {
-        newCodecConversions[codecConversion.id] = codecConversion;
+      const oldCodecConversions = state.codecConversions;
+      state.codecConversions = {};
+      for (let id in oldCodecConversions) {
+        state.codecConversions[id] = oldCodecConversions[id];
       }
-      state.codecConversions = newCodecConversions;
+      for (let obj of payload) {
+        state.codecConversions[obj.id] = obj;
+      }
     },
     setCodecConversion(state, { id, codecConversion }) {
+      const oldCodecConversions = state.codecConversions;
+      state.codecConversions = {};
+      for (let id in oldCodecConversions) {
+        state.codecConversions[id] = oldCodecConversions[id];
+      }
       codecConversion.loaded = new Date();
-      Vue.set(state.codecConversions, id, codecConversion);
+      state.codecConversions[id] = codecConversion;
     },
     setStartLoading(state) {
       state.startLoading = new Date();
@@ -27,13 +35,13 @@ export default {
       Vue.delete(state.codecConversions, id);
     },
     removeOld(state) {
-      Object.values(state.codecConversions)
-        .filter((obj) => {
-          return obj.loaded < state.startLoading;
-        })
-        .forEach((obj) => {
-          Vue.delete(state.codecConversions, obj.id);
-        });
+      const oldCodecConversions = state.codecConversions;
+      state.codecConversions = {};
+      for (let id in oldCodecConversions) {
+        if (oldCodecConversions[id].loaded > state.startLoading) {
+          state.codecConversions[id] = oldCodecConversions[id];
+        }
+      }
     },
   },
   actions: {

@@ -11,15 +11,23 @@ export default {
   },
   mutations: {
     setAlbums(state, payload) {
-      let newAlbums = { ...state.albums };
-      for (let album of payload) {
-        newAlbums[album.id] = album;
+      const oldAlbums = state.albums;
+      state.albums = {};
+      for (let id in oldAlbums) {
+        state.albums[id] = oldAlbums[id];
       }
-      state.albums = newAlbums;
+      for (let album of payload) {
+        state.albums[album.id] = album;
+      }
     },
     setAlbum(state, { id, album }) {
+      const oldAlbums = state.albums;
+      state.albums = {};
+      for (let id in oldAlbums) {
+        state.albums[id] = oldAlbums[id];
+      }
       album.loaded = new Date();
-      Vue.set(state.albums, id, album);
+      state.albums[id] = album;
     },
     setStartLoading(state) {
       state.startLoading = new Date();
@@ -28,29 +36,27 @@ export default {
       Vue.delete(state.albums, id);
     },
     removeOld(state) {
-      Object.values(state.albums)
-        .filter((obj) => {
-          return obj.loaded < state.startLoading;
-        })
-        .forEach((obj) => {
-          Vue.delete(state.albums, obj.id);
-        });
+      const oldAlbums = state.albums;
+      state.albums = {};
+      for (let id in oldAlbums) {
+        if (oldAlbums[id].loaded > state.startLoading) {
+          state.albums[id] = oldAlbums[id];
+        }
+      }
     },
-    updateLabelOccurence(state, { newID, oldID }) {
-      for (const a in state.albums) {
-        const i = state.albums[a].label_ids.findIndex(
-          (lId) => `${lId}` === `${oldID}`
-        );
+    updateLabelOccurence(state, { oldID, newID }) {
+      const oldAlbums = state.albums;
+      state.albums = {};
+      for (let album of Object.values(oldAlbums)) {
+        const i = albums.album_labels.findIndex((l) => l.label_id === oldID);
         if (i >= 0) {
-          state.albums[a].label_ids.splice(i, 1);
-          if (
-            state.albums[a].label_ids.findIndex(
-              (lId) => `${lId}` === `${newID}`
-            ) === -1
-          ) {
-            state.albums[t].label_ids.push(newID);
+          if (album.album_labels.some((l) => l.label_id === newID)) {
+            album.album_labels.splice(i, 1);
+          } else {
+            album.album_labels[i].label_id = newID;
           }
         }
+        state.albums[album.id] = album;
       }
     },
   },

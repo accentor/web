@@ -18,15 +18,23 @@ export default {
   },
   mutations: {
     setGenres(state, payload) {
-      let newGenres = { ...state.genres };
-      for (let genre of payload) {
-        newGenres[genre.id] = genre;
+      const oldGenres = state.genres;
+      state.genres = {};
+      for (let id in oldGenres) {
+        state.genres[id] = oldGenres[id];
       }
-      state.genres = newGenres;
+      for (let obj of payload) {
+        state.genres[obj.id] = obj;
+      }
     },
     setGenre(state, { id, genre }) {
+      const oldGenres = state.genres;
+      state.genres = {};
+      for (let id in oldGenres) {
+        state.genres[id] = oldGenres[id];
+      }
       genre.loaded = new Date();
-      Vue.set(state.genres, id, genre);
+      state.genres[id] = genre;
     },
     setStartLoading(state) {
       state.startLoading = new Date();
@@ -35,13 +43,13 @@ export default {
       Vue.delete(state.genres, id);
     },
     removeOld(state) {
-      Object.values(state.genres)
-        .filter((obj) => {
-          return obj.loaded < state.startLoading;
-        })
-        .forEach((obj) => {
-          Vue.delete(state.genres, obj.id);
-        });
+      const oldGenres = state.genres;
+      state.genres = {};
+      for (let id in oldGenres) {
+        if (oldGenres[id].loaded > state.startLoading) {
+          state.genres[id] = oldGenres[id];
+        }
+      }
     },
   },
   actions: {

@@ -10,15 +10,23 @@ export default {
   },
   mutations: {
     setImageTypes(state, payload) {
-      let newImageTypes = { ...state.imageTypes };
-      for (let imageType of payload) {
-        newImageTypes[imageType.id] = imageType;
+      const oldImageTypes = state.imageTypes;
+      state.imageTypes = {};
+      for (let id in oldImageTypes) {
+        state.imageTypes[id] = oldImageTypes[id];
       }
-      state.imageTypes = newImageTypes;
+      for (let obj of payload) {
+        state.imageTypes[obj.id] = obj;
+      }
     },
     setImageType(state, { id, imageType }) {
+      const oldImageTypes = state.imageTypes;
+      state.imageTypes = {};
+      for (let id in oldImageTypes) {
+        state.imageTypes[id] = oldImageTypes[id];
+      }
       imageType.loaded = new Date();
-      Vue.set(state.imageTypes, id, imageType);
+      state.imageTypes[id] = imageType;
     },
     setStartLoading(state) {
       state.startLoading = new Date();
@@ -27,13 +35,13 @@ export default {
       Vue.delete(state.imageTypes, id);
     },
     removeOld(state) {
-      Object.values(state.imageTypes)
-        .filter((obj) => {
-          return obj.loaded < state.startLoading;
-        })
-        .forEach((obj) => {
-          Vue.delete(state.imageTypes, obj.id);
-        });
+      const oldImageTypes = state.imageTypes;
+      state.imageTypes = {};
+      for (let id in oldImageTypes) {
+        if (oldImageTypes[id].loaded > state.startLoading) {
+          state.imageTypes[id] = oldImageTypes[id];
+        }
+      }
     },
   },
   actions: {
