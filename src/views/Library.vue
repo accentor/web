@@ -2,13 +2,13 @@
   <VContainer fluid v-if="isModerator">
     <vue-headful :title="$t('library-settings') + ' | Accentor'" />
     <VRow>
-      <h2 class="headline">{{ $t("library.maintenance") }}</h2>
+      <h2 class="text-h5">{{ $t("library.maintenance") }}</h2>
     </VRow>
     <VRow>
       <MaintenanceActions />
     </VRow>
     <VRow>
-      <h2 class="headline">{{ $t("library.rescan") }}</h2>
+      <h2 class="text-h5">{{ $t("library.rescan") }}</h2>
     </VRow>
     <VRow v-if="rescan">
       <VBtn
@@ -41,17 +41,17 @@
         <div>
           <h3 class="title">{{ $t("library.warnings") }}</h3>
         </div>
-        <pre class="body-2">{{ rescan.warning_text }}</pre>
+        <pre class="text-body-2">{{ rescan.warning_text }}</pre>
       </div>
       <div v-if="rescan.error_text">
         <div>
           <h3 class="title">{{ $t("library.errors") }}</h3>
         </div>
-        <pre class="body-2">{{ rescan.error_text }}</pre>
+        <pre class="text-body-2">{{ rescan.error_text }}</pre>
       </div>
     </VRow>
     <VRow>
-      <h2 class="headline">{{ $t("library.codecs") }}</h2>
+      <h2 class="text-h5">{{ $t("library.codecs") }}</h2>
     </VRow>
     <VRow>
       <VCol cols="12">
@@ -59,7 +59,7 @@
       </VCol>
     </VRow>
     <VRow>
-      <h2 class="headline">{{ $t("library.codec-conversions") }}</h2>
+      <h2 class="text-h5">{{ $t("library.codec-conversions") }}</h2>
     </VRow>
     <VRow>
       <VCol cols="12">
@@ -67,7 +67,7 @@
       </VCol>
     </VRow>
     <VRow>
-      <h2 class="headline">{{ $t("library.cover-filenames") }}</h2>
+      <h2 class="text-h5">{{ $t("library.cover-filenames") }}</h2>
     </VRow>
     <VRow>
       <VCol cols="12">
@@ -75,7 +75,7 @@
       </VCol>
     </VRow>
     <VRow>
-      <h2 class="headline">
+      <h2 class="text-h5">
         {{ $t("library.image-types") }}
       </h2>
     </VRow>
@@ -85,7 +85,7 @@
       </VCol>
     </VRow>
     <VRow>
-      <h2 class="headline">{{ $t("library.locations") }}</h2>
+      <h2 class="text-h5">{{ $t("library.locations") }}</h2>
     </VRow>
     <VRow>
       <VCol cols="12">

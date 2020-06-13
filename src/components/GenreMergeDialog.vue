@@ -21,7 +21,7 @@
     </template>
     <VCard>
       <VCardTitle>
-        <span class="headline">{{
+        <span class="text-h5">{{
           $t("music.genre.merge-into", { obj: genre.name })
         }}</span>
       </VCardTitle>

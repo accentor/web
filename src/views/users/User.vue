@@ -3,7 +3,7 @@
     <vue-headful :title="user.name + ' | Accentor'" />
     <VRow>
       <div>
-        <div class="display-1">{{ user.name }}</div>
+        <div class="text-h4">{{ user.name }}</div>
         <span class="grey--text">
           {{ user.permission }}
         </span>

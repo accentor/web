@@ -12,7 +12,7 @@
         :items-per-page="numberOfItems"
       >
         <template v-slot:header>
-          <h2 class="display-1">{{ $t("home.recently-released") }}</h2>
+          <h2 class="text-h4">{{ $t("home.recently-released") }}</h2>
         </template>
         <template v-slot:default="props">
           <VRow>
@@ -42,7 +42,7 @@
         :items-per-page="numberOfItems"
       >
         <template v-slot:header>
-          <h2 class="display-1">
+          <h2 class="text-h4">
             {{ $t("home.recently-added-albums") }}
           </h2>
         </template>
@@ -74,7 +74,7 @@
         :items-per-page="numberOfItems"
       >
         <template v-slot:header>
-          <h2 class="display-1">
+          <h2 class="text-h4">
             {{ $t("home.recently-added-artists") }}
           </h2>
         </template>
@@ -106,7 +106,7 @@
         :items-per-page="numberOfItems"
       >
         <template v-slot:header>
-          <h2 class="display-1">{{ $t("home.on-this-day") }}</h2>
+          <h2 class="text-h4">{{ $t("home.on-this-day") }}</h2>
         </template>
         <template v-slot:no-data>
           <v-alert :value="true" color="info" icon="mdi-information" dark>
@@ -142,7 +142,7 @@
         :items-per-page="numberOfItems"
       >
         <template v-slot:header>
-          <h2 class="display-1">
+          <h2 class="text-h4">
             {{ $t("home.random-albums") }}
           </h2>
         </template>
@@ -174,7 +174,7 @@
         :items-per-page="numberOfItems"
       >
         <template v-slot:header>
-          <h2 class="display-1">
+          <h2 class="text-h4">
             {{ $t("home.random-artists") }}
           </h2>
         </template>
