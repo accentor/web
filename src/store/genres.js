@@ -18,7 +18,7 @@ export default {
   },
   mutations: {
     setGenres(state, payload) {
-      let oldGenres = { ...state.genres };
+      const oldGenres = { ...state.genres };
       state.genres = {};
       for (let id in oldGenres) {
         state.genres[id] = oldGenres[id];

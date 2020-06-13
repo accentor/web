@@ -11,7 +11,7 @@ export default {
   },
   mutations: {
     setTracks(state, payload) {
-      let oldTracks = { ...state.tracks };
+      const oldTracks = { ...state.tracks };
       state.tracks = {};
       for (let id in oldTracks) {
         state.tracks[id] = oldTracks[id];

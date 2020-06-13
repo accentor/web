@@ -10,7 +10,7 @@ export default {
   },
   mutations: {
     setImageTypes(state, payload) {
-      let oldImageTypes = { ...state.imageTypes };
+      const oldImageTypes = { ...state.imageTypes };
       state.imageTypes = {};
       for (let id in oldImageTypes) {
         state.imageTypes[id] = oldImageTypes[id];

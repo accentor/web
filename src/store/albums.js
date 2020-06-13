@@ -11,7 +11,7 @@ export default {
   },
   mutations: {
     setAlbums(state, payload) {
-      let oldAlbums = { ...state.albums };
+      const oldAlbums = { ...state.albums };
       state.albums = {};
       for (let id in oldAlbums) {
         state.albums[id] = oldAlbums[id];

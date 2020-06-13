@@ -26,7 +26,7 @@ export default {
       state.id = null;
     },
     setAuthTokens(state, payload) {
-      let oldAuthTokens = { ...state.authTokens };
+      const oldAuthTokens = { ...state.authTokens };
       state.authTokens = {};
       for (let id in oldAuthTokens) {
         state.authTokens[id] = oldAuthTokens[id];

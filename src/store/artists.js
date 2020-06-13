@@ -11,7 +11,7 @@ export default {
   },
   mutations: {
     setArtists(state, payload) {
-      let oldArtists = { ...state.artists };
+      const oldArtists = { ...state.artists };
       state.artists = {};
       for (let id in oldArtists) {
         state.artists[id] = oldArtists[id];

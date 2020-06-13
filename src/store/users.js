@@ -11,7 +11,7 @@ export default {
   },
   mutations: {
     setUsers(state, payload) {
-      let oldUsers = { ...state.users };
+      const oldUsers = { ...state.users };
       state.users = {};
       for (let id in oldUsers) {
         state.users[id] = oldUsers[id];

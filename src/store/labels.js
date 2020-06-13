@@ -18,7 +18,7 @@ export default {
   },
   mutations: {
     setLabels(state, payload) {
-      let oldLabels = { ...state.labels };
+      const oldLabels = { ...state.labels };
       state.labels = {};
       for (let id in oldLabels) {
         state.labels[id] = oldLabels[id];

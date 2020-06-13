@@ -10,7 +10,7 @@ export default {
   },
   mutations: {
     setLocations(state, payload) {
-      let oldLocations = { ...state.locations };
+      const oldLocations = { ...state.locations };
       state.locations = {};
       for (let id in oldLocations) {
         state.locations[id] = oldLocations[id];

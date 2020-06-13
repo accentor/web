@@ -10,7 +10,7 @@ export default {
   },
   mutations: {
     setCodecs(state, payload) {
-      let oldCodecs = { ...state.codecs };
+      const oldCodecs = { ...state.codecs };
       state.codecs = {};
       for (let id in oldCodecs) {
         state.codecs[id] = oldCodecs[id];

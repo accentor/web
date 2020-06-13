@@ -10,7 +10,7 @@ export default {
   },
   mutations: {
     setCoverFilenames(state, payload) {
-      let oldCoverFilenames = { ...state.coverFilenames };
+      const oldCoverFilenames = { ...state.coverFilenames };
       state.coverFilenames = {};
       for (let id in oldCoverFilenames) {
         state.coverFilenames[id] = oldCoverFilenames[id];
