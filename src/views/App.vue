@@ -14,7 +14,7 @@
     </VAppBar>
 
     <VNavigationDrawer
-      :mobile-break-point="1500"
+      :mobile-breakpoint="1500"
       app
       clipped
       left
