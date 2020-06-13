@@ -10,7 +10,7 @@ export default {
   },
   mutations: {
     setCodecs(state, payload) {
-      const oldCodecs = { ...state.codecs };
+      const oldCodecs = state.codecs;
       state.codecs = {};
       for (let id in oldCodecs) {
         state.codecs[id] = oldCodecs[id];
@@ -20,7 +20,7 @@ export default {
       }
     },
     setCodec(state, { id, codec }) {
-      const oldCodecs = { ...state.codecs };
+      const oldCodecs = state.codecs;
       state.codecs = {};
       for (let id in oldCodecs) {
         state.codecs[id] = oldCodecs[id];
@@ -35,7 +35,7 @@ export default {
       Vue.delete(state.codecs, id);
     },
     removeOld(state) {
-      const oldCodecs = { ...state.codecs };
+      const oldCodecs = state.codecs;
       state.codecs = {};
       for (let id in oldCodecs) {
         if (oldCodecs[id].loaded > state.startLoading) {

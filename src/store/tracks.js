@@ -11,7 +11,7 @@ export default {
   },
   mutations: {
     setTracks(state, payload) {
-      const oldTracks = { ...state.tracks };
+      const oldTracks = state.tracks;
       state.tracks = {};
       for (let id in oldTracks) {
         state.tracks[id] = oldTracks[id];
@@ -21,7 +21,7 @@ export default {
       }
     },
     setTrack(state, { id, track }) {
-      const oldTracks = { ...state.tracks };
+      const oldTracks = state.tracks;
       state.tracks = {};
       for (let id in oldTracks) {
         state.tracks[id] = oldTracks[id];
@@ -36,7 +36,7 @@ export default {
       Vue.delete(state.tracks, id);
     },
     removeOld(state) {
-      const oldTracks = { ...state.tracks };
+      const oldTracks = state.tracks;
       state.tracks = {};
       for (let id in oldTracks) {
         if (oldTracks[id].loaded > state.startLoading) {

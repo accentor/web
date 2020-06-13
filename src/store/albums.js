@@ -11,7 +11,7 @@ export default {
   },
   mutations: {
     setAlbums(state, payload) {
-      const oldAlbums = { ...state.albums };
+      const oldAlbums = state.albums;
       state.albums = {};
       for (let id in oldAlbums) {
         state.albums[id] = oldAlbums[id];
@@ -21,7 +21,7 @@ export default {
       }
     },
     setAlbum(state, { id, album }) {
-      const oldAlbums = { ...state.albums };
+      const oldAlbums = state.albums;
       state.albums = {};
       for (let id in oldAlbums) {
         state.albums[id] = oldAlbums[id];
@@ -36,7 +36,7 @@ export default {
       Vue.delete(state.albums, id);
     },
     removeOld(state) {
-      const oldAlbums = { ...state.albums };
+      const oldAlbums = state.albums;
       state.albums = {};
       for (let id in oldAlbums) {
         if (oldAlbums[id].loaded > state.startLoading) {

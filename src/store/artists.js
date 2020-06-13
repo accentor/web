@@ -11,7 +11,7 @@ export default {
   },
   mutations: {
     setArtists(state, payload) {
-      const oldArtists = { ...state.artists };
+      const oldArtists = state.artists;
       state.artists = {};
       for (let id in oldArtists) {
         state.artists[id] = oldArtists[id];
@@ -21,7 +21,7 @@ export default {
       }
     },
     setArtist(state, { id, artist }) {
-      const oldArtists = { ...state.artists };
+      const oldArtists = state.artists;
       state.artists = {};
       for (let id in oldArtists) {
         state.artists[id] = oldArtists[id];
@@ -36,7 +36,7 @@ export default {
       Vue.delete(state.artists, id);
     },
     removeOld(state) {
-      const oldArtists = { ...state.artists };
+      const oldArtists = state.artists;
       state.artists = {};
       for (let id in oldArtists) {
         if (oldArtists[id].loaded > state.startLoading) {

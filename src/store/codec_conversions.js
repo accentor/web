@@ -10,7 +10,7 @@ export default {
   },
   mutations: {
     setCodecConversions(state, payload) {
-      const oldCodecConversions = { ...state.codecConversions };
+      const oldCodecConversions = state.codecConversions;
       state.codecConversions = {};
       for (let id in oldCodecConversions) {
         state.codecConversions[id] = oldCodecConversions[id];
@@ -20,7 +20,7 @@ export default {
       }
     },
     setCodecConversion(state, { id, codecConversion }) {
-      const oldCodecConversions = { ...state.codecConversions };
+      const oldCodecConversions = state.codecConversions;
       state.codecConversions = {};
       for (let id in oldCodecConversions) {
         state.codecConversions[id] = oldCodecConversions[id];
@@ -35,7 +35,7 @@ export default {
       Vue.delete(state.codecConversions, id);
     },
     removeOld(state) {
-      const oldCodecConversions = { ...state.codecConversions };
+      const oldCodecConversions = state.codecConversions;
       state.codecConversions = {};
       for (let id in oldCodecConversions) {
         if (oldCodecConversions[id].loaded > state.startLoading) {

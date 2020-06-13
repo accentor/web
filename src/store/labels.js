@@ -18,7 +18,7 @@ export default {
   },
   mutations: {
     setLabels(state, payload) {
-      const oldLabels = { ...state.labels };
+      const oldLabels = state.labels;
       state.labels = {};
       for (let id in oldLabels) {
         state.labels[id] = oldLabels[id];
@@ -28,7 +28,7 @@ export default {
       }
     },
     setLabel(state, { id, label }) {
-      const oldLabels = { ...state.labels };
+      const oldLabels = state.labels;
       state.labels = {};
       for (let id in oldLabels) {
         state.labels[id] = oldLabels[id];
@@ -43,7 +43,7 @@ export default {
       Vue.delete(state.labels, id);
     },
     removeOld(state) {
-      const oldLabels = { ...state.labels };
+      const oldLabels = state.labels;
       state.labels = {};
       for (let id in oldLabels) {
         if (oldLabels[id].loaded > state.startLoading) {

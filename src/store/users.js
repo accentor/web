@@ -11,7 +11,7 @@ export default {
   },
   mutations: {
     setUsers(state, payload) {
-      const oldUsers = { ...state.users };
+      const oldUsers = state.users;
       state.users = {};
       for (let id in oldUsers) {
         state.users[id] = oldUsers[id];
@@ -21,7 +21,7 @@ export default {
       }
     },
     setUser(state, { id, user }) {
-      const oldUsers = { ...state.users };
+      const oldUsers = state.users;
       state.users = {};
       for (let id in oldUsers) {
         state.users[id] = oldUsers[id];
@@ -36,7 +36,7 @@ export default {
       Vue.delete(state.users, id);
     },
     removeOld(state) {
-      const oldUsers = { ...state.users };
+      const oldUsers = state.users;
       state.users = {};
       for (let id in oldUsers) {
         if (oldUsers[id].loaded > state.startLoading) {

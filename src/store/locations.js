@@ -10,7 +10,7 @@ export default {
   },
   mutations: {
     setLocations(state, payload) {
-      const oldLocations = { ...state.locations };
+      const oldLocations = state.locations;
       state.locations = {};
       for (let id in oldLocations) {
         state.locations[id] = oldLocations[id];
@@ -20,7 +20,7 @@ export default {
       }
     },
     setLocation(state, { id, location }) {
-      const oldLocations = { ...state.locations };
+      const oldLocations = state.locations;
       state.locations = {};
       for (let id in oldLocations) {
         state.locations[id] = oldLocations[id];
@@ -35,7 +35,7 @@ export default {
       Vue.delete(state.locations, id);
     },
     removeOld(state) {
-      const oldLocations = { ...state.locations };
+      const oldLocations = state.locations;
       state.locations = {};
       for (let id in oldLocations) {
         if (oldLocations[id].loaded > state.startLoading) {

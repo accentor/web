@@ -18,7 +18,7 @@ export default {
   },
   mutations: {
     setGenres(state, payload) {
-      const oldGenres = { ...state.genres };
+      const oldGenres = state.genres;
       state.genres = {};
       for (let id in oldGenres) {
         state.genres[id] = oldGenres[id];
@@ -28,7 +28,7 @@ export default {
       }
     },
     setGenre(state, { id, genre }) {
-      const oldGenres = { ...state.genres };
+      const oldGenres = state.genres;
       state.genres = {};
       for (let id in oldGenres) {
         state.genres[id] = oldGenres[id];
@@ -43,7 +43,7 @@ export default {
       Vue.delete(state.genres, id);
     },
     removeOld(state) {
-      const oldGenres = { ...state.genres };
+      const oldGenres = state.genres;
       state.genres = {};
       for (let id in oldGenres) {
         if (oldGenres[id].loaded > state.startLoading) {

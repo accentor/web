@@ -26,7 +26,7 @@ export default {
       state.id = null;
     },
     setAuthTokens(state, payload) {
-      const oldAuthTokens = { ...state.authTokens };
+      const oldAuthTokens = state.authTokens;
       state.authTokens = {};
       for (let id in oldAuthTokens) {
         state.authTokens[id] = oldAuthTokens[id];
@@ -42,7 +42,7 @@ export default {
       Vue.delete(state.authTokens, id);
     },
     removeOld(state) {
-      const oldAuthTokens = { ...state.authTokens };
+      const oldAuthTokens = state.authTokens;
       state.authTokens = {};
       for (let id in oldAuthTokens) {
         if (oldAuthTokens[id].loaded > state.startLoading) {

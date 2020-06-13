@@ -10,7 +10,7 @@ export default {
   },
   mutations: {
     setCoverFilenames(state, payload) {
-      const oldCoverFilenames = { ...state.coverFilenames };
+      const oldCoverFilenames = state.coverFilenames;
       state.coverFilenames = {};
       for (let id in oldCoverFilenames) {
         state.coverFilenames[id] = oldCoverFilenames[id];
@@ -20,7 +20,7 @@ export default {
       }
     },
     setCoverFilename(state, { id, coverFilename }) {
-      const oldCoverFilenames = { ...state.coverFilenames };
+      const oldCoverFilenames = state.coverFilenames;
       state.coverFilenames = {};
       for (let id in oldCoverFilenames) {
         state.coverFilenames[id] = oldCoverFilenames[id];
@@ -35,7 +35,7 @@ export default {
       Vue.delete(state.coverFilenames, id);
     },
     removeOld(state) {
-      const oldCoverFilenames = { ...state.coverFilenames };
+      const oldCoverFilenames = state.coverFilenames;
       state.coverFilenames = {};
       for (let id in oldCoverFilenames) {
         if (oldCoverFilenames[id].loaded > state.startLoading) {
