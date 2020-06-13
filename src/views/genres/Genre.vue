@@ -4,7 +4,7 @@
     <VRow>
       <VCol cols="12">
         <div>
-          <h2 class="display-1">{{ genre.name }}</h2>
+          <h2 class="text-h4">{{ genre.name }}</h2>
         </div>
         <div>
           <GenreActions :genre="genre" />

@@ -15,7 +15,7 @@
         <VRow class="mb-2" justify="space-between" align="baseline">
           <VCol cols="12" sm="4" md="6" lg="8" xl="10">
             <div>
-              <h2 class="display-1">{{ label.name }}</h2>
+              <h2 class="text-h4">{{ label.name }}</h2>
             </div>
             <div>
               <LabelActions :label="label" />

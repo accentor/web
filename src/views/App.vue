@@ -14,7 +14,7 @@
     </VAppBar>
 
     <VNavigationDrawer
-      :mobile-break-point="1500"
+      :mobile-breakpoint="1500"
       app
       clipped
       left
@@ -143,7 +143,7 @@
       </VList>
     </VNavigationDrawer>
 
-    <VContent>
+    <VMain>
       <VContainer>
         <Errors />
         <VRow no-gutters>
@@ -152,7 +152,7 @@
           </VCol>
         </VRow>
       </VContainer>
-    </VContent>
+    </VMain>
 
     <VFooter app color="white" inset fixed height="auto" class="pa-0">
       <Player />

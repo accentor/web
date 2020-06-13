@@ -10,7 +10,7 @@
     <VIcon>mdi-flag</VIcon>
     <VDialog v-model="show" max-width="600px">
       <VCard>
-        <VCardTitle class="headline">
+        <VCardTitle class="text-h5">
           {{ $t("music.flag.for-review") }}
         </VCardTitle>
         <VCardText>

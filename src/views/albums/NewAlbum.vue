@@ -143,7 +143,7 @@
               />
             </VCol>
           </VRow>
-          <h4 class="subtitle-1">{{ $tc("music.labels", 2) }}</h4>
+          <h4 class="text-subtitle-1">{{ $tc("music.labels", 2) }}</h4>
           <VRow
             :key="`label-${index}`"
             v-for="(item, index) of newAlbum.album_labels"

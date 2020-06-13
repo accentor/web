@@ -38,7 +38,7 @@
             return-object
             v-model="newTrack.genre_ids"
           />
-          <h4 class="subtitle-1">{{ $tc("music.artists", 2) }}</h4>
+          <h4 class="text-subtitle-1">{{ $tc("music.artists", 2) }}</h4>
           <VRow
             :key="index"
             v-for="(item, index) of newTrack.track_artists"

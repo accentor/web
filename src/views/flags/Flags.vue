@@ -4,7 +4,7 @@
     <VContainer fluid>
       <VRow>
         <VCol>
-          <h2 class="display-1">{{ $tc("music.artists", 2) }}</h2>
+          <h2 class="text-h4">{{ $tc("music.artists", 2) }}</h2>
         </VCol>
       </VRow>
       <VDataIterator
@@ -32,7 +32,7 @@
     <VContainer fluid>
       <VRow>
         <VCol>
-          <h2 class="display-1">{{ $tc("music.albums", 2) }}</h2>
+          <h2 class="text-h4">{{ $tc("music.albums", 2) }}</h2>
         </VCol>
       </VRow>
       <VDataIterator
@@ -61,7 +61,7 @@
       <VRow class="flex-column">
         <VRow>
           <VCol>
-            <h2 class="display-1">{{ $tc("music.tracks", 2) }}</h2>
+            <h2 class="text-h4">{{ $tc("music.tracks", 2) }}</h2>
           </VCol>
         </VRow>
         <VRow>

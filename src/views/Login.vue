@@ -1,5 +1,5 @@
 <template>
-  <VContent>
+  <VMain>
     <vue-headful :title="$t('common.login') + ' | Accentor'" />
     <VContainer class="fill-height" fluid>
       <VRow no-gutters align="center" justify="center">
@@ -37,7 +37,7 @@
         </VCol>
       </VRow>
     </VContainer>
-  </VContent>
+  </VMain>
 </template>
 
 <script>

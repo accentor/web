@@ -107,7 +107,7 @@
             clearable
           />
           <FilePicker v-model="newAlbum.image" />
-          <h4 class="subtitle-1">{{ $tc("music.artists", 2) }}</h4>
+          <h4 class="text-subtitle-1">{{ $tc("music.artists", 2) }}</h4>
           <VRow
             :key="`artist-${index}`"
             v-for="(item, index) of newAlbum.album_artists"
@@ -153,7 +153,7 @@
               />
             </VCol>
           </VRow>
-          <h4 class="subtitle-1">{{ $tc("music.labels", 2) }}</h4>
+          <h4 class="text-subtitle-1">{{ $tc("music.labels", 2) }}</h4>
           <VRow
             :key="`label-${index}`"
             v-for="(item, index) of newAlbum.album_labels"
