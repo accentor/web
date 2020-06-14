@@ -1,73 +1,27 @@
-import baseURL from "./base_url";
-import { indexGenerator } from "./fetch";
+import {
+  indexGenerator,
+  create as genCreate,
+  update as genUpdate,
+  destroy as genDestroy,
+  destroyEmpty as genDestroyEmpty,
+} from "./fetch";
 
 export function index(auth) {
   return indexGenerator("albums", auth);
 }
 
 export function create(auth, album) {
-  return fetch(`${baseURL}/albums`, {
-    method: "POST",
-    headers: {
-      "content-type": "application/json",
-      "x-secret": auth.secret,
-      "x-device-id": auth.device_id,
-    },
-    body: JSON.stringify({ album }),
-  })
-    .catch((reason) => Promise.reject({ error: [reason] }))
-    .then((request) => Promise.all([request.ok, request.json()]))
-    .then(([ok, result]) => {
-      return ok ? Promise.resolve(result) : Promise.reject(result);
-    });
+  return genCreate("albums", auth, album);
 }
 
 export function update(auth, id, album) {
-  return fetch(`${baseURL}/albums/${id}`, {
-    method: "PATCH",
-    headers: {
-      "content-type": "application/json",
-      "x-secret": auth.secret,
-      "x-device-id": auth.device_id,
-    },
-    body: JSON.stringify({ album }),
-  })
-    .catch((reason) => Promise.reject({ error: [reason] }))
-    .then((request) => Promise.all([request.ok, request.json()]))
-    .then(([ok, result]) => {
-      return ok ? Promise.resolve(result) : Promise.reject(result);
-    });
+  return genUpdate(`albums/${id}`, auth, album);
 }
 
 export function destroy(auth, id) {
-  return fetch(`${baseURL}/albums/${id}`, {
-    method: "DELETE",
-    headers: {
-      "x-secret": auth.secret,
-      "x-device-id": auth.device_id,
-    },
-  })
-    .catch((reason) => Promise.reject({ error: [reason] }))
-    .then((request) => {
-      return request.ok
-        ? Promise.resolve()
-        : request.json().then((result) => Promise.reject(result));
-    });
+  return genDestroy(`albums/${id}`, auth);
 }
 
 export function destroyEmpty(auth) {
-  return fetch(`${baseURL}/albums/destroy_empty`, {
-    method: "POST",
-    headers: {
-      "content-type": "application/json",
-      "x-secret": auth.secret,
-      "x-device-id": auth.device_id,
-    },
-  })
-    .catch((reason) => Promise.reject({ error: [reason] }))
-    .then((request) => {
-      return request.ok
-        ? Promise.resolve()
-        : request.json().then((result) => Promise.reject(result));
-    });
+  return genDestroyEmpty("albums", auth);
 }

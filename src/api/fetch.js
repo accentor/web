@@ -29,3 +29,87 @@ export async function* indexGenerator(path, auth) {
     page++;
   }
 }
+
+export function create(path, auth, object) {
+  return fetch(`${baseURL}/${path}`, {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+      "x-secret": auth.secret,
+      "x-device-id": auth.device_id,
+    },
+    body: JSON.stringify({ object }),
+  })
+    .catch((reason) => Promise.reject({ error: [reason] }))
+    .then((request) => Promise.all([request.ok, request.json()]))
+    .then(([ok, result]) => {
+      return ok ? Promise.resolve(result) : Promise.reject(result);
+    });
+}
+
+export function update(path, auth, object) {
+  return fetch(`${baseURL}/${path}`, {
+    method: "PATCH",
+    headers: {
+      "content-type": "application/json",
+      "x-secret": auth.secret,
+      "x-device-id": auth.device_id,
+    },
+    body: JSON.stringify({ object }),
+  })
+    .catch((reason) => Promise.reject({ error: [reason] }))
+    .then((request) => Promise.all([request.ok, request.json()]))
+    .then(([ok, result]) => {
+      return ok ? Promise.resolve(result) : Promise.reject(result);
+    });
+}
+
+export function destroy(path, auth) {
+  return fetch(`${baseURL}/${path}`, {
+    method: "DELETE",
+    headers: {
+      "x-secret": auth.secret,
+      "x-device-id": auth.device_id,
+    },
+  })
+    .catch((reason) => Promise.reject({ error: [reason] }))
+    .then((request) => {
+      return request.ok
+        ? Promise.resolve()
+        : request.json().then((result) => Promise.reject(result));
+    });
+}
+
+export function destroyEmpty(path, auth) {
+  return fetch(`${baseURL}/${path}/destroy_empty`, {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+      "x-secret": auth.secret,
+      "x-device-id": auth.device_id,
+    },
+  })
+    .catch((reason) => Promise.reject({ error: [reason] }))
+    .then((request) => {
+      return request.ok
+        ? Promise.resolve()
+        : request.json().then((result) => Promise.reject(result));
+    });
+}
+
+export function merge(path, auth) {
+  return fetch(`${baseURL}/${path}`, {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+      "x-secret": auth.secret,
+      "x-device-id": auth.device_id,
+    },
+  })
+    .catch((reason) => Promise.reject({ error: [reason] }))
+    .then((request) => {
+      return request.ok
+        ? Promise.resolve()
+        : request.json().then((result) => Promise.reject(result));
+    });
+}

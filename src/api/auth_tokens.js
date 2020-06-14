@@ -1,5 +1,5 @@
 import baseURL from "./base_url";
-import { indexGenerator } from "./fetch";
+import { indexGenerator, destroy as genDestroy } from "./fetch";
 
 export function index(auth) {
   return indexGenerator("auth_tokens", auth);
@@ -21,17 +21,5 @@ export function create(data) {
 }
 
 export function destroy(auth, id) {
-  return fetch(`${baseURL}/auth_tokens/${id}`, {
-    method: "DELETE",
-    headers: {
-      "x-secret": auth.secret,
-      "x-device-id": auth.device_id,
-    },
-  })
-    .catch((reason) => Promise.reject({ error: [reason] }))
-    .then((request) => {
-      return request.ok
-        ? Promise.resolve()
-        : request.json().then((result) => Promise.reject(result));
-    });
+  return genDestroy(`auth_tokens/${id}`, auth);
 }
