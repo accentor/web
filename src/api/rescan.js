@@ -1,7 +1,12 @@
 import baseURL from "./base_url";
+const fetchRetry = require("fetch-retry")(fetch);
 
 export function show(auth) {
-  return fetch(`${baseURL}/rescan`, {
+  return fetchRetry(`${baseURL}/rescan`, {
+    retries: 5,
+    retryDelay: function (attempt) {
+      return Math.pow(2, attempt) * 15000;
+    },
     method: "GET",
     headers: {
       "x-secret": auth.secret,
