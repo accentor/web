@@ -284,13 +284,17 @@
 			"edit": "Pas nummer aan",
 			"empty": "Dit nummer heeft geen audio.",
 			"length": "Lengte",
+			"merge": "Voeg nummer samen",
+			"merge-explanation": "Dit verwijderd dit nummer en de bijhorende tags maar bewaard het audiobestand indien aanwezig.",
+			"merge-into": "Voeg {obj} samen met",
 			"number": "Tracknummer",
 			"update": "Werk nummer bij"
 		},
 		"tracks": "Nummers | Nummer | Nummers"
 	},
 	"page-titles": {
-		"edit": "{obj} aanpassen"
+		"edit": "{obj} aanpassen",
+		"merge": "{obj} samenvoegen"
 	},
 	"search": "Zoeken",
 	"users": {

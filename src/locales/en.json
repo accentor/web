@@ -288,13 +288,17 @@
 			"edit": "Edit track",
 			"empty": "This track does not have audio.",
 			"length": "Length",
+			"merge": "Merge track",
+			"merge-explanation": "This will remove this track and tags, but keep the audio if present.",
+			"merge-into": "Merge {obj} into",
 			"number": "Number",
 			"update": "Update track"
 		},
 		"tracks": "Tracks | Track | Tracks"
 	},
 	"page-titles": {
-		"edit": "Edit {obj}"
+		"edit": "Edit {obj}",
+		"merge": "Merge {obj}"
 	},
 	"search": "Search",
 	"users": {

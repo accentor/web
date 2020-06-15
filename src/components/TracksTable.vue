@@ -95,6 +95,7 @@ export default {
   props: {
     tracks: { default: () => [], type: Array },
     savePagination: { default: true, type: Boolean },
+    showActions: { default: true, type: Boolean },
     showAlbum: { default: true, type: Boolean },
     showMassEdit: { default: true, type: Boolean },
     showSearch: { default: false, type: Boolean },
@@ -143,6 +144,9 @@ export default {
     ];
     if (!this.showAlbum) {
       headers.splice(3, 1);
+    }
+    if (!this.showActions) {
+      headers.splice(-1, 1);
     }
     return {
       headers,
