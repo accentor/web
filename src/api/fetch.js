@@ -43,7 +43,7 @@ export function create(path, auth, object) {
       "x-secret": auth.secret,
       "x-device-id": auth.device_id,
     },
-    body: JSON.stringify({ object }),
+    body: JSON.stringify(object),
   })
     .catch((reason) => Promise.reject({ error: [reason] }))
     .then((request) => Promise.all([request.ok, request.json()]))
@@ -60,7 +60,7 @@ export function update(path, auth, object) {
       "x-secret": auth.secret,
       "x-device-id": auth.device_id,
     },
-    body: JSON.stringify({ object }),
+    body: JSON.stringify(object),
   })
     .catch((reason) => Promise.reject({ error: [reason] }))
     .then((request) => Promise.all([request.ok, request.json()]))

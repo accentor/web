@@ -10,11 +10,11 @@ export function index(auth) {
 }
 
 export function create(auth, cover_filename) {
-  return genCreate("cover_filenames", auth, cover_filename);
+  return genCreate("cover_filenames", auth, { cover_filename });
 }
 
 export function update(auth, id, cover_filename) {
-  return genUpdate(`cover_filenames/${id}`, auth, cover_filename);
+  return genUpdate(`cover_filenames/${id}`, auth, { cover_filename });
 }
 
 export function destroy(auth, id) {

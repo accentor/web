@@ -11,11 +11,11 @@ export function index(auth) {
 }
 
 export function create(auth, album) {
-  return genCreate("albums", auth, album);
+  return genCreate("albums", auth, { album });
 }
 
 export function update(auth, id, album) {
-  return genUpdate(`albums/${id}`, auth, album);
+  return genUpdate(`albums/${id}`, auth, { album });
 }
 
 export function destroy(auth, id) {

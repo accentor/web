@@ -9,7 +9,7 @@ export function index(auth) {
 }
 
 export function create(auth, location) {
-  return genCreate("locations", auth, location);
+  return genCreate("locations", auth, { location });
 }
 
 export function destroy(auth, id) {

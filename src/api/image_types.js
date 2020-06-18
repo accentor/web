@@ -10,11 +10,11 @@ export function index(auth) {
 }
 
 export function create(auth, image_type) {
-  return genCreate("image_types", auth, image_type);
+  return genCreate("image_types", auth, { image_type });
 }
 
 export function update(auth, id, image_type) {
-  return genUpdate(`image_types/${id}`, auth, image_type);
+  return genUpdate(`image_types/${id}`, auth, { image_type });
 }
 
 export function destroy(auth, id) {
