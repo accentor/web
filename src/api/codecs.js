@@ -10,11 +10,11 @@ export function index(auth) {
 }
 
 export function create(auth, codec) {
-  return genCreate("codecs", auth, codec);
+  return genCreate("codecs", auth, { codec });
 }
 
 export function update(auth, id, codec) {
-  return genUpdate(`codecs/${id}`, auth, codec);
+  return genUpdate(`codecs/${id}`, auth, { codec });
 }
 
 export function destroy(auth, id) {

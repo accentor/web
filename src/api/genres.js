@@ -12,11 +12,11 @@ export function index(auth) {
 }
 
 export function create(auth, genre) {
-  return genCreate("genres", auth, genre);
+  return genCreate("genres", auth, { genre });
 }
 
 export function update(auth, id, genre) {
-  return genUpdate(`genres/${id}`, auth, genre);
+  return genUpdate(`genres/${id}`, auth, { genre });
 }
 
 export function destroy(auth, id) {

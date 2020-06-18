@@ -10,11 +10,11 @@ export function index(auth) {
 }
 
 export function create(auth, user) {
-  return genCreate("users", auth, user);
+  return genCreate("users", auth, { user });
 }
 
 export function update(auth, id, user) {
-  return genUpdate(`users/${id}`, auth, user);
+  return genUpdate(`users/${id}`, auth, { user });
 }
 
 export function destroy(auth, id) {
