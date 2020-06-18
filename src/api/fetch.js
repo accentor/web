@@ -1,9 +1,14 @@
 import baseURL from "./base_url";
+const fetchRetry = require("fetch-retry")(fetch);
 
 export async function* indexGenerator(path, auth) {
   let page = 1;
   while (true) {
-    const request = await fetch(`${baseURL}/${path}?page=${page}`, {
+    const request = await fetchRetry(`${baseURL}/${path}?page=${page}`, {
+      retries: 5,
+      retryDelay: function (attempt) {
+        return Math.pow(2, attempt) * 15000;
+      },
       method: "GET",
       headers: {
         "x-secret": auth.secret,
