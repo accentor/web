@@ -89,11 +89,7 @@ export default {
     destroy({ commit, rootState }, id) {
       return destroy(rootState.auth, id)
         .then(() => {
-          commit(
-            "tracks/removeOrMergeGenreOccurence",
-            { oldID: id },
-            { root: true }
-          );
+          commit("tracks/removeGenreOccurence", id, { root: true });
           commit("removeGenre", id);
           return Promise.resolve(true);
         })
@@ -116,7 +112,7 @@ export default {
       return merge(rootState.auth, newID, oldID)
         .then(() => {
           commit(
-            "tracks/removeOrMergeGenreOccurence",
+            "tracks/updateGenreOccurence",
             { newID, oldID },
             { root: true }
           );

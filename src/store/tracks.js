@@ -56,14 +56,25 @@ export default {
         state.tracks[track.id] = track;
       }
     },
-    removeOrMergeGenreOccurence(state, { newID, oldID }) {
+    removeGenreOccurence(state, oldID) {
       const oldTracks = state.tracks;
       state.tracks = {};
       for (const track of Object.values(oldTracks)) {
         const i = track.genre_ids.findIndex((gId) => `${gId}` === `${oldID}`);
         if (i >= 0) {
           track.genre_ids.splice(i, 1);
-          if (typeof newID !== undefined && !track.genre_ids.includes(newID)) {
+        }
+        state.tracks[track.id] = track;
+      }
+    },
+    updateGenreOccurence(state, { newID, oldID }) {
+      const oldTracks = state.tracks;
+      state.tracks = {};
+      for (const track of Object.values(oldTracks)) {
+        const i = track.genre_ids.findIndex((gId) => `${gId}` === `${oldID}`);
+        if (i >= 0) {
+          track.genre_ids.splice(i, 1);
+          if (!track.genre_ids.includes(newID)) {
             track.genre_ids.push(newID);
           }
         }
