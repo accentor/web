@@ -1,5 +1,5 @@
 <template>
-  <VDialog v-model="dialog" fullscreen scrollable @update:returnValue="closed">
+  <VDialog v-model="dialog" fullscreen scrollable>
     <template v-slot:activator="{ on }">
       <VBtn v-on="on" color="edit" class="ma-2" :disabled="tracks.length === 0">
         {{
@@ -540,6 +540,7 @@ export default {
         })
         .finally(() => {
           this.saving = false;
+          this.$emit("close");
         });
     },
     addArtist() {
@@ -586,9 +587,6 @@ export default {
       };
       this.clearReviewComments = false;
       this.showReviewComments = false;
-    },
-    closed() {
-      this.$emit("close");
     },
   },
 };
