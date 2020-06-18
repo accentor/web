@@ -139,7 +139,9 @@ export default {
           if (!(ta.artist_id in result)) {
             result[ta.artist_id] = [];
           }
-          result[ta.artist_id].push(track);
+          if (!result[ta.artist_id].includes(track)) {
+            result[ta.artist_id].push(track);
+          }
         }
       }
       return result;
