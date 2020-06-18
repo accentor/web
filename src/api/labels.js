@@ -1,90 +1,32 @@
-import baseURL from "./base_url";
-import { indexGenerator } from "./fetch";
+import {
+  indexGenerator,
+  create as genCreate,
+  update as genUpdate,
+  destroy as genDestroy,
+  destroyEmpty as genDestroyEmpty,
+  merge as genMerge,
+} from "./fetch";
 
 export function index(auth) {
   return indexGenerator("labels", auth);
 }
 
 export function create(auth, label) {
-  return fetch(`${baseURL}/labels`, {
-    method: "POST",
-    headers: {
-      "content-type": "application/json",
-      "x-secret": auth.secret,
-      "x-device-id": auth.device_id,
-    },
-    body: JSON.stringify({ label }),
-  })
-    .catch((reason) => Promise.reject({ error: [reason] }))
-    .then((request) => Promise.all([request.ok, request.json()]))
-    .then(([ok, result]) => {
-      return ok ? Promise.resolve(result) : Promise.reject(result);
-    });
+  return genCreate("labels", auth, label);
 }
 
 export function update(auth, id, label) {
-  return fetch(`${baseURL}/labels/${id}`, {
-    method: "PATCH",
-    headers: {
-      "content-type": "application/json",
-      "x-secret": auth.secret,
-      "x-device-id": auth.device_id,
-    },
-    body: JSON.stringify({ label }),
-  })
-    .catch((reason) => Promise.reject({ error: [reason] }))
-    .then((request) => Promise.all([request.ok, request.json()]))
-    .then(([ok, result]) => {
-      return ok ? Promise.resolve(result) : Promise.reject(result);
-    });
+  return genUpdate(`labels/${id}`, auth, label);
 }
 
 export function destroy(auth, id) {
-  return fetch(`${baseURL}/labels/${id}`, {
-    method: "DELETE",
-    headers: {
-      "x-secret": auth.secret,
-      "x-device-id": auth.device_id,
-    },
-  })
-    .catch((reason) => Promise.reject({ error: [reason] }))
-    .then((request) => {
-      return request.ok
-        ? Promise.resolve()
-        : request.json().then((result) => Promise.reject(result));
-    });
+  return genDestroy(`labels/${id}`, auth);
 }
 
 export function destroyEmpty(auth) {
-  return fetch(`${baseURL}/labels/destroy_empty`, {
-    method: "POST",
-    headers: {
-      "content-type": "application/json",
-      "x-secret": auth.secret,
-      "x-device-id": auth.device_id,
-    },
-  })
-    .catch((reason) => Promise.reject({ error: [reason] }))
-    .then((request) => {
-      return request.ok
-        ? Promise.resolve()
-        : request.json().then((result) => Promise.reject(result));
-    });
+  return genDestroyEmpty("labels", auth);
 }
 
 export function merge(auth, newID, oldID) {
-  return fetch(`${baseURL}/labels/${newID}/merge?other_label_id=${oldID}`, {
-    method: "POST",
-    headers: {
-      "content-type": "application/json",
-      "x-secret": auth.secret,
-      "x-device-id": auth.device_id,
-    },
-  })
-    .catch((reason) => Promise.reject({ error: [reason] }))
-    .then((request) => {
-      return request.ok
-        ? Promise.resolve()
-        : request.json().then((result) => Promise.reject(result));
-    });
+  return genMerge(`labels/${newID}/merge?other_label_id=${oldID}`, auth);
 }
