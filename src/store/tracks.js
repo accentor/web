@@ -44,7 +44,7 @@ export default {
         }
       }
     },
-    removeArtistOccurence(state, { oldID }) {
+    removeArtistOccurence(state, oldID) {
       const oldTracks = state.tracks;
       state.tracks = {};
       for (let track in Object.values(oldTracks)) {
