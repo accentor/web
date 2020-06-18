@@ -22,14 +22,16 @@
       :items="filteredItems"
       :items-per-page="30"
       :page.sync="pagination.page"
-      :show-select="isModerator && showMassEdit"
+      :show-select="isModerator"
+      :single-select="singleSelect"
       class="elevation-3"
       ref="table"
+      @item-selected="emitSelected"
     >
       <template v-slot:header.actions v-if="isModerator && showMassEdit">
         <MassEditDialog :tracks="selected" @close="reloadSelected" />
       </template>
-      <template v-slot:header.data-table-select="props">
+      <template v-slot:header.data-table-select="props" v-if="!singleSelect">
         <VCheckbox
           :input-value="props.props.value"
           :value="props.props.value"
@@ -99,6 +101,7 @@ export default {
     showAlbum: { default: true, type: Boolean },
     showMassEdit: { default: true, type: Boolean },
     showSearch: { default: false, type: Boolean },
+    singleSelect: { default: false, type: Boolean },
   },
   data() {
     const headers = [
@@ -169,6 +172,9 @@ export default {
     },
   },
   methods: {
+    emitSelected(o) {
+      this.$emit("selected", o.item.id);
+    },
     toggleAll() {
       if (this.selected.length > 0) {
         this.selected = [];
