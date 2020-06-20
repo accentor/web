@@ -152,12 +152,12 @@ export default {
       );
     },
     tracksFilterByGenre: (state, getters, rootState) => (id) => {
-      return getters.tracksBinnedByGenre[id].sort((t1, t2) =>
+      return (getters.tracksBinnedByGenre[id] || []).sort((t1, t2) =>
         compareTracks(rootState, t1, t2)
       );
     },
     tracksFilterByArtist: (state, getters, rootState) => (id) => {
-      return getters.tracksBinnedByArtist[id].sort((t1, t2) =>
+      return (getters.tracksBinnedByArtist[id] || []).sort((t1, t2) =>
         compareTracks(rootState, t1, t2)
       );
     },
