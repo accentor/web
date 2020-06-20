@@ -61,10 +61,9 @@ export function read(path, auth) {
     },
   })
     .catch((reason) => Promise.reject({ error: [reason] }))
-    .then((request) => {
-      return request.ok
-        ? Promise.resolve()
-        : request.json().then((result) => Promise.reject(result));
+    .then((request) => Promise.all([request.ok, request.json()]))
+    .then(([ok, result]) => {
+      return ok ? Promise.resolve(result) : Promise.reject(result);
     });
 }
 
