@@ -173,7 +173,7 @@ export default {
   },
   methods: {
     emitSelected(o) {
-      this.$emit("selected", o.item.id);
+      this.$emit("selected", o.value ? o.item.id : null);
     },
     toggleAll() {
       if (this.selected.length > 0) {
