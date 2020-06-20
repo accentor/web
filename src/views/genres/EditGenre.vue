@@ -5,9 +5,15 @@
     />
     <VRow no-gutters align="center" justify="center">
       <VCol md="4" sm="8" cols="12">
-        <VForm @submit.prevent="submit">
-          <VTextField genre="Name" v-model="newGenre.name" />
-          <VBtn color="primary" class="ma-2" type="submit">
+        <VForm v-model="isValid" @submit.prevent="submit">
+          <VTextField
+            :label="$t('common.name')"
+            v-model="newGenre.name"
+            :rules="[(v) => !!v || $t('errors.genre.name-blank')]"
+            required
+            aria-required="true"
+          />
+          <VBtn :disabled="!isValid" color="primary" class="ma-2" type="submit">
             {{ $t("music.genre.update") }}
           </VBtn>
         </VForm>
@@ -26,6 +32,7 @@ export default {
       newGenre: {
         name: "",
       },
+      isValid: true,
     };
   },
   created() {
