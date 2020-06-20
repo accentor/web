@@ -121,8 +121,8 @@ export default {
     },
     async read({ commit, rootState }, id) {
       try {
-        const result = await read(rootState.auth, id);
-        commit("setTrack", { id, track: result });
+        const track = await read(rootState.auth, id);
+        commit("setTrack", { id, track });
       } catch (error) {
         this.commit("addError", error);
       }
