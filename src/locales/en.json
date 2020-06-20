@@ -288,9 +288,18 @@
 			"edit": "Edit track",
 			"empty": "This track does not have audio.",
 			"length": "Length",
-			"merge": "Merge track",
-			"merge-explanation": "This will remove this track and tags, but keep the audio if present.",
-			"merge-into": "Merge {obj} into",
+			"merge": {
+				"explanation": "This will remove this track and tags, but keep the audio if present.",
+				"into": "Merge {obj} into",
+				"merge": "Merge track",
+				"original": "Original track",
+				"result": "Result",
+				"selected": "Selected track",
+				"show-all-tracks": "Show all tracks",
+				"show-only-album-tracks": "Only show tracks from album",
+				"submit": "Merge tracks",
+				"swap-tracks": "Swap tracks"
+			},
 			"number": "Number",
 			"update": "Update track"
 		},

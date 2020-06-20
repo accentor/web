@@ -80,7 +80,7 @@
                 <VIcon color="edit">mdi-merge</VIcon>
               </VListItemIcon>
               <VListItemContent>
-                <VListItemTitle>{{ $t("music.track.merge") }}</VListItemTitle>
+                <VListItemTitle>{{ $t("music.track.merge.merge") }}</VListItemTitle>
               </VListItemContent>
             </VListItem>
           </template>

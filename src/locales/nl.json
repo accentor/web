@@ -284,9 +284,18 @@
 			"edit": "Pas nummer aan",
 			"empty": "Dit nummer heeft geen audio.",
 			"length": "Lengte",
-			"merge": "Voeg nummer samen",
-			"merge-explanation": "Dit verwijderd dit nummer en de bijhorende tags maar bewaard het audiobestand indien aanwezig.",
-			"merge-into": "Voeg {obj} samen met",
+			"merge": {
+				"explanation": "Dit verwijderd dit nummer en de bijhorende tags maar bewaard het audiobestand indien aanwezig.",
+				"into": "Voeg {obj} samen met",
+				"merge": "Voeg nummer samen",
+				"original": "Origineel nummer",
+				"result": "Resultaat",
+				"selected": "Geselecteerd nummer",
+				"show-all-tracks": "Toon alle nummers",
+				"show-only-album-tracks": "Toon alleen nummers van album",
+				"submit": "Voeg nummers samen",
+				"swap-tracks": "Verwissel nummers"
+			},
 			"number": "Tracknummer",
 			"update": "Werk nummer bij"
 		},
