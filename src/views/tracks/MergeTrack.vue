@@ -14,19 +14,39 @@
       </VCol>
     </VRow>
     <VRow v-if="newID">
-      <VCol lg="9" md="8" sm="6" cols="12">
-        <div class="text-h5">
-          Result:
-        </div>
-        <div class="text-h6">
-          {{ selectedTrack.title }}
-        </div>
-        <div>
-          {{ albums[newID].title }}
-        </div>
-        <TrackArtists :track="selectedTrack" />
-        <TrackGenres :track="selectedTrack" />
-      </VCol>
+      <VSimpleTable class="text-center merge-table">
+        <template v-slot:default>
+          <thead>
+            <tr>
+              <th class="text-left">Original</th>
+              <th class="text-center">New Track</th>
+              <th class="text-center">Result</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{{ track.title }}</td>
+              <td>{{ selectedTrack.title }}</td>
+              <td>{{ selectedTrack.title }}</td>
+            </tr>
+            <tr>
+              <td>{{ albums[track.album_id].title }}</td>
+              <td>{{ albums[selectedTrack.album_id].title }}</td>
+              <td>{{ albums[selectedTrack.album_id].title }}</td>
+            </tr>
+            <tr>
+              <td><TrackArtists :track="track" /></td>
+              <td><TrackArtists :track="selectedTrack" /></td>
+              <td><TrackArtists :track="selectedTrack" /></td>
+            </tr>
+            <tr>
+              <td><TrackGenres :track="track" /></td>
+              <td><TrackGenres :track="selectedTrack" /></td>
+              <td><TrackGenres :track="selectedTrack" /></td>
+            </tr>
+          </tbody>
+        </template>
+      </VSimpleTable>
     </VRow>
     <VRow>
       <VCol>
@@ -78,3 +98,15 @@ export default {
   },
 };
 </script>
+
+<style lang="scss">
+
+.merge-table {
+  width: 100%;
+
+  table {
+    table-layout: fixed;
+  }
+}
+
+</style>
