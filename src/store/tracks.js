@@ -149,7 +149,7 @@ export default {
           return Promise.resolve(false);
         });
     },
-    async merge({ commit, rootState }, { newID, oldID }) {
+    async merge({ commit, dispatch, rootState }, { newID, oldID }) {
       try {
         await merge(rootState.auth, newID, oldID);
         await dispatch("read", newID);
