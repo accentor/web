@@ -12,8 +12,14 @@
         >
           {{ album.review_comment }}
         </VAlert>
-        <VForm @submit.prevent="submit">
-          <VTextField :label="$t('music.title')" v-model="newAlbum.title" />
+        <VForm v-model="isValid" @submit.prevent="submit">
+          <VTextField
+            :label="$t('music.title')"
+            v-model="newAlbum.title"
+            :rules="[(v) => !!v || $t('errors.albums.title-blank')]"
+            required
+            aria-required="true"
+          />
           <VDialog
             ref="dialogOriginal"
             v-model="originalModal"
@@ -184,7 +190,12 @@
             :label="$tc('music.flag.clear', 1)"
           />
           <VRow justify="center">
-            <VBtn color="primary" class="ma-2" type="submit">
+            <VBtn
+              :disabled="!isValid"
+              color="primary"
+              class="ma-2"
+              type="submit"
+            >
               {{ $t("music.album.update") }}
             </VBtn>
             <VSpacer />
@@ -210,6 +221,7 @@ export default {
   components: { FilePicker },
   data() {
     return {
+      isValid: true,
       originalModal: false,
       editionModal: false,
       newAlbum: {
