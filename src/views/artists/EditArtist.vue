@@ -12,15 +12,21 @@
         >
           {{ artist.review_comment }}
         </VAlert>
-        <VForm @submit.prevent="submit">
-          <VTextField :label="$t('common.name')" v-model="newArtist.name" />
+        <VForm v-model="isValid" @submit.prevent="submit">
+          <VTextField
+            :label="$t('common.name')"
+            v-model="newArtist.name"
+            :rules="[(v) => !!v || $t('errors.artists.name-blank')]"
+            required
+            aria-required="true"
+          />
           <FilePicker v-model="newArtist.image" />
           <VCheckbox
             v-if="artist.review_comment !== null"
             v-model="clear_review_comment"
             :label="$tc('music.flag.clear', 1)"
           />
-          <VBtn color="primary" class="ma-2" type="submit">
+          <VBtn :disabled="!isValid" color="primary" class="ma-2" type="submit">
             {{ $t("music.artist.update") }}
           </VBtn>
         </VForm>
@@ -44,6 +50,7 @@ export default {
         review_comment: null,
       },
       clear_review_comment: true,
+      isValid: true,
     };
   },
   created() {
