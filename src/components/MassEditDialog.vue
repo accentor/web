@@ -97,6 +97,7 @@
                   v-model="number.amount"
                   :label="$t('common.amount')"
                   type="number"
+                  step="1"
                   v-if="number.enabled"
                   hide-details="true"
                 />
@@ -196,6 +197,8 @@
                   multiple
                   return-object
                   v-model="changeGenres.genres"
+                  :rules="rules.genre"
+                  validate-on-blur
                 />
               </VCol>
             </VRow>
@@ -399,6 +402,35 @@ export default {
     ...mapGetters("genres", {
       sortedGenres: "genresByName",
     }),
+    rules: function () {
+      const rules = {
+        genre: [],
+      };
+
+      const genreValidation = (v) => {
+        let valid = true;
+        v.forEach((newGenre) => {
+          if (typeof newGenre !== "object") {
+            const double = this.sortedGenres.some(
+              (g) =>
+                g.name === newGenre ||
+                g.normalized_name === newGenre.toLowerCase()
+            );
+            if (double) {
+              valid = this.$t("errors.genre.name-taken-obj", { obj: newGenre });
+            } else if (!newGenre.trim().length) {
+              valid = this.$t("errors.genre.name-blank");
+            }
+          }
+        });
+        return valid; // We only return the last error, since we can only display one
+      };
+      if (this.changeGenres.enabled) {
+        rules.genre.push(genreValidation);
+      }
+
+      return rules;
+    },
   },
   methods: {
     ...mapActions("tracks", ["update"]),
