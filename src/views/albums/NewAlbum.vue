@@ -187,14 +187,15 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
+import { mapActions, mapGetters, mapState } from "vuex";
 import FilePicker from "../../components/FilePicker";
 
 export default {
-  name: "EditAlbum",
+  name: "NewAlbum",
   components: { FilePicker },
   data() {
     return {
+      originalModal: false,
       releaseModal: false,
       newAlbum: {
         title: "",
@@ -221,6 +222,7 @@ export default {
     };
   },
   computed: {
+    ...mapState("userSettings", ["locale"]),
     ...mapGetters("artists", {
       sortedArtists: "artistsByName",
     }),
