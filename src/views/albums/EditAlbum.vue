@@ -18,7 +18,6 @@
             v-model="newAlbum.title"
             :rules="[(v) => !!v || $t('errors.albums.title-blank')]"
             required
-            aria-required="true"
           />
           <VDialog
             ref="dialogOriginal"

@@ -11,7 +11,6 @@
             v-model="newLabel.name"
             :rules="[(v) => !!v || $t('errors.label.name-blank')]"
             required
-            aria-required="true"
           />
           <VBtn :disabled="!isValid" color="primary" class="ma-2" type="submit">
             {{ $t("music.label.update") }}

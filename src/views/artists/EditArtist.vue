@@ -18,7 +18,6 @@
             v-model="newArtist.name"
             :rules="[(v) => !!v || $t('errors.artists.name-blank')]"
             required
-            aria-required="true"
           />
           <FilePicker v-model="newArtist.image" />
           <VCheckbox

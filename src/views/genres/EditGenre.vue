@@ -11,7 +11,6 @@
             v-model="newGenre.name"
             :rules="[(v) => !!v || $t('errors.genre.name-blank')]"
             required
-            aria-required="true"
           />
           <VBtn :disabled="!isValid" color="primary" class="ma-2" type="submit">
             {{ $t("music.genre.update") }}
