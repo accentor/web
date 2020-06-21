@@ -98,7 +98,8 @@
 		"ffmpeg": "FFmpeg parameters",
 		"genre": {
 			"name-blank": "Vul een naam voor het genre in.",
-			"name-taken": "Een genre met deze naam bestaat reeds."
+			"name-taken": "Een genre met deze naam bestaat reeds.",
+			"name-taken-obj": "Er bestaat al een genre met naam {obj}."
 		},
 		"image": {
 			"mime-blank": "Vul een MIMEtype in.",

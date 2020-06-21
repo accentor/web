@@ -43,6 +43,8 @@
             :label="$t('music.genre-s')"
             multiple
             return-object
+            :rules="rules.genre"
+            validate-on-blur
             v-model="newTrack.genre_ids"
           />
           <h4 class="text-subtitle-1">{{ $tc("music.artists", 2) }}</h4>
@@ -205,8 +207,28 @@ export default {
           (v) => !!v || this.$t("errors.tracks.number-blank"),
           (v) => Number(v) % 1 === 0 || this.$t("errors.tracks.number-whole"),
         ],
+        genre: [],
       };
 
+      const genreValidation = (v) => {
+        let valid = true;
+        v.forEach((newGenre) => {
+          if (typeof newGenre !== "object") {
+            const double = this.sortedGenres.some(
+              (g) =>
+                g.name === newGenre ||
+                g.normalized_name === newGenre.toLowerCase()
+            );
+            if (double) {
+              valid = this.$t("errors.genre.name-taken-obj", { obj: newGenre });
+            } else if (newGenre.length) {
+              valid = this.$t("errors.genre.name-blank");
+            }
+          }
+        });
+        return valid; // We only return the last error, since we can only display one
+      };
+      rules.genre.push(genreValidation);
 
       return rules;
     },

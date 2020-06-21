@@ -98,7 +98,8 @@
 		"ffmpeg": "FFmpeg parameters",
 		"genre": {
 			"name-blank": "Please fill in a genre name.",
-			"name-taken": "A genre with this name already exists."
+			"name-taken": "A genre with this name already exists.",
+			"name-taken-obj": "A genre called {obj} already exists."
 		},
 		"image": {
 			"mime-blank": "Please fill in a MIMEtype.",
@@ -142,6 +143,7 @@
 		"track": "Track",
 		"tracks": {
 			"number-blank": "Please provide a track number",
+			"number-whole": "Please provide a whole number",
 			"title-blank": "Please provide a track title."
 		},
 		"traces": "Traces",
