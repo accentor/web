@@ -15,11 +15,12 @@
         </VForm>
       </VCol>
       <VCol lg="4" md="6" sm="8" cols="12" class="px-3">
-        <VForm @submit.prevent="submitPassword">
+        <VForm v-model="isValid" @submit.prevent="submitPassword">
           <VTextField
             :label="$t('common.name')"
             v-model="newUser.name"
             autocomplete="username"
+            :rules="[(v) => !!v || $t('errors.user.name-blank')]"
           />
           <VTextField
             :label="$t('users.current-password')"
@@ -39,7 +40,7 @@
             autocomplete="new-password"
             v-model="newUser.password_confirmation"
           />
-          <VBtn color="primary" class="ma-2" type="submit">
+          <VBtn :disabled="!isValid" color="primary" class="ma-2" type="submit">
             {{ $t("common.change-settings") }}
           </VBtn>
         </VForm>
@@ -68,6 +69,7 @@ export default {
         password: "",
         password_confirmation: "",
       },
+      isValid: true,
       newLocale: "",
       langs: [
         { value: "en", text: "English" },
