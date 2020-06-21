@@ -147,11 +147,13 @@
 		"traces": "Sporen",
 		"unauthorized": "Onbevoegd",
 		"user": {
+			"current-password-blank": "Vul je huidige wachtwoord in.",
 			"current-password-incorrect": "Je huidige wachtwoord was fout.",
 			"name": "Gebruikersnaam",
 			"name-blank": "Vul een gebruikersnaam in.",
 			"password-blank": "Vul een wachtwoord in.",
 			"password-confirmation": "Bevestiging komt niet overeen met wachtwoord.",
+			"password-confirmation-blank": "Bevestig je wachtwoord.",
 			"permission-blank": "Selecteer een permissie voor de gebruiker.",
 			"wrong-credentials": "De gebruikersnaam en het wachtwoord komen niet overeen."
 		}

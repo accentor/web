@@ -147,11 +147,13 @@
 		"traces": "Traces",
 		"unauthorized": "Unauthorized",
 		"user": {
+			"current-password-blank": "Please fill in your current password.",
 			"current-password-incorrect": "Your current password was incorrect.",
 			"name": "Username",
 			"name-blank": "Please fill in a username.",
 			"password-blank": "Please fill in a password.",
 			"password-confirmation": "Confirmation doensn't match password.",
+			"password-confirmation-blank": "Please confirmation your password.",
 			"permission-blank": "Please give the user a permission.",
 			"wrong-credentials": "Username and password don't match."
 		}
