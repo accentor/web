@@ -221,7 +221,7 @@ export default {
             );
             if (double) {
               valid = this.$t("errors.genre.name-taken-obj", { obj: newGenre });
-            } else if (newGenre.length) {
+            } else if (!newGenre.trim().length) {
               valid = this.$t("errors.genre.name-blank");
             }
           }
