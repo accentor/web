@@ -45,7 +45,6 @@
             :label="$t('users.confirm-password')"
             type="password"
             autocomplete="new-password"
-            required
             :rules="rules.confirmation"
             v-model="newUser.password_confirmation"
           />
