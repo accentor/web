@@ -118,6 +118,7 @@
 		"number": "Number",
 		"order": "Order",
 		"password": "Password",
+		"password_confirmation": "Password confirmation",
 		"path": "Path",
 		"player": {
 			"no-tracks-added": "No tracks were added to the playlist",
@@ -150,6 +151,7 @@
 			"name": "Username",
 			"name-blank": "Please fill in a username.",
 			"password-blank": "Please fill in a password.",
+			"password-confirmation": "Confirmation doensn't match password.",
 			"permission-blank": "Please give the user a permission.",
 			"wrong-credentials": "Username and password don't match."
 		}

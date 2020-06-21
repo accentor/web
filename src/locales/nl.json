@@ -118,6 +118,7 @@
 		"number": "Tracknummer",
 		"order": "Ordening",
 		"password": "Wachtwoord",
+		"password_confirmation": "Bevestiging wachtwoord",
 		"path": "Pad",
 		"player": {
 			"no-tracks-added": "Er zijn geen nummers toegevoegd aan de afspeellijst.",
@@ -150,6 +151,7 @@
 			"name": "Gebruikersnaam",
 			"name-blank": "Vul een gebruikersnaam in.",
 			"password-blank": "Vul een wachtwoord in.",
+			"password-confirmation": "Bevestiging komt niet overeen met wachtwoord.",
 			"permission-blank": "Selecteer een permissie voor de gebruiker.",
 			"wrong-credentials": "De gebruikersnaam en het wachtwoord komen niet overeen."
 		}
