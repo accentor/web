@@ -1,15 +1,18 @@
 <template>
-  <VForm>
+  <VForm v-model="isValid" ref="form" lazy-validation>
     <VRow>
       <VCol cols="5">
         <VTextField
           v-model="newLocation.path"
           :label="$t('library.path')"
           :disabled="location !== null"
+          required
+          :rules="rules.path"
         />
       </VCol>
       <VCol cols="2" sm="1">
         <VBtn
+          :disabled="!isValid"
           icon
           outlined
           color="success"
@@ -35,7 +38,7 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
   name: "LocationForm",
@@ -45,6 +48,7 @@ export default {
       newLocation: {
         path: "",
       },
+      isValid: true,
     };
   },
   created() {
@@ -61,17 +65,36 @@ export default {
       }
     },
   },
+  computed: {
+    ...mapGetters("locations", ["locations"]),
+    rules() {
+      const rules = {
+        path: [(v) => !!v || this.$t("errors.location.path-blank")],
+      };
+      if (this.location === null) {
+        const pathTaken = (v) => {
+          const double = this.locations.some((l) => l.path === v);
+          return !double || this.$t("errors.location.path-taken");
+        };
+        rules.path.push(pathTaken);
+      }
+
+      return rules;
+    },
+  },
   methods: {
     fillValues() {
       this.newLocation.path = this.location.path;
     },
     ...mapActions("locations", ["destroy", "update", "create"]),
     saveLocation() {
-      this.create(this.newLocation).then((id) => {
-        if (id) {
-          this.newLocation.path = "";
-        }
-      });
+      if (this.$refs.form.validate()) {
+        this.create(this.newLocation).then((id) => {
+          if (id) {
+            this.newLocation.path = "";
+          }
+        });
+      }
     },
     deleteLocation() {
       if (confirm(this.$t("common.are-you-sure"))) {
