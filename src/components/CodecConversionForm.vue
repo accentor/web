@@ -1,16 +1,20 @@
 <template>
-  <VForm>
+  <VForm v-model="isValid" ref="form" lazy-validation>
     <VRow>
       <VCol cols="3">
         <VTextField
           v-model="newCodecConversion.name"
           :label="$t('common.name')"
+          required
+          :rules="rules.name"
         />
       </VCol>
       <VCol cols="5">
         <VTextField
           v-model="newCodecConversion.ffmpeg_params"
           :label="$t('library.ffmpeg-para')"
+          required
+          :rules="[(v) => !!v || $t('errors.codecconv.ffmepg-blank')]"
         />
       </VCol>
       <VCol cols="3">
@@ -20,12 +24,15 @@
           v-model="newCodecConversion.resulting_codec_id"
           item-value="id"
           item-text="extension"
+          required
+          :rules="[(v) => !!v || $t('errors.codecconv.result-blank')]"
         />
       </VCol>
       <VCol cols="2" sm="1">
         <VBtn
           icon
           outlined
+          :disabled="!isValid"
           :color="(codecConversion && 'info') || 'success'"
           class="ma-2"
           @click="saveCodecConversion"
@@ -62,6 +69,7 @@ export default {
         ffmpeg_params: "",
         resulting_codec_id: null,
       },
+      isValid: true,
     };
   },
   created() {
@@ -80,6 +88,21 @@ export default {
   },
   computed: {
     ...mapGetters("codecs", ["codecs"]),
+    ...mapGetters("codecConversions", ["codecConversions"]),
+    rules() {
+      const rules = {
+        name: [(v) => !!v || this.$t("errors.codecconv.name-blank")],
+      };
+
+      const nameTaken = (v) => {
+        const double = this.codecConversions.some(
+          (cc) => cc.name === v && cc.id !== this.codecConversion?.id
+        );
+        return !double || this.$t("errors.codecconv.name-taken");
+      };
+      rules.name.push(nameTaken);
+      return rules;
+    },
   },
   methods: {
     fillValues() {
@@ -89,19 +112,21 @@ export default {
     },
     ...mapActions("codecConversions", ["destroy", "update", "create"]),
     saveCodecConversion() {
-      if (this.codecConversion === null) {
-        this.create(this.newCodecConversion).then((id) => {
-          if (id) {
-            this.newCodecConversion.name = "";
-            this.newCodecConversion.ffmpeg_params = "";
-            this.newCodecConversion.resulting_codec_id = null;
-          }
-        });
-      } else {
-        this.update({
-          id: this.codecConversion.id,
-          newCodecConversion: this.newCodecConversion,
-        });
+      if (this.$refs.form.validate()) {
+        if (this.codecConversion === null) {
+          this.create(this.newCodecConversion).then((id) => {
+            if (id) {
+              this.newCodecConversion.name = "";
+              this.newCodecConversion.ffmpeg_params = "";
+              this.newCodecConversion.resulting_codec_id = null;
+            }
+          });
+        } else {
+          this.update({
+            id: this.codecConversion.id,
+            newCodecConversion: this.newCodecConversion,
+          });
+        }
       }
     },
     deleteCodecConversion() {
