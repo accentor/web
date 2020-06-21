@@ -44,6 +44,29 @@ export default {
         }
       }
     },
+    removeArtistOccurence(state, oldID) {
+      const oldTracks = state.tracks;
+      state.tracks = {};
+      for (let track in Object.values(oldTracks)) {
+        if (track.track_artists.some((ta) => ta.artist_id === oldID)) {
+          track.track_artists = track.track_artists.filter(
+            (ta) => ta.artist_id !== oldID
+          );
+        }
+        state.tracks[track.id] = track;
+      }
+    },
+    removeGenreOccurence(state, oldID) {
+      const oldTracks = state.tracks;
+      state.tracks = {};
+      for (const track of Object.values(oldTracks)) {
+        const i = track.genre_ids.findIndex((gId) => `${gId}` === `${oldID}`);
+        if (i >= 0) {
+          track.genre_ids.splice(i, 1);
+        }
+        state.tracks[track.id] = track;
+      }
+    },
     updateGenreOccurence(state, { newID, oldID }) {
       const oldTracks = state.tracks;
       state.tracks = {};

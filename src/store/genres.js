@@ -89,6 +89,7 @@ export default {
     destroy({ commit, rootState }, id) {
       return destroy(rootState.auth, id)
         .then(() => {
+          commit("tracks/removeGenreOccurence", id, { root: true });
           commit("removeGenre", id);
           return Promise.resolve(true);
         })

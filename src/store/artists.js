@@ -82,6 +82,8 @@ export default {
     destroy({ commit, rootState }, id) {
       return destroy(rootState.auth, id)
         .then(() => {
+          commit("albums/removeArtistOccurence", id, { root: true });
+          commit("tracks/removeArtistOccurence", id, { root: true });
           commit("removeArtist", id);
           return Promise.resolve(true);
         })
