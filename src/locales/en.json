@@ -91,6 +91,9 @@
 			"ffmepg-blank": "Please fill in the FFmpeg parameters.",
 			"result-blank": "Please fill in a resulting codec."
 		},
+		"cover_filename": {
+			"filename-blank": "Please fill in a cover filename."
+		},
 		"current_password": "Current Password",
 		"error": "Error",
 		"exception": "Exception",
