@@ -179,7 +179,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .bottom-padding-fix {
   padding-bottom: 16px;
 }

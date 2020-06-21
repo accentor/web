@@ -4,7 +4,7 @@
   </VApp>
 </template>
 
-<style>
+<style lang="scss">
 a {
   text-decoration: none;
 }

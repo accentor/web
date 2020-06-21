@@ -235,7 +235,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .btn-caption {
   font-size: 0.75rem;
 }

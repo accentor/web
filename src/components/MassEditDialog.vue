@@ -592,7 +592,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .review-comment-table td {
   padding: 0 0.5rem;
 }
