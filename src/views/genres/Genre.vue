@@ -28,7 +28,7 @@ export default {
   name: "Genre",
   components: { GenreActions, TracksTable },
   watch: {
-    agenre: function () {
+    genre: function () {
       if (this.genre === undefined) {
         this.$router.go(-1);
       }
