@@ -47,7 +47,7 @@ export default {
     removeArtistOccurence(state, oldID) {
       const oldAlbums = state.albums;
       state.albums = {};
-      for (let album in Object.values(oldAlbums)) {
+      for (let album of Object.values(oldAlbums)) {
         const i = album.album_artists.findIndex((aa) => aa.artist_id === oldID);
         if (i >= 0) {
           album.album_artists.splice(i, 1);
