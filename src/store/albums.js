@@ -55,6 +55,17 @@ export default {
         state.albums[album.id] = album;
       }
     },
+    updateArtistOccurence(state, { newID, oldID }) {
+      const oldAlbums = state.albums;
+      state.albums = {};
+      for (let album of Object.values(oldAlbums)) {
+        const i = album.album_artists.findIndex((aa) => aa.artist_id === oldID);
+        if (i >= 0) {
+          album.album_artists[i].artist_id = newID;
+        }
+        state.albums[album.id] = album;
+      }
+    },
     removeLabelOccurence(state, oldID) {
       const oldAlbums = state.albums;
       state.albums = {};

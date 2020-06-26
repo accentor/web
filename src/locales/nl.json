@@ -66,6 +66,7 @@
 			"title-blank": "Vul aub een albumtitel in."
 		},
 		"aa": {
+			"albums-overlap": "Deze twee artisten delene een aantal albums. Los die op voor je de artiesten samenvoegt.",
 			"name-blank": "Vul aub een naam in.",
 			"order-blank": "Artiesten moeten een volgorde hebben."
 		},
@@ -136,10 +137,12 @@
 			"name-taken": "Deze naam wordt reeds gebruikt.",
 			"order-blank": "Zet de artiesten in een volgorde.",
 			"role-blank": "Geef de artiest een rol.",
-			"track-blank": "Je kan geen artiest creëren zonder naar een nummer te verwijzen."
+			"track-blank": "Je kan geen artiest creëren zonder naar een nummer te verwijzen.",
+			"tracks-overlap": "DEze twee artiesten delen een aantal nummers. Los die op voor je de artiesten samenvoegt."
 		},
 		"title": "Titel",
 		"track": "Nummer",
+		"track_artists": "Nummer artiesten",
 		"tracks": {
 			"number-blank": "Vul een tracknummer in.",
 			"title-blank": "Vul een titel voor het nummer in."
@@ -212,6 +215,8 @@
 		"artist": {
 			"add": "Voeg artiest toe",
 			"artist-s": "Artiest(en)",
+			"merge": "Artiesten samenvoegen",
+			"merge-into": "Voeg {obj} samen met",
 			"new": "Nieuwe artiest",
 			"role": "Rol",
 			"roles": {
