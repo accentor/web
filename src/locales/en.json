@@ -63,6 +63,7 @@
 	"errors": {
 		"album_artists": "Album artists",
 		"albums": {
+			"album-blank": "Please select an album.",
 			"title-blank": "Please fill in an album title."
 		},
 		"aa": {
@@ -76,6 +77,7 @@
 		},
 		"artist": "Artist",
 		"artists": {
+			"artist-blank": "Please select an artist.",
 			"name-blank": "Please fill in artist name."
 		},
 		"base": "Base",
