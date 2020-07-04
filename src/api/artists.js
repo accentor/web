@@ -4,6 +4,7 @@ import {
   update as genUpdate,
   destroy as genDestroy,
   destroyEmpty as genDestroyEmpty,
+  merge as genMerge,
 } from "./fetch";
 
 export function index(auth) {
@@ -24,4 +25,8 @@ export function destroy(auth, id) {
 
 export function destroyEmpty(auth) {
   return genDestroyEmpty("artists", auth);
+}
+
+export function merge(auth, newID, oldID) {
+  return genMerge(`artists/${newID}/merge?other_artist_id=${oldID}`, auth);
 }

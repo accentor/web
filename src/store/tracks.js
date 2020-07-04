@@ -56,6 +56,20 @@ export default {
         state.tracks[track.id] = track;
       }
     },
+    updateArtistOccurence(state, { newID, oldID }) {
+      const oldTracks = state.tracks;
+      state.tracks = {};
+      for (let track of Object.values(oldTracks)) {
+        if (track.track_artists.some((ta) => ta.artist_id === oldID)) {
+          track.track_artists.forEach((ta) => {
+            if (ta.artist_id === oldID) {
+              ta.artist_id = newID;
+            }
+          });
+        }
+        state.tracks[track.id] = track;
+      }
+    },
     removeGenreOccurence(state, oldID) {
       const oldTracks = state.tracks;
       state.tracks = {};

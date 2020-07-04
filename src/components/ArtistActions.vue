@@ -27,6 +27,14 @@
     <VTooltip bottom :disabled="!waitingForReload">
       <template v-slot:activator="{ on }">
         <span v-on="on">
+          <ArtistMergeDialog :artist="artist" :disabled="waitingForReload" />
+        </span>
+      </template>
+      <span>{{ $t("common.disabled-while-loading") }}</span>
+    </VTooltip>
+    <VTooltip bottom :disabled="!waitingForReload">
+      <template v-slot:activator="{ on }">
+        <span v-on="on">
           <VBtn
             @click.stop.prevent="deleteArtist"
             v-if="isModerator"
@@ -50,10 +58,11 @@
 <script>
 import { mapActions, mapGetters, mapState } from "vuex";
 import EditReviewComment from "./EditReviewComment";
+import ArtistMergeDialog from "./ArtistMergeDialog";
 
 export default {
   name: "ArtistActions",
-  components: { EditReviewComment },
+  components: { ArtistMergeDialog, EditReviewComment },
   props: {
     artist: {
       type: Object,

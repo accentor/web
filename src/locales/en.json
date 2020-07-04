@@ -67,6 +67,7 @@
 			"title-blank": "Please fill in an album title."
 		},
 		"aa": {
+			"albums-overlap": "There is some overlap in albums between these two artists. Please resolve those first before merging.",
 			"name-blank": "Please fill in a name for the artist.",
 			"order-blank": "Please put the artists in order."
 		},
@@ -142,10 +143,12 @@
 			"name-taken": "This name is already used.",
 			"order-blank": "Please provide an order for the track artists.",
 			"role-blank": "Please fill in a role for the artists.",
-			"track-blank": "You can't create a track artist without a track."
+			"track-blank": "You can't create a track artist without a track.",
+			"tracks-overlap": "There is some overlap in tracks between these two artists. Please resolve those first before merging."
 		},
 		"title": "Title",
 		"track": "Track",
+		"track_artists": "Track artists",
 		"tracks": {
 			"number-blank": "Please provide a track number",
 			"number-whole": "Please provide a whole number",
@@ -221,6 +224,8 @@
 		"artist": {
 			"add": "Add artist",
 			"artist-s": "Artist(s)",
+			"merge": "Merge artists",
+			"merge-into": "Merge {obj} into",
 			"new": "New artist",
 			"role": "Role",
 			"roles": {

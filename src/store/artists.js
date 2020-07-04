@@ -1,5 +1,12 @@
 import Vue from "vue";
-import { index, create, destroy, update, destroyEmpty } from "../api/artists";
+import {
+  index,
+  create,
+  destroy,
+  update,
+  destroyEmpty,
+  merge,
+} from "../api/artists";
 import { fetchAll } from "./actions";
 import { compareStrings } from "../comparators";
 
@@ -101,6 +108,24 @@ export default {
           this.commit("addError", error);
           return Promise.resolve(false);
         });
+    },
+    async merge({ commit, rootState }, { newID, oldID }) {
+      try {
+        await merge(rootState.auth, newID, oldID);
+        commit(
+          "tracks/updateArtistOccurence",
+          { newID, oldID },
+          { root: true }
+        );
+        commit(
+          "albums/updateArtistOccurence",
+          { newID, oldID },
+          { root: true }
+        );
+        commit("removeArtist", oldID);
+      } catch (error) {
+        this.commit("addError", error);
+      }
     },
   },
   getters: {
