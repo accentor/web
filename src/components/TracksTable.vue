@@ -57,6 +57,9 @@
         </span>
         <span v-else>{{ props.value }}</span>
       </template>
+      <template v-slot:item.title="props">
+        <TrackDetails :track="props.item" />
+      </template>
       <template v-slot:item.length="props">
         <span v-if="props.value !== null">
           {{ props.value | length }}
@@ -96,12 +99,19 @@ import Paginated from "../mixins/Paginated";
 import { mapGetters, mapState } from "vuex";
 import Searchable from "../mixins/Searchable";
 import TrackArtists from "./TrackArtists";
+import TrackDetails from "./TrackDetails";
 import TrackGenres from "./TrackGenres";
 import MassEditDialog from "./MassEditDialog";
 
 export default {
   name: "TracksTable",
-  components: { TrackGenres, TrackActions, TrackArtists, MassEditDialog },
+  components: {
+    TrackGenres,
+    TrackActions,
+    TrackArtists,
+    TrackDetails,
+    MassEditDialog,
+  },
   mixins: [Paginated, Searchable],
   props: {
     tracks: { default: () => [], type: Array },

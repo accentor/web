@@ -178,6 +178,7 @@
 	},
 	"library": {
 		"codec-conversions": "Omzetten codecs ",
+		"codec": "Codec",
 		"codecs": "Codecs",
 		"cover-filenames": "Bestandsnamen albumhoes",
 		"currently-running": "Momenteel aan het scannen",
@@ -191,6 +192,7 @@
 		"filename": "Bestandsnaam",
 		"finished-at": "Geëindigd om",
 		"image-types": "Type afbeelding",
+		"location": "Plaats",
 		"locations": "Plaatsen",
 		"maintenance": "Onderhoud",
 		"mime-type": "MIME type",

@@ -182,6 +182,7 @@
 	},
 	"library": {
 		"codec-conversions": "Codecs conversions",
+		"codec": "Codec",
 		"codecs": "Codecs",
 		"cover-filenames": "Cover filenames",
 		"currently-running": "Currently running",
@@ -195,6 +196,7 @@
 		"filename": "Filename",
 		"finished-at": "Finished at",
 		"image-types": "Image types",
+		"location": "Location",
 		"locations": "Locations",
 		"maintenance": "Maintenance",
 		"mime-type": "MIME type",
@@ -284,6 +286,7 @@
 		},
 		"title": "Title",
 		"track": {
+			"bitrate": "Bitrate",
 			"delete": "Delete track",
 			"edit": "Edit track",
 			"empty": "This track does not have audio.",
