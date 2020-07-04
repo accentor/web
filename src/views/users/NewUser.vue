@@ -3,24 +3,35 @@
     <vue-headful :title="$t('users.new') + ' | Accentor'" />
     <VRow no-gutters align="center" justify="center">
       <VCol md="4" sm="8" cols="12">
-        <VForm @submit.prevent="submit">
-          <VTextField :label="$t('common.name')" v-model="newUser.name" />
+        <VForm v-model="isValid" @submit.prevent="submit">
+          <VTextField
+            :label="$t('common.name')"
+            v-model="newUser.name"
+            required
+            :rules="[(v) => !!v || $t('errors.user.name-blank')]"
+          />
           <VTextField
             :label="$t('users.password')"
             type="password"
             v-model="newUser.password"
+            required
+            :rules="[(v) => !!v || $t('errors.user.password-blank')]"
           />
           <VTextField
             :label="$t('users.confirm-password')"
             type="password"
             v-model="newUser.password_confirmation"
+            required
+            :rules="rules.confirmation"
           />
           <VSelect
             :items="permissionOptions"
             :label="$t('users.permissions')"
+            required
             v-model="newUser.permission"
+            :rules="[(v) => !!v || $t('errors.user.permission-blank')]"
           />
-          <VBtn color="primary" class="ma-2" type="submit">
+          <VBtn :disabled="!isValid" color="primary" class="ma-2" type="submit">
             {{ $t("users.create") }}
           </VBtn>
         </VForm>
@@ -48,6 +59,20 @@ export default {
         { text: this.$t("users.permission.user"), value: "user" },
       ],
     };
+  },
+  computed: {
+    rules() {
+      const rules = {
+        confirmation: [
+          (v) => !!v || this.$t("errors.user.password-confirmation-blank"),
+          (v) =>
+            (!!v && v) === this.newUser.password ||
+            this.$t("errors.user.password-confirmation"),
+        ],
+      };
+
+      return rules;
+    },
   },
   methods: {
     ...mapActions("users", ["create"]),

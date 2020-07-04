@@ -63,6 +63,7 @@
 	"errors": {
 		"album_artists": "Album artiesten",
 		"albums": {
+			"album-blank": "Selecteer een album.",
 			"title-blank": "Vul aub een albumtitel in."
 		},
 		"aa": {
@@ -76,6 +77,7 @@
 		},
 		"artist": "Artiest",
 		"artists": {
+			"artist-blank": "Selecteer een artiest.",
 			"name-blank": "Vul een artiestennaam in."
 		},
 		"base": "Base",
@@ -98,7 +100,8 @@
 		"ffmpeg": "FFmpeg parameters",
 		"genre": {
 			"name-blank": "Vul een naam voor het genre in.",
-			"name-taken": "Een genre met deze naam bestaat reeds."
+			"name-taken": "Een genre met deze naam bestaat reeds.",
+			"name-taken-obj": "Er bestaat al een genre met naam {obj}."
 		},
 		"image": {
 			"mime-blank": "Vul een MIMEtype in.",
@@ -147,11 +150,13 @@
 		"traces": "Sporen",
 		"unauthorized": "Onbevoegd",
 		"user": {
+			"current-password-blank": "Vul je huidige wachtwoord in.",
 			"current-password-incorrect": "Je huidige wachtwoord was fout.",
 			"name": "Gebruikersnaam",
 			"name-blank": "Vul een gebruikersnaam in.",
 			"password-blank": "Vul een wachtwoord in.",
 			"password-confirmation": "Bevestiging komt niet overeen met wachtwoord.",
+			"password-confirmation-blank": "Bevestig je wachtwoord.",
 			"permission-blank": "Selecteer een permissie voor de gebruiker.",
 			"wrong-credentials": "De gebruikersnaam en het wachtwoord komen niet overeen."
 		}

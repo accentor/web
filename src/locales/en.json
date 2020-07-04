@@ -63,6 +63,7 @@
 	"errors": {
 		"album_artists": "Album artists",
 		"albums": {
+			"album-blank": "Please select an album.",
 			"title-blank": "Please fill in an album title."
 		},
 		"aa": {
@@ -76,6 +77,7 @@
 		},
 		"artist": "Artist",
 		"artists": {
+			"artist-blank": "Please select an artist.",
 			"name-blank": "Please fill in artist name."
 		},
 		"base": "Base",
@@ -91,6 +93,9 @@
 			"ffmepg-blank": "Please fill in the FFmpeg parameters.",
 			"result-blank": "Please fill in a resulting codec."
 		},
+		"cover_filename": {
+			"filename-blank": "Please fill in a cover filename."
+		},
 		"current_password": "Current Password",
 		"error": "Error",
 		"exception": "Exception",
@@ -98,7 +103,8 @@
 		"ffmpeg": "FFmpeg parameters",
 		"genre": {
 			"name-blank": "Please fill in a genre name.",
-			"name-taken": "A genre with this name already exists."
+			"name-taken": "A genre with this name already exists.",
+			"name-taken-obj": "A genre called {obj} already exists."
 		},
 		"image": {
 			"mime-blank": "Please fill in a MIMEtype.",
@@ -142,16 +148,19 @@
 		"track": "Track",
 		"tracks": {
 			"number-blank": "Please provide a track number",
+			"number-whole": "Please provide a whole number",
 			"title-blank": "Please provide a track title."
 		},
 		"traces": "Traces",
 		"unauthorized": "Unauthorized",
 		"user": {
+			"current-password-blank": "Please fill in your current password.",
 			"current-password-incorrect": "Your current password was incorrect.",
 			"name": "Username",
 			"name-blank": "Please fill in a username.",
 			"password-blank": "Please fill in a password.",
 			"password-confirmation": "Confirmation doensn't match password.",
+			"password-confirmation-blank": "Please confirmation your password.",
 			"permission-blank": "Please give the user a permission.",
 			"wrong-credentials": "Username and password don't match."
 		}

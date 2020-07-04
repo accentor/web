@@ -3,8 +3,13 @@
     <vue-headful :title="$t('music.album.new') + ' | Accentor'" />
     <VRow no-gutters align="center" justify="center">
       <VCol lg="6" sm="8" cols="12">
-        <VForm @submit.prevent="submit">
-          <VTextField :label="$t('music.title')" v-model="newAlbum.title" />
+        <VForm v-model="isValid" @submit.prevent="submit">
+          <VTextField
+            :label="$t('music.title')"
+            v-model="newAlbum.title"
+            :rules="[(v) => !!v || $t('errors.albums.title-blank')]"
+            required
+          />
           <VDialog
             ref="dialogOriginal"
             v-model="originalModal"
@@ -169,7 +174,12 @@
             </VCol>
           </VRow>
           <VRow justify="center">
-            <VBtn color="primary" class="ma-2" type="submit">
+            <VBtn
+              :disabled="!isValid"
+              color="primary"
+              class="ma-2"
+              type="submit"
+            >
               {{ $t("music.album.create") }}
             </VBtn>
             <VSpacer />
@@ -219,6 +229,7 @@ export default {
         ],
       },
       editionInformation: false,
+      isValid: true,
     };
   },
   computed: {

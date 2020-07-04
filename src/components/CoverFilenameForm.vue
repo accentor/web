@@ -1,15 +1,18 @@
 <template>
-  <VForm>
+  <VForm v-model="isValid" ref="form" lazy-validation>
     <VRow>
       <VCol cols="5">
         <VTextField
           v-model="newCoverFilename.filename"
           :label="$t('library.filename')"
           :disabled="coverFilename !== null"
+          required
+          :rules="[(v) => !!v || $t('errors.cover_filename.filename-blank')]"
         />
       </VCol>
       <VCol cols="2" sm="1">
         <VBtn
+          :disabled="!isValid"
           icon
           outlined
           color="success"
@@ -45,6 +48,7 @@ export default {
       newCoverFilename: {
         filename: "",
       },
+      isValid: true,
     };
   },
   created() {
@@ -67,11 +71,13 @@ export default {
     },
     ...mapActions("coverFilenames", ["destroy", "update", "create"]),
     saveCoverFilename() {
-      this.create(this.newCoverFilename).then((id) => {
-        if (id) {
-          this.newCoverFilename.filename = "";
-        }
-      });
+      if (this.$refs.form.validate()) {
+        this.create(this.newCoverFilename).then((id) => {
+          if (id) {
+            this.newCoverFilename.filename = "";
+          }
+        });
+      }
     },
     deleteCoverFilename() {
       if (confirm(this.$t("common.are-you-sure"))) {
