@@ -58,7 +58,8 @@
         <span v-else>{{ props.value }}</span>
       </template>
       <template v-slot:item.title="props">
-        <TrackDetails :track="props.item" />
+        <TrackDetails v-if="props.item.length" :track="props.item" />
+        <span v-else>{{ props.value }}</span>
       </template>
       <template v-slot:item.length="props">
         <span v-if="props.value !== null">
