@@ -58,8 +58,13 @@
         <span v-else>{{ props.value }}</span>
       </template>
       <template v-slot:item.title="props">
-        <TrackDetails v-if="props.item.length" :track="props.item" />
-        <span v-else>{{ props.value }}</span>
+        <div class="d-flex justify-space-between">
+          <span>{{ props.value }}</span>
+          <TrackDetails
+            v-if="props.item.length && isModerator"
+            :track="props.item"
+          />
+        </div>
       </template>
       <template v-slot:item.length="props">
         <span v-if="props.value !== null">

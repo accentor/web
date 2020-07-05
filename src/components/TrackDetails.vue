@@ -1,8 +1,10 @@
 <template>
-  <VMenu open-on-hover offset-y :disabled="!isModerator">
+  <VMenu>
     <template v-slot:activator="{ on }">
       <div v-on="on">
-        {{ track.title }}
+        <VBtn icon small>
+          <VIcon small>mdi-file-music</VIcon>
+        </VBtn>
       </div>
     </template>
     <VList dense>
@@ -59,7 +61,6 @@ export default {
     track: { type: Object, required: true },
   },
   computed: {
-    ...mapGetters("auth", ["isModerator"]),
     ...mapState("codecs", ["codecs"]),
     ...mapState("locations", ["locations"]),
   },
