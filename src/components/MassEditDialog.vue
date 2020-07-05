@@ -8,28 +8,28 @@
       </VBtn>
     </template>
     <VCard>
-      <VForm v-model="isValid" ref="form">
-        <VToolbar dark color="primary" class="flex-grow-0">
-          <VBtn icon dark @click="dialog = false">
-            <VIcon>mdi-close</VIcon>
+      <VToolbar dark color="primary" class="flex-grow-0">
+        <VBtn icon dark @click="dialog = false">
+          <VIcon>mdi-close</VIcon>
+        </VBtn>
+        <VToolbarTitle>
+          {{
+            $tc("music.mass.edit-tracks", tracks.length, {
+              count: tracks.length,
+            })
+          }}
+        </VToolbarTitle>
+        <VSpacer></VSpacer>
+        <VToolbarItems>
+          <VBtn icon @click="saveTracks" :disabled="saving">
+            <VIcon>
+              {{ saving ? "mdi-refresh mdi-spin" : "mdi-content-save" }}
+            </VIcon>
           </VBtn>
-          <VToolbarTitle>
-            {{
-              $tc("music.mass.edit-tracks", tracks.length, {
-                count: tracks.length,
-              })
-            }}
-          </VToolbarTitle>
-          <VSpacer></VSpacer>
-          <VToolbarItems>
-            <VBtn icon @click="saveTracks" :disabled="saving">
-              <VIcon>
-                {{ saving ? "mdi-refresh mdi-spin" : "mdi-content-save" }}
-              </VIcon>
-            </VBtn>
-          </VToolbarItems>
-        </VToolbar>
-        <div style="overflow-y: auto; backface-visibility: hidden;">
+        </VToolbarItems>
+      </VToolbar>
+      <div style="overflow-y: auto; backface-visibility: hidden;">
+        <VForm v-model="isValid" ref="form">
           <VContainer>
             <Errors />
             <VContainer
@@ -311,8 +311,8 @@
               </VRow>
             </VContainer>
           </VContainer>
-        </div>
-      </VForm>
+        </VForm>
+      </div>
     </VCard>
   </VDialog>
 </template>
