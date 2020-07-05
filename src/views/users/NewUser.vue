@@ -58,6 +58,7 @@ export default {
         { text: this.$t("users.permission.moderator"), value: "moderator" },
         { text: this.$t("users.permission.user"), value: "user" },
       ],
+      isValid: true,
     };
   },
   computed: {
