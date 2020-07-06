@@ -2,6 +2,7 @@
   <div
     v-if="album_artists.length !== 0"
     :class="{ 'd-block text-truncate': truncate }"
+    :title="title"
   >
     <span v-for="aa of album_artists" :key="`${aa.artist_id} ${aa.name}`"
       ><RouterLink :to="{ name: 'artist', params: { id: aa.artist_id } }">{{
@@ -34,12 +35,12 @@ export default {
         .map((aa) => aa)
         .sort((a1, a2) => a1.order - a2.order);
     },
+    title() {
+      return this.album_artists.reduce(
+        (acc, cur) => `${acc}${cur.name}${cur.separator ?? ""}`,
+        ""
+      );
+    },
   },
 };
 </script>
-
-<style lang="scss" scoped>
-.text-truncate:hover {
-  white-space: normal !important;
-}
-</style>

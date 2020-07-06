@@ -8,7 +8,7 @@
       v-else
       class="grey lighten-3"
     />
-    <VCardTitle class="pb-0 d-block text-truncate">
+    <VCardTitle class="pb-0 d-block text-truncate" :title="full_title">
       {{ album.title }}&nbsp;
       <span v-if="album.edition_description !== null" class="grey--text">
         ({{ album.edition_description }})
@@ -55,12 +55,12 @@ export default {
         return undefined;
       }
     },
+    full_title() {
+      let full_title = this.album.title;
+      if (this.album.edition_description)
+        full_title += ` ${this.album.edition_description}`;
+      return full_title;
+    },
   },
 };
 </script>
-
-<style lang="scss" scoped>
-.text-truncate:hover {
-  white-space: normal !important;
-}
-</style>
