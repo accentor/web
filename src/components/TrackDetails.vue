@@ -31,16 +31,6 @@
       <VListItem>
         <VListItemContent>
           <span class="font-weight-bold">
-            {{ $t("library.codec") }}:
-            <span class="font-weight-regular">
-              {{ codecs[track.codec_id].extension }}
-            </span>
-          </span>
-        </VListItemContent>
-      </VListItem>
-      <VListItem>
-        <VListItemContent>
-          <span class="font-weight-bold">
             {{ $t("music.track.bitrate") }}:
             <span class="font-weight-regular">
               {{ track.bitrate }}
