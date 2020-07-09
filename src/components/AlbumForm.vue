@@ -187,7 +187,9 @@
         />
         <VRow justify="center">
           <VBtn :disabled="!isValid" color="primary" class="ma-2" type="submit">
-            {{ $t("music.album.update") }}
+            {{
+              this.album ? $t("music.album.update") : $t("music.album.create")
+            }}
           </VBtn>
           <VSpacer />
           <VBtn @click="addArtist" color="success" class="ma-2">
