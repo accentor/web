@@ -48,6 +48,26 @@
           </span>
         </VListItemContent>
       </VListItem>
+      <VListItem v-if="track.hasOwnProperty('sample_rate')">
+        <VListItemContent>
+          <span class="font-weight-bold">
+            {{ $t("music.track.sample_rate") }}:
+            <span class="font-weight-regular">
+              {{ track.sample_rate }}
+            </span>
+          </span>
+        </VListItemContent>
+      </VListItem>
+      <VListItem v-if="track.hasOwnProperty('bit_depth')">
+        <VListItemContent>
+          <span class="font-weight-bold">
+            {{ $t("music.track.bit_depth") }}:
+            <span class="font-weight-regular">
+              {{ track.bit_depth }}
+            </span>
+          </span>
+        </VListItemContent>
+      </VListItem>
     </VList>
   </VMenu>
 </template>

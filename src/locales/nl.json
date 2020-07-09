@@ -282,6 +282,8 @@
 		},
 		"title": "Titel",
 		"track": {
+			"bitrate": "Bitrate",
+			"bit_depth": "Bit depth",
 			"delete": "Verwijder nummer",
 			"edit": "Pas nummer aan",
 			"empty": "Dit nummer heeft geen audio.",
@@ -300,6 +302,7 @@
 				"title": "{obj} samenvoegen"
 			},
 			"number": "Tracknummer",
+			"sample_rate": "Sample rate",
 			"update": "Werk nummer bij"
 		},
 		"tracks": "Nummers | Nummer | Nummers"
