@@ -209,6 +209,7 @@ import { mapGetters, mapActions, mapState } from "vuex";
 import FilePicker from "./FilePicker";
 
 export default {
+  name: "AlbumForm",
   components: { FilePicker },
   props: { album: { type: Object, default: null } },
   data() {
