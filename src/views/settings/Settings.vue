@@ -20,7 +20,7 @@
     </VRow>
     <VRow>
       <VCol>
-        <AuthTokensTable :authTokens="authTokens" redirectFallback="home" />
+        <AuthTokensTable :authTokens="authTokens" />
       </VCol>
     </VRow>
   </VContainer>
