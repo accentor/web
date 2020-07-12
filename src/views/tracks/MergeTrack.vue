@@ -21,7 +21,7 @@
               <th>{{ $t("music.track.merge.original") }}</th>
               <th>{{ $t("music.track.merge.selected") }}</th>
               <th class="d-flex justify-space-between">
-                <VIcon>mdi-arrow-right</VIcon>
+                <VIcon>mdi-merge</VIcon>
                 <span class="text-right my-auto">{{
                   $t("music.track.merge.result")
                 }}</span>
@@ -30,11 +30,19 @@
           </thead>
           <tbody>
             <tr>
-              <td>{{ track.number }}. {{ track.title }}</td>
-              <td>
-                <span v-if="selectedTrack.number"
-                  >{{ selectedTrack.number }}. </span
-                >{{ selectedTrack.title }}
+              <td :class="{ 'd-flex justify-space-between': !reversed }">
+                <span class="my-auto"
+                  >{{ track.number }}. {{ track.title }}</span
+                >
+                <VIcon v-if="!reversed && newID">mdi-arrow-right</VIcon>
+              </td>
+              <td :class="{ 'd-flex justify-space-between': reversed }">
+                <span class="my-auto">
+                  <span v-if="selectedTrack.number"
+                    >{{ selectedTrack.number }}. </span
+                  >{{ selectedTrack.title }}
+                </span>
+                <VIcon v-if="reversed && newID">mdi-arrow-right</VIcon>
               </td>
               <td class="text-right">
                 <span v-if="result.number">{{ result.number }}. </span
@@ -42,26 +50,37 @@
               </td>
             </tr>
             <tr>
-              <td>{{ albums[track.album_id].title }}</td>
-              <td>
-                {{
-                  selectedTrack.album_id
-                    ? albums[selectedTrack.album_id].title
-                    : "-"
-                }}
+              <td :class="{ 'd-flex justify-space-between': !reversed }">
+                <span class="my-auto">{{ albums[track.album_id].title }}</span>
+                <VIcon v-if="!reversed && newID">mdi-arrow-right</VIcon>
+              </td>
+              <td :class="{ 'd-flex justify-space-between': reversed }">
+                <span class="my-auto">
+                  {{
+                    selectedTrack.album_id
+                      ? albums[selectedTrack.album_id].title
+                      : "-"
+                  }}
+                </span>
+                <VIcon v-if="reversed && newID">mdi-arrow-right</VIcon>
               </td>
               <td class="text-right">
                 {{ result.album_id ? albums[result.album_id].title : "-" }}
               </td>
             </tr>
             <tr>
-              <td><TrackArtists :track="track" /></td>
-              <td>
+              <td :class="{ 'd-flex justify-space-between': !reversed }">
+                <TrackArtists class="my-auto" :track="track" />
+                <VIcon v-if="!reversed && newID">mdi-arrow-right</VIcon>
+              </td>
+              <td :class="{ 'd-flex justify-space-between': reversed }">
                 <TrackArtists
+                  class="my-auto"
                   :track="selectedTrack"
                   v-if="selectedTrack.track_artists"
                 />
                 <span v-else>-</span>
+                <VIcon v-if="reversed && newID">mdi-arrow-right</VIcon>
               </td>
               <td class="text-right">
                 <TrackArtists :track="result" v-if="result.track_artists" />
@@ -69,13 +88,18 @@
               </td>
             </tr>
             <tr>
-              <td><TrackGenres :track="track" /></td>
-              <td>
+              <td :class="{ 'd-flex justify-space-between': !reversed }">
+                <TrackGenres class="my-auto" :track="track" />
+                <VIcon v-if="!reversed && newID">mdi-arrow-right</VIcon>
+              </td>
+              <td :class="{ 'd-flex justify-space-between': reversed }">
                 <TrackGenres
+                  class="my-auto"
                   :track="selectedTrack"
                   v-if="selectedTrack.genre_ids"
                 />
                 <span v-else>-</span>
+                <VIcon v-if="reversed && newID">mdi-arrow-right</VIcon>
               </td>
               <td class="text-right">
                 <TrackGenres :track="result" v-if="result.genre_ids" />
@@ -83,25 +107,44 @@
               </td>
             </tr>
             <tr>
-              <td>
-                {{ track.filename ? track.filename : $t("music.track.empty") }}
+              <td
+                :class="{
+                  'd-flex justify-space-between': !result.file.selected,
+                }"
+              >
+                <span class="my-auto">
+                  {{
+                    track.filename ? track.filename : $t("music.track.empty")
+                  }}
+                </span>
+                <VIcon v-if="!result.file.selected && track.filename && newID"
+                  >mdi-arrow-right</VIcon
+                >
               </td>
-              <td>
-                <span v-if="selectedTrack">
+              <td
+                :class="{
+                  'd-flex justify-space-between': result.file.selected,
+                }"
+              >
+                <span class="my-auto" v-if="selectedTrack">
                   {{
                     selectedTrack.filename
                       ? selectedTrack.filename
                       : $t("music.track.empty")
                   }}
                 </span>
-                <span v-else>
+                <span class="my-auto" v-else>
                   -
                 </span>
+                <VIcon
+                  v-if="result.file.selected && selectedTrack.filename && newID"
+                  >mdi-arrow-right</VIcon
+                >
               </td>
               <td class="text-right">
                 {{
-                  result.filename
-                    ? result.filename
+                  result.file.name
+                    ? result.file.name
                     : $t("music.track.merge.result-empty")
                 }}
               </td>
@@ -188,19 +231,19 @@ export default {
       return this.tracks.find(({ id }) => id == this.$route.params.id);
     },
     result: function () {
-      const filename =
+      const file =
         this.track.filename && !this.reversed
-          ? this.track.filename
-          : this.selectedTrack.filename;
+          ? { name: this.track.filename, selected: false }
+          : { name: this.selectedTrack.filename, selected: true };
       if (!this.reversed) {
         return {
           ...this.selectedTrack,
-          filename,
+          file,
         };
       } else {
         return {
           ...this.track,
-          filename,
+          file,
         };
       }
     },
