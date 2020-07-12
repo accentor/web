@@ -8,4 +8,8 @@
 a {
   text-decoration: none;
 }
+
+.flex-basis-auto {
+  flex-basis: auto;
+}
 </style>

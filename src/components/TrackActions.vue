@@ -36,50 +36,58 @@
       </template>
       <span>{{ $t("music.track.empty") }}</span>
     </VTooltip>
-    <EditReviewComment :item="track" :update="flag" />
-    <VTooltip bottom :disabled="!waitingForReload">
+    <EditReviewComment :item="track" :update="flag" v-if="!isModerator" />
+    <VMenu v-model="expanded" offset-y v-else class="">
       <template v-slot:activator="{ on }">
         <span v-on="on">
-          <VBtn
-            :to="{
-              name: 'edit-track',
-              params: { id: track.id },
-              query: { redirect: $route.fullPath },
-            }"
-            v-if="isModerator"
-            :disabled="waitingForReload"
-            color="edit"
-            class="ma-1"
-            text
-            icon
-            small
-          >
-            <VIcon>mdi-pencil</VIcon>
+          <VBtn class="ma-1" color="edit" small icon>
+            <VIcon v-if="expanded">mdi-close</VIcon>
+            <VIcon v-else>mdi-arrow-expand-down</VIcon>
           </VBtn>
         </span>
       </template>
-      <span>{{ $t("common.disabled-while-loading") }}</span>
-    </VTooltip>
-    <VTooltip bottom :disabled="!waitingForReload">
-      <template v-slot:activator="{ on }">
-        <span v-on="on">
-          <VBtn
-            @click.stop.prevent="deleteTrack"
-            v-if="isModerator"
-            :disabled="waitingForReload"
-            color="danger"
-            class="ma-1"
-            href="#"
-            text
-            icon
-            small
-          >
-            <VIcon>mdi-delete</VIcon>
-          </VBtn>
-        </span>
-      </template>
-      <span>{{ $t("common.disabled-while-loading") }}</span>
-    </VTooltip>
+      <VList dense>
+        <VListItem class="px-0">
+          <VListContent class="py-0">
+            <EditReviewComment :item="track" :update="flag" />
+          </VListContent>
+        </VListItem>
+        <VListItem class="px-0">
+          <VListItemContent class="py-0">
+            <VBtn
+              :to="{
+                name: 'edit-track',
+                params: { id: track.id },
+                query: { redirect: $route.fullPath },
+              }"
+              :disabled="waitingForReload"
+              color="edit"
+              class="ma-1 flex-grow-0 flex-basis-auto"
+              text
+              icon
+              small
+            >
+              <VIcon>mdi-pencil</VIcon>
+            </VBtn>
+          </VListItemContent>
+        </VListItem>
+        <VLisstItem class="px-0">
+          <VListItemContent class="py-0">
+            <VBtn
+              @click.stop.prevent="deleteTrack"
+              :disabled="waitingForReload"
+              color="danger"
+              class="ma-1 flex-grow-0 flex-basis-auto"
+              text
+              icon
+              small
+            >
+              <VIcon>mdi-delete</VIcon>
+            </VBtn>
+          </VListItemContent>
+        </VLisstItem>
+      </VList>
+    </VMenu>
   </span>
 </template>
 
@@ -92,6 +100,11 @@ export default {
   components: { EditReviewComment },
   props: {
     track: { type: Object, required: true },
+  },
+  data() {
+    return {
+      expanded: false,
+    };
   },
   computed: {
     ...mapGetters("auth", ["isModerator"]),
