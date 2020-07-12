@@ -115,7 +115,7 @@
           v-for="(item, index) of newAlbum.album_artists"
           no-gutters
         >
-          <VCol class="flex-column no-grow">
+          <VCol class="flex-column flex-grow-0">
             <VBtn
               @click="moveArtist(index, -1)"
               icon

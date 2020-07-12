@@ -231,7 +231,10 @@
                 v-for="(item, index) of changeArtists.track_artists"
                 no-gutters
               >
-                <VCol class="flex-column no-grow" v-if="changeArtists.enabled">
+                <VCol
+                  class="flex-column flex-grow-0"
+                  v-if="changeArtists.enabled"
+                >
                   <VBtn
                     @click="moveArtist(index, -1)"
                     icon
