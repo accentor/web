@@ -42,6 +42,15 @@
           class="bottom-padding-fix"
         />
       </template>
+      <template v-slot:item.data-table-select="item" v-if="singleSelect">
+        <VRadioGroup v-model="selectedIds" :multiple="true" :mandatory="false">
+          <VRadio
+            :value="item.item.id"
+            :input-value="item.isSelected"
+            @click="(val) => item.select(val)"
+          />
+        </VRadioGroup>
+      </template>
       <template v-slot:item.number="props">
         <span v-if="currentTrack !== null && props.item.id === currentTrack.id">
           <VIcon>mdi-volume-high</VIcon>
@@ -169,6 +178,9 @@ export default {
             .toLocaleLowerCase()
             .indexOf(this.search.toLocaleLowerCase()) >= 0
       );
+    },
+    selectedIds() {
+      return this.selected.map((t) => t.id);
     },
   },
   methods: {
