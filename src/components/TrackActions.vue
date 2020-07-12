@@ -44,8 +44,10 @@
       icon
       @click.stop="expanded = !expanded"
     >
-      <VIcon v-if="expanded">mdi-arrow-expand-left</VIcon>
-      <VIcon v-else>mdi-arrow-expand-right</VIcon>
+      <transition name="flip-icon" mode="out-in">
+        <VIcon v-if="expanded" key="left">mdi-arrow-expand-left</VIcon>
+        <VIcon v-else key="right">mdi-arrow-expand-right</VIcon>
+      </transition>
     </VBtn>
     <VSlideXReverseTransition>
       <span v-show="expanded">
@@ -138,3 +140,19 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.flip-icon-leave {
+  transform: none;
+}
+
+.flip-icon-leave-active {
+  transition-duration: 750ms;
+  transition-property: transform;
+  transition-timing-function: ease-in;
+}
+
+.flip-icon-leave-to {
+  transform: rotate(0.5turn);
+}
+</style>
