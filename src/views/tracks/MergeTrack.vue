@@ -6,7 +6,7 @@
     <VRow>
       <VCol lg="9" md="8" sm="6" cols="12">
         <div class="text-h4">
-          {{ $t("music.track.merge.into", { obj: track.title }) }}
+          {{ $t("music.track.merge.title", { obj: track.title }) }}
         </div>
         <div class="grey--text">
           {{ $t("music.track.merge.explanation") }}

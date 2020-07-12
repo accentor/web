@@ -286,7 +286,6 @@
 			"length": "Lengte",
 			"merge": {
 				"explanation": "Dit verwijderd dit nummer en de bijhorende tags maar bewaard het audiobestand indien aanwezig.",
-				"into": "Voeg {obj} samen met",
 				"merge": "Voeg nummer samen",
 				"original": "Origineel nummer",
 				"result": "Resultaat",
@@ -295,7 +294,8 @@
 				"show-all-tracks": "Toon alle nummers",
 				"show-only-album-tracks": "Toon alleen nummers van album",
 				"submit": "Voeg nummers samen",
-				"swap-tracks": "Verwissel nummers"
+				"swap-tracks": "Verwissel nummers",
+				"title": "{obj} samenvoegen"
 			},
 			"number": "Tracknummer",
 			"update": "Werk nummer bij"
