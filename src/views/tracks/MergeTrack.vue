@@ -87,10 +87,23 @@
                 {{ track.filename ? track.filename : $t("music.track.empty") }}
               </td>
               <td>
-                {{ selectedTrack ? selectedTrack.filename : "-" }}
+                <span v-if="selectedTrack">
+                  {{
+                    selectedTrack.filename
+                      ? selectedTrack.filename
+                      : $t("music.track.empty")
+                  }}
+                </span>
+                <span v-else>
+                  -
+                </span>
               </td>
               <td class="text-right">
-                {{ result.filename }}
+                {{
+                  result.filename
+                    ? result.filename
+                    : $t("music.track.merge.result-empty")
+                }}
               </td>
             </tr>
           </tbody>

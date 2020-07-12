@@ -294,6 +294,7 @@
 				"merge": "Merge track",
 				"original": "Original track",
 				"result": "Result",
+				"result-empty": "This track will not have audio.",
 				"selected": "Selected track",
 				"show-all-tracks": "Show all tracks",
 				"show-only-album-tracks": "Only show tracks from album",

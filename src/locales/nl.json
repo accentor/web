@@ -290,6 +290,7 @@
 				"merge": "Voeg nummer samen",
 				"original": "Origineel nummer",
 				"result": "Resultaat",
+				"result-empty": "Dit nummer zal geen audio hebben.",
 				"selected": "Geselecteerd nummer",
 				"show-all-tracks": "Toon alle nummers",
 				"show-only-album-tracks": "Toon alleen nummers van album",
