@@ -52,33 +52,46 @@
     <VSlideXReverseTransition>
       <span v-show="expanded">
         <EditReviewComment :item="track" :update="flag" />
-        <VBtn
-          :to="{
-            name: 'edit-track',
-            params: { id: track.id },
-            query: { redirect: $route.fullPath },
-          }"
-          :disabled="waitingForReload"
-          color="edit"
-          class="ma-1 flex-grow-0 flex-basis-auto"
-          text
-          icon
-          small
-        >
-          <VIcon>mdi-pencil</VIcon>
-        </VBtn>
-
-        <VBtn
-          @click.stop.prevent="deleteTrack"
-          :disabled="waitingForReload"
-          color="danger"
-          class="ma-1 flex-grow-0 flex-basis-auto"
-          text
-          icon
-          small
-        >
-          <VIcon>mdi-delete</VIcon>
-        </VBtn>
+        <VTooltip bottom :disabled="!waitingForReload">
+          <template v-slot:activator="{ on }">
+            <span v-on="on">
+              <VBtn
+                :to="{
+                  name: 'edit-track',
+                  params: { id: track.id },
+                  query: { redirect: $route.fullPath },
+                }"
+                :disabled="waitingForReload"
+                color="edit"
+                class="ma-1"
+                text
+                icon
+                small
+              >
+                <VIcon>mdi-pencil</VIcon>
+              </VBtn>
+            </span>
+          </template>
+          <span>{{ $t("common.disabled-while-loading") }}</span>
+        </VTooltip>
+        <VTooltip bottom :disabled="!waitingForReload">
+          <template v-slot:activator="{ on }">
+            <span v-on="on">
+              <VBtn
+                @click.stop.prevent="deleteTrack"
+                :disabled="waitingForReload"
+                color="danger"
+                class="ma-1"
+                text
+                icon
+                small
+              >
+                <VIcon>mdi-delete</VIcon>
+              </VBtn>
+            </span>
+          </template>
+          <span>{{ $t("common.disabled-while-loading") }}</span>
+        </VTooltip>
       </span>
     </VSlideXReverseTransition>
   </span>
