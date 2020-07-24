@@ -53,7 +53,7 @@
             v-for="(item, index) of newTrack.track_artists"
             no-gutters
           >
-            <VCol class="no-grow flex-column">
+            <VCol class="flex-grow-0 flex-column">
               <VBtn
                 @click="moveArtist(index, -1)"
                 icon
