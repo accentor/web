@@ -36,64 +36,54 @@
       </template>
       <span>{{ $t("music.track.empty") }}</span>
     </VTooltip>
-    <EditReviewComment :item="track" :update="flag" v-if="!isModerator" />
-    <VBtn
-      class="ma-1"
-      color="edit"
-      small
-      icon
-      @click.stop="expanded = !expanded"
-    >
-      <transition name="flip-icon" mode="out-in">
-        <VIcon v-if="expanded" key="left">mdi-arrow-expand-left</VIcon>
-        <VIcon v-else key="right">mdi-arrow-expand-right</VIcon>
-      </transition>
-    </VBtn>
-    <VSlideXReverseTransition>
-      <span v-show="expanded">
-        <EditReviewComment :item="track" :update="flag" />
+    <EditReviewComment :item="track" :update="flag"/>
+    <VMenu>
+      <template v-slot:activator="{ on, attrs }">
+        <VBtn class="ma-1" small icon v-bind="attrs" v-on="on">
+          <VIcon>mdi-dots-vertical</VIcon>
+        </VBtn>
+      </template>
+      <VList>
         <VTooltip bottom :disabled="!waitingForReload">
           <template v-slot:activator="{ on }">
-            <span v-on="on">
-              <VBtn
-                :to="{
-                  name: 'edit-track',
-                  params: { id: track.id },
-                  query: { redirect: $route.fullPath },
-                }"
-                :disabled="waitingForReload"
-                color="edit"
-                class="ma-1"
-                text
-                icon
-                small
-              >
-                <VIcon>mdi-pencil</VIcon>
-              </VBtn>
-            </span>
+            <VListItem
+              :to="{
+                name: 'edit-track',
+                params: { id: track.id },
+                query: { redirect: $route.fullPath },
+              }"
+              :disabled="waitingForReload"
+              v-on="on"
+            >
+              <VListItemIcon>
+                <VIcon color="edit">mdi-pencil</VIcon>
+              </VListItemIcon>
+              <VListItemContent>
+                <VListItemTitle>Edit Track</VListItemTitle>
+              </VListItemContent>
+            </VListItem>
           </template>
           <span>{{ $t("common.disabled-while-loading") }}</span>
         </VTooltip>
         <VTooltip bottom :disabled="!waitingForReload">
           <template v-slot:activator="{ on }">
-            <span v-on="on">
-              <VBtn
-                @click.stop.prevent="deleteTrack"
-                :disabled="waitingForReload"
-                color="danger"
-                class="ma-1"
-                text
-                icon
-                small
-              >
-                <VIcon>mdi-delete</VIcon>
-              </VBtn>
-            </span>
+            <VListItem
+              @click.stop.prevent="deleteTrack"
+              :disabled="waitingForReload"
+              v-on="on"
+            >
+              <VListItemIcon>
+                <VIcon color="danger">mdi-delete</VIcon>
+              </VListItemIcon>
+              <VListItemContent>
+                <VListItemTitle>Delete Track</VListItemTitle>
+              </VListItemContent>
+            </VListItem>
           </template>
           <span>{{ $t("common.disabled-while-loading") }}</span>
         </VTooltip>
-      </span>
-    </VSlideXReverseTransition>
+      </VList>
+    </VMenu>
   </span>
 </template>
 

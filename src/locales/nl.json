@@ -280,6 +280,8 @@
 		},
 		"title": "Titel",
 		"track": {
+			"delete": "Verwijder nummer",
+			"edit": "Pas nummer aan",
 			"empty": "Dit nummer heeft geen audio.",
 			"length": "Lengte",
 			"number": "Tracknummer",

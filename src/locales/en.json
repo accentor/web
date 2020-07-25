@@ -284,6 +284,8 @@
 		},
 		"title": "Title",
 		"track": {
+			"delete": "Verwijder nummer",
+			"edit": "Pas nummer aan",
 			"empty": "This track does not have audio.",
 			"length": "Length",
 			"number": "Number",
