@@ -36,7 +36,7 @@
       </template>
       <span>{{ $t("music.track.empty") }}</span>
     </VTooltip>
-    <EditReviewComment :item="track" :update="flag"/>
+    <EditReviewComment :item="track" :update="flag" />
     <VMenu>
       <template v-slot:activator="{ on, attrs }">
         <VBtn class="ma-1" small icon v-bind="attrs" v-on="on">
