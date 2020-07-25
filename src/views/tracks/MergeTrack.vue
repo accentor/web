@@ -164,6 +164,17 @@
       </VCol>
       <VCol class="d-flex justify-center">
         <VBtn
+          color="success"
+          class="ma-2"
+          :disabled="!newID"
+          @click="reversed = !reversed"
+        >
+          <VIcon>mdi-swap-horizontal-bold</VIcon>
+          {{ $t("music.track.merge.swap-tracks") }}
+        </VBtn>
+      </VCol>
+      <VCol class="d-flex justify-center">
+        <VBtn
           color="secondary"
           class="ma-2"
           @click="limitTracksToAlbum = !limitTracksToAlbum"
@@ -173,17 +184,6 @@
               ? $t("music.track.merge.show-all-tracks")
               : $t("music.track.merge.show-only-album-tracks")
           }}
-        </VBtn>
-      </VCol>
-      <VCol class="d-flex justify-center">
-        <VBtn
-          color="success"
-          class="ma-2"
-          :disabled="!newID"
-          @click="reversed = !reversed"
-        >
-          <VIcon>mdi-swap-horizontal-bold</VIcon>
-          {{ $t("music.track.merge.swap-tracks") }}
         </VBtn>
       </VCol>
     </VRow>
