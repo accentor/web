@@ -43,7 +43,7 @@
           <VIcon>mdi-dots-vertical</VIcon>
         </VBtn>
       </template>
-      <VList>
+      <VList dense>
         <VTooltip bottom :disabled="!waitingForReload">
           <template v-slot:activator="{ on }">
             <VListItem
