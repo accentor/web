@@ -37,7 +37,7 @@
       <span>{{ $t("music.track.empty") }}</span>
     </VTooltip>
     <EditReviewComment :item="track" :update="flag" />
-    <VMenu>
+    <VMenu v-if="isModerator">
       <template v-slot:activator="{ on, attrs }">
         <VBtn class="ma-1" small icon v-bind="attrs" v-on="on">
           <VIcon>mdi-dots-vertical</VIcon>
