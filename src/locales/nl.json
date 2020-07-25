@@ -285,7 +285,7 @@
 			"empty": "Dit nummer heeft geen audio.",
 			"length": "Lengte",
 			"merge": {
-				"explanation": "Dit verwijderd dit nummer en de bijhorende tags maar bewaard het audiobestand indien aanwezig.",
+				"explanation": "Dit verwijdert dit nummer en de bijhorende tags maar bewaart het audiobestand indien aanwezig.",
 				"merge": "Voeg nummer samen",
 				"original": "Origineel nummer",
 				"result": "Resultaat",
