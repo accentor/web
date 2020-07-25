@@ -138,19 +138,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped>
-.flip-icon-leave {
-  transform: none;
-}
-
-.flip-icon-leave-active {
-  transition-duration: 750ms;
-  transition-property: transform;
-  transition-timing-function: ease-in;
-}
-
-.flip-icon-leave-to {
-  transform: rotate(0.5turn);
-}
-</style>
