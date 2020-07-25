@@ -59,7 +59,7 @@
                 <VIcon color="edit">mdi-pencil</VIcon>
               </VListItemIcon>
               <VListItemContent>
-                <VListItemTitle>Edit Track</VListItemTitle>
+                <VListItemTitle>{{ $t("music.track.edit") }}</VListItemTitle>
               </VListItemContent>
             </VListItem>
           </template>
@@ -76,7 +76,7 @@
                 <VIcon color="danger">mdi-delete</VIcon>
               </VListItemIcon>
               <VListItemContent>
-                <VListItemTitle>Delete Track</VListItemTitle>
+                <VListItemTitle>{{ $t("music.track.delete") }}</VListItemTitle>
               </VListItemContent>
             </VListItem>
           </template>
