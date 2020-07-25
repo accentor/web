@@ -97,11 +97,6 @@ export default {
   props: {
     track: { type: Object, required: true },
   },
-  data() {
-    return {
-      expanded: false,
-    };
-  },
   computed: {
     ...mapGetters("auth", ["isModerator"]),
     ...mapState("tracks", ["startLoading"]),
