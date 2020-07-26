@@ -56,6 +56,7 @@
             <VCol class="flex-grow-0 flex-column">
               <VBtn
                 @click="moveArtist(index, -1)"
+                @click.once="isDirty = true"
                 icon
                 small
                 class="ma-2"
@@ -65,6 +66,7 @@
               </VBtn>
               <VBtn
                 @click="moveArtist(index, 1)"
+                @click.once="isDirty = true"
                 icon
                 small
                 class="ma-2"
@@ -72,7 +74,7 @@
               >
                 <VIcon>mdi-menu-down</VIcon>
               </VBtn>
-              <VBtn @click="removeArtist(index)" icon small class="ma-2">
+              <VBtn @click="removeArtist(index)" @click.once="isDirty = true" icon small class="ma-2">
                 <VIcon>mdi-close</VIcon>
               </VBtn>
             </VCol>
@@ -109,7 +111,7 @@
               {{ $t("music.track.update") }}
             </VBtn>
             <VSpacer />
-            <VBtn @click="addArtist" color="success" class="ma-2">
+            <VBtn @click="addArtist" @click.once="isDirty = true" color="success" class="ma-2">
               {{ $t("music.artist.add") }}
             </VBtn>
           </VRow>
