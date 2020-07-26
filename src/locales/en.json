@@ -291,6 +291,7 @@
 			"delete": "Delete track",
 			"edit": "Edit track",
 			"empty": "This track does not have audio.",
+			"file": "Audio file",
 			"length": "Length",
 			"merge": {
 				"explanation": "This will remove this track and tags, but keep the audio if present.",
