@@ -1,6 +1,6 @@
 <template>
   <VRow no-gutters align="center" justify="center">
-    <VCol lg="6" sm="8" cols="12" @change.once="isDirty = true" @click.once="isDirty = true">
+    <VCol lg="6" sm="8" cols="12" @change.once="isDirty = true">
       <VAlert
         v-if="album"
         :value="album.review_comment !== null"
@@ -136,7 +136,13 @@
             >
               <VIcon>mdi-menu-down</VIcon>
             </VBtn>
-            <VBtn @click="removeArtist(index)" @click.once="isDirty = true" icon small class="ma-2">
+            <VBtn
+              @click="removeArtist(index)"
+              @click.once="isDirty = true"
+              icon
+              small
+              class="ma-2"
+            >
               <VIcon>mdi-close</VIcon>
             </VBtn>
           </VCol>
@@ -163,7 +169,13 @@
           v-for="(item, index) of newAlbum.album_labels"
           no-gutters
         >
-          <VBtn @click="removeLabel(index)" @click.once="isDirty = true" icon small class="ma-2">
+          <VBtn
+            @click="removeLabel(index)"
+            @click.once="isDirty = true"
+            icon
+            small
+            class="ma-2"
+          >
             <VIcon>mdi-close</VIcon>
           </VBtn>
           <VCol class="flex-column">
@@ -194,10 +206,20 @@
             }}
           </VBtn>
           <VSpacer />
-          <VBtn @click="addArtist" @click.once="isDirty = true" color="success" class="ma-2">
+          <VBtn
+            @click="addArtist"
+            @click.once="isDirty = true"
+            color="success"
+            class="ma-2"
+          >
             {{ $t("music.artist.add") }}
           </VBtn>
-          <VBtn @click="addLabel" @click.once="isDirty = true" color="success" class="ma-2">
+          <VBtn
+            @click="addLabel"
+            @click.once="isDirty = true"
+            color="success"
+            class="ma-2"
+          >
             {{ $t("music.label.add") }}
           </VBtn>
         </VRow>
