@@ -101,12 +101,7 @@ import MassEditDialog from "./MassEditDialog";
 
 export default {
   name: "TracksTable",
-  components: {
-    TrackGenres,
-    TrackActions,
-    TrackArtists,
-    MassEditDialog,
-  },
+  components: { TrackGenres, TrackActions, TrackArtists, MassEditDialog },
   mixins: [Paginated, Searchable],
   props: {
     tracks: { default: () => [], type: Array },
