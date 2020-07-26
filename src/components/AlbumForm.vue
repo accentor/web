@@ -1,6 +1,6 @@
 <template>
   <VRow no-gutters align="center" justify="center">
-    <VCol lg="6" sm="8" cols="12">
+    <VCol lg="6" sm="8" cols="12" @change.once="isDirty = true">
       <VAlert
         v-if="album"
         :value="album.review_comment !== null"
@@ -214,6 +214,7 @@ export default {
   props: { album: { type: Object, default: null } },
   data() {
     return {
+      isDirty: false,
       isValid: true,
       originalModal: false,
       editionModal: false,
@@ -251,7 +252,7 @@ export default {
   },
   watch: {
     album: function () {
-      if (this.album) {
+      if (this.album && !this.isDirty) {
         this.fillValues();
       }
     },

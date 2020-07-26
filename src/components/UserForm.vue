@@ -1,44 +1,46 @@
 <template>
-  <VForm v-model="isValid" ref="userForm" @submit.prevent="submit">
-    <VTextField
-      :label="$t('common.name')"
-      v-model="newUser.name"
-      autocomplete="username"
-      required
-      :rules="[(v) => !!v || $t('errors.user.name-blank')]"
-    />
-    <VTextField
-      v-if="user === currentUser"
-      :label="$t('users.current-password')"
-      type="password"
-      autocomplete="current-password"
-      v-model="newUser.current_password"
-      :rules="rules.current"
-    />
-    <VTextField
-      :label="$t('users.password')"
-      type="password"
-      autocomplete="new-password"
-      v-model="newUser.password"
-      :rules="rules.password"
-    />
-    <VTextField
-      :label="$t('users.confirm-password')"
-      type="password"
-      autocomplete="new-password"
-      v-model="newUser.password_confirmation"
-      :rules="rules.confirmation"
-    />
-    <VSelect
-      v-if="showPermissions"
-      :items="permissionOptions"
-      :label="$t('users.permissions')"
-      v-model="newUser.permission"
-    />
-    <VBtn color="primary" class="ma-2" type="submit">
-      {{ $t("users.update") }}
-    </VBtn>
-  </VForm>
+  <div @change="isDirty = true">
+    <VForm v-model="isValid" ref="userForm" @submit.prevent="submit">
+      <VTextField
+        :label="$t('common.name')"
+        v-model="newUser.name"
+        autocomplete="username"
+        required
+        :rules="[(v) => !!v || $t('errors.user.name-blank')]"
+      />
+      <VTextField
+        v-if="user === currentUser"
+        :label="$t('users.current-password')"
+        type="password"
+        autocomplete="current-password"
+        v-model="newUser.current_password"
+        :rules="rules.current"
+      />
+      <VTextField
+        :label="$t('users.password')"
+        type="password"
+        autocomplete="new-password"
+        v-model="newUser.password"
+        :rules="rules.password"
+      />
+      <VTextField
+        :label="$t('users.confirm-password')"
+        type="password"
+        autocomplete="new-password"
+        v-model="newUser.password_confirmation"
+        :rules="rules.confirmation"
+      />
+      <VSelect
+        v-if="showPermissions"
+        :items="permissionOptions"
+        :label="$t('users.permissions')"
+        v-model="newUser.permission"
+      />
+      <VBtn color="primary" class="ma-2" type="submit">
+        {{ $t("users.update") }}
+      </VBtn>
+    </VForm>
+  </div>
 </template>
 
 <script>
@@ -65,6 +67,7 @@ export default {
         { text: this.$t("users.permission.moderator"), value: "moderator" },
         { text: this.$t("users.permission.user"), value: "user" },
       ],
+      isDirty: false,
       isValid: true,
     };
   },
@@ -77,7 +80,7 @@ export default {
   },
   watch: {
     user: function () {
-      if (this.user) {
+      if (this.user && !this.isDirty) {
         this.fillValues();
       }
     },

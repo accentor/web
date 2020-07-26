@@ -1,6 +1,6 @@
 <template>
   <VRow no-gutters align="center" justify="center">
-    <VCol md="4" sm="8" cols="12">
+    <VCol md="4" sm="8" cols="12" @change.once="isDirty = true">
       <VAlert
         v-if="artist"
         :value="artist.review_comment !== null"
@@ -46,6 +46,7 @@ export default {
         review_comment: null,
       },
       clear_review_comment: true,
+      isDirty: false,
       isValid: true,
     };
   },
@@ -58,7 +59,7 @@ export default {
   },
   watch: {
     artist: function () {
-      if (this.artist) {
+      if (this.artist && !this.isDirty) {
         this.fillValues();
       }
     },

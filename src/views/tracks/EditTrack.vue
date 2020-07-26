@@ -4,7 +4,7 @@
       :title="$t('page-titles.edit', { obj: track.title }) + ' | Accentor'"
     />
     <VRow no-gutters align="center" justify="center">
-      <VCol md="6" sm="8" cols="12">
+      <VCol md="6" sm="8" cols="12" @change.once="isDirty = true">
         <VAlert
           :value="track.review_comment !== null"
           type="warning"
@@ -165,6 +165,7 @@ export default {
         },
       ],
       clear_review_comment: true,
+      isDirty: false,
       isValid: true,
     };
   },
@@ -177,7 +178,7 @@ export default {
   },
   watch: {
     track: function () {
-      if (this.track) {
+      if (this.track && !this.isDirty) {
         this.fillValues();
       }
     },
