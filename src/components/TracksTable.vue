@@ -22,14 +22,16 @@
       :items="filteredItems"
       :items-per-page="30"
       :page.sync="pagination.page"
-      :show-select="isModerator && showMassEdit"
+      :show-select="isModerator"
+      :single-select="singleSelect"
       class="elevation-3"
       ref="table"
+      @item-selected="emitSelected"
     >
       <template v-slot:header.actions v-if="isModerator && showMassEdit">
         <MassEditDialog :tracks="selected" @close="reloadSelected" />
       </template>
-      <template v-slot:header.data-table-select="props">
+      <template v-slot:header.data-table-select="props" v-if="!singleSelect">
         <VCheckbox
           :input-value="props.props.value"
           :value="props.props.value"
@@ -39,6 +41,15 @@
           @click.stop="toggleAll"
           class="bottom-padding-fix"
         />
+      </template>
+      <template v-slot:item.data-table-select="item" v-if="singleSelect">
+        <VRadioGroup v-model="selectedIds" :multiple="true" :mandatory="false">
+          <VRadio
+            :value="item.item.id"
+            :input-value="item.isSelected"
+            @click="(val) => item.select(val)"
+          />
+        </VRadioGroup>
       </template>
       <template v-slot:item.number="props">
         <span v-if="currentTrack !== null && props.item.id === currentTrack.id">
@@ -95,9 +106,11 @@ export default {
   props: {
     tracks: { default: () => [], type: Array },
     savePagination: { default: true, type: Boolean },
+    showActions: { default: true, type: Boolean },
     showAlbum: { default: true, type: Boolean },
     showMassEdit: { default: true, type: Boolean },
     showSearch: { default: false, type: Boolean },
+    singleSelect: { default: false, type: Boolean },
   },
   data() {
     const headers = [
@@ -144,6 +157,9 @@ export default {
     if (!this.showAlbum) {
       headers.splice(3, 1);
     }
+    if (!this.showActions) {
+      headers.splice(-1, 1);
+    }
     return {
       headers,
       selected: [],
@@ -163,8 +179,14 @@ export default {
             .indexOf(this.search.toLocaleLowerCase()) >= 0
       );
     },
+    selectedIds() {
+      return this.selected.map((t) => t.id);
+    },
   },
   methods: {
+    emitSelected(o) {
+      this.$emit("selected", o.value ? o.item.id : null);
+    },
     toggleAll() {
       if (this.selected.length > 0) {
         this.selected = [];

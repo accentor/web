@@ -68,6 +68,29 @@
         <VTooltip bottom :disabled="!waitingForReload">
           <template v-slot:activator="{ on }">
             <VListItem
+              :to="{
+                name: 'merge-track',
+                params: { id: track.id },
+                query: { redirect: $route.fullPath },
+              }"
+              :disabled="waitingForReload"
+              v-on="on"
+            >
+              <VListItemIcon>
+                <VIcon color="edit">mdi-merge</VIcon>
+              </VListItemIcon>
+              <VListItemContent>
+                <VListItemTitle>
+                  {{ $t("music.track.merge.merge") }}
+                </VListItemTitle>
+              </VListItemContent>
+            </VListItem>
+          </template>
+          <span>{{ $t("common.disabled-while-loading") }}</span>
+        </VTooltip>
+        <VTooltip bottom :disabled="!waitingForReload">
+          <template v-slot:activator="{ on }">
+            <VListItem
               @click.stop.prevent="deleteTrack"
               :disabled="waitingForReload"
               v-on="on"

@@ -14,6 +14,7 @@ import Home from "./views/Home";
 import Login from "./views/Login";
 import Library from "./views/Library";
 import EditTrack from "./views/tracks/EditTrack";
+import MergeTrack from "./views/tracks/MergeTrack";
 import Tracks from "./views/tracks/Tracks";
 import EditUser from "./views/users/EditUser";
 import NewUser from "./views/users/NewUser";
@@ -137,6 +138,11 @@ const router = new Router({
           path: "tracks/:id/edit",
           name: "edit-track",
           component: EditTrack,
+        },
+        {
+          path: "tracks/:id/merge",
+          name: "merge-track",
+          component: MergeTrack,
         },
         {
           path: "users",
