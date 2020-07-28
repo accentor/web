@@ -65,7 +65,8 @@ export default {
           !this.search ||
           item.name
             .toLocaleLowerCase()
-            .indexOf(this.search.toLocaleLowerCase()) >= 0
+            .indexOf(this.search.toLocaleLowerCase()) >= 0 ||
+          item.normalized_name.indexOf(this.search.toLocaleLowerCase()) >= 0
       );
     },
     numberOfItems() {
