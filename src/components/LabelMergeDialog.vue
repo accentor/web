@@ -31,6 +31,7 @@
             <VCol cols="12">
               <VCombobox
                 :items="sortedLabels"
+                :filter="filterName"
                 cache-items
                 item-text="name"
                 item-value="id"
@@ -85,6 +86,13 @@ export default {
   },
   methods: {
     ...mapActions("labels", ["merge"]),
+    filterName(item, queryText, itemText) {
+      const search = queryText.toLowerCase();
+      return (
+        item.name.toLowerCase().indexOf(search) > -1 ||
+        item.normalized_name.indexOf(search) > -1
+      );
+    },
     mergeLabels() {
       this.merge({ newID: this.mergeLabel.id, oldID: this.label.id }).finally(
         () => {
