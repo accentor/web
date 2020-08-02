@@ -1,6 +1,14 @@
 <template>
   <span>
     <VBtn
+      :to="{ name: 'empty-tracks' }"
+      color="danger"
+      class="ma-2 white--text"
+    >
+      <VIcon left>mdi-alert-octagon</VIcon>
+      {{ $t("library.review-empty-tracks") }}
+    </VBtn>
+    <VBtn
       @click="destroyEmptyArtists"
       color="danger"
       class="ma-2 white--text"

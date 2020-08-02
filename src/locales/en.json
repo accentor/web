@@ -204,6 +204,7 @@
 		"processed": "Processed",
 		"rescan": "Rescan",
 		"resulting-codec": "Resulting codec",
+		"review-empty-tracks": "Review empty tracks",
 		"start-scan": "Start scan",
 		"warnings": "Warnings"
 	},
