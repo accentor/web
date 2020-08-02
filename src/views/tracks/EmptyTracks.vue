@@ -1,5 +1,5 @@
 <template>
-  <VContainer class="fill-height" fluid>
+  <VContainer class="fill-height" fluid v-if="isModerator">
     <vue-headful :title="$t('music.tracks-empty') + ' | Accentor'" />
     <VRow no-gutters>
       <VCol>
