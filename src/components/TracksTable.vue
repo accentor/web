@@ -1,6 +1,9 @@
 <template>
   <div>
     <VRow class="mb-2" justify="end" align="baseline">
+      <VCol cols="12" md="6" lg="8" xl="10" v-if="title !== null">
+        <h2 class="text-h4">{{ title }}</h2>
+      </VCol>
       <VCol v-if="showSearch" cols="12" sm="8" md="6" lg="4" xl="2">
         <VTextField
           v-model="search"
@@ -111,6 +114,7 @@ export default {
     showMassEdit: { default: true, type: Boolean },
     showSearch: { default: false, type: Boolean },
     singleSelect: { default: false, type: Boolean },
+    title: { required: false, type: String },
   },
   data() {
     const headers = [

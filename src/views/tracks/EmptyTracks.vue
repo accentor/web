@@ -5,6 +5,7 @@
       <VCol>
         <TracksTable
           :tracks="tracks"
+          :title="$t('music.tracks-empty')"
           :show-search="true"
           :show-mass-edit="true"
         />
