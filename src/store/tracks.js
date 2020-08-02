@@ -215,6 +215,11 @@ export default {
         compareTracks(rootState, t1, t2)
       );
     },
+    tracksEmpty: (state, getters, rootState) => {
+      return getters.tracks
+        .filter((t) => t.length === null)
+        .sort((t1, t2) => compareTracks(rootState, t1, t2));
+    },
     tracksFlagged: (state, getters, rootState) => {
       return getters.tracks
         .filter((t) => t.review_comment !== null)

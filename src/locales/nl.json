@@ -306,7 +306,8 @@
 			"sample_rate": "Sample rate",
 			"update": "Werk nummer bij"
 		},
-		"tracks": "Nummers | Nummer | Nummers"
+		"tracks": "Nummers | Nummer | Nummers",
+		"tracks-empty": "Lege nummers"
 	},
 	"page-titles": {
 		"edit": "{obj} aanpassen",

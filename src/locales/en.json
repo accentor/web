@@ -310,7 +310,8 @@
 			"sample_rate": "Sample rate",
 			"update": "Update track"
 		},
-		"tracks": "Tracks | Track | Tracks"
+		"tracks": "Tracks | Track | Tracks",
+		"tracks-empty": "Empty tracks"
 	},
 	"page-titles": {
 		"edit": "Edit {obj}",
