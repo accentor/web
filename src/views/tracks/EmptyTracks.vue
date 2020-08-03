@@ -22,6 +22,7 @@ export default {
   name: "EmptyTracks",
   components: { TracksTable },
   computed: {
+    ...mapGetters("auth", ["isModerator"]),
     ...mapGetters("tracks", {
       tracks: "tracksEmpty",
     }),
