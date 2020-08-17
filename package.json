@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@mdi/font": "^5.4.55",
-    "@mdi/svg": "^5.4.55",
+    "@mdi/svg": "^5.5.55",
     "core-js": "^3.6.5",
     "fetch-retry": "^4.0.1",
     "roboto-fontface": "^0.10.0",
