@@ -28,7 +28,7 @@
           </VBtn>
         </VToolbarItems>
       </VToolbar>
-      <div style="overflow-y: auto; backface-visibility: hidden;">
+      <div style="overflow-y: auto; backface-visibility: hidden">
         <VForm v-model="isValid" ref="form">
           <VContainer>
             <Errors />
