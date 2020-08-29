@@ -147,9 +147,7 @@
                       : $t("music.track.empty")
                   }}
                 </span>
-                <span class="my-auto text-right" v-else>
-                  -
-                </span>
+                <span class="my-auto text-right" v-else> - </span>
               </td>
             </tr>
           </tbody>
