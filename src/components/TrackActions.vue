@@ -44,67 +44,6 @@
         </VBtn>
       </template>
       <VList dense>
-        <VTooltip bottom :disabled="!waitingForReload">
-          <template v-slot:activator="{ on }">
-            <VListItem
-              :to="{
-                name: 'edit-track',
-                params: { id: track.id },
-                query: { redirect: $route.fullPath },
-              }"
-              :disabled="waitingForReload"
-              v-on="on"
-            >
-              <VListItemIcon>
-                <VIcon color="edit">mdi-pencil</VIcon>
-              </VListItemIcon>
-              <VListItemContent>
-                <VListItemTitle>{{ $t("music.track.edit") }}</VListItemTitle>
-              </VListItemContent>
-            </VListItem>
-          </template>
-          <span>{{ $t("common.disabled-while-loading") }}</span>
-        </VTooltip>
-        <VTooltip bottom :disabled="!waitingForReload">
-          <template v-slot:activator="{ on }">
-            <VListItem
-              :to="{
-                name: 'merge-track',
-                params: { id: track.id },
-                query: { redirect: $route.fullPath },
-              }"
-              :disabled="waitingForReload"
-              v-on="on"
-            >
-              <VListItemIcon>
-                <VIcon color="edit">mdi-merge</VIcon>
-              </VListItemIcon>
-              <VListItemContent>
-                <VListItemTitle>
-                  {{ $t("music.track.merge.merge") }}
-                </VListItemTitle>
-              </VListItemContent>
-            </VListItem>
-          </template>
-          <span>{{ $t("common.disabled-while-loading") }}</span>
-        </VTooltip>
-        <VTooltip bottom :disabled="!waitingForReload">
-          <template v-slot:activator="{ on }">
-            <VListItem
-              @click.stop.prevent="deleteTrack"
-              :disabled="waitingForReload"
-              v-on="on"
-            >
-              <VListItemIcon>
-                <VIcon color="danger">mdi-delete</VIcon>
-              </VListItemIcon>
-              <VListItemContent>
-                <VListItemTitle>{{ $t("music.track.delete") }}</VListItemTitle>
-              </VListItemContent>
-            </VListItem>
-          </template>
-          <span>{{ $t("common.disabled-while-loading") }}</span>
-        </VTooltip>
         <VMenu open-on-hover offset-x left v-if="track.length">
           <template v-slot:activator="{ on }">
             <VListItem v-on="on">
@@ -167,6 +106,67 @@
             </VListItem>
           </VList>
         </VMenu>
+        <VTooltip bottom :disabled="!waitingForReload">
+          <template v-slot:activator="{ on }">
+            <VListItem
+              :to="{
+                name: 'edit-track',
+                params: { id: track.id },
+                query: { redirect: $route.fullPath },
+              }"
+              :disabled="waitingForReload"
+              v-on="on"
+            >
+              <VListItemIcon>
+                <VIcon color="edit">mdi-pencil</VIcon>
+              </VListItemIcon>
+              <VListItemContent>
+                <VListItemTitle>{{ $t("music.track.edit") }}</VListItemTitle>
+              </VListItemContent>
+            </VListItem>
+          </template>
+          <span>{{ $t("common.disabled-while-loading") }}</span>
+        </VTooltip>
+        <VTooltip bottom :disabled="!waitingForReload">
+          <template v-slot:activator="{ on }">
+            <VListItem
+              :to="{
+                name: 'merge-track',
+                params: { id: track.id },
+                query: { redirect: $route.fullPath },
+              }"
+              :disabled="waitingForReload"
+              v-on="on"
+            >
+              <VListItemIcon>
+                <VIcon color="edit">mdi-merge</VIcon>
+              </VListItemIcon>
+              <VListItemContent>
+                <VListItemTitle>
+                  {{ $t("music.track.merge.merge") }}
+                </VListItemTitle>
+              </VListItemContent>
+            </VListItem>
+          </template>
+          <span>{{ $t("common.disabled-while-loading") }}</span>
+        </VTooltip>
+        <VTooltip bottom :disabled="!waitingForReload">
+          <template v-slot:activator="{ on }">
+            <VListItem
+              @click.stop.prevent="deleteTrack"
+              :disabled="waitingForReload"
+              v-on="on"
+            >
+              <VListItemIcon>
+                <VIcon color="danger">mdi-delete</VIcon>
+              </VListItemIcon>
+              <VListItemContent>
+                <VListItemTitle>{{ $t("music.track.delete") }}</VListItemTitle>
+              </VListItemContent>
+            </VListItem>
+          </template>
+          <span>{{ $t("common.disabled-while-loading") }}</span>
+        </VTooltip>
       </VList>
     </VMenu>
   </span>
