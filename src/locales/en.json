@@ -182,6 +182,7 @@
 	},
 	"library": {
 		"codec-conversions": "Codecs conversions",
+		"codec": "Codec",
 		"codecs": "Codecs",
 		"cover-filenames": "Cover filenames",
 		"currently-running": "Currently running",
@@ -195,6 +196,7 @@
 		"filename": "Filename",
 		"finished-at": "Finished at",
 		"image-types": "Image types",
+		"location": "Location",
 		"locations": "Locations",
 		"maintenance": "Maintenance",
 		"mime-type": "MIME type",
@@ -284,9 +286,12 @@
 		},
 		"title": "Title",
 		"track": {
+			"bitrate": "Bitrate",
+			"bit_depth": "Bit depth",
 			"delete": "Delete track",
 			"edit": "Edit track",
 			"empty": "This track does not have audio.",
+			"file": "Audio file",
 			"length": "Length",
 			"merge": {
 				"explanation": "This will remove this track and tags, but keep the audio if present.",
@@ -302,6 +307,7 @@
 				"title": "Merge {obj}"
 			},
 			"number": "Number",
+			"sample_rate": "Sample rate",
 			"update": "Update track"
 		},
 		"tracks": "Tracks | Track | Tracks"
