@@ -156,6 +156,7 @@
                 <VCol cols="12" sm="6">
                   <VAutocomplete
                     :items="sortedAlbums"
+                    :filter="filterTitle"
                     item-text="title"
                     item-value="id"
                     label="Album"
@@ -191,6 +192,7 @@
                 <VCol cols="12" sm="6">
                   <VCombobox
                     :items="sortedGenres"
+                    :filter="filterName"
                     cache-items
                     chips
                     deletable-chips
@@ -260,6 +262,7 @@
                 <VCol v-if="changeArtists.enabled">
                   <VCombobox
                     :items="sortedArtists"
+                    :filter="filterName"
                     item-text="name"
                     item-value="id"
                     :label="$tc('music.artists', 2)"
@@ -462,6 +465,20 @@ export default {
       createArtist: "artists/create",
       createGenre: "genres/create",
     }),
+    filterName(item, queryText, itemText) {
+      const search = queryText.toLowerCase();
+      return (
+        item.name.toLowerCase().indexOf(search) > -1 ||
+        item.normalized_name.indexOf(search) > -1
+      );
+    },
+    filterTitle(item, queryText, itemText) {
+      const search = queryText.toLowerCase();
+      return (
+        item.title.toLowerCase().indexOf(search) > -1 ||
+        item.normalized_title.indexOf(search) > -1
+      );
+    },
     saveTracks() {
       this.$refs.form.validate();
       if (!this.isValid) return false;

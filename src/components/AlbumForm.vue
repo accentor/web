@@ -149,6 +149,7 @@
           <VCol class="flex-column">
             <VCombobox
               :items="sortedArtists"
+              :filter="filterName"
               item-text="name"
               item-value="id"
               :label="$tc('music.artists', 1)"
@@ -181,6 +182,7 @@
           <VCol class="flex-column">
             <VCombobox
               :items="sortedLabels"
+              :filter="filterName"
               item-text="name"
               item-value="id"
               :label="$tc('music.labels', 1)"
@@ -298,6 +300,13 @@ export default {
       createArtist: "artists/create",
       createLabel: "labels/create",
     }),
+    filterName(item, queryText, itemText) {
+      const search = queryText.toLowerCase();
+      return (
+        item.name.toLowerCase().indexOf(search) > -1 ||
+        item.normalized_name.indexOf(search) > -1
+      );
+    },
     fillValues() {
       this.newAlbum.title = this.album.title;
       this.newAlbum.release = this.album.release;

@@ -31,6 +31,7 @@
             <VCol cols="12">
               <VCombobox
                 :items="sortedArtists"
+                :filter="filterName"
                 cache-items
                 item-text="name"
                 item-value="id"
@@ -85,6 +86,13 @@ export default {
   },
   methods: {
     ...mapActions("artists", ["merge"]),
+    filterName(item, queryText, itemText) {
+      const search = queryText.toLowerCase();
+      return (
+        item.name.toLowerCase().indexOf(search) > -1 ||
+        item.normalized_name.indexOf(search) > -1
+      );
+    },
     mergeArtists() {
       this.merge({ newID: this.mergeArtist.id, oldID: this.artist.id }).finally(
         () => {

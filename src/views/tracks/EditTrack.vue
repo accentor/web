@@ -28,6 +28,7 @@
           />
           <VAutocomplete
             :items="sortedAlbums"
+            :filter="filterTitle"
             item-text="title"
             item-value="id"
             :label="$tc('music.albums', 1)"
@@ -35,6 +36,7 @@
           />
           <VCombobox
             :items="sortedGenres"
+            :filter="filterName"
             cache-items
             chips
             deletable-chips
@@ -87,6 +89,7 @@
             <VCol>
               <VCombobox
                 :items="sortedArtists"
+                :filter="filterName"
                 item-text="name"
                 item-value="id"
                 :label="$tc('music.artists', 1)"
@@ -253,6 +256,20 @@ export default {
       createArtist: "artists/create",
       createGenre: "genres/create",
     }),
+    filterName(item, queryText, itemText) {
+      const search = queryText.toLowerCase();
+      return (
+        item.name.toLowerCase().indexOf(search) > -1 ||
+        item.normalized_name.indexOf(search) > -1
+      );
+    },
+    filterTitle(item, queryText, itemText) {
+      const search = queryText.toLowerCase();
+      return (
+        item.title.toLowerCase().indexOf(search) > -1 ||
+        item.normalized_title.indexOf(search) > -1
+      );
+    },
     fillValues() {
       this.newTrack.number = this.track.number;
       this.newTrack.title = this.track.title;
