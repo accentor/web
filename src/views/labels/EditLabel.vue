@@ -4,7 +4,7 @@
       :title="$t('page-titles.edit', { obj: label.name }) + ' | Accentor'"
     />
     <VRow no-gutters align="center" justify="center">
-      <VCol md="4" sm="8" cols="12">
+      <VCol md="4" sm="8" cols="12" @change.once="isDirty = true">
         <VForm v-model="isValid" @submit.prevent="submit">
           <VTextField
             :label="$t('common.name')"
@@ -31,6 +31,7 @@ export default {
       newLabel: {
         name: "",
       },
+      isDirty: false,
       isValid: true,
     };
   },
@@ -43,7 +44,7 @@ export default {
   },
   watch: {
     label: function () {
-      if (this.label) {
+      if (this.label && !this.isDirty) {
         this.fillValues();
       }
     },
