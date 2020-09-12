@@ -48,7 +48,7 @@
           <template v-slot:activator="{ on }">
             <VListItem v-on="on">
               <VListItemIcon v-on="on">
-                <VIcon>mdi-file-music</VIcon>
+                <VIcon color="info">mdi-file-music</VIcon>
               </VListItemIcon>
               <VListItemContent>
                 <VListItemTitle>
