@@ -200,11 +200,11 @@
 		"locations": "Locations",
 		"maintenance": "Maintenance",
 		"mime-type": "MIME type",
+		"overview-tracks-without-audio": "Overview of tracks without audio",
 		"path": "Path",
 		"processed": "Processed",
 		"rescan": "Rescan",
 		"resulting-codec": "Resulting codec",
-		"review-empty-tracks": "Review empty tracks",
 		"start-scan": "Start scan",
 		"warnings": "Warnings"
 	},
@@ -312,7 +312,7 @@
 			"update": "Update track"
 		},
 		"tracks": "Tracks | Track | Tracks",
-		"tracks-empty": "Empty tracks"
+		"tracks-without-audio": "Tracks without audio"
 	},
 	"page-titles": {
 		"edit": "Edit {obj}",

@@ -196,6 +196,7 @@
 		"locations": "Plaatsen",
 		"maintenance": "Onderhoud",
 		"mime-type": "MIME type",
+		"overview-tracks-without-audio": "Overzicht nummers zonder audio",
 		"path": "Pad",
 		"processed": "Verwerkt",
 		"rescan": "Herscannen",
@@ -308,7 +309,7 @@
 			"update": "Werk nummer bij"
 		},
 		"tracks": "Nummers | Nummer | Nummers",
-		"tracks-empty": "Lege nummers"
+		"tracks-without-audio": "Nummers zonder audio"
 	},
 	"page-titles": {
 		"edit": "{obj} aanpassen",

@@ -1,11 +1,11 @@
 <template>
   <VContainer class="fill-height" fluid v-if="isModerator">
-    <vue-headful :title="$t('music.tracks-empty') + ' | Accentor'" />
+    <vue-headful :title="$t('music.tracks-without-audio') + ' | Accentor'" />
     <VRow no-gutters>
       <VCol>
         <TracksTable
           :tracks="tracks"
-          :title="$t('music.tracks-empty')"
+          :title="$t('music.tracks-without-audio')"
           :show-search="true"
           :show-mass-edit="true"
         />
