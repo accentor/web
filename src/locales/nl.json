@@ -196,6 +196,7 @@
 		"locations": "Plaatsen",
 		"maintenance": "Onderhoud",
 		"mime-type": "MIME type",
+		"no-tracks-without-audio": "Er zijn geen nummers zonder audio",
 		"overview-tracks-without-audio": "Overzicht nummers zonder audio",
 		"path": "Pad",
 		"processed": "Verwerkt",

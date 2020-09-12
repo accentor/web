@@ -200,6 +200,7 @@
 		"locations": "Locations",
 		"maintenance": "Maintenance",
 		"mime-type": "MIME type",
+		"no-tracks-without-audio": "There are no tracks without audio",
 		"overview-tracks-without-audio": "Overview of tracks without audio",
 		"path": "Path",
 		"processed": "Processed",
