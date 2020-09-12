@@ -1,5 +1,21 @@
 <template>
   <span>
+    <VTooltip bottom :disabled="tracksEmpty.length > 0">
+      <template v-slot:activator="{ on }">
+        <span v-on="on">
+          <VBtn
+            :to="{ name: 'tracks-without-audio' }"
+            :disabled="tracksEmpty.length === 0"
+            color="info"
+            class="ma-2 white--text"
+          >
+            <VIcon left>mdi-alert-octagon</VIcon>
+            {{ $t("library.overview-tracks-without-audio") }}
+          </VBtn>
+        </span>
+      </template>
+      <span>{{ $t("library.no-tracks-without-audio") }}</span>
+    </VTooltip>
     <VBtn
       @click="destroyEmptyArtists"
       color="danger"
@@ -48,7 +64,7 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
   name: "MaintenanceActions",
@@ -59,6 +75,9 @@ export default {
       labelsDisabled: false,
       genresDisabled: false,
     };
+  },
+  computed: {
+    ...mapGetters("tracks", ["tracksEmpty"]),
   },
   methods: {
     ...mapActions({

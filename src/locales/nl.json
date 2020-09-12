@@ -196,10 +196,13 @@
 		"locations": "Plaatsen",
 		"maintenance": "Onderhoud",
 		"mime-type": "MIME type",
+		"no-tracks-without-audio": "Er zijn geen nummers zonder audio",
+		"overview-tracks-without-audio": "Overzicht nummers zonder audio",
 		"path": "Pad",
 		"processed": "Verwerkt",
 		"rescan": "Herscannen",
 		"resulting-codec": "Uiteindelijke codec",
+		"review-empty-tracks": "Evalueer lege nummers",
 		"start-scan": "Scannen starten",
 		"warnings": "Waarschuwingen"
 	},
@@ -306,7 +309,8 @@
 			"sample_rate": "Sample rate",
 			"update": "Werk nummer bij"
 		},
-		"tracks": "Nummers | Nummer | Nummers"
+		"tracks": "Nummers | Nummer | Nummers",
+		"tracks-without-audio": "Nummers zonder audio"
 	},
 	"page-titles": {
 		"edit": "{obj} aanpassen",

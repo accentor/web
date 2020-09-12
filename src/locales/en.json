@@ -200,6 +200,8 @@
 		"locations": "Locations",
 		"maintenance": "Maintenance",
 		"mime-type": "MIME type",
+		"no-tracks-without-audio": "There are no tracks without audio",
+		"overview-tracks-without-audio": "Overview of tracks without audio",
 		"path": "Path",
 		"processed": "Processed",
 		"rescan": "Rescan",
@@ -310,7 +312,8 @@
 			"sample_rate": "Sample rate",
 			"update": "Update track"
 		},
-		"tracks": "Tracks | Track | Tracks"
+		"tracks": "Tracks | Track | Tracks",
+		"tracks-without-audio": "Tracks without audio"
 	},
 	"page-titles": {
 		"edit": "Edit {obj}",
