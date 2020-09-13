@@ -269,7 +269,7 @@ export default {
     },
     submit() {
       const newID = this.reversed ? this.newID : this.track.id;
-      const oldID = this.reversed ? this.track.id : this.track.id;
+      const oldID = this.reversed ? this.track.id : this.newID;
       this.merge({ newID, oldID }).finally(() => {
         this.$router.push(this.$route.query.redirect || { name: "tracks" });
       });
