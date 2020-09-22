@@ -119,7 +119,10 @@ export default {
     ...mapState("rescan", ["rescan"]),
     ...mapState("rescan", ["lastClick"]),
     rescanRunning() {
-      return this.lastClick > new Date(this.rescan.finished_at) ? true : false;
+      return this.rescan.running ||
+        this.lastClick > new Date(this.rescan.finished_at)
+        ? true
+        : false;
     },
   },
   methods: {
