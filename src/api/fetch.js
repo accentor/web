@@ -1,5 +1,7 @@
 import baseURL from "./base_url";
-const fetchRetry = require("fetch-retry")(fetch);
+const fetchRetry = require("fetch-retry")(fetch, {
+  retries: 0,
+});
 
 export async function* indexGenerator(path, auth) {
   let page = 1;
@@ -41,7 +43,7 @@ export async function* indexGenerator(path, auth) {
 async function resolveRequest(request) {
   let response;
   try {
-    response = await fetch(request);
+    response = await fetchRetry(request);
   } catch (reason) {
     throw { error: [reason] };
   }
@@ -66,8 +68,9 @@ export async function create(path, auth, object) {
   return await resolveRequest(request);
 }
 
-export async function read(path, auth) {
+export async function read(path, auth, retryOptions = {}) {
   const request = new Request(`${baseURL}/${path}`, {
+    ...retryOptions,
     method: "GET",
     headers: {
       "x-secret": auth.secret,
