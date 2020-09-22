@@ -186,11 +186,10 @@ export default {
     };
   },
   created() {
-    this.$nextTick(() => {
-      if (this.track) {
+    if (this.track)
+      this.read(this.track.id).then(() => {
         this.fillValues();
-      }
-    });
+      });
   },
   watch: {
     track: function () {
@@ -251,7 +250,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions("tracks", ["update"]),
+    ...mapActions("tracks", ["read", "update"]),
     ...mapActions({
       createArtist: "artists/create",
       createGenre: "genres/create",

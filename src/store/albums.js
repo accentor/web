@@ -1,5 +1,12 @@
 import Vue from "vue";
-import { index, create, destroy, update, destroyEmpty } from "../api/albums";
+import {
+  index,
+  create,
+  read,
+  destroy,
+  update,
+  destroyEmpty,
+} from "../api/albums";
 import { fetchAll } from "./actions";
 import { compareStrings } from "../comparators";
 
@@ -115,6 +122,14 @@ export default {
           this.commit("addError", error);
           return Promise.resolve(false);
         });
+    },
+    async read({ commit, rootState }, id) {
+      try {
+        const album = await read(rootState.auth, id);
+        commit("setAlbum", { id, album });
+      } catch (error) {
+        this.commit("addError", error);
+      }
     },
     update({ commit, rootState }, { id, newAlbum }) {
       return update(rootState.auth, id, newAlbum)

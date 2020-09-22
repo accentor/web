@@ -1,6 +1,7 @@
 import {
   indexGenerator,
   create as genCreate,
+  read as genRead,
   update as genUpdate,
   destroy as genDestroy,
   destroyEmpty as genDestroyEmpty,
@@ -12,6 +13,10 @@ export function index(auth) {
 
 export function create(auth, album) {
   return genCreate("albums", auth, { album });
+}
+
+export function read(auth, id) {
+  return genRead(`albums/${id}`, auth);
 }
 
 export function update(auth, id, album) {

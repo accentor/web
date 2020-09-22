@@ -270,11 +270,10 @@ export default {
     };
   },
   created() {
-    this.$nextTick(() => {
-      if (this.album) {
+    if (this.album)
+      this.read(this.album.id).then(() => {
         this.fillValues();
-      }
-    });
+      });
   },
   watch: {
     album: function () {
@@ -295,7 +294,7 @@ export default {
     }),
   },
   methods: {
-    ...mapActions("albums", ["create", "update"]),
+    ...mapActions("albums", ["create", "read", "update"]),
     ...mapActions({
       createArtist: "artists/create",
       createLabel: "labels/create",

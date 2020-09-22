@@ -51,11 +51,10 @@ export default {
     };
   },
   created() {
-    this.$nextTick(() => {
-      if (this.artist) {
+    if (this.artist)
+      this.read(this.artist.id).then(() => {
         this.fillValues();
-      }
-    });
+      });
   },
   watch: {
     artist: function () {
@@ -65,7 +64,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions("artists", ["create", "update"]),
+    ...mapActions("artists", ["create", "read", "update"]),
     fillValues() {
       this.newArtist.name = this.artist.name;
       this.newArtist.review_comment = this.artist.review_comment;

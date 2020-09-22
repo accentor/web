@@ -2,6 +2,7 @@ import Vue from "vue";
 import {
   index,
   create,
+  read,
   destroy,
   update,
   destroyEmpty,
@@ -74,6 +75,14 @@ export default {
           this.commit("addError", error);
           return Promise.resolve(false);
         });
+    },
+    async read({ commit, rootState }, id) {
+      try {
+        const artist = await read(rootState.auth, id);
+        commit("setArtist", { id, artist });
+      } catch (error) {
+        this.commit("addError", error);
+      }
     },
     update({ commit, rootState }, { id, newArtist }) {
       return update(rootState.auth, id, newArtist)

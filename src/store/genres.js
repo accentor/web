@@ -75,6 +75,14 @@ export default {
           return Promise.resolve(false);
         });
     },
+    async read({ commit, rootState }, id) {
+      try {
+        const genre = await read(rootState.auth, id);
+        commit("setGenre", { id, genre });
+      } catch (error) {
+        this.commit("addError", error);
+      }
+    },
     update({ commit, rootState }, { id, newGenre }) {
       return update(rootState.auth, id, newGenre)
         .then((result) => {

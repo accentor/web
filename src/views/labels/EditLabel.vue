@@ -36,11 +36,10 @@ export default {
     };
   },
   created() {
-    this.$nextTick(() => {
-      if (this.label) {
+    if (this.label)
+      this.read(this.label.id).then(() => {
         this.fillValues();
-      }
-    });
+      });
   },
   watch: {
     label: function () {
@@ -56,7 +55,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions("labels", ["update"]),
+    ...mapActions("labels", ["read", "update"]),
     fillValues() {
       this.newLabel.name = this.label.name;
     },

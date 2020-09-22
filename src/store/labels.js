@@ -75,6 +75,14 @@ export default {
           return Promise.resolve(false);
         });
     },
+    async read({ commit, rootState }, id) {
+      try {
+        const label = await read(rootState.auth, id);
+        commit("setLabel", { id, label });
+      } catch (error) {
+        this.commit("addError", error);
+      }
+    },
     update({ commit, rootState }, { id, newLabel }) {
       return update(rootState.auth, id, newLabel)
         .then((result) => {
