@@ -76,13 +76,16 @@ export default {
           return Promise.resolve(false);
         });
     },
-    async read({ commit, rootState }, id) {
-      try {
-        const artist = await read(rootState.auth, id);
-        commit("setArtist", { id, artist });
-      } catch (error) {
-        this.commit("addError", error);
-      }
+    read({ commit, rootState }, id) {
+      return read(rootState.auth, id)
+        .then((result) => {
+          commit("setArtist", { id, artist: result });
+          return Promise.resolve(result.id);
+        })
+        .catch((error) => {
+          this.commit("addError", error);
+          return Promise.resolve(false);
+        });
     },
     update({ commit, rootState }, { id, newArtist }) {
       return update(rootState.auth, id, newArtist)

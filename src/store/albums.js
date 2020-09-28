@@ -123,13 +123,16 @@ export default {
           return Promise.resolve(false);
         });
     },
-    async read({ commit, rootState }, id) {
-      try {
-        const album = await read(rootState.auth, id);
-        commit("setAlbum", { id, album });
-      } catch (error) {
-        this.commit("addError", error);
-      }
+    read({ commit, rootState }, id) {
+      return read(rootState.auth, id)
+        .then((result) => {
+          commit("setAlbum", { id, album: result });
+          return Promise.resolve(result.id);
+        })
+        .catch((error) => {
+          this.commit("addError", error);
+          return Promise.resolve(false);
+        });
     },
     update({ commit, rootState }, { id, newAlbum }) {
       return update(rootState.auth, id, newAlbum)
