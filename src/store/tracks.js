@@ -1,5 +1,6 @@
 import Vue from "vue";
 import { index, create, destroy, update, read, merge } from "../api/tracks";
+import { create as create_play } from "../api/plays";
 import { fetchAll } from "./actions";
 import { compareTracks } from "../comparators";
 
@@ -116,6 +117,20 @@ export default {
         commit("addError", error, { root: true });
         return false;
       }
+    },
+    create_play({ commit, rootState }, id) {
+      return create_play(rootState.auth, {
+        track_id: id,
+        user_id: rootState.auth.user_id,
+        played_at: new Date(),
+      })
+        .then((result) => {
+          return Promise.resolve(result.id);
+        })
+        .catch((error) => {
+          this.commit("addError", error);
+          return Promise.resolve(false);
+        });
     },
     async read({ commit, rootState }, id) {
       try {
