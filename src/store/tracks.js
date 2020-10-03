@@ -118,19 +118,17 @@ export default {
         return false;
       }
     },
-    create_play({ commit, rootState }, id) {
-      return create_play(rootState.auth, {
-        track_id: id,
-        user_id: rootState.auth.user_id,
-        played_at: new Date(),
-      })
-        .then((result) => {
-          return Promise.resolve(result.id);
-        })
-        .catch((error) => {
-          this.commit("addError", error);
-          return Promise.resolve(false);
+    async create_play({ commit, dispatch, rootState }, id) {
+      try {
+        await create_play(rootState.auth, {
+          track_id: id,
+          user_id: rootState.auth.user_id,
+          played_at: new Date(),
         });
+        await dispatch("read", id);
+      } catch (error) {
+        commit("addError", error, { root: true });
+      }
     },
     async read({ commit, rootState }, id) {
       try {
