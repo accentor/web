@@ -4,6 +4,7 @@ import {
   create,
   read,
   destroy,
+  read,
   update,
   destroyEmpty,
   merge,
@@ -54,86 +55,77 @@ export default {
     },
   },
   actions: {
-    index({ commit, rootState }) {
+    async index({ commit, rootState }) {
       const generator = index(rootState.auth);
-      return fetchAll(commit, generator, "setGenres")
-        .then(() => {
-          return Promise.resolve(true);
-        })
-        .catch((error) => {
-          this.commit("addError", error);
-          return Promise.resolve(false);
-        });
+      try {
+        await fetchAll(commit, generator, "setGenres");
+        return true;
+      } catch (error) {
+        commit("addError", error, { root: true });
+        return false;
+      }
     },
-    create({ commit, rootState }, newGenre) {
-      return create(rootState.auth, newGenre)
-        .then((result) => {
-          commit("setGenre", { id: result.id, genre: result });
-          return Promise.resolve(result.id);
-        })
-        .catch((error) => {
-          this.commit("addError", error);
-          return Promise.resolve(false);
-        });
+    async create({ commit, rootState }, newGenre) {
+      try {
+        const result = await create(rootState.auth, newGenre);
+        commit("setGenre", { id: result.id, genre: result });
+        return result.id;
+      } catch (error) {
+        commit("addError", error, { root: true });
+        return false;
+      }
     },
-    read({ commit, rootState }, id) {
-      return read(rootState.auth, id)
-        .then((result) => {
-          commit("setGenre", { id, genre: result });
-          return Promise.resolve(result.id);
-        })
-        .catch((error) => {
-          this.commit("addError", error);
-          return Promise.resolve(false);
-        });
+    async read({ commit, rootState }, id) {
+      try {
+        const result = await read(rootState.auth, id);
+        commit("setGenre", { id, genre: result });
+        return result.id;
+      } catch (error) {
+        commit("addError", error, { root: true });
+        return false;
+      }
     },
-    update({ commit, rootState }, { id, newGenre }) {
-      return update(rootState.auth, id, newGenre)
-        .then((result) => {
-          commit("setGenre", { id, genre: result });
-          return Promise.resolve(true);
-        })
-        .catch((error) => {
-          this.commit("addError", error);
-          return Promise.resolve(false);
-        });
+    async update({ commit, rootState }, { id, newGenre }) {
+      try {
+        const result = await update(rootState.auth, id, newGenre);
+        commit("setGenre", { id, genre: result });
+        return true;
+      } catch (error) {
+        commit("addError", error, { root: true });
+        return false;
+      }
     },
-    destroy({ commit, rootState }, id) {
-      return destroy(rootState.auth, id)
-        .then(() => {
-          commit("tracks/removeGenreOccurence", id, { root: true });
-          commit("removeGenre", id);
-          return Promise.resolve(true);
-        })
-        .catch((error) => {
-          this.commit("addError", error);
-          return Promise.resolve(false);
-        });
+    async destroy({ commit, rootState }, id) {
+      try {
+        await destroy(rootState.auth, id);
+        commit("tracks/removeGenreOccurence", id, { root: true });
+        commit("removeGenre", id);
+        return true;
+      } catch (error) {
+        commit("addError", error, { root: true });
+        return false;
+      }
     },
-    destroyEmpty({ rootState }) {
-      return destroyEmpty(rootState.auth)
-        .then(() => {
-          return this.dispatch("genres/index");
-        })
-        .catch((error) => {
-          this.commit("addError", error);
-          return Promise.resolve(false);
-        });
+    async destroyEmpty({ commit, dispatch, rootState }) {
+      try {
+        await destroyEmpty(rootState.auth);
+        dispatch("index");
+        return true;
+      } catch (error) {
+        commit("addError", error, { root: true });
+        return false;
+      }
     },
-    merge({ commit, rootState }, { newID, oldID }) {
-      return merge(rootState.auth, newID, oldID)
-        .then(() => {
-          commit(
-            "tracks/updateGenreOccurence",
-            { newID, oldID },
-            { root: true }
-          );
-          commit("removeGenre", oldID);
-        })
-        .catch((error) => {
-          this.commit("addError", error);
-          return Promise.resolve(false);
-        });
+    async merge({ commit, rootState }, { newID, oldID }) {
+      try {
+        await merge(rootState.auth, newID, oldID);
+        commit("tracks/updateGenreOccurence", { newID, oldID }, { root: true });
+        commit("removeGenre", oldID);
+        return true;
+      } catch (error) {
+        commit("addError", error, { root: true });
+        return false;
+      }
     },
   },
   getters: {

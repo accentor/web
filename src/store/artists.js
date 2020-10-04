@@ -54,72 +54,67 @@ export default {
     },
   },
   actions: {
-    index({ commit, rootState }) {
+    async index({ commit, rootState }) {
       const generator = index(rootState.auth);
-      return fetchAll(commit, generator, "setArtists")
-        .then(() => {
-          return Promise.resolve(true);
-        })
-        .catch((error) => {
-          this.commit("addError", error);
-          return Promise.resolve(false);
-        });
+      try {
+        await fetchAll(commit, generator, "setArtists");
+        return true;
+      } catch (error) {
+        commit("addError", error, { root: true });
+        return false;
+      }
     },
-    create({ commit, rootState }, newArtist) {
-      return create(rootState.auth, newArtist)
-        .then((result) => {
-          commit("setArtist", { id: result.id, artist: result });
-          return Promise.resolve(result.id);
-        })
-        .catch((error) => {
-          this.commit("addError", error);
-          return Promise.resolve(false);
-        });
+    async create({ commit, rootState }, newArtist) {
+      try {
+        const result = await create(rootState.auth, newArtist);
+        commit("setArtist", { id: result.id, artist: result });
+        return result.id;
+      } catch (error) {
+        commit("addError", error, { root: true });
+        return false;
+      }
     },
-    read({ commit, rootState }, id) {
-      return read(rootState.auth, id)
-        .then((result) => {
-          commit("setArtist", { id, artist: result });
-          return Promise.resolve(result.id);
-        })
-        .catch((error) => {
-          this.commit("addError", error);
-          return Promise.resolve(false);
-        });
+    async read({ commit, rootState }, id) {
+      try {
+        const result = await read(rootState.auth, id);
+        commit("setArtist", { id, artist: result });
+        return result.id;
+      } catch (error) {
+        commit("addError", error, { root: true });
+        return false;
+      }
     },
-    update({ commit, rootState }, { id, newArtist }) {
-      return update(rootState.auth, id, newArtist)
-        .then((result) => {
-          commit("setArtist", { id, artist: result });
-          return Promise.resolve(true);
-        })
-        .catch((error) => {
-          this.commit("addError", error);
-          return Promise.resolve(false);
-        });
+    async update({ commit, rootState }, { id, newArtist }) {
+      try {
+        const result = await update(rootState.auth, id, newArtist);
+        commit("setArtist", { id, artist: result });
+        return true;
+      } catch (error) {
+        commit("addError", error, { root: true });
+        return false;
+      }
     },
-    destroy({ commit, rootState }, id) {
-      return destroy(rootState.auth, id)
-        .then(() => {
-          commit("albums/removeArtistOccurence", id, { root: true });
-          commit("tracks/removeArtistOccurence", id, { root: true });
-          commit("removeArtist", id);
-          return Promise.resolve(true);
-        })
-        .catch((error) => {
-          this.commit("addError", error);
-          return Promise.resolve(false);
-        });
+    async destroy({ commit, rootState }, id) {
+      try {
+        await destroy(rootState.auth, id);
+        commit("albums/removeArtistOccurence", id, { root: true });
+        commit("tracks/removeArtistOccurence", id, { root: true });
+        commit("removeArtist", id);
+        return true;
+      } catch (error) {
+        commit("addError", error, { root: true });
+        return false;
+      }
     },
-    destroyEmpty({ rootState }) {
-      return destroyEmpty(rootState.auth)
-        .then(() => {
-          return this.dispatch("artists/index");
-        })
-        .catch((error) => {
-          this.commit("addError", error);
-          return Promise.resolve(false);
-        });
+    async destroyEmpty({ commit, dispatch, rootState }) {
+      try {
+        await destroyEmpty(rootState.auth);
+        dispatch("index");
+        return true;
+      } catch (error) {
+        commit("addError", error, { root: true });
+        return false;
+      }
     },
     async merge({ commit, rootState }, { newID, oldID }) {
       try {
@@ -135,8 +130,10 @@ export default {
           { root: true }
         );
         commit("removeArtist", oldID);
+        return true;
       } catch (error) {
-        this.commit("addError", error);
+        commit("addError", error, { root: true });
+        return false;
       }
     },
   },

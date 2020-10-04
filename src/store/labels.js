@@ -54,86 +54,77 @@ export default {
     },
   },
   actions: {
-    index({ commit, rootState }) {
+    async index({ commit, rootState }) {
       const generator = index(rootState.auth);
-      return fetchAll(commit, generator, "setLabels")
-        .then(() => {
-          return Promise.resolve(true);
-        })
-        .catch((error) => {
-          this.commit("addError", error);
-          return Promise.resolve(false);
-        });
+      try {
+        await fetchAll(commit, generator, "setLabels");
+        return true;
+      } catch (error) {
+        commit("addError", error, { root: true });
+        return false;
+      }
     },
-    create({ commit, rootState }, newLabel) {
-      return create(rootState.auth, newLabel)
-        .then((result) => {
-          commit("setLabel", { id: result.id, label: result });
-          return Promise.resolve(result.id);
-        })
-        .catch((error) => {
-          this.commit("addError", error);
-          return Promise.resolve(false);
-        });
+    async create({ commit, rootState }, newLabel) {
+      try {
+        const result = await create(rootState.auth, newLabel);
+        commit("setLabel", { id: result.id, label: result });
+        return result.id;
+      } catch (error) {
+        commit("addError", error, { root: true });
+        return false;
+      }
     },
-    read({ commit, rootState }, id) {
-      return read(rootState.auth, id)
-        .then((result) => {
-          commit("setLabel", { id, label: result });
-          return Promise.resolve(result.id);
-        })
-        .catch((error) => {
-          this.commit("addError", error);
-          return Promise.resolve(false);
-        });
+    async read({ commit, rootState }, id) {
+      try {
+        const result = read(rootState.auth, id);
+        commit("setLabel", { id, label: result });
+        return result.id;
+      } catch (error) {
+        commit("addError", error, { root: true });
+        return false;
+      }
     },
-    update({ commit, rootState }, { id, newLabel }) {
-      return update(rootState.auth, id, newLabel)
-        .then((result) => {
-          commit("setLabel", { id, label: result });
-          return Promise.resolve(true);
-        })
-        .catch((error) => {
-          this.commit("addError", error);
-          return Promise.resolve(false);
-        });
+    async update({ commit, rootState }, { id, newLabel }) {
+      try {
+        const result = await update(rootState.auth, id, newLabel);
+        commit("setLabel", { id, label: result });
+        return true;
+      } catch (error) {
+        commit("addError", error, { root: true });
+        return false;
+      }
     },
-    destroy({ commit, rootState }, id) {
-      return destroy(rootState.auth, id)
-        .then(() => {
-          commit("albums/removeLabelOccurence", id, { root: true });
-          commit("removeLabel", id);
-          return Promise.resolve(true);
-        })
-        .catch((error) => {
-          this.commit("addError", error);
-          return Promise.resolve(false);
-        });
+    async destroy({ commit, rootState }, id) {
+      try {
+        await destroy(rootState.auth, id);
+        commit("albums/removeLabelOccurence", id, { root: true });
+        commit("removeLabel", id);
+        return true;
+      } catch (error) {
+        commit("addError", error, { root: true });
+        return false;
+      }
     },
-    destroyEmpty({ rootState }) {
-      return destroyEmpty(rootState.auth)
-        .then(() => {
-          return this.dispatch("labels/index");
-        })
-        .catch((error) => {
-          this.commit("addError", error);
-          return Promise.resolve(false);
-        });
+    async destroyEmpty({ commit, dispatch, rootState }) {
+      try {
+        await destroyEmpty(rootState.auth);
+        dispatch("index");
+        return true;
+      } catch (error) {
+        commit("addError", error, { root: true });
+        return false;
+      }
     },
-    merge({ commit, rootState }, { newID, oldID }) {
-      return merge(rootState.auth, newID, oldID)
-        .then(() => {
-          commit(
-            "albums/updateLabelOccurence",
-            { newID, oldID },
-            { root: true }
-          );
-          commit("removeLabel", oldID);
-        })
-        .catch((error) => {
-          this.commit("addError", error);
-          return Promise.resolve(false);
-        });
+    async merge({ commit, rootState }, { newID, oldID }) {
+      try {
+        await merge(rootState.auth, newID, oldID);
+        commit("albums/updateLabelOccurence", { newID, oldID }, { root: true });
+        commit("removeLabel", oldID);
+        return true;
+      } catch (error) {
+        commit("addError", error, { root: true });
+        return false;
+      }
     },
   },
   getters: {

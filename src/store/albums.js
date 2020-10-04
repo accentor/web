@@ -101,70 +101,65 @@ export default {
     },
   },
   actions: {
-    index({ commit, rootState }) {
+    async index({ commit, rootState }) {
       const generator = index(rootState.auth);
-      return fetchAll(commit, generator, "setAlbums")
-        .then(() => {
-          return Promise.resolve(true);
-        })
-        .catch((error) => {
-          this.commit("addError", error);
-          return Promise.resolve(false);
-        });
+      try {
+        await fetchAll(commit, generator, "setAlbums");
+        return true;
+      } catch (error) {
+        commit("addError", error, { root: true });
+        return false;
+      }
     },
-    create({ commit, rootState }, newAlbum) {
-      return create(rootState.auth, newAlbum)
-        .then((result) => {
-          commit("setAlbum", { id: result.id, album: result });
-          return Promise.resolve(result.id);
-        })
-        .catch((error) => {
-          this.commit("addError", error);
-          return Promise.resolve(false);
-        });
+    async create({ commit, rootState }, newAlbum) {
+      try {
+        const result = await create(rootState.auth, newAlbum);
+        commit("setAlbum", { id: result.id, album: result });
+        return result.id;
+      } catch (error) {
+        commit("addError", error, { root: true });
+        return false;
+      }
     },
-    read({ commit, rootState }, id) {
-      return read(rootState.auth, id)
-        .then((result) => {
-          commit("setAlbum", { id, album: result });
-          return Promise.resolve(result.id);
-        })
-        .catch((error) => {
-          this.commit("addError", error);
-          return Promise.resolve(false);
-        });
+    async read({ commit, rootState }, id) {
+      try {
+        const result = await read(rootState.auth, id);
+        commit("setAlbum", { id, album: result });
+        return result.id;
+      } catch (error) {
+        commit("addError", error, { root: true });
+        return false;
+      }
     },
-    update({ commit, rootState }, { id, newAlbum }) {
-      return update(rootState.auth, id, newAlbum)
-        .then((result) => {
-          commit("setAlbum", { id, album: result });
-          return Promise.resolve(true);
-        })
-        .catch((error) => {
-          this.commit("addError", error);
-          return Promise.resolve(false);
-        });
+    async update({ commit, rootState }, { id, newAlbum }) {
+      try {
+        const result = await update(rootState.auth, id, newAlbum);
+        commit("setAlbum", { id, album: result });
+        return true;
+      } catch (error) {
+        commit("addError", error, { root: true });
+        return false;
+      }
     },
-    destroy({ commit, rootState }, id) {
-      return destroy(rootState.auth, id)
-        .then(() => {
-          commit("removeAlbum", id);
-          return Promise.resolve(true);
-        })
-        .catch((error) => {
-          this.commit("addError", error);
-          return Promise.resolve(false);
-        });
+    async destroy({ commit, rootState }, id) {
+      try {
+        await destroy(rootState.auth, id);
+        commit("removeAlbum", id);
+        return true;
+      } catch (error) {
+        commit("addError", error, { root: true });
+        return false;
+      }
     },
-    destroyEmpty({ rootState }) {
-      return destroyEmpty(rootState.auth)
-        .then(() => {
-          return this.dispatch("albums/index");
-        })
-        .catch((error) => {
-          this.commit("addError", error);
-          return Promise.resolve(false);
-        });
+    async destroyEmpty({ commit, dispatch, rootState }) {
+      try {
+        await destroyEmpty(rootState.auth);
+        dispatch("index");
+        return true;
+      } catch (error) {
+        commit("addError", error, { root: true });
+        return false;
+      }
     },
   },
   getters: {
