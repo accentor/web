@@ -119,6 +119,7 @@
 		"mimetype": "MIME type",
 		"name": "Naam",
 		"not-authorized": "Je hebt geen toestemming om dit te doen",
+		"not_found": "Niet gevonden",
 		"number": "Tracknummer",
 		"order": "Ordening",
 		"password": "Wachtwoord",

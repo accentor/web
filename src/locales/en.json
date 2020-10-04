@@ -122,6 +122,7 @@
 		"mimetype": "MIME type",
 		"name": "Name",
 		"not-authorized": "You are not authorized to do this",
+		"not_found": "Not found",
 		"number": "Number",
 		"order": "Order",
 		"password": "Password",
