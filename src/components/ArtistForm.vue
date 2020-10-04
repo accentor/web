@@ -70,24 +70,20 @@ export default {
       this.newArtist.name = this.artist.name;
       this.newArtist.review_comment = this.artist.review_comment;
     },
-    submit() {
+    async submit() {
       this.newArtist.review_comment = this.clear_review_comment
         ? null
         : this.newArtist.review_comment;
       let promise = null;
       if (this.artist) {
-        promise = this.update({
-          id: this.artist.id,
-          newArtist: this.newArtist,
-        });
+        const newArtist = { id: this.artist.id, newArtist: this.newArtist };
+        promise = this.update();
       } else {
         promise = this.create(this.newArtist);
       }
-      promise.then((succeeded) => {
-        if (succeeded) {
-          this.$router.push(this.$route.query.redirect || { name: "artists" });
-        }
-      });
+      const succeeded = await promise;
+      if (succeeded)
+        this.$router.push(this.$route.query.redirect || { name: "artists" });
     },
   },
 };

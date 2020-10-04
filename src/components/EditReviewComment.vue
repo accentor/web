@@ -53,12 +53,12 @@ export default {
     this.new_review_comment = this.item.review_comment;
   },
   methods: {
-    flag() {
-      this.update(this.item.id, this.new_review_comment).then((succeeded) => {
-        if (succeeded) {
-          this.show = false;
-        }
-      });
+    async flag() {
+      const succeeded = await this.update(
+        this.item.id,
+        this.new_review_comment
+      );
+      if (succeeded) this.show = false;
     },
   },
 };

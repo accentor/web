@@ -122,7 +122,7 @@ export default {
       this.newUser.name = this.user.name;
       this.newUser.permission = this.user.permission;
     },
-    submit() {
+    async submit() {
       this.$refs.userForm.validate();
       if (this.isValid) {
         let promise = null;
@@ -131,13 +131,11 @@ export default {
         } else {
           promise = this.create(this.newUser);
         }
-        promise.then((succeeded) => {
-          if (succeeded) {
-            this.$router.push(
-              this.$route.query.redirect || { name: this.redirectFallback }
-            );
-          }
-        });
+        const succeeded = await promise;
+        if (succeeded)
+          this.$router.push(
+            this.$route.query.redirect || { name: this.redirectFallback }
+          );
       }
     },
   },

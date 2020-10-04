@@ -111,18 +111,17 @@ export default {
       this.newCodecConversion.resulting_codec_id = this.codecConversion.resulting_codec_id;
     },
     ...mapActions("codecConversions", ["destroy", "update", "create"]),
-    saveCodecConversion() {
+    async saveCodecConversion() {
       if (this.$refs.form.validate()) {
         if (this.codecConversion === null) {
-          this.create(this.newCodecConversion).then((id) => {
-            if (id) {
-              this.newCodecConversion.name = "";
-              this.newCodecConversion.ffmpeg_params = "";
-              this.newCodecConversion.resulting_codec_id = null;
-            }
-          });
+          const id = await this.create(this.newCodecConversion);
+          if (id) {
+            this.newCodecConversion.name = "";
+            this.newCodecConversion.ffmpeg_params = "";
+            this.newCodecConversion.resulting_codec_id = null;
+          }
         } else {
-          this.update({
+          await this.update({
             id: this.codecConversion.id,
             newCodecConversion: this.newCodecConversion,
           });
@@ -130,9 +129,8 @@ export default {
       }
     },
     deleteCodecConversion() {
-      if (confirm(this.$t("common.are-you-sure"))) {
+      if (confirm(this.$t("common.are-you-sure")))
         this.destroy(this.codecConversion.id);
-      }
     },
   },
 };

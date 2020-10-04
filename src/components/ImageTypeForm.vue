@@ -98,15 +98,14 @@ export default {
       this.newImageType.mimetype = this.imageType.mimetype;
     },
     ...mapActions("imageTypes", ["destroy", "update", "create"]),
-    saveImageType() {
+    async saveImageType() {
       if (this.$refs.form.validate()) {
         if (this.imageType === null) {
-          this.create(this.newImageType).then((id) => {
-            if (id) {
-              this.newImageType.extension = "";
-              this.newImageType.mimetype = "";
-            }
-          });
+          const id = await this.create(this.newImageType);
+          if (id) {
+            this.newImageType.extension = "";
+            this.newImageType.mimetype = "";
+          }
         } else {
           this.update({
             id: this.imageType.id,
@@ -116,9 +115,8 @@ export default {
       }
     },
     deleteImageType() {
-      if (confirm(this.$t("common.are-you-sure"))) {
+      if (confirm(this.$t("common.are-you-sure")))
         this.destroy(this.imageType.id);
-      }
     },
   },
 };

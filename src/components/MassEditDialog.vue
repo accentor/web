@@ -479,7 +479,7 @@ export default {
         item.normalized_title.indexOf(search) > -1
       );
     },
-    saveTracks() {
+    async saveTracks() {
       this.$refs.form.validate();
       if (!this.isValid) {
         return false;
@@ -491,135 +491,124 @@ export default {
       const promises = [];
 
       if (this.changeArtists.enabled) {
-        this.changeArtists.track_artists.forEach((ta, index) => {
-          if (typeof ta.artist_id === "string") {
-            promises.push(
-              this.createArtist({
+        const artist_map = this.changeArtists.track_artists.map(
+          async (ta, index) => {
+            if (typeof ta.artist_id === "string") {
+              const id = await this.createArtist({
                 name: ta.artist_id,
                 review_comment: "New artist",
-              }).then((id) => {
-                if (id) {
-                  transformedArtists.push({
-                    artist_id: id,
-                    name: ta.name || ta.artist_id,
-                    role: ta.role,
-                    order: index + 1,
-                  });
-                } else {
-                  return Promise.reject();
-                }
-              })
-            );
-          } else {
-            transformedArtists.push({
-              artist_id: ta.artist_id.id,
-              name: ta.name || ta.artist_id.name,
-              role: ta.role,
-              order: index + 1,
-            });
+              });
+              if (id) {
+                transformedArtists.push({
+                  artist_id: id,
+                  name: ta.name || ta.artist_id,
+                  role: ta.role,
+                  order: index + 1,
+                });
+              } else {
+                throw false;
+              }
+            } else {
+              transformedArtists.push({
+                artist_id: ta.artist_id.id,
+                name: ta.name || ta.artist_id.name,
+                role: ta.role,
+                order: index + 1,
+              });
+            }
           }
-        });
+        );
+        promises.push(...artist_map);
       }
 
       if (this.changeGenres.enabled) {
-        for (let genre_id of this.changeGenres.genres) {
+        const genre_map = this.changeGenres.genres.map(async (genre_id) => {
           if (typeof genre_id === "string") {
-            promises.push(
-              this.createGenre({ name: genre_id }).then((id) => {
-                if (id) {
-                  transformedGenres.push(id);
-                } else {
-                  return Promise.reject();
-                }
-              })
-            );
+            const id = await this.createGenre({ name: genre_id });
+            if (id) {
+              transformedGenres.push(id);
+            } else {
+              throw false;
+            }
           } else {
             transformedGenres.push(genre_id.id);
           }
-        }
+        });
+        promises.push(...genre_map);
       }
 
-      Promise.all(promises)
-        .then(() => {
-          return Promise.all(
-            this.tracks.map((t) => {
-              const transformed = {
-                number: t.number,
-                title: t.title,
-                album_id: t.album_id,
-                review_comment: this.clearReviewComments
-                  ? null
-                  : t.review_comment,
-                genre_ids: t.genre_ids,
-                track_artists: t.track_artists,
-              };
+      await Promise.all(promises);
+      const track_map = this.tracks.map(async (t) => {
+        const transformed = {
+          number: t.number,
+          title: t.title,
+          album_id: t.album_id,
+          review_comment: this.clearReviewComments ? null : t.review_comment,
+          genre_ids: t.genre_ids,
+          track_artists: t.track_artists,
+        };
 
-              if (this.number.enabled) {
-                transformed.number += parseInt(this.number.amount);
+        if (this.number.enabled) {
+          transformed.number += parseInt(this.number.amount);
+        }
+
+        if (this.titleReplacement.enabled) {
+          if (this.titleReplacement.regex) {
+            transformed.title = transformed.title.replace(
+              new RegExp(this.titleReplacement.search),
+              this.titleReplacement.replace
+            );
+          } else {
+            transformed.title = transformed.title.replace(
+              this.titleReplacement.search,
+              this.titleReplacement.replace
+            );
+          }
+        }
+
+        if (this.changeArtists.enabled) {
+          if (this.changeArtists.replace) {
+            transformed.track_artists = transformedArtists;
+          } else {
+            transformedArtists.forEach((a) => {
+              if (
+                transformed.track_artists.filter(
+                  (ta) =>
+                    ta.name === a.name &&
+                    ta.role === a.role &&
+                    ta.artist_id === a.artist_id
+                ).length === 0
+              ) {
+                a.order += t.track_artists.length - 1;
+                transformed.track_artists.push(a);
               }
+            });
+          }
+        }
 
-              if (this.titleReplacement.enabled) {
-                if (this.titleReplacement.regex) {
-                  transformed.title = transformed.title.replace(
-                    new RegExp(this.titleReplacement.search),
-                    this.titleReplacement.replace
-                  );
-                } else {
-                  transformed.title = transformed.title.replace(
-                    this.titleReplacement.search,
-                    this.titleReplacement.replace
-                  );
-                }
+        if (this.changeGenres.enabled) {
+          if (this.changeGenres.replace) {
+            transformed.genre_ids = transformedGenres;
+          } else {
+            transformedGenres.forEach((g) => {
+              if (!transformed.genre_ids.includes(g)) {
+                transformed.genre_ids.push(g);
               }
+            });
+          }
+        }
 
-              if (this.changeArtists.enabled) {
-                if (this.changeArtists.replace) {
-                  transformed.track_artists = transformedArtists;
-                } else {
-                  transformedArtists.forEach((a) => {
-                    if (
-                      transformed.track_artists.filter(
-                        (ta) =>
-                          ta.name === a.name &&
-                          ta.role === a.role &&
-                          ta.artist_id === a.artist_id
-                      ).length === 0
-                    ) {
-                      a.order += t.track_artists.length - 1;
-                      transformed.track_artists.push(a);
-                    }
-                  });
-                }
-              }
+        if (this.album.enabled) {
+          transformed.album_id = this.album.album;
+        }
 
-              if (this.changeGenres.enabled) {
-                if (this.changeGenres.replace) {
-                  transformed.genre_ids = transformedGenres;
-                } else {
-                  transformedGenres.forEach((g) => {
-                    if (!transformed.genre_ids.includes(g)) {
-                      transformed.genre_ids.push(g);
-                    }
-                  });
-                }
-              }
-
-              if (this.album.enabled) {
-                transformed.album_id = this.album.album;
-              }
-
-              return this.update({ id: t.id, newTrack: transformed });
-            })
-          );
-        })
-        .then(() => {
-          this.dialog = false;
-          this.resetState();
-        })
-        .finally(() => {
-          this.saving = false;
-          this.$emit("close");
-        });
+        await this.update({ id: t.id, newTrack: transformed });
+      });
+      await Promise.all(track_map);
+      this.dialog = false;
+      this.resetState();
+      this.saving = false;
+      this.$emit("close");
     },
     addArtist() {
       this.changeArtists.track_artists.push({

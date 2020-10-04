@@ -60,14 +60,11 @@ export default {
     fillValues() {
       this.newLabel.name = this.label.name;
     },
-    submit() {
-      this.update({ id: this.label.id, newLabel: this.newLabel }).then(
-        (succeeded) => {
-          if (succeeded) {
-            this.$router.push(this.$route.query.redirect || { name: "labels" });
-          }
-        }
-      );
+    async submit() {
+      const newLabel = { id: this.label.id, newLabel: this.newLabel };
+      const succeeded = await this.update(newLabel);
+      if (succeeded)
+        this.$router.push(this.$route.query.redirect || { name: "labels" });
     },
   },
 };
