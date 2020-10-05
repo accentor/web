@@ -64,6 +64,7 @@
 		"album_artists": "Album artists",
 		"albums": {
 			"album-blank": "Please select an album.",
+			"not-found": "This album could not be found.",
 			"title-blank": "Please fill in an album title."
 		},
 		"aa": {
@@ -79,7 +80,8 @@
 		"artist": "Artist",
 		"artists": {
 			"artist-blank": "Please select an artist.",
-			"name-blank": "Please fill in artist name."
+			"name-blank": "Please fill in artist name.",
+			"not-found": "This artist could not be found."
 		},
 		"base": "Base",
 		"catalogue_number": "Catalogue number",
@@ -106,6 +108,10 @@
 			"name-blank": "Please fill in a genre name.",
 			"name-taken": "A genre with this name already exists.",
 			"name-taken-obj": "A genre called {obj} already exists."
+			
+		},
+		"genres": {
+			"not-found": "This genre could not be found."
 		},
 		"image": {
 			"mime-blank": "Please fill in a MIMEtype.",
@@ -115,6 +121,9 @@
 		"label": {
 			"name-blank": "Please fill in a label name."
 		},
+		"labels": {
+			"not-found": "This label could not be found."
+		},
 		"location": {
 			"path-blank": "Please fill in a path.",
 			"path-taken": "This path is already in use."
@@ -122,6 +131,7 @@
 		"mimetype": "MIME type",
 		"name": "Name",
 		"not-authorized": "You are not authorized to do this",
+		"not_found": "Not found",
 		"number": "Number",
 		"order": "Order",
 		"password": "Password",
@@ -150,6 +160,7 @@
 		"track": "Track",
 		"track_artists": "Track artists",
 		"tracks": {
+			"not-found": "This track could not be found.",
 			"number-blank": "Please provide a track number",
 			"number-whole": "Please provide a whole number",
 			"title-blank": "Please provide a track title."

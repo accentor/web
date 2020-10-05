@@ -64,6 +64,7 @@
 		"album_artists": "Album artiesten",
 		"albums": {
 			"album-blank": "Selecteer een album.",
+			"not-found": "Dit album kon niet gevonden worden.",
 			"title-blank": "Vul aub een albumtitel in."
 		},
 		"aa": {
@@ -79,7 +80,8 @@
 		"artist": "Artiest",
 		"artists": {
 			"artist-blank": "Selecteer een artiest.",
-			"name-blank": "Vul een artiestennaam in."
+			"name-blank": "Vul een artiestennaam in.",
+			"not-found": "Deze artiest kon niet gevonden worden."
 		},
 		"base": "Base",
 		"catalogue_number": "Catalogus nummer",
@@ -104,6 +106,9 @@
 			"name-taken": "Een genre met deze naam bestaat reeds.",
 			"name-taken-obj": "Er bestaat al een genre met naam {obj}."
 		},
+		"genres": {
+			"not-found": "Dit genre kon niet gevonden worden."
+		},
 		"image": {
 			"mime-blank": "Vul een MIMEtype in.",
 			"ext-blank": "Vul een extensie in.",
@@ -112,6 +117,9 @@
 		"label": {
 			"name-blank": "Vul een naam voor het label in."
 		},
+		"labels": {
+			"not-found": "Dit label kon niet gevonden worden."
+		},
 		"location": {
 			"path-blank": "Vul een pad in.",
 			"path-taken": "Dit pad wordt reeds gebruikt."
@@ -119,6 +127,7 @@
 		"mimetype": "MIME type",
 		"name": "Naam",
 		"not-authorized": "Je hebt geen toestemming om dit te doen",
+		"not_found": "Niet gevonden",
 		"number": "Tracknummer",
 		"order": "Ordening",
 		"password": "Wachtwoord",
@@ -147,6 +156,7 @@
 		"track": "Nummer",
 		"track_artists": "Nummer artiesten",
 		"tracks": {
+			"not-found": "Dit nummer kon niet gevonden worden.",
 			"number-blank": "Vul een tracknummer in.",
 			"title-blank": "Vul een titel voor het nummer in."
 		},
