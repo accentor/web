@@ -7,4 +7,6 @@ module.exports = {
     "\\.(css|less)$": "<rootDir>/tests/mocks/styleMock.js",
   },
   snapshotSerializers: ["jest-serializer-vue"],
+  collectCoverage: true,
+  collectCoverageFrom: ["src/**/*.{js,vue}"],
 };
