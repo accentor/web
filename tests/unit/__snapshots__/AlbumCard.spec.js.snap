@@ -1,0 +1,223 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AlbumCard renders correctly 1`] = `
+<a
+  aria-current="page"
+  class="router-link-exact-active router-link-active v-card v-card--link v-sheet theme--light"
+  href="#/"
+  tabindex="0"
+>
+  <div
+    class="v-image v-responsive grey lighten-3 theme--light"
+  >
+    <div
+      class="v-responsive__sizer"
+      style="padding-bottom: 100%;"
+    />
+    <transition-stub
+      mode="in-out"
+      name="fade-transition"
+    >
+      <div
+        class="v-image__image v-image__image--preload v-image__image--cover"
+        style="background-position: center center;"
+      />
+    </transition-stub>
+    <div
+      class="v-responsive__content"
+    />
+  </div>
+   
+  <div
+    class="v-card__title pb-0 d-block text-truncate"
+    title="title"
+  >
+    
+    title 
+    
+    <!---->
+  </div>
+   
+  <div
+    class="v-card__text"
+  >
+    <div>
+      <span>
+        music.artist.various
+      </span>
+    </div>
+  </div>
+   
+  <div
+    class="v-card__text"
+  >
+    <div
+      class="grey--text album-release"
+    >
+      1970-01-01
+    </div>
+     
+    <!---->
+  </div>
+   
+  <div
+    class="v-card__actions"
+  >
+    <albumactions-stub
+      album="[object Object]"
+    />
+  </div>
+</a>
+`;
+
+exports[`AlbumCard with CatNr renders correctly 1`] = `
+<a
+  aria-current="page"
+  class="router-link-exact-active router-link-active v-card v-card--link v-sheet theme--light"
+  href="#/"
+  tabindex="0"
+>
+  <div
+    class="v-image v-responsive grey lighten-3 theme--light"
+  >
+    <div
+      class="v-responsive__sizer"
+      style="padding-bottom: 100%;"
+    />
+    <transition-stub
+      mode="in-out"
+      name="fade-transition"
+    >
+      <div
+        class="v-image__image v-image__image--preload v-image__image--cover"
+        style="background-position: center center;"
+      />
+    </transition-stub>
+    <div
+      class="v-responsive__content"
+    />
+  </div>
+   
+  <div
+    class="v-card__title pb-0 d-block text-truncate"
+    title="title"
+  >
+    
+    title 
+    
+    <!---->
+  </div>
+   
+  <div
+    class="v-card__text"
+  >
+    <div>
+      <span>
+        music.artist.various
+      </span>
+    </div>
+  </div>
+   
+  <div
+    class="v-card__text"
+  >
+    <div
+      class="grey--text album-release"
+    >
+      1970-01-01
+    </div>
+     
+    <div
+      class="grey--text album-cat"
+    >
+      
+      catNr
+    
+    </div>
+  </div>
+   
+  <div
+    class="v-card__actions"
+  >
+    <albumactions-stub
+      album="[object Object]"
+    />
+  </div>
+</a>
+`;
+
+exports[`AlbumCard with release description renders correctly 1`] = `
+<a
+  aria-current="page"
+  class="router-link-exact-active router-link-active v-card v-card--link v-sheet theme--light"
+  href="#/"
+  tabindex="0"
+>
+  <div
+    class="v-image v-responsive grey lighten-3 theme--light"
+  >
+    <div
+      class="v-responsive__sizer"
+      style="padding-bottom: 100%;"
+    />
+    <transition-stub
+      mode="in-out"
+      name="fade-transition"
+    >
+      <div
+        class="v-image__image v-image__image--preload v-image__image--cover"
+        style="background-position: center center;"
+      />
+    </transition-stub>
+    <div
+      class="v-responsive__content"
+    />
+  </div>
+   
+  <div
+    class="v-card__title pb-0 d-block text-truncate"
+    title="title description"
+  >
+    
+    title 
+    
+    <span
+      class="grey--text"
+    >
+      
+      (description)
+    
+    </span>
+  </div>
+   
+  <div
+    class="v-card__text"
+  >
+    <div>
+      <span>
+        music.artist.various
+      </span>
+    </div>
+  </div>
+   
+  <div
+    class="v-card__text"
+  >
+    <div
+      class="grey--text album-release"
+    >
+      1970-01-01
+    </div>
+     
+    <!---->
+  </div>
+   
+  <div
+    class="v-card__actions"
+  >
+    <albumactions-stub
+      album="[object Object]"
+    />
+  </div>
+</a>
+`;

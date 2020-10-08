@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AlbumArtists renders correctly 1`] = `
+<div
+  class=""
+  title="artist 1 / artist 2"
+>
+  <span>
+    <a
+      aria-current="page"
+      class="router-link-exact-active router-link-active"
+      href="#/"
+    >
+      artist 1
+    </a>
+     / 
+  </span>
+  <span>
+    <a
+      aria-current="page"
+      class="router-link-exact-active router-link-active"
+      href="#/"
+    >
+      artist 2
+    </a>
+    
+  </span>
+</div>
+`;
+
+exports[`AlbumArtists without artists renders correctly 1`] = `
+<div>
+  <span>
+    music.artist.various
+  </span>
+</div>
+`;

@@ -18,8 +18,8 @@
       <AlbumArtists :album="album" :truncate="true" />
     </VCardText>
     <VCardText>
-      <div class="grey--text">{{ album.release }}</div>
-      <div v-if="labelForCatNr" class="grey--text">
+      <div class="grey--text album-release">{{ album.release }}</div>
+      <div v-if="labelForCatNr" class="grey--text album-cat">
         {{ catalogueNumber || $t("music.label.catalogue-number-none") }}
       </div>
     </VCardText>
