@@ -1,5 +1,5 @@
 <template>
-  <span>
+  <span v-if="isModerator">
     <VTooltip bottom :disabled="!waitingForReload">
       <template v-slot:activator="{ on }">
         <span v-on="on">
@@ -9,7 +9,6 @@
               params: { id: genre.id },
               query: { redirect: $route.fullPath },
             }"
-            v-if="isModerator"
             :disabled="waitingForReload"
             color="edit"
             class="ma-2"
@@ -36,7 +35,6 @@
         <span v-on="on">
           <VBtn
             @click.stop.prevent="deleteGenre"
-            v-if="isModerator"
             :disabled="waitingForReload"
             color="danger"
             class="ma-2"
