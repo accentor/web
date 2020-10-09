@@ -38,7 +38,7 @@
       <span>{{ $t("music.album.no-tracks-to-add") }}</span>
     </VTooltip>
     <EditReviewComment :item="album" :update="flag" />
-    <VTooltip bottom :disabled="!waitingForReload">
+    <VTooltip bottom :disabled="!waitingForReload" v-if="isModerator">
       <template v-slot:activator="{ on }">
         <span v-on="on">
           <VBtn
@@ -47,7 +47,6 @@
               params: { id: album.id },
               query: { redirect: $route.fullPath },
             }"
-            v-if="isModerator"
             :disabled="waitingForReload"
             color="edit"
             class="ma-2"
@@ -61,12 +60,11 @@
       </template>
       <span>{{ $t("common.disabled-while-loading") }}</span>
     </VTooltip>
-    <VTooltip bottom :disabled="!waitingForReload">
+    <VTooltip bottom :disabled="!waitingForReload" v-if="isModerator">
       <template v-slot:activator="{ on }">
         <span v-on="on">
           <VBtn
             @click.stop.prevent="deleteAlbum"
-            v-if="isModerator"
             :disabled="album.loaded < startLoading"
             color="danger"
             class="ma-2"

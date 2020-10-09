@@ -1,7 +1,7 @@
 <template>
   <span>
     <EditReviewComment :item="artist" :update="flag" />
-    <VTooltip bottom :disabled="!waitingForReload">
+    <VTooltip bottom :disabled="!waitingForReload" v-if="isModerator">
       <template v-slot:activator="{ on }">
         <span v-on="on">
           <VBtn
@@ -10,7 +10,6 @@
               params: { id: artist.id },
               query: { redirect: $route.fullPath },
             }"
-            v-if="isModerator"
             :disabled="waitingForReload"
             color="edit"
             class="ma-2"
@@ -24,7 +23,7 @@
       </template>
       <span>{{ $t("common.disabled-while-loading") }}</span>
     </VTooltip>
-    <VTooltip bottom :disabled="!waitingForReload">
+    <VTooltip bottom :disabled="!waitingForReload" v-if="isModerator">
       <template v-slot:activator="{ on }">
         <span v-on="on">
           <ArtistMergeDialog :artist="artist" :disabled="waitingForReload" />
@@ -32,12 +31,11 @@
       </template>
       <span>{{ $t("common.disabled-while-loading") }}</span>
     </VTooltip>
-    <VTooltip bottom :disabled="!waitingForReload">
+    <VTooltip bottom :disabled="!waitingForReload" v-if="isModerator">
       <template v-slot:activator="{ on }">
         <span v-on="on">
           <VBtn
             @click.stop.prevent="deleteArtist"
-            v-if="isModerator"
             :disabled="waitingForReload"
             color="danger"
             class="ma-2"
