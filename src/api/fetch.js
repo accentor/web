@@ -47,7 +47,7 @@ async function resolveRequest(request) {
   }
 }
 
-export function create(path, auth, object) {
+export async function create(path, auth, object) {
   const request = new Request(`${baseURL}/${path}`, {
     method: "POST",
     headers: {
@@ -57,10 +57,10 @@ export function create(path, auth, object) {
     },
     body: JSON.stringify(object),
   });
-  return resolveRequest(request);
+  return await resolveRequest(request);
 }
 
-export function read(path, auth) {
+export async function read(path, auth) {
   const request = new Request(`${baseURL}/${path}`, {
     method: "GET",
     headers: {
@@ -68,10 +68,10 @@ export function read(path, auth) {
       "x-device-id": auth.device_id,
     },
   });
-  return resolveRequest(request);
+  return await resolveRequest(request);
 }
 
-export function update(path, auth, object) {
+export async function update(path, auth, object) {
   const request = new Request(`${baseURL}/${path}`, {
     method: "PATCH",
     headers: {
@@ -81,7 +81,7 @@ export function update(path, auth, object) {
     },
     body: JSON.stringify(object),
   });
-  return resolveRequest(request);
+  return await resolveRequest(request);
 }
 
 export async function destroy(path, auth) {
@@ -92,10 +92,10 @@ export async function destroy(path, auth) {
       "x-device-id": auth.device_id,
     },
   });
-  return resolveRequest(request);
+  return await resolveRequest(request);
 }
 
-export function destroyEmpty(path, auth) {
+export async function destroyEmpty(path, auth) {
   const request = new Request(`${baseURL}/${path}/destroy_empty`, {
     method: "POST",
     headers: {
@@ -104,10 +104,10 @@ export function destroyEmpty(path, auth) {
       "x-device-id": auth.device_id,
     },
   });
-  return resolveRequest(request);
+  return await resolveRequest(request);
 }
 
-export function merge(path, auth) {
+export async function merge(path, auth) {
   const request = new Request(`${baseURL}/${path}`, {
     method: "POST",
     headers: {
@@ -116,5 +116,5 @@ export function merge(path, auth) {
       "x-device-id": auth.device_id,
     },
   });
-  return resolveRequest(request);
+  return await resolveRequest(request);
 }
