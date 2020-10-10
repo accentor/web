@@ -219,8 +219,11 @@ export default {
         promises.push(this.$store.dispatch("imageTypes/index"));
         promises.push(this.$store.dispatch("locations/index"));
       }
-      await Promise.all(promises);
-      this.loading = false;
+      try {
+        await Promise.all(promises);
+      } finally {
+        this.loading = false;
+      }
     },
     async logout() {
       await this.$store.dispatch("auth/logout");
