@@ -358,8 +358,10 @@ export default {
       });
 
       await Promise.all([...genre_map, ...artist_map]);
-      const newTrack = { id: this.track.id, newTrack: transformed };
-      const succeeded = await this.update(newTrack);
+      const succeeded = await this.update({
+        id: this.track.id,
+        newTrack: transformed,
+      });
       if (succeeded) {
         this.$router.push(this.$route.query.redirect || { name: "tracks" });
       }

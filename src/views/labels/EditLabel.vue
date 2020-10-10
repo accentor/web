@@ -61,8 +61,10 @@ export default {
       this.newLabel.name = this.label.name;
     },
     async submit() {
-      const newLabel = { id: this.label.id, newLabel: this.newLabel };
-      const succeeded = await this.update(newLabel);
+      const succeeded = await this.update({
+        id: this.label.id,
+        newLabel: this.newLabel,
+      });
       if (succeeded) {
         this.$router.push(this.$route.query.redirect || { name: "labels" });
       }
