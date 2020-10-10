@@ -244,7 +244,7 @@ export default {
             navigator.mediaSession.playbackState = "playing";
           }
         } catch (error) {
-          new Error(error);
+          this.commit("addError", error);
         }
       } else {
         await this.$refs.audio.pause();
