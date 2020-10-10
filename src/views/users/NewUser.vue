@@ -10,7 +10,6 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
 import UserForm from "@/components/UserForm";
 
 export default {

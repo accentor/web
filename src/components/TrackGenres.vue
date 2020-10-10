@@ -27,7 +27,7 @@ export default {
     ...mapState("genres", ["genres"]),
     track_genres() {
       return this.track.genre_ids
-        .filter((tg) => this.genres.hasOwnProperty(`${tg}`))
+        .filter((tg) => `${tg}` in this.genres)
         .map((tg) => this.genres[tg])
         .sort((g1, g2) => {
           return compareStrings(g1.normalized_name, g2.normalized_name);

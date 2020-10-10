@@ -465,14 +465,14 @@ export default {
       createArtist: "artists/create",
       createGenre: "genres/create",
     }),
-    filterName(item, queryText, itemText) {
+    filterName(item, queryText) {
       const search = queryText.toLowerCase();
       return (
         item.name.toLowerCase().indexOf(search) > -1 ||
         item.normalized_name.indexOf(search) > -1
       );
     },
-    filterTitle(item, queryText, itemText) {
+    filterTitle(item, queryText) {
       const search = queryText.toLowerCase();
       return (
         item.title.toLowerCase().indexOf(search) > -1 ||
@@ -481,7 +481,9 @@ export default {
     },
     saveTracks() {
       this.$refs.form.validate();
-      if (!this.isValid) return false;
+      if (!this.isValid) {
+        return false;
+      }
 
       this.saving = true;
       const transformedArtists = [];

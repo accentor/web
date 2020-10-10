@@ -70,7 +70,7 @@ export default {
       const oldAlbums = state.albums;
       state.albums = {};
       for (let album of Object.values(oldAlbums)) {
-        const i = albums.album_labels.findIndex((l) => l.label_id === oldID);
+        const i = album.album_labels.findIndex((l) => l.label_id === oldID);
         if (i >= 0) {
           album.album_labels.splice(i, 1);
         }
@@ -81,7 +81,7 @@ export default {
       const oldAlbums = state.albums;
       state.albums = {};
       for (let album of Object.values(oldAlbums)) {
-        const i = albums.album_labels.findIndex((l) => l.label_id === oldID);
+        const i = album.album_labels.findIndex((l) => l.label_id === oldID);
         if (i >= 0) {
           if (album.album_labels.some((l) => l.label_id === newID)) {
             album.album_labels.splice(i, 1);

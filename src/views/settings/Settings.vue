@@ -61,7 +61,9 @@ export default {
   methods: {
     ...mapMutations("userSettings", ["setLocale"]),
     fillValues() {
-      if (this.locale) this.newLocale = this.locale;
+      if (this.locale) {
+        this.newLocale = this.locale;
+      }
     },
     submitLocale: function () {
       this.setLocale({

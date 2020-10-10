@@ -57,8 +57,9 @@ export default {
     },
     full_title() {
       let full_title = this.album.title;
-      if (this.album.edition_description)
+      if (this.album.edition_description) {
         full_title += ` ${this.album.edition_description}`;
+      }
       return full_title;
     },
   },

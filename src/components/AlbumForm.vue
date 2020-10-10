@@ -300,7 +300,7 @@ export default {
       createArtist: "artists/create",
       createLabel: "labels/create",
     }),
-    filterName(item, queryText, itemText) {
+    filterName(item, queryText) {
       const search = queryText.toLowerCase();
       return (
         item.name.toLowerCase().indexOf(search) > -1 ||
