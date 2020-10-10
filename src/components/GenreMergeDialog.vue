@@ -86,7 +86,7 @@ export default {
   },
   methods: {
     ...mapActions("genres", ["merge"]),
-    filterName(item, queryText, itemText) {
+    filterName(item, queryText) {
       const search = queryText.toLowerCase();
       return (
         item.name.toLowerCase().indexOf(search) > -1 ||

@@ -1,7 +1,7 @@
 import Vue from "vue";
 import { index, create, destroy, update, read, merge } from "../api/tracks";
 import { fetchAll } from "./actions";
-import { compareStrings, compareTracks } from "../comparators";
+import { compareTracks } from "../comparators";
 
 export default {
   namespaced: true,
