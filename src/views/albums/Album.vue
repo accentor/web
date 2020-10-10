@@ -77,8 +77,8 @@ export default {
       return this.albums[this.$route.params.id];
     },
     album_labels: function () {
-      return this.album.album_labels.filter((al) =>
-        this.labels.hasOwnProperty(`${al.label_id}`)
+      return this.album.album_labels.filter(
+        (al) => `${al.label_id}` in this.labels
       );
     },
   },
