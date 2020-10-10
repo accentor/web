@@ -36,10 +36,11 @@ export default {
     };
   },
   created() {
-    if (this.label)
+    if (this.label) {
       this.read(this.label.id).then(() => {
         this.fillValues();
       });
+    }
   },
   watch: {
     label: function () {

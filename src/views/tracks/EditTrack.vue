@@ -186,10 +186,11 @@ export default {
     };
   },
   created() {
-    if (this.track)
+    if (this.track) {
       this.read(this.track.id).then(() => {
         this.fillValues();
       });
+    }
   },
   watch: {
     track: function () {

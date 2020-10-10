@@ -51,10 +51,11 @@ export default {
     };
   },
   created() {
-    if (this.artist)
+    if (this.artist) {
       this.read(this.artist.id).then(() => {
         this.fillValues();
       });
+    }
   },
   watch: {
     artist: function () {
