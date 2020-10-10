@@ -4,9 +4,9 @@ const fetchRetry = require("fetch-retry")(fetch);
 export async function* indexGenerator(path, auth) {
   let page = 1;
   while (true) {
-    let request;
+    let response;
     try {
-      request = await fetchRetry(`${baseURL}/${path}?page=${page}`, {
+      response = await fetchRetry(`${baseURL}/${path}?page=${page}`, {
         retries: 5,
         retryDelay: function (attempt) {
           return Math.pow(2, attempt) * 15000;
@@ -20,13 +20,13 @@ export async function* indexGenerator(path, auth) {
     } catch (reason) {
       throw { error: [reason] };
     }
-    const result = await request.json();
-    if (request.ok && result) {
+    const result = await response.json();
+    if (response.ok && result) {
       const loaded = new Date();
       for (let obj in result) {
         result[obj].loaded = loaded;
       }
-      if (request.headers.get("x-total-pages") == page) {
+      if (response.headers.get("x-total-pages") == page) {
         return result;
       } else {
         yield result;
