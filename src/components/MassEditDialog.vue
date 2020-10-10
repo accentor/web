@@ -481,7 +481,9 @@ export default {
     },
     saveTracks() {
       this.$refs.form.validate();
-      if (!this.isValid) return false;
+      if (!this.isValid) {
+        return false;
+      }
 
       this.saving = true;
       const transformedArtists = [];
