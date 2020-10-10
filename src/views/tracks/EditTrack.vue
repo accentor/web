@@ -318,7 +318,7 @@ export default {
         track_artists: [],
       };
 
-      const genre_map = this.newTrack.genre_ids.map(async (genre_id) => {
+      const mappedGenres = this.newTrack.genre_ids.map(async (genre_id) => {
         if (typeof genre_id === "string") {
           const id = await this.createGenre({ name: genre_id });
           if (id) {
@@ -331,33 +331,35 @@ export default {
         }
       });
 
-      const artist_map = this.newTrack.track_artists.map(async (ta, index) => {
-        if (typeof ta.artist_id === "string") {
-          const id = await this.createArtist({
-            name: ta.artist_id,
-            review_comment: "New artist",
-          });
-          if (id) {
+      const mappedArtists = this.newTrack.track_artists.map(
+        async (ta, index) => {
+          if (typeof ta.artist_id === "string") {
+            const id = await this.createArtist({
+              name: ta.artist_id,
+              review_comment: "New artist",
+            });
+            if (id) {
+              transformed.track_artists.push({
+                artist_id: id,
+                name: ta.name || ta.artist_id,
+                role: ta.role,
+                order: index + 1,
+              });
+            } else {
+              throw false;
+            }
+          } else {
             transformed.track_artists.push({
-              artist_id: id,
-              name: ta.name || ta.artist_id,
+              artist_id: ta.artist_id.id,
+              name: ta.name || ta.artist_id.name,
               role: ta.role,
               order: index + 1,
             });
-          } else {
-            throw false;
           }
-        } else {
-          transformed.track_artists.push({
-            artist_id: ta.artist_id.id,
-            name: ta.name || ta.artist_id.name,
-            role: ta.role,
-            order: index + 1,
-          });
         }
-      });
+      );
 
-      await Promise.all([...genre_map, ...artist_map]);
+      await Promise.all([...mappedGenres, ...mappedArtists]);
       const succeeded = await this.update({
         id: this.track.id,
         newTrack: transformed,

@@ -375,7 +375,7 @@ export default {
         album_artists: [],
       };
 
-      const label_map = this.newAlbum.album_labels.map(async (label) => {
+      const mappedLabels = this.newAlbum.album_labels.map(async (label) => {
         if (typeof label.label_id === "string") {
           const id = await this.createLabel({ name: label.label_id });
           if (id) {
@@ -394,39 +394,41 @@ export default {
         }
       });
 
-      const artist_map = this.newAlbum.album_artists.map(async (aa, index) => {
-        if (typeof aa.artist_id === "string") {
-          const id = await this.createArtist({
-            name: aa.artist_id,
-            review_comment: "New artist",
-          });
-          if (id) {
+      const mappedArtists = this.newAlbum.album_artists.map(
+        async (aa, index) => {
+          if (typeof aa.artist_id === "string") {
+            const id = await this.createArtist({
+              name: aa.artist_id,
+              review_comment: "New artist",
+            });
+            if (id) {
+              transformed.album_artists.push({
+                artist_id: id,
+                name: aa.name || aa.artist_id,
+                separator:
+                  index !== this.newAlbum.album_artists.length - 1
+                    ? aa.separator
+                    : null,
+                order: index + 1,
+              });
+            } else {
+              throw false;
+            }
+          } else {
             transformed.album_artists.push({
-              artist_id: id,
-              name: aa.name || aa.artist_id,
+              artist_id: aa.artist_id.id,
+              name: aa.name || aa.artist_id.name,
               separator:
                 index !== this.newAlbum.album_artists.length - 1
                   ? aa.separator
                   : null,
               order: index + 1,
             });
-          } else {
-            throw false;
           }
-        } else {
-          transformed.album_artists.push({
-            artist_id: aa.artist_id.id,
-            name: aa.name || aa.artist_id.name,
-            separator:
-              index !== this.newAlbum.album_artists.length - 1
-                ? aa.separator
-                : null,
-            order: index + 1,
-          });
         }
-      });
+      );
 
-      await Promise.all([...artist_map, ...label_map]);
+      await Promise.all([...mappedArtists, ...mappedLabels]);
       let promise = null;
       if (this.album) {
         promise = this.update({ id: this.album.id, newAlbum: transformed });

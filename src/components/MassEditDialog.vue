@@ -491,7 +491,7 @@ export default {
       const promises = [];
 
       if (this.changeArtists.enabled) {
-        const artist_map = this.changeArtists.track_artists.map(
+        const mappedArtists = this.changeArtists.track_artists.map(
           async (ta, index) => {
             if (typeof ta.artist_id === "string") {
               const id = await this.createArtist({
@@ -518,11 +518,11 @@ export default {
             }
           }
         );
-        promises.push(...artist_map);
+        promises.push(...mappedArtists);
       }
 
       if (this.changeGenres.enabled) {
-        const genre_map = this.changeGenres.genres.map(async (genre_id) => {
+        const mappedGenres = this.changeGenres.genres.map(async (genre_id) => {
           if (typeof genre_id === "string") {
             const id = await this.createGenre({ name: genre_id });
             if (id) {
@@ -534,11 +534,11 @@ export default {
             transformedGenres.push(genre_id.id);
           }
         });
-        promises.push(...genre_map);
+        promises.push(...mappedGenres);
       }
 
       await Promise.all(promises);
-      const track_map = this.tracks.map(async (t) => {
+      const mappedTracks = this.tracks.map(async (t) => {
         const transformed = {
           number: t.number,
           title: t.title,
@@ -604,7 +604,7 @@ export default {
 
         await this.update({ id: t.id, newTrack: transformed });
       });
-      await Promise.all(track_map);
+      await Promise.all(mappedTracks);
       this.dialog = false;
       this.resetState();
       this.saving = false;
