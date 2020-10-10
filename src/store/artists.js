@@ -2,6 +2,7 @@ import Vue from "vue";
 import {
   index,
   create,
+  read,
   destroy,
   update,
   destroyEmpty,
@@ -68,6 +69,17 @@ export default {
       return create(rootState.auth, newArtist)
         .then((result) => {
           commit("setArtist", { id: result.id, artist: result });
+          return Promise.resolve(result.id);
+        })
+        .catch((error) => {
+          this.commit("addError", error);
+          return Promise.resolve(false);
+        });
+    },
+    read({ commit, rootState }, id) {
+      return read(rootState.auth, id)
+        .then((result) => {
+          commit("setArtist", { id, artist: result });
           return Promise.resolve(result.id);
         })
         .catch((error) => {

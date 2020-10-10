@@ -36,11 +36,10 @@ export default {
     };
   },
   created() {
-    this.$nextTick(() => {
-      if (this.genre) {
+    if (this.genre)
+      this.read(this.genre.id).then(() => {
         this.fillValues();
-      }
-    });
+      });
   },
   watch: {
     genre: function () {
@@ -56,7 +55,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions("genres", ["update"]),
+    ...mapActions("genres", ["read", "update"]),
     fillValues() {
       this.newGenre.name = this.genre.name;
     },
