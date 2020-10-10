@@ -4,19 +4,22 @@ const fetchRetry = require("fetch-retry")(fetch);
 export async function* indexGenerator(path, auth) {
   let page = 1;
   while (true) {
-    const request = await fetchRetry(`${baseURL}/${path}?page=${page}`, {
-      retries: 5,
-      retryDelay: function (attempt) {
-        return Math.pow(2, attempt) * 15000;
-      },
-      method: "GET",
-      headers: {
-        "x-secret": auth.secret,
-        "x-device-id": auth.device_id,
-      },
-    }).catch((reason) => {
+    let request;
+    try {
+      request = await fetchRetry(`${baseURL}/${path}?page=${page}`, {
+        retries: 5,
+        retryDelay: function (attempt) {
+          return Math.pow(2, attempt) * 15000;
+        },
+        method: "GET",
+        headers: {
+          "x-secret": auth.secret,
+          "x-device-id": auth.device_id,
+        },
+      });
+    } catch (reason) {
       throw { error: [reason] };
-    });
+    }
     const result = await request.json();
     if (request.ok && result) {
       const loaded = new Date();
@@ -36,9 +39,12 @@ export async function* indexGenerator(path, auth) {
 }
 
 async function resolveRequest(request) {
-  const response = await fetch(request).catch((reason) => {
+  let response;
+  try {
+    response = await fetch(request);
+  } catch (reason) {
     throw { error: [reason] };
-  });
+  }
   const result = await response.json();
   if (response.ok) {
     return result;
