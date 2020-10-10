@@ -58,7 +58,9 @@ export default {
         this.item.id,
         this.new_review_comment
       );
-      if (succeeded) this.show = false;
+      if (succeeded) {
+        this.show = false;
+      }
     },
   },
 };

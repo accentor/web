@@ -115,8 +115,9 @@ export default {
       }
     },
     deleteImageType() {
-      if (confirm(this.$t("common.are-you-sure")))
+      if (confirm(this.$t("common.are-you-sure"))) {
         this.destroy(this.imageType.id);
+      }
     },
   },
 };

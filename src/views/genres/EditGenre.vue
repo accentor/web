@@ -63,8 +63,9 @@ export default {
     async submit() {
       const newGenre = { id: this.genre.id, newGenre: this.newGenre };
       const succeeded = await this.update(newGenre);
-      if (succeeded)
+      if (succeeded) {
         this.$router.push(this.$route.query.redirect || { name: "genres" });
+      }
     },
   },
 };

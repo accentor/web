@@ -129,8 +129,9 @@ export default {
       }
     },
     deleteCodecConversion() {
-      if (confirm(this.$t("common.are-you-sure")))
+      if (confirm(this.$t("common.are-you-sure"))) {
         this.destroy(this.codecConversion.id);
+      }
     },
   },
 };

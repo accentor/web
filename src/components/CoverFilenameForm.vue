@@ -73,12 +73,15 @@ export default {
     async saveCoverFilename() {
       if (this.$refs.form.validate()) {
         const id = await this.create(this.newCoverFilename);
-        if (id) this.newCoverFilename.filename = "";
+        if (id) {
+          this.newCoverFilename.filename = "";
+        }
       }
     },
     deleteCoverFilename() {
-      if (confirm(this.$t("common.are-you-sure")))
+      if (confirm(this.$t("common.are-you-sure"))) {
         this.destroy(this.coverFilename.id);
+      }
     },
   },
 };

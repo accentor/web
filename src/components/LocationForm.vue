@@ -90,12 +90,15 @@ export default {
     async saveLocation() {
       if (this.$refs.form.validate()) {
         const id = await this.create(this.newLocation);
-        if (id) this.newLocation.path = "";
+        if (id) {
+          this.newLocation.path = "";
+        }
       }
     },
     deleteLocation() {
-      if (confirm(this.$t("common.are-you-sure")))
+      if (confirm(this.$t("common.are-you-sure"))) {
         this.destroy(this.location.id);
+      }
     },
   },
 };

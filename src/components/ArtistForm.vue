@@ -76,14 +76,17 @@ export default {
         : this.newArtist.review_comment;
       let promise = null;
       if (this.artist) {
-        const newArtist = { id: this.artist.id, newArtist: this.newArtist };
-        promise = this.update();
+        promise = this.update({
+          id: this.artist.id,
+          newArtist: this.newArtist,
+        });
       } else {
         promise = this.create(this.newArtist);
       }
       const succeeded = await promise;
-      if (succeeded)
+      if (succeeded) {
         this.$router.push(this.$route.query.redirect || { name: "artists" });
+      }
     },
   },
 };

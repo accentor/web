@@ -132,10 +132,11 @@ export default {
           promise = this.create(this.newUser);
         }
         const succeeded = await promise;
-        if (succeeded)
+        if (succeeded) {
           this.$router.push(
             this.$route.query.redirect || { name: this.redirectFallback }
           );
+        }
       }
     },
   },

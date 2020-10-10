@@ -434,8 +434,9 @@ export default {
         promise = this.create(transformed);
       }
       const succeeded = await promise;
-      if (succeeded)
+      if (succeeded) {
         this.$router.push(this.$route.query.redirect || { name: "albums" });
+      }
     },
   },
 };

@@ -63,7 +63,9 @@ export default {
         name: this.name,
         password: this.password,
       });
-      if (succeeded) this.redirect();
+      if (succeeded) {
+        this.redirect();
+      }
     },
     redirect: function () {
       const path = this.$route.query.redirect || "/app/";

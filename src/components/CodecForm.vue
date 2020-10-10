@@ -111,7 +111,9 @@ export default {
       }
     },
     deleteCodec() {
-      if (confirm(this.$t("common.are-you-sure"))) this.destroy(this.codec.id);
+      if (confirm(this.$t("common.are-you-sure"))) {
+        this.destroy(this.codec.id);
+      }
     },
   },
 };
