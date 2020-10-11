@@ -209,18 +209,26 @@ export default {
       const labels = this.$store.dispatch("labels/index");
       const tracks = this.$store.dispatch("tracks/index");
       const users = this.$store.dispatch("users/index");
-      const promises = [auth, albums, artists, genres, labels, tracks, users];
+      const pendingResults = [
+        auth,
+        albums,
+        artists,
+        genres,
+        labels,
+        tracks,
+        users,
+      ];
       await users;
       if (this.isModerator) {
-        promises.push(this.$store.dispatch("rescan/show"));
-        promises.push(this.$store.dispatch("codecs/index"));
-        promises.push(this.$store.dispatch("codecConversions/index"));
-        promises.push(this.$store.dispatch("coverFilenames/index"));
-        promises.push(this.$store.dispatch("imageTypes/index"));
-        promises.push(this.$store.dispatch("locations/index"));
+        pendingResults.push(this.$store.dispatch("rescan/show"));
+        pendingResults.push(this.$store.dispatch("codecs/index"));
+        pendingResults.push(this.$store.dispatch("codecConversions/index"));
+        pendingResults.push(this.$store.dispatch("coverFilenames/index"));
+        pendingResults.push(this.$store.dispatch("imageTypes/index"));
+        pendingResults.push(this.$store.dispatch("locations/index"));
       }
       try {
-        await Promise.all(promises);
+        await Promise.all(pendingResults);
       } finally {
         this.loading = false;
       }

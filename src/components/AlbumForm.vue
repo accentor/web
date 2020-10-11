@@ -429,13 +429,16 @@ export default {
       );
 
       await Promise.all([...mappedArtists, ...mappedLabels]);
-      let promise = null;
+      let pendingResult = null;
       if (this.album) {
-        promise = this.update({ id: this.album.id, newAlbum: transformed });
+        pendingResult = this.update({
+          id: this.album.id,
+          newAlbum: transformed,
+        });
       } else {
-        promise = this.create(transformed);
+        pendingResult = this.create(transformed);
       }
-      const succeeded = await promise;
+      const succeeded = await pendingResult;
       if (succeeded) {
         this.$router.push(this.$route.query.redirect || { name: "albums" });
       }

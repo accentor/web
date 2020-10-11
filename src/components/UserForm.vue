@@ -125,13 +125,16 @@ export default {
     async submit() {
       this.$refs.userForm.validate();
       if (this.isValid) {
-        let promise = null;
+        let pendingResult = null;
         if (this.user) {
-          promise = this.update({ id: this.user.id, newUser: this.newUser });
+          pendingResult = this.update({
+            id: this.user.id,
+            newUser: this.newUser,
+          });
         } else {
-          promise = this.create(this.newUser);
+          pendingResult = this.create(this.newUser);
         }
-        const succeeded = await promise;
+        const succeeded = await pendingResult;
         if (succeeded) {
           this.$router.push(
             this.$route.query.redirect || { name: this.redirectFallback }

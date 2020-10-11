@@ -488,7 +488,7 @@ export default {
       this.saving = true;
       const transformedArtists = [];
       const transformedGenres = [];
-      const promises = [];
+      const pendingResults = [];
 
       if (this.changeArtists.enabled) {
         const mappedArtists = this.changeArtists.track_artists.map(
@@ -518,7 +518,7 @@ export default {
             }
           }
         );
-        promises.push(...mappedArtists);
+        pendingResults.push(...mappedArtists);
       }
 
       if (this.changeGenres.enabled) {
@@ -534,10 +534,10 @@ export default {
             transformedGenres.push(genre_id.id);
           }
         });
-        promises.push(...mappedGenres);
+        pendingResults.push(...mappedGenres);
       }
 
-      await Promise.all(promises);
+      await Promise.all(pendingResults);
       const mappedTracks = this.tracks.map(async (t) => {
         const transformed = {
           number: t.number,
