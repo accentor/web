@@ -97,65 +97,65 @@ export default {
     },
   },
   actions: {
-    index({ commit, rootState }) {
+    async index({ commit, rootState }) {
       const generator = index(rootState.auth);
-      return fetchAll(commit, generator, "setTracks")
-        .then(() => {
-          return Promise.resolve(true);
-        })
-        .catch((error) => {
-          this.commit("addError", error);
-          return Promise.resolve(false);
-        });
+      try {
+        await fetchAll(commit, generator, "setTracks");
+        return true;
+      } catch (error) {
+        commit("addError", error, { root: true });
+        return false;
+      }
     },
-    create({ commit, rootState }, newTrack) {
-      return create(rootState.auth, newTrack)
-        .then((result) => {
-          commit("setTrack", { id: result.id, track: result });
-          return Promise.resolve(result.id);
-        })
-        .catch((error) => {
-          this.commit("addError", error);
-          return Promise.resolve(false);
-        });
+    async create({ commit, rootState }, newTrack) {
+      try {
+        const result = await create(rootState.auth, newTrack);
+        commit("setTrack", { id: result.id, track: result });
+        return result.id;
+      } catch (error) {
+        commit("addError", error, { root: true });
+        return false;
+      }
     },
     async read({ commit, rootState }, id) {
       try {
         const track = await read(rootState.auth, id);
         commit("setTrack", { id, track });
+        return true;
       } catch (error) {
-        this.commit("addError", error);
+        commit("addError", error, { root: true });
+        return false;
       }
     },
-    update({ commit, rootState }, { id, newTrack }) {
-      return update(rootState.auth, id, newTrack)
-        .then((result) => {
-          commit("setTrack", { id, track: result });
-          return Promise.resolve(true);
-        })
-        .catch((error) => {
-          this.commit("addError", error);
-          return Promise.resolve(false);
-        });
+    async update({ commit, rootState }, { id, newTrack }) {
+      try {
+        const result = await update(rootState.auth, id, newTrack);
+        commit("setTrack", { id, track: result });
+        return true;
+      } catch (error) {
+        commit("addError", error, { root: true });
+        return false;
+      }
     },
-    destroy({ commit, rootState }, id) {
-      return destroy(rootState.auth, id)
-        .then(() => {
-          commit("removeTrack", id);
-          return Promise.resolve(true);
-        })
-        .catch((error) => {
-          this.commit("addError", error);
-          return Promise.resolve(false);
-        });
+    async destroy({ commit, rootState }, id) {
+      try {
+        await destroy(rootState.auth, id);
+        commit("removeTrack", id);
+        return true;
+      } catch (error) {
+        commit("addError", error, { root: true });
+        return false;
+      }
     },
     async merge({ commit, dispatch, rootState }, { newID, oldID }) {
       try {
         await merge(rootState.auth, newID, oldID);
         await dispatch("read", newID);
         commit("removeTrack", oldID);
+        return true;
       } catch (error) {
-        this.commit("addError", error);
+        commit("addError", error, { root: true });
+        return false;
       }
     },
   },

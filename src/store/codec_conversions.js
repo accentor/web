@@ -45,52 +45,48 @@ export default {
     },
   },
   actions: {
-    index({ commit, rootState }) {
+    async index({ commit, rootState }) {
       const generator = index(rootState.auth);
-      return fetchAll(commit, generator, "setCodecConversions")
-        .then(() => {
-          return Promise.resolve(true);
-        })
-        .catch((error) => {
-          this.commit("addError", error);
-          return Promise.resolve(false);
-        });
+      try {
+        await fetchAll(commit, generator, "setCodecConversions");
+        return true;
+      } catch (error) {
+        commit("addError", error, { root: true });
+        return false;
+      }
     },
-    create({ commit, rootState }, newCodecConversion) {
-      return create(rootState.auth, newCodecConversion)
-        .then((result) => {
-          commit("setCodecConversion", {
-            id: result.id,
-            codecConversion: result,
-          });
-          return Promise.resolve(result.id);
-        })
-        .catch((error) => {
-          this.commit("addError", error);
-          return Promise.resolve(false);
+    async create({ commit, rootState }, newCodecConversion) {
+      try {
+        const result = await create(rootState.auth, newCodecConversion);
+        commit("setCodecConversion", {
+          id: result.id,
+          codecConversion: result,
         });
+        return result.id;
+      } catch (error) {
+        commit("addError", error, { root: true });
+        return false;
+      }
     },
-    update({ commit, rootState }, { id, newCodecConversion }) {
-      return update(rootState.auth, id, newCodecConversion)
-        .then((result) => {
-          commit("setCodecConversion", { id, codecConversion: result });
-          return Promise.resolve(true);
-        })
-        .catch((error) => {
-          this.commit("addError", error);
-          return Promise.resolve(false);
-        });
+    async update({ commit, rootState }, { id, newCodecConversion }) {
+      try {
+        const result = await update(rootState.auth, id, newCodecConversion);
+        commit("setCodecConversion", { id, codecConversion: result });
+        return true;
+      } catch (error) {
+        commit("addError", error, { root: true });
+        return false;
+      }
     },
-    destroy({ commit, rootState }, id) {
-      return destroy(rootState.auth, id)
-        .then(() => {
-          commit("removeCodecConversion", id);
-          return Promise.resolve(true);
-        })
-        .catch((error) => {
-          this.commit("addError", error);
-          return Promise.resolve(false);
-        });
+    async destroy({ commit, rootState }, id) {
+      try {
+        await destroy(rootState.auth, id);
+        commit("removeCodecConversion", id);
+        return true;
+      } catch (error) {
+        commit("addError", error, { root: true });
+        return false;
+      }
     },
   },
   getters: {

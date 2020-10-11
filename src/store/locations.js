@@ -45,38 +45,35 @@ export default {
     },
   },
   actions: {
-    index({ commit, rootState }) {
+    async index({ commit, rootState }) {
       const generator = index(rootState.auth);
-      return fetchAll(commit, generator, "setLocations")
-        .then(() => {
-          return Promise.resolve(true);
-        })
-        .catch((error) => {
-          this.commit("addError", error);
-          return Promise.resolve(false);
-        });
+      try {
+        await fetchAll(commit, generator, "setLocations");
+        return true;
+      } catch (error) {
+        commit("addError", error, { root: true });
+        return false;
+      }
     },
-    create({ commit, rootState }, newLocation) {
-      return create(rootState.auth, newLocation)
-        .then((result) => {
-          commit("setLocation", { id: result.id, location: result });
-          return Promise.resolve(result.id);
-        })
-        .catch((error) => {
-          this.commit("addError", error);
-          return Promise.resolve(false);
-        });
+    async create({ commit, rootState }, newLocation) {
+      try {
+        const result = await create(rootState.auth, newLocation);
+        commit("setLocation", { id: result.id, location: result });
+        return result.id;
+      } catch (error) {
+        commit("addError", error, { root: true });
+        return false;
+      }
     },
-    destroy({ commit, rootState }, id) {
-      return destroy(rootState.auth, id)
-        .then(() => {
-          commit("removeLocation", id);
-          return Promise.resolve(true);
-        })
-        .catch((error) => {
-          this.commit("addError", error);
-          return Promise.resolve(false);
-        });
+    async destroy({ commit, rootState }, id) {
+      try {
+        await destroy(rootState.auth, id);
+        commit("removeLocation", id);
+        return true;
+      } catch (error) {
+        commit("addError", error, { root: true });
+        return false;
+      }
     },
   },
   getters: {
