@@ -122,22 +122,24 @@ export default {
       this.newUser.name = this.user.name;
       this.newUser.permission = this.user.permission;
     },
-    submit() {
+    async submit() {
       this.$refs.userForm.validate();
       if (this.isValid) {
-        let promise = null;
+        let pendingResult = null;
         if (this.user) {
-          promise = this.update({ id: this.user.id, newUser: this.newUser });
+          pendingResult = this.update({
+            id: this.user.id,
+            newUser: this.newUser,
+          });
         } else {
-          promise = this.create(this.newUser);
+          pendingResult = this.create(this.newUser);
         }
-        promise.then((succeeded) => {
-          if (succeeded) {
-            this.$router.push(
-              this.$route.query.redirect || { name: this.redirectFallback }
-            );
-          }
-        });
+        const succeeded = await pendingResult;
+        if (succeeded) {
+          this.$router.push(
+            this.$route.query.redirect || { name: this.redirectFallback }
+          );
+        }
       }
     },
   },

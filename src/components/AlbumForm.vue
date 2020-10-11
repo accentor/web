@@ -359,7 +359,7 @@ export default {
         this.newAlbum.album_artists.splice(index, 1)[0]
       );
     },
-    submit() {
+    async submit() {
       const transformed = {
         title: this.newAlbum.title,
         release: this.newAlbum.release,
@@ -375,78 +375,73 @@ export default {
         album_artists: [],
       };
 
-      const promises = [];
-
-      for (let label of this.newAlbum.album_labels) {
+      const mappedLabels = this.newAlbum.album_labels.map(async (label) => {
         if (typeof label.label_id === "string") {
-          promises.push(
-            this.createLabel({ name: label.label_id }).then((id) => {
-              if (id) {
-                transformed.album_labels.push({
-                  label_id: id,
-                  catalogue_number: label.catalogue_number,
-                });
-              } else {
-                return Promise.reject();
-              }
-            })
-          );
+          const id = await this.createLabel({ name: label.label_id });
+          if (id) {
+            transformed.album_labels.push({
+              label_id: id,
+              catalogue_number: label.catalogue_number,
+            });
+          } else {
+            throw false;
+          }
         } else {
           transformed.album_labels.push({
             label_id: label.label_id.id,
             catalogue_number: label.catalogue_number,
           });
         }
-      }
+      });
 
-      this.newAlbum.album_artists.forEach((aa, index) => {
-        if (typeof aa.artist_id === "string") {
-          promises.push(
-            this.createArtist({
+      const mappedArtists = this.newAlbum.album_artists.map(
+        async (aa, index) => {
+          if (typeof aa.artist_id === "string") {
+            const id = await this.createArtist({
               name: aa.artist_id,
               review_comment: "New artist",
-            }).then((id) => {
-              if (id) {
-                transformed.album_artists.push({
-                  artist_id: id,
-                  name: aa.name || aa.artist_id,
-                  separator:
-                    index !== this.newAlbum.album_artists.length - 1
-                      ? aa.separator
-                      : null,
-                  order: index + 1,
-                });
-              } else {
-                return Promise.reject();
-              }
-            })
-          );
-        } else {
-          transformed.album_artists.push({
-            artist_id: aa.artist_id.id,
-            name: aa.name || aa.artist_id.name,
-            separator:
-              index !== this.newAlbum.album_artists.length - 1
-                ? aa.separator
-                : null,
-            order: index + 1,
-          });
-        }
-      });
-
-      Promise.all(promises).then(() => {
-        let promise = null;
-        if (this.album) {
-          promise = this.update({ id: this.album.id, newAlbum: transformed });
-        } else {
-          promise = this.create(transformed);
-        }
-        promise.then((succeeded) => {
-          if (succeeded) {
-            this.$router.push(this.$route.query.redirect || { name: "albums" });
+            });
+            if (id) {
+              transformed.album_artists.push({
+                artist_id: id,
+                name: aa.name || aa.artist_id,
+                separator:
+                  index !== this.newAlbum.album_artists.length - 1
+                    ? aa.separator
+                    : null,
+                order: index + 1,
+              });
+            } else {
+              throw false;
+            }
+          } else {
+            transformed.album_artists.push({
+              artist_id: aa.artist_id.id,
+              name: aa.name || aa.artist_id.name,
+              separator:
+                index !== this.newAlbum.album_artists.length - 1
+                  ? aa.separator
+                  : null,
+              order: index + 1,
+            });
           }
+        }
+      );
+
+      await Promise.all([...mappedArtists, ...mappedLabels]);
+      let pendingResult = null;
+      if (this.album) {
+        pendingResult = this.update({
+          id: this.album.id,
+          newAlbum: transformed,
         });
-      });
+      } else {
+        pendingResult = this.create(transformed);
+      }
+      const succeeded = await pendingResult;
+      if (succeeded) {
+        this.$router.push(this.$route.query.redirect || { name: "albums" });
+      }
     },
   },
 };

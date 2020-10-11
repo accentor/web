@@ -57,16 +57,15 @@ export default {
   methods: {
     ...mapActions("auth", ["login"]),
     ...mapMutations(["clearErrors"]),
-    submit: function () {
+    async submit() {
       this.clearErrors();
-      this.login({
+      const succeeded = await this.login({
         name: this.name,
         password: this.password,
-      }).then((succeeded) => {
-        if (succeeded) {
-          this.redirect();
-        }
       });
+      if (succeeded) {
+        this.redirect();
+      }
     },
     redirect: function () {
       const path = this.$route.query.redirect || "/app/";

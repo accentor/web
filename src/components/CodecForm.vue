@@ -97,15 +97,14 @@ export default {
       this.newCodec.mimetype = this.codec.mimetype;
     },
     ...mapActions("codecs", ["destroy", "update", "create"]),
-    saveCodec() {
+    async saveCodec() {
       if (this.$refs.form.validate()) {
         if (this.codec === null) {
-          this.create(this.newCodec).then((id) => {
-            if (id) {
-              this.newCodec.extension = "";
-              this.newCodec.mimetype = "";
-            }
-          });
+          const id = await this.create(this.newCodec);
+          if (id) {
+            this.newCodec.extension = "";
+            this.newCodec.mimetype = "";
+          }
         } else {
           this.update({ id: this.codec.id, newCodec: this.newCodec });
         }

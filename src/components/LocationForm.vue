@@ -87,13 +87,12 @@ export default {
       this.newLocation.path = this.location.path;
     },
     ...mapActions("locations", ["destroy", "update", "create"]),
-    saveLocation() {
+    async saveLocation() {
       if (this.$refs.form.validate()) {
-        this.create(this.newLocation).then((id) => {
-          if (id) {
-            this.newLocation.path = "";
-          }
-        });
+        const id = await this.create(this.newLocation);
+        if (id) {
+          this.newLocation.path = "";
+        }
       }
     },
     deleteLocation() {

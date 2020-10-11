@@ -183,42 +183,40 @@ export default {
     this.setPlaying(false);
   },
   watch: {
-    currentTrackURL() {
+    async currentTrackURL() {
       this.$refs.audio.src = this.currentTrackURL;
       if (this.playing) {
-        this.$refs.audio
-          .play()
-          .then(() => {
-            if ("mediaSession" in navigator) {
-              navigator.mediaSession.metadata = new window.MediaMetadata({
-                title: this.currentTrack.title,
-                artist: this.currentTrack.track_artists
-                  .map((a) => a.name)
-                  .join(" / "),
-                album: this.albums[this.currentTrack.album_id].title,
-                artwork: [
-                  {
-                    src: this.albums[this.currentTrack.album_id].image100,
-                    sizes: "100x100",
-                    type: this.albums[this.currentTrack.album_id].image_type,
-                  },
-                  {
-                    src: this.albums[this.currentTrack.album_id].image250,
-                    sizes: "250x250",
-                    type: this.albums[this.currentTrack.album_id].image_type,
-                  },
-                  {
-                    src: this.albums[this.currentTrack.album_id].image500,
-                    sizes: "500x500",
-                    type: this.albums[this.currentTrack.album_id].image_type,
-                  },
-                ],
-              });
-            }
-          })
-          .catch((error) => {
-            this.commit("addError", error);
-          });
+        try {
+          await this.$refs.audio.play();
+          if ("mediaSession" in navigator) {
+            navigator.mediaSession.metadata = new window.MediaMetadata({
+              title: this.currentTrack.title,
+              artist: this.currentTrack.track_artists
+                .map((a) => a.name)
+                .join(" / "),
+              album: this.albums[this.currentTrack.album_id].title,
+              artwork: [
+                {
+                  src: this.albums[this.currentTrack.album_id].image100,
+                  sizes: "100x100",
+                  type: this.albums[this.currentTrack.album_id].image_type,
+                },
+                {
+                  src: this.albums[this.currentTrack.album_id].image250,
+                  sizes: "250x250",
+                  type: this.albums[this.currentTrack.album_id].image_type,
+                },
+                {
+                  src: this.albums[this.currentTrack.album_id].image500,
+                  sizes: "500x500",
+                  type: this.albums[this.currentTrack.album_id].image_type,
+                },
+              ],
+            });
+          }
+        } catch (error) {
+          this.commit("addError", error);
+        }
       }
     },
     volume() {
@@ -238,20 +236,18 @@ export default {
         }
       }
     },
-    playing() {
+    async playing() {
       if (this.playing) {
-        this.$refs.audio
-          .play()
-          .then(() => {
-            if ("mediaSession" in navigator) {
-              navigator.mediaSession.playbackState = "playing";
-            }
-          })
-          .catch((error) => {
-            new Error(error);
-          });
+        try {
+          await this.$refs.audio.play();
+          if ("mediaSession" in navigator) {
+            navigator.mediaSession.playbackState = "playing";
+          }
+        } catch (error) {
+          this.commit("addError", error);
+        }
       } else {
-        this.$refs.audio.pause();
+        await this.$refs.audio.pause();
         if ("mediaSession" in navigator) {
           navigator.mediaSession.playbackState = "paused";
         }

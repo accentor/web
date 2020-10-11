@@ -60,14 +60,14 @@ export default {
     fillValues() {
       this.newGenre.name = this.genre.name;
     },
-    submit() {
-      this.update({ id: this.genre.id, newGenre: this.newGenre }).then(
-        (succeeded) => {
-          if (succeeded) {
-            this.$router.push(this.$route.query.redirect || { name: "genres" });
-          }
-        }
-      );
+    async submit() {
+      const succeeded = await this.update({
+        id: this.genre.id,
+        newGenre: this.newGenre,
+      });
+      if (succeeded) {
+        this.$router.push(this.$route.query.redirect || { name: "genres" });
+      }
     },
   },
 };

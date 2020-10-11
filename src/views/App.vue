@@ -200,36 +200,42 @@ export default {
     ...mapState("userSettings", ["locale"]),
   },
   methods: {
-    loadData() {
+    async loadData() {
       this.loading = true;
-      Promise.all([
-        this.$store.dispatch("auth/index"),
-        this.$store.dispatch("albums/index"),
-        this.$store.dispatch("artists/index"),
-        this.$store.dispatch("genres/index"),
-        this.$store.dispatch("labels/index"),
-        this.$store.dispatch("tracks/index"),
-        this.$store.dispatch("users/index").then(() => {
-          const promises = [];
-          if (this.isModerator) {
-            promises.push(this.$store.dispatch("rescan/show"));
-            promises.push(this.$store.dispatch("codecs/index"));
-            promises.push(this.$store.dispatch("codecConversions/index"));
-            promises.push(this.$store.dispatch("coverFilenames/index"));
-            promises.push(this.$store.dispatch("imageTypes/index"));
-            promises.push(this.$store.dispatch("locations/index"));
-          }
-          return Promise.all(promises);
-        }),
-        new Promise((resolve) => setTimeout(resolve, 1000)),
-      ]).finally(() => {
+      const auth = this.$store.dispatch("auth/index");
+      const albums = this.$store.dispatch("albums/index");
+      const artists = this.$store.dispatch("artists/index");
+      const genres = this.$store.dispatch("genres/index");
+      const labels = this.$store.dispatch("labels/index");
+      const tracks = this.$store.dispatch("tracks/index");
+      const users = this.$store.dispatch("users/index");
+      const pendingResults = [
+        auth,
+        albums,
+        artists,
+        genres,
+        labels,
+        tracks,
+        users,
+      ];
+      await users;
+      if (this.isModerator) {
+        pendingResults.push(this.$store.dispatch("rescan/show"));
+        pendingResults.push(this.$store.dispatch("codecs/index"));
+        pendingResults.push(this.$store.dispatch("codecConversions/index"));
+        pendingResults.push(this.$store.dispatch("coverFilenames/index"));
+        pendingResults.push(this.$store.dispatch("imageTypes/index"));
+        pendingResults.push(this.$store.dispatch("locations/index"));
+      }
+      try {
+        await Promise.all(pendingResults);
+      } finally {
         this.loading = false;
-      });
+      }
     },
-    logout: function () {
-      this.$store.dispatch("auth/logout").then(() => {
-        this.$router.push({ name: "login" });
-      });
+    async logout() {
+      await this.$store.dispatch("auth/logout");
+      this.$router.push({ name: "login" });
     },
   },
 };

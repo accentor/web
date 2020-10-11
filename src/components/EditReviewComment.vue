@@ -36,7 +36,7 @@ export default {
   data() {
     return {
       show: false,
-      new_review_comment: "",
+      newReviewComment: "",
     };
   },
   props: {
@@ -50,15 +50,14 @@ export default {
     },
   },
   created() {
-    this.new_review_comment = this.item.review_comment;
+    this.newReviewComment = this.item.review_comment;
   },
   methods: {
-    flag() {
-      this.update(this.item.id, this.new_review_comment).then((succeeded) => {
-        if (succeeded) {
-          this.show = false;
-        }
-      });
+    async flag() {
+      const succeeded = await this.update(this.item.id, this.newReviewComment);
+      if (succeeded) {
+        this.show = false;
+      }
     },
   },
 };

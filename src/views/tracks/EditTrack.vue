@@ -306,7 +306,7 @@ export default {
         this.newTrack.track_artists.splice(index, 1)[0]
       );
     },
-    submit() {
+    async submit() {
       const transformed = {
         number: this.newTrack.number,
         title: this.newTrack.title,
@@ -317,64 +317,56 @@ export default {
         genre_ids: [],
         track_artists: [],
       };
-      const promises = [];
 
-      for (let genre_id of this.newTrack.genre_ids) {
+      const mappedGenres = this.newTrack.genre_ids.map(async (genre_id) => {
         if (typeof genre_id === "string") {
-          promises.push(
-            this.createGenre({ name: genre_id }).then((id) => {
-              if (id) {
-                transformed.genre_ids.push(id);
-              } else {
-                return Promise.reject();
-              }
-            })
-          );
+          const id = await this.createGenre({ name: genre_id });
+          if (id) {
+            transformed.genre_ids.push(id);
+          } else {
+            throw false;
+          }
         } else {
           transformed.genre_ids.push(genre_id.id);
         }
-      }
+      });
 
-      this.newTrack.track_artists.forEach((ta, index) => {
-        if (typeof ta.artist_id === "string") {
-          promises.push(
-            this.createArtist({
+      const mappedArtists = this.newTrack.track_artists.map(
+        async (ta, index) => {
+          if (typeof ta.artist_id === "string") {
+            const id = await this.createArtist({
               name: ta.artist_id,
               review_comment: "New artist",
-            }).then((id) => {
-              if (id) {
-                transformed.track_artists.push({
-                  artist_id: id,
-                  name: ta.name || ta.artist_id,
-                  role: ta.role,
-                  order: index + 1,
-                });
-              } else {
-                return Promise.reject();
-              }
-            })
-          );
-        } else {
-          transformed.track_artists.push({
-            artist_id: ta.artist_id.id,
-            name: ta.name || ta.artist_id.name,
-            role: ta.role,
-            order: index + 1,
-          });
-        }
-      });
-
-      Promise.all(promises).then(() => {
-        this.update({ id: this.track.id, newTrack: transformed }).then(
-          (succeeded) => {
-            if (succeeded) {
-              this.$router.push(
-                this.$route.query.redirect || { name: "tracks" }
-              );
+            });
+            if (id) {
+              transformed.track_artists.push({
+                artist_id: id,
+                name: ta.name || ta.artist_id,
+                role: ta.role,
+                order: index + 1,
+              });
+            } else {
+              throw false;
             }
+          } else {
+            transformed.track_artists.push({
+              artist_id: ta.artist_id.id,
+              name: ta.name || ta.artist_id.name,
+              role: ta.role,
+              order: index + 1,
+            });
           }
-        );
+        }
+      );
+
+      await Promise.all([...mappedGenres, ...mappedArtists]);
+      const succeeded = await this.update({
+        id: this.track.id,
+        newTrack: transformed,
       });
+      if (succeeded) {
+        this.$router.push(this.$route.query.redirect || { name: "tracks" });
+      }
     },
   },
 };

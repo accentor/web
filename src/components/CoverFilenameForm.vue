@@ -70,13 +70,12 @@ export default {
       this.newCoverFilename.filename = this.coverFilename.filename;
     },
     ...mapActions("coverFilenames", ["destroy", "update", "create"]),
-    saveCoverFilename() {
+    async saveCoverFilename() {
       if (this.$refs.form.validate()) {
-        this.create(this.newCoverFilename).then((id) => {
-          if (id) {
-            this.newCoverFilename.filename = "";
-          }
-        });
+        const id = await this.create(this.newCoverFilename);
+        if (id) {
+          this.newCoverFilename.filename = "";
+        }
       }
     },
     deleteCoverFilename() {
