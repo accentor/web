@@ -270,10 +270,11 @@ export default {
     };
   },
   created() {
-    if (this.album)
+    if (this.album) {
       this.read(this.album.id).then(() => {
         this.fillValues();
       });
+    }
   },
   watch: {
     album: function () {

@@ -2,6 +2,7 @@ import Vue from "vue";
 import {
   index,
   create,
+  read,
   destroy,
   update,
   destroyEmpty,

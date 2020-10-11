@@ -36,10 +36,11 @@ export default {
     };
   },
   created() {
-    if (this.genre)
+    if (this.genre) {
       this.read(this.genre.id).then(() => {
         this.fillValues();
       });
+    }
   },
   watch: {
     genre: function () {
