@@ -4,7 +4,6 @@ import {
   create,
   read,
   destroy,
-  read,
   update,
   destroyEmpty,
   merge,
