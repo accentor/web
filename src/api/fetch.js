@@ -1,6 +1,9 @@
 import baseURL from "./base_url";
 const fetchRetry = require("fetch-retry")(fetch, {
   retries: 0,
+  retryDelay: function (attempt) {
+    return Math.pow(2, attempt) * 15000;
+  },
 });
 
 export async function* indexGenerator(path, auth) {
@@ -10,9 +13,6 @@ export async function* indexGenerator(path, auth) {
     try {
       response = await fetchRetry(`${baseURL}/${path}?page=${page}`, {
         retries: 5,
-        retryDelay: function (attempt) {
-          return Math.pow(2, attempt) * 15000;
-        },
         method: "GET",
         headers: {
           "x-secret": auth.secret,
@@ -60,8 +60,8 @@ export async function create(path, auth, object) {
     method: "POST",
     headers: {
       "content-type": "application/json",
-      "x-secret": auth.secret,
-      "x-device-id": auth.device_id,
+      "x-secret": auth?.secret,
+      "x-device-id": auth?.device_id,
     },
     body: JSON.stringify(object),
   });
