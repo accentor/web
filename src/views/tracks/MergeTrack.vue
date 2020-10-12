@@ -232,16 +232,18 @@ export default {
       return this.tracks.find(({ id }) => id == this.$route.params.id);
     },
     result: function () {
-      const file =
-        this.track.filename && !this.reversed
-          ? { name: this.selectedTrack.filename, selected: true }
-          : { name: this.track.filename, selected: false };
       if (this.reversed) {
+        const file = this.track.filename
+          ? { name: this.track.filename, selected: false }
+          : { name: this.selectedTrack.filename, selected: true };
         return {
           ...this.selectedTrack,
           file,
         };
       } else {
+        const file = this.selectedTrack.filename
+          ? { name: this.selectedTrack.filename, selected: true }
+          : { name: this.track.filename, selected: false };
         return {
           ...this.track,
           file,
