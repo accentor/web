@@ -16,7 +16,7 @@
         <VCardText>
           <VTextField
             :label="$t('music.flag.comment')"
-            v-model="new_review_comment"
+            v-model="newReviewComment"
           />
         </VCardText>
         <VCardActions>
