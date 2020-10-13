@@ -1,5 +1,10 @@
 import baseURL from "./base_url";
-const fetchRetry = require("fetch-retry")(fetch);
+const fetchRetry = require("fetch-retry")(fetch, {
+  retries: 0,
+  retryDelay: function (attempt) {
+    return Math.pow(2, attempt) * 15000;
+  },
+});
 
 export async function* indexGenerator(path, auth) {
   let page = 1;
@@ -8,9 +13,6 @@ export async function* indexGenerator(path, auth) {
     try {
       response = await fetchRetry(`${baseURL}/${path}?page=${page}`, {
         retries: 5,
-        retryDelay: function (attempt) {
-          return Math.pow(2, attempt) * 15000;
-        },
         method: "GET",
         headers: {
           "x-secret": auth.secret,
@@ -38,10 +40,10 @@ export async function* indexGenerator(path, auth) {
   }
 }
 
-async function resolveRequest(request) {
+async function resolveRequest(path, options) {
   let response;
   try {
-    response = await fetch(request);
+    response = await fetchRetry(`${baseURL}/${path}`, options);
   } catch (reason) {
     throw { error: [reason] };
   }
@@ -54,31 +56,32 @@ async function resolveRequest(request) {
 }
 
 export async function create(path, auth, object) {
-  const request = new Request(`${baseURL}/${path}`, {
+  const options = {
     method: "POST",
     headers: {
       "content-type": "application/json",
-      "x-secret": auth.secret,
-      "x-device-id": auth.device_id,
+      "x-secret": auth?.secret,
+      "x-device-id": auth?.device_id,
     },
     body: JSON.stringify(object),
-  });
-  return await resolveRequest(request);
+  };
+  return await resolveRequest(path, options);
 }
 
-export async function read(path, auth) {
-  const request = new Request(`${baseURL}/${path}`, {
+export async function read(path, auth, retryOptions = {}) {
+  const options = {
+    ...retryOptions,
     method: "GET",
     headers: {
       "x-secret": auth.secret,
       "x-device-id": auth.device_id,
     },
-  });
-  return await resolveRequest(request);
+  };
+  return await resolveRequest(path, options);
 }
 
 export async function update(path, auth, object) {
-  const request = new Request(`${baseURL}/${path}`, {
+  const options = {
     method: "PATCH",
     headers: {
       "content-type": "application/json",
@@ -86,41 +89,41 @@ export async function update(path, auth, object) {
       "x-device-id": auth.device_id,
     },
     body: JSON.stringify(object),
-  });
-  return await resolveRequest(request);
+  };
+  return await resolveRequest(path, options);
 }
 
 export async function destroy(path, auth) {
-  const request = new Request(`${baseURL}/${path}`, {
+  const options = {
     method: "DELETE",
     headers: {
       "x-secret": auth.secret,
       "x-device-id": auth.device_id,
     },
-  });
-  return await resolveRequest(request);
+  };
+  return await resolveRequest(path, options);
 }
 
 export async function destroyEmpty(path, auth) {
-  const request = new Request(`${baseURL}/${path}/destroy_empty`, {
+  const options = {
     method: "POST",
     headers: {
       "content-type": "application/json",
       "x-secret": auth.secret,
       "x-device-id": auth.device_id,
     },
-  });
-  return await resolveRequest(request);
+  };
+  return await resolveRequest(path, options);
 }
 
 export async function merge(path, auth) {
-  const request = new Request(`${baseURL}/${path}`, {
+  const options = {
     method: "POST",
     headers: {
       "content-type": "application/json",
       "x-secret": auth.secret,
       "x-device-id": auth.device_id,
     },
-  });
-  return await resolveRequest(request);
+  };
+  return await resolveRequest(path, options);
 }
