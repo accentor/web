@@ -10,7 +10,7 @@ export function compareStrings(s1, s2) {
 
 export function compareAlbumEditions(a1, a2) {
   // If one album has an edition but the other doesn't, we assume
-  // that the one without an edition is the "original" and schould come first.
+  // that the one without an edition is the "original" and should come first.
   if (a1.edition === null && a2.edition === null) {
     return 0;
   } else if (a1.edition === null) {
