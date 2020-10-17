@@ -8,7 +8,7 @@ import {
   destroyEmpty,
 } from "../api/albums";
 import { fetchAll } from "./actions";
-import { compareStrings } from "../comparators";
+import { compareAlbumsByRelease, compareAlbumsByTitle } from "../comparators";
 
 export default {
   namespaced: true,
@@ -165,38 +165,26 @@ export default {
   getters: {
     albums: (state) => Object.values(state.albums),
     albumsByTitle: (state, getters) =>
-      getters.albums.sort((a1, a2) =>
-        compareStrings(a1.normalized_title, a2.normalized_title)
-      ),
+      getters.albums.sort((a1, a2) => compareAlbumsByTitle(a1, a2)),
     albumsFilterByArtist: (state, getters) => (id) => {
       const aaFilter = (a) =>
         a.album_artists.filter((aa) => `${aa.artist_id}` === `${id}`).length >
         0;
       return getters.albums
         .filter(aaFilter)
-        .sort(
-          (a1, a2) =>
-            compareStrings(a1.release, a2.release) ||
-            compareStrings(a1.normalized_title, a2.normalized_title)
-        );
+        .sort((a1, a2) => compareAlbumsByRelease(a1, a2));
     },
     albumsFilterByLabel: (state, getters) => (id) => {
       const alFilter = (a) =>
         a.album_labels.filter((l) => `${l.label_id}` === `${id}`).length > 0;
       return getters.albums
         .filter(alFilter)
-        .sort(
-          (a1, a2) =>
-            compareStrings(a1.release, a2.release) ||
-            compareStrings(a1.normalized_title, a2.normalized_title)
-        );
+        .sort((a1, a2) => compareAlbumsByRelease(a1, a2));
     },
     albumsFlagged: (state, getters) => {
       return getters.albums
         .filter((t) => t.review_comment !== null)
-        .sort((a1, a2) =>
-          compareStrings(a1.normalized_title, a2.normalized_title)
-        );
+        .sort((a1, a2) => compareAlbumsByTitle(a1, a2));
     },
     albumsOnThisDay: (state, getters, rootState) => {
       const today = new Date(rootState.currentDay);
@@ -207,11 +195,7 @@ export default {
               `${today.getMonth() + 1}`.padStart(2, "0") &&
             `${r.release.slice(-2)}` === `${today.getDate()}`.padStart(2, "0")
         )
-        .sort(
-          (a1, a2) =>
-            compareStrings(a1.release, a2.release) ||
-            compareStrings(a1.normalized_title, a2.normalized_title)
-        );
+        .sort((a1, a2) => compareAlbumsByRelease(a1, a2));
     },
   },
 };
