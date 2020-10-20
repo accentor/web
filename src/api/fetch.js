@@ -113,7 +113,7 @@ export async function destroyEmpty(path, auth) {
       "x-device-id": auth.device_id,
     },
   };
-  return await resolveRequest(path, options);
+  return await resolveRequest(`${path}/destroy_empty`, options);
 }
 
 export async function merge(path, auth) {
