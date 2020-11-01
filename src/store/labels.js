@@ -76,7 +76,7 @@ export default {
     },
     async read({ commit, rootState }, id) {
       try {
-        const result = read(rootState.auth, id);
+        const result = await read(rootState.auth, id);
         commit("setLabel", { id, label: result });
         return result.id;
       } catch (error) {

@@ -35,12 +35,9 @@ export default {
       isValid: true,
     };
   },
-  created() {
-    if (this.label) {
-      this.read(this.label.id).then(() => {
-        this.fillValues();
-      });
-    }
+  async created() {
+    await this.read(this.$route.params.id);
+    this.fillValues();
   },
   watch: {
     label: function () {
