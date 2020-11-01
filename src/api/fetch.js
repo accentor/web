@@ -47,7 +47,7 @@ async function resolveRequest(path, options) {
   } catch (reason) {
     throw { error: [reason] };
   }
-  const result = await response.json();
+  const result = response.status === 204 ? true : await response.json();
   if (response.ok) {
     return result;
   } else {
