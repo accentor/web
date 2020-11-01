@@ -38,18 +38,18 @@ export function compareTracks(rootState, t1, t2) {
     return -1;
   }
 
-  let albOrd = compareAlbumsByTitle(a1.normalized_title, a2.normalized_title);
+  let albOrd = compareAlbumsByTitleFirst(a1, a2);
   return albOrd === 0 ? t1.number - t2.number : albOrd;
 }
 
-export function compareAlbumsByTitle(a1, a2) {
+export function compareAlbumsByTitleFirst(a1, a2) {
   let order = compareStrings(a1.normalized_title, a2.normalized_title);
   order = order === 0 ? compareStrings(a1.release, a2.release) : order;
   order = order === 0 ? compareAlbumEditions(a1, a2) : order;
   return (order = order === 0 ? compareStrings(a1.id, a2.id) : order);
 }
 
-export function compareAlbumsByRelease(a1, a2) {
+export function compareAlbumsByReleaseFirst(a1, a2) {
   let order = compareStrings(a1.release, a2.release);
   order =
     order === 0
