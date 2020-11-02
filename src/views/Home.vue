@@ -202,17 +202,14 @@
 import { mapGetters } from "vuex";
 import AlbumCard from "../components/AlbumCard";
 import ArtistCard from "../components/ArtistCard";
-import { compareStrings } from "../comparators";
+import { compareAlbumsByReleaseFirst, compareStrings } from "../comparators";
 
 export default {
   name: "home",
   components: { AlbumCard, ArtistCard },
   methods: {
     releaseSort(items) {
-      items.sort((a1, a2) => {
-        return compareStrings(a2.release, a1.release);
-      });
-      return items;
+      return items.sort(compareAlbumsByReleaseFirst).reverse();
     },
     createdSort(items) {
       items.sort((a1, a2) => {
