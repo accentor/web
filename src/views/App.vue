@@ -202,31 +202,14 @@ export default {
   methods: {
     async loadData() {
       this.loading = true;
-      const auth = this.$store.dispatch("auth/index");
-      const albums = this.$store.dispatch("albums/index");
-      const artists = this.$store.dispatch("artists/index");
-      const genres = this.$store.dispatch("genres/index");
-      const labels = this.$store.dispatch("labels/index");
-      const tracks = this.$store.dispatch("tracks/index");
-      const users = this.$store.dispatch("users/index");
-      const pendingResults = [
-        auth,
-        albums,
-        artists,
-        genres,
-        labels,
-        tracks,
-        users,
-      ];
-      await users;
-      if (this.isModerator) {
-        pendingResults.push(this.$store.dispatch("rescan/show"));
-        pendingResults.push(this.$store.dispatch("codecs/index"));
-        pendingResults.push(this.$store.dispatch("codecConversions/index"));
-        pendingResults.push(this.$store.dispatch("coverFilenames/index"));
-        pendingResults.push(this.$store.dispatch("imageTypes/index"));
-        pendingResults.push(this.$store.dispatch("locations/index"));
-      }
+      let pendingResults = [];
+      pendingResults.push(this.$store.dispatch("auth/index"));
+      pendingResults.push(this.$store.dispatch("albums/index"));
+      pendingResults.push(this.$store.dispatch("artists/index"));
+      pendingResults.push(this.$store.dispatch("genres/index"));
+      pendingResults.push(this.$store.dispatch("labels/index"));
+      pendingResults.push(this.$store.dispatch("tracks/index"));
+      pendingResults.push(this.$store.dispatch("users/index"));
       try {
         await Promise.all(pendingResults);
       } finally {
