@@ -187,8 +187,8 @@ export default {
     locale() {
       this.$i18n.locale = this.locale;
     },
-    finishedAt() {
-      if (!this.loading) {
+    finishedAt(newValue, oldValue) {
+      if (!this.loading && typeof oldValue !== "undefined") {
         this.loadData();
       }
     },
