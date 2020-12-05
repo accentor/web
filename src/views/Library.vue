@@ -114,6 +114,9 @@ export default {
     EditLocations,
     MaintenanceActions,
   },
+  created() {
+    this.loadData();
+  },
   computed: {
     ...mapGetters("auth", ["isModerator"]),
     ...mapState("rescan", ["rescan"]),
@@ -127,6 +130,18 @@ export default {
   },
   methods: {
     ...mapActions("rescan", ["start"]),
+    async loadData() {
+      let pendingResults = [];
+      if (this.isModerator) {
+        pendingResults.push(this.$store.dispatch("rescan/show"));
+        pendingResults.push(this.$store.dispatch("codecs/index"));
+        pendingResults.push(this.$store.dispatch("codecConversions/index"));
+        pendingResults.push(this.$store.dispatch("coverFilenames/index"));
+        pendingResults.push(this.$store.dispatch("imageTypes/index"));
+        pendingResults.push(this.$store.dispatch("locations/index"));
+      }
+      await Promise.all(pendingResults);
+    },
   },
 };
 </script>
