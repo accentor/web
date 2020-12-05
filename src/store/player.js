@@ -144,7 +144,9 @@ export default {
   },
   getters: {
     playlistTracks(state, getters, rootState) {
-      return state.playlist.map((id) => rootState.tracks.tracks[id]);
+      return state.playlist
+        .map((id) => rootState.tracks.tracks[id])
+        .filter((t) => t);
     },
     currentTrack(state, getters) {
       return state.current >= 0 ? getters.playlistTracks[state.current] : null;
