@@ -185,11 +185,10 @@ export default {
       isValid: true,
     };
   },
-  created() {
+  async created() {
     if (this.track) {
-      this.read(this.track.id).then(() => {
-        this.fillValues();
-      });
+      await this.read(this.track.id);
+      this.fillValues();
     }
   },
   watch: {

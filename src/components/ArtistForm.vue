@@ -50,11 +50,10 @@ export default {
       isValid: true,
     };
   },
-  created() {
+  async created() {
     if (this.artist) {
-      this.read(this.artist.id).then(() => {
-        this.fillValues();
-      });
+      await this.read(this.artist.id);
+      this.fillValues();
     }
   },
   watch: {

@@ -35,11 +35,10 @@ export default {
       isValid: true,
     };
   },
-  created() {
+  async created() {
     if (this.genre) {
-      this.read(this.genre.id).then(() => {
-        this.fillValues();
-      });
+      await this.read(this.genre.id);
+      this.fillValues();
     }
   },
   watch: {

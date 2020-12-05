@@ -269,11 +269,10 @@ export default {
       editionInformation: false,
     };
   },
-  created() {
+  async created() {
     if (this.album) {
-      this.read(this.album.id).then(() => {
-        this.fillValues();
-      });
+      await this.read(this.album.id);
+      this.fillValues();
     }
   },
   watch: {
