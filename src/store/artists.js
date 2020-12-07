@@ -109,7 +109,7 @@ export default {
     async destroyEmpty({ commit, dispatch, rootState }) {
       try {
         await destroyEmpty(rootState.auth);
-        dispatch("index");
+        await dispatch("index");
         return true;
       } catch (error) {
         commit("addError", error, { root: true });
