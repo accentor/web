@@ -9,6 +9,7 @@
       }"
       :items="filteredItems"
       :page.sync="pagination.page"
+      :items-per-page="12"
       v-if="albums.length > 0"
     >
       <template v-slot:header>
