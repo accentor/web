@@ -228,60 +228,10 @@
                   />
                 </VCol>
               </VRow>
-              <VRow
-                :key="index"
-                v-for="(item, index) of changeArtists.track_artists"
-                no-gutters
-              >
-                <VCol
-                  class="flex-column flex-grow-0"
-                  v-if="changeArtists.enabled"
-                >
-                  <VBtn
-                    @click="moveArtist(index, -1)"
-                    icon
-                    small
-                    class="ma-2"
-                    :disabled="index === 0"
-                  >
-                    <VIcon>mdi-menu-up</VIcon>
-                  </VBtn>
-                  <VBtn
-                    @click="moveArtist(index, 1)"
-                    icon
-                    small
-                    class="ma-2"
-                    :disabled="index === changeArtists.track_artists.length - 1"
-                  >
-                    <VIcon>mdi-menu-down</VIcon>
-                  </VBtn>
-                  <VBtn @click="removeArtist(index)" icon small class="ma-2">
-                    <VIcon>mdi-close</VIcon>
-                  </VBtn>
-                </VCol>
-                <VCol v-if="changeArtists.enabled">
-                  <VCombobox
-                    :items="sortedArtists"
-                    :filter="filterName"
-                    item-text="name"
-                    item-value="id"
-                    :label="$tc('music.artists', 2)"
-                    :rules="rules.artist"
-                    return-object
-                    v-model="item.artist_id"
-                  />
-                  <VTextField :label="$t('common.name')" v-model="item.name" />
-                  <VAutocomplete
-                    :items="roles"
-                    :label="$t('music.artist.role')"
-                    v-model="item.role"
-                  />
-                  <VDivider
-                    light
-                    v-if="index !== changeArtists.track_artists.length - 1"
-                  />
-                </VCol>
-              </VRow>
+              <TrackFormArtists
+                v-model="changeArtists.track_artists"
+                v-if="changeArtists.enabled"
+              />
               <VBtn
                 @click="addArtist"
                 color="success"
@@ -326,46 +276,17 @@
 <script>
 import { mapActions, mapGetters, mapState } from "vuex";
 import Errors from "./Errors";
+import TrackFormArtists from "./TrackFormArtists.vue";
 
 export default {
   name: "MassEditDialog",
-  components: { Errors },
+  components: { Errors, TrackFormArtists },
   props: {
     tracks: { default: () => [], type: Array },
   },
   data() {
     return {
       dialog: false,
-      roles: [
-        {
-          value: "main",
-          text: this.$t("music.artist.roles.main"),
-        },
-        {
-          value: "performer",
-          text: this.$t("music.artist.roles.performer"),
-        },
-        {
-          value: "composer",
-          text: this.$t("music.artist.roles.composer"),
-        },
-        {
-          value: "conductor",
-          text: this.$t("music.artist.roles.conductor"),
-        },
-        {
-          value: "remixer",
-          text: this.$t("music.artist.roles.remixer"),
-        },
-        {
-          value: "producer",
-          text: this.$t("music.artist.roles.producer"),
-        },
-        {
-          value: "arranger",
-          text: this.$t("music.artist.roles.arranger"),
-        },
-      ],
       titleReplacement: {
         enabled: false,
         search: "",
@@ -409,9 +330,6 @@ export default {
     ...mapGetters("albums", {
       sortedAlbums: "albumsByTitle",
     }),
-    ...mapGetters("artists", {
-      sortedArtists: "artistsByName",
-    }),
     ...mapGetters("genres", {
       sortedGenres: "genresByName",
     }),
@@ -442,12 +360,6 @@ export default {
       };
       if (this.changeGenres.enabled) {
         rules.genre.push(genreValidation);
-      }
-
-      if (this.changeArtists.enabled) {
-        const artistValidation = (v) =>
-          !!v || this.$t("errors.artists.artist-blank");
-        rules.artist.push(artistValidation);
       }
 
       if (this.album.enabled) {
@@ -616,16 +528,6 @@ export default {
         name: "",
         role: "main",
       });
-    },
-    removeArtist(index) {
-      this.changeArtists.track_artists.splice(index, 1);
-    },
-    moveArtist(index, direction) {
-      this.changeArtists.track_artists.splice(
-        index + direction,
-        0,
-        this.changeArtists.track_artists.splice(index, 1)[0]
-      );
     },
     resetState() {
       this.titleReplacement = {
