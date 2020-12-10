@@ -50,7 +50,10 @@
             v-model="newTrack.genre_ids"
           />
           <h4 class="text-subtitle-1">{{ $tc("music.artists", 2) }}</h4>
-          <TrackFormArtists v-model="newTrack.track_artists" />
+          <TrackFormArtists
+            v-model="newTrack.track_artists"
+            @update:value.once="isDirty = true"
+          />
           <VCheckbox
             v-if="track.review_comment !== null"
             v-model="clear_review_comment"
