@@ -93,12 +93,15 @@ export default {
       required: true,
     },
   },
-  mounted() {
-    this.trackArtists = this.value;
-  },
   watch: {
     trackArtists(newValue) {
       this.$emit("update:value", newValue);
+    },
+    value: {
+      handler() {
+        this.trackArtists = this.value;
+      },
+      immediate: true,
     },
   },
   computed: {
