@@ -50,61 +50,10 @@
             v-model="newTrack.genre_ids"
           />
           <h4 class="text-subtitle-1">{{ $tc("music.artists", 2) }}</h4>
-          <VRow
-            :key="index"
-            v-for="(item, index) of newTrack.track_artists"
-            no-gutters
-          >
-            <VCol class="flex-grow-0 flex-column">
-              <VBtn
-                @click="moveArtist(index, -1)"
-                @click.once="isDirty = true"
-                icon
-                small
-                class="ma-2"
-                :disabled="index === 0"
-              >
-                <VIcon>mdi-menu-up</VIcon>
-              </VBtn>
-              <VBtn
-                @click="moveArtist(index, 1)"
-                @click.once="isDirty = true"
-                icon
-                small
-                class="ma-2"
-                :disabled="index === newTrack.track_artists.length - 1"
-              >
-                <VIcon>mdi-menu-down</VIcon>
-              </VBtn>
-              <VBtn
-                @click="removeArtist(index)"
-                @click.once="isDirty = true"
-                icon
-                small
-                class="ma-2"
-              >
-                <VIcon>mdi-close</VIcon>
-              </VBtn>
-            </VCol>
-            <VCol>
-              <VCombobox
-                :items="sortedArtists"
-                :filter="filterName"
-                item-text="name"
-                item-value="id"
-                :label="$tc('music.artists', 1)"
-                return-object
-                v-model="item.artist_id"
-              />
-              <VTextField :label="$t('common.name')" v-model="item.name" />
-              <VAutocomplete
-                :items="roles"
-                :label="$t('music.artist.role')"
-                v-model="item.role"
-              />
-              <VDivider v-if="index !== newTrack.track_artists.length - 1" />
-            </VCol>
-          </VRow>
+          <TrackFormArtists
+            v-model="newTrack.track_artists"
+            @update:value.once="isDirty = true"
+          />
           <VCheckbox
             v-if="track.review_comment !== null"
             v-model="clear_review_comment"
@@ -137,8 +86,10 @@
 
 <script>
 import { mapActions, mapGetters, mapState } from "vuex";
+import TrackFormArtists from "@/components/TrackFormArtists.vue";
 
 export default {
+  components: { TrackFormArtists },
   name: "EditTrack",
   data() {
     return {
@@ -150,36 +101,6 @@ export default {
         track_artists: [],
         genre_ids: [],
       },
-      roles: [
-        {
-          value: "main",
-          text: this.$t("music.artist.roles.main"),
-        },
-        {
-          value: "performer",
-          text: this.$t("music.artist.roles.performer"),
-        },
-        {
-          value: "composer",
-          text: this.$t("music.artist.roles.composer"),
-        },
-        {
-          value: "conductor",
-          text: this.$t("music.artist.roles.conductor"),
-        },
-        {
-          value: "remixer",
-          text: this.$t("music.artist.roles.remixer"),
-        },
-        {
-          value: "producer",
-          text: this.$t("music.artist.roles.producer"),
-        },
-        {
-          value: "arranger",
-          text: this.$t("music.artist.roles.arranger"),
-        },
-      ],
       clear_review_comment: true,
       isDirty: false,
       isValid: true,
@@ -294,16 +215,6 @@ export default {
         name: "",
         role: "main",
       });
-    },
-    removeArtist(index) {
-      this.newTrack.track_artists.splice(index, 1);
-    },
-    moveArtist(index, direction) {
-      this.newTrack.track_artists.splice(
-        index + direction,
-        0,
-        this.newTrack.track_artists.splice(index, 1)[0]
-      );
     },
     async submit() {
       const transformed = {
