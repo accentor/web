@@ -11,7 +11,7 @@
           class="d-flex justify-space-between fill-height flex-column py-2"
         >
           <VBtn
-            @click="moveArtist({ oldIndex: index, newIndex: index - 1 })"
+            @click="moveArtist(index, -1)"
             icon
             small
             class="ma-2"
@@ -31,7 +31,7 @@
             <VIcon>mdi-drag-horizontal-variant</VIcon>
           </VBtn>
           <VBtn
-            @click="moveArtist({ oldIndex: index, newIndex: index + 1 })"
+            @click="moveArtist(index, 1)"
             icon
             small
             class="ma-2"
