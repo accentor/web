@@ -20,7 +20,14 @@
           >
             <VIcon>mdi-menu-up</VIcon>
           </VBtn>
-          <VBtn small icon text class="ma-2 drag-handle" tabindex="-1">
+          <VBtn
+            small
+            icon
+            text
+            class="ma-2 drag-handle"
+            tabindex="-1"
+            :disabled="trackArtists.length === 1"
+          >
             <VIcon>mdi-drag-horizontal-variant</VIcon>
           </VBtn>
           <VBtn
