@@ -170,7 +170,11 @@ export default {
       } else if (key === "ArrowUp" || key === "u") {
         direction = -1;
       }
-      if (typeof direction !== "undefined") {
+      if (
+        typeof direction !== "undefined" &&
+        index + direction >= 0 &&
+        index + direction < this.trackArtists.length
+      ) {
         this.moveArtist(index, direction);
         // Due to the way Vue updates the DOM, we have to manually focus on the current trackArtist in its new place
         this.$refs[index + direction][0].focus();
