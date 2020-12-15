@@ -1,29 +1,45 @@
-# accentor
+# Accentor web frontend
+Web frontend for Accentor, a modern music server focusing on metadata.
 
-## Project setup
-```
-yarn install
-```
+## Why use Accentor?
+Accentor gives you complete control over your music. You can build your own collection (with good old CD's, bandcamp downloads, ...) in the soundquality that you want and stream it either through the web frontend or [android app](https://github.com/accentor/android).
 
-### Compiles and hot-reloads for development
-```
-yarn run serve
-```
+Accentor is focused on metadata. We allow you to add detailed metadata to your music collection, beyond what the tags inside an audio file are capable of. Album and tracks can have multiple artists with a different name on different albums/tracks, albums can have multiple labels and tracks can have multiple genres.
 
-### Compiles and minifies for production
-```
-yarn run build
-```
+The metadata is completely in your control: you can edit them however you want.
 
-### Run your tests
-```
-yarn run test
-```
+# How to deploy
+To use the web frontend, you already need to have an API running. You can read how to do that [here](https://github.com/accentor/api).
 
-### Lints and fixes files
-```
-yarn run lint
-```
+Once you have the API running, you have two options for the frontend.
+## Use a hosting service for static sites
+The project can be deployed to a static site hoster like Netlify.
+You only need to configure the following three things:
+* Build command: `yarn build`
+* Output directory: `dist/`
+* An ENV token for `VUE_APP_API_URL` pointing to the domain of your api.
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## Deploy on the same domain as the API
+
+-- TODO --
+
+# Local development
+To run and develop locally:
+1. Install all dependencies with `yarn install`
+2. Compile with hot-reloads using `yarn run serve`
+
+You will also need an API to interact with. For this you can
+* [Run the API locally](https://github.com/accentor/api) (Recommended)
+* Set an ENV token for `VUE_APP_API_URL` pointing to an existing API.
+
+# Help
+Have a question?
+You can ask your question through [GitHub discussions](https://github.com/accentor/web/discussions) or in the [Matrix channel](https://matrix.to/#/!PCYHOaWItkVRNacTSv:vanpetegem.me?via=vanpetegem.me&via=matrix.org).
+
+Think you have noticed a bug? [Create an issue](https://github.com/accentor/web/issues/new?assignees=&labels=bug&template=bug_report.md&title=).
+# Known issues
+## Playback support depends on browser
+Playback of audio files depends on browser support entirerly. This can cause three issues:
+1. No support for a codec: Not all browsers support all codecs, see [MDN](https://developer.mozilla.org/en-US/docs/Web/Media/Formats/Audio_codecs) for a detailed guide.
+2. Faulty encoding: a file that isn't encoded correctly might play in one browser, but not in another. (For example, Chromium-based browsers seems to be stricter to FLAC than FF)
+3. Problems with the browser: A browser can always have an internal problem with playback. Most notable [Firefox < 76 had problems playing FLAC.](https://bugzilla.mozilla.org/show_bug.cgi?id=1528265)
