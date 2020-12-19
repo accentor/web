@@ -43,3 +43,6 @@ Playback of audio files depends on browser support entirerly. This can cause thr
 1. No support for a codec: Not all browsers support all codecs, see [MDN](https://developer.mozilla.org/en-US/docs/Web/Media/Formats/Audio_codecs) for a detailed guide.
 2. Faulty encoding: a file that isn't encoded correctly might play in one browser, but not in another. (For example, Chromium-based browsers seems to be stricter to FLAC than FF)
 3. Problems with the browser: A browser can always have an internal problem with playback. Most notable [Firefox < 76 had problems playing FLAC.](https://bugzilla.mozilla.org/show_bug.cgi?id=1528265)
+
+## Memory usage
+Since the frontend stores all tracks, albums, artists, ... locally, the memory usage will grow as your collection grow. At the moment we can keep memory usage below 100MB for substantial libraries. We'll continue to monitor this, so the memory usage doesn't grow more than necessary.
