@@ -1,5 +1,4 @@
 import { show, start } from "../api/rescan";
-import { wait } from "../utils";
 
 export default {
   namespaced: true,
@@ -30,7 +29,7 @@ export default {
         do {
           result = await show(rootState.auth);
           commit("setRescan", result);
-          await wait(1000);
+          await new Promise((resolve) => setTimeout(resolve, 1000));
         } while (
           rootState.rescan.lastClick > new Date(result.finished_at) ||
           result.running
