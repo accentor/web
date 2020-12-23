@@ -39,6 +39,7 @@ export default {
         return true;
       } catch (error) {
         commit("addError", error, { root: true });
+        commit("setLoading", false);
         return false;
       }
     },
