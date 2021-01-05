@@ -2,12 +2,12 @@
   <VContainer fluid v-if="user">
     <vue-headful :title="user.name + ' | Accentor'" />
     <VRow>
-      <div>
+      <VCol>
         <div class="text-h4">{{ user.name }}</div>
         <span class="grey--text">
           {{ user.permission }}
         </span>
-      </div>
+      </VCol>
     </VRow>
   </VContainer>
 </template>

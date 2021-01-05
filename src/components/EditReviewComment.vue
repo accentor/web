@@ -20,7 +20,7 @@
           />
         </VCardText>
         <VCardActions>
-          <VRow justify="end">
+          <VRow justify="end" no-gutters>
             <VBtn color="primary" class="ma-2" type="submit" @click="flag">
               {{ $t("music.flag.for-review") }}
             </VBtn>
