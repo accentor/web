@@ -47,7 +47,7 @@
       </table>
     </div>
 
-    <VRow class="player-controls" align="center">
+    <VRow class="player-controls" align="center" no-gutters>
       <div class="flex player-left">
         <div class="content">
           <VBtn
