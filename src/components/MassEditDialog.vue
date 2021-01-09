@@ -457,7 +457,7 @@ export default {
           album_id: t.album_id,
           review_comment: this.clearReviewComments ? null : t.review_comment,
           genre_ids: t.genre_ids,
-          track_artists: t.track_artists,
+          track_artists: [...t.track_artists],
         };
 
         if (this.number.enabled) {
