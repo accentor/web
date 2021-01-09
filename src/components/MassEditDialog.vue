@@ -456,8 +456,8 @@ export default {
           title: t.title,
           album_id: t.album_id,
           review_comment: this.clearReviewComments ? null : t.review_comment,
-          genre_ids: t.genre_ids,
-          track_artists: t.track_artists,
+          genre_ids: [...t.genre_ids],
+          track_artists: [...t.track_artists],
         };
 
         if (this.number.enabled) {
@@ -491,7 +491,7 @@ export default {
                     ta.artist_id === a.artist_id
                 ).length === 0
               ) {
-                a.order += t.track_artists.length - 1;
+                a.order += t.track_artists.length;
                 transformed.track_artists.push(a);
               }
             });
