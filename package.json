@@ -46,6 +46,6 @@
     "vue-cli-plugin-vuetify": "^2.0.9",
     "vue-template-compiler": "^2.6.12",
     "vuetify-loader": "^1.6.0",
-    "webpack": "^4.44.2"
+    "webpack": "^4.45.0"
   }
 }
