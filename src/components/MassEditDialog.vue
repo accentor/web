@@ -491,7 +491,7 @@ export default {
                     ta.artist_id === a.artist_id
                 ).length === 0
               ) {
-                a.order += t.track_artists.length - 1;
+                a.order += t.track_artists.length;
                 transformed.track_artists.push(a);
               }
             });
