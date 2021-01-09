@@ -1,16 +1,16 @@
 <template>
   <VContainer fluid v-if="isModerator">
     <vue-headful :title="$t('library-settings') + ' | Accentor'" />
-    <VRow>
+    <VRow class="mb-2">
       <h2 class="text-h5">{{ $t("library.maintenance") }}</h2>
     </VRow>
-    <VRow>
+    <VRow class="mb-4">
       <MaintenanceActions />
     </VRow>
-    <VRow>
+    <VRow class="mb-2">
       <h2 class="text-h5">{{ $t("library.rescan") }}</h2>
     </VRow>
-    <VRow v-if="rescan">
+    <VRow v-if="rescan" class="mb-2">
       <VBtn
         @click="start"
         :disabled="rescanRunning"
@@ -24,7 +24,7 @@
         {{ $t("library.start-scan") }}
       </VBtn>
     </VRow>
-    <VRow class="flex-column" v-if="rescan">
+    <VRow class="flex-column mb-4" v-if="rescan">
       <div>
         <strong>{{ $t("library.finished-at") }}: </strong>
         {{
@@ -50,7 +50,7 @@
         <pre class="text-body-2">{{ rescan.error_text }}</pre>
       </div>
     </VRow>
-    <VRow>
+    <VRow class="mb-2">
       <h2 class="text-h5">{{ $t("library.codecs") }}</h2>
     </VRow>
     <VRow>
@@ -58,7 +58,7 @@
         <EditCodecs />
       </VCol>
     </VRow>
-    <VRow>
+    <VRow class="mb-2">
       <h2 class="text-h5">{{ $t("library.codec-conversions") }}</h2>
     </VRow>
     <VRow>
@@ -66,7 +66,7 @@
         <EditCodecConversions />
       </VCol>
     </VRow>
-    <VRow>
+    <VRow class="mb-2">
       <h2 class="text-h5">{{ $t("library.cover-filenames") }}</h2>
     </VRow>
     <VRow>
@@ -74,17 +74,17 @@
         <EditCoverFilenames />
       </VCol>
     </VRow>
-    <VRow>
+    <VRow class="mb-2">
       <h2 class="text-h5">
         {{ $t("library.image-types") }}
       </h2>
     </VRow>
-    <VRow>
+    <VRow class="mb-2">
       <VCol cols="12">
         <EditImageTypes />
       </VCol>
     </VRow>
-    <VRow>
+    <VRow class="mb-2">
       <h2 class="text-h5">{{ $t("library.locations") }}</h2>
     </VRow>
     <VRow>

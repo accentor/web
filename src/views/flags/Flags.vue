@@ -13,7 +13,7 @@
         :items-per-page="6"
       >
         <template v-slot:default="props">
-          <VRow>
+          <VRow class="mb-0">
             <VCol
               v-for="item in props.items"
               :key="`artist${item.id}`"
@@ -41,7 +41,7 @@
         :items-per-page="6"
       >
         <template v-slot:default="props">
-          <VRow>
+          <VRow class="mb-0">
             <VCol
               v-for="item in props.items"
               :key="`album${item.id}`"

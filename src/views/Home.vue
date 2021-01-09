@@ -15,7 +15,7 @@
           <h2 class="text-h4">{{ $t("home.recently-released") }}</h2>
         </template>
         <template v-slot:default="props">
-          <VRow>
+          <VRow class="my-0">
             <VCol
               v-for="item in props.items"
               :key="item.id"
@@ -47,7 +47,7 @@
           </h2>
         </template>
         <template v-slot:default="props">
-          <VRow>
+          <VRow class="my-0">
             <VCol
               v-for="item in props.items"
               :key="item.id"
@@ -79,7 +79,7 @@
           </h2>
         </template>
         <template v-slot:default="props">
-          <VRow>
+          <VRow class="my-0">
             <VCol
               v-for="item in props.items"
               :key="item.id"
@@ -114,7 +114,7 @@
           </v-alert>
         </template>
         <template v-slot:default="props">
-          <VRow>
+          <VRow class="my-0">
             <VCol
               v-for="item in props.items"
               :key="item.id"
@@ -147,7 +147,7 @@
           </h2>
         </template>
         <template v-slot:default="props">
-          <VRow>
+          <VRow class="my-0">
             <VCol
               v-for="item in props.items"
               :key="item.id"
@@ -179,7 +179,7 @@
           </h2>
         </template>
         <template v-slot:default="props">
-          <VRow>
+          <VRow class="my-0">
             <VCol
               v-for="item in props.items"
               :key="item.id"
