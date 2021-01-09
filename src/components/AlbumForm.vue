@@ -201,7 +201,7 @@
           v-model="clear_review_comment"
           :label="$tc('music.flag.clear', 1)"
         />
-        <VRow justify="center" no-gutters>
+        <VRow justify="center my-o">
           <VBtn :disabled="!isValid" color="primary" class="ma-2" type="submit">
             {{
               this.album ? $t("music.album.update") : $t("music.album.create")
