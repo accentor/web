@@ -9,9 +9,12 @@
 		"dataTable": {
 			"itemsPerPageText": "Rijen per pagina:",
 			"ariaLabel": {
-				"sortDescending": ": Aflopend gesorteerd. Activeer om sorteren ongedaan te maken.",
-				"sortAscending": ": Oplopend gesorteerd. Activeer om aflopend te sorteren.",
-				"sortNone": ": Niet gesorteerd. Activeer om oplopend te sorteren"
+				"sortDescending": "Aflopend gesorteerd.",
+				"sortAscending": "Oplopend gesorteerd.",
+				"sortNone": "Niet gesorteerd.",
+				"activateNone": "Activeer om sorteren ongedaan te maken.",
+				"activateDescending": "Activeer om aflopend te sorteren.",
+				"activateAscending": "Activeer om oplopend te sorteren."
 			},
 			"sortBy": "Sorteer volgens"
 		},
