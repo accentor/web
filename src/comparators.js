@@ -1,3 +1,5 @@
+import store from "@/store/store";
+
 export function compareStrings(s1, s2) {
   if (s1 > s2) {
     return 1;
@@ -27,9 +29,9 @@ export function compareAlbumEditions(a1, a2) {
     : order;
 }
 
-export function compareTracks(rootState, t1, t2) {
-  const a1 = rootState.albums.albums[t1.album_id];
-  const a2 = rootState.albums.albums[t2.album_id];
+export function compareTracks(t1, t2, albums = store.state.albums.albums) {
+  const a1 = albums[t1.album_id];
+  const a2 = albums[t2.album_id];
   if (a1 === undefined && a2 === undefined) {
     return t1.number - t2.number;
   } else if (a1 === undefined) {
