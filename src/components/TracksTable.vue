@@ -131,35 +131,35 @@ export default {
       {
         text: "#",
         value: "number",
-        sortable: true,
         align: "center",
         width: "1px",
+        class: "text-no-wrap",
       },
       {
         text: this.$t("music.title"),
         value: "title",
-        sortable: true,
+        class: "text-no-wrap",
       },
       {
         text: this.$t("music.track.length"),
         value: "length",
-        sortable: true,
         align: "end",
+        class: "text-no-wrap",
       },
       {
         text: this.$tc("music.albums", 1),
         value: "album_id",
-        sortable: true,
+        class: "text-no-wrap",
       },
       {
         text: this.$t("music.artist.artist-s"),
         value: "track_artists",
-        sortable: true,
+        class: "text-no-wrap",
       },
       {
         text: this.$t("music.genre-s"),
         value: "genre_ids",
-        sortable: true,
+        class: "text-no-wrap",
       },
       {
         text: this.$t("music.play-count"),
@@ -172,6 +172,7 @@ export default {
         value: "actions",
         sortable: false,
         align: "end",
+        class: "text-no-wrap",
       },
     ];
     if (!this.showAlbum) {
