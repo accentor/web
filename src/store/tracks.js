@@ -224,12 +224,12 @@ export default {
         compareTracks(rootState.albums.albums)
       );
     },
-    tracksEmpty: (state, getters, rootState) => {
+    tracksEmpty: (state, getters) => {
       return getters.tracks
         .filter((t) => t.length === null)
         .sort(compareTracks(rootState.albums.albums));
     },
-    tracksFlagged: (state, getters, rootState) => {
+    tracksFlagged: (state, getters) => {
       return getters.tracks
         .filter((t) => t.review_comment !== null)
         .sort(compareTracks(rootState.albums.albums));
