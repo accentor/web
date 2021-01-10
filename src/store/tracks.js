@@ -122,7 +122,6 @@ export default {
       try {
         await create_play(rootState.auth, {
           track_id: id,
-          user_id: rootState.auth.user_id,
           played_at: new Date(),
         });
         await dispatch("read", id);
