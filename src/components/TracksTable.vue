@@ -105,7 +105,12 @@ import Searchable from "../mixins/Searchable";
 import TrackArtists from "./TrackArtists";
 import TrackGenres from "./TrackGenres";
 import MassEditDialog from "./MassEditDialog";
-import { compareStrings, compareTracks, compareTracksByArtist, compareTracksByGenre } from "@/comparators";
+import {
+  compareStrings,
+  compareTracks,
+  compareTracksByArtist,
+  compareTracksByGenre,
+} from "@/comparators";
 
 export default {
   name: "TracksTable",
