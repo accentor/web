@@ -27,6 +27,7 @@
       :page.sync="pagination.page"
       :show-select="isModerator"
       :single-select="singleSelect"
+      :custom-sort="sortFunction"
       class="elevation-3"
       ref="table"
       @item-selected="emitSelected"
@@ -104,6 +105,7 @@ import Searchable from "../mixins/Searchable";
 import TrackArtists from "./TrackArtists";
 import TrackGenres from "./TrackGenres";
 import MassEditDialog from "./MassEditDialog";
+import { compareStrings, compareTracks, compareTracksByArtist, compareTracksByGenre } from "@/comparators";
 
 export default {
   name: "TracksTable",
@@ -124,36 +126,36 @@ export default {
       {
         text: "#",
         value: "number",
-        sortable: false,
+        sortable: true,
         align: "end",
         width: "1px",
       },
       {
         text: this.$t("music.title"),
         value: "title",
-        sortable: false,
+        sortable: true,
       },
       {
         text: this.$t("music.track.length"),
         value: "length",
-        sortable: false,
+        sortable: true,
         align: "end",
         width: "1px",
       },
       {
         text: this.$tc("music.albums", 1),
         value: "album_id",
-        sortable: false,
+        sortable: true,
       },
       {
         text: this.$t("music.artist.artist-s"),
         value: "track_artists",
-        sortable: false,
+        sortable: true,
       },
       {
         text: this.$t("music.genre-s"),
         value: "genre_ids",
-        sortable: false,
+        sortable: true,
       },
       {
         text: this.$t("music.play-count"),
@@ -214,6 +216,31 @@ export default {
     },
     reloadSelected() {
       this.selected = this.selected.map((s) => this.tracksObj[s.id]);
+    },
+    sortFunction(items, sortBy, sortDesc) {
+      let sortFunction = null;
+      switch (sortBy[0]) {
+        case "album_id":
+          sortFunction = compareTracks;
+          break;
+        case "genre_ids":
+          sortFunction = compareTracksByGenre;
+          break;
+        case "length":
+          sortFunction = (t1, t2) => t1.length - t2.length;
+          break;
+        case "number":
+          sortFunction = (t1, t2) => t1.number - t2.number;
+          break;
+        case "title":
+          sortFunction = (t1, t2) =>
+            compareStrings(t1.normalized_title, t2.normalized_title);
+          break;
+        case "track_artists":
+          sortFunction = compareTracksByArtist;
+      }
+      const sorted = sortFunction ? items.sort(sortFunction) : items;
+      return sortDesc[0] ? sorted.reverse() : sorted;
     },
   },
 };
