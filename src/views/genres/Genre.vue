@@ -19,9 +19,10 @@
 </template>
 
 <script>
-import { mapGetters, mapState } from "vuex";
+import { mapActions, mapGetters, mapState } from "vuex";
 import GenreActions from "@/components/GenreActions";
 import TracksTable from "../../components/TracksTable";
+import { TracksScope } from "@/api/scopes";
 
 export default {
   name: "Genre",
@@ -29,12 +30,14 @@ export default {
   metaInfo() {
     return { title: this.genre?.name };
   },
-  watch: {
-    genre: function () {
-      if (this.genre === undefined) {
-        this.$router.go(-1);
-      }
+  props: {
+    id: {
+      type: [String, Number],
+      required: true,
     },
+  },
+  watch: {
+    id: "fetchContent",
   },
   computed: {
     ...mapGetters("auth", ["isModerator"]),
@@ -46,6 +49,20 @@ export default {
     },
     genre: function () {
       return this.genres[this.$route.params.id];
+    },
+  },
+  methods: {
+    ...mapActions("genres", ["read"]),
+    ...mapActions("tracks", { indexTracks: "index" }),
+    async fetchContent() {
+      const genre = this.read(this.id);
+      const tracks = this.indexTracks(new TracksScope().genre(this.id));
+      Promise.all([genre, tracks]).finally(() => {
+        // If the genre is undefined after loading, we assume that it doesn't exist.
+        if (this.genre === undefined) {
+          this.$router.go(-1);
+        }
+      });
     },
   },
 };

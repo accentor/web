@@ -101,6 +101,7 @@ const router = new Router({
           path: "genres/:id",
           name: "genre",
           component: Genre,
+          props: true,
         },
         {
           path: "genres/:id/edit",
