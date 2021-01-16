@@ -85,10 +85,7 @@ export default {
     };
   },
   watch: {
-    id: {
-      handler: "fetchContent",
-      immediate: true,
-    },
+    id: "fetchContent",
   },
   computed: {
     ...mapState("albums", ["albums"]),
