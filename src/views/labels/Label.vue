@@ -53,11 +53,12 @@
 </template>
 
 <script>
-import { mapGetters, mapState } from "vuex";
+import { mapActions, mapGetters, mapState } from "vuex";
 import AlbumCard from "../../components/AlbumCard";
 import LabelActions from "@/components/LabelActions";
 import Paginated from "../../mixins/Paginated";
 import Searchable from "../../mixins/Searchable";
+import { AlbumsScope } from "@/api/scopes";
 
 export default {
   name: "Label",
@@ -66,12 +67,14 @@ export default {
   metaInfo() {
     return { title: this.label.name };
   },
-  watch: {
-    label: function () {
-      if (this.label === undefined) {
-        this.$router.go(-1);
-      }
+  props: {
+    id: {
+      type: [String, Number],
+      required: true,
     },
+  },
+  watch: {
+    id: "fetchContent",
   },
   computed: {
     ...mapGetters("auth", ["isModerator"]),
@@ -93,6 +96,20 @@ export default {
             .indexOf(this.search.toLocaleLowerCase()) >= 0 ||
           item.normalized_title.indexOf(this.search.toLocaleLowerCase()) >= 0
       );
+    },
+  },
+  methods: {
+    ...mapActions("albums", ["read"]),
+    ...mapActions("albums", { indexAlbums: "index" }),
+    async fetchContent() {
+      const label = this.read(this.id);
+      const albums = this.indexAlbums(new AlbumsScope().label(this.id));
+      Promise.all([label, albums]).finally(() => {
+        // If the label is undefined after loading, we assume that it doesn't exist.
+        if (this.label === undefined) {
+          this.$router.go(-1);
+        }
+      });
     },
   },
 };

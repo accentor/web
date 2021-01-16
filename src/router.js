@@ -117,6 +117,7 @@ const router = new Router({
           path: "labels/:id",
           name: "label",
           component: Label,
+          props: true,
         },
         {
           path: "labels/:id/edit",
