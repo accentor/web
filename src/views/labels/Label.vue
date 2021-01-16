@@ -102,7 +102,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions("albums", ["read"]),
+    ...mapActions("labels", ["read"]),
     ...mapActions("albums", { indexAlbums: "index" }),
     async fetchContent(newValue, oldValue) {
       // After loading the content, the router will change the id from a string to a number
