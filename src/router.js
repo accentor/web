@@ -80,6 +80,7 @@ const router = new Router({
           path: "artists/:id",
           name: "artist",
           component: Artist,
+          props: true,
         },
         {
           path: "artists/:id/edit",
