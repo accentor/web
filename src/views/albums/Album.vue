@@ -61,10 +61,11 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapActions } from "vuex";
 import AlbumActions from "../../components/AlbumActions";
 import TracksTable from "../../components/TracksTable";
 import AlbumArtists from "../../components/AlbumArtists";
+import { TracksScope } from "@/api/scopes";
 
 export default {
   name: "Album",
@@ -72,16 +73,21 @@ export default {
   metaInfo() {
     return { title: this.album?.title };
   },
+  props: {
+    id: {
+      type: [String, Number],
+      required: true,
+    },
+  },
   data() {
     return {
       imageUnavailable: false,
     };
   },
   watch: {
-    album: function () {
-      if (this.album === undefined) {
-        this.$router.go(-1);
-      }
+    id: {
+      handler: "fetchContent",
+      immediate: true,
     },
   },
   computed: {
@@ -102,6 +108,18 @@ export default {
     },
   },
   methods: {
+    ...mapActions("albums", ["read"]),
+    ...mapActions("tracks", { indexTracks: "index" }),
+    async fetchContent() {
+      const album = this.read(this.id);
+      const tracks = this.indexTracks(new TracksScope().album(this.id));
+      Promise.all([album, tracks]).finally(() => {
+        // If the album is undefined after loading, we assume that it doesn't exist.
+        if (this.album === undefined) {
+          this.$router.go(-1);
+        }
+      });
+    },
     setImageUnavailable() {
       this.imageUnavailable = true;
     },

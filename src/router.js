@@ -59,6 +59,7 @@ const router = new Router({
           path: "albums/:id",
           name: "album",
           component: Album,
+          props: true,
         },
         {
           path: "albums/:id/edit",
