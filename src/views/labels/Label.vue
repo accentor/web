@@ -74,7 +74,10 @@ export default {
     },
   },
   watch: {
-    id: "fetchContent",
+    id: {
+      handler: "fetchContent",
+      immediate: true,
+    },
   },
   computed: {
     ...mapGetters("auth", ["isModerator"]),
@@ -101,7 +104,13 @@ export default {
   methods: {
     ...mapActions("albums", ["read"]),
     ...mapActions("albums", { indexAlbums: "index" }),
-    async fetchContent() {
+    async fetchContent(newValue, oldValue) {
+      // After loading the content, the router will change the id from a string to a number
+      // but we don't actually want to load the content twice
+      if (newValue == oldValue) {
+        return;
+      }
+
       const label = this.read(this.id);
       const albums = this.indexAlbums(new AlbumsScope().label(this.id));
       Promise.all([label, albums]).finally(() => {

@@ -82,7 +82,10 @@ export default {
     };
   },
   watch: {
-    id: "fetchContent",
+    id: {
+      handler: "fetchContent",
+      immediate: true,
+    },
   },
   computed: {
     ...mapGetters("auth", ["isModerator"]),
@@ -105,7 +108,13 @@ export default {
     ...mapActions("albums", { indexAlbums: "index" }),
     ...mapActions("artists", ["read"]),
     ...mapActions("tracks", { indexTracks: "index" }),
-    async fetchContent() {
+    async fetchContent(newValue, oldValue) {
+      // After loading the content, the router will change the id from a string to a number
+      // but we don't actually want to load the content twice
+      if (newValue == oldValue) {
+        return;
+      }
+
       const artist = this.read(this.id);
       const albums = this.indexAlbums(new AlbumsScope().artist(this.id));
       const tracks = this.indexTracks(new TracksScope().artist(this.id));
