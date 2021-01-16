@@ -6,19 +6,22 @@ const fetchRetry = require("fetch-retry")(fetch, {
   },
 });
 
-export async function* indexGenerator(path, auth) {
+export async function* indexGenerator(path, auth, scope = { finalQuery: "" }) {
   let page = 1;
   while (true) {
     let response, result;
     try {
-      response = await fetchRetry(`${baseURL}/${path}?page=${page}`, {
-        retries: 5,
-        method: "GET",
-        headers: {
-          "x-secret": auth.secret,
-          "x-device-id": auth.device_id,
-        },
-      });
+      response = await fetchRetry(
+        `${baseURL}/${path}?page=${page}${scope.finalQuery}`,
+        {
+          retries: 5,
+          method: "GET",
+          headers: {
+            "x-secret": auth.secret,
+            "x-device-id": auth.device_id,
+          },
+        }
+      );
       result = await response.json();
     } catch (reason) {
       throw { error: [reason] };

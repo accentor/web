@@ -1,4 +1,4 @@
-export async function fetchAll(commit, generator, commitAction) {
+export async function fetchAll(commit, generator, commitAction, scope = null) {
   commit("setStartLoading");
   let done = false;
   let results = [];
@@ -13,5 +13,8 @@ export async function fetchAll(commit, generator, commitAction) {
     }
   }
   commit(commitAction, results);
-  commit("removeOld");
+  // If a scope is present, we skip removeOld
+  if (scope === null) {
+    commit("removeOld");
+  }
 }

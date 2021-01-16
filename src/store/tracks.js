@@ -97,10 +97,10 @@ export default {
     },
   },
   actions: {
-    async index({ commit, rootState }) {
-      const generator = index(rootState.auth);
+    async index({ commit, rootState }, scope) {
+      const generator = index(rootState.auth, scope);
       try {
-        await fetchAll(commit, generator, "setTracks");
+        await fetchAll(commit, generator, "setTracks", scope);
         return true;
       } catch (error) {
         commit("addError", error, { root: true });
