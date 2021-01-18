@@ -19,10 +19,14 @@ import userSettings from "./user_settings";
 
 Vue.use(Vuex);
 
+const persistedModules = ["auth", "userSettings"];
+
 export default new Vuex.Store({
   plugins: [
     createPersistedState({
-      paths: ["auth", "userSettings"],
+      paths: persistedModules,
+      filter: (m) =>
+        persistedModules.includes(m.type.substring(0, m.type.indexOf("/"))),
     }),
   ],
   strict: process.env.NODE_ENV !== "production",
