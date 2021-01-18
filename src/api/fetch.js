@@ -1,4 +1,5 @@
 import baseURL from "./base_url";
+import { Scope } from "./scopes";
 const fetchRetry = require("fetch-retry")(fetch, {
   retries: 0,
   retryDelay: function (attempt) {
@@ -6,7 +7,7 @@ const fetchRetry = require("fetch-retry")(fetch, {
   },
 });
 
-export async function* indexGenerator(path, auth, scope = { finalQuery: "" }) {
+export async function* indexGenerator(path, auth, scope = new Scope()) {
   let page = 1;
   while (true) {
     let response, result;
