@@ -160,7 +160,7 @@ export default {
     this.intervalId = setInterval(this.checkTime, 100);
     this.$nextTick(() =>
       this.$refs.audio.addEventListener("ended", () => {
-        this.create_play(this.currentTrack.id);
+        this.createPlay(this.currentTrack.id);
         this.trackEnded();
       })
     );
@@ -309,7 +309,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions("tracks", ["create_play"]),
+    ...mapActions("plays", { createPlay: "create" }),
     ...mapMutations("player", [
       "setSeekTime",
       "seek",

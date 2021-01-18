@@ -1,6 +1,5 @@
 import Vue from "vue";
 import { index, create, destroy, update, read, merge } from "../api/tracks";
-import { create as create_play } from "../api/plays";
 import { fetchAll } from "./actions";
 import { compareTracks } from "../comparators";
 
@@ -116,17 +115,6 @@ export default {
       } catch (error) {
         commit("addError", error, { root: true });
         return false;
-      }
-    },
-    async create_play({ commit, dispatch, rootState }, id) {
-      try {
-        await create_play(rootState.auth, {
-          track_id: id,
-          played_at: new Date(),
-        });
-        await dispatch("read", id);
-      } catch (error) {
-        commit("addError", error, { root: true });
       }
     },
     async read({ commit, rootState }, id) {
