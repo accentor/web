@@ -1,5 +1,5 @@
 import VuexPersistence from "vuex-persist";
-import localforage from "localforage";
+import localForage from "localforage";
 
 const localStorageModules = [
   "auth",
@@ -15,7 +15,7 @@ const localStorageModules = [
 const localForageModules = ["albums", "artists", "genres", "labels"];
 
 export const vuexLocalForage = new VuexPersistence({
-  storage: localforage,
+  storage: localForage,
   asyncStorage: true,
   strictMode: process.env.NODE_ENV !== "production",
   modules: localForageModules,

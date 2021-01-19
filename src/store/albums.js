@@ -13,6 +13,7 @@ import {
   compareAlbumsByTitleFirst,
 } from "../comparators";
 import { AlbumsScope } from "../api/scopes";
+import store from "./store";
 
 export default {
   namespaced: true,
@@ -108,6 +109,7 @@ export default {
     async index({ commit, rootState }, scope = new AlbumsScope()) {
       const generator = index(rootState.auth, scope);
       try {
+        await store.restored;
         await fetchAll(commit, generator, "setAlbums", scope);
         return true;
       } catch (error) {
@@ -128,6 +130,7 @@ export default {
     async read({ commit, rootState }, id) {
       try {
         const result = await read(rootState.auth, id);
+        await store.restored;
         commit("setAlbum", { id, album: result });
         return result.id;
       } catch (error) {

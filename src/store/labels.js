@@ -10,6 +10,7 @@ import {
 } from "../api/labels";
 import { fetchAll } from "./actions";
 import { compareStrings } from "../comparators";
+import store from "./store";
 
 export default {
   namespaced: true,
@@ -57,6 +58,7 @@ export default {
     async index({ commit, rootState }) {
       const generator = index(rootState.auth);
       try {
+        await store.restored;
         await fetchAll(commit, generator, "setLabels");
         return true;
       } catch (error) {
@@ -77,6 +79,7 @@ export default {
     async read({ commit, rootState }, id) {
       try {
         const result = await read(rootState.auth, id);
+        await store.restored;
         commit("setLabel", { id, label: result });
         return result.id;
       } catch (error) {
