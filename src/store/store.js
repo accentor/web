@@ -1,6 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import createPersistedState from "vuex-persistedstate";
+import { vuexLocalForage, vuexLocalStorage } from "./persistence";
 import albums from "./albums";
 import artists from "./artists";
 import auth from "./auth";
@@ -21,11 +21,7 @@ import userSettings from "./user_settings";
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-  plugins: [
-    createPersistedState({
-      paths: ["auth", "userSettings"],
-    }),
-  ],
+  plugins: [vuexLocalForage.plugin, vuexLocalStorage.plugin],
   strict: process.env.NODE_ENV !== "production",
   modules: {
     albums,
