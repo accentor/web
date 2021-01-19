@@ -20,6 +20,25 @@ import userSettings from "./user_settings";
 
 Vue.use(Vuex);
 
+const mutations = {
+  addError(state, error) {
+    if (error.unauthorized) {
+      this.commit("auth/logout");
+    }
+    state.errors.push(error);
+  },
+  clearErrors(state) {
+    state.errors = [];
+  },
+  updateCurrentDay(state) {
+    state.currentDay = new Date().setHours(0, 0, 0, 0);
+  },
+};
+
+if (process.env.NODE_ENV !== "production") {
+  mutations.RESTORE_MUTATION = vuexLocalForage.RESTORE_MUTATION;
+}
+
 export default new Vuex.Store({
   plugins: [vuexLocalForage.plugin, vuexLocalStorage.plugin],
   strict: process.env.NODE_ENV !== "production",
@@ -45,20 +64,7 @@ export default new Vuex.Store({
     errors: [],
     currentDay: new Date().setHours(0, 0, 0, 0),
   },
-  mutations: {
-    addError(state, error) {
-      if (error.unauthorized) {
-        this.commit("auth/logout");
-      }
-      state.errors.push(error);
-    },
-    clearErrors(state) {
-      state.errors = [];
-    },
-    updateCurrentDay(state) {
-      state.currentDay = new Date().setHours(0, 0, 0, 0);
-    },
-  },
+  mutations,
   actions: {},
   getters: {
     numberOfFlaggedItems(state, getters) {
