@@ -58,7 +58,7 @@ export default {
     async index({ commit, rootState }) {
       const generator = index(rootState.auth);
       try {
-        await store.restored;
+        await store.genresRestored;
         await fetchAll(commit, generator, "setGenres");
         return true;
       } catch (error) {
@@ -79,7 +79,7 @@ export default {
     async read({ commit, rootState }, id) {
       try {
         const result = await read(rootState.auth, id);
-        await store.restored;
+        await store.genresRestored;
         commit("setGenre", { id, genre: result });
         return result.id;
       } catch (error) {

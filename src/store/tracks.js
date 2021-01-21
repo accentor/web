@@ -3,6 +3,7 @@ import { index, create, destroy, update, read, merge } from "../api/tracks";
 import { fetchAll } from "./actions";
 import { compareTracks } from "../comparators";
 import { TracksScope } from "../api/scopes";
+import store from "./store";
 
 export default {
   namespaced: true,
@@ -101,6 +102,7 @@ export default {
     async index({ commit, rootState }, scope = new TracksScope()) {
       const generator = index(rootState.auth, scope);
       try {
+        await store.tracksRestored;
         await fetchAll(commit, generator, "setTracks", scope);
         return true;
       } catch (error) {
@@ -121,6 +123,7 @@ export default {
     async read({ commit, rootState }, id) {
       try {
         const track = await read(rootState.auth, id);
+        await store.tracksRestored;
         commit("setTrack", { id, track });
         return true;
       } catch (error) {

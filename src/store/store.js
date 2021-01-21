@@ -1,6 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import { vuexLocalForage, vuexLocalStorage } from "./persistence";
+import persistencePlugins, { vuexLocalStorage } from "./persistence";
 import albums from "./albums";
 import artists from "./artists";
 import auth from "./auth";
@@ -36,11 +36,11 @@ const mutations = {
 };
 
 if (process.env.NODE_ENV !== "production") {
-  mutations.RESTORE_MUTATION = vuexLocalForage.RESTORE_MUTATION;
+  mutations.RESTORE_MUTATION = vuexLocalStorage.RESTORE_MUTATION;
 }
 
 export default new Vuex.Store({
-  plugins: [vuexLocalForage.plugin, vuexLocalStorage.plugin],
+  plugins: persistencePlugins,
   strict: process.env.NODE_ENV !== "production",
   modules: {
     albums,

@@ -109,7 +109,7 @@ export default {
     async index({ commit, rootState }, scope = new AlbumsScope()) {
       const generator = index(rootState.auth, scope);
       try {
-        await store.restored;
+        await store.albumsRestored;
         await fetchAll(commit, generator, "setAlbums", scope);
         return true;
       } catch (error) {
@@ -130,7 +130,7 @@ export default {
     async read({ commit, rootState }, id) {
       try {
         const result = await read(rootState.auth, id);
-        await store.restored;
+        await store.albumsRestored;
         commit("setAlbum", { id, album: result });
         return result.id;
       } catch (error) {
