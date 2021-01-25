@@ -2,10 +2,22 @@
   <VContainer fluid v-if="album">
     <vue-headful :title="album.title + ' | Accentor'" />
     <VRow>
-      <VCol lg="3" md="4" sm="6" v-if="album.image500" cols="12">
+      <VCol
+        lg="3"
+        md="4"
+        sm="6"
+        v-if="album.image500 && !imageUnavailable"
+        cols="12"
+      >
         <VImg :src="album.image500" class="elevation-3" />
       </VCol>
-      <VCol lg="3" md="4" sm="6" v-else-if="album.image" cols="12">
+      <VCol
+        lg="3"
+        md="4"
+        sm="6"
+        v-else-if="album.image && !imageUnavailable"
+        cols="12"
+      >
         <VImg :src="album.image" class="elevation-3" />
       </VCol>
       <VCol lg="9" md="8" sm="6" cols="12">
@@ -58,6 +70,11 @@ import AlbumArtists from "../../components/AlbumArtists";
 export default {
   name: "Album",
   components: { AlbumArtists, TracksTable, AlbumActions },
+  data() {
+    return {
+      imageUnavailable: false,
+    };
+  },
   watch: {
     album: function () {
       if (this.album === undefined) {
@@ -80,6 +97,11 @@ export default {
       return this.album.album_labels.filter(
         (al) => `${al.label_id}` in this.labels
       );
+    },
+  },
+  methods: {
+    setImageUnavailable() {
+      this.imageUnavailable = true;
     },
   },
 };

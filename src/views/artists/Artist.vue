@@ -2,10 +2,22 @@
   <VContainer fluid v-if="artist">
     <vue-headful :title="artist.name + ' | Accentor'" />
     <VRow>
-      <VCol lg="3" md="4" sm="6" v-if="artist.image500" cols="12">
+      <VCol
+        lg="3"
+        md="4"
+        sm="6"
+        v-if="artist.image500 && !imageUnavailable"
+        cols="12"
+      >
         <VImg :src="artist.image500" class="elevation-3" />
       </VCol>
-      <VCol lg="3" md="4" sm="6" v-else-if="artist.image" cols="12">
+      <VCol
+        lg="3"
+        md="4"
+        sm="6"
+        v-else-if="artist.image && !imageUnavailable"
+        cols="12"
+      >
         <VImg :src="artist.image" class="elevation-3" />
       </VCol>
       <VCol lg="9" md="8" sm="6" cols="12">
@@ -55,6 +67,11 @@ export default {
     AlbumCard,
     ArtistActions,
   },
+  data() {
+    return {
+      imageUnavailable: false,
+    };
+  },
   watch: {
     artist: function () {
       if (this.artist === undefined) {
@@ -77,6 +94,11 @@ export default {
     },
     artist: function () {
       return this.artists[this.$route.params.id];
+    },
+  },
+  methods: {
+    setImageUnavailable() {
+      this.imageUnavailable = true;
     },
   },
 };

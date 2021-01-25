@@ -1,7 +1,17 @@
 <template>
   <VCard :to="{ name: 'artist', params: { id: artist.id } }">
-    <VImg :aspect-ratio="1" :src="artist.image500" v-if="artist.image500" />
-    <VImg :aspect-ratio="1" :src="artist.image" v-else-if="artist.image" />
+    <VImg
+      :aspect-ratio="1"
+      :src="artist.image500"
+      v-if="artist.image500 && !imageUnavailable"
+      @error="setImageUnavailable"
+    />
+    <VImg
+      :aspect-ratio="1"
+      :src="artist.image"
+      v-else-if="artist.image"
+      @error="setImageUnavailable"
+    />
     <VImg
       :aspect-ratio="1"
       :src="require('@mdi/svg/svg/account-music.svg')"
@@ -25,6 +35,16 @@ export default {
   components: { ArtistActions },
   props: {
     artist: { type: Object, required: true },
+  },
+  data() {
+    return {
+      imageUnavailable: false,
+    };
+  },
+  methods: {
+    setImageUnavailable() {
+      this.imageUnavailable = true;
+    },
   },
 };
 </script>
