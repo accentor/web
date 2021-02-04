@@ -9,7 +9,7 @@ const fetchRetry = require("fetch-retry")(fetch, {
 export async function* indexGenerator(path, auth) {
   let page = 1;
   while (true) {
-    let response;
+    let response, result;
     try {
       response = await fetchRetry(`${baseURL}/${path}?page=${page}`, {
         retries: 5,
@@ -19,10 +19,10 @@ export async function* indexGenerator(path, auth) {
           "x-device-id": auth.device_id,
         },
       });
+      result = await response.json();
     } catch (reason) {
       throw { error: [reason] };
     }
-    const result = await response.json();
     if (response.ok && result) {
       const loaded = new Date();
       for (let obj in result) {
@@ -41,13 +41,13 @@ export async function* indexGenerator(path, auth) {
 }
 
 async function resolveRequest(path, options) {
-  let response;
+  let response, result;
   try {
     response = await fetchRetry(`${baseURL}/${path}`, options);
+    result = response.status === 204 ? true : await response.json();
   } catch (reason) {
     throw { error: [reason] };
   }
-  const result = response.status === 204 ? true : await response.json();
   if (response.ok) {
     return result;
   } else {
