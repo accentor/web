@@ -1,7 +1,17 @@
 <template>
   <VCard :to="{ name: 'album', params: { id: album.id } }">
-    <VImg :aspect-ratio="1" :src="album.image500" v-if="album.image500" />
-    <VImg :aspect-ratio="1" :src="album.image" v-else-if="album.image" />
+    <VImg
+      :aspect-ratio="1"
+      :src="album.image500"
+      v-if="album.image500 && !imageUnavailable"
+      @error="setImageUnavailable"
+    />
+    <VImg
+      :aspect-ratio="1"
+      :src="album.image"
+      v-else-if="album.image && !imageUnavailable"
+      @error="setImageUnavailable"
+    />
     <VImg
       :aspect-ratio="1"
       :src="require('@mdi/svg/svg/album.svg')"
@@ -45,6 +55,11 @@ export default {
       required: false,
     },
   },
+  data() {
+    return {
+      imageUnavailable: false,
+    };
+  },
   computed: {
     catalogueNumber() {
       if (this.labelForCatNr) {
@@ -61,6 +76,11 @@ export default {
         full_title += ` ${this.album.edition_description}`;
       }
       return full_title;
+    },
+  },
+  methods: {
+    setImageUnavailable() {
+      this.imageUnavailable = true;
     },
   },
 };
