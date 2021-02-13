@@ -12,7 +12,7 @@
     "@mdi/font": "^5.9.55",
     "@mdi/svg": "^5.9.55",
     "core-js": "^3.8.3",
-    "fetch-retry": "^4.0.1",
+    "fetch-retry": "^4.1.0",
     "roboto-fontface": "^0.10.0",
     "vue": "^2.6.12",
     "vue-headful": "^2.1.0",
