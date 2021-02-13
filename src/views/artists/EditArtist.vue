@@ -1,8 +1,5 @@
 <template>
   <VContainer class="fill-height" fluid v-if="artist">
-    <vue-headful
-      :title="$t('page-titles.edit', { obj: artist.name }) + ' | Accentor'"
-    />
     <ArtistForm :artist="artist" />
   </VContainer>
 </template>
@@ -14,6 +11,9 @@ import ArtistForm from "../../components/ArtistForm";
 export default {
   name: "EditArtist",
   components: { ArtistForm },
+  metaInfo() {
+    return { title: this.$t("page-titles.edit", { obj: this.artist.name }) };
+  },
   computed: {
     ...mapState("artists", ["artists"]),
     artist: function () {

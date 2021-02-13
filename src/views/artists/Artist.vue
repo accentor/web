@@ -1,6 +1,5 @@
 <template>
   <VContainer fluid v-if="artist">
-    <vue-headful :title="artist.name + ' | Accentor'" />
     <VRow>
       <VCol
         lg="3"
@@ -62,6 +61,9 @@ import TracksTable from "../../components/TracksTable";
 
 export default {
   name: "Artist",
+  metaInfo() {
+    return { title: this.artist.name };
+  },
   components: {
     TracksTable,
     AlbumCard,

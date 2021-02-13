@@ -1,6 +1,5 @@
 <template>
   <VContainer fluid>
-    <vue-headful :title="$tc('music.labels', 2) + ' | Accentor'" />
     <VDataIterator
       :footer-props="{
         disableItemsPerPage: true,
@@ -53,6 +52,9 @@ import Searchable from "../../mixins/Searchable";
 
 export default {
   name: "labels",
+  metaInfo() {
+    return { title: this.$tc("music.labels", 2) };
+  },
   components: { LabelCard },
   mixins: [Paginated, Searchable],
   computed: {

@@ -1,6 +1,5 @@
 <template>
   <VContainer fluid>
-    <vue-headful :title="$tc('music.genres', 2) + ' | Accentor'" />
     <VDataIterator
       :footer-props="{
         disableItemsPerPage: true,
@@ -52,6 +51,9 @@ import Searchable from "../../mixins/Searchable";
 
 export default {
   name: "genres",
+  metaInfo() {
+    return { title: this.$tc("music.genres", 2) };
+  },
   components: { GenreCard },
   mixins: [Paginated, Searchable],
   computed: {

@@ -1,6 +1,5 @@
 <template>
   <div>
-    <vue-headful title="Accentor" />
     <VAppBar app clipped-left color="primary" dark>
       <VAppBarNavIcon @click.stop="drawer = !drawer" />
       <VToolbarTitle>Accentor</VToolbarTitle>
@@ -168,6 +167,7 @@ import Player from "../components/Player";
 export default {
   name: "app",
   components: { Errors, Player },
+  metaInfo: { title: "Accentor" },
   data() {
     return {
       drawer: null,

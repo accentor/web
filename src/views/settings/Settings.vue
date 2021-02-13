@@ -1,6 +1,5 @@
 <template>
   <VContainer class="fill-height" fluid v-if="user">
-    <vue-headful :title="$t('common.settings') + ' | Accentor'" />
     <VRow no-gutters align="center" justify="center">
       <VCol lg="4" md="6" sm="8" cols="12" class="px-3">
         <VForm @submit.prevent="submitLocale">
@@ -34,6 +33,9 @@ import UserForm from "@/components/UserForm";
 export default {
   name: "Settings",
   components: { AuthTokensTable, UserForm },
+  metaInfo() {
+    return { title: this.$t("common.settings") };
+  },
   data() {
     return {
       newLocale: "",

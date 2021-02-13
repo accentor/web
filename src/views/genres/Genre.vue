@@ -1,6 +1,5 @@
 <template>
   <VContainer fluid v-if="genre">
-    <vue-headful :title="genre.name + ' | Accentor'" />
     <VRow>
       <VCol cols="12">
         <div>
@@ -27,6 +26,9 @@ import TracksTable from "../../components/TracksTable";
 export default {
   name: "Genre",
   components: { GenreActions, TracksTable },
+  metaInfo() {
+    return { title: this.genre.name };
+  },
   watch: {
     genre: function () {
       if (this.genre === undefined) {

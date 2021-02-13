@@ -1,8 +1,5 @@
 <template>
   <VContainer class="fill-height" fluid v-if="track">
-    <vue-headful
-      :title="$t('page-titles.edit', { obj: track.title }) + ' | Accentor'"
-    />
     <VRow no-gutters align="center" justify="center">
       <VCol md="6" sm="8" cols="12" @change.once="isDirty = true">
         <VAlert
@@ -91,6 +88,9 @@ import TrackFormArtists from "@/components/TrackFormArtists.vue";
 export default {
   components: { TrackFormArtists },
   name: "EditTrack",
+  metaInfo() {
+    return { title: this.$t("page-titles.edit", { obj: this.track.title }) };
+  },
   data() {
     return {
       newTrack: {

@@ -1,6 +1,5 @@
 <template>
   <div>
-    <vue-headful :title="$t('common.home') + ' | Accentor'" />
     <VContainer fluid>
       <VDataIterator
         :footer-props="{
@@ -205,8 +204,11 @@ import ArtistCard from "../components/ArtistCard";
 import { compareAlbumsByReleaseFirst, compareStrings } from "../comparators";
 
 export default {
-  name: "home",
+  name: "Home",
   components: { AlbumCard, ArtistCard },
+  metaInfo() {
+    return { title: this.$t("common.home") };
+  },
   methods: {
     releaseSort(items) {
       return items.sort(compareAlbumsByReleaseFirst).reverse();

@@ -1,6 +1,5 @@
 <template>
   <VContainer fluid v-if="isModerator">
-    <vue-headful :title="$t('library-settings') + ' | Accentor'" />
     <VRow class="mb-2">
       <h2 class="text-h5">{{ $t("library.maintenance") }}</h2>
     </VRow>
@@ -113,6 +112,9 @@ export default {
     EditImageTypes,
     EditLocations,
     MaintenanceActions,
+  },
+  metaInfo() {
+    return { title: this.$t("library-settings") };
   },
   created() {
     this.loadData();

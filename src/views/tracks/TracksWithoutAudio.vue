@@ -1,6 +1,5 @@
 <template>
   <VContainer class="fill-height" fluid v-if="isModerator">
-    <vue-headful :title="$t('music.tracks-without-audio') + ' | Accentor'" />
     <VRow no-gutters>
       <VCol>
         <TracksTable
@@ -21,6 +20,9 @@ import TracksTable from "../../components/TracksTable";
 export default {
   name: "EmptyTracks",
   components: { TracksTable },
+  metaInfo() {
+    return { title: this.$t("music.tracks-without-audio") };
+  },
   computed: {
     ...mapGetters("auth", ["isModerator"]),
     ...mapGetters("tracks", {
