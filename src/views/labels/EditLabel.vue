@@ -1,8 +1,5 @@
 <template>
   <VContainer class="fill-height" fluid v-if="label">
-    <vue-headful
-      :title="$t('page-titles.edit', { obj: label.name }) + ' | Accentor'"
-    />
     <VRow no-gutters align="center" justify="center">
       <VCol md="4" sm="8" cols="12" @change.once="isDirty = true">
         <VForm v-model="isValid" @submit.prevent="submit">
@@ -26,6 +23,9 @@ import { mapActions, mapState } from "vuex";
 
 export default {
   name: "EditLabel",
+  metaInfo() {
+    return { title: this.$t("page-titles.edit", { obj: this.label.name }) };
+  },
   data() {
     return {
       newLabel: {

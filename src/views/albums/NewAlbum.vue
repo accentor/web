@@ -1,6 +1,5 @@
 <template>
   <VContainer class="fill-height" fluid>
-    <vue-headful :title="$t('music.album.new') + ' | Accentor'" />
     <AlbumForm />
   </VContainer>
 </template>
@@ -10,6 +9,9 @@ import AlbumForm from "../../components/AlbumForm";
 
 export default {
   name: "NewAlbum",
+  metaInfo() {
+    return { title: this.$t("music.album.new") };
+  },
   components: { AlbumForm },
 };
 </script>

@@ -1,6 +1,5 @@
 <template>
   <VContainer fluid v-if="label">
-    <vue-headful :title="label.name + ' | Accentor'" />
     <VDataIterator
       :footer-props="{
         disableItemsPerPage: true,
@@ -64,6 +63,9 @@ export default {
   name: "Label",
   components: { AlbumCard, LabelActions },
   mixins: [Paginated, Searchable],
+  metaInfo() {
+    return { title: this.label.name };
+  },
   watch: {
     label: function () {
       if (this.label === undefined) {

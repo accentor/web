@@ -1,6 +1,5 @@
 <template>
   <VMain>
-    <vue-headful :title="$t('common.login') + ' | Accentor'" />
     <VContainer class="fill-height" fluid>
       <VRow no-gutters align="center" justify="center">
         <VCol md="4" sm="8" cols="12">
@@ -47,6 +46,9 @@ import Errors from "../components/Errors";
 export default {
   name: "login",
   components: { Errors },
+  metaInfo() {
+    return { title: this.$t("common.login") };
+  },
   data: function () {
     return {
       name: "",

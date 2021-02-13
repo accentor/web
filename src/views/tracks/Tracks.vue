@@ -1,6 +1,5 @@
 <template>
   <VContainer class="fill-height" fluid>
-    <vue-headful :title="$tc('music.tracks', 2) + ' | Accentor'" />
     <VRow no-gutters>
       <VCol>
         <TracksTable
@@ -20,6 +19,9 @@ import TracksTable from "../../components/TracksTable";
 export default {
   name: "Tracks",
   components: { TracksTable },
+  metaInfo() {
+    return { title: this.$tc("music.tracks", 2) };
+  },
   computed: {
     ...mapGetters("tracks", {
       tracks: "tracksByAlbumAndNumber",

@@ -1,6 +1,5 @@
 <template>
   <div>
-    <vue-headful :title="$tc('music.flags', 2) + ' | Accentor'" />
     <VContainer fluid>
       <VRow>
         <VCol>
@@ -87,6 +86,9 @@ import AlbumCard from "../../components/AlbumCard";
 
 export default {
   name: "Flags",
+  metaInfo() {
+    return { title: this.$tc("music.flags", 2) };
+  },
   components: { AlbumCard, ArtistCard, TracksTable },
   computed: {
     ...mapGetters({

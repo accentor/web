@@ -1,6 +1,5 @@
 <template>
   <VContainer fluid v-if="user">
-    <vue-headful :title="user.name + ' | Accentor'" />
     <VRow>
       <VCol>
         <div class="text-h4">{{ user.name }}</div>
@@ -17,6 +16,9 @@ import { mapState } from "vuex";
 
 export default {
   name: "User",
+  metaInfo() {
+    return { title: this.user.name };
+  },
   watch: {
     user: function () {
       if (this.user === undefined) {

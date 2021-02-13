@@ -1,6 +1,5 @@
 <template>
   <VContainer fluid v-if="album">
-    <vue-headful :title="album.title + ' | Accentor'" />
     <VRow>
       <VCol
         lg="3"
@@ -70,6 +69,9 @@ import AlbumArtists from "../../components/AlbumArtists";
 export default {
   name: "Album",
   components: { AlbumArtists, TracksTable, AlbumActions },
+  metaInfo() {
+    return { title: this.album.title };
+  },
   data() {
     return {
       imageUnavailable: false,

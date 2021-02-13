@@ -1,8 +1,5 @@
 <template>
   <VContainer class="fill-height" fluid v-if="album">
-    <vue-headful
-      :title="$t('page-titles.edit', { obj: album.title }) + ' | Accentor'"
-    />
     <AlbumForm :album="album" />
   </VContainer>
 </template>
@@ -13,6 +10,9 @@ import AlbumForm from "../../components/AlbumForm";
 
 export default {
   name: "EditAlbum",
+  metaInfo() {
+    return { title: this.$t("page-titles.edit", { obj: this.album.title }) };
+  },
   components: { AlbumForm },
   computed: {
     ...mapState("albums", ["albums"]),

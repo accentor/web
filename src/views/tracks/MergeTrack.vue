@@ -1,8 +1,5 @@
 <template>
   <VContainer class="fill-height" v-if="track">
-    <vue-headful
-      :title="$t('page-titles.merge', { obj: track.title }) + ' | Accentor'"
-    />
     <VRow>
       <VCol lg="9" md="8" sm="6" cols="12">
         <div class="text-h4">
@@ -209,6 +206,9 @@ import TracksTable from "@/components/TracksTable";
 export default {
   name: "MergeTrack",
   components: { TrackArtists, TrackGenres, TracksTable },
+  metaInfo() {
+    return { title: this.$t("page-titles.merge", { obj: this.track.title }) };
+  },
   data() {
     return {
       reversed: false,
