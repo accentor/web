@@ -38,13 +38,13 @@
       </div>
       <div v-if="rescan.warning_text">
         <div>
-          <h3 class="title">{{ $t("library.warnings") }}</h3>
+          <h3 class="text-h6">{{ $t("library.warnings") }}</h3>
         </div>
         <pre class="text-body-2">{{ rescan.warning_text }}</pre>
       </div>
       <div v-if="rescan.error_text">
         <div>
-          <h3 class="title">{{ $t("library.errors") }}</h3>
+          <h3 class="text-h6">{{ $t("library.errors") }}</h3>
         </div>
         <pre class="text-body-2">{{ rescan.error_text }}</pre>
       </div>
