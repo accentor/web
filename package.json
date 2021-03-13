@@ -14,7 +14,7 @@
     "fetch-retry": "^4.1.0",
     "roboto-fontface": "^0.10.0",
     "vue": "^2.6.12",
-    "vue-i18n": "^8.23.0",
+    "vue-i18n": "^8.24.1",
     "vue-meta": "^2.4.0",
     "vue-router": "^3.5.1",
     "vuedraggable": "^2.24.3",
