@@ -70,7 +70,7 @@ export default {
   name: "Album",
   components: { AlbumArtists, TracksTable, AlbumActions },
   metaInfo() {
-    return { title: this.album.title };
+    return { title: this.album?.title };
   },
   data() {
     return {

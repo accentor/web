@@ -62,7 +62,7 @@ import TracksTable from "../../components/TracksTable";
 export default {
   name: "Artist",
   metaInfo() {
-    return { title: this.artist.name };
+    return { title: this.artist?.name };
   },
   components: {
     TracksTable,

@@ -11,7 +11,7 @@ import AlbumForm from "../../components/AlbumForm";
 export default {
   name: "EditAlbum",
   metaInfo() {
-    return { title: this.$t("page-titles.edit", { obj: this.album.title }) };
+    return { title: this.$t("page-titles.edit", { obj: this.album?.title }) };
   },
   components: { AlbumForm },
   computed: {

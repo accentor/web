@@ -27,7 +27,7 @@ export default {
   name: "Genre",
   components: { GenreActions, TracksTable },
   metaInfo() {
-    return { title: this.genre.name };
+    return { title: this.genre?.name };
   },
   watch: {
     genre: function () {
