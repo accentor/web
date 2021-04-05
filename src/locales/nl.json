@@ -206,6 +206,7 @@
 		"locations": "Plaatsen",
 		"maintenance": "Onderhoud",
 		"mime-type": "MIME type",
+		"no-errors-warning": "Scan klaar zonder errors of waarschuwingen 🎉",
 		"no-tracks-without-audio": "Er zijn geen nummers zonder audio",
 		"overview-tracks-without-audio": "Overzicht nummers zonder audio",
 		"path": "Pad",
