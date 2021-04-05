@@ -24,7 +24,7 @@ import { mapActions, mapState } from "vuex";
 export default {
   name: "EditGenre",
   metaInfo() {
-    return { title: this.$t("page-titles.edit", { obj: this.genre.name }) };
+    return { title: this.$t("page-titles.edit", { obj: this.genre?.name }) };
   },
   data() {
     return {

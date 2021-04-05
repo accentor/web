@@ -12,7 +12,7 @@ export default {
   name: "EditArtist",
   components: { ArtistForm },
   metaInfo() {
-    return { title: this.$t("page-titles.edit", { obj: this.artist.name }) };
+    return { title: this.$t("page-titles.edit", { obj: this.artist?.name }) };
   },
   computed: {
     ...mapState("artists", ["artists"]),
