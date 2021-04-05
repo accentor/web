@@ -48,6 +48,9 @@
         </div>
         <pre class="text-body-2">{{ rescan.error_text }}</pre>
       </div>
+      <div v-if="!rescan.error_text && !rescan.warning_text">
+        <h3 class="text-h6">{{ $t("library.no-errors-warnings") }}</h3>
+      </div>
     </VRow>
     <VRow class="mb-2">
       <h2 class="text-h5">{{ $t("library.codecs") }}</h2>
