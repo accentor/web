@@ -211,7 +211,7 @@
 		"locations": "Locations",
 		"maintenance": "Maintenance",
 		"mime-type": "MIME type",
-		"no-errors-warning": "Rescan finished without errors or warnings 🎉",
+		"no-errors-warnings": "Rescan finished without errors or warnings 🎉",
 		"no-tracks-without-audio": "There are no tracks without audio",
 		"overview-tracks-without-audio": "Overview of tracks without audio",
 		"path": "Path",
