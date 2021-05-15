@@ -107,8 +107,10 @@ export default {
   methods: {
     fillValues() {
       this.newCodecConversion.name = this.codecConversion.name;
-      this.newCodecConversion.ffmpeg_params = this.codecConversion.ffmpeg_params;
-      this.newCodecConversion.resulting_codec_id = this.codecConversion.resulting_codec_id;
+      this.newCodecConversion.ffmpeg_params =
+        this.codecConversion.ffmpeg_params;
+      this.newCodecConversion.resulting_codec_id =
+        this.codecConversion.resulting_codec_id;
     },
     ...mapActions("codecConversions", ["destroy", "update", "create"]),
     async saveCodecConversion() {
