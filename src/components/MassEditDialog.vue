@@ -35,6 +35,7 @@
             <VContainer
               fluid
               v-if="tracks.filter((t) => t.review_comment !== null).length > 0"
+              key="showReviewComments"
             >
               <VRow dense>
                 <VCol cols="12">
@@ -83,7 +84,7 @@
             <VDivider
               v-if="tracks.filter((t) => t.review_comment !== null).length > 0"
             />
-            <VContainer fluid>
+            <VContainer fluid key="increaseTrackNumbers">
               <VRow dense>
                 <VCol cols="12" sm="6">
                   <VCheckbox v-model="number.enabled">
@@ -107,7 +108,7 @@
               </VRow>
             </VContainer>
             <VDivider />
-            <VContainer fluid>
+            <VContainer fluid key="searchAndReplaceTitle">
               <VRow dense>
                 <VCol cols="12" sm="6">
                   <VCheckbox v-model="titleReplacement.enabled">
@@ -142,7 +143,7 @@
               </VRow>
             </VContainer>
             <VDivider />
-            <VContainer fluid>
+            <VContainer fluid key="setAlbum">
               <VRow dense>
                 <VCol cols="12" sm="6">
                   <VCheckbox v-model="album.enabled">
@@ -169,7 +170,7 @@
               </VRow>
             </VContainer>
             <VDivider />
-            <VContainer fluid>
+            <VContainer fluid key="changeGenres">
               <VRow dense>
                 <VCol cols="12" sm="6">
                   <VCheckbox v-model="changeGenres.enabled">
@@ -209,7 +210,7 @@
               </VRow>
             </VContainer>
             <VDivider />
-            <VContainer fluid>
+            <VContainer fluid key="changeArtists">
               <VRow dense>
                 <VCol cols="12" sm="6">
                   <VCheckbox v-model="changeArtists.enabled">
@@ -247,6 +248,7 @@
             <VContainer
               fluid
               v-if="tracks.filter((t) => t.review_comment !== null).length > 0"
+              key="clearReviewComments"
             >
               <VRow dense>
                 <VCol cols="12" sm="6">
