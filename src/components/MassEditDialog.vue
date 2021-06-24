@@ -34,7 +34,7 @@
             <Errors />
             <VContainer
               fluid
-              v-if="tracks.filter((t) => t.review_comment !== null).length > 0"
+              v-if="tracksWithReviewComments.length > 0"
               key="showReviewComments"
             >
               <VRow dense>
@@ -45,8 +45,8 @@
                         {{
                           $tc(
                             "music.flag.show",
-                            tracks.filter((t) => t.review_comment !== null)
-                              .length
+                            tracksWithReviewComments.length,
+                            { count: tracksWithReviewComments.length }
                           )
                         }}
                       </span>
@@ -62,12 +62,7 @@
                     icon="mdi-flag"
                   >
                     <table class="review-comment-table">
-                      <tr
-                        v-for="t of tracks.filter(
-                          (tr) => tr.review_comment !== null
-                        )"
-                        :key="t.id"
-                      >
+                      <tr v-for="t of tracksWithReviewComments" :key="t.id">
                         <td class="text-right">
                           <strong>{{ t.number }}</strong>
                         </td>
@@ -81,9 +76,7 @@
                 </VCol>
               </VRow>
             </VContainer>
-            <VDivider
-              v-if="tracks.filter((t) => t.review_comment !== null).length > 0"
-            />
+            <VDivider v-if="tracksWithReviewComments.length > 0" />
             <VContainer fluid key="increaseTrackNumbers">
               <VRow dense>
                 <VCol cols="12" sm="6">
@@ -242,12 +235,10 @@
                 {{ $t("music.artist.add") }}
               </VBtn>
             </VContainer>
-            <VDivider
-              v-if="tracks.filter((t) => t.review_comment !== null).length > 0"
-            />
+            <VDivider v-if="tracksWithReviewComments.length > 0" />
             <VContainer
               fluid
-              v-if="tracks.filter((t) => t.review_comment !== null).length > 0"
+              v-if="tracksWithReviewComments.length > 0"
               key="clearReviewComments"
             >
               <VRow dense>
@@ -258,8 +249,7 @@
                         {{
                           $tc(
                             "music.flag.clear",
-                            tracks.filter((t) => t.review_comment !== null)
-                              .length
+                            tracksWithReviewComments.length
                           )
                         }}
                       </span>
@@ -335,6 +325,9 @@ export default {
     ...mapGetters("genres", {
       sortedGenres: "genresByName",
     }),
+    tracksWithReviewComments: () => {
+      this.tracks.filter((t) => t.review_comment !== null);
+    },
     rules: function () {
       const rules = {
         genre: [],
