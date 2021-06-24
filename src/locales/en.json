@@ -263,7 +263,7 @@
 			"comment": "Comment",
 			"for-review": "Flag for review",
 			"review-comments": "Review comments | Review comment | Review comments",
-			"show": "Show review comments | Show review comment | Show review comments"
+			"show": "Show review comments | Show review comment | Show {count} review comments"
 		},
 		"flags": "Flags | Flag | Flags",
 		"genre-s": "Genre(s)",

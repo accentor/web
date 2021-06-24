@@ -46,7 +46,12 @@
                           $tc(
                             "music.flag.show",
                             tracks.filter((t) => t.review_comment !== null)
-                              .length
+                              .length,
+                            {
+                              count: tracks.filter(
+                                (t) => t.review_comment !== null
+                              ).length,
+                            }
                           )
                         }}
                       </span>
