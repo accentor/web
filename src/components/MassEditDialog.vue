@@ -325,8 +325,8 @@ export default {
     ...mapGetters("genres", {
       sortedGenres: "genresByName",
     }),
-    tracksWithReviewComments: () => {
-      this.tracks.filter((t) => t.review_comment !== null);
+    tracksWithReviewComments() {
+      return this.tracks.filter((t) => t.review_comment !== null);
     },
     rules: function () {
       const rules = {
