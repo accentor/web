@@ -12,6 +12,7 @@ import imageTypes from "./image_types";
 import labels from "./labels";
 import locations from "./locations";
 import player from "./player";
+import plays from "./plays";
 import rescan from "./rescan";
 import tracks from "./tracks";
 import users from "./users";
@@ -38,6 +39,7 @@ export default new Vuex.Store({
     labels,
     locations,
     player,
+    plays,
     rescan,
     tracks,
     users,

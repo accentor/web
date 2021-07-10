@@ -141,7 +141,7 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations, mapState } from "vuex";
+import { mapActions, mapGetters, mapMutations, mapState } from "vuex";
 import Draggable from "vuedraggable";
 import TrackArtists from "./TrackArtists";
 
@@ -160,6 +160,7 @@ export default {
     this.intervalId = setInterval(this.checkTime, 100);
     this.$nextTick(() =>
       this.$refs.audio.addEventListener("ended", () => {
+        this.createPlay(this.currentTrack.id);
         this.trackEnded();
       })
     );
@@ -308,6 +309,7 @@ export default {
     },
   },
   methods: {
+    ...mapActions("plays", { createPlay: "create" }),
     ...mapMutations("player", [
       "setSeekTime",
       "seek",
