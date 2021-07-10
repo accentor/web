@@ -9,7 +9,7 @@
         >
           {{ track.review_comment }}
         </VAlert>
-        <VForm v-model="isValid" @submit.prevent="submit">
+        <VForm v-model="isValid" @submit.prevent="submit" v-if="loaded">
           <VTextField
             type="number"
             :label="$t('music.track.number')"
@@ -104,17 +104,20 @@ export default {
       clear_review_comment: true,
       isDirty: false,
       isValid: true,
+      loaded: false,
     };
   },
   async created() {
     if (this.track) {
       await this.read(this.track.id);
+      this.loaded = true;
       this.fillValues();
     }
   },
   watch: {
     track: function () {
       if (this.track && !this.isDirty) {
+        this.loaded = true;
         this.fillValues();
       }
     },
