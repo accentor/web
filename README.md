@@ -30,11 +30,15 @@ The project can be deployed to a static site hoster like Netlify.
 You only need to configure the following three things:
 * Build command: `yarn build`.
 * Output directory: `dist/`.
-* An ENV token for `VUE_APP_API_URL` pointing to the domain of your api.
+* An environment variable for `VUE_APP_API_URL` pointing to the domain of your api.
 
 ### Deploy on the same domain as the API
 
--- TODO --
+To deploy on the same domain as the API, build the frontend using
+`yarn build`. The result in `dist` should be the root for your web
+server. Make sure to proxy requests to `/api/*` and `/rails/*` to your
+API server. `/index.html` should be served instead of a 404 to make
+sure the navigation in the SPA works correctly.
 
 ## Local development
 
@@ -44,9 +48,11 @@ To run and develop locally:
 
 You will also need an API to interact with. For this you can
 * [Run the API locally](https://github.com/accentor/api) (Recommended)
-* Set an ENV token for `VUE_APP_API_URL` pointing to an existing API.
+* Set an environment variable for `VUE_APP_API_URL` pointing to an
+  existing API.
 
 ## Help
+
 Have a question? You can ask it through [GitHub
 discussions](https://github.com/accentor/web/discussions) or in the
 [Matrix channel](https://matrix.to/#/!PCYHOaWItkVRNacTSv:vanpetegem.me?via=vanpetegem.me&via=matrix.org).
