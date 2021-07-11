@@ -10,7 +10,6 @@ import {
 } from "../api/genres";
 import { fetchAll } from "./actions";
 import { compareStrings } from "../comparators";
-import store from "./store";
 
 export default {
   namespaced: true,
@@ -58,7 +57,7 @@ export default {
     async index({ commit, rootState }) {
       const generator = index(rootState.auth);
       try {
-        await store.genresRestored;
+        await this.genresRestored;
         await fetchAll(commit, generator, "setGenres");
         return true;
       } catch (error) {
@@ -79,7 +78,7 @@ export default {
     async read({ commit, rootState }, id) {
       try {
         const result = await read(rootState.auth, id);
-        await store.genresRestored;
+        await this.genresRestored;
         commit("setGenre", { id, genre: result });
         return result.id;
       } catch (error) {
