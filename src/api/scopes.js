@@ -6,28 +6,12 @@ export class Scope {
   }
 
   addScope = (key, query) => {
-    if (typeof query !== "string" && typeof query !== "number") {
-      throw TypeError(
-        `${query} is an ${typeof query} while your scope '${key}' that expects a string or number.`
-      );
-    }
     this.scopes.push({ key, query });
     return this;
   };
 
   addScopesFromArray = (key, queries) => {
-    if (!Array.isArray(queries)) {
-      throw TypeError(
-        `${queries} is an ${typeof queries} while your scope '${key}' that expects an array with strings or numbers.`
-      );
-    }
-    try {
-      queries.forEach((q) => this.addScope(key, q));
-    } catch (e) {
-      throw TypeError(
-        `One of the values in your array is not a string or number:\n${e.message}`
-      );
-    }
+    queries.forEach((q) => this.addScope(key, q));
     return this;
   };
 }
