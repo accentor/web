@@ -208,11 +208,15 @@ export default {
         (t1, t2) => t1.number - t2.number
       );
     },
-    tracksFilterByGenre: (state, getters) => (id) => {
-      return (getters.tracksBinnedByGenre[id] || []).sort(compareTracks);
+    tracksFilterByGenre: (state, getters, rootState) => (id) => {
+      return (getters.tracksBinnedByGenre[id] || []).sort(
+        compareTracks(rootState.albums.albums)
+      );
     },
-    tracksFilterByArtist: (state, getters) => (id) => {
-      return (getters.tracksBinnedByArtist[id] || []).sort(compareTracks);
+    tracksFilterByArtist: (state, getters, rootState) => (id) => {
+      return (getters.tracksBinnedByArtist[id] || []).sort(
+        compareTracks(rootState.albums.albums)
+      );
     },
     tracksEmpty: (state, getters) => {
       return getters.tracks
