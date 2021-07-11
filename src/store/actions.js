@@ -14,7 +14,7 @@ export async function fetchAll(commit, generator, commitAction, scope = null) {
   }
   commit(commitAction, results);
   // If a scope is present, we skip removeOld
-  if (scope === null) {
+  if (scope !== null) {
     commit("removeOld");
   }
 }
