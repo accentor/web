@@ -12,6 +12,7 @@ import {
   compareAlbumsByReleaseFirst,
   compareAlbumsByTitleFirst,
 } from "../comparators";
+import { AlbumsScope } from "../api/scopes";
 
 export default {
   namespaced: true,
@@ -104,7 +105,7 @@ export default {
     },
   },
   actions: {
-    async index({ commit, rootState }, scope) {
+    async index({ commit, rootState }, scope = new AlbumsScope()) {
       const generator = index(rootState.auth, scope);
       try {
         await fetchAll(commit, generator, "setAlbums", scope);
