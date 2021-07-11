@@ -83,11 +83,11 @@
       <template v-slot:item.track_artists="props">
         <TrackArtists :track="props.item" />
       </template>
-      <template v-slot:item.genre_ids="props">
-        <TrackGenres :track="props.item" />
-      </template>
       <template v-slot:item.play_count="props">
         {{ playCountsByTrack[props.item.id] || 0 }}
+      </template>
+      <template v-slot:item.genre_ids="props">
+        <TrackGenres :track="props.item" />
       </template>
       <template v-slot:item.actions="props">
         <TrackActions :track="props.item" />
