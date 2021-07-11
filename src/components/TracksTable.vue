@@ -195,6 +195,7 @@ export default {
     ...mapGetters("player", ["currentTrack"]),
     ...mapGetters("plays", ["playCountsByTrack"]),
     ...mapState("albums", ["albums"]),
+    ...mapState("genres", ["genres"]),
     ...mapState("tracks", { tracksObj: "tracks" }),
     filteredItems() {
       return this.tracks.filter(
@@ -228,10 +229,10 @@ export default {
       let sortFunction = null;
       switch (sortBy[0]) {
         case "album_id":
-          sortFunction = compareTracks;
+          sortFunction = compareTracks(this.albums);
           break;
         case "genre_ids":
-          sortFunction = compareTracksByGenre;
+          sortFunction = compareTracksByGenre(this.genres);
           break;
         case "length":
           sortFunction = (t1, t2) => t1.length - t2.length;
