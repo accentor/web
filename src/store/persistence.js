@@ -8,6 +8,7 @@ import debounce from "lodash.debounce";
 // If this structure changes, we inevitably have to update this class
 class VuexPersistentModule extends VuexPersistence {
   constructor(module, storage) {
+    const lowerCaseModule = module.toLowerCase();
     // Write startLoading and the main collection (as an array) to storage
     async function saveModule(module, state, storage) {
       const modifiedState = {
@@ -21,23 +22,34 @@ class VuexPersistentModule extends VuexPersistence {
     super({
       storage,
       asyncStorage: true,
-      modules: [module],
-      key: module,
-      filter: (m) => m.type.substring(0, m.type.indexOf("/")) === module,
+      modules: [lowerCaseModule],
+      key: lowerCaseModule,
+      filter: (m) =>
+        m.type.substring(0, m.type.indexOf("/")) === lowerCaseModule,
       saveState: debounce(saveModule, 60000),
     });
 
+    this.upperCaseModule = module;
+
     // Get item from an async storage and commit them back to the store
-    this.replaceState = async (module, storage, store) => {
-      const savedState = await storage.getItem(module);
+    this.replaceState = async (
+      lowerCaseModule,
+      upperCaseModule,
+      storage,
+      store
+    ) => {
+      const savedState = await storage.getItem(lowerCaseModule);
       if (savedState) {
         if (savedState.startLoading) {
-          store.commit(`${module}/setStartLoading`, savedState.startLoading);
-        }
-        if (savedState[module]) {
           store.commit(
-            `${module}/set${module.charAt(0).toUpperCase() + module.slice(1)}`,
-            savedState[module]
+            `${lowerCaseModule}/setStartLoading`,
+            savedState.startLoading
+          );
+        }
+        if (savedState[lowerCaseModule]) {
+          store.commit(
+            `${lowerCaseModule}/set${upperCaseModule}`,
+            savedState[lowerCaseModule]
           );
         }
       }
@@ -47,6 +59,7 @@ class VuexPersistentModule extends VuexPersistence {
     this.plugin = (store) => {
       store[`${module}Restored`] = this.replaceState(
         this.key,
+        this.upperCaseModule,
         this.storage,
         store
       ).then(() => {
@@ -65,12 +78,12 @@ class VuexPersistentModule extends VuexPersistence {
 }
 
 const plugins = [
-  "albums",
-  "artists",
-  "genres",
-  "labels",
-  "plays",
-  "tracks",
+  "Albums",
+  "Artists",
+  "Genres",
+  "Labels",
+  "Plays",
+  "Tracks",
 ].map((module) => {
   const plugin = new VuexPersistentModule(module, localForage);
   return plugin.plugin;
