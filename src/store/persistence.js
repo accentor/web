@@ -2,7 +2,7 @@ import VuexPersistence from "vuex-persist";
 import localForage from "localforage";
 import debounce from "lodash.debounce";
 
-// A subclass for VuexPersintence to deal with single namepaced modules and large collections
+// A subclass for VuexPersintence to deal with single namespaced modules and large collections
 // Should be provided with a module and an async storage
 // IMPORTANT: This class assumes a lot about the structure of state and mutations available in each module
 // If this structure changes, we inevitably have to update this class
