@@ -57,7 +57,7 @@ class VuexPersistentModule extends VuexPersistence {
 
     // Overwrite plugin to use replaceState and set a custom restored prop for each module
     this.plugin = (store) => {
-      store[`${module}Restored`] = this.replaceState(
+      store[`${this.key}Restored`] = this.replaceState(
         this.key,
         this.upperCaseModule,
         this.storage,
