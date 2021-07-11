@@ -113,12 +113,11 @@ export default {
 
       const label = this.read(this.id);
       const albums = this.indexAlbums(new AlbumsScope().label(this.id));
-      Promise.all([label, albums]).finally(() => {
-        // If the label is undefined after loading, we assume that it doesn't exist.
-        if (this.label === undefined) {
-          this.$router.go(-1);
-        }
-      });
+      await Promise.all([label, albums]);
+      // If the label is undefined after loading, we assume that it doesn't exist.
+      if (this.label === undefined) {
+        this.$router.go(-1);
+      }
     },
   },
 };

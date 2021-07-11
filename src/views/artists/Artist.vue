@@ -118,12 +118,11 @@ export default {
       const artist = this.read(this.id);
       const albums = this.indexAlbums(new AlbumsScope().artist(this.id));
       const tracks = this.indexTracks(new TracksScope().artist(this.id));
-      Promise.all([artist, albums, tracks]).finally(() => {
-        // If the artist is undefined after loading, we assume that it doesn't exist.
-        if (this.artist === undefined) {
-          this.$router.go(-1);
-        }
-      });
+      await Promise.all([artist, albums, tracks]);
+      // If the artist is undefined after loading, we assume that it doesn't exist.
+      if (this.artist === undefined) {
+        this.$router.go(-1);
+      }
     },
     setImageUnavailable() {
       this.imageUnavailable = true;

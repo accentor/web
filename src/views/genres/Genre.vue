@@ -66,12 +66,11 @@ export default {
 
       const genre = this.read(this.id);
       const tracks = this.indexTracks(new TracksScope().genre(this.id));
-      Promise.all([genre, tracks]).finally(() => {
-        // If the genre is undefined after loading, we assume that it doesn't exist.
-        if (this.genre === undefined) {
-          this.$router.go(-1);
-        }
-      });
+      await Promise.all([genre, tracks]);
+      // If the genre is undefined after loading, we assume that it doesn't exist.
+      if (this.genre === undefined) {
+        this.$router.go(-1);
+      }
     },
   },
 };

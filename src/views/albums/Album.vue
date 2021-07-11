@@ -75,7 +75,7 @@ export default {
   },
   props: {
     id: {
-      type: [String, Number],
+      type: [String],
       required: true,
     },
   },
@@ -119,12 +119,11 @@ export default {
 
       const album = this.read(this.id);
       const tracks = this.indexTracks(new TracksScope().album(this.id));
-      Promise.all([album, tracks]).finally(() => {
-        // If the album is undefined after loading, we assume that it doesn't exist.
-        if (this.album === undefined) {
-          this.$router.go(-1);
-        }
-      });
+      await Promise.all([album, tracks]);
+      // If the album is undefined after loading, we assume that it doesn't exist.
+      if (this.album === undefined) {
+        this.$router.go(-1);
+      }
     },
     setImageUnavailable() {
       this.imageUnavailable = true;
