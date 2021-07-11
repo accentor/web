@@ -64,12 +64,17 @@ class VuexPersistentModule extends VuexPersistence {
   }
 }
 
-const plugins = ["albums", "artists", "genres", "labels", "tracks"].map(
-  (module) => {
-    const plugin = new VuexPersistentModule(module, localForage);
-    return plugin.plugin;
-  }
-);
+const plugins = [
+  "albums",
+  "artists",
+  "genres",
+  "labels",
+  "plays",
+  "tracks",
+].map((module) => {
+  const plugin = new VuexPersistentModule(module, localForage);
+  return plugin.plugin;
+});
 
 const localStorageModules = [
   "auth",

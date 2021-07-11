@@ -1,5 +1,6 @@
 import { index, create } from "../api/plays";
 import { fetchAll } from "./actions";
+import store from "./store";
 
 export default {
   namespaced: true,
@@ -44,6 +45,7 @@ export default {
     async index({ commit, rootState }) {
       const generator = index(rootState.auth);
       try {
+        await store.playsRestored;
         await fetchAll(commit, generator, "setPlays");
         return true;
       } catch (error) {
