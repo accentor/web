@@ -77,7 +77,7 @@
       </template>
       <template v-slot:item.album_id="props">
         <RouterLink :to="{ name: 'album', params: { id: props.value } }">
-          {{ albums[props.value].title }}
+          {{ albums[props.value] ? albums[props.value].title : "" }}
         </RouterLink>
       </template>
       <template v-slot:item.track_artists="props">
