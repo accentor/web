@@ -67,5 +67,15 @@ export default {
   },
   getters: {
     plays: (state) => Object.values(state.plays),
+    playCountsByTrack: (state, getters) => {
+      const result = {};
+      for (let play of getters.plays) {
+        if (!(play.track_id in result)) {
+          result[play.track_id] = 0;
+        }
+        result[play.track_id]++;
+      }
+      return result;
+    },
   },
 };
