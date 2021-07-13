@@ -59,6 +59,7 @@ const router = new Router({
           path: "albums/:id",
           name: "album",
           component: Album,
+          props: true,
         },
         {
           path: "albums/:id/edit",
@@ -79,6 +80,7 @@ const router = new Router({
           path: "artists/:id",
           name: "artist",
           component: Artist,
+          props: true,
         },
         {
           path: "artists/:id/edit",
@@ -99,6 +101,7 @@ const router = new Router({
           path: "genres/:id",
           name: "genre",
           component: Genre,
+          props: true,
         },
         {
           path: "genres/:id/edit",
@@ -114,6 +117,7 @@ const router = new Router({
           path: "labels/:id",
           name: "label",
           component: Label,
+          props: true,
         },
         {
           path: "labels/:id/edit",

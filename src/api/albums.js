@@ -7,8 +7,8 @@ import {
   destroyEmpty as genDestroyEmpty,
 } from "./fetch";
 
-export function index(auth) {
-  return indexGenerator("albums", auth);
+export function index(auth, scope) {
+  return indexGenerator("albums", auth, scope);
 }
 
 export function create(auth, album) {

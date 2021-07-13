@@ -10,6 +10,7 @@ import {
 } from "../api/artists";
 import { fetchAll } from "./actions";
 import { compareStrings } from "../comparators";
+import { ArtistsScope } from "../api/scopes";
 
 export default {
   namespaced: true,
@@ -54,10 +55,10 @@ export default {
     },
   },
   actions: {
-    async index({ commit, rootState }) {
-      const generator = index(rootState.auth);
+    async index({ commit, rootState }, scope = new ArtistsScope()) {
+      const generator = index(rootState.auth, scope);
       try {
-        await fetchAll(commit, generator, "setArtists");
+        await fetchAll(commit, generator, "setArtists", scope);
         return true;
       } catch (error) {
         commit("addError", error, { root: true });

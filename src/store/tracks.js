@@ -2,6 +2,7 @@ import Vue from "vue";
 import { index, create, destroy, update, read, merge } from "../api/tracks";
 import { fetchAll } from "./actions";
 import { compareTracks } from "../comparators";
+import { TracksScope } from "../api/scopes";
 
 export default {
   namespaced: true,
@@ -97,10 +98,10 @@ export default {
     },
   },
   actions: {
-    async index({ commit, rootState }) {
-      const generator = index(rootState.auth);
+    async index({ commit, rootState }, scope = new TracksScope()) {
+      const generator = index(rootState.auth, scope);
       try {
-        await fetchAll(commit, generator, "setTracks");
+        await fetchAll(commit, generator, "setTracks", scope);
         return true;
       } catch (error) {
         commit("addError", error, { root: true });

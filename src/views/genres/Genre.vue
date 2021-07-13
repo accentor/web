@@ -19,9 +19,10 @@
 </template>
 
 <script>
-import { mapGetters, mapState } from "vuex";
+import { mapActions, mapGetters, mapState } from "vuex";
 import GenreActions from "@/components/GenreActions";
 import TracksTable from "../../components/TracksTable";
+import { TracksScope } from "@/api/scopes";
 
 export default {
   name: "Genre",
@@ -29,11 +30,16 @@ export default {
   metaInfo() {
     return { title: this.genre?.name };
   },
+  props: {
+    id: {
+      type: [String, Number],
+      required: true,
+    },
+  },
   watch: {
-    genre: function () {
-      if (this.genre === undefined) {
-        this.$router.go(-1);
-      }
+    id: {
+      handler: "fetchContent",
+      immediate: true,
     },
   },
   computed: {
@@ -46,6 +52,25 @@ export default {
     },
     genre: function () {
       return this.genres[this.$route.params.id];
+    },
+  },
+  methods: {
+    ...mapActions("genres", ["read"]),
+    ...mapActions("tracks", { indexTracks: "index" }),
+    async fetchContent(newValue, oldValue) {
+      // After loading the content, the router will change the id from a string to a number
+      // but we don't actually want to load the content twice
+      if (newValue == oldValue) {
+        return;
+      }
+
+      const genre = this.read(this.id);
+      const tracks = this.indexTracks(new TracksScope().genre(this.id));
+      await Promise.all([genre, tracks]);
+      // If the genre is undefined after loading, we assume that it doesn't exist.
+      if (this.genre === undefined) {
+        this.$router.go(-1);
+      }
     },
   },
 };

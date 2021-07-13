@@ -7,8 +7,8 @@ import {
   merge as genMerge,
 } from "./fetch";
 
-export function index(auth) {
-  return indexGenerator("tracks", auth);
+export function index(auth, scope) {
+  return indexGenerator("tracks", auth, scope);
 }
 
 export function create(auth, track) {

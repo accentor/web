@@ -8,8 +8,8 @@ import {
   merge as genMerge,
 } from "./fetch";
 
-export function index(auth) {
-  return indexGenerator("artists", auth);
+export function index(auth, scope) {
+  return indexGenerator("artists", auth, scope);
 }
 
 export function create(auth, artist) {

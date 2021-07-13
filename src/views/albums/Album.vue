@@ -61,10 +61,11 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapActions } from "vuex";
 import AlbumActions from "../../components/AlbumActions";
 import TracksTable from "../../components/TracksTable";
 import AlbumArtists from "../../components/AlbumArtists";
+import { TracksScope } from "@/api/scopes";
 
 export default {
   name: "Album",
@@ -72,16 +73,21 @@ export default {
   metaInfo() {
     return { title: this.album?.title };
   },
+  props: {
+    id: {
+      type: [String, Number],
+      required: true,
+    },
+  },
   data() {
     return {
       imageUnavailable: false,
     };
   },
   watch: {
-    album: function () {
-      if (this.album === undefined) {
-        this.$router.go(-1);
-      }
+    id: {
+      handler: "fetchContent",
+      immediate: true,
     },
   },
   computed: {
@@ -102,6 +108,23 @@ export default {
     },
   },
   methods: {
+    ...mapActions("albums", ["read"]),
+    ...mapActions("tracks", { indexTracks: "index" }),
+    async fetchContent(newValue, oldValue) {
+      // After loading the content, the router will change the id from a string to a number
+      // but we don't actually want to load the content twice
+      if (newValue == oldValue) {
+        return;
+      }
+
+      const album = this.read(this.id);
+      const tracks = this.indexTracks(new TracksScope().album(this.id));
+      await Promise.all([album, tracks]);
+      // If the album is undefined after loading, we assume that it doesn't exist.
+      if (this.album === undefined) {
+        this.$router.go(-1);
+      }
+    },
     setImageUnavailable() {
       this.imageUnavailable = true;
     },
