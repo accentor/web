@@ -33,5 +33,5 @@ export function destroyEmpty(auth) {
 }
 
 export function merge(auth, newID, oldID) {
-  return genMerge(`genres/${newID}/merge?other_genre_id=${oldID}`, auth);
+  return genMerge(`genres/${newID}/merge?source_id=${oldID}`, auth);
 }

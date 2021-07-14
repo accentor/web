@@ -28,5 +28,5 @@ export function destroy(auth, id) {
 }
 
 export function merge(auth, newID, oldID) {
-  return genMerge(`tracks/${newID}/merge?other_track_id=${oldID}`, auth);
+  return genMerge(`tracks/${newID}/merge?source_id=${oldID}`, auth);
 }
