@@ -125,7 +125,7 @@ export default {
         text: "#",
         value: "number",
         sortable: false,
-        align: "center",
+        align: "end",
         width: "1px",
       },
       {
@@ -138,6 +138,7 @@ export default {
         value: "length",
         sortable: false,
         align: "end",
+        width: "1px",
       },
       {
         text: this.$tc("music.albums", 1),
@@ -159,12 +160,14 @@ export default {
         value: "play_count",
         sortable: false,
         align: "end",
+        width: "1px",
       },
       {
         text: this.$t("common.actions"),
         value: "actions",
         sortable: false,
         align: "end",
+        width: "1px",
       },
     ];
     if (!this.showAlbum) {
