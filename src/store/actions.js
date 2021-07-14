@@ -13,8 +13,8 @@ export async function fetchAll(commit, generator, commitAction, scope = null) {
     }
   }
   commit(commitAction, results);
-  // If a scope is present, we skip removeOld
-  if (scope !== null) {
+  // If there is no scope present, we remove old items
+  if (scope === null) {
     commit("removeOld");
   }
 }
