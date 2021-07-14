@@ -57,6 +57,7 @@ export default {
     async index({ commit, rootState }) {
       const generator = index(rootState.auth);
       try {
+        await this.labelsRestored;
         await fetchAll(commit, generator, "setLabels");
         return true;
       } catch (error) {
@@ -77,6 +78,7 @@ export default {
     async read({ commit, rootState }, id) {
       try {
         const result = await read(rootState.auth, id);
+        await this.labelsRestored;
         commit("setLabel", { id, label: result });
         return result.id;
       } catch (error) {

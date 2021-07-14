@@ -1,6 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import createPersistedState from "vuex-persistedstate";
+import persistencePlugins, { vuexLocalStorage } from "./persistence";
 import albums from "./albums";
 import artists from "./artists";
 import auth from "./auth";
@@ -20,12 +20,27 @@ import userSettings from "./user_settings";
 
 Vue.use(Vuex);
 
+const mutations = {
+  addError(state, error) {
+    if (error.unauthorized) {
+      this.commit("auth/logout");
+    }
+    state.errors.push(error);
+  },
+  clearErrors(state) {
+    state.errors = [];
+  },
+  updateCurrentDay(state) {
+    state.currentDay = new Date().setHours(0, 0, 0, 0);
+  },
+};
+
+if (process.env.NODE_ENV !== "production") {
+  mutations.RESTORE_MUTATION = vuexLocalStorage.RESTORE_MUTATION;
+}
+
 export default new Vuex.Store({
-  plugins: [
-    createPersistedState({
-      paths: ["auth", "userSettings"],
-    }),
-  ],
+  plugins: persistencePlugins,
   strict: process.env.NODE_ENV !== "production",
   modules: {
     albums,
@@ -49,20 +64,7 @@ export default new Vuex.Store({
     errors: [],
     currentDay: new Date().setHours(0, 0, 0, 0),
   },
-  mutations: {
-    addError(state, error) {
-      if (error.unauthorized) {
-        this.commit("auth/logout");
-      }
-      state.errors.push(error);
-    },
-    clearErrors(state) {
-      state.errors = [];
-    },
-    updateCurrentDay(state) {
-      state.currentDay = new Date().setHours(0, 0, 0, 0);
-    },
-  },
+  mutations,
   actions: {},
   getters: {
     numberOfFlaggedItems(state, getters) {

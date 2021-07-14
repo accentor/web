@@ -101,6 +101,7 @@ export default {
     async index({ commit, rootState }, scope = new TracksScope()) {
       const generator = index(rootState.auth, scope);
       try {
+        await this.tracksRestored;
         await fetchAll(commit, generator, "setTracks", scope);
         return true;
       } catch (error) {
@@ -121,6 +122,7 @@ export default {
     async read({ commit, rootState }, id) {
       try {
         const track = await read(rootState.auth, id);
+        await this.tracksRestored;
         commit("setTrack", { id, track });
         return true;
       } catch (error) {

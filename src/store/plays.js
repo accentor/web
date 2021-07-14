@@ -44,6 +44,7 @@ export default {
     async index({ commit, rootState }) {
       const generator = index(rootState.auth);
       try {
+        await this.playsRestored;
         await fetchAll(commit, generator, "setPlays");
         return true;
       } catch (error) {

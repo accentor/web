@@ -58,6 +58,7 @@ export default {
     async index({ commit, rootState }, scope = new ArtistsScope()) {
       const generator = index(rootState.auth, scope);
       try {
+        await this.artistsRestored;
         await fetchAll(commit, generator, "setArtists", scope);
         return true;
       } catch (error) {
@@ -78,6 +79,7 @@ export default {
     async read({ commit, rootState }, id) {
       try {
         const result = await read(rootState.auth, id);
+        await this.artistsRestored;
         commit("setArtist", { id, artist: result });
         return result.id;
       } catch (error) {
