@@ -164,7 +164,6 @@ export default {
       {
         text: this.$t("music.play-count"),
         value: "play_count",
-        sortable: false,
         align: "end",
       },
       {
@@ -235,6 +234,10 @@ export default {
           break;
         case "number":
           sortFunction = (t1, t2) => t1.number - t2.number;
+          break;
+        case "play_count":
+          sortFunction = (t1, t2) =>
+            (this.playCountsByTrack[t1] = this.playCountsByTrack[t2]);
           break;
         case "title":
           sortFunction = (t1, t2) =>
