@@ -27,6 +27,7 @@
       :page.sync="pagination.page"
       :show-select="isModerator"
       :single-select="singleSelect"
+      :custom-sort="sortFunction"
       class="elevation-3"
       ref="table"
       @item-selected="emitSelected"
@@ -104,6 +105,12 @@ import Searchable from "../mixins/Searchable";
 import TrackArtists from "./TrackArtists";
 import TrackGenres from "./TrackGenres";
 import MassEditDialog from "./MassEditDialog";
+import {
+  compareStrings,
+  compareTracks,
+  compareTracksByArtist,
+  compareTracksByGenre,
+} from "@/comparators";
 
 export default {
   name: "TracksTable",
@@ -124,40 +131,39 @@ export default {
       {
         text: "#",
         value: "number",
-        sortable: false,
         align: "center",
         width: "1px",
+        class: "text-no-wrap",
       },
       {
         text: this.$t("music.title"),
         value: "title",
-        sortable: false,
+        class: "text-no-wrap",
       },
       {
         text: this.$t("music.track.length"),
         value: "length",
-        sortable: false,
         align: "end",
+        class: "text-no-wrap",
       },
       {
         text: this.$tc("music.albums", 1),
         value: "album_id",
-        sortable: false,
+        class: "text-no-wrap",
       },
       {
         text: this.$t("music.artist.artist-s"),
         value: "track_artists",
-        sortable: false,
+        class: "text-no-wrap",
       },
       {
         text: this.$t("music.genre-s"),
         value: "genre_ids",
-        sortable: false,
+        class: "text-no-wrap",
       },
       {
         text: this.$t("music.play-count"),
         value: "play_count",
-        sortable: false,
         align: "end",
       },
       {
@@ -165,6 +171,7 @@ export default {
         value: "actions",
         sortable: false,
         align: "end",
+        class: "text-no-wrap",
       },
     ];
     if (!this.showAlbum) {
@@ -183,6 +190,7 @@ export default {
     ...mapGetters("player", ["currentTrack"]),
     ...mapGetters("plays", ["playCountsByTrack"]),
     ...mapState("albums", ["albums"]),
+    ...mapState("genres", ["genres"]),
     ...mapState("tracks", { tracksObj: "tracks" }),
     filteredItems() {
       return this.tracks.filter(
@@ -211,6 +219,35 @@ export default {
     },
     reloadSelected() {
       this.selected = this.selected.map((s) => this.tracksObj[s.id]);
+    },
+    sortFunction(items, sortBy, sortDesc) {
+      let sortFunction = null;
+      switch (sortBy[0]) {
+        case "album_id":
+          sortFunction = compareTracks(this.albums);
+          break;
+        case "genre_ids":
+          sortFunction = compareTracksByGenre(this.genres);
+          break;
+        case "length":
+          sortFunction = (t1, t2) => t1.length - t2.length;
+          break;
+        case "number":
+          sortFunction = (t1, t2) => t1.number - t2.number;
+          break;
+        case "play_count":
+          sortFunction = (t1, t2) =>
+            (this.playCountsByTrack[t1] = this.playCountsByTrack[t2]);
+          break;
+        case "title":
+          sortFunction = (t1, t2) =>
+            compareStrings(t1.normalized_title, t2.normalized_title);
+          break;
+        case "track_artists":
+          sortFunction = compareTracksByArtist;
+      }
+      const sorted = sortFunction ? items.sort(sortFunction) : items;
+      return sortDesc[0] ? sorted.reverse() : sorted;
     },
   },
 };
