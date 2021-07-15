@@ -33,5 +33,5 @@ export function destroyEmpty(auth) {
 }
 
 export function merge(auth, newID, oldID) {
-  return genMerge(`labels/${newID}/merge?other_label_id=${oldID}`, auth);
+  return genMerge(`labels/${newID}/merge?source_id=${oldID}`, auth);
 }
