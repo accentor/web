@@ -1,7 +1,7 @@
 <template>
   <VBtn
     color="flag"
-    class="ma-1"
+    class="ma-1 ma-sm-2"
     text
     icon
     small

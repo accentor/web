@@ -41,7 +41,7 @@
             md="4"
             sm="6"
             xl="2"
-            cols="12"
+            cols="6"
           >
             <AlbumCard :album="item" />
           </VCol>

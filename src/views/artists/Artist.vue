@@ -36,7 +36,7 @@
         sm="6"
         v-for="item of albums"
         xl="2"
-        cols="12"
+        cols="6"
       >
         <AlbumCard :album="item" />
       </VCol>

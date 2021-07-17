@@ -7,7 +7,7 @@
             @click.stop.prevent="startTracks"
             :disabled="playableTracks.length === 0"
             color="primary"
-            class="ma-2"
+            class="ml-0 ma-1 ma-sm-2"
             text
             icon
             small
@@ -25,7 +25,7 @@
             @click.stop.prevent="addTracks"
             :disabled="playableTracks.length === 0"
             color="success"
-            class="ma-2"
+            class="ma-1 ma-sm-2"
             text
             icon
             small
@@ -49,7 +49,7 @@
             }"
             :disabled="waitingForReload"
             color="edit"
-            class="ma-2"
+            class="ma-1 ma-sm-2"
             text
             icon
             small
@@ -67,7 +67,7 @@
             @click.stop.prevent="deleteAlbum"
             :disabled="album.loaded < startLoading"
             color="danger"
-            class="ma-2"
+            class="mr-0 ma-1 ma-sm-2"
             text
             href="#"
             icon
