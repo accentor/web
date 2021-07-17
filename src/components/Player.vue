@@ -3,14 +3,18 @@
     <audio ref="audio" @error="onAudioError" />
     <div class="tracks-list-container" v-if="open">
       <table class="tracks-list">
-        <Draggable tag="tbody" @end="updatePlaylist">
+        <Draggable
+          tag="tbody"
+          @end="updatePlaylist"
+          handle="[data-draggable=handle]"
+        >
           <tr
             v-for="(track, index) of playlistTracks"
             :key="track.id"
             class="track"
           >
             <td class="px-0 icon">
-              <VBtn small icon text class="ma-2">
+              <VBtn small icon text class="ma-2" data-draggable="handle">
                 <VIcon>mdi-drag-horizontal-variant</VIcon>
               </VBtn>
             </td>
