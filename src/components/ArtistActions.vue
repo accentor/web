@@ -12,7 +12,7 @@
             }"
             :disabled="waitingForReload"
             color="edit"
-            class="ma-2"
+            class="ma-sm-2"
             text
             icon
             small
@@ -38,7 +38,7 @@
             @click.stop.prevent="deleteArtist"
             :disabled="waitingForReload"
             color="danger"
-            class="ma-2"
+            class="ma-sm-2"
             href="#"
             text
             icon
