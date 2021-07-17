@@ -96,7 +96,6 @@ const localStorageModules = [
   "coverFilenames",
   "imageTypes",
   "locations",
-  "rescan",
   "users",
   "userSettings",
 ];
