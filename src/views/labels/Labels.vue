@@ -34,7 +34,7 @@
             sm="6"
             v-for="item in props.items"
             xl="2"
-            cols="12"
+            cols="6"
           >
             <LabelCard :label="item" />
           </VCol>
