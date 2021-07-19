@@ -1,7 +1,7 @@
 export async function fetchAll(commit, generator, commitAction, scope = null) {
   // If there is no scope present, we prepare for removing old items
   // later (this also influences editability of items)
-  if (scope === null) {
+  if (scope === null || scope.scopes.length === 0) {
     commit("setStartLoading");
   }
   let done = false;
@@ -18,7 +18,7 @@ export async function fetchAll(commit, generator, commitAction, scope = null) {
   }
   commit(commitAction, results);
   // If there is no scope present, we remove old items
-  if (scope === null) {
+  if (scope === null || scope.scopes.length === 0) {
     commit("removeOld");
   }
 }
