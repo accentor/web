@@ -1,5 +1,5 @@
 <template>
-  <span>
+  <span class="text-no-wrap">
     <VTooltip bottom :disabled="track.length !== null">
       <template v-slot:activator="{ on }">
         <span v-on="on">
