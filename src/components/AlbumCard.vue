@@ -34,7 +34,7 @@
       </div>
     </VCardText>
     <VCardActions>
-      <AlbumActions :album="album" />
+      <AlbumActions :album="album" class="sm:actions--wide" />
     </VCardActions>
   </VCard>
 </template>
