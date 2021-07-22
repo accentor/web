@@ -4,7 +4,7 @@
       {{ label.name }}
     </VCardTitle>
     <VCardActions>
-      <LabelActions :label="label" class="sm:actions--wide" />
+      <LabelActions :label="label" class="actions--sm-wide" />
     </VCardActions>
   </VCard>
 </template>

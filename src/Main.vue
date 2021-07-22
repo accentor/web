@@ -33,7 +33,7 @@ a {
 }
 
 @media (min-width: map-get($grid-breakpoints, "sm")) {
-  .sm\:actions--wide {
+  .actions--sm-wide {
     .actions__button {
       margin: 8px 16px 8px 0;
     }
