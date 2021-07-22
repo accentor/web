@@ -10,7 +10,7 @@
         v-on="on"
         :disabled="disabled"
         @click.stop.prevent
-        class="ma-1 ma-sm-2"
+        class="actions__button"
         color="edit"
         text
         icon

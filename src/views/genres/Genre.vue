@@ -6,7 +6,7 @@
           <h2 class="text-h4">{{ genre.name }}</h2>
         </div>
         <div>
-          <GenreActions :genre="genre" />
+          <GenreActions :genre="genre" class="actions--wide" />
         </div>
       </VCol>
     </VRow>

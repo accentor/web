@@ -11,7 +11,7 @@
             }"
             :disabled="waitingForReload"
             color="edit"
-            class="ml-0 ma-1 ma-sm-2"
+            class="actions__button"
             text
             icon
             small
@@ -37,7 +37,7 @@
             @click.stop.prevent="deleteGenre"
             :disabled="waitingForReload"
             color="danger"
-            class="mr-0 ma-1 ma-sm-2"
+            class="actions__button mr-0"
             href="#"
             text
             icon

@@ -24,7 +24,7 @@
           <h2 class="text-h4">{{ artist.name }}</h2>
         </div>
         <div>
-          <ArtistActions :artist="artist" />
+          <ArtistActions :artist="artist" class="actions" />
         </div>
       </VCol>
     </VRow>

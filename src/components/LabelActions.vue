@@ -1,5 +1,5 @@
 <template>
-  <span v-if="isModerator">
+  <span v-if="isModerator" class="actions">
     <VTooltip bottom :disabled="!waitingForReload">
       <template v-slot:activator="{ on }">
         <span v-on="on">
@@ -11,7 +11,7 @@
             }"
             :disabled="waitingForReload"
             color="edit"
-            class="ml-0 ma-1 ma-sm-2"
+            class="actions__button"
             text
             icon
             small
@@ -37,7 +37,7 @@
             @click.stop.prevent="deleteLabel"
             :disabled="waitingForReload"
             color="danger"
-            class="mr-0 ma-1 ma-sm-2"
+            class="mr-0 actions__button"
             href="#"
             text
             icon

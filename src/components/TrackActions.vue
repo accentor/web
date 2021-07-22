@@ -1,5 +1,5 @@
 <template>
-  <span class="text-no-wrap">
+  <span class="text-no-wrap actions">
     <VTooltip bottom :disabled="track.length !== null">
       <template v-slot:activator="{ on }">
         <span v-on="on">
@@ -7,7 +7,7 @@
             @click="startTrack"
             :disabled="track.length === null"
             color="primary"
-            class="ma-1"
+            class="actions__button"
             text
             icon
             small
@@ -25,7 +25,7 @@
             @click="addTrack"
             :disabled="track.length === null"
             color="success"
-            class="ma-1"
+            class="actions__button"
             text
             icon
             small
@@ -39,7 +39,7 @@
     <EditReviewComment :item="track" :update="flag" />
     <VMenu v-if="isModerator">
       <template v-slot:activator="{ on, attrs }">
-        <VBtn class="ma-1" small icon v-bind="attrs" v-on="on">
+        <VBtn class="actions__button mr-0" small icon v-bind="attrs" v-on="on">
           <VIcon>mdi-dots-vertical</VIcon>
         </VBtn>
       </template>

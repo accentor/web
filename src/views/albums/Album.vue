@@ -47,7 +47,7 @@
             {{ al.catalogue_number || $t("music.label.catalogue-number-none") }}
           </div>
           <div>
-            <AlbumActions :album="album" />
+            <AlbumActions :album="album" class="actions--wide" />
           </div>
         </div>
       </VCol>
