@@ -1,3 +1,5 @@
+import { createApiClient } from "@accentor/api-client-js";
+
 let url;
 if (process.env.VUE_APP_API_URL !== undefined) {
   url = process.env.VUE_APP_API_URL;
@@ -7,4 +9,8 @@ if (process.env.VUE_APP_API_URL !== undefined) {
   url = "http://localhost:3000/api";
 }
 
-export default url;
+export const baseURL = url;
+
+const api = createApiClient(baseURL);
+
+export default api;
