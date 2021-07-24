@@ -2,6 +2,13 @@
 # yarn lockfile v1
 
 
+"@accentor/api-client-js@^0.11.1":
+  version "0.11.1"
+  resolved "https://registry.yarnpkg.com/@accentor/api-client-js/-/api-client-js-0.11.1.tgz#98f9bfe81bdf4915d4e176b860c6051f7677d264"
+  integrity sha512-QVW7NzGWsoThl6m9OWF58vx7ULX9rr+hTt/mAGgmhz+GD85vvQ2fXh3PdK3tPjQUgJcN1ndd5IScd4651yt4Lg==
+  dependencies:
+    fetch-retry "^4.1.1"
+
 "@babel/code-frame@^7.0.0", "@babel/code-frame@^7.12.13":
   version "7.12.13"
   resolved "https://registry.yarnpkg.com/@babel/code-frame/-/code-frame-7.12.13.tgz#dcfc826beef65e75c50e21d3837d7d95798dd658"
