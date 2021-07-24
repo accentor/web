@@ -17,7 +17,10 @@ export default {
   },
   watch: {
     "pagination.page": function () {
-      if (this.savePagination === undefined || this.savePagination) {
+      if (
+        (this.savePagination === undefined || this.savePagination) &&
+        parseInt(this.$route.query.page) !== this.pagination.page
+      ) {
         this.$router.replace({
           query: {
             ...this.$route.query,
