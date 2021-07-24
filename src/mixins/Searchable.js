@@ -17,7 +17,7 @@ export default {
   },
   watch: {
     search: function () {
-      if (this.saveSearch) {
+      if (this.saveSearch && this.$route.query.search !== this.search) {
         this.$router.replace({
           query: {
             ...this.$route.query,
