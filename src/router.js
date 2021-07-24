@@ -186,6 +186,13 @@ const router = new Router({
     },
     { path: "*", redirect: "/app/" },
   ],
+  scrollBehavior(to, from, savedPosition) {
+    if (to.path === from.path) {
+      return savedPosition;
+    } else {
+      return { x: 0, y: 0 };
+    }
+  },
 });
 
 store.watch(
