@@ -111,7 +111,9 @@ export default {
     },
     async create({ commit, rootState }, newTrack) {
       try {
-        const result = await api.tracks.create(rootState.auth, newTrack);
+        const result = await api.tracks.create(rootState.auth, {
+          track: newTrack,
+        });
         commit("setTrack", { id: result.id, track: result });
         return result.id;
       } catch (error) {
@@ -132,7 +134,9 @@ export default {
     },
     async update({ commit, rootState }, { id, newTrack }) {
       try {
-        const result = await api.tracks.update(rootState.auth, id, newTrack);
+        const result = await api.tracks.update(rootState.auth, id, {
+          track: newTrack,
+        });
         commit("setTrack", { id, track: result });
         return true;
       } catch (error) {

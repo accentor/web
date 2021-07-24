@@ -55,8 +55,10 @@ export default {
     async create({ commit, rootState }, track_id) {
       try {
         const result = await api.plays.create(rootState.auth, {
-          track_id,
-          played_at: new Date(),
+          play: {
+            track_id,
+            played_at: new Date(),
+          },
         });
         commit("setPlay", { id: result.id, play: result });
         return result.id;

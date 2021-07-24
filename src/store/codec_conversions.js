@@ -57,7 +57,9 @@ export default {
     },
     async create({ commit, rootState }, newCodecConversion) {
       try {
-        const result = await api.codec_conversions.create(rootState.auth, newCodecConversion);
+        const result = await api.codec_conversions.create(rootState.auth, {
+          codec_conversion: newCodecConversion,
+        });
         commit("setCodecConversion", {
           id: result.id,
           codecConversion: result,
@@ -70,7 +72,9 @@ export default {
     },
     async update({ commit, rootState }, { id, newCodecConversion }) {
       try {
-        const result = await api.codec_conversions.update(rootState.auth, id, newCodecConversion);
+        const result = await api.codec_conversions.update(rootState.auth, id, {
+          codec_conversion: newCodecConversion,
+        });
         commit("setCodecConversion", { id, codecConversion: result });
         return true;
       } catch (error) {

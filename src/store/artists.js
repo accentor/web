@@ -60,7 +60,9 @@ export default {
     },
     async create({ commit, rootState }, newArtist) {
       try {
-        const result = await api.artists.create(rootState.auth, newArtist);
+        const result = await api.artists.create(rootState.auth, {
+          artist: newArtist,
+        });
         commit("setArtist", { id: result.id, artist: result });
         return result.id;
       } catch (error) {
@@ -81,7 +83,9 @@ export default {
     },
     async update({ commit, rootState }, { id, newArtist }) {
       try {
-        const result = await api.artists.update(rootState.auth, id, newArtist);
+        const result = await api.artists.update(rootState.auth, id, {
+          artist: newArtist,
+        });
         commit("setArtist", { id, artist: result });
         return true;
       } catch (error) {

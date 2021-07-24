@@ -59,7 +59,9 @@ export default {
     },
     async create({ commit, rootState }, newGenre) {
       try {
-        const result = await api.genres.create(rootState.auth, newGenre);
+        const result = await api.genres.create(rootState.auth, {
+          genre: newGenre,
+        });
         commit("setGenre", { id: result.id, genre: result });
         return result.id;
       } catch (error) {
@@ -80,7 +82,9 @@ export default {
     },
     async update({ commit, rootState }, { id, newGenre }) {
       try {
-        const result = await api.genres.update(rootState.auth, id, newGenre);
+        const result = await api.genres.update(rootState.auth, id, {
+          genre: newGenre,
+        });
         commit("setGenre", { id, genre: result });
         return true;
       } catch (error) {

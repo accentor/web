@@ -58,7 +58,9 @@ export default {
     },
     async create({ commit, rootState }, newUser) {
       try {
-        const result = await api.users.create(rootState.auth, newUser);
+        const result = await api.users.create(rootState.auth, {
+          user: newUser,
+        });
         commit("setUser", { id: result.id, user: result });
         return result.id;
       } catch (error) {
@@ -68,7 +70,9 @@ export default {
     },
     async update({ commit, rootState }, { id, newUser }) {
       try {
-        const result = await api.users.update(rootState.auth, id, newUser);
+        const result = await api.users.update(rootState.auth, id, {
+          user: newUser,
+        });
         commit("setUser", { id, user: result });
         return true;
       } catch (error) {

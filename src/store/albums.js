@@ -111,7 +111,9 @@ export default {
     },
     async create({ commit, rootState }, newAlbum) {
       try {
-        const result = await api.albums.create(rootState.auth, newAlbum);
+        const result = await api.albums.create(rootState.auth, {
+          album: newAlbum,
+        });
         commit("setAlbum", { id: result.id, album: result });
         return result.id;
       } catch (error) {
@@ -132,7 +134,9 @@ export default {
     },
     async update({ commit, rootState }, { id, newAlbum }) {
       try {
-        const result = await api.albums.update(rootState.auth, id, newAlbum);
+        const result = await api.albums.update(rootState.auth, id, {
+          album: newAlbum,
+        });
         commit("setAlbum", { id, album: result });
         return true;
       } catch (error) {

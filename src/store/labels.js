@@ -59,7 +59,9 @@ export default {
     },
     async create({ commit, rootState }, newLabel) {
       try {
-        const result = await api.labels.create(rootState.auth, newLabel);
+        const result = await api.labels.create(rootState.auth, {
+          label: newLabel,
+        });
         commit("setLabel", { id: result.id, label: result });
         return result.id;
       } catch (error) {
@@ -80,7 +82,9 @@ export default {
     },
     async update({ commit, rootState }, { id, newLabel }) {
       try {
-        const result = await api.labels.update(rootState.auth, id, newLabel);
+        const result = await api.labels.update(rootState.auth, id, {
+          label: newLabel,
+        });
         commit("setLabel", { id, label: result });
         return true;
       } catch (error) {

@@ -57,7 +57,9 @@ export default {
     },
     async create({ commit, rootState }, newImageType) {
       try {
-        const result = await api.image_types.create(rootState.auth, newImageType);
+        const result = await api.image_types.create(rootState.auth, {
+          image_type: newImageType,
+        });
         commit("setImageType", { id: result.id, imageType: result });
         return result.id;
       } catch (error) {
@@ -67,7 +69,9 @@ export default {
     },
     async update({ commit, rootState }, { id, newImageType }) {
       try {
-        const result = await api.image_types.update(rootState.auth, id, newImageType);
+        const result = await api.image_types.update(rootState.auth, id, {
+          image_type: newImageType,
+        });
         commit("setImageType", { id, imageType: result });
         return true;
       } catch (error) {

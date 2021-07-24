@@ -57,7 +57,9 @@ export default {
     },
     async create({ commit, rootState }, newLocation) {
       try {
-        const result = await api.locations.create(rootState.auth, newLocation);
+        const result = await api.locations.create(rootState.auth, {
+          location: newLocation,
+        });
         commit("setLocation", { id: result.id, location: result });
         return result.id;
       } catch (error) {
