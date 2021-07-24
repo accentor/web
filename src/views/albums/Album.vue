@@ -65,7 +65,7 @@ import { mapState, mapActions } from "vuex";
 import AlbumActions from "../../components/AlbumActions";
 import TracksTable from "../../components/TracksTable";
 import AlbumArtists from "../../components/AlbumArtists";
-import { TracksScope } from "@/api/scopes";
+import { TracksScope } from "@accentor/api-client-js";
 
 export default {
   name: "Album",

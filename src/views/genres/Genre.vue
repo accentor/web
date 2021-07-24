@@ -22,7 +22,7 @@
 import { mapActions, mapGetters, mapState } from "vuex";
 import GenreActions from "@/components/GenreActions";
 import TracksTable from "../../components/TracksTable";
-import { TracksScope } from "@/api/scopes";
+import { TracksScope } from "@accentor/api-client-js";
 
 export default {
   name: "Genre",

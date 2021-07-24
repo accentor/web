@@ -1,5 +1,5 @@
 import Vue from "vue";
-import { index, create, destroy, update } from "../api/users";
+import api from "@/api";
 import { fetchAll } from "./actions";
 import { compareStrings } from "../comparators";
 
@@ -47,7 +47,7 @@ export default {
   },
   actions: {
     async index({ commit, rootState }) {
-      const generator = index(rootState.auth);
+      const generator = api.users.index(rootState.auth);
       try {
         await fetchAll(commit, generator, "setUsers");
         return true;
@@ -58,7 +58,7 @@ export default {
     },
     async create({ commit, rootState }, newUser) {
       try {
-        const result = await create(rootState.auth, newUser);
+        const result = await api.users.create(rootState.auth, newUser);
         commit("setUser", { id: result.id, user: result });
         return result.id;
       } catch (error) {
@@ -68,7 +68,7 @@ export default {
     },
     async update({ commit, rootState }, { id, newUser }) {
       try {
-        const result = await update(rootState.auth, id, newUser);
+        const result = await api.users.update(rootState.auth, id, newUser);
         commit("setUser", { id, user: result });
         return true;
       } catch (error) {
@@ -78,7 +78,7 @@ export default {
     },
     async destroy({ commit, rootState }, id) {
       try {
-        await destroy(rootState.auth, id);
+        await api.users.destroy(rootState.auth, id);
         commit("removeUser", id);
         return true;
       } catch (error) {

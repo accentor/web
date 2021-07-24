@@ -1,8 +1,8 @@
 import Vue from "vue";
-import { index, create, destroy, update, read, merge } from "../api/tracks";
+import api from "@/api";
 import { fetchAll } from "./actions";
 import { compareTracks } from "../comparators";
-import { TracksScope } from "../api/scopes";
+import { TracksScope } from "@accentor/api-client-js";
 
 export default {
   namespaced: true,
@@ -99,7 +99,7 @@ export default {
   },
   actions: {
     async index({ commit, rootState }, scope = new TracksScope()) {
-      const generator = index(rootState.auth, scope);
+      const generator = api.tracks.index(rootState.auth, scope);
       try {
         await this.tracksRestored;
         await fetchAll(commit, generator, "setTracks", scope);
@@ -111,7 +111,7 @@ export default {
     },
     async create({ commit, rootState }, newTrack) {
       try {
-        const result = await create(rootState.auth, newTrack);
+        const result = await api.tracks.create(rootState.auth, newTrack);
         commit("setTrack", { id: result.id, track: result });
         return result.id;
       } catch (error) {
@@ -121,7 +121,7 @@ export default {
     },
     async read({ commit, rootState }, id) {
       try {
-        const track = await read(rootState.auth, id);
+        const track = await api.tracks.read(rootState.auth, id);
         await this.tracksRestored;
         commit("setTrack", { id, track });
         return true;
@@ -132,7 +132,7 @@ export default {
     },
     async update({ commit, rootState }, { id, newTrack }) {
       try {
-        const result = await update(rootState.auth, id, newTrack);
+        const result = await api.tracks.update(rootState.auth, id, newTrack);
         commit("setTrack", { id, track: result });
         return true;
       } catch (error) {
@@ -142,7 +142,7 @@ export default {
     },
     async destroy({ commit, rootState }, id) {
       try {
-        await destroy(rootState.auth, id);
+        await api.tracks.destroy(rootState.auth, id);
         commit("removeTrack", id);
         return true;
       } catch (error) {
@@ -152,7 +152,7 @@ export default {
     },
     async merge({ commit, dispatch, rootState }, { newID, oldID }) {
       try {
-        await merge(rootState.auth, newID, oldID);
+        await api.tracks.merge(rootState.auth, newID, oldID);
         await dispatch("read", newID);
         commit("removeTrack", oldID);
         return true;

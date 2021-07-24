@@ -1,4 +1,4 @@
-import { index, create } from "../api/plays";
+import api from "@/api";
 import { fetchAll } from "./actions";
 
 export default {
@@ -42,7 +42,7 @@ export default {
   },
   actions: {
     async index({ commit, rootState }) {
-      const generator = index(rootState.auth);
+      const generator = api.plays.index(rootState.auth);
       try {
         await this.playsRestored;
         await fetchAll(commit, generator, "setPlays");
@@ -54,7 +54,7 @@ export default {
     },
     async create({ commit, rootState }, track_id) {
       try {
-        const result = await create(rootState.auth, {
+        const result = await api.plays.create(rootState.auth, {
           track_id,
           played_at: new Date(),
         });

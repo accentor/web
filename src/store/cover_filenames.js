@@ -1,5 +1,5 @@
 import Vue from "vue";
-import { index, create, destroy, update } from "../api/cover_filenames";
+import api from "@/api";
 import { fetchAll } from "./actions";
 
 export default {
@@ -46,7 +46,7 @@ export default {
   },
   actions: {
     async index({ commit, rootState }) {
-      const generator = index(rootState.auth);
+      const generator = api.cover_filenames.index(rootState.auth);
       try {
         await fetchAll(commit, generator, "setCoverFilenames");
         return true;
@@ -57,7 +57,7 @@ export default {
     },
     async create({ commit, rootState }, newCoverFilename) {
       try {
-        const result = await create(rootState.auth, newCoverFilename);
+        const result = await api.cover_filenames.create(rootState.auth, newCoverFilename);
         commit("setCoverFilename", { id: result.id, coverFilename: result });
         return result.id;
       } catch (error) {
@@ -67,7 +67,7 @@ export default {
     },
     async update({ commit, rootState }, { id, newCoverFilename }) {
       try {
-        const result = await update(rootState.auth, id, newCoverFilename);
+        const result = await api.cover_filenames.update(rootState.auth, id, newCoverFilename);
         commit("setCoverFilename", { id, coverFilename: result });
         return true;
       } catch (error) {
@@ -77,7 +77,7 @@ export default {
     },
     async destroy({ commit, rootState }, id) {
       try {
-        await destroy(rootState.auth, id);
+        await api.cover_filenames.destroy(rootState.auth, id);
         commit("removeCoverFilename", id);
         return true;
       } catch (error) {

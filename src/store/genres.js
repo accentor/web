@@ -1,13 +1,5 @@
 import Vue from "vue";
-import {
-  index,
-  create,
-  read,
-  destroy,
-  update,
-  destroyEmpty,
-  merge,
-} from "../api/genres";
+import api from "@/api";
 import { fetchAll } from "./actions";
 import { compareStrings } from "../comparators";
 
@@ -55,7 +47,7 @@ export default {
   },
   actions: {
     async index({ commit, rootState }) {
-      const generator = index(rootState.auth);
+      const generator = api.genres.index(rootState.auth);
       try {
         await this.genresRestored;
         await fetchAll(commit, generator, "setGenres");
@@ -67,7 +59,7 @@ export default {
     },
     async create({ commit, rootState }, newGenre) {
       try {
-        const result = await create(rootState.auth, newGenre);
+        const result = await api.genres.create(rootState.auth, newGenre);
         commit("setGenre", { id: result.id, genre: result });
         return result.id;
       } catch (error) {
@@ -77,7 +69,7 @@ export default {
     },
     async read({ commit, rootState }, id) {
       try {
-        const result = await read(rootState.auth, id);
+        const result = await api.genres.read(rootState.auth, id);
         await this.genresRestored;
         commit("setGenre", { id, genre: result });
         return result.id;
@@ -88,7 +80,7 @@ export default {
     },
     async update({ commit, rootState }, { id, newGenre }) {
       try {
-        const result = await update(rootState.auth, id, newGenre);
+        const result = await api.genres.update(rootState.auth, id, newGenre);
         commit("setGenre", { id, genre: result });
         return true;
       } catch (error) {
@@ -98,7 +90,7 @@ export default {
     },
     async destroy({ commit, rootState }, id) {
       try {
-        await destroy(rootState.auth, id);
+        await api.genres.destroy(rootState.auth, id);
         commit("tracks/removeGenreOccurence", id, { root: true });
         commit("removeGenre", id);
         return true;
@@ -109,7 +101,7 @@ export default {
     },
     async destroyEmpty({ commit, dispatch, rootState }) {
       try {
-        await destroyEmpty(rootState.auth);
+        await api.genres.destroyEmpty(rootState.auth);
         await dispatch("index");
         return true;
       } catch (error) {
@@ -119,7 +111,7 @@ export default {
     },
     async merge({ commit, rootState }, { newID, oldID }) {
       try {
-        await merge(rootState.auth, newID, oldID);
+        await api.genres.merge(rootState.auth, newID, oldID);
         commit("tracks/updateGenreOccurence", { newID, oldID }, { root: true });
         commit("removeGenre", oldID);
         return true;

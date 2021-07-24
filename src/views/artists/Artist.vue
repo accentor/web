@@ -58,7 +58,7 @@ import { mapActions, mapGetters, mapState } from "vuex";
 import AlbumCard from "../../components/AlbumCard";
 import ArtistActions from "../../components/ArtistActions";
 import TracksTable from "../../components/TracksTable";
-import { AlbumsScope, TracksScope } from "@/api/scopes";
+import { AlbumsScope, TracksScope } from "@accentor/api-client-js";
 
 export default {
   name: "Artist",

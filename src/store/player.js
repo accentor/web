@@ -1,4 +1,4 @@
-import baseURL from "../api/base_url";
+import { baseURL } from "@/api";
 
 const repeatModes = ["off", "all", "single"];
 
