@@ -189,6 +189,10 @@ export default {
   },
   watch: {
     async currentTrackURL() {
+      if (this.currentTrackURL === null) {
+        return;
+      }
+
       this.$refs.audio.src = this.currentTrackURL;
       if (this.playing) {
         try {
