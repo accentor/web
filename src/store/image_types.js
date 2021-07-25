@@ -1,5 +1,5 @@
 import Vue from "vue";
-import { index, create, destroy, update } from "../api/image_types";
+import api from "@/api";
 import { fetchAll } from "./actions";
 
 export default {
@@ -15,7 +15,9 @@ export default {
       for (let id in oldImageTypes) {
         state.imageTypes[id] = oldImageTypes[id];
       }
+      const loaded = new Date();
       for (let obj of payload) {
+        obj.loaded = loaded;
         state.imageTypes[obj.id] = obj;
       }
     },
@@ -46,7 +48,7 @@ export default {
   },
   actions: {
     async index({ commit, rootState }) {
-      const generator = index(rootState.auth);
+      const generator = api.image_types.index(rootState.auth);
       try {
         await fetchAll(commit, generator, "setImageTypes");
         return true;
@@ -57,7 +59,9 @@ export default {
     },
     async create({ commit, rootState }, newImageType) {
       try {
-        const result = await create(rootState.auth, newImageType);
+        const result = await api.image_types.create(rootState.auth, {
+          image_type: newImageType,
+        });
         commit("setImageType", { id: result.id, imageType: result });
         return result.id;
       } catch (error) {
@@ -67,7 +71,9 @@ export default {
     },
     async update({ commit, rootState }, { id, newImageType }) {
       try {
-        const result = await update(rootState.auth, id, newImageType);
+        const result = await api.image_types.update(rootState.auth, id, {
+          image_type: newImageType,
+        });
         commit("setImageType", { id, imageType: result });
         return true;
       } catch (error) {
@@ -77,7 +83,7 @@ export default {
     },
     async destroy({ commit, rootState }, id) {
       try {
-        await destroy(rootState.auth, id);
+        await api.image_types.destroy(rootState.auth, id);
         commit("removeImageType", id);
         return true;
       } catch (error) {

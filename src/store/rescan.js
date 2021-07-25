@@ -1,4 +1,4 @@
-import { show, start } from "../api/rescan";
+import api from "@/api";
 
 export default {
   namespaced: true,
@@ -27,7 +27,7 @@ export default {
         commit("setLoading", true);
         let result = null;
         do {
-          result = await show(rootState.auth);
+          result = await api.rescan.show(rootState.auth);
           commit("setRescan", result);
           await new Promise((resolve) => setTimeout(resolve, 1000));
         } while (
@@ -45,7 +45,7 @@ export default {
     async start({ commit, dispatch, rootState }) {
       commit("setLastClick", new Date());
       try {
-        const result = await start(rootState.auth);
+        const result = await api.rescan.start(rootState.auth);
         result.running = true;
         commit("setRescan", result);
         setTimeout(() => dispatch("show"), 1000);

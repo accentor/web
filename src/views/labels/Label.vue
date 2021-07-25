@@ -58,7 +58,7 @@ import AlbumCard from "../../components/AlbumCard";
 import LabelActions from "@/components/LabelActions";
 import Paginated from "../../mixins/Paginated";
 import Searchable from "../../mixins/Searchable";
-import { AlbumsScope } from "@/api/scopes";
+import { AlbumsScope } from "@accentor/api-client-js";
 
 export default {
   name: "Label",

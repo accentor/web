@@ -1,5 +1,5 @@
 import Vue from "vue";
-import { index, create, destroy } from "../api/locations";
+import api from "@/api";
 import { fetchAll } from "./actions";
 
 export default {
@@ -15,7 +15,9 @@ export default {
       for (let id in oldLocations) {
         state.locations[id] = oldLocations[id];
       }
+      const loaded = new Date();
       for (let obj of payload) {
+        obj.loaded = loaded;
         state.locations[obj.id] = obj;
       }
     },
@@ -46,7 +48,7 @@ export default {
   },
   actions: {
     async index({ commit, rootState }) {
-      const generator = index(rootState.auth);
+      const generator = api.locations.index(rootState.auth);
       try {
         await fetchAll(commit, generator, "setLocations");
         return true;
@@ -57,7 +59,9 @@ export default {
     },
     async create({ commit, rootState }, newLocation) {
       try {
-        const result = await create(rootState.auth, newLocation);
+        const result = await api.locations.create(rootState.auth, {
+          location: newLocation,
+        });
         commit("setLocation", { id: result.id, location: result });
         return result.id;
       } catch (error) {
@@ -67,7 +71,7 @@ export default {
     },
     async destroy({ commit, rootState }, id) {
       try {
-        await destroy(rootState.auth, id);
+        await api.locations.destroy(rootState.auth, id);
         commit("removeLocation", id);
         return true;
       } catch (error) {

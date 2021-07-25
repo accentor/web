@@ -1,13 +1,5 @@
 import Vue from "vue";
-import {
-  index,
-  create,
-  read,
-  destroy,
-  update,
-  destroyEmpty,
-  merge,
-} from "../api/labels";
+import api from "@/api";
 import { fetchAll } from "./actions";
 import { compareStrings } from "../comparators";
 
@@ -24,7 +16,9 @@ export default {
       for (let id in oldLabels) {
         state.labels[id] = oldLabels[id];
       }
+      const loaded = new Date();
       for (let obj of payload) {
+        obj.loaded = loaded;
         state.labels[obj.id] = obj;
       }
     },
@@ -55,7 +49,7 @@ export default {
   },
   actions: {
     async index({ commit, rootState }) {
-      const generator = index(rootState.auth);
+      const generator = api.labels.index(rootState.auth);
       try {
         await this.labelsRestored;
         await fetchAll(commit, generator, "setLabels");
@@ -67,7 +61,9 @@ export default {
     },
     async create({ commit, rootState }, newLabel) {
       try {
-        const result = await create(rootState.auth, newLabel);
+        const result = await api.labels.create(rootState.auth, {
+          label: newLabel,
+        });
         commit("setLabel", { id: result.id, label: result });
         return result.id;
       } catch (error) {
@@ -77,7 +73,7 @@ export default {
     },
     async read({ commit, rootState }, id) {
       try {
-        const result = await read(rootState.auth, id);
+        const result = await api.labels.read(rootState.auth, id);
         await this.labelsRestored;
         commit("setLabel", { id, label: result });
         return result.id;
@@ -88,7 +84,9 @@ export default {
     },
     async update({ commit, rootState }, { id, newLabel }) {
       try {
-        const result = await update(rootState.auth, id, newLabel);
+        const result = await api.labels.update(rootState.auth, id, {
+          label: newLabel,
+        });
         commit("setLabel", { id, label: result });
         return true;
       } catch (error) {
@@ -98,7 +96,7 @@ export default {
     },
     async destroy({ commit, rootState }, id) {
       try {
-        await destroy(rootState.auth, id);
+        await api.labels.destroy(rootState.auth, id);
         commit("albums/removeLabelOccurence", id, { root: true });
         commit("removeLabel", id);
         return true;
@@ -109,7 +107,7 @@ export default {
     },
     async destroyEmpty({ commit, dispatch, rootState }) {
       try {
-        await destroyEmpty(rootState.auth);
+        await api.labels.destroyEmpty(rootState.auth);
         await dispatch("index");
         return true;
       } catch (error) {
@@ -119,7 +117,7 @@ export default {
     },
     async merge({ commit, rootState }, { newID, oldID }) {
       try {
-        await merge(rootState.auth, newID, oldID);
+        await api.labels.merge(rootState.auth, newID, oldID);
         commit("albums/updateLabelOccurence", { newID, oldID }, { root: true });
         commit("removeLabel", oldID);
         return true;

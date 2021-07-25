@@ -1,5 +1,5 @@
 import Vue from "vue";
-import { index, create, destroy, update } from "../api/codecs";
+import api from "@/api";
 import { fetchAll } from "./actions";
 
 export default {
@@ -15,7 +15,9 @@ export default {
       for (let id in oldCodecs) {
         state.codecs[id] = oldCodecs[id];
       }
+      const loaded = new Date();
       for (let obj of payload) {
+        obj.loaded = loaded;
         state.codecs[obj.id] = obj;
       }
     },
@@ -46,7 +48,7 @@ export default {
   },
   actions: {
     async index({ commit, rootState }) {
-      const generator = index(rootState.auth);
+      const generator = api.codecs.index(rootState.auth);
       try {
         await fetchAll(commit, generator, "setCodecs");
         return true;
@@ -57,7 +59,9 @@ export default {
     },
     async create({ commit, rootState }, newCodec) {
       try {
-        const result = await create(rootState.auth, newCodec);
+        const result = await api.codecs.create(rootState.auth, {
+          codec: newCodec,
+        });
         commit("setCodec", { id: result.id, codec: result });
         return result.id;
       } catch (error) {
@@ -67,7 +71,9 @@ export default {
     },
     async update({ commit, rootState }, { id, newCodec }) {
       try {
-        const result = await update(rootState.auth, id, newCodec);
+        const result = await api.codecs.update(rootState.auth, id, {
+          codec: newCodec,
+        });
         commit("setCodec", { id, codec: result });
         return true;
       } catch (error) {
@@ -77,7 +83,7 @@ export default {
     },
     async destroy({ commit, rootState }, id) {
       try {
-        await destroy(rootState.auth, id);
+        await api.codecs.destroy(rootState.auth, id);
         commit("removeCodec", id);
         return true;
       } catch (error) {

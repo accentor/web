@@ -1,16 +1,8 @@
 import Vue from "vue";
-import {
-  index,
-  create,
-  read,
-  destroy,
-  update,
-  destroyEmpty,
-  merge,
-} from "../api/artists";
+import api from "@/api";
 import { fetchAll } from "./actions";
 import { compareStrings } from "../comparators";
-import { ArtistsScope } from "../api/scopes";
+import { ArtistsScope } from "@accentor/api-client-js";
 
 export default {
   namespaced: true,
@@ -25,7 +17,9 @@ export default {
       for (let id in oldArtists) {
         state.artists[id] = oldArtists[id];
       }
+      const loaded = new Date();
       for (let artist of payload) {
+        artist.loaded = loaded;
         state.artists[artist.id] = artist;
       }
     },
@@ -56,7 +50,7 @@ export default {
   },
   actions: {
     async index({ commit, rootState }, scope = new ArtistsScope()) {
-      const generator = index(rootState.auth, scope);
+      const generator = api.artists.index(rootState.auth, scope);
       try {
         await this.artistsRestored;
         await fetchAll(commit, generator, "setArtists", scope);
@@ -68,7 +62,9 @@ export default {
     },
     async create({ commit, rootState }, newArtist) {
       try {
-        const result = await create(rootState.auth, newArtist);
+        const result = await api.artists.create(rootState.auth, {
+          artist: newArtist,
+        });
         commit("setArtist", { id: result.id, artist: result });
         return result.id;
       } catch (error) {
@@ -78,7 +74,7 @@ export default {
     },
     async read({ commit, rootState }, id) {
       try {
-        const result = await read(rootState.auth, id);
+        const result = await api.artists.read(rootState.auth, id);
         await this.artistsRestored;
         commit("setArtist", { id, artist: result });
         return result.id;
@@ -89,7 +85,9 @@ export default {
     },
     async update({ commit, rootState }, { id, newArtist }) {
       try {
-        const result = await update(rootState.auth, id, newArtist);
+        const result = await api.artists.update(rootState.auth, id, {
+          artist: newArtist,
+        });
         commit("setArtist", { id, artist: result });
         return true;
       } catch (error) {
@@ -99,7 +97,7 @@ export default {
     },
     async destroy({ commit, rootState }, id) {
       try {
-        await destroy(rootState.auth, id);
+        await api.artists.destroy(rootState.auth, id);
         commit("albums/removeArtistOccurence", id, { root: true });
         commit("tracks/removeArtistOccurence", id, { root: true });
         commit("removeArtist", id);
@@ -111,7 +109,7 @@ export default {
     },
     async destroyEmpty({ commit, dispatch, rootState }) {
       try {
-        await destroyEmpty(rootState.auth);
+        await api.artists.destroyEmpty(rootState.auth);
         await dispatch("index");
         return true;
       } catch (error) {
@@ -121,7 +119,7 @@ export default {
     },
     async merge({ commit, rootState }, { newID, oldID }) {
       try {
-        await merge(rootState.auth, newID, oldID);
+        await api.artists.merge(rootState.auth, newID, oldID);
         commit(
           "tracks/updateArtistOccurence",
           { newID, oldID },

@@ -1,5 +1,5 @@
 import Vue from "vue";
-import { index, create, destroy } from "../api/auth_tokens";
+import api from "@/api";
 import { fetchAll } from "./actions";
 
 export default {
@@ -31,7 +31,9 @@ export default {
       for (let id in oldAuthTokens) {
         state.authTokens[id] = oldAuthTokens[id];
       }
+      const loaded = new Date();
       for (let obj of payload) {
+        obj.loaded = loaded;
         state.authTokens[obj.id] = obj;
       }
     },
@@ -54,7 +56,7 @@ export default {
   actions: {
     async login({ commit }, data) {
       try {
-        const result = await create(data);
+        const result = await api.auth_tokens.create(data);
         commit("login", result);
         return true;
       } catch (error) {
@@ -64,7 +66,7 @@ export default {
     },
     async logout({ commit, state }) {
       try {
-        await destroy(state, state.id);
+        await api.auth_tokens.destroy(state, state.id);
         commit("logout");
         return true;
       } catch (error) {
@@ -73,7 +75,7 @@ export default {
       }
     },
     async index({ commit, rootState }) {
-      const generator = index(rootState.auth);
+      const generator = api.auth_tokens.index(rootState.auth);
       try {
         await fetchAll(commit, generator, "setAuthTokens");
         return true;
@@ -84,7 +86,7 @@ export default {
     },
     async destroy({ commit, rootState }, id) {
       try {
-        await destroy(rootState.auth, id);
+        await api.auth_tokens.destroy(rootState.auth, id);
         commit("removeAuthToken", id);
         return true;
       } catch (error) {

@@ -1,4 +1,4 @@
-import { index, create } from "../api/plays";
+import api from "@/api";
 import { fetchAll } from "./actions";
 
 export default {
@@ -14,7 +14,9 @@ export default {
       for (let id in oldPlays) {
         state.plays[id] = oldPlays[id];
       }
+      const loaded = new Date();
       for (let play of payload) {
+        play.loaded = loaded;
         state.plays[play.id] = play;
       }
     },
@@ -42,7 +44,7 @@ export default {
   },
   actions: {
     async index({ commit, rootState }) {
-      const generator = index(rootState.auth);
+      const generator = api.plays.index(rootState.auth);
       try {
         await this.playsRestored;
         await fetchAll(commit, generator, "setPlays");
@@ -54,9 +56,11 @@ export default {
     },
     async create({ commit, rootState }, track_id) {
       try {
-        const result = await create(rootState.auth, {
-          track_id,
-          played_at: new Date(),
+        const result = await api.plays.create(rootState.auth, {
+          play: {
+            track_id,
+            played_at: new Date(),
+          },
         });
         commit("setPlay", { id: result.id, play: result });
         return result.id;

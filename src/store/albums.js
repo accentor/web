@@ -1,18 +1,11 @@
 import Vue from "vue";
-import {
-  index,
-  create,
-  read,
-  destroy,
-  update,
-  destroyEmpty,
-} from "../api/albums";
+import api from "@/api";
 import { fetchAll } from "./actions";
 import {
   compareAlbumsByReleaseFirst,
   compareAlbumsByTitleFirst,
 } from "../comparators";
-import { AlbumsScope } from "../api/scopes";
+import { AlbumsScope } from "@accentor/api-client-js";
 
 export default {
   namespaced: true,
@@ -27,7 +20,9 @@ export default {
       for (let id in oldAlbums) {
         state.albums[id] = oldAlbums[id];
       }
+      const loaded = new Date();
       for (let album of payload) {
+        album.loaded = loaded;
         state.albums[album.id] = album;
       }
     },
@@ -106,7 +101,7 @@ export default {
   },
   actions: {
     async index({ commit, rootState }, scope = new AlbumsScope()) {
-      const generator = index(rootState.auth, scope);
+      const generator = api.albums.index(rootState.auth, scope);
       try {
         await this.albumsRestored;
         await fetchAll(commit, generator, "setAlbums", scope);
@@ -118,7 +113,9 @@ export default {
     },
     async create({ commit, rootState }, newAlbum) {
       try {
-        const result = await create(rootState.auth, newAlbum);
+        const result = await api.albums.create(rootState.auth, {
+          album: newAlbum,
+        });
         commit("setAlbum", { id: result.id, album: result });
         return result.id;
       } catch (error) {
@@ -128,7 +125,7 @@ export default {
     },
     async read({ commit, rootState }, id) {
       try {
-        const result = await read(rootState.auth, id);
+        const result = await api.albums.read(rootState.auth, id);
         await this.albumsRestored;
         commit("setAlbum", { id, album: result });
         return result.id;
@@ -139,7 +136,9 @@ export default {
     },
     async update({ commit, rootState }, { id, newAlbum }) {
       try {
-        const result = await update(rootState.auth, id, newAlbum);
+        const result = await api.albums.update(rootState.auth, id, {
+          album: newAlbum,
+        });
         commit("setAlbum", { id, album: result });
         return true;
       } catch (error) {
@@ -149,7 +148,7 @@ export default {
     },
     async destroy({ commit, rootState }, id) {
       try {
-        await destroy(rootState.auth, id);
+        await api.albums.destroy(rootState.auth, id);
         commit("removeAlbum", id);
         return true;
       } catch (error) {
@@ -159,7 +158,7 @@ export default {
     },
     async destroyEmpty({ commit, dispatch, rootState }) {
       try {
-        await destroyEmpty(rootState.auth);
+        await api.albums.destroyEmpty(rootState.auth);
         await dispatch("index");
         return true;
       } catch (error) {
