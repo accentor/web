@@ -14,7 +14,9 @@ export default {
       for (let id in oldPlays) {
         state.plays[id] = oldPlays[id];
       }
+      const loaded = new Date();
       for (let play of payload) {
+        play.loaded = loaded;
         state.plays[play.id] = play;
       }
     },

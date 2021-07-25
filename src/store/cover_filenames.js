@@ -15,7 +15,9 @@ export default {
       for (let id in oldCoverFilenames) {
         state.coverFilenames[id] = oldCoverFilenames[id];
       }
+      const loaded = new Date();
       for (let obj of payload) {
+        obj.loaded = loaded;
         state.coverFilenames[obj.id] = obj;
       }
     },

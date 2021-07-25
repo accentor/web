@@ -16,7 +16,9 @@ export default {
       for (let id in oldLabels) {
         state.labels[id] = oldLabels[id];
       }
+      const loaded = new Date();
       for (let obj of payload) {
+        obj.loaded = loaded;
         state.labels[obj.id] = obj;
       }
     },

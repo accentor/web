@@ -16,7 +16,9 @@ export default {
       for (let id in oldGenres) {
         state.genres[id] = oldGenres[id];
       }
+      const loaded = new Date();
       for (let obj of payload) {
+        obj.loaded = loaded;
         state.genres[obj.id] = obj;
       }
     },

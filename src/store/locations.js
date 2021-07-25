@@ -15,7 +15,9 @@ export default {
       for (let id in oldLocations) {
         state.locations[id] = oldLocations[id];
       }
+      const loaded = new Date();
       for (let obj of payload) {
+        obj.loaded = loaded;
         state.locations[obj.id] = obj;
       }
     },

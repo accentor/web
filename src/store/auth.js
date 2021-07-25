@@ -31,7 +31,9 @@ export default {
       for (let id in oldAuthTokens) {
         state.authTokens[id] = oldAuthTokens[id];
       }
+      const loaded = new Date();
       for (let obj of payload) {
+        obj.loaded = loaded;
         state.authTokens[obj.id] = obj;
       }
     },

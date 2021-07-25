@@ -17,7 +17,9 @@ export default {
       for (let id in oldArtists) {
         state.artists[id] = oldArtists[id];
       }
+      const loaded = new Date();
       for (let artist of payload) {
+        artist.loaded = loaded;
         state.artists[artist.id] = artist;
       }
     },

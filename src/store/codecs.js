@@ -15,7 +15,9 @@ export default {
       for (let id in oldCodecs) {
         state.codecs[id] = oldCodecs[id];
       }
+      const loaded = new Date();
       for (let obj of payload) {
+        obj.loaded = loaded;
         state.codecs[obj.id] = obj;
       }
     },

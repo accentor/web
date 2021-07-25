@@ -16,7 +16,9 @@ export default {
       for (let id in oldUsers) {
         state.users[id] = oldUsers[id];
       }
+      const loaded = new Date();
       for (let user of payload) {
+        user.loaded = loaded;
         state.users[user.id] = user;
       }
     },

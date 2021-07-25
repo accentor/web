@@ -20,7 +20,9 @@ export default {
       for (let id in oldAlbums) {
         state.albums[id] = oldAlbums[id];
       }
+      const loaded = new Date();
       for (let album of payload) {
+        album.loaded = loaded;
         state.albums[album.id] = album;
       }
     },

@@ -15,7 +15,9 @@ export default {
       for (let id in oldImageTypes) {
         state.imageTypes[id] = oldImageTypes[id];
       }
+      const loaded = new Date();
       for (let obj of payload) {
+        obj.loaded = loaded;
         state.imageTypes[obj.id] = obj;
       }
     },
