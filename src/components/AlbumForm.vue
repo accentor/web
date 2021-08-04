@@ -108,7 +108,7 @@
           v-if="editionInformation"
           clearable
         />
-        <FilePicker
+        <ImagePicker
           v-model="newAlbum.image"
           :currentImg="album.image250"
           :placeholder="require('@mdi/svg/svg/album.svg')"
@@ -236,11 +236,11 @@
 
 <script>
 import { mapGetters, mapActions, mapState } from "vuex";
-import FilePicker from "./FilePicker";
+import ImagePicker from "./ImagePicker";
 
 export default {
   name: "AlbumForm",
-  components: { FilePicker },
+  components: { ImagePicker },
   props: { album: { type: Object, default: null } },
   data() {
     return {

@@ -16,7 +16,7 @@
           :rules="[(v) => !!v || $t('errors.artists.name-blank')]"
           required
         />
-        <FilePicker
+        <ImagePicker
           v-model="newArtist.image"
           :currentImg="artist.image250"
           :placeholder="require('@mdi/svg/svg/account-music.svg')"
@@ -36,11 +36,11 @@
 
 <script>
 import { mapActions } from "vuex";
-import FilePicker from "./FilePicker";
+import ImagePicker from "./ImagePicker";
 
 export default {
   name: "ArtistForm",
-  components: { FilePicker },
+  components: { ImagePicker },
   props: { artist: { type: Object, default: null } },
   data() {
     return {
