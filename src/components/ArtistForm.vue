@@ -16,7 +16,11 @@
           :rules="[(v) => !!v || $t('errors.artists.name-blank')]"
           required
         />
-        <FilePicker v-model="newArtist.image" />
+        <FilePicker
+          v-model="newArtist.image"
+          :currentImg="artist.image250"
+          :placeholder="require('@mdi/svg/svg/account-music.svg')"
+        />
         <VCheckbox
           v-if="artist && artist.review_comment !== null"
           v-model="clear_review_comment"

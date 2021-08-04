@@ -108,7 +108,11 @@
           v-if="editionInformation"
           clearable
         />
-        <FilePicker v-model="newAlbum.image" />
+        <FilePicker
+          v-model="newAlbum.image"
+          :currentImg="album.image250"
+          :placeholder="require('@mdi/svg/svg/album.svg')"
+        />
         <h4 class="text-subtitle-1">{{ $tc("music.artists", 2) }}</h4>
         <VRow
           :key="`artist-${index}`"
@@ -292,6 +296,9 @@ export default {
     ...mapGetters("labels", {
       sortedLabels: "labelsByName",
     }),
+    imagePreviewSrc() {
+      return this.newAlbum.image?.data ?? this.album?.image500;
+    },
   },
   methods: {
     ...mapActions("albums", ["create", "read", "update"]),
