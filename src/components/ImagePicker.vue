@@ -15,15 +15,15 @@
       <VCol class="flex-column flex-grow-0">
         <VImg
           :src="previewSrc"
-          height="250"
-          width="250"
+          height="200"
+          width="200"
           contain
           v-if="value && value.data"
         />
         <VImg
           :src="currentImg"
-          height="250"
-          width="250"
+          height="200"
+          width="200"
           contain
           v-else-if="value === null && currentImg"
         />
@@ -31,8 +31,8 @@
           :src="placeholder"
           :aspect-ratio="1"
           class="grey lighten-3"
-          height="250"
-          width="250"
+          height="200"
+          width="200"
           contain
           v-else
         />
