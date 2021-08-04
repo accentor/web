@@ -1,6 +1,6 @@
 <template>
   <VRow no-gutters align="center" justify="center">
-    <VCol md="4" sm="8" cols="12" @change.once="isDirty = true">
+    <VCol lg="6" sm="8" cols="12" @change.once="isDirty = true">
       <VAlert
         v-if="artist"
         :value="artist.review_comment !== null"
