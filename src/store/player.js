@@ -154,7 +154,10 @@ export default {
     currentTrackURL(state, getters, rootState) {
       const secret = rootState.auth.secret;
       const device_id = rootState.auth.device_id;
-      const params = `/audio?secret=${secret}&device_id=${device_id}`;
+      let params = `/audio?secret=${secret}&device_id=${device_id}`;
+      if (rootState.userSettings.codecConversion) {
+        params += `&codec_conversion_id=${rootState.userSettings.codecConversion}`;
+      }
       const tracks = `${baseURL}/tracks/`;
       return (
         getters.currentTrack && `${tracks}${getters.currentTrack.id}${params}`
