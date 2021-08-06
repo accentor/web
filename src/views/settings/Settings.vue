@@ -11,7 +11,7 @@
           <VSelect
             v-model="newCodecConversion"
             :items="codecConversions"
-            label="Stream audio in"
+            :label="$t('settings.codec-conversion.label')"
           ></VSelect>
           <VBtn color="primary" class="ma-2" type="submit">
             {{ $t("common.change-settings") }}
@@ -74,7 +74,7 @@ export default {
           });
           return acc;
         },
-        [{ text: "Original", value: null }]
+        [{ text: this.$t("settings.codec-conversion.original"), value: null }]
       );
     },
   },
