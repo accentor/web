@@ -2,11 +2,16 @@
   <VContainer class="fill-height" fluid v-if="user">
     <VRow no-gutters align="center" justify="center">
       <VCol lg="4" md="6" sm="8" cols="12" class="px-3">
-        <VForm @submit.prevent="submitLocale">
+        <VForm @submit.prevent="submitSettings">
           <VSelect
             v-model="newLocale"
             :items="langs"
             label="Language"
+          ></VSelect>
+          <VSelect
+            v-model="newCodecConversion"
+            :items="codecConversions"
+            label="Stream audio in"
           ></VSelect>
           <VBtn color="primary" class="ma-2" type="submit">
             {{ $t("common.change-settings") }}
@@ -43,6 +48,7 @@ export default {
         { value: "en", text: "English" },
         { value: "nl", text: "Nederlands" },
       ],
+      newCodecConversion: null,
     };
   },
   created() {
@@ -58,18 +64,34 @@ export default {
   computed: {
     ...mapGetters("auth", { user: "currentUser" }),
     ...mapGetters("auth", ["authTokens"]),
-    ...mapState("userSettings", ["locale"]),
+    ...mapState("userSettings", ["codecConversion", "locale"]),
+    codecConversions() {
+      return this.$store.getters["codecConversions/codecConversions"].reduce(
+        (acc, cc) => {
+          acc.push({
+            text: cc.name,
+            value: cc.id,
+          });
+          return acc;
+        },
+        [{ text: "Original", value: null }]
+      );
+    },
   },
   methods: {
-    ...mapMutations("userSettings", ["setLocale"]),
+    ...mapMutations("userSettings", ["setSettings"]),
     fillValues() {
       if (this.locale) {
         this.newLocale = this.locale;
       }
+      if (this.codecConversion) {
+        this.newCodecConversion = this.codecConversion;
+      }
     },
-    submitLocale: function () {
-      this.setLocale({
+    submitSettings: function () {
+      this.setSettings({
         locale: this.newLocale,
+        codecConversion: this.newCodecConversion,
       });
     },
   },

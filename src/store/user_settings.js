@@ -2,10 +2,12 @@ export default {
   namespaced: true,
   state: {
     locale: null,
+    codecConversion: null,
   },
   mutations: {
-    setLocale(state, payload) {
+    setSettings(state, payload) {
       state.locale = payload.locale;
+      state.codecConversion = payload.codecConversion;
     },
   },
 };
