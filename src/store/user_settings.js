@@ -2,12 +2,19 @@ export default {
   namespaced: true,
   state: {
     locale: null,
-    codecConversion: null,
+    codecConversionID: null,
   },
   mutations: {
     setSettings(state, payload) {
       state.locale = payload.locale;
-      state.codecConversion = payload.codecConversion;
+      state.codecConversionID = payload.codecConversionID;
+    },
+  },
+  getters: {
+    codecConversion: (state, getters, rootState) => {
+      return rootState.codecConversions.codecConversions[
+        state.codecConversionID
+      ];
     },
   },
 };

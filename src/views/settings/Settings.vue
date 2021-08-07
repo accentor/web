@@ -64,7 +64,8 @@ export default {
   computed: {
     ...mapGetters("auth", { user: "currentUser" }),
     ...mapGetters("auth", ["authTokens"]),
-    ...mapState("userSettings", ["codecConversion", "locale"]),
+    ...mapGetters("userSettings", ["codecConversion"]),
+    ...mapState("userSettings", ["locale"]),
     codecConversions() {
       return this.$store.getters["codecConversions/codecConversions"].reduce(
         (acc, cc) => {
@@ -85,13 +86,13 @@ export default {
         this.newLocale = this.locale;
       }
       if (this.codecConversion) {
-        this.newCodecConversion = this.codecConversion;
+        this.newCodecConversion = this.codecConversion.id;
       }
     },
     submitSettings: function () {
       this.setSettings({
         locale: this.newLocale,
-        codecConversion: this.newCodecConversion,
+        codecConversionID: this.newCodecConversion,
       });
     },
   },
