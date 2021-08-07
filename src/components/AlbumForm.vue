@@ -296,9 +296,6 @@ export default {
     ...mapGetters("labels", {
       sortedLabels: "labelsByName",
     }),
-    imagePreviewSrc() {
-      return this.newAlbum.image?.data ?? this.album?.image500;
-    },
   },
   methods: {
     ...mapActions("albums", ["create", "read", "update"]),
