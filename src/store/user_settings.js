@@ -1,7 +1,7 @@
 export default {
   namespaced: true,
   state: {
-    locale: null,
+    locale: "en",
     codecConversionID: null,
   },
   mutations: {
