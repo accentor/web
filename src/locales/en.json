@@ -334,6 +334,12 @@
 		"merge": "Merge {obj}"
 	},
 	"search": "Search",
+	"settings": {
+		"codec-conversion": {
+			"label": "Stream audio in",
+			"original": "Original quality"
+		}
+	},
 	"users": {
 		"auth": {
 			"destroy-selected": "Delete selected",

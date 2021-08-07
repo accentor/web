@@ -1,41 +1,41 @@
 <template>
-  <div class="footer-container" v-click-outside="clickOutside">
+  <div class="player" v-click-outside="clickOutside">
     <audio ref="audio" @error="onAudioError" />
-    <div class="tracks-list-container" v-if="open">
-      <table class="tracks-list">
+    <div class="play-queue" v-if="open">
+      <table class="play-queue__table">
         <Draggable
           tag="tbody"
           @end="updatePlaylist"
           handle="[data-draggable=handle]"
         >
-          <tr
-            v-for="(track, index) of playlistTracks"
-            :key="track.id"
-            class="track"
-          >
-            <td class="px-0 icon">
+          <tr v-for="(track, index) of playlistTracks" :key="track.id">
+            <td class="play-queue__cell play-queue__cell--icon">
               <VBtn small icon text class="ma-2" data-draggable="handle">
                 <VIcon>mdi-drag-horizontal-variant</VIcon>
               </VBtn>
             </td>
-            <td class="px-0 icon-small">
+            <td class="play-queue__cell play-queue__cell--icon-small">
               <VIcon v-if="index === current">mdi-volume-high</VIcon>
             </td>
-            <td class="pl-3">
+            <td class="pl-3 play-queue__cell">
               <a @click.stop.prevent="setCurrent(index)">{{ track.title }}</a>
             </td>
-            <td>
+            <td class="play-queue__cell">
               <RouterLink
                 :to="{ name: 'album', params: { id: track.album_id } }"
                 >{{ albums[track.album_id].title }}</RouterLink
               >
             </td>
-            <td class="text-right">{{ track.length | length }}</td>
-            <td>
+            <td class="play-queue__cell text-right">
+              {{ track.length | length }}
+            </td>
+            <td class="play-queue__cell">
               <TrackArtists :track="track" />
             </td>
-            <td>{{ albums[track.album_id].release }}</td>
-            <td class="px-0 icon">
+            <td class="play-queue__cell">
+              {{ albums[track.album_id].release }}
+            </td>
+            <td class="play-queue__cell play-queue__cell--icon">
               <VBtn
                 small
                 icon
@@ -51,94 +51,83 @@
       </table>
     </div>
 
-    <VRow class="player-controls my-0" align="center">
-      <div class="flex player-left">
-        <div class="content">
-          <VBtn
-            @click="prevTrack"
-            :disabled="!playlistTracks.length || current === -1"
-            class="not-on-small ma-2"
-            icon
-            small
-          >
-            <VIcon>mdi-skip-previous</VIcon>
-          </VBtn>
-          <VBtn
-            @click="setPlaying(!playing)"
-            :disabled="!playlistTracks.length"
-            icon
-            class="ma-2"
-          >
-            <VIcon large>{{ playing ? "mdi-pause" : "mdi-play" }}</VIcon>
-          </VBtn>
-          <VBtn
-            @click="nextTrack"
-            :disabled="
-              !playlistTracks.length ||
-              current === playlistTracks.length - 1 ||
-              current === -1
-            "
-            class="not-on-small ma-2"
-            icon
-            small
-          >
-            <VIcon>mdi-skip-next</VIcon>
-          </VBtn>
-        </div>
+    <VRow class="controls" align="center">
+      <div class="controls__left">
+        <VBtn
+          @click="prevTrack"
+          :disabled="!playlistTracks.length || current === -1"
+          class="controls__button controls__button--sm-and-up"
+          icon
+          small
+        >
+          <VIcon>mdi-skip-previous</VIcon>
+        </VBtn>
+        <VBtn
+          @click="setPlaying(!playing)"
+          :disabled="!playlistTracks.length"
+          icon
+          class="controls__button"
+        >
+          <VIcon large>{{ playing ? "mdi-pause" : "mdi-play" }}</VIcon>
+        </VBtn>
+        <VBtn
+          @click="nextTrack"
+          :disabled="
+            !playlistTracks.length ||
+            current === playlistTracks.length - 1 ||
+            current === -1
+          "
+          class="controls__button controls__button--sm-and-up"
+          icon
+          small
+        >
+          <VIcon>mdi-skip-next</VIcon>
+        </VBtn>
       </div>
-      <div class="flex center">
-        <div class="content">
-          <div class="not-on-small">
-            <VRow class="flex-column">
-              <VSlider
-                :always-dirty="!!currentTrack"
-                :max="currentTrack ? currentTrack.length : 1"
-                :disabled="!currentTrack || currentTrack.length === null"
-                :value="seekTime"
-                v-on:input="seek"
-                hide-details
-              />
-            </VRow>
-          </div>
-          <VRow class="play-time flex-column">
-            <span>
-              {{ seekTime | length }} /
-              {{ currentTrack ? currentTrack.length : 0 | length }}
-            </span>
-          </VRow>
-        </div>
+      <div class="controls__time">
+        <VSlider
+          class="controls__time-slider"
+          :always-dirty="!!currentTrack"
+          :max="currentTrack ? currentTrack.length : 1"
+          :disabled="!currentTrack || currentTrack.length === null"
+          :value="seekTime"
+          v-on:input="seek"
+          hide-details
+        />
+        <span class="controls__time-display">
+          {{ seekTime | length }} /
+          {{ currentTrack ? currentTrack.length : 0 | length }}
+        </span>
       </div>
-      <div class="flex player-right">
-        <div class="content">
-          <VBtn
-            @click="open = !open"
-            icon
-            :disabled="this.playlistTracks.length === 0"
-            class="ma-2"
-          >
-            <VIcon>{{ open ? "mdi-chevron-down" : "mdi-chevron-up" }}</VIcon>
-          </VBtn>
-          <VSlider
-            :readonly="muted"
-            :prepend-icon="audioIcon"
-            hide-details
-            v-model="volume"
-            class="not-on-small volume-slider ma-2"
-            v-on:click:prepend="muted = !muted"
-          />
-          <VBtn @click="shuffle" icon class="ma-2">
-            <VIcon>mdi-shuffle</VIcon>
-          </VBtn>
-          <VBtn
-            :color="repeatModeColor"
-            @click="nextRepeatMode"
-            text
-            icon
-            class="ma-2"
-          >
-            <VIcon>{{ repeatModeIcon }}</VIcon>
-          </VBtn>
-        </div>
+      <div class="controls__right">
+        <VBtn
+          :color="repeatModeColor"
+          @click="nextRepeatMode"
+          text
+          icon
+          class="controls__button"
+        >
+          <VIcon>{{ repeatModeIcon }}</VIcon>
+        </VBtn>
+        <VBtn @click="shuffle" icon class="controls__button">
+          <VIcon>mdi-shuffle</VIcon>
+        </VBtn>
+        <VSlider
+          :readonly="muted"
+          :prepend-icon="audioIcon"
+          hide-details
+          v-model="volume"
+          class="controls__volume-slider"
+          v-on:click:prepend="muted = !muted"
+        />
+        <VBtn
+          @click="open = !open"
+          icon
+          :disabled="this.playlistTracks.length === 0"
+          class="controls__button"
+        >
+          <VIcon>{{ open ? "mdi-chevron-down" : "mdi-chevron-up" }}</VIcon>
+        </VBtn>
       </div>
     </VRow>
   </div>
@@ -355,104 +344,135 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.footer-container {
+@import "~vuetify/src/styles/styles.sass";
+
+.player {
   width: 100%;
   border-top: solid thin rgba(0, 0, 0, 0.12);
 }
 
-.player-controls {
-  .flex {
-    flex: 1;
+.controls {
+  margin-top: 0;
+  margin-bottom: 0;
+
+  &__left {
     display: flex;
-    justify-content: center;
-
-    > .content {
-      display: inline-flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .not-on-small {
-      @media (max-width: 750px) {
-        display: none;
-      }
-    }
-  }
-
-  .player-left {
     flex-shrink: 0;
-    flex-grow: 2;
-
-    .content {
-      margin-right: auto;
-      padding-left: 10px;
+    flex-grow: 1;
+    justify-content: flex-start;
+    align-items: center;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-right: auto;
+    @media (min-width: map-get($grid-breakpoints, "md")) {
       padding-right: 20px;
     }
   }
 
-  .center {
-    flex-grow: 3;
+  &__button {
+    margin: 4px;
 
-    .content {
-      flex-grow: 1;
+    @media (min-width: map-get($grid-breakpoints, "md")) {
+      margin: 8px;
+    }
 
-      .not-on-small {
-        flex: 1;
-      }
-
-      .play-time {
-        width: 12rem;
-        flex-grow: 0;
-        padding-left: 30px;
-        padding-right: 30px;
+    &--sm-and-up {
+      display: none;
+      @media (min-width: map-get($grid-breakpoints, "sm")) {
+        display: unset;
       }
     }
   }
 
-  .player-right {
+  &__time {
+    display: flex;
+    flex-grow: 3;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__time-slider {
+    display: none;
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 0%;
+    padding-right: 10px;
+
+    @media (min-width: map-get($grid-breakpoints, "sm")) {
+      display: inline-flex;
+    }
+
+    @media (min-width: map-get($grid-breakpoints, "md")) {
+      padding-right: 20px;
+    }
+  }
+
+  &__time-display {
+    min-width: 6rem;
+    flex-grow: 0;
+
+    @media (min-width: map-get($grid-breakpoints, "md")) {
+      width: 9rem;
+    }
+  }
+
+  &__right {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    flex-grow: 1;
     flex-shrink: 0;
-    flex-grow: 2;
-
-    .content {
-      margin-left: auto;
+    margin-left: auto;
+    padding-left: 10px;
+    padding-right: 10px;
+    @media (min-width: map-get($grid-breakpoints, "md")) {
       padding-left: 20px;
-      padding-right: 10px;
-      justify-content: end;
-      flex-direction: row-reverse;
-      flex-grow: 1;
+    }
+  }
 
-      .volume-slider {
-        min-width: 100px;
-        max-width: 250px;
-      }
+  &__volume-slider {
+    display: none;
+    margin: 4px;
+    min-width: 50px;
+    max-width: 250px;
+    @media (min-width: map-get($grid-breakpoints, "sm")) {
+      display: flex;
+    }
+
+    @media (min-width: map-get($grid-breakpoints, "md")) {
+      margin: 8px;
+      min-width: 100px;
     }
   }
 }
 
-.tracks-list-container {
+.play-queue {
   max-height: 50vh;
   overflow-y: auto;
   border-bottom: solid thin rgba(0, 0, 0, 0.12);
   width: 100%;
   padding-right: 0.5rem;
 
-  .tracks-list {
+  &__table {
     width: 100%;
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
+  }
 
-    td {
-      padding: 0 24px;
-    }
+  &__cell {
+    padding: 0 24px;
 
-    .track .icon {
+    &--icon {
       width: 44px;
       max-width: 44px;
+      padding-left: 0;
+      padding-right: 0;
     }
-
-    .icon-small {
+    &--icon-small {
       width: 24px;
       max-width: 24px;
+      padding-left: 0;
+      padding-right: 0;
     }
   }
 }
