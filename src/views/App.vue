@@ -206,6 +206,7 @@ export default {
       pendingResults.push(this.$store.dispatch("auth/index"));
       pendingResults.push(this.$store.dispatch("albums/index"));
       pendingResults.push(this.$store.dispatch("artists/index"));
+      pendingResults.push(this.$store.dispatch("codecConversions/index"));
       pendingResults.push(this.$store.dispatch("genres/index"));
       pendingResults.push(this.$store.dispatch("labels/index"));
       pendingResults.push(this.$store.dispatch("plays/index"));

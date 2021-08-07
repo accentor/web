@@ -329,6 +329,12 @@
 		"merge": "{obj} samenvoegen"
 	},
 	"search": "Zoeken",
+	"settings": {
+		"codec-conversion": {
+			"label": "Speel audio af in",
+			"original": "Originele kwaliteit"
+		}
+	},
 	"users": {
 		"auth": {
 			"destroy-selected": "Verwijder geselecteerde",
