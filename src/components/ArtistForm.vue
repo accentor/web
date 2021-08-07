@@ -1,6 +1,6 @@
 <template>
   <VRow no-gutters align="center" justify="center">
-    <VCol md="4" sm="8" cols="12" @change.once="isDirty = true">
+    <VCol lg="6" sm="8" cols="12" @change.once="isDirty = true">
       <VAlert
         v-if="artist"
         :value="artist.review_comment !== null"
@@ -16,7 +16,11 @@
           :rules="[(v) => !!v || $t('errors.artists.name-blank')]"
           required
         />
-        <FilePicker v-model="newArtist.image" />
+        <ImagePicker
+          v-model="newArtist.image"
+          :currentImg="artist.image250"
+          :placeholder="require('@mdi/svg/svg/account-music.svg')"
+        />
         <VCheckbox
           v-if="artist && artist.review_comment !== null"
           v-model="clear_review_comment"
@@ -32,11 +36,11 @@
 
 <script>
 import { mapActions } from "vuex";
-import FilePicker from "./FilePicker";
+import ImagePicker from "./ImagePicker";
 
 export default {
   name: "ArtistForm",
-  components: { FilePicker },
+  components: { ImagePicker },
   props: { artist: { type: Object, default: null } },
   data() {
     return {

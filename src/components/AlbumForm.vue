@@ -108,7 +108,11 @@
           v-if="editionInformation"
           clearable
         />
-        <FilePicker v-model="newAlbum.image" />
+        <ImagePicker
+          v-model="newAlbum.image"
+          :currentImg="album.image250"
+          :placeholder="require('@mdi/svg/svg/album.svg')"
+        />
         <h4 class="text-subtitle-1">{{ $tc("music.artists", 2) }}</h4>
         <VRow
           :key="`artist-${index}`"
@@ -232,11 +236,11 @@
 
 <script>
 import { mapGetters, mapActions, mapState } from "vuex";
-import FilePicker from "./FilePicker";
+import ImagePicker from "./ImagePicker";
 
 export default {
   name: "AlbumForm",
-  components: { FilePicker },
+  components: { ImagePicker },
   props: { album: { type: Object, default: null } },
   data() {
     return {
