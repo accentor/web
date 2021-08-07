@@ -53,7 +53,7 @@
 
 <script>
 export default {
-  name: "FilePicker",
+  name: "ImagePicker",
   props: {
     value: {
       type: Object,
