@@ -22,7 +22,7 @@ a {
   text-decoration: none;
 }
 
-// Component styles with globel scope
+// Component styles with global scope
 .actions {
   .actions__button {
     margin: 4px 8px 4px 0;
