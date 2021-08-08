@@ -327,9 +327,7 @@ export default {
       sortedGenres: "genresByName",
     }),
     sortedTracks() {
-      return [...this.tracks].sort((t1, t2) =>
-        compareTracks(this.$store.state, t1, t2)
-      );
+      return [...this.tracks].sort(compareTracks(this.albums));
     },
     tracksWithReviewComments() {
       return this.sortedTracks.filter((t) => t.review_comment !== null);
