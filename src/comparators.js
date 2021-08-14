@@ -50,12 +50,17 @@ export function compareAlbumsByTitleFirst(a1, a2) {
   return (order = order === 0 ? compareStrings(a1.id, a2.id) : order);
 }
 
-export function compareAlbumsByReleaseFirst(a1, a2) {
-  let order = compareStrings(a1.release, a2.release);
-  order =
-    order === 0
-      ? compareStrings(a1.normalized_title, a2.normalized_title)
-      : order;
-  order = order === 0 ? compareAlbumEditions(a1, a2) : order;
-  return (order = order === 0 ? compareStrings(a1.id, a2.id) : order);
+export function compareAlbumsByReleaseFirst(newestFirst = false) {
+  return function (a1, a2) {
+    let order = compareStrings(a1.release, a2.release);
+    if (newestFirst) {
+      order = order * -1;
+    }
+    order =
+      order === 0
+        ? compareStrings(a1.normalized_title, a2.normalized_title)
+        : order;
+    order = order === 0 ? compareAlbumEditions(a1, a2) : order;
+    return (order = order === 0 ? compareStrings(a1.id, a2.id) : order);
+  };
 }

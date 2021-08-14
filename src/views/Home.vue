@@ -209,7 +209,7 @@ export default {
   },
   methods: {
     releaseSort(items) {
-      return items.sort(compareAlbumsByReleaseFirst).reverse();
+      return items.sort(compareAlbumsByReleaseFirst(true));
     },
     createdSort(items) {
       items.sort((a1, a2) => {
