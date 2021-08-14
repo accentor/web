@@ -269,6 +269,7 @@
 
 <script>
 import { mapActions, mapGetters, mapState } from "vuex";
+import { compareTracks } from "../comparators";
 import Errors from "./Errors";
 import TrackFormArtists from "./TrackFormArtists.vue";
 
@@ -327,8 +328,13 @@ export default {
     ...mapGetters("genres", {
       sortedGenres: "genresByName",
     }),
+    sortedTracks() {
+      return [...this.tracks].sort((t1, t2) =>
+        compareTracks(this.$store.state, t1, t2)
+      );
+    },
     tracksWithReviewComments() {
-      return this.tracks.filter((t) => t.review_comment !== null);
+      return this.sortedTracks.filter((t) => t.review_comment !== null);
     },
     rules: function () {
       const rules = {
