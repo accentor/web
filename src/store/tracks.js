@@ -171,7 +171,7 @@ export default {
   getters: {
     tracks: (state) => Object.values(state.tracks),
     tracksByAlbumAndNumber: (state, getters, rootState) => {
-      return getters.tracks.sort((t1, t2) => compareTracks(rootState, t1, t2));
+      return getters.tracks.sort(compareTracks(rootState.albums.albums));
     },
     tracksBinnedByAlbum: (state, getters) => {
       const result = {};
@@ -215,24 +215,24 @@ export default {
       );
     },
     tracksFilterByGenre: (state, getters, rootState) => (id) => {
-      return (getters.tracksBinnedByGenre[id] || []).sort((t1, t2) =>
-        compareTracks(rootState, t1, t2)
+      return (getters.tracksBinnedByGenre[id] || []).sort(
+        compareTracks(rootState.albums.albums)
       );
     },
     tracksFilterByArtist: (state, getters, rootState) => (id) => {
-      return (getters.tracksBinnedByArtist[id] || []).sort((t1, t2) =>
-        compareTracks(rootState, t1, t2)
+      return (getters.tracksBinnedByArtist[id] || []).sort(
+        compareTracks(rootState.albums.albums)
       );
     },
     tracksEmpty: (state, getters, rootState) => {
       return getters.tracks
         .filter((t) => t.length === null)
-        .sort((t1, t2) => compareTracks(rootState, t1, t2));
+        .sort(compareTracks(rootState.albums.albums));
     },
     tracksFlagged: (state, getters, rootState) => {
       return getters.tracks
         .filter((t) => t.review_comment !== null)
-        .sort((t1, t2) => compareTracks(rootState, t1, t2));
+        .sort(compareTracks(rootState.albums.albums));
     },
   },
 };
