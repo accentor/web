@@ -26,20 +26,21 @@ export function compareAlbumEditions(a1, a2) {
     ? compareStrings(a1.edition_description, a2.edition_description)
     : order;
 }
+export function compareTracks(albums) {
+  return function (t1, t2) {
+    const a1 = albums[t1.album_id];
+    const a2 = albums[t2.album_id];
+    if (a1 === undefined && a2 === undefined) {
+      return t1.number - t2.number;
+    } else if (a1 === undefined) {
+      return 1;
+    } else if (a2 === undefined) {
+      return -1;
+    }
 
-export function compareTracks(rootState, t1, t2) {
-  const a1 = rootState.albums.albums[t1.album_id];
-  const a2 = rootState.albums.albums[t2.album_id];
-  if (a1 === undefined && a2 === undefined) {
-    return t1.number - t2.number;
-  } else if (a1 === undefined) {
-    return 1;
-  } else if (a2 === undefined) {
-    return -1;
-  }
-
-  let albOrd = compareAlbumsByTitleFirst(a1, a2);
-  return albOrd === 0 ? t1.number - t2.number : albOrd;
+    let albOrd = compareAlbumsByTitleFirst(a1, a2);
+    return albOrd === 0 ? t1.number - t2.number : albOrd;
+  };
 }
 
 export function compareAlbumsByTitleFirst(a1, a2) {

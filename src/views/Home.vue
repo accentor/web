@@ -136,8 +136,7 @@
           disableItemsPerPage: true,
           itemsPerPageOptions: [numberOfItems],
         }"
-        :items="albums"
-        :custom-sort="randomSort"
+        :items="randomAlbums"
         :items-per-page="numberOfItems"
       >
         <template v-slot:header>
@@ -168,8 +167,7 @@
           disableItemsPerPage: true,
           itemsPerPageOptions: [numberOfItems],
         }"
-        :items="artists"
-        :custom-sort="randomSort"
+        :items="randomArtists"
         :items-per-page="numberOfItems"
       >
         <template v-slot:header>
@@ -233,6 +231,12 @@ export default {
       albumsOnThisDay: "albums/albumsOnThisDay",
       artists: "artists/artists",
     }),
+    randomAlbums() {
+      return this.randomSort(this.albums);
+    },
+    randomArtists() {
+      return this.randomSort(this.artists);
+    },
     numberOfItems() {
       if (this.$vuetify.breakpoint.name === "xl") {
         return 6;

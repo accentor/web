@@ -17,10 +17,12 @@ export default {
 <style lang="scss">
 @import "~vuetify/src/styles/styles.sass";
 
+// Additional resets
 a {
   text-decoration: none;
 }
 
+// Component styles with global scope
 .actions {
   .actions__button {
     margin: 4px 8px 4px 0;
@@ -38,5 +40,15 @@ a {
       margin: 8px 16px 8px 0;
     }
   }
+}
+
+// Additional utility classes
+.white-space-nowrap {
+  white-space: nowrap;
+}
+
+// Temporary fix until https://github.com/vuetifyjs/vuetify/issues/13678 is resolved
+.v-data-footer {
+  justify-content: flex-end;
 }
 </style>

@@ -42,7 +42,7 @@
           hide-details
           primary
           @click.stop="toggleAll"
-          class="bottom-padding-fix"
+          class="pb-4"
         />
       </template>
       <template v-slot:item.data-table-select="item" v-if="singleSelect">
@@ -218,13 +218,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped>
-.bottom-padding-fix {
-  padding-bottom: 16px;
-}
-
-.white-space-nowrap {
-  white-space: nowrap;
-}
-</style>
