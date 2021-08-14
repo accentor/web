@@ -175,12 +175,16 @@ export default {
       const aaFilter = (a) =>
         a.album_artists.filter((aa) => `${aa.artist_id}` === `${id}`).length >
         0;
-      return getters.albums.filter(aaFilter).sort(compareAlbumsByReleaseFirst);
+      return getters.albums
+        .filter(aaFilter)
+        .sort(compareAlbumsByReleaseFirst());
     },
     albumsFilterByLabel: (state, getters) => (id) => {
       const alFilter = (a) =>
         a.album_labels.filter((l) => `${l.label_id}` === `${id}`).length > 0;
-      return getters.albums.filter(alFilter).sort(compareAlbumsByReleaseFirst);
+      return getters.albums
+        .filter(alFilter)
+        .sort(compareAlbumsByReleaseFirst());
     },
     albumsFlagged: (state, getters) => {
       return getters.albums
@@ -196,7 +200,7 @@ export default {
               `${today.getMonth() + 1}`.padStart(2, "0") &&
             `${r.release.slice(-2)}` === `${today.getDate()}`.padStart(2, "0")
         )
-        .sort(compareAlbumsByReleaseFirst);
+        .sort(compareAlbumsByReleaseFirst());
     },
   },
 };
