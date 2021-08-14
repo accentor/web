@@ -2,7 +2,7 @@
   <div>
     <VAppBar app clipped-left color="primary" dark>
       <VAppBarNavIcon @click.stop="drawer = !drawer" />
-      <VToolbarTitle>Accentor</VToolbarTitle>
+      <VToolbarTitle class="font-weight-medium">Accentor</VToolbarTitle>
       <VSpacer />
       <VBtn :disabled="loading" @click="loadData" text icon>
         <VIcon>mdi-refresh {{ loading ? "mdi-spin" : "" }}</VIcon>
@@ -108,7 +108,7 @@
               dark
               color="primary"
               outlined
-              class="btn-caption"
+              class="text-caption font-weight-medium"
             >
               {{ numberOfFlaggedItems }}
             </VBtn>
@@ -225,12 +225,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped>
-.btn-caption {
-  font-size: 0.75rem;
-}
-.v-toolbar__title {
-  font-weight: 500;
-}
-</style>

@@ -61,15 +61,17 @@
                     type="warning"
                     icon="mdi-flag"
                   >
-                    <table class="review-comment-table">
+                    <table class="review-comments">
                       <tr v-for="t of tracksWithReviewComments" :key="t.id">
-                        <td class="text-right">
+                        <td class="review-comments__cell text-right">
                           <strong>{{ t.number }}</strong>
                         </td>
-                        <td>
+                        <td class="review-comments__cell">
                           <strong>{{ t.title }}</strong>
                         </td>
-                        <td>{{ t.review_comment }}</td>
+                        <td class="review-comments__cell">
+                          {{ t.review_comment }}
+                        </td>
                       </tr>
                     </table>
                   </VAlert>
@@ -563,7 +565,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.review-comment-table td {
-  padding: 0 0.5rem;
+.review-comments {
+  &__cell {
+    padding: 0 0.5rem;
+  }
 }
 </style>

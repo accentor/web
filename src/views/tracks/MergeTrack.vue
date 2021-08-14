@@ -281,6 +281,7 @@ export default {
 </script>
 
 <style lang="scss">
+// We do not follow BEM here, since Vuetify doesn't allow us to directly add a class to the table
 .merge-table {
   width: 100%;
 
