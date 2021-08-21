@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@accentor/api-client-js@^0.11.2":
-  version "0.11.2"
-  resolved "https://registry.yarnpkg.com/@accentor/api-client-js/-/api-client-js-0.11.2.tgz#1d606360cc03c50888025cede40339ece36ef5f0"
-  integrity sha512-uLluel1oRj+0+27wDcfAN1jGNkbWsr79T49YtV4PKOi6kjrJhWIoW8oR2sNrG4/OYy8xAg0978XTlyK/g55h7Q==
+"@accentor/api-client-js@^0.12.1":
+  version "0.12.1"
+  resolved "https://registry.yarnpkg.com/@accentor/api-client-js/-/api-client-js-0.12.1.tgz#7b784cb7afe077b39e0a9e8d619cb8bf34ae8281"
+  integrity sha512-8b1XCiCKGAhoq7D3fmMQ48qdlW/zZp/98dHvO6fBXrOpJ/YQAeEQigRpmvc+GmYYTZo2JlJeT686fNMYPeE0QQ==
   dependencies:
     fetch-retry "^4.1.1"
 
