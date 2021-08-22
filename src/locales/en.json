@@ -305,6 +305,7 @@
 			"bitrate": "Bitrate",
 			"bit_depth": "Bit depth",
 			"delete": "Delete track",
+			"delete-file-explanation": "Know that you have to remove the audio file as well. Otherwise this track will show up again on the next rescan.",
 			"edit": "Edit track",
 			"empty": "This track does not have audio.",
 			"file": "Audio file",
