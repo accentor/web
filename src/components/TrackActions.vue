@@ -194,7 +194,11 @@ export default {
   methods: {
     ...mapActions("tracks", ["destroy", "update"]),
     deleteTrack: function () {
-      if (confirm(this.$t("common.are-you-sure"))) {
+      let message = this.$t("common.are-you-sure");
+      if (this.track.length) {
+        message += ` ${this.$t("music.track.delete-file-explanation")}`;
+      }
+      if (confirm(message)) {
         this.destroy(this.track.id);
       }
     },
