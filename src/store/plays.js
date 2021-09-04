@@ -1,4 +1,5 @@
 import api from "@/api";
+import { TracksScope } from "@accentor/api-client-js";
 import { fetchAll } from "./actions";
 
 export default {
@@ -43,11 +44,11 @@ export default {
     },
   },
   actions: {
-    async index({ commit, rootState }) {
-      const generator = api.plays.index(rootState.auth);
+    async index({ commit, rootState }, scope = new TracksScope()) {
+      const generator = api.plays.index(rootState.auth, scope);
       try {
         await this.playsRestored;
-        await fetchAll(commit, generator, "setPlays");
+        await fetchAll(commit, generator, "setPlays", scope);
         return true;
       } catch (error) {
         commit("addError", error, { root: true });
