@@ -321,7 +321,7 @@ export default {
     ]),
     checkTime() {
       const time = Math.floor(this.$refs.audio.currentTime);
-      if (time !== this.seekTime) {
+      if (this.currentTrack && time !== this.seekTime) {
         this.setSeekTime(time);
       }
     },
