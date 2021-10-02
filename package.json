@@ -12,7 +12,7 @@
     "@accentor/api-client-js": "^0.13.0",
     "@mdi/font": "^6.1.95",
     "@mdi/svg": "^6.1.95",
-    "fetch-retry": "^4.1.1",
+    "fetch-retry": "^5.0.1",
     "localforage": "^1.10.0",
     "lodash.debounce": "^4.0.8",
     "roboto-fontface": "^0.10.0",
