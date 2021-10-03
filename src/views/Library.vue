@@ -48,7 +48,13 @@
         </div>
         <pre class="text-body-2">{{ combinedRescans.error_text }}</pre>
       </div>
-      <div v-if="!rescanRunning && !combinedRescans.error_text && !combinedRescans.warning_text">
+      <div
+        v-if="
+          !rescanRunning &&
+          !combinedRescans.error_text &&
+          !combinedRescans.warning_text
+        "
+      >
         <h3 class="text-h6">{{ $t("library.no-errors-warnings") }}</h3>
       </div>
     </VRow>
