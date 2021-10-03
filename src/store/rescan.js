@@ -120,6 +120,33 @@ export default {
     },
   },
   getters: {
-    finishedAt: (state) => state.rescan?.finished_at,
+    rescans: (state) => Object.values(state.rescans),
+    running: (state, getters) => getters.rescans.some((r) => r.running),
+    combinedRescans: (state, getters) =>
+      getters.rescans.reduce(
+        (acc, rescan) => {
+          acc.finished_at =
+            acc.finished_at < new Date(rescan.finished_at)
+              ? new Date(rescan.finished_at)
+              : acc;
+          acc.processed += rescan.processed;
+          acc.error_text += rescan.error_text;
+          acc.warning_text += rescan.warning_text;
+          return acc;
+        },
+        {
+          running: false,
+          finished_at: 0,
+          processed: 0,
+          error_text: "",
+          warning_text: "",
+        }
+      ),
+    finishedAt: (state, getters) =>
+      getters.rescans.reduce((acc, rescan) => {
+        return acc < new Date(rescan.finished_at)
+          ? new Date(rescan.finished_at)
+          : acc;
+      }, undefined),
   },
 };
