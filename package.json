@@ -11,7 +11,7 @@
   "dependencies": {
     "@accentor/api-client-js": "^0.13.0",
     "@mdi/font": "^6.2.95",
-    "@mdi/svg": "^6.2.95",
+    "@mdi/svg": "^6.3.95",
     "fetch-retry": "^5.0.1",
     "localforage": "^1.10.0",
     "lodash.debounce": "^4.0.8",
