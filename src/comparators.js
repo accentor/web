@@ -43,6 +43,79 @@ export function compareTracks(albums) {
   };
 }
 
+export function compareTracksByArtist(t1, t2) {
+  // tracks without artists get sorted last
+  if (t1.track_artists.length === 0 && t2.track_artists.length === 0) {
+    return 0;
+  } else if (t1.track_artists.length === 0) {
+    return 1;
+  } else if (t2.track_artists.length === 0) {
+    return -1;
+  }
+
+  let order = 0;
+  let index = 0;
+  while (order === 0) {
+    const a1 = t1.track_artists[index];
+    const a2 = t2.track_artists[index];
+
+    // If tracks share the same artists, but one track has one or more extra artist(s),
+    // we sort the track with more artists last
+    if (typeof a1 === "undefined" && typeof a2 === "undefined") {
+      return 0;
+    } else if (typeof a1 === "undefined") {
+      return -1;
+    } else if (typeof a2 === "undefined") {
+      return 1;
+    }
+    order = compareStrings(a1.name, a2.name);
+    index++;
+  }
+  return order;
+}
+
+export function compareTracksByGenre(genres) {
+  return function (t1, t2) {
+    // tracks without genres get sorted last
+    if (t1.genre_ids.length === 0 && t2.genre_ids.length === 0) {
+      return 0;
+    } else if (t1.genre_ids.length === 0) {
+      return 1;
+    } else if (t2.genre_ids.length === 0) {
+      return -1;
+    }
+
+    // we map the genres for each track and sort by name
+    const t1_genres = t1.genre_ids
+      .map((g) => genres[g].normalized_name)
+      .sort((g1, g2) => compareStrings(g1, g2));
+    const t2_genres = t2.genre_ids
+      .map((g) => genres[g].normalized_name)
+      .sort((g1, g2) => compareStrings(g1, g2));
+
+    // We loop over the sorted genres until we find a difference to sort by
+    let index = 0;
+    let order = 0;
+    while (order === 0) {
+      const g1 = t1_genres[index];
+      const g2 = t2_genres[index];
+
+      // If tracks share the same genres, but one track has one or more extra genre(s),
+      // we sort the track with more genres last
+      if (typeof g1 === "undefined" && typeof g2 === "undefined") {
+        return 0;
+      } else if (typeof g1 === "undefined") {
+        return -1;
+      } else if (typeof g2 === "undefined") {
+        return 1;
+      }
+      order = compareStrings(g1, g2);
+      index++;
+    }
+    return order;
+  };
+}
+
 export function compareAlbumsByTitleFirst(a1, a2) {
   let order = compareStrings(a1.normalized_title, a2.normalized_title);
   order = order === 0 ? compareStrings(a1.release, a2.release) : order;
