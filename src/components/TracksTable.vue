@@ -168,6 +168,7 @@ export default {
         value: "play_count",
         align: "end",
         width: "1px",
+        class: "text-no-wrap",
       },
       {
         text: this.$t("common.actions"),
@@ -241,7 +242,8 @@ export default {
           break;
         case "play_count":
           sortFunction = (t1, t2) =>
-            (this.playCountsByTrack[t1] = this.playCountsByTrack[t2]);
+            (this.playCountsByTrack[t1.id] || 0) -
+            (this.playCountsByTrack[t2.id] || 0);
           break;
         case "title":
           sortFunction = (t1, t2) =>
