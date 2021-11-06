@@ -168,6 +168,7 @@ export default {
         value: "play_count",
         align: "end",
         width: "1px",
+        class: "text-no-wrap",
       },
       {
         text: this.$t("common.actions"),
