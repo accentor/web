@@ -147,6 +147,6 @@ export default {
         return acc < new Date(rescan.finished_at)
           ? new Date(rescan.finished_at)
           : acc;
-      }, undefined),
+      }, null),
   },
 };

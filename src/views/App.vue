@@ -190,7 +190,7 @@ export default {
     finishedAt(newValue, oldValue) {
       if (
         !this.loading &&
-        typeof oldValue !== "undefined" &&
+        oldValue !== null &&
         oldValue.getTime() != newValue.getTime()
       ) {
         this.loadData();
