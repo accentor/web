@@ -128,7 +128,7 @@ export default {
           acc.finished_at =
             acc.finished_at < new Date(rescan.finished_at)
               ? new Date(rescan.finished_at)
-              : acc;
+              : acc.finished_at;
           acc.processed += rescan.processed;
           acc.error_text += rescan.error_text;
           acc.warning_text += rescan.warning_text;
