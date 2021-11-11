@@ -10,18 +10,37 @@
       <h2 class="text-h5">{{ $t("library.rescan") }}</h2>
     </VRow>
     <VRow v-if="combinedRescans" class="mb-2">
-      <VBtn
-        @click="startAll"
-        :disabled="rescanRunning"
-        color="success"
-        class="ma-2"
-      >
-        <VIcon left>
-          mdi-refresh
-          {{ rescanRunning ? "mdi-spin" : "" }}
-        </VIcon>
-        {{ $t("library.start-scan") }}
-      </VBtn>
+      <VBtnToggle class="ma-2" :disabled="rescanRunning" color="success">
+        <VBtn
+          @click="startAll"
+          :disabled="rescans.length === 0 || rescanRunning"
+          color="success"
+        >
+          <VIcon left class="white--text">
+            mdi-refresh
+            {{ rescanRunning ? "mdi-spin" : "" }}
+          </VIcon>
+          {{ $t("library.start-scan") }}
+        </VBtn>
+        <VMenu offset-y bottom left close-on-click v-if="rescans.length > 1">
+          <template v-slot:activator="{ on, attrs }">
+            <VBtn color="success" v-bind="attrs" v-on="on">
+              <VIcon class="white--text">mdi-menu-down</VIcon>
+            </VBtn>
+          </template>
+          <VList>
+            <VListItem
+              v-for="(rescan, index) in rescans"
+              :key="index"
+              @click="start(rescan.id)"
+            >
+              <VListItemTitle :disabled="rescan.running">
+                Rescan {{ locations[rescan.location_id].path }}
+              </VListItemTitle>
+            </VListItem>
+          </VList>
+        </VMenu>
+      </VBtnToggle>
     </VRow>
     <VRow class="flex-column mb-4" v-if="combinedRescans">
       <div>
@@ -130,7 +149,9 @@ export default {
   },
   computed: {
     ...mapGetters("auth", ["isModerator"]),
+    ...mapGetters("rescan", ["rescans"]),
     ...mapGetters("rescan", ["combinedRescans"]),
+    ...mapState("locations", ["locations"]),
     ...mapState("rescan", ["lastClick"]),
     rescanRunning() {
       return this.combinedRescans.running ||
@@ -140,7 +161,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions("rescan", ["startAll"]),
+    ...mapActions("rescan", ["start", "startAll"]),
     async loadData() {
       let pendingResults = [];
       if (this.isModerator) {
