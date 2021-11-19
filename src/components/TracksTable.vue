@@ -88,7 +88,11 @@
         <TrackGenres :track="props.item" />
       </template>
       <template v-slot:item.play_count="props">
-        {{ playCountsByTrack[props.item.id] || 0 }}
+        {{
+          (playStatsByTrack[props.item.id] &&
+            playStatsByTrack[props.item.id].count) ||
+          0
+        }}
       </template>
       <template v-slot:item.actions="props">
         <TrackActions :track="props.item" />
@@ -193,7 +197,7 @@ export default {
   computed: {
     ...mapGetters("auth", ["isModerator"]),
     ...mapGetters("player", ["currentTrack"]),
-    ...mapGetters("plays", ["playCountsByTrack"]),
+    ...mapGetters("plays", ["playStatsByTrack"]),
     ...mapState("albums", ["albums"]),
     ...mapState("genres", ["genres"]),
     ...mapState("tracks", { tracksObj: "tracks" }),
@@ -242,8 +246,8 @@ export default {
           break;
         case "play_count":
           sortFunction = (t1, t2) =>
-            (this.playCountsByTrack[t1.id] || 0) -
-            (this.playCountsByTrack[t2.id] || 0);
+            (this.playStatsByTrack[t1.id]?.count || 0) -
+            (this.playStatsByTrack[t2.id]?.count || 0);
           break;
         case "title":
           sortFunction = (t1, t2) =>

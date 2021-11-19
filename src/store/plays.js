@@ -73,13 +73,21 @@ export default {
   },
   getters: {
     plays: (state) => Object.values(state.plays),
-    playCountsByTrack: (state, getters) => {
+    playStatsByTrack: (state, getters) => {
       const result = {};
       for (let play of getters.plays) {
         if (!(play.track_id in result)) {
-          result[play.track_id] = 0;
+          result[play.track_id] = {
+            count: 1,
+            last_played_at: new Date(play.played_at),
+          };
+        } else {
+          result[play.track_id].count++;
+
+          if (result[play.track_id].last_played_at < new Date(play.played_at)) {
+            result[play.track_id].last_played_at = new Date(play.played_at);
+          }
         }
-        result[play.track_id]++;
       }
       return result;
     },
