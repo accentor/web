@@ -192,6 +192,70 @@
         </template>
       </VDataIterator>
     </VContainer>
+    <VContainer fluid>
+      <VDataIterator
+        :footer-props="{
+          disableItemsPerPage: true,
+          itemsPerPageOptions: [numberOfItems],
+        }"
+        :items="albums"
+        :custom-sort="recentlyPlayedAlbumsSort"
+        :items-per-page="numberOfItems"
+      >
+        <template v-slot:header>
+          <h2 class="text-h4">
+            {{ $t("home.recently-played-albums") }}
+          </h2>
+        </template>
+        <template v-slot:default="props">
+          <VRow class="my-0">
+            <VCol
+              v-for="item in props.items"
+              :key="item.id"
+              lg="3"
+              md="4"
+              sm="6"
+              xl="2"
+              cols="6"
+            >
+              <AlbumCard :album="item" />
+            </VCol>
+          </VRow>
+        </template>
+      </VDataIterator>
+    </VContainer>
+    <VContainer fluid>
+      <VDataIterator
+        :footer-props="{
+          disableItemsPerPage: true,
+          itemsPerPageOptions: [numberOfItems],
+        }"
+        :items="artists"
+        :custom-sort="recentlyPlayedArtistsSort"
+        :items-per-page="numberOfItems"
+      >
+        <template v-slot:header>
+          <h2 class="text-h4">
+            {{ $t("home.recently-played-artists") }}
+          </h2>
+        </template>
+        <template v-slot:default="props">
+          <VRow class="my-0">
+            <VCol
+              v-for="item in props.items"
+              :key="item.id"
+              lg="3"
+              md="4"
+              sm="6"
+              xl="2"
+              cols="6"
+            >
+              <ArtistCard :artist="item" />
+            </VCol>
+          </VRow>
+        </template>
+      </VDataIterator>
+    </VContainer>
   </div>
 </template>
 
@@ -199,7 +263,11 @@
 import { mapGetters } from "vuex";
 import AlbumCard from "../components/AlbumCard";
 import ArtistCard from "../components/ArtistCard";
-import { compareAlbumsByReleaseFirst, compareStrings } from "../comparators";
+import {
+  compareAlbumsByReleaseFirst,
+  compareByRecentlyPlayed,
+  compareStrings,
+} from "../comparators";
 
 export default {
   name: "Home",
@@ -217,6 +285,12 @@ export default {
       });
       return items;
     },
+    recentlyPlayedAlbumsSort(albums) {
+      return albums.sort(compareByRecentlyPlayed(this.playStatsByAlbum));
+    },
+    recentlyPlayedArtistsSort(artists) {
+      return artists.sort(compareByRecentlyPlayed(this.playStatsByArtist));
+    },
     randomSort(items) {
       const newItems = [...items];
       for (let i = newItems.length - 1; i > 0; i--) {
@@ -231,6 +305,8 @@ export default {
       albums: "albums/albums",
       albumsOnThisDay: "albums/albumsOnThisDay",
       artists: "artists/artists",
+      playStatsByAlbum: "plays/playStatsByAlbum",
+      playStatsByArtist: "plays/playStatsByArtist",
     }),
     randomAlbums() {
       return this.randomSort(this.albums);

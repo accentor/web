@@ -91,5 +91,61 @@ export default {
       }
       return result;
     },
+    playStatsByAlbum: (state, getters, rootState) => {
+      const result = {};
+      for (let track_id in getters.playStatsByTrack) {
+        // If this track is not (yet) loaded, we need to skip it
+        if (!rootState.tracks.tracks[track_id]) {
+          continue;
+        }
+
+        const album_id = rootState.tracks.tracks[track_id].album_id;
+        if (!(album_id in result)) {
+          result[album_id] = {
+            count: getters.playStatsByTrack[track_id].count,
+            last_played_at: getters.playStatsByTrack[track_id].last_played_at,
+          };
+        } else {
+          result[album_id].count += getters.playStatsByTrack[track_id].count;
+          if (
+            result[album_id].last_played_at <
+            getters.playStatsByTrack[track_id].plast_layed_at
+          ) {
+            result[album_id].last_played_at =
+              getters.playStatsByTrack[track_id].last_played_at;
+          }
+        }
+      }
+      return result;
+    },
+    playStatsByArtist: (state, getters, rootState) => {
+      const result = {};
+      for (let track_id in getters.playStatsByTrack) {
+        // If this track is not (yet) loaded, we need to skip it
+        if (!rootState.tracks.tracks[track_id]) {
+          continue;
+        }
+
+        for (let ta of rootState.tracks.tracks[track_id].track_artists) {
+          if (!(ta.artist_id in result)) {
+            result[ta.artist_id] = {
+              count: getters.playStatsByTrack[track_id].count,
+              last_played_at: getters.playStatsByTrack[track_id].last_played_at,
+            };
+          } else {
+            result[ta.artist_id].count +=
+              getters.playStatsByTrack[track_id].count;
+            if (
+              result[ta.artist_id].last_played_at <
+              getters.playStatsByTrack[track_id].plast_layed_at
+            ) {
+              result[ta.artist_id].last_played_at =
+                getters.playStatsByTrack[track_id].last_played_at;
+            }
+          }
+        }
+      }
+      return result;
+    },
   },
 };
