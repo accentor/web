@@ -10,11 +10,13 @@
       <h2 class="text-h5">{{ $t("library.rescan") }}</h2>
     </VRow>
     <VRow v-if="combinedRescans" class="mb-2">
-      <VBtnToggle class="ma-2" :disabled="rescanRunning" color="success">
+      <div class="button-group ma-2">
         <VBtn
           @click="startAll"
           :disabled="rescans.length === 0 || rescanRunning"
           color="success"
+          class="button-group__button"
+          depressed
         >
           <VIcon left class="white--text">
             mdi-refresh
@@ -24,7 +26,13 @@
         </VBtn>
         <VMenu offset-y bottom left close-on-click v-if="rescans.length > 1">
           <template v-slot:activator="{ on, attrs }">
-            <VBtn color="success" v-bind="attrs" v-on="on">
+            <VBtn
+              color="success"
+              depressed
+              v-bind="attrs"
+              v-on="on"
+              class="button-group__button"
+            >
               <VIcon class="white--text">mdi-menu-down</VIcon>
             </VBtn>
           </template>
@@ -40,7 +48,7 @@
             </VListItem>
           </VList>
         </VMenu>
-      </VBtnToggle>
+      </div>
     </VRow>
     <VRow class="flex-column mb-4" v-if="combinedRescans">
       <div>
