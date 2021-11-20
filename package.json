@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@accentor/api-client-js": "^0.13.0",
-    "@mdi/font": "^6.4.95",
+    "@mdi/font": "^6.5.95",
     "@mdi/svg": "^6.4.95",
     "fetch-retry": "^5.0.1",
     "localforage": "^1.10.0",
@@ -21,7 +21,7 @@
     "vue-meta": "^2.4.0",
     "vue-router": "^3.5.3",
     "vuedraggable": "^2.24.3",
-    "vuetify": "^2.5.14",
+    "vuetify": "^2.6.0",
     "vuex": "^3.6.2",
     "vuex-persist": "^3.1.3"
   },
