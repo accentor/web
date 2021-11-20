@@ -106,7 +106,7 @@ export default {
           };
         } else if (
           result[album_id].last_played_at <
-          getters.playStatsByTrack[track_id].plast_layed_at
+          getters.playStatsByTrack[track_id].last_played_at
         ) {
           result[album_id].last_played_at =
             getters.playStatsByTrack[track_id].last_played_at;
@@ -133,7 +133,7 @@ export default {
               getters.playStatsByTrack[track_id].count;
             if (
               result[ta.artist_id].last_played_at <
-              getters.playStatsByTrack[track_id].plast_layed_at
+              getters.playStatsByTrack[track_id].last_played_at
             ) {
               result[ta.artist_id].last_played_at =
                 getters.playStatsByTrack[track_id].last_played_at;
