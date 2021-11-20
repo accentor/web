@@ -102,18 +102,14 @@ export default {
         const album_id = rootState.tracks.tracks[track_id].album_id;
         if (!(album_id in result)) {
           result[album_id] = {
-            count: getters.playStatsByTrack[track_id].count,
             last_played_at: getters.playStatsByTrack[track_id].last_played_at,
           };
-        } else {
-          result[album_id].count += getters.playStatsByTrack[track_id].count;
-          if (
-            result[album_id].last_played_at <
-            getters.playStatsByTrack[track_id].plast_layed_at
-          ) {
-            result[album_id].last_played_at =
-              getters.playStatsByTrack[track_id].last_played_at;
-          }
+        } else if (
+          result[album_id].last_played_at <
+          getters.playStatsByTrack[track_id].plast_layed_at
+        ) {
+          result[album_id].last_played_at =
+            getters.playStatsByTrack[track_id].last_played_at;
         }
       }
       return result;
