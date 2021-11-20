@@ -80,7 +80,7 @@ export default {
         let result = null;
         do {
           result = await api.rescans.show(rootState.auth, id);
-          commit("setRescan", result);
+          commit("setRescan", { id, rescan: result });
           await new Promise((resolve) => setTimeout(resolve, 1000));
         } while (
           rootState.rescan.lastClick > new Date(result.finished_at) ||
@@ -110,7 +110,7 @@ export default {
       try {
         const result = await api.rescans.start(rootState.auth, id);
         result.running = true;
-        commit("setRescan", result);
+        commit("setRescan", { id, rescan: result });
         setTimeout(() => dispatch("show", id), 1000);
         return true;
       } catch (error) {
