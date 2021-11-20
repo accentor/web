@@ -73,13 +73,73 @@ export default {
   },
   getters: {
     plays: (state) => Object.values(state.plays),
-    playCountsByTrack: (state, getters) => {
+    playStatsByTrack: (state, getters) => {
       const result = {};
       for (let play of getters.plays) {
         if (!(play.track_id in result)) {
-          result[play.track_id] = 0;
+          result[play.track_id] = {
+            count: 1,
+            last_played_at: new Date(play.played_at),
+          };
+        } else {
+          result[play.track_id].count++;
+
+          if (result[play.track_id].last_played_at < new Date(play.played_at)) {
+            result[play.track_id].last_played_at = new Date(play.played_at);
+          }
         }
-        result[play.track_id]++;
+      }
+      return result;
+    },
+    playStatsByAlbum: (state, getters, rootState) => {
+      const result = {};
+      for (let track_id in getters.playStatsByTrack) {
+        // If this track is not (yet) loaded, we need to skip it
+        if (!rootState.tracks.tracks[track_id]) {
+          continue;
+        }
+
+        const album_id = rootState.tracks.tracks[track_id].album_id;
+        if (!(album_id in result)) {
+          result[album_id] = {
+            last_played_at: getters.playStatsByTrack[track_id].last_played_at,
+          };
+        } else if (
+          result[album_id].last_played_at <
+          getters.playStatsByTrack[track_id].plast_layed_at
+        ) {
+          result[album_id].last_played_at =
+            getters.playStatsByTrack[track_id].last_played_at;
+        }
+      }
+      return result;
+    },
+    playStatsByArtist: (state, getters, rootState) => {
+      const result = {};
+      for (let track_id in getters.playStatsByTrack) {
+        // If this track is not (yet) loaded, we need to skip it
+        if (!rootState.tracks.tracks[track_id]) {
+          continue;
+        }
+
+        for (let ta of rootState.tracks.tracks[track_id].track_artists) {
+          if (!(ta.artist_id in result)) {
+            result[ta.artist_id] = {
+              count: getters.playStatsByTrack[track_id].count,
+              last_played_at: getters.playStatsByTrack[track_id].last_played_at,
+            };
+          } else {
+            result[ta.artist_id].count +=
+              getters.playStatsByTrack[track_id].count;
+            if (
+              result[ta.artist_id].last_played_at <
+              getters.playStatsByTrack[track_id].plast_layed_at
+            ) {
+              result[ta.artist_id].last_played_at =
+                getters.playStatsByTrack[track_id].last_played_at;
+            }
+          }
+        }
       }
       return result;
     },

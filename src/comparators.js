@@ -137,3 +137,12 @@ export function compareAlbumsByReleaseFirst(newestFirst = false) {
     return (order = order === 0 ? compareStrings(a1.id, a2.id) : order);
   };
 }
+
+export function compareByRecentlyPlayed(stats) {
+  return function (i1, i2) {
+    return (
+      (stats[i2.id]?.last_played_at || new Date(0)) -
+      (stats[i1.id]?.last_played_at || new Date(0))
+    );
+  };
+}
