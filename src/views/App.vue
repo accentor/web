@@ -191,7 +191,7 @@ export default {
       if (
         !this.loading &&
         oldValue !== null &&
-        oldValue.getTime() != newValue.getTime()
+        oldValue.getTime() !== newValue.getTime()
       ) {
         this.loadData();
       }
