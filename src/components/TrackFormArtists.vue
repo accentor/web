@@ -63,11 +63,24 @@
           v-model="item.artist_id"
         />
         <VTextField :label="$t('common.name')" v-model="item.name" />
-        <VAutocomplete
-          :items="roles"
-          :label="$t('music.artist.role')"
-          v-model="item.role"
-        />
+        <VRow>
+          <VCol>
+          <VAutocomplete
+            :items="roles"
+            :label="$t('music.artist.role')"
+            v-model="item.role"
+            class="flex-grow-2"
+          />
+          </VCol>
+          <VCol class="flex-grow-0 flex-shrink-0">
+          <VCheckbox
+            v-model="item.hidden"
+            label="Hide in overview?"
+            color="red"
+            class="white-space-nowrap"
+            ></VCheckbox>
+          </VCol>
+        </VRow>
         <VDivider light v-if="index !== trackArtists.length - 1" />
       </VCol>
     </VRow>
