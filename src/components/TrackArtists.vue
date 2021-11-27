@@ -3,7 +3,12 @@
     <VMenu open-on-hover offset-y>
       <template v-slot:activator="{ on }">
         <div v-on="on">
-          {{ track_artists.filter((a) => !a.hidden).map((a) => a.name).join(" / ") }}
+          {{
+            track_artists
+              .filter((a) => !a.hidden)
+              .map((a) => a.name)
+              .join(" / ")
+          }}
         </div>
       </template>
       <VList dense>
