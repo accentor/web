@@ -1,0 +1,110 @@
+<template>
+  <VCard class="pa-2">
+    <VCardTitle> {{ title }}</VCardTitle>
+    <ol class="top-list">
+      <li v-for="(item, index) in listData" :key="index" class="top-item">
+        <span class="top-item__text">
+          <span class="top-item__position font-weight-medium">
+            {{ index + 1 }}.
+          </span>
+          <span class="top-item__name">
+            {{ item.trackArtists.map((a) => a.name).join(" / ") }}
+            - {{ item.title }}
+          </span>
+        </span>
+        <div class="top-item__bg-wrapper">
+          <div
+            class="top-item__bg primary"
+            :style="{ width: `${item.width}%` }"
+          >
+            <span class="top-item__count font-weight-medium white--text">
+              {{ item.count }}
+            </span>
+          </div>
+        </div>
+      </li>
+    </ol>
+  </VCard>
+</template>
+
+<script>
+import { mapState } from "vuex";
+import { calcPlayCountForTracks } from "@/reducers";
+
+export default {
+  name: "TopTracksList",
+  props: {
+    plays: {
+      type: Array,
+      required: true,
+    },
+    title: {
+      type: String,
+      required: true,
+    },
+  },
+  computed: {
+    ...mapState("tracks", ["tracks"]),
+    topTracks() {
+      return Object.entries(calcPlayCountForTracks(this.plays))
+        .sort((t1, t2) => t2[1] - t1[1])
+        .slice(0, 10);
+    },
+    listData() {
+      const max = (this.topTracks[0] && this.topTracks[0][1]) || 0;
+      return [...this.topTracks].map((tt) => {
+        const track = this.tracks[tt[0]];
+        return {
+          count: tt[1],
+          title: track?.title,
+          width: (tt[1] * 100.0) / max,
+          trackArtists:
+            track?.track_artists
+              .map((ta) => ta)
+              .sort((a1, a2) => a1.order - a2.order) || [],
+        };
+      });
+    },
+  },
+};
+</script>
+
+<style lang="scss" scoped>
+.top-list {
+  list-style: none;
+  padding-left: 0;
+
+  & > * + * {
+    margin-top: 0.5rem;
+  }
+}
+
+.top-item {
+  width: 100%;
+  display: block;
+  padding: 0.375rem 1rem;
+
+  &__bg-wrapper {
+    width: 100%;
+    height: 2rem;
+  }
+
+  &__bg {
+    height: 100%;
+    border-radius: 0.5rem;
+    transition-property: width;
+    transition-timing-function: ease-in-out;
+    transition-duration: 500ms;
+  }
+
+  &__text {
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  &__count {
+    float: right;
+    padding: 0.25rem 0.5rem;
+  }
+}
+</style>

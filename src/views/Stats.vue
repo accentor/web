@@ -9,19 +9,30 @@
       </VCol>
     </VRow>
     <VRow>
-      <PercentagePlayedCard
-        :plays="filteredPlays"
-        :tracks="tracks"
-        :title="$t('stats.percentageLibraryPlayed')"
-      />
+      <VCol cols="12" md="9">
+        <TopTracksList
+          class="stats__top-tracks"
+          :plays="filteredPlays"
+          :title="$t('stats.topTracks')"
+        />
+      </VCol>
+      <VCol cols="12" md="3">
+        <PercentagePlayedCard
+          class="stats__percentage-played"
+          :plays="filteredPlays"
+          :tracks="tracks"
+          :title="$t('stats.percentageLibraryPlayed')"
+        />
+      </VCol>
     </VRow>
   </VContainer>
 </template>
 
 <script>
-import { mapGetters, mapState } from "vuex";
+import { mapActions, mapGetters, mapState } from "vuex";
 import DateRangeSelect from "@/components/DateRangeSelect";
 import PercentagePlayedCard from "@/components/PercentagePlayedCard";
+import TopTracksList from "@/components/TopTracksList";
 import { filterPlaysByPeriod } from "@/filters";
 
 export default {
@@ -32,6 +43,7 @@ export default {
   components: {
     DateRangeSelect,
     PercentagePlayedCard,
+    TopTracksList,
   },
   data() {
     return {
@@ -42,6 +54,7 @@ export default {
     };
   },
   computed: {
+    ...mapActions("plays", { indexPlays: "index" }),
     ...mapGetters({
       plays: "plays/plays",
       tracks: "tracks/tracks",
@@ -51,6 +64,11 @@ export default {
       return this.plays.filter(
         filterPlaysByPeriod(this.period.start, this.period.end)
       );
+    },
+  },
+  methods: {
+    async reloadPlays() {
+      await this.indexPlays();
     },
   },
 };
