@@ -8,6 +8,13 @@
         <DateRangeSelect @input="(e) => (period = e)" />
       </VCol>
     </VRow>
+    <VRow>
+      <PercentagePlayedCard
+        :plays="filteredPlays"
+        :tracks="tracks"
+        :title="$t('stats.percentageLibraryPlayed')"
+      />
+    </VRow>
   </VContainer>
 </template>
 

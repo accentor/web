@@ -355,6 +355,9 @@
 			"original": "Originele kwaliteit"
 		}
 	},
+	"stats": {
+		"percentageLibraryPlayed": "Percentage van muziekbibliotheek dat je besluistered hebt:"
+	},
 	"users": {
 		"auth": {
 			"destroy-selected": "Verwijder geselecteerde",

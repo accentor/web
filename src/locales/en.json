@@ -359,6 +359,9 @@
 			"original": "Original quality"
 		}
 	},
+	"stats": {
+		"percentageLibraryPlayed": "Percentage of library that you listened to:"
+	},
 	"users": {
 		"auth": {
 			"destroy-selected": "Delete selected",
