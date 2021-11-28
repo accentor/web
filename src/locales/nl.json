@@ -62,7 +62,20 @@
 		"replace": "Vervangen",
 		"search": "Zoeken",
 		"settings": "Instellingen",
+		"stats": "Statistieken",
 		"yes": "Ja"
+	},
+	"components": {
+		"dateRangeSelect": {
+			"label": "Selecteer periode",
+			"options": {
+				"last7Days": "Voorbije 7 dagen",
+				"lastMonth": "Voorbije maand",
+				"thisYear": "Dit jaar",
+				"allTime": "Altijd",
+				"customRange": "Eigen selectie"
+			}
+		}
 	},
 	"errors": {
 		"album_artists": "Album artiesten",
