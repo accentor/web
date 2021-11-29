@@ -5,10 +5,19 @@
       :label="$t('components.dateRangeSelect.label')"
       v-model="selectedPreset"
     >
+      <template v-slot:item="{ item, on, attrs }">
+        <VListItem
+          v-on="on"
+          v-bind="attrs"
+          @click="showCustomRangeModal = item.value === 'customRange'"
+        >
+          {{ item.text }}
+        </VListItem>
+      </template>
       <template v-slot:selection="{ item }">
         <span>
-          {{ item.value === "customRange" ? customRangeText : item.text }}</span
-        >
+          {{ item.value === "customRange" ? customRangeText : item.text }}
+        </span>
       </template>
     </VSelect>
     <VDialog persistent width="290px" v-model="showCustomRangeModal">
@@ -97,7 +106,7 @@ export default {
             .sort((d1, d2) => d1 > d2);
           if (range.length) {
             start = range[0];
-            end = range[1] || range[0];
+            end = range[1] || new Date(range[0]);
           }
           break;
         }
@@ -111,9 +120,7 @@ export default {
   watch: {
     selectedPreset: {
       handler(newValue) {
-        if (newValue === "customRange") {
-          this.showCustomRangeModal = true;
-        } else {
+        if (newValue !== "customRange") {
           this.emitSelection();
         }
       },
