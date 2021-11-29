@@ -15,7 +15,7 @@
         <div class="top-item__bg-wrapper">
           <div
             class="top-item__bg primary"
-            :style="{ width: `${item.width}%` }"
+            :style="{ width: `${animatedWidths[index]}%` }"
           >
             <span class="top-item__count font-weight-medium white--text">
               {{ item.count }}
@@ -43,6 +43,11 @@ export default {
       required: true,
     },
   },
+  data() {
+    return {
+      animatedWidths: Array(10).fill(0),
+    };
+  },
   computed: {
     ...mapState("tracks", ["tracks"]),
     topTracks() {
@@ -64,6 +69,13 @@ export default {
               .sort((a1, a2) => a1.order - a2.order) || [],
         };
       });
+    },
+  },
+  watch: {
+    listData() {
+      setTimeout(() => {
+        this.animatedWidths = this.listData.map((i) => i.width);
+      }, 0);
     },
   },
 };
