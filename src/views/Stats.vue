@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters, mapState } from "vuex";
+import { mapGetters, mapState } from "vuex";
 import DateRangeSelect from "@/components/DateRangeSelect";
 import PercentagePlayedCard from "@/components/PercentagePlayedCard";
 import TopTracksList from "@/components/TopTracksList";
@@ -53,8 +53,10 @@ export default {
       },
     };
   },
+  created() {
+    this.reloadPlays();
+  },
   computed: {
-    ...mapActions("plays", { indexPlays: "index" }),
     ...mapGetters({
       plays: "plays/plays",
       tracks: "tracks/tracks",
@@ -68,7 +70,7 @@ export default {
   },
   methods: {
     async reloadPlays() {
-      await this.indexPlays();
+      await this.$store.dispatch("plays/index");
     },
   },
 };
