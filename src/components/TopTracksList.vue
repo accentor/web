@@ -85,10 +85,6 @@ export default {
 .top-list {
   list-style: none;
   padding-left: 0;
-
-  & > * + * {
-    margin-top: 0.5rem;
-  }
 }
 
 .top-item {
