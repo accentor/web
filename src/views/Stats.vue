@@ -2,7 +2,7 @@
   <VContainer>
     <VRow>
       <VCol>
-        <h1>{{ $t("common.stats") }}</h1>
+        <h1 class="text-h4">{{ $t("common.stats") }}</h1>
       </VCol>
       <VCol>
         <DateRangeSelect @input="(e) => (period = e)" />
