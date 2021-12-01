@@ -4,8 +4,9 @@
       <VCol>
         <h1 class="text-h4">{{ $t("common.stats") }}</h1>
       </VCol>
-      <VCol>
+      <VCol class="d-flex flex-column align-end">
         <DateRangeSelect @input="(e) => (period = e)" />
+        <VSwitch v-model="useTrackLength" :label="$t('stats.byTrackLength')" />
       </VCol>
     </VRow>
     <VRow>
@@ -13,6 +14,7 @@
         <TopTracksList
           class="stats__top-tracks"
           :plays="filteredPlays"
+          :use-track-length="useTrackLength"
           :title="$t('stats.topTracks')"
         />
       </VCol>
@@ -20,6 +22,7 @@
         <PercentagePlayedCard
           class="stats__percentage-played"
           :plays="filteredPlays"
+          :use-track-length="useTrackLength"
           :tracks="tracks"
           :title="$t('stats.percentageLibraryPlayed')"
         />
@@ -51,6 +54,7 @@ export default {
         start: null,
         end: null,
       },
+      useTrackLength: false,
     };
   },
   created() {

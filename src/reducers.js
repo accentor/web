@@ -9,3 +9,15 @@ export function calcPlayCountForTracks(plays) {
   }
   return acc;
 }
+
+export function calcPlayTimeForTracks(plays, tracks) {
+  const acc = {};
+  for (const play of plays) {
+    if (!(play.track_id in acc)) {
+      acc[play.track_id] = tracks[play.track_id]?.length || 0;
+    } else {
+      acc[play.track_id] += tracks[play.track_id]?.length || 0;
+    }
+  }
+  return acc;
+}

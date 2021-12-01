@@ -361,7 +361,8 @@
 	},
 	"stats": {
 		"percentageLibraryPlayed": "Percentage of library that you listened to",
-		"topTracks": "Top tracks"
+		"topTracks": "Top tracks",
+		"useTrackLength": "Use track length"
 	},
 	"users": {
 		"auth": {

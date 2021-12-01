@@ -17,7 +17,13 @@
             class="top-item__bg primary"
             :style="{ width: `${animatedWidths[index]}%` }"
           >
-            <span class="top-item__count font-weight-medium white--text">
+            <span
+              class="top-item__count font-weight-medium white--text"
+              v-if="useTrackLength"
+            >
+              {{ item.count | length }}
+            </span>
+            <span class="top-item__count font-weight-medium white--text" v-else>
               {{ item.count }}
             </span>
           </div>
@@ -29,7 +35,7 @@
 
 <script>
 import { mapState } from "vuex";
-import { calcPlayCountForTracks } from "@/reducers";
+import { calcPlayCountForTracks, calcPlayTimeForTracks } from "@/reducers";
 
 export default {
   name: "TopTracksList",
@@ -42,6 +48,10 @@ export default {
       type: String,
       required: true,
     },
+    useTrackLength: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {
@@ -51,7 +61,11 @@ export default {
   computed: {
     ...mapState("tracks", ["tracks"]),
     topTracks() {
-      return Object.entries(calcPlayCountForTracks(this.plays))
+      return Object.entries(
+        this.useTrackLength
+          ? calcPlayTimeForTracks(this.plays, this.tracks)
+          : calcPlayCountForTracks(this.plays)
+      )
         .sort((t1, t2) => t2[1] - t1[1])
         .slice(0, 10);
     },

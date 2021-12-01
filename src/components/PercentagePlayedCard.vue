@@ -51,6 +51,10 @@ export default {
       type: String,
       required: true,
     },
+    useTrackLength: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {
@@ -60,16 +64,34 @@ export default {
   computed: {
     playedTracksInPeriod() {
       const trackIds = this.plays.map((p) => p.track_id);
-      return [...new Set(trackIds)].length;
+      return [...new Set(trackIds)];
+    },
+    playedTracksLength() {
+      return this.playedTracksInPeriod.reduce((acc, cur) => {
+        return acc + (this.tracks.find((t) => t.id === cur)?.length || 0);
+      }, 0);
+    },
+    totalTracksLength() {
+      return this.tracks.reduce((acc, cur) => {
+        return acc + cur.length;
+      }, 0);
     },
     circumference() {
       // 2πr
       return 2 * Math.PI * 100;
     },
     percentage() {
-      return this.tracks.length
-        ? (this.playedTracksInPeriod * 1.0) / this.tracks.length
-        : 0;
+      if (!this.tracks.length) {
+        return 0;
+      }
+
+      const playsCount = this.useTrackLength
+        ? this.playedTracksLength
+        : this.playedTracksInPeriod.length;
+      const tracksCount = this.useTrackLength
+        ? this.totalTracksLength
+        : this.tracks.length;
+      return (1.0 * playsCount) / tracksCount;
     },
     strokeDashOffset() {
       const strokeDiff = this.animatedPercentage * this.circumference;

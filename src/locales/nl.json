@@ -357,7 +357,8 @@
 	},
 	"stats": {
 		"percentageLibraryPlayed": "Percentage van muziekbibliotheek dat je besluisterd hebt:",
-		"topTracks": "Meest besluisterde nummers"
+		"topTracks": "Meest besluisterde nummers",
+		"useTrackLength": "Volgens lengte nummers"
 	},
 	"users": {
 		"auth": {
