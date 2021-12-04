@@ -55,6 +55,10 @@ a {
 }
 
 // Additional utility classes
+.break-word {
+  word-break: break-word;
+}
+
 .white-space-nowrap {
   white-space: nowrap;
 }

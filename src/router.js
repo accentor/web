@@ -13,6 +13,7 @@ import NewArtist from "./views/artists/NewArtist";
 import Home from "./views/Home";
 import Login from "./views/Login";
 import Library from "./views/Library";
+import Stats from "./views/Stats";
 import EditTrack from "./views/tracks/EditTrack";
 import TracksWithoutAudio from "./views/tracks/TracksWithoutAudio";
 import MergeTrack from "./views/tracks/MergeTrack";
@@ -133,6 +134,11 @@ const router = new Router({
           path: "settings",
           name: "settings",
           component: Settings,
+        },
+        {
+          path: "stats",
+          name: "stats",
+          component: Stats,
         },
         {
           path: "tracks",

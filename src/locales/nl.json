@@ -62,7 +62,20 @@
 		"replace": "Vervangen",
 		"search": "Zoeken",
 		"settings": "Instellingen",
+		"stats": "Statistieken",
 		"yes": "Ja"
+	},
+	"components": {
+		"dateRangeSelect": {
+			"label": "Selecteer periode",
+			"options": {
+				"last7Days": "Voorbije 7 dagen",
+				"lastMonth": "Voorbije maand",
+				"thisYear": "Dit jaar",
+				"allTime": "Altijd",
+				"customRange": "Eigen selectie"
+			}
+		}
 	},
 	"errors": {
 		"album_artists": "Album artiesten",
@@ -341,6 +354,11 @@
 			"label": "Speel audio af in",
 			"original": "Originele kwaliteit"
 		}
+	},
+	"stats": {
+		"percentageLibraryPlayed": "Percentage van muziekbibliotheek dat je besluisterd hebt:",
+		"topTracks": "Meest besluisterde nummers",
+		"useTrackLength": "Volgens lengte nummers"
 	},
 	"users": {
 		"auth": {

@@ -62,7 +62,20 @@
 		"replace": "Replace",
 		"search": "Search",
 		"settings": "Settings",
+		"stats": "Stats",
 		"yes": "Yes"
+	},
+	"components": {
+		"dateRangeSelect": {
+			"label": "Select period",
+			"options": {
+				"last7Days": "Last 7 days",
+				"lastMonth": "Last month",
+				"thisYear": "This year",
+				"allTime": "All time",
+				"customRange": "Custom range"
+			}
+		}
 	},
 	"errors": {
 		"album_artists": "Album artists",
@@ -345,6 +358,11 @@
 			"label": "Stream audio in",
 			"original": "Original quality"
 		}
+	},
+	"stats": {
+		"percentageLibraryPlayed": "Percentage of library that you listened to",
+		"topTracks": "Top tracks",
+		"useTrackLength": "Use track length"
 	},
 	"users": {
 		"auth": {

@@ -81,6 +81,16 @@
             </VListItemTitle>
           </VListItemContent>
         </VListItem>
+        <VListItem :to="{ name: 'stats' }">
+          <VListItemAction>
+            <VIcon>mdi-chart-bar</VIcon>
+          </VListItemAction>
+          <VListItemContent>
+            <VListItemTitle>
+              {{ $tc("common.stats", 2) }}
+            </VListItemTitle>
+          </VListItemContent>
+        </VListItem>
         <VListItem :to="{ name: 'library' }" v-if="isModerator">
           <VListItemAction>
             <VIcon>mdi-tune</VIcon>
