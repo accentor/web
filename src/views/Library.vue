@@ -31,7 +31,8 @@
               depressed
               v-bind="attrs"
               v-on="on"
-              class="button-group__button"
+              min-width="0"
+              class="button-group__button px-2"
             >
               <VIcon class="white--text">mdi-menu-down</VIcon>
             </VBtn>
