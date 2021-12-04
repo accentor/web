@@ -75,10 +75,21 @@
           <VCol class="flex-grow-0 flex-shrink-0">
             <VCheckbox
               v-model="item.hidden"
-              label="Hide in overview?"
               color="red"
               class="white-space-nowrap"
-            ></VCheckbox>
+            >
+              <template v-slot:label>
+                {{ $t("music.artist.hide.label") }}
+                <VTooltip bottom>
+                  <template v-slot:activator="{ on, attrs }">
+                    <VIcon class="ml-2" small="true" v-bind="attrs" v-on="on">
+                      mdi-information
+                    </VIcon>
+                  </template>
+                  <span>{{ $t("music.artist.hide.explanation") }}</span>
+                </VTooltip>
+              </template>
+            </VCheckbox>
           </VCol>
         </VRow>
         <VDivider light v-if="index !== trackArtists.length - 1" />
