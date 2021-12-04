@@ -11,10 +11,14 @@ import colors from "vuetify/lib/util/colors";
 
 Vue.config.productionTip = false;
 
-Vue.filter(
-  "length",
-  (l) => `${Math.floor(l / 60)}:${`${l % 60}`.padStart(2, "0")}`
-);
+Vue.filter("length", (l) => {
+  const hours = Math.floor(l / 3600);
+  const minutes = Math.floor((l % 3600) / 60);
+  const seconds = `${l % 60}`.padStart(2, "0");
+  return hours
+    ? `${hours}:${minutes.toString().padStart(2, "0")}:${seconds}`
+    : `${minutes}:${seconds}`;
+});
 
 Vue.use(Vuetify);
 Vue.use(Meta, { refreshOnceOnNavigation: true });
