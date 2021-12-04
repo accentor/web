@@ -9,46 +9,79 @@
     <VRow class="mb-2">
       <h2 class="text-h5">{{ $t("library.rescan") }}</h2>
     </VRow>
-    <VRow v-if="rescan" class="mb-2">
-      <VBtn
-        @click="start"
-        :disabled="rescanRunning"
-        color="success"
-        class="ma-2"
-      >
-        <VIcon left>
-          mdi-refresh
-          {{ rescanRunning ? "mdi-spin" : "" }}
-        </VIcon>
-        {{ $t("library.start-scan") }}
-      </VBtn>
+    <VRow v-if="combinedRescans" class="mb-2">
+      <div class="button-group ma-2">
+        <VBtn
+          @click="startAll"
+          :disabled="rescans.length === 0 || rescanRunning"
+          color="success"
+          class="button-group__button"
+          depressed
+        >
+          <VIcon left class="white--text">
+            mdi-refresh
+            {{ rescanRunning ? "mdi-spin" : "" }}
+          </VIcon>
+          {{ $t("library.start-scan") }}
+        </VBtn>
+        <VMenu offset-y bottom left close-on-click v-if="rescans.length > 1">
+          <template v-slot:activator="{ on, attrs }">
+            <VBtn
+              color="success"
+              depressed
+              v-bind="attrs"
+              v-on="on"
+              class="button-group__button"
+            >
+              <VIcon class="white--text">mdi-menu-down</VIcon>
+            </VBtn>
+          </template>
+          <VList>
+            <VListItem
+              v-for="(rescan, index) in rescans"
+              :key="index"
+              @click="start(rescan.id)"
+            >
+              <VListItemTitle :disabled="rescan.running">
+                Rescan {{ locations[rescan.location_id].path }}
+              </VListItemTitle>
+            </VListItem>
+          </VList>
+        </VMenu>
+      </div>
     </VRow>
-    <VRow class="flex-column mb-4" v-if="rescan">
+    <VRow class="flex-column mb-4" v-if="combinedRescans">
       <div>
         <strong>{{ $t("library.finished-at") }}: </strong>
         {{
           rescanRunning
             ? $t("library.currently-running")
-            : $d(new Date(rescan.finished_at), "long")
+            : $d(new Date(combinedRescans.finished_at), "long")
         }}
       </div>
       <div>
         <strong>{{ $t("library.processed") }}: </strong>
-        {{ rescan.processed }}
+        {{ combinedRescans.processed }}
       </div>
-      <div v-if="rescan.warning_text">
+      <div v-if="combinedRescans.warning_text">
         <div>
           <h3 class="text-h6">{{ $t("library.warnings") }}</h3>
         </div>
-        <pre class="text-body-2">{{ rescan.warning_text }}</pre>
+        <pre class="text-body-2">{{ combinedRescans.warning_text }}</pre>
       </div>
-      <div v-if="rescan.error_text">
+      <div v-if="combinedRescans.error_text">
         <div>
           <h3 class="text-h6">{{ $t("library.errors") }}</h3>
         </div>
-        <pre class="text-body-2">{{ rescan.error_text }}</pre>
+        <pre class="text-body-2">{{ combinedRescans.error_text }}</pre>
       </div>
-      <div v-if="!rescanRunning && !rescan.error_text && !rescan.warning_text">
+      <div
+        v-if="
+          !rescanRunning &&
+          !combinedRescans.error_text &&
+          !combinedRescans.warning_text
+        "
+      >
         <h3 class="text-h6">{{ $t("library.no-errors-warnings") }}</h3>
       </div>
     </VRow>
@@ -124,21 +157,23 @@ export default {
   },
   computed: {
     ...mapGetters("auth", ["isModerator"]),
-    ...mapState("rescan", ["rescan"]),
+    ...mapGetters("rescan", ["rescans"]),
+    ...mapGetters("rescan", ["combinedRescans"]),
+    ...mapState("locations", ["locations"]),
     ...mapState("rescan", ["lastClick"]),
     rescanRunning() {
-      return this.rescan.running ||
-        this.lastClick > new Date(this.rescan.finished_at)
+      return this.combinedRescans.running ||
+        this.lastClick > new Date(this.combinedRescans.finished_at)
         ? true
         : false;
     },
   },
   methods: {
-    ...mapActions("rescan", ["start"]),
+    ...mapActions("rescan", ["start", "startAll"]),
     async loadData() {
       let pendingResults = [];
       if (this.isModerator) {
-        pendingResults.push(this.$store.dispatch("rescan/show"));
+        pendingResults.push(this.$store.dispatch("rescan/index"));
         pendingResults.push(this.$store.dispatch("codecs/index"));
         pendingResults.push(this.$store.dispatch("codecConversions/index"));
         pendingResults.push(this.$store.dispatch("coverFilenames/index"));
