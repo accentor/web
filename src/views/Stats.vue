@@ -4,9 +4,9 @@
       <VCol>
         <h1 class="text-h4">{{ $t("common.stats") }}</h1>
       </VCol>
-      <VCol class="d-flex flex-column align-end">
+      <VCol class="d-flex justify-end">
+        <VSwitch v-model="useTrackLength" :label="$t('stats.byTrackLength')" class="mr-4" />
         <DateRangeSelect @input="(e) => (period = e)" />
-        <VSwitch v-model="useTrackLength" :label="$t('stats.byTrackLength')" />
       </VCol>
     </VRow>
     <VRow>
