@@ -1,6 +1,6 @@
 <template>
   <VCard class="pa-2">
-    <VCardTitle>{{ title }}</VCardTitle>
+    <VCardTitle class="break-word">{{ title }}</VCardTitle>
     <div class="ma-2">
       <svg viewBox="0 0 250 250">
         <circle
