@@ -205,6 +205,7 @@ export default {
             name: ta.name,
             role: ta.role,
             order: ta.order,
+            hidden: ta.hidden,
           };
         })
         .sort((a1, a2) => a1.order - a2.order);
@@ -217,6 +218,7 @@ export default {
         artist_id: null,
         name: "",
         role: "main",
+        hidden: false,
       });
     },
     async submit() {
@@ -256,6 +258,7 @@ export default {
                 artist_id: id,
                 name: ta.name || ta.artist_id,
                 role: ta.role,
+                hidden: ta.hidden ? 1 : 0,
                 order: index + 1,
               });
             } else {
@@ -266,6 +269,7 @@ export default {
               artist_id: ta.artist_id.id,
               name: ta.name || ta.artist_id.name,
               role: ta.role,
+              hidden: ta.hidden ? 1 : 0,
               order: index + 1,
             });
           }

@@ -416,6 +416,7 @@ export default {
                   artist_id: id,
                   name: ta.name || ta.artist_id,
                   role: ta.role,
+                  hidden: ta.hidden,
                   order: index + 1,
                 });
               } else {
@@ -426,6 +427,7 @@ export default {
                 artist_id: ta.artist_id.id,
                 name: ta.name || ta.artist_id.name,
                 role: ta.role,
+                hidden: ta.hidden,
                 order: index + 1,
               });
             }
@@ -528,6 +530,7 @@ export default {
         artist_id: null,
         name: "",
         role: "main",
+        hidden: false,
       });
     },
     resetState() {

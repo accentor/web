@@ -259,6 +259,10 @@
 		"artist": {
 			"add": "Add artist",
 			"artist-s": "Artist(s)",
+			"hide": {
+				"label": "Hide in overview?",
+				"explanation": "If an artist is hidden, they will only be shown in detailed lists."
+			},
 			"merge": "Merge artists",
 			"merge-into": "Merge {obj} into",
 			"new": "New artist",
