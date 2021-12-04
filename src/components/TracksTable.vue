@@ -25,6 +25,8 @@
       :items="filteredItems"
       :items-per-page="30"
       :page.sync="pagination.page"
+      :sort-by.sync="sortable.sortBy"
+      :sort-desc.sync="sortable.sortDesc"
       :show-select="isModerator"
       :single-select="singleSelect"
       :custom-sort="sortFunction"
@@ -106,6 +108,7 @@ import TrackActions from "./TrackActions";
 import Paginated from "../mixins/Paginated";
 import { mapGetters, mapState } from "vuex";
 import Searchable from "../mixins/Searchable";
+import Sortable from "../mixins/Sortable";
 import TrackArtists from "./TrackArtists";
 import TrackGenres from "./TrackGenres";
 import MassEditDialog from "./MassEditDialog";
@@ -119,7 +122,7 @@ import {
 export default {
   name: "TracksTable",
   components: { TrackGenres, TrackActions, TrackArtists, MassEditDialog },
-  mixins: [Paginated, Searchable],
+  mixins: [Paginated, Searchable, Sortable],
   props: {
     tracks: { default: () => [], type: Array },
     savePagination: { default: true, type: Boolean },
