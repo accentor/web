@@ -29,7 +29,7 @@
         </VToolbarItems>
       </VToolbar>
       <div style="overflow-y: auto; backface-visibility: hidden">
-        <VForm v-model="isValid" ref="form">
+        <VForm v-model="isValid" ref="form" @submit.prevent="saveTracks">
           <VContainer>
             <Errors />
             <VContainer
