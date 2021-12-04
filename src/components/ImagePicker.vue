@@ -4,7 +4,7 @@
       {{ $tc("common.images", 1) }}
     </label>
     <input
-      @change="interpret"
+      @change="handleSelect"
       class="d-none"
       ref="picker"
       type="file"
@@ -12,7 +12,11 @@
       name="image"
     />
     <VRow>
-      <VCol class="flex-column flex-grow-0">
+      <VCol
+        class="flex-column flex-grow-0"
+        @dragover.prevent="/* just here to prevent file from opening */"
+        @drop.prevent="handleDrop"
+      >
         <VImg
           :src="previewSrc"
           height="200"
@@ -38,7 +42,14 @@
         />
       </VCol>
       <VCol class="flex-column d-flex flex-grow-0 justify-center">
-        <VBtn @click="passthrough" color="primary" class="ma-2" dark>
+        <VBtn
+          @click="passthrough"
+          @dragover.prevent="/* just here to prevent file from opening */"
+          @drop.prevent="handleDrop"
+          color="primary"
+          class="ma-2"
+          dark
+        >
           <VIcon left>mdi-upload</VIcon>
           {{ hasImage ? $t("common.replace") : $t("common.choose-image") }}
         </VBtn>
@@ -84,22 +95,33 @@ export default {
     },
   },
   methods: {
-    interpret(event) {
+    handleDrop(event) {
+      if (
+        event.dataTransfer.files.length === 1 &&
+        /^image.*/.test(event.dataTransfer.files[0].type)
+      ) {
+        this.interpret(event.dataTransfer.files[0]);
+      }
+    },
+    handleSelect(event) {
       const file = event.target.files[0];
       if (file) {
-        const fileReader = new FileReader();
-        fileReader.onload = (ev) => {
-          this.$emit("input", {
-            filename: file.name,
-            mimetype: file.type,
-            data: ev.target.result.replace(
-              /^data:[a-zA-Z0-9!#$%^&\\*_\-+{}|'.`~]+\/[a-zA-Z0-9!#$%^&\\*_\-+{}|'.`~]+;base64,/,
-              ""
-            ),
-          });
-        };
-        fileReader.readAsDataURL(file);
+        this.interpret(file);
       }
+    },
+    interpret(file) {
+      const fileReader = new FileReader();
+      fileReader.onload = (ev) => {
+        this.$emit("input", {
+          filename: file.name,
+          mimetype: file.type,
+          data: ev.target.result.replace(
+            /^data:[a-zA-Z0-9!#$%^&\\*_\-+{}|'.`~]+\/[a-zA-Z0-9!#$%^&\\*_\-+{}|'.`~]+;base64,/,
+            ""
+          ),
+        });
+      };
+      fileReader.readAsDataURL(file);
     },
     clear() {
       this.$emit("input", {
