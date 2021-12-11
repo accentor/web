@@ -140,8 +140,10 @@ export default {
           newValue.end !== this.period.end
         ) {
           this.selectedPreset = "customRange";
-          // We cannot use toISOString().slice(0, 10) here, since it would ignore the users timezone
-          this.customRange = [getFormattedDate(newValue.start), getFormattedDate(newValue.end)];
+          this.customRange = [
+            getFormattedDate(newValue.start),
+            getFormattedDate(newValue.end),
+          ];
           this.emitSelection();
         }
       },
