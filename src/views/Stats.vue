@@ -11,7 +11,7 @@
           :label="$t('stats.useTrackLength')"
           class="mr-4"
         />
-        <DateRangeSelect @input="(e) => (period = e)" />
+        <DateRangeSelect v-model="period" />
       </VCol>
     </VRow>
     <VRow>
@@ -88,6 +88,31 @@ export default {
       await this.$store.dispatch("plays/index");
     },
   },
+  watch: {
+    period() {
+      if (this.period.start && this.period.end && (new Date(+this.$route.query.periodStart) !== this.period.start || new Date(+this.$route.query.periodEnd) !== this.period.end)) {
+        this.$router.push({
+          query: {
+            ...this.$route.query,
+            periodStart: this.period.start.valueOf(),
+            periodEnd: this.period.end.valueOf()
+          }
+        })
+      }
+    },
+    "$route.query.periodEnd": {
+      handler() {
+        this.period.end = new Date(+this.$route.query.periodEnd);
+      },
+      immediate: true
+    },
+    "$route.query.periodStart": {
+      handler() {
+        this.period.start = new Date(+this.$route.query.periodStart);
+      },
+      immediate: true
+    }
+  }
 };
 </script>
 
