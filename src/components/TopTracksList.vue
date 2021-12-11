@@ -8,7 +8,7 @@
             {{ index + 1 }}.
           </span>
           <span class="top-item__name">
-            {{ item.trackArtists.map((a) => a.name).join(" / ") }}
+            {{ item.trackArtists.filter((a) => !a.hidden).map((a) => a.name).join(" / ") }}
             - {{ item.title }}
           </span>
         </span>
