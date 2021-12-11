@@ -120,8 +120,13 @@ export default {
   }
 
   &__text {
-    overflow: hidden;
-    white-space: nowrap;
+    display: flex;
+    line-height: 1.2;
+    margin-bottom: 0.125rem;
+  }
+
+  &__position {
+    margin-right: 0.25rem;
   }
 
   &__count {
