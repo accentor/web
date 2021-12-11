@@ -42,6 +42,7 @@ import DateRangeSelect from "@/components/DateRangeSelect";
 import PercentagePlayedCard from "@/components/PercentagePlayedCard";
 import TopTracksList from "@/components/TopTracksList";
 import { filterPlaysByPeriod } from "@/filters";
+import { getFormattedDate } from "@/dates";
 
 export default {
   name: "Stats",
@@ -93,14 +94,14 @@ export default {
       if (
         this.period.start &&
         this.period.end &&
-        (new Date(+this.$route.query.periodStart) !== this.period.start ||
-          new Date(+this.$route.query.periodEnd) !== this.period.end)
+        (new Date(this.$route.query.periodStart) !== this.period.start ||
+          new Date(this.$route.query.periodEnd) !== this.period.end)
       ) {
         this.$router.push({
           query: {
             ...this.$route.query,
-            periodStart: this.period.start.valueOf(),
-            periodEnd: this.period.end.valueOf(),
+            periodStart: getFormattedDate(this.period.start),
+            periodEnd: getFormattedDate(this.period.end),
           },
         });
       }
@@ -117,13 +118,13 @@ export default {
     },
     "$route.query.periodEnd": {
       handler() {
-        this.period.end = new Date(+this.$route.query.periodEnd);
+        this.period.end = new Date(this.$route.query.periodEnd);
       },
       immediate: true,
     },
     "$route.query.periodStart": {
       handler() {
-        this.period.start = new Date(+this.$route.query.periodStart);
+        this.period.start = new Date(this.$route.query.periodStart);
       },
       immediate: true,
     },
