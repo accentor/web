@@ -75,7 +75,7 @@ export default {
       if (this.period.start && this.period.end) {
         return `${this.period.start.toLocaleDateString()} - ${this.period.end.toLocaleDateString()}`;
       }
-      return '';
+      return "";
     },
     filteredPlays() {
       return this.plays.filter(
@@ -90,14 +90,19 @@ export default {
   },
   watch: {
     period() {
-      if (this.period.start && this.period.end && (new Date(+this.$route.query.periodStart) !== this.period.start || new Date(+this.$route.query.periodEnd) !== this.period.end)) {
+      if (
+        this.period.start &&
+        this.period.end &&
+        (new Date(+this.$route.query.periodStart) !== this.period.start ||
+          new Date(+this.$route.query.periodEnd) !== this.period.end)
+      ) {
         this.$router.push({
           query: {
             ...this.$route.query,
             periodStart: this.period.start.valueOf(),
-            periodEnd: this.period.end.valueOf()
-          }
-        })
+            periodEnd: this.period.end.valueOf(),
+          },
+        });
       }
     },
     useTrackLength() {
@@ -106,29 +111,29 @@ export default {
           query: {
             ...this.$route.query,
             useTrackLength: this.useTrackLength,
-          }
-        })
+          },
+        });
       }
     },
     "$route.query.periodEnd": {
       handler() {
         this.period.end = new Date(+this.$route.query.periodEnd);
       },
-      immediate: true
+      immediate: true,
     },
     "$route.query.periodStart": {
       handler() {
         this.period.start = new Date(+this.$route.query.periodStart);
       },
-      immediate: true
+      immediate: true,
     },
     "$route.query.useTrackLength": {
       handler() {
         this.useTrackLength = this.$route.query.useTrackLength === "true";
       },
-      immediate: true
-    }
-  }
+      immediate: true,
+    },
+  },
 };
 </script>
 
