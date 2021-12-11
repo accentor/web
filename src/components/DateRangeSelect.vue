@@ -47,6 +47,7 @@
 
 <script>
 import { mapState } from "vuex";
+import { getFormattedDate } from "@/dates";
 
 export default {
   name: "DateRangeSelect",
@@ -140,16 +141,7 @@ export default {
         ) {
           this.selectedPreset = "customRange";
           // We cannot use toISOString().slice(0, 10) here, since it would ignore the users timezone
-          const start = `${newValue.start.getFullYear()}-${`${
-            newValue.start.getMonth() + 1
-          }`.padStart(2, "0")}-${`${newValue.start.getDate()}`.padStart(
-            2,
-            "0"
-          )}`;
-          const end = `${newValue.end.getFullYear()}-${`${
-            newValue.end.getMonth() + 1
-          }`.padStart(2, "0")}-${`${newValue.end.getDate()}`.padStart(2, "0")}`;
-          this.customRange = [start, end];
+          this.customRange = [getFormattedDate(newValue.start), getFormattedDate(newValue.end)];
           this.emitSelection();
         }
       },
