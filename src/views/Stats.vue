@@ -100,6 +100,16 @@ export default {
         })
       }
     },
+    useTrackLength() {
+      if (this.useTrackLength.toString() !== this.$route.query.useTrackLength) {
+        this.$router.replace({
+          query: {
+            ...this.$route.query,
+            useTrackLength: this.useTrackLength,
+          }
+        })
+      }
+    },
     "$route.query.periodEnd": {
       handler() {
         this.period.end = new Date(+this.$route.query.periodEnd);
@@ -109,6 +119,12 @@ export default {
     "$route.query.periodStart": {
       handler() {
         this.period.start = new Date(+this.$route.query.periodStart);
+      },
+      immediate: true
+    },
+    "$route.query.useTrackLength": {
+      handler() {
+        this.useTrackLength = this.$route.query.useTrackLength === "true";
       },
       immediate: true
     }
