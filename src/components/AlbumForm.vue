@@ -110,7 +110,7 @@
         />
         <ImagePicker
           v-model="newAlbum.image"
-          :currentImg="album.image250"
+          :currentImg="album && album.image250"
           :placeholder="require('@mdi/svg/svg/album.svg')"
         />
         <h4 class="text-subtitle-1">{{ $tc("music.artists", 2) }}</h4>

@@ -85,7 +85,9 @@ export default {
   },
   computed: {
     previewSrc() {
-      return `data:${this.value.mimetype};base64, ${this.value.data}`;
+      return (
+        this.value && `data:${this.value.mimetype};base64, ${this.value.data}`
+      );
     },
     hasImage() {
       return (

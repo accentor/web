@@ -18,7 +18,7 @@
         />
         <ImagePicker
           v-model="newArtist.image"
-          :currentImg="artist.image250"
+          :currentImg="artist && artist.image250"
           :placeholder="require('@mdi/svg/svg/account-music.svg')"
         />
         <VCheckbox
