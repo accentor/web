@@ -360,6 +360,16 @@
 		}
 	},
 	"stats": {
+		"count": {
+			"playCount": {
+				"before": "Je hebt",
+				"after": "nummers beluisterd."
+			},
+			"playTime": {
+				"before": "Goed voor",
+				"after": "luistertijd."
+			}
+		},
 		"percentageLibraryPlayed": "Percentage van muziekbibliotheek dat je besluisterd hebt:",
 		"topTracks": "Meest besluisterde nummers",
 		"useTrackLength": "Volgens lengte nummers"
