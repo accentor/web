@@ -47,7 +47,6 @@
 
 <script>
 import { mapState } from "vuex";
-import { getFormattedDate } from "@/dates";
 
 export default {
   name: "DateRangeSelect",
@@ -79,12 +78,6 @@ export default {
       showCustomRangeModal: false,
       customRange: [],
     };
-  },
-  props: {
-    value: {
-      type: Object,
-      required: true,
-    },
   },
   computed: {
     ...mapState("userSettings", ["locale"]),
@@ -125,25 +118,22 @@ export default {
     },
   },
   watch: {
-    selectedPreset: {
-      handler(newValue) {
-        if (newValue !== "customRange") {
+    "$route.query.period": {
+      handler() {
+        const newSelectedPreset = this.$route.query.period;
+        if (this.periodPresets.find((p) => p.value === newSelectedPreset)) {
+          this.selectedPreset = this.$route.query.period;
+        } else if (this.customRange !== newSelectedPreset) {
+          this.selectedPreset = "customRange";
+          this.customRange = newSelectedPreset;
           this.emitSelection();
         }
       },
       immediate: true,
     },
-    value: {
+    selectedPreset: {
       handler(newValue) {
-        if (
-          newValue.start !== this.period.start ||
-          newValue.end !== this.period.end
-        ) {
-          this.selectedPreset = "customRange";
-          this.customRange = [
-            getFormattedDate(newValue.start),
-            getFormattedDate(newValue.end),
-          ];
+        if (newValue !== "customRange") {
           this.emitSelection();
         }
       },
@@ -154,6 +144,19 @@ export default {
     emitSelection() {
       this.$emit("input", this.period);
       this.showCustomRangeModal = false;
+      // We only want to set a new query when the selection bubbles up
+      const newPeriod =
+        this.selectedPreset === "customRange"
+          ? this.customRange
+          : this.selectedPreset;
+      if (newPeriod !== this.$route.query.period) {
+        this.$router.push({
+          query: {
+            ...this.$route.query,
+            period: newPeriod,
+          },
+        });
+      }
     },
   },
 };
