@@ -367,7 +367,10 @@
 			},
 			"playTime": {
 				"before": "Goed voor",
-				"after": "luistertijd."
+				"after": "luistertijd.",
+				"days": "Dagen | Dag | Dagen",
+				"hours": "Uren | Uur | Uren",
+				"minutes": "Minuten | Minuut | Minuten"
 			}
 		},
 		"percentageLibraryPlayed": "Percentage van muziekbibliotheek dat je besluisterd hebt:",
