@@ -90,22 +90,6 @@ export default {
     },
   },
   watch: {
-    period() {
-      if (
-        this.period.start &&
-        this.period.end &&
-        (new Date(this.$route.query.periodStart) !== this.period.start ||
-          new Date(this.$route.query.periodEnd) !== this.period.end)
-      ) {
-        this.$router.push({
-          query: {
-            ...this.$route.query,
-            periodStart: getFormattedDate(this.period.start),
-            periodEnd: getFormattedDate(this.period.end),
-          },
-        });
-      }
-    },
     useTrackLength() {
       if (this.useTrackLength.toString() !== this.$route.query.useTrackLength) {
         this.$router.replace({
@@ -115,18 +99,6 @@ export default {
           },
         });
       }
-    },
-    "$route.query.periodEnd": {
-      handler() {
-        this.period.end = new Date(this.$route.query.periodEnd);
-      },
-      immediate: true,
-    },
-    "$route.query.periodStart": {
-      handler() {
-        this.period.start = new Date(this.$route.query.periodStart);
-      },
-      immediate: true,
     },
     "$route.query.useTrackLength": {
       handler() {
