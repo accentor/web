@@ -42,7 +42,6 @@ import DateRangeSelect from "@/components/DateRangeSelect";
 import PercentagePlayedCard from "@/components/PercentagePlayedCard";
 import TopTracksList from "@/components/TopTracksList";
 import { filterPlaysByPeriod } from "@/filters";
-import { getFormattedDate } from "@/dates";
 
 export default {
   name: "Stats",
