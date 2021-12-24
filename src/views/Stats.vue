@@ -13,25 +13,26 @@
         <DateRangeSelect @input="(e) => (period = e)" />
       </VCol>
     </VRow>
-    <VRow>
-      <VCol cols="12" md="9">
-        <TopTracksList
-          class="stats__top-tracks"
-          :plays="filteredPlays"
-          :use-track-length="useTrackLength"
-          :title="$t('stats.topTracks')"
-        />
-      </VCol>
-      <VCol cols="12" md="3">
-        <PercentagePlayedCard
-          class="stats__percentage-played"
-          :plays="filteredPlays"
-          :use-track-length="useTrackLength"
-          :tracks="tracks"
-          :title="$t('stats.percentageLibraryPlayed')"
-        />
-      </VCol>
-    </VRow>
+    <div class="stats">
+      <PlayCountCard
+        :plays="filteredPlays"
+        title=""
+        class="stats__play-count"
+      />
+      <TopTracksList
+        class="stats__top-tracks"
+        :plays="filteredPlays"
+        :use-track-length="useTrackLength"
+        :title="$t('stats.topTracks')"
+      />
+      <PercentagePlayedCard
+        class="stats__percentage-played"
+        :plays="filteredPlays"
+        :use-track-length="useTrackLength"
+        :tracks="tracks"
+        :title="$t('stats.percentageLibraryPlayed')"
+      />
+    </div>
   </VContainer>
 </template>
 
@@ -39,6 +40,7 @@
 import { mapGetters, mapState } from "vuex";
 import DateRangeSelect from "@/components/DateRangeSelect";
 import PercentagePlayedCard from "@/components/PercentagePlayedCard";
+import PlayCountCard from "@/components/PlayCountCard";
 import TopTracksList from "@/components/TopTracksList";
 import { filterPlaysByPeriod } from "@/filters";
 
@@ -50,6 +52,7 @@ export default {
   components: {
     DateRangeSelect,
     PercentagePlayedCard,
+    PlayCountCard,
     TopTracksList,
   },
   data() {
@@ -84,4 +87,38 @@ export default {
 };
 </script>
 
-<style></style>
+<style lang="scss" scoped>
+.stats {
+  display: grid;
+  grid-auto-columns: 1fr;
+  gap: 1rem;
+  grid-template-areas:
+    "playCount"
+    "topTracks"
+    "percentagePlayed";
+
+  @media (min-width: map-get($grid-breakpoints, "sm")) {
+    grid-template-areas:
+      "topTracks topTracks"
+      "playCount percentagePlayed";
+  }
+
+  @media (min-width: map-get($grid-breakpoints, "md")) {
+    grid-template-areas:
+      "topTracks topTracks playCount"
+      "topTracks topTracks percentagePlayed";
+  }
+
+  &__percentage-played {
+    grid-area: percentagePlayed;
+  }
+
+  &__play-count {
+    grid-area: playCount;
+  }
+
+  &__top-tracks {
+    grid-area: topTracks;
+  }
+}
+</style>
