@@ -47,7 +47,7 @@ import { getFormattedDate } from "@/dates";
 export default {
   name: "Stats",
   metaInfo() {
-    return { title: `${this.$t("common.stats")}: ${this.pageSubtitle}` };
+    return { title: this.$t("common.stats") };
   },
   components: {
     DateRangeSelect,
