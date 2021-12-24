@@ -11,7 +11,7 @@
           :label="$t('stats.useTrackLength')"
           class="mr-4"
         />
-        <DateRangeSelect v-model="period" />
+        <DateRangeSelect @input="(e) => (period = e)" />
       </VCol>
     </VRow>
     <VRow>
