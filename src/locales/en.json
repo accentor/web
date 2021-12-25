@@ -364,6 +364,19 @@
 		}
 	},
 	"stats": {
+		"count": {
+			"playCount": {
+				"before": "You have listened to",
+				"after": "songs."
+			},
+			"playTime": {
+				"before": "Good for",
+				"after": "of listening time.",
+				"days": "Days | Day | Days",
+				"hours": "Hours | Hour | Hours",
+				"minutes": "Minutes | Minute | Minutes"
+			}
+		},
 		"percentageLibraryPlayed": "Percentage of library that you listened to",
 		"topTracks": "Top tracks",
 		"useTrackLength": "Use track length"
