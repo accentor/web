@@ -3,6 +3,7 @@
     <VRow>
       <VCol>
         <h1 class="text-h4">{{ $t("common.stats") }}</h1>
+        <p class="text-subtitle-1">{{ pageSubtitle }}</p>
       </VCol>
       <VCol class="d-flex justify-end">
         <VSwitch
@@ -70,6 +71,12 @@ export default {
       tracks: "tracks/tracks",
     }),
     ...mapState("userSettings", ["locale"]),
+    pageSubtitle() {
+      if (this.period.start && this.period.end) {
+        return `${this.period.start.toLocaleDateString()} - ${this.period.end.toLocaleDateString()}`;
+      }
+      return "";
+    },
     filteredPlays() {
       return this.plays.filter(
         filterPlaysByPeriod(this.period.start, this.period.end)
@@ -79,6 +86,24 @@ export default {
   methods: {
     async reloadPlays() {
       await this.$store.dispatch("plays/index");
+    },
+  },
+  watch: {
+    useTrackLength() {
+      if (this.useTrackLength.toString() !== this.$route.query.useTrackLength) {
+        this.$router.replace({
+          query: {
+            ...this.$route.query,
+            useTrackLength: this.useTrackLength,
+          },
+        });
+      }
+    },
+    "$route.query.useTrackLength": {
+      handler() {
+        this.useTrackLength = this.$route.query.useTrackLength === "true";
+      },
+      immediate: true,
     },
   },
 };
