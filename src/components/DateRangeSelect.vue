@@ -121,12 +121,14 @@ export default {
     "$route.query.period": {
       handler() {
         const newSelectedPreset = this.$route.query.period;
-        if (this.periodPresets.find((p) => p.value === newSelectedPreset)) {
-          this.selectedPreset = this.$route.query.period;
-        } else if (this.customRange !== newSelectedPreset) {
-          this.selectedPreset = "customRange";
-          this.customRange = newSelectedPreset;
-          this.emitSelection();
+        if (this.$route.query.period !== undefined) {
+          if (this.periodPresets.find((p) => p.value === newSelectedPreset)) {
+            this.selectedPreset = this.$route.query.period;
+          } else if (this.customRange !== newSelectedPreset) {
+            this.selectedPreset = "customRange";
+            this.customRange = newSelectedPreset;
+            this.emitSelection();
+          }
         }
       },
       immediate: true,
