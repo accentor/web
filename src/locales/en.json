@@ -63,6 +63,7 @@
 		"search": "Search",
 		"settings": "Settings",
 		"stats": "Stats",
+		"stats-for-artist": "Stats for {artist}",
 		"yes": "Yes"
 	},
 	"components": {

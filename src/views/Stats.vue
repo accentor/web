@@ -2,7 +2,7 @@
   <VContainer>
     <VRow>
       <VCol>
-        <h1 class="text-h4">{{ $t("common.stats") }}</h1>
+        <h1 class="text-h4">{{ pageTitle }}</h1>
         <p class="text-subtitle-1">{{ pageSubtitle }}</p>
       </VCol>
       <VCol class="d-flex justify-end">
@@ -57,12 +57,12 @@ import PlayCountCard from "@/components/PlayCountCard";
 import TopArtistsList from "@/components/TopArtistsList";
 import TopTracksList from "@/components/TopTracksList";
 import TopAlbumsList from "@/components/TopAlbumsList";
-import { filterPlaysByPeriod } from "@/filters";
+import { filterPlaysByPeriod, filterPlaysByArtist } from "@/filters";
 
 export default {
   name: "Stats",
   metaInfo() {
-    return { title: this.$t("common.stats") };
+    return { title: this.pageTitle };
   },
   components: {
     DateRangeSelect,
@@ -81,6 +81,12 @@ export default {
       useTrackLength: false,
     };
   },
+  props: {
+    artist_id: {
+      type: Number,
+      default: null,
+    },
+  },
   created() {
     this.reloadPlays();
   },
@@ -89,7 +95,15 @@ export default {
       plays: "plays/plays",
       tracks: "tracks/tracks",
     }),
-    ...mapState("userSettings", ["locale"]),
+    ...mapState("artists", ["artists"]),
+    artistName() {
+      return this.artist_id && this.artists[this.artist_id]?.name;
+    },
+    pageTitle() {
+      return this.artistName
+        ? this.$t("common.stats-for-artist", { artist: this.artistName })
+        : this.$t("common.stats");
+    },
     pageSubtitle() {
       if (this.period.start && this.period.end) {
         return `${this.period.start.toLocaleDateString()} - ${this.period.end.toLocaleDateString()}`;
@@ -97,9 +111,13 @@ export default {
       return "";
     },
     filteredPlays() {
-      return this.plays.filter(
+      let plays = this.plays.filter(
         filterPlaysByPeriod(this.period.start, this.period.end)
       );
+      if (this.artist_id) {
+        plays = plays.filter(filterPlaysByArtist(this.tracks, this.artist_id));
+      }
+      return plays;
     },
   },
   methods: {

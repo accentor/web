@@ -63,6 +63,7 @@
 		"search": "Zoeken",
 		"settings": "Instellingen",
 		"stats": "Statistieken",
+		"stats-for-artist": "Statistieken voor {artist}",
 		"yes": "Ja"
 	},
 	"components": {

@@ -1,5 +1,18 @@
 <template>
   <span class="actions">
+    <VBtn
+      :to="{
+        name: 'stats',
+        query: { artist_id: artist.id },
+      }"
+      color="primary"
+      class="actions__button"
+      text
+      icon
+      small
+    >
+      <VIcon>mdi-chart-bar</VIcon>
+    </VBtn>
     <EditReviewComment :item="artist" :update="flag" />
     <VTooltip bottom :disabled="!waitingForReload" v-if="isModerator">
       <template v-slot:activator="{ on }">
