@@ -171,6 +171,15 @@ export default {
         this.setPlaying(false);
       });
     }
+    window.addEventListener("keydown", (e) => {
+      if (e.code === "Space") {
+        if (this.playlistTracks.length > 0) {
+          this.setPlaying(!this.playing);
+        }
+        // prevent window from scrolling down
+        e.preventDefault();
+      }
+    });
   },
   beforeDestroy() {
     clearInterval(this.intervalId);
