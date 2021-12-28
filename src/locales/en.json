@@ -379,6 +379,7 @@
 		},
 		"percentageLibraryPlayed": "Percentage of library that you listened to",
 		"topAlbums": "Top albums",
+		"topArtists": "Top artists",
 		"topTracks": "Top tracks",
 		"useAverage": "Use average",
 		"useTrackLength": "Use track length"

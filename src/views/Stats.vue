@@ -39,6 +39,12 @@
         :use-track-length="useTrackLength"
         :title="$t('stats.topAlbums')"
       />
+      <TopArtistsList
+        class="stats__top-artists"
+        :plays="filteredPlays"
+        :use-track-length="useTrackLength"
+        :title="$t('stats.topArtists')"
+      />
     </div>
   </VContainer>
 </template>
@@ -48,6 +54,7 @@ import { mapGetters, mapState } from "vuex";
 import DateRangeSelect from "@/components/DateRangeSelect";
 import PercentagePlayedCard from "@/components/PercentagePlayedCard";
 import PlayCountCard from "@/components/PlayCountCard";
+import TopArtistsList from "@/components/TopArtistsList";
 import TopTracksList from "@/components/TopTracksList";
 import TopAlbumsList from "@/components/TopAlbumsList";
 import { filterPlaysByPeriod } from "@/filters";
@@ -62,6 +69,7 @@ export default {
     PercentagePlayedCard,
     PlayCountCard,
     TopAlbumsList,
+    TopArtistsList,
     TopTracksList,
   },
   data() {
@@ -129,20 +137,22 @@ export default {
     "playCount"
     "topTracks"
     "percentagePlayed"
-    "topAlbums";
+    "topAlbums"
+    "topArtists";
 
   @media (min-width: map-get($grid-breakpoints, "sm")) {
     grid-template-areas:
       "topTracks topTracks"
       "playCount percentagePlayed"
-      "topAlbums topAlbums";
+      "topAlbums topAlbums"
+      "topArtists topArtists";
   }
 
   @media (min-width: map-get($grid-breakpoints, "md")) {
     grid-template-areas:
-      "topTracks topTracks playCount"
-      "topTracks topTracks percentagePlayed"
-      "topAlbums topAlbums topAlbums";
+      "topTracks topTracks topTracks topTracks playCount playCount"
+      "topTracks topTracks topTracks topTracks percentagePlayed percentagePlayed"
+      "topAlbums topAlbums topAlbums topArtists topArtists topArtists";
   }
 
   &__percentage-played {
@@ -159,6 +169,10 @@ export default {
 
   &__top-albums {
     grid-area: topAlbums;
+  }
+
+  &__top-artists {
+    grid-area: topArtists;
   }
 }
 </style>
