@@ -73,3 +73,31 @@ export function calcPlayTimeForAlbums(plays, tracks, useAverage = false) {
   }
   return acc;
 }
+
+export function calcPlayCountForArtists(plays, tracks) {
+  const acc = {};
+  for (const play of plays) {
+    for (const ta of tracks[play.track_id]?.track_artists || []) {
+      if (!(ta.artist_id in acc)) {
+        acc[ta.artist_id] = 1;
+      } else {
+        acc[ta.artist_id]++;
+      }
+    }
+  }
+  return acc;
+}
+
+export function calcPlayTimeForArtists(plays, tracks) {
+  const acc = {};
+  for (const play of plays) {
+    for (const ta of tracks[play.track_id]?.track_artists || []) {
+      if (!(ta.artist_id in acc)) {
+        acc[ta.artist_id] = tracks[play.track_id]?.length || 0;
+      } else {
+        acc[ta.artist_id] += tracks[play.track_id]?.length || 0;
+      }
+    }
+  }
+  return acc;
+}
