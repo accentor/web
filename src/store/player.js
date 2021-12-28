@@ -71,10 +71,12 @@ export default {
       state.doSeek = true;
     },
     setPlaying(state, val) {
-      if (state.current === -1 && state.playlist.length) {
-        state.current = 0;
+      if (state.playlist.length) {
+        if (state.current === -1) {
+          state.current = 0;
+        }
+        state.playing = val;
       }
-      state.playing = val;
     },
     nextTrack(state) {
       state.current += 1;
@@ -161,6 +163,11 @@ export default {
       return (
         getters.currentTrack && `${tracks}${getters.currentTrack.id}${params}`
       );
+    },
+  },
+  actions: {
+    togglePlaying({ commit, state }) {
+      commit("setPlaying", !state.playing);
     },
   },
 };

@@ -63,7 +63,7 @@
           <VIcon>mdi-skip-previous</VIcon>
         </VBtn>
         <VBtn
-          @click="setPlaying(!playing)"
+          @click="togglePlaying()"
           :disabled="!playlistTracks.length"
           icon
           class="controls__button"
@@ -171,6 +171,13 @@ export default {
         this.setPlaying(false);
       });
     }
+    window.addEventListener("keydown", (e) => {
+      if (e.code === "Space") {
+        this.togglePlaying();
+        // prevent window from scrolling down
+        e.preventDefault();
+      }
+    });
   },
   beforeDestroy() {
     clearInterval(this.intervalId);
@@ -307,6 +314,7 @@ export default {
   },
   methods: {
     ...mapActions("plays", { createPlay: "create" }),
+    ...mapActions("player", ["togglePlaying"]),
     ...mapMutations("player", [
       "setSeekTime",
       "seek",
