@@ -1,6 +1,6 @@
 <template>
   <VCard class="pa-2">
-    <VCardTitle> {{ title }}</VCardTitle>
+    <VCardTitle>{{ title }}</VCardTitle>
     <ol class="top-list">
       <li v-for="(item, index) in listData" :key="index" class="top-item">
         <VImg :src="item.image" class="top-item__cover" />
