@@ -2,7 +2,7 @@
   <VCard class="pa-2">
     <VRow>
       <VCol>
-        <VCardTitle> {{ title }}</VCardTitle>
+        <VCardTitle>{{ title }}</VCardTitle>
       </VCol>
       <VCol class="d-flex justify-end">
         <VSwitch
