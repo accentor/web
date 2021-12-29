@@ -12,6 +12,26 @@
           </span>
         </span>
         <div class="top-item__bg-wrapper">
+          <span
+            class="
+              top-item__count top-item__count--backup
+              font-weight-medium
+              black--text
+            "
+            v-if="showLength"
+          >
+            {{ item.count | length }}
+          </span>
+          <span
+            class="
+              top-item__count top-item__count--backup
+              font-weight-medium
+              black--text
+            "
+            v-else
+          >
+            {{ item.count }}
+          </span>
           <div
             class="top-item__bg primary"
             :style="{ width: `${animatedWidths[index]}%` }"
@@ -92,6 +112,7 @@ export default {
   &__bg-wrapper {
     width: 100%;
     height: 2rem;
+    position: relative;
   }
 
   &__bg {
@@ -100,6 +121,10 @@ export default {
     transition-property: width;
     transition-timing-function: ease-in-out;
     transition-duration: 500ms;
+    display: flex;
+    z-index: 1;
+    position: relative;
+    overflow: hidden;
   }
 
   &__text {
@@ -113,8 +138,17 @@ export default {
   }
 
   &__count {
-    float: right;
+    margin-left: auto;
+    white-space: nowrap;
     padding: 0.25rem 0.5rem;
+
+    &--backup {
+      margin-left: 0;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 0;
+    }
   }
 }
 </style>
