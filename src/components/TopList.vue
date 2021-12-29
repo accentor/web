@@ -16,7 +16,7 @@
             class="
               top-item__count top-item__count--backup
               font-weight-medium
-              black--text
+              primary--text
             "
             v-if="showLength"
           >
@@ -26,7 +26,7 @@
             class="
               top-item__count top-item__count--backup
               font-weight-medium
-              black--text
+              primary--text
             "
             v-else
           >
