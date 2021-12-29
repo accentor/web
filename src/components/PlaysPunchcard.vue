@@ -7,7 +7,7 @@
       by
       7 * 22 (for the dots) + 10 (for the x-axis)
      -->
-    <svg viewBox="0 0 569 174" class="punchcard mx-4 mt-1">
+    <svg viewBox="0 0 569 174" class="mx-4 mt-1">
       <!-- Offset 11 (half dot) + 1 (to visually center) -->
       <g y-axis transform="translate(0,12)">
         <text
@@ -45,7 +45,7 @@
       <!-- Move all dots to the appropriate area: offset for y axis and half dot in each direction -->
       <g transform="translate(41,11)">
         <circle
-          class="punchcard__dot primary--text text--darken-1"
+          class="primary--text text--darken-1"
           :cx="dot.cx"
           :cy="dot.cy"
           :r="dot.r"
