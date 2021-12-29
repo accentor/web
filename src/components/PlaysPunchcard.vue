@@ -1,6 +1,6 @@
 <template>
   <VCard class="pa-2">
-    <VCardTitle> {{ title }}</VCardTitle>
+    <VCardTitle>{{ title }}</VCardTitle>
     <!-- 
       The viewbox represents:
       24 * 22 (For the dots) + 30 (for the y-axis) + 11 (for the final x-axis label)
