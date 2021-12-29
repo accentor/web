@@ -13,21 +13,13 @@
         </span>
         <div class="top-item__bg-wrapper">
           <span
-            class="
-              top-item__count top-item__count--backup
-              font-weight-medium
-              primary--text
-            "
+            class="top-item__count top-item__count--backup font-weight-medium primary--text"
             v-if="showLength"
           >
             {{ item.count | length }}
           </span>
           <span
-            class="
-              top-item__count top-item__count--backup
-              font-weight-medium
-              primary--text
-            "
+            class="top-item__count top-item__count--backup font-weight-medium primary--text"
             v-else
           >
             {{ item.count }}
