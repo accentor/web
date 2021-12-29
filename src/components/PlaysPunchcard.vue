@@ -46,10 +46,10 @@
       <g transform="translate(41,11)">
         <circle
           class="punchcard__dot primary--text text--darken-1"
-          :cx="hour.cx"
-          :cy="hour.cy"
-          :r="hour.r"
-          v-for="(hour, index) in svgData"
+          :cx="dot.cx"
+          :cy="dot.cy"
+          :r="dot.r"
+          v-for="(dot, index) in svgData"
           :key="index"
           fill="currentColor"
         />
