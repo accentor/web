@@ -3,7 +3,7 @@
     <VCardTitle> {{ title }}</VCardTitle>
     <!-- 
       The viewbox represents:
-      24 * 22 (For the dots) + 25 (for the y-axis) + 11 (for the final x-axis label)
+      24 * 22 (For the dots) + 30 (for the y-axis) + 11 (for the final x-axis label)
       by
       7 * 22 (for the dots) + 10 (for the x-axis)
      -->
