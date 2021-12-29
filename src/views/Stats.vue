@@ -49,6 +49,12 @@
         :use-track-length="useTrackLength"
         :title="$t('stats.topArtists')"
       />
+      <PlaysPunchcard
+        class="stats__punchcard"
+        :plays="filteredPlays"
+        :use-track-length="useTrackLength"
+        :title="$t('stats.punchcard')"
+      />
     </div>
   </VContainer>
 </template>
@@ -58,6 +64,7 @@ import { mapGetters, mapState } from "vuex";
 import DateRangeSelect from "@/components/DateRangeSelect";
 import PercentagePlayedCard from "@/components/PercentagePlayedCard";
 import PlayCountCard from "@/components/PlayCountCard";
+import PlaysPunchcard from "@/components/PlaysPunchcard";
 import TopArtistsList from "@/components/TopArtistsList";
 import TopTracksList from "@/components/TopTracksList";
 import TopAlbumsList from "@/components/TopAlbumsList";
@@ -72,6 +79,7 @@ export default {
     DateRangeSelect,
     PercentagePlayedCard,
     PlayCountCard,
+    PlaysPunchcard,
     TopAlbumsList,
     TopArtistsList,
     TopTracksList,
@@ -167,21 +175,24 @@ export default {
     "topTracks"
     "percentagePlayed"
     "topAlbums"
-    "topArtists";
+    "topArtists"
+    "punchcard";
 
   @media (min-width: map-get($grid-breakpoints, "sm")) {
     grid-template-areas:
       "topTracks topTracks"
       "playCount percentagePlayed"
       "topAlbums topAlbums"
-      "topArtists topArtists";
+      "topArtists topArtists"
+      "punchcard punchcard";
   }
 
   @media (min-width: map-get($grid-breakpoints, "md")) {
     grid-template-areas:
       "topTracks topTracks topTracks topTracks playCount playCount"
       "topTracks topTracks topTracks topTracks percentagePlayed percentagePlayed"
-      "topAlbums topAlbums topAlbums topArtists topArtists topArtists";
+      "topAlbums topAlbums topAlbums topArtists topArtists topArtists"
+      "punchcard punchcard punchcard punchcard punchcard punchcard";
   }
 
   &__percentage-played {
@@ -202,6 +213,10 @@ export default {
 
   &__top-artists {
     grid-area: topArtists;
+  }
+
+  &__punchcard {
+    grid-area: punchcard;
   }
 }
 </style>

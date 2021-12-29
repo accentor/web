@@ -108,3 +108,41 @@ export function calcPlayTimeForArtists(plays, tracks) {
   }
   return acc;
 }
+
+export function calcPlayCountForHours(plays) {
+  const acc = new Array(168).fill(0);
+  for (const play of plays) {
+    const playedAt = new Date(play.played_at);
+    const day = playedAt.getDay();
+    const hour = playedAt.getHours();
+    acc[day * 24 + hour]++;
+  }
+  // Put sunday last
+  acc.push(...acc.splice(0, 24));
+  return acc;
+}
+
+export function calcPlayTimeForHours(plays, tracks) {
+  const binnedByTrack = {};
+  for (const play of plays) {
+    if (!binnedByTrack[play.track_id]) {
+      binnedByTrack[play.track_id] = [play];
+    } else {
+      binnedByTrack[play.track_id].push(play);
+    }
+  }
+
+  const acc = new Array(168).fill(0);
+  for (const track_id in binnedByTrack) {
+    const length = tracks[track_id]?.length || 0;
+    for (const play of binnedByTrack[track_id]) {
+      const playedAt = new Date(play.played_at);
+      const day = playedAt.getDay();
+      const hour = playedAt.getHours();
+      acc[day * 24 + hour] += length;
+    }
+  }
+  // Put sunday last
+  acc.push(...acc.splice(0, 24));
+  return acc;
+}
