@@ -31,7 +31,11 @@
         :plays="filteredPlays"
         :use-track-length="useTrackLength"
         :tracks="filteredTracks"
-        :title="$t('stats.percentageLibraryPlayed')"
+        :title="
+          artist_id
+            ? $t('stats.percentageArtistPlayed', { artist: artistName })
+            : $t('stats.percentageLibraryPlayed')
+        "
       />
       <TopAlbumsList
         class="stats__top-albums"
