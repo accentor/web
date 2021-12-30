@@ -5,10 +5,8 @@ export function filterPlaysByPeriod(startDate, endDate) {
   };
 }
 
-export function filterPlaysByArtist(tracks, artist_id) {
+export function filterPlaysByTracks(tracks) {
   return function (play) {
-    return tracks[play.track_id]?.track_artists.some(
-      (a) => a.artist_id === artist_id
-    );
+    return tracks.some((t) => t.id === play.track_id);
   };
 }

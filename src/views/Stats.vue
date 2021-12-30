@@ -115,9 +115,17 @@ export default {
         filterPlaysByPeriod(this.period.start, this.period.end)
       );
       if (this.artist_id) {
-        plays = plays.filter(filterPlaysByArtist(this.tracks, this.artist_id));
+        plays = plays.filter(filterPlaysByTracks(this.filteredTracks));
       }
       return plays;
+    },
+    filteredTracks() {
+      if (this.artist_id) {
+        return this.$store.getters["tracks/tracksFilterByArtist"](
+          this.artist_id
+        );
+      }
+      return this.$store.getters["tracks/tracks"];
     },
   },
   methods: {
