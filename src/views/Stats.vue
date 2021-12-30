@@ -30,7 +30,7 @@
         class="stats__percentage-played"
         :plays="filteredPlays"
         :use-track-length="useTrackLength"
-        :tracks="tracks"
+        :tracks="filteredTracks"
         :title="$t('stats.percentageLibraryPlayed')"
       />
       <TopAlbumsList
@@ -57,7 +57,7 @@ import PlayCountCard from "@/components/PlayCountCard";
 import TopArtistsList from "@/components/TopArtistsList";
 import TopTracksList from "@/components/TopTracksList";
 import TopAlbumsList from "@/components/TopAlbumsList";
-import { filterPlaysByPeriod, filterPlaysByArtist } from "@/filters";
+import { filterPlaysByPeriod, filterPlaysByTracks } from "@/filters";
 
 export default {
   name: "Stats",
@@ -93,7 +93,6 @@ export default {
   computed: {
     ...mapGetters({
       plays: "plays/plays",
-      tracks: "tracks/tracks",
     }),
     ...mapState("artists", ["artists"]),
     artistName() {
