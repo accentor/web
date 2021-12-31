@@ -12,32 +12,37 @@
           </span>
         </span>
         <div class="top-item__bg-wrapper">
-          <span
-            class="top-item__count top-item__count--backup font-weight-medium primary--text"
-            v-if="showLength"
-          >
-            {{ item.count | length }}
-          </span>
-          <span
-            class="top-item__count top-item__count--backup font-weight-medium primary--text"
-            v-else
-          >
-            {{ item.count }}
-          </span>
           <div
             class="top-item__bg primary"
             :style="{ width: `${animatedWidths[index]}%` }"
           >
             <span
               class="top-item__count font-weight-medium white--text"
-              v-if="showLength"
+              v-if="widths[index] > 10 && showLength"
             >
               {{ item.count | length }}
             </span>
-            <span class="top-item__count font-weight-medium white--text" v-else>
+            <span
+              class="top-item__count font-weight-medium white--text"
+              v-else-if="widths[index] > 10"
+            >
               {{ item.count }}
             </span>
           </div>
+          <span
+            class="top-item__count top-item__count--backup font-weight-medium primary--text"
+            :style="{ 'margin-left': `${animatedWidths[index]}%` }"
+            v-if="widths[index] <= 10 && showLength"
+          >
+            {{ item.count | length }}
+          </span>
+          <span
+            class="top-item__count top-item__count--backup font-weight-medium primary--text"
+            :style="{ 'margin-left': `${animatedWidths[index]}%` }"
+            v-else-if="widths[index] <= 10"
+          >
+            {{ item.count }}
+          </span>
         </div>
       </div>
     </li>
