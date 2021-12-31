@@ -1,5 +1,9 @@
 <template>
   <div class="player" v-click-outside="clickOutside">
+    <GlobalEvents
+      :filter="(event) => !['INPUT', 'TEXTAREA'].includes(event.target.tagName)"
+      @keydown.space.prevent="togglePlaying"
+    />
     <audio ref="audio" @error="onAudioError" />
     <div class="play-queue" v-if="open">
       <table class="play-queue__table">
@@ -136,11 +140,12 @@
 <script>
 import { mapActions, mapGetters, mapMutations, mapState } from "vuex";
 import Draggable from "vuedraggable";
+import GlobalEvents from "vue-global-events";
 import TrackArtists from "./TrackArtists";
 
 export default {
   name: "Player",
-  components: { Draggable, TrackArtists },
+  components: { Draggable, GlobalEvents, TrackArtists },
   data() {
     return {
       open: false,
@@ -171,13 +176,6 @@ export default {
         this.setPlaying(false);
       });
     }
-    window.addEventListener("keydown", (e) => {
-      if (e.code === "Space") {
-        this.togglePlaying();
-        // prevent window from scrolling down
-        e.preventDefault();
-      }
-    });
   },
   beforeDestroy() {
     clearInterval(this.intervalId);
