@@ -10,6 +10,7 @@
       text
       icon
       small
+      v-if="extended"
     >
       <VIcon>mdi-chart-bar</VIcon>
     </VBtn>
@@ -79,6 +80,10 @@ export default {
       type: Object,
       required: true,
     },
+    extended: {
+      type: Boolean,
+      default: false,
+    }
   },
   computed: {
     ...mapGetters("auth", ["isModerator"]),
