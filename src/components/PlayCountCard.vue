@@ -108,7 +108,7 @@ export default {
       const newDays = Math.floor(newValue / 86400);
       const newHours = Math.floor((newValue % 86400) / 3600);
       const newMinutes = Math.floor(((newValue % 86400) % 3600) / 60);
-      if (newDays) {
+      if (this.$data.animatedTime.days || newDays) {
         await gsap.to(this.$data.animatedTime, {
           duration: 0.4,
           days: newDays,
