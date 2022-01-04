@@ -83,7 +83,7 @@ export default {
     extended: {
       type: Boolean,
       default: false,
-    }
+    },
   },
   computed: {
     ...mapGetters("auth", ["isModerator"]),
