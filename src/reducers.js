@@ -77,11 +77,14 @@ export function calcPlayCountForArtists(plays, tracks) {
   const playCounts = calcPlayCountForTracks(plays);
   const acc = {};
   for (const track_id in playCounts) {
-    for (const ta of tracks[track_id]?.track_artists || []) {
-      if (!(ta.artist_id in acc)) {
-        acc[ta.artist_id] = playCounts[track_id];
+    const uniqueIds = (tracks[track_id]?.track_artists || [])
+      .map((ta) => ta.artist_id)
+      .filter((id, index, list) => list.indexOf(id) == index);
+    for (const ta of uniqueIds) {
+      if (!(ta in acc)) {
+        acc[ta] = playCounts[track_id];
       } else {
-        acc[ta.artist_id] += playCounts[track_id];
+        acc[ta] += playCounts[track_id];
       }
     }
   }
@@ -92,11 +95,14 @@ export function calcPlayTimeForArtists(plays, tracks) {
   const playCounts = calcPlayCountForTracks(plays);
   const acc = {};
   for (const track_id in playCounts) {
-    for (const ta of tracks[track_id]?.track_artists || []) {
-      if (!(ta.artist_id in acc)) {
-        acc[ta.artist_id] = playCounts[track_id] * tracks[track_id].length;
+    const uniqueIds = (tracks[track_id]?.track_artists || [])
+      .map((ta) => ta.artist_id)
+      .filter((id, index, list) => list.indexOf(id) == index);
+    for (const ta of uniqueIds) {
+      if (!(ta in acc)) {
+        acc[ta] = playCounts[track_id] * tracks[track_id].length;
       } else {
-        acc[ta.artist_id] += playCounts[track_id] * tracks[track_id].length;
+        acc[ta] += playCounts[track_id] * tracks[track_id].length;
       }
     }
   }
