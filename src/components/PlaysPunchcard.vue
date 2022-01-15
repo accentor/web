@@ -107,7 +107,8 @@ export default {
         // We only want to keep/render all the hours where there is at least one play
         if (count) {
           // The radius of each dot ranges between 1 and 11
-          const radius = Math.ceil((count / max) * 10000) / 1000 + 1;
+          const radius =
+            Math.ceil((Math.sqrt(count) / Math.sqrt(max)) * 10000) / 1000 + 1;
           dots.push({
             cx: 22 * (index % 24),
             cy: 22 * Math.floor(index / 24),
