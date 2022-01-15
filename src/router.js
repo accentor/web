@@ -139,6 +139,7 @@ const router = new Router({
           path: "stats",
           name: "stats",
           component: Stats,
+          props: (route) => ({ artist_id: +route.query.artist_id || null }),
         },
         {
           path: "tracks",

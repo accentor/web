@@ -63,6 +63,7 @@
 		"search": "Search",
 		"settings": "Settings",
 		"stats": "Stats",
+		"stats-for-artist": "Stats for {artist}",
 		"yes": "Yes"
 	},
 	"components": {
@@ -377,6 +378,7 @@
 				"minutes": "Minutes | Minute | Minutes"
 			}
 		},
+		"percentageArtistPlayed": "Percentage of {artist} that you listened to",
 		"percentageLibraryPlayed": "Percentage of library that you listened to",
 		"topAlbums": "Top albums",
 		"topArtists": "Top artists",
