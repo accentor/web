@@ -26,21 +26,17 @@ export default {
       default: false,
     },
   },
+  data() {
+    return {
+      topTracks: [],
+    };
+  },
   components: {
     TopList,
   },
   computed: {
     ...mapState("artists", ["artists"]),
     ...mapState("tracks", ["tracks"]),
-    topTracks() {
-      return Object.entries(
-        this.useTrackLength
-          ? calcPlayTimeForArtists(this.plays, this.tracks)
-          : calcPlayCountForArtists(this.plays, this.tracks)
-      )
-        .sort((t1, t2) => t2[1] - t1[1])
-        .slice(0, 10);
-    },
     listData() {
       return [...this.topTracks].map((tt) => {
         const artist = this.artists[tt[0]];
@@ -51,6 +47,25 @@ export default {
         };
       });
     },
+  },
+  methods: {
+    async calcTopTracks() {
+      this.topTracks = Object.entries(
+        this.useTrackLength
+          ? calcPlayTimeForArtists(this.plays, this.tracks)
+          : calcPlayCountForArtists(this.plays, this.tracks)
+      )
+        .sort((t1, t2) => t2[1] - t1[1])
+        .slice(0, 10);
+    },
+  },
+  created() {
+    this.calcTopTracks();
+  },
+  watch: {
+    plays: "calcTopTracks",
+    tracks: "calcTopTracks",
+    useTrackLength: "calcTopTracks",
   },
 };
 </script>
