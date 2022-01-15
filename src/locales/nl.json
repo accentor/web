@@ -374,8 +374,8 @@
 				"minutes": "Minuten | Minuut | Minuten"
 			}
 		},
-		"percentageArtistPlayed": "Percentage van {artist} dat je besluisterd hebt:",
-		"percentageLibraryPlayed": "Percentage van muziekbibliotheek dat je besluisterd hebt:",
+		"percentageArtistPlayed": "Percentage van {artist} dat je beluisterd hebt:",
+		"percentageLibraryPlayed": "Percentage van muziekbibliotheek dat je beluisterd hebt:",
 		"topAlbums": "Meest besluisterde albums",
 		"topArtists": "Meest besluisterde artiesten",
 		"topTracks": "Meest besluisterde nummers",
