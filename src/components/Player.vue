@@ -195,6 +195,8 @@ export default {
             navigator.mediaSession.metadata = new window.MediaMetadata({
               title: this.currentTrack.title,
               artist: this.currentTrack.track_artists
+                .map((ta) => ta)
+                .sort((a1, a2) => a1.order - a2.order)
                 .map((a) => a.name)
                 .join(" / "),
               album: this.albums[this.currentTrack.album_id].title,
