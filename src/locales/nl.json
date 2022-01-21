@@ -62,6 +62,15 @@
 		"replace": "Vervangen",
 		"search": "Zoeken",
 		"settings": "Instellingen",
+		"shortWeekdays": {
+			"monday": "Maa",
+			"tuesday": "Din",
+			"wednesday": "Woe",
+			"thursday": "Don",
+			"friday": "Vrij",
+			"saturday": "Zat",
+			"sunday": "Zon"
+		},
 		"stats": "Statistieken",
 		"stats-for-artist": "Statistieken voor {artist}",
 		"yes": "Ja"
@@ -376,6 +385,7 @@
 		},
 		"percentageArtistPlayed": "Percentage van {artist} dat je beluisterd hebt:",
 		"percentageLibraryPlayed": "Percentage van muziekbibliotheek dat je beluisterd hebt:",
+		"punchcard": "Wanneer luister je naar muziek?",
 		"topAlbums": "Meest besluisterde albums",
 		"topArtists": "Meest besluisterde artiesten",
 		"topTracks": "Meest besluisterde nummers",
