@@ -16,6 +16,6 @@ module.exports = {
     "vuetify/no-legacy-grid": "error",
   },
   parserOptions: {
-    parser: '@babel/eslint-parser',
+    parser: "@babel/eslint-parser",
   },
 };
