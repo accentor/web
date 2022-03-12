@@ -55,8 +55,7 @@ export default {
   },
   methods: {
     artist_name(ta) {
-      return typeof this.artists !== undefined &&
-        `${ta.artist_id}` in this.artists
+      return this.artists !== undefined && `${ta.artist_id}` in this.artists
         ? this.artists[ta.artist_id].name
         : ta.name;
     },
