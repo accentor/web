@@ -33,7 +33,7 @@
     "@intlify/vue-i18n-loader": "4.0.0",
     "@vue/cli-plugin-babel": "~5.0.3",
     "@vue/cli-plugin-eslint": "~5.0.1",
-    "@vue/cli-service": "~5.0.1",
+    "@vue/cli-service": "~5.0.3",
     "@vue/eslint-config-prettier": "^7.0.0",
     "eslint": "^8.11.0",
     "eslint-config-prettier": "^8.5.0",
