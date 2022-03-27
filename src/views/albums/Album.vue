@@ -23,7 +23,13 @@
         <div>
           <div class="text-h4">
             {{ album.title }}
-            <span v-if="album.edition_description !== null" class="grey--text">
+            <span
+              v-if="
+                album.edition_description !== null &&
+                album.edition_description.length
+              "
+              class="grey--text"
+            >
               ({{ album.edition_description }})
             </span>
           </div>

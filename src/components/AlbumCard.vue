@@ -20,7 +20,12 @@
     />
     <VCardTitle class="pb-0 d-block text-truncate" :title="full_title">
       {{ album.title }}&nbsp;
-      <span v-if="album.edition_description !== null" class="grey--text">
+      <span
+        v-if="
+          album.edition_description !== null && album.edition_description.length
+        "
+        class="grey--text"
+      >
         ({{ album.edition_description }})
       </span>
     </VCardTitle>
