@@ -94,7 +94,11 @@ export default {
       return item.name.toLowerCase().indexOf(search) > -1;
     },
     addItemToPlaylist() {
-      const newItems = [...this.playlists.item_ids, this.item.id];
+      if (this.selectedPlaylist === null) {
+        return;
+      }
+
+      const newItems = [...this.selectedPlaylist.item_ids, this.item.id];
       this.update({
         id: this.selectedPlaylist.id,
         newPlaylist: { item_ids: newItems },
