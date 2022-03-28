@@ -4,7 +4,7 @@
       <VCol cols="12" sm="4" md="6" lg="8" xl="10">
         <div>
           <h2 class="text-h4">{{ playlist.name }}</h2>
-          <span class="">{{ playlist.description }}</span>
+          <span class="grey--text">{{ playlist.description }}</span>
         </div>
         <div class="actions">
           <PlaylistActions :playlist="playlist" />
