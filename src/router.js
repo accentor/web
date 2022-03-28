@@ -32,6 +32,8 @@ import Genre from "./views/genres/Genre";
 import EditGenre from "./views/genres/EditGenre";
 import Playlists from "./views/playlists/Playlists";
 import Playlist from "./views/playlists/Playlist";
+import NewPlaylist from "./views/playlists/NewPlaylist";
+import EditPlaylist from "./views/playlists/EditPlaylist";
 
 Vue.use(Router);
 
@@ -138,9 +140,19 @@ const router = new Router({
           component: Playlists,
         },
         {
+          path: "playlists/new",
+          name: "new-playlist",
+          component: NewPlaylist,
+        },
+        {
           path: "playlists/:id",
           name: "playlist",
           component: Playlist,
+        },
+        {
+          path: "playlists/:id/edit",
+          name: "edit-playlist",
+          component: EditPlaylist,
         },
         {
           path: "settings",

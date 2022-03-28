@@ -23,6 +23,10 @@
               v-model="search"
             />
           </VCol>
+          <VBtn :to="{ name: 'new-playlist' }" color="success" class="ma-2">
+            <VIcon left>mdi-plus</VIcon>
+            {{ $t("music.playlist.new") }}
+          </VBtn>
         </VRow>
       </template>
       <template v-slot:default="props">
