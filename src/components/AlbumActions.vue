@@ -37,6 +37,7 @@
       </template>
       <span>{{ $t("music.album.no-tracks-to-add") }}</span>
     </VTooltip>
+    <AddToPlaylist :item="album" type="album" />
     <EditReviewComment :item="album" :update="flag" />
     <VTooltip bottom :disabled="!waitingForReload" v-if="isModerator">
       <template v-slot:activator="{ on }">
@@ -84,10 +85,11 @@
 <script>
 import { mapActions, mapGetters, mapState } from "vuex";
 import EditReviewComment from "./EditReviewComment";
+import AddToPlaylist from "./AddToPlaylist";
 
 export default {
   name: "AlbumActions",
-  components: { EditReviewComment },
+  components: { AddToPlaylist, EditReviewComment },
   props: {
     album: {
       type: Object,
