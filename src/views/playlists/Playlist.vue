@@ -12,7 +12,7 @@
       </VCol>
       <VCol cols="12" sm="8" md="6" lg="4" xl="2"> </VCol>
     </VRow>
-    <VRow no-gutters >
+    <VRow no-gutters>
       <VCol v-if="playlist.playlist_type === 'track'">
         <TracksTable
           :tracks="items"

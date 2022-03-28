@@ -49,7 +49,7 @@ import { mapActions, mapState } from "vuex";
 
 export default {
   name: "PlaylistActions",
-  components: { },
+  components: {},
   props: {
     playlist: {
       type: Object,
@@ -57,7 +57,7 @@ export default {
     },
   },
   computed: {
-    ...mapState("auth", { currentUser: "user_id"}),
+    ...mapState("auth", { currentUser: "user_id" }),
     ...mapState("playlists", ["startLoading"]),
     waitingForReload() {
       return this.startLoading > this.playlist.loaded;

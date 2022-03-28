@@ -50,7 +50,6 @@ export default {
     async index({ commit, rootState }) {
       const generator = api.playlists.index(rootState.auth);
       try {
-        console.log(generator);
         await fetchAll(commit, generator, "setPlaylists");
         return true;
       } catch (error) {
