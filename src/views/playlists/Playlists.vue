@@ -40,6 +40,9 @@
               <VCardTitle>
                 {{ item.name }}
               </VCardTitle>
+              <VCardActions>
+                <PlaylistActions :playlist="item" />
+              </VCardActions>
             </VCard>
           </VCol>
         </VRow>
@@ -52,13 +55,14 @@
 import { mapGetters } from "vuex";
 import Paginated from "../../mixins/Paginated";
 import Searchable from "../../mixins/Searchable";
+import PlaylistActions from "../../components/PlaylistActions";
 
 export default {
   name: "playlists",
   metaInfo() {
     return { title: this.$tc("music.labels", 2) };
   },
-  components: {},
+  components: { PlaylistActions },
   mixins: [Paginated, Searchable],
   computed: {
     ...mapGetters("playlists", {
