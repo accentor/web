@@ -61,15 +61,15 @@ export default {
       playlistTypes: [
         {
           value: "album",
-          text: this.$t("music.playlists.types.album"),
+          text: this.$t("music.playlist.playlist_types.album"),
         },
         {
           value: "artist",
-          text: this.$t("music.playlists.types.artist"),
+          text: this.$t("music.playlist.playlist_types.artist"),
         },
         {
           value: "tracks",
-          text: this.$t("music.playlists.types.track"),
+          text: this.$t("music.playlist.playlist_types.track"),
         },
       ],
       isDirty: false,

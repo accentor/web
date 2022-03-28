@@ -50,6 +50,7 @@
 		"choose-file": "Choose file",
 		"choose-image": "Choose image",
 		"close": "Close",
+		"description": "Description",
 		"disabled-while-loading": "Disabled while loading",
 		"edit": "Edit",
 		"errors": "Errors | Error | Errors",
@@ -333,6 +334,22 @@
 			"title-search": "Search and replace title"
 		},
 		"play-count": "Played",
+		"playlists": "Playlists | Playlist | Playlists",
+		"playlist": {
+			"create": "Create playlist",
+			"new": "New playlist",
+			"personal": {
+				"label": "Personal",
+				"explanation": "Only you will be able to edit this playlist"
+			},
+			"playlist_type": "Type",
+			"playlist_types": {
+				"album": "Album",
+				"artist": "Artist",
+				"track": "Track"
+			},
+			"update": "Update playlist"
+		},
 		"title": "Title",
 		"track": {
 			"bitrate": "Bitrate",

@@ -50,6 +50,7 @@
 		"choose-file": "Bestand kiezen",
 		"choose-image": "Afbeelding kiezen",
 		"close": "Sluiten",
+		"description": "Beschrijving",
 		"disabled-while-loading": "Niet mogelijk tijdens het laden",
 		"edit": "Aanpassen",
 		"errors": "Fouten | Fout | Fouten",
@@ -329,6 +330,22 @@
 			"title-search": "Zoek en vervang in titel"
 		},
 		"play-count": "Afgespeeld",
+		"playlists": "Afspeellijsten | Afspeellijst | Afspeellijsten",
+		"playlist": {
+			"create": "Maak afspeellijst aan",
+			"new": "Nieuwwe afspeellijst",
+			"personal": {
+				"label": "Persoonlijk",
+				"explanation": "Allen jij kan deze afspeellijst aanpassen"
+			},
+			"playlist_type": "Type",
+			"playlist_types": {
+				"album": "Album",
+				"artist": "Artist",
+				"track": "Nummer"
+			},
+			"update": "Pas playlist aan"
+		},
 		"title": "Titel",
 		"track": {
 			"bitrate": "Bitrate",

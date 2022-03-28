@@ -83,7 +83,7 @@
         </VListItem>
         <VListItem :to="{ name: 'playlists' }">
           <VListItemAction>
-            <VIcon>mdi-label</VIcon>
+            <VIcon>mdi-playlist-music</VIcon>
           </VListItemAction>
           <VListItemContent>
             <VListItemTitle>
