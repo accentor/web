@@ -31,6 +31,7 @@ import Genres from "./views/genres/Genres";
 import Genre from "./views/genres/Genre";
 import EditGenre from "./views/genres/EditGenre";
 import Playlists from "./views/playlists/Playlists";
+import Playlist from "./views/playlists/Playlist";
 
 Vue.use(Router);
 
@@ -135,6 +136,11 @@ const router = new Router({
           path: "playlists",
           name: "playlists",
           component: Playlists,
+        },
+        {
+          path: "playlists/:id",
+          name: "playlist",
+          component: Playlist,
         },
         {
           path: "settings",
