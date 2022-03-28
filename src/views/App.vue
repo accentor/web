@@ -81,6 +81,16 @@
             </VListItemTitle>
           </VListItemContent>
         </VListItem>
+        <VListItem :to="{ name: 'playlists' }">
+          <VListItemAction>
+            <VIcon>mdi-label</VIcon>
+          </VListItemAction>
+          <VListItemContent>
+            <VListItemTitle>
+              {{ $tc("music.playlists", 2) }}
+            </VListItemTitle>
+          </VListItemContent>
+        </VListItem>
         <VListItem :to="{ name: 'stats' }">
           <VListItemAction>
             <VIcon>mdi-chart-bar</VIcon>

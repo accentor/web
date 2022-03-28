@@ -30,6 +30,7 @@ import EditLabel from "./views/labels/EditLabel";
 import Genres from "./views/genres/Genres";
 import Genre from "./views/genres/Genre";
 import EditGenre from "./views/genres/EditGenre";
+import Playlists from "./views/playlists/Playlists";
 
 Vue.use(Router);
 
@@ -129,6 +130,11 @@ const router = new Router({
           path: "library",
           name: "library",
           component: Library,
+        },
+        {
+          path: "playlists",
+          name: "playlists",
+          component: Playlists,
         },
         {
           path: "settings",
