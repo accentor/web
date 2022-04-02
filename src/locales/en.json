@@ -41,6 +41,7 @@
 	},
 	"common": {
 		"actions": "Actions",
+		"added-on": "Added on",
 		"amount": "Amount",
 		"are-you-sure": "Are you sure?",
 		"as": "as",

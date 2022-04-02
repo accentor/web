@@ -104,6 +104,14 @@
                 </VListItemSubtitle>
               </VListItemContent>
             </VListItem>
+            <VListItem>
+              <VListItemContent>
+                <VListItemTitle> {{ $t("common.added-on") }}: </VListItemTitle>
+                <VListItemSubtitle>
+                  {{ $d(new Date(track.created_at), "long") }}
+                </VListItemSubtitle>
+              </VListItemContent>
+            </VListItem>
           </VList>
         </VMenu>
         <VTooltip bottom :disabled="!waitingForReload">

@@ -41,6 +41,7 @@
 	},
 	"common": {
 		"actions": "Acties",
+		"added-on": "Toegevoegd op",
 		"amount": "Hoeveelheid",
 		"are-you-sure": "Ben je zeker?",
 		"as": "als",
