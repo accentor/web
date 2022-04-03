@@ -332,6 +332,8 @@
 		"play-count": "Afgespeeld",
 		"playlists": "Afspeellijsten | Afspeellijst | Afspeellijsten",
 		"playlist": {
+			"add": "Voeg toe",
+			"add-item": "Voeg {obj} toe aan afspeellijst",
 			"create": "Maak afspeellijst aan",
 			"new": "Nieuwwe afspeellijst",
 			"personal": {

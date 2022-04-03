@@ -336,6 +336,8 @@
 		"play-count": "Played",
 		"playlists": "Playlists | Playlist | Playlists",
 		"playlist": {
+			"add": "Add",
+			"add-item": "Add {obj} to playlist",
 			"create": "Create playlist",
 			"new": "New playlist",
 			"personal": {

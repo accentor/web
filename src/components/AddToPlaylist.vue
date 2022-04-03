@@ -16,7 +16,7 @@
     <VCard>
       <VCardTitle>
         <span class="text-h5">{{
-          $t("music.playlist.add", { obj: item.name || item.title })
+          $t("music.playlist.add-item", { obj: item.name || item.title })
         }}</span>
       </VCardTitle>
       <VCardText>
@@ -47,7 +47,6 @@
           :disabled="selectedPlaylist === null"
           @click="addItemToPlaylist"
         >
-          <VIcon>mdi-playlist-plus</VIcon>
           {{ $t("music.playlist.add") }}
         </VBtn>
       </VCardActions>
