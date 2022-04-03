@@ -332,6 +332,12 @@
 		"play-count": "Afgespeeld",
 		"playlists": "Afspeellijsten | Afspeellijst | Afspeellijsten",
 		"playlist": {
+			"access": "Toegang",
+			"access_options": {
+				"secret": "Geheim",
+				"shared": "Gedeeld",
+				"personal": "Persoonlijk"
+			},
 			"add": "Voeg toe",
 			"add-item": "Voeg {obj} toe aan afspeellijst",
 			"create": "Maak afspeellijst aan",

@@ -13,24 +13,16 @@
           rows="3"
           v-model="newPlaylist.description"
         />
-        <VCheckbox v-model="newPlaylist.personal" class="white-space-nowrap">
-          <template v-slot:label>
-            {{ $t("music.playlist.personal.label") }}
-            <VTooltip bottom>
-              <template v-slot:activator="{ on, attrs }">
-                <VIcon class="ml-2" :small="true" v-bind="attrs" v-on="on">
-                  mdi-information
-                </VIcon>
-              </template>
-              <span>{{ $t("music.playlist.personal.explanation") }}</span>
-            </VTooltip>
-          </template>
-        </VCheckbox>
         <VAutocomplete
           :items="playlistTypes"
           :label="$t('music.playlist.playlist_type')"
           v-model="newPlaylist.playlist_type"
           :disabled="hasItems"
+        />
+        <VAutocomplete
+          :items="accessOptions"
+          :label="$t('music.playlist.access')"
+          v-model="newPlaylist.access"
         />
         <VBtn :disabled="!isValid" color="primary" class="ma-2" type="submit">
           {{
@@ -55,7 +47,7 @@ export default {
       newPlaylist: {
         name: "",
         description: "",
-        personal: false,
+        access: "shared",
         playlist_type: null,
       },
       playlistTypes: [
@@ -70,6 +62,20 @@ export default {
         {
           value: "tracks",
           text: this.$t("music.playlist.playlist_types.track"),
+        },
+      ],
+      accessOptions: [
+        {
+          value: "shared",
+          text: this.$t("music.playlist.access_options.shared"),
+        },
+        {
+          value: "personal",
+          text: this.$t("music.playlist.access_options.personal"),
+        },
+        {
+          value: "secret",
+          text: this.$t("music.playlist.access_options.secret"),
         },
       ],
       isDirty: false,
@@ -99,7 +105,7 @@ export default {
     fillValues() {
       this.newPlaylist.name = this.playlist.name;
       this.newPlaylist.description = this.playlist.description;
-      this.newPlaylist.personal = this.playlist.user_id !== null;
+      this.newPlaylist.access = this.playlist.access;
       this.newPlaylist.playlist_type = this.playlist.playlist_type;
     },
     async submit() {

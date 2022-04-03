@@ -24,7 +24,7 @@
           <VRow>
             <VCol cols="12">
               <VCombobox
-                :items="playlistOptions"
+                :items="editablePlaylists"
                 :filter="filterName"
                 cache-items
                 item-text="name"
@@ -77,14 +77,7 @@ export default {
   },
   computed: {
     ...mapGetters("auth", ["currentUser"]),
-    ...mapGetters("playlists", ["playlists"]),
-    playlistOptions() {
-      return this.playlists.filter(
-        (p) =>
-          [null, this.currentUser.id].includes(p.user_id) &&
-          p.playlist_type === this.type
-      );
-    },
+    ...mapGetters("playlists", ["editablePlaylists"]),
   },
   methods: {
     ...mapActions("playlists", ["update"]),

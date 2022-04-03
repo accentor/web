@@ -104,9 +104,9 @@ export default {
   },
   getters: {
     playlists: (state) => Object.values(state.playlists),
-    personalPlaylists: (state, getters, rootState) =>
-      getters.playlists.filter((p) => p.user_id === rootState.auth.user_id),
-    sharedPlaylists: (state, getters) =>
-      getters.playlists.filter((p) => p.user_id === null),
+    editablePlaylists: (state, getters, rootState) =>
+      getters.playlists.filter(
+        (p) => p.access === "shared" || p.user_id === rootState.auth.user_id
+      ),
   },
 };

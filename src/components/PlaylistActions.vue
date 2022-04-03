@@ -101,7 +101,10 @@ export default {
       return this.startLoading > this.playlist.loaded;
     },
     isAllowedToEdit() {
-      return [null, this.currentUser].includes(this.playlist.user_id);
+      return (
+        this.playlist.access === "shared" ||
+        this.playlist.user_id === this.currentUser
+      );
     },
     playlistTracks() {
       switch (this.playlist.playlist_type) {

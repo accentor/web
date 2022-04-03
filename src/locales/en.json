@@ -336,14 +336,16 @@
 		"play-count": "Played",
 		"playlists": "Playlists | Playlist | Playlists",
 		"playlist": {
+			"access": "Access",
+			"access_options": {
+				"secret": "Secret",
+				"shared": "Shared",
+				"personal": "Personal"
+			},
 			"add": "Add",
 			"add-item": "Add {obj} to playlist",
 			"create": "Create playlist",
 			"new": "New playlist",
-			"personal": {
-				"label": "Personal",
-				"explanation": "Only you will be able to edit this playlist"
-			},
 			"playlist_type": "Type",
 			"playlist_types": {
 				"album": "Album",
