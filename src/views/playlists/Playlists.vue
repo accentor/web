@@ -9,7 +9,6 @@
       :items="filteredItems"
       :items-per-page="numberOfItems"
       :page.sync="pagination.page"
-      v-if="playlists.length > 0"
     >
       <template v-slot:header>
         <VRow class="mb-2" justify="end">
