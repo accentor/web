@@ -1,46 +1,114 @@
 <template>
   <VRow no-gutters align="center" justify="center">
-    <VCol md="6" sm="8" cols="12" @change.once="isDirty = true">
+    <VCol cols="12" @change.once="isDirty = true">
       <VForm v-model="isValid" @submit.prevent="submit">
-        <VTextField
-          :label="$t('common.name')"
-          v-model="newPlaylist.name"
-          :rules="[(v) => !!v || $t('errors.playlist.name-blank')]"
-          required
-        />
-        <VTextarea
-          :label="$t('common.description')"
-          rows="3"
-          v-model="newPlaylist.description"
-        />
-        <VAutocomplete
-          :items="playlistTypes"
-          :label="$t('music.playlist.playlist_type')"
-          v-model="newPlaylist.playlist_type"
-          :disabled="hasItems"
-        />
-        <VAutocomplete
-          :items="accessOptions"
-          :label="$t('music.playlist.access')"
-          v-model="newPlaylist.access"
-        />
-        <VBtn :disabled="!isValid" color="primary" class="ma-2" type="submit">
-          {{
-            this.playlist
-              ? $t("music.playlist.update")
-              : $t("music.playlist.create")
-          }}
-        </VBtn>
+        <VRow no-gutters align="center" justify="center">
+          <VCol md="6" sm="8" cols="12" @change.once="isDirty = true">
+            <VTextField
+              :label="$t('common.name')"
+              v-model="newPlaylist.name"
+              :rules="[(v) => !!v || $t('errors.playlist.name-blank')]"
+              required
+            />
+            <VTextarea
+              :label="$t('common.description')"
+              rows="3"
+              v-model="newPlaylist.description"
+            />
+            <VAutocomplete
+              :items="playlistTypes"
+              :label="$t('music.playlist.playlist_type')"
+              v-model="newPlaylist.playlist_type"
+              :disabled="hasItems"
+            />
+            <VAutocomplete
+              :items="accessOptions"
+              :label="$t('music.playlist.access')"
+              v-model="newPlaylist.access"
+            />
+            <VBtn
+              :disabled="!isValid"
+              color="primary"
+              class="ma-2"
+              type="submit"
+            >
+              {{
+                this.playlist
+                  ? $t("music.playlist.update")
+                  : $t("music.playlist.create")
+              }}
+            </VBtn>
+          </VCol>
+        </VRow>
+        <VRow no-gutters align="center" justify="center">
+          <VCol md="9" sm="10" cols="12" @change.once="isDirty = true">
+            <h4 class="text-h6 mt-6 ml-4">
+              {{ $tc("music.playlist.items", 2) }}
+            </h4>
+            <VSimpleTable>
+              <thead>
+                <tr>
+                  <th style="width: 1px" class="text-center">Sort</th>
+                  <th>
+                    {{
+                      newPlaylist.playlist_type === "artist"
+                        ? $t("music.name")
+                        : $t("music.title")
+                    }}
+                  </th>
+                  <th></th>
+                </tr>
+              </thead>
+              <Draggable
+                tag="tbody"
+                v-model="newPlaylist.item_ids"
+                handle="[data-draggable=handle]"
+              >
+                <tr
+                  v-for="(item_id, index) of newPlaylist.item_ids"
+                  :key="item_id"
+                >
+                  <td class="text-no-wrap">
+                    <VBtn small icon text class="" data-draggable="handle">
+                      <VIcon>mdi-drag-horizontal-variant</VIcon>
+                    </VBtn>
+                    {{ index }}
+                  </td>
+                  <td class="play-queue__cell">
+                    {{
+                      newPlaylist.playlist_type === "artist"
+                        ? items[item_id].name
+                        : items[item_id].title
+                    }}
+                  </td>
+                  <td class="text-right">
+                    <VBtn
+                      small
+                      icon
+                      text
+                      class="ma-2 red--text"
+                      @click="() => newPlaylist.item_ids.splice(index, 1)"
+                    >
+                      <VIcon>mdi-close</VIcon>
+                    </VBtn>
+                  </td>
+                </tr>
+              </Draggable>
+            </VSimpleTable>
+          </VCol>
+        </VRow>
       </VForm>
     </VCol>
   </VRow>
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapState } from "vuex";
+import Draggable from "vuedraggable";
 
 export default {
   name: "PlaylistForm",
+  components: { Draggable },
   props: { playlist: { type: Object, default: null } },
   data() {
     return {
@@ -49,6 +117,7 @@ export default {
         description: "",
         access: "shared",
         playlist_type: null,
+        item_ids: [],
       },
       playlistTypes: [
         {
@@ -78,6 +147,20 @@ export default {
           text: this.$t("music.playlist.access_options.secret"),
         },
       ],
+      headers: [
+        {
+          text: "#",
+          value: "index",
+        },
+        {
+          text: this.$t("music.title"),
+          value: "title",
+        },
+        {
+          text: "remove",
+          value: "remove",
+        },
+      ],
       isDirty: false,
       isValid: true,
     };
@@ -96,8 +179,14 @@ export default {
     },
   },
   computed: {
+    ...mapState("albums", ["albums"]),
+    ...mapState("artists", ["artists"]),
+    ...mapState("tracks", ["tracks"]),
     hasItems() {
-      return this.playlist?.item_ids.length > 0;
+      return this.newPlaylist.item_ids.length > 0;
+    },
+    items() {
+      return this[`${this.newPlaylist.playlist_type}s`];
     },
   },
   methods: {
@@ -107,6 +196,7 @@ export default {
       this.newPlaylist.description = this.playlist.description;
       this.newPlaylist.access = this.playlist.access;
       this.newPlaylist.playlist_type = this.playlist.playlist_type;
+      this.newPlaylist.item_ids = this.playlist.item_ids;
     },
     async submit() {
       let pendingResult = null;

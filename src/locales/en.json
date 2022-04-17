@@ -345,6 +345,7 @@
 			"add": "Add",
 			"add-item": "Add {obj} to playlist",
 			"create": "Create playlist",
+			"items": "Items | Item | Items",
 			"new": "New playlist",
 			"playlist_type": "Type",
 			"playlist_types": {

@@ -341,6 +341,7 @@
 			"add": "Voeg toe",
 			"add-item": "Voeg {obj} toe aan afspeellijst",
 			"create": "Maak afspeellijst aan",
+			"items": "Items | Item | Items",
 			"new": "Nieuwwe afspeellijst",
 			"personal": {
 				"label": "Persoonlijk",
