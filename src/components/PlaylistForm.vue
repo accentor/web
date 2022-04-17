@@ -60,7 +60,7 @@ export default {
           text: this.$t("music.playlist.playlist_types.artist"),
         },
         {
-          value: "tracks",
+          value: "track",
           text: this.$t("music.playlist.playlist_types.track"),
         },
       ],
