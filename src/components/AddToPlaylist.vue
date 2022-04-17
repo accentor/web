@@ -78,6 +78,11 @@ export default {
   computed: {
     ...mapGetters("auth", ["currentUser"]),
     ...mapGetters("playlists", ["editablePlaylists"]),
+    playlistOptions() {
+      return this.editablePlaylists.filter(
+        (p) => p.playlist_type === this.type
+      );
+    },
   },
   methods: {
     ...mapActions("playlists", ["update"]),
