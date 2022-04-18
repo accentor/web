@@ -1,0 +1,22 @@
+name: Dependencies
+
+on:
+  push:
+    paths:
+      - package.json
+      - yarn.lock
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    if: ${{ github.ref != 'refs/heads/main' }}
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+      - name: Run yarn2nix
+        run: nix-shell -p yarn2nix --run "yarn2nix > yarn.nix"
+      - uses: stefanzweifel/git-auto-commit-action@v4.14.0
+        with:
+          commit_message: "Update yarn.nix"
