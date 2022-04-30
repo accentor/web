@@ -1,5 +1,5 @@
 {
-  description = "Accentor WEB";
+  description = "Accentor Web";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
@@ -34,6 +34,8 @@
           yarnLock = ./yarn.lock;
           yarnNix = ./yarn.nix;
 
+          # Otherwise this tries to write to read-only paths, and caching is unnecessary anyway.
+          SKIP_CACHE = "true";
           buildPhase = ''
             cp deps/accentor/postcss.config.js .
             yarn run build
@@ -48,7 +50,7 @@
         };
 
         devShell = pkgs.devshell.mkShell {
-          name = "Accentor WEB";
+          name = "Accentor Web";
           packages = with pkgs; [
             yarn2nix
             yarn
