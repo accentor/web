@@ -890,11 +890,11 @@
       };
     }
     {
-      name = "_eslint_eslintrc___eslintrc_1.2.2.tgz";
+      name = "_eslint_eslintrc___eslintrc_1.2.3.tgz";
       path = fetchurl {
-        name = "_eslint_eslintrc___eslintrc_1.2.2.tgz";
-        url  = "https://registry.yarnpkg.com/@eslint/eslintrc/-/eslintrc-1.2.2.tgz";
-        sha512 = "lTVWHs7O2hjBFZunXTZYnYqtB9GakA1lnxIf+gKq2nY5gxkkNi/lQvveW6t8gFdOHTg6nG50Xs95PrLqVpcaLg==";
+        name = "_eslint_eslintrc___eslintrc_1.2.3.tgz";
+        url  = "https://registry.yarnpkg.com/@eslint/eslintrc/-/eslintrc-1.2.3.tgz";
+        sha512 = "uGo44hIwoLGNyduRpjdEpovcbMdd+Nv7amtmJxnKmI8xj6yd5LncmSwDa5NgX/41lIFJtkjD6YdVfgEzPfJ5UA==";
       };
     }
     {
@@ -1671,6 +1671,14 @@
         name = "acorn___acorn_8.7.0.tgz";
         url  = "https://registry.yarnpkg.com/acorn/-/acorn-8.7.0.tgz";
         sha512 = "V/LGr1APy+PXIwKebEWrkZPwoeoF+w1jiOBUmuxuiUIaOHtob8Qc9BTrYo7VuI5fR8tqsy+buA2WFooR5olqvQ==";
+      };
+    }
+    {
+      name = "acorn___acorn_8.7.1.tgz";
+      path = fetchurl {
+        name = "acorn___acorn_8.7.1.tgz";
+        url  = "https://registry.yarnpkg.com/acorn/-/acorn-8.7.1.tgz";
+        sha512 = "Xx54uLJQZ19lKygFXOWsscKUbsBZW0CPykPhVQdhIeIwrbPmJzqeASDInc8nKBnp/JT6igTs82qPXz069H8I/A==";
       };
     }
     {
@@ -3138,11 +3146,11 @@
       };
     }
     {
-      name = "eslint___eslint_8.14.0.tgz";
+      name = "eslint___eslint_8.15.0.tgz";
       path = fetchurl {
-        name = "eslint___eslint_8.14.0.tgz";
-        url  = "https://registry.yarnpkg.com/eslint/-/eslint-8.14.0.tgz";
-        sha512 = "3/CE4aJX7LNEiE3i6FeodHmI/38GZtWCsAtsymScmzYapx8q1nVVb+eLcLSzATmCPXw5pT4TqVs1E0OmxAd9tw==";
+        name = "eslint___eslint_8.15.0.tgz";
+        url  = "https://registry.yarnpkg.com/eslint/-/eslint-8.15.0.tgz";
+        sha512 = "GG5USZ1jhCu8HJkzGgeK8/+RGnHaNYZGrGDzUtigK3BsGESW/rs2az23XqE0WVwDxy1VRvvjSSGu5nB0Bu+6SA==";
       };
     }
     {
@@ -3162,11 +3170,11 @@
       };
     }
     {
-      name = "espree___espree_9.3.1.tgz";
+      name = "espree___espree_9.3.2.tgz";
       path = fetchurl {
-        name = "espree___espree_9.3.1.tgz";
-        url  = "https://registry.yarnpkg.com/espree/-/espree-9.3.1.tgz";
-        sha512 = "bvdyLmJMfwkV3NCRl5ZhJf22zBFo1y8bYh3VYb+bfzqNB4Je68P2sSuXyuFquzWLebHpNd2/d5uv7yoP9ISnGQ==";
+        name = "espree___espree_9.3.2.tgz";
+        url  = "https://registry.yarnpkg.com/espree/-/espree-9.3.2.tgz";
+        sha512 = "D211tC7ZwouTIuY5x9XnS0E9sWNChB7IYKX/Xp5eQj3nFXhqmiUDB9q27y76oFl8jTg3pXcQx/bpxMfs3CIZbA==";
       };
     }
     {
