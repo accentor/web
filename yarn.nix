@@ -50,11 +50,11 @@
       };
     }
     {
-      name = "_babel_core___core_7.17.10.tgz";
+      name = "_babel_core___core_7.18.0.tgz";
       path = fetchurl {
-        name = "_babel_core___core_7.17.10.tgz";
-        url  = "https://registry.yarnpkg.com/@babel/core/-/core-7.17.10.tgz";
-        sha512 = "liKoppandF3ZcBnIYFjfSDHZLKdLHGJRkoWtG8zQyGJBQfIYobpnVGI5+pLBNtS6psFLDzyq8+h5HiVljW9PNA==";
+        name = "_babel_core___core_7.18.0.tgz";
+        url  = "https://registry.yarnpkg.com/@babel/core/-/core-7.18.0.tgz";
+        sha512 = "Xyw74OlJwDijToNi0+6BBI5mLLR5+5R3bcSH80LXzjzEGEUlvNzujEE71BaD/ApEZHAvFI/Mlmp4M5lIkdeeWw==";
       };
     }
     {
@@ -66,11 +66,11 @@
       };
     }
     {
-      name = "_babel_generator___generator_7.17.10.tgz";
+      name = "_babel_generator___generator_7.18.0.tgz";
       path = fetchurl {
-        name = "_babel_generator___generator_7.17.10.tgz";
-        url  = "https://registry.yarnpkg.com/@babel/generator/-/generator-7.17.10.tgz";
-        sha512 = "46MJZZo9y3o4kmhBVc7zW7i8dtR1oIK/sdO5NcfcZRhTGYi+KKJRtHNgsU6c4VUcJmUNV/LQdebD/9Dlv4K+Tg==";
+        name = "_babel_generator___generator_7.18.0.tgz";
+        url  = "https://registry.yarnpkg.com/@babel/generator/-/generator-7.18.0.tgz";
+        sha512 = "81YO9gGx6voPXlvYdZBliFXAZU8vZ9AZ6z+CjlmcnaeOcYSFbMTpdeDUO9xD9dh/68Vq03I8ZspfUTPfitcDHg==";
       };
     }
     {
@@ -186,11 +186,11 @@
       };
     }
     {
-      name = "_babel_helper_module_transforms___helper_module_transforms_7.17.7.tgz";
+      name = "_babel_helper_module_transforms___helper_module_transforms_7.18.0.tgz";
       path = fetchurl {
-        name = "_babel_helper_module_transforms___helper_module_transforms_7.17.7.tgz";
-        url  = "https://registry.yarnpkg.com/@babel/helper-module-transforms/-/helper-module-transforms-7.17.7.tgz";
-        sha512 = "VmZD99F3gNTYB7fJRDTi+u6l/zxY0BE6OIxPSU7a50s6ZUQkHwSDmV92FfM+oCG0pZRVojGYhkR8I0OGeCVREw==";
+        name = "_babel_helper_module_transforms___helper_module_transforms_7.18.0.tgz";
+        url  = "https://registry.yarnpkg.com/@babel/helper-module-transforms/-/helper-module-transforms-7.18.0.tgz";
+        sha512 = "kclUYSUBIjlvnzN2++K9f2qzYKFgjmnmjwL4zlmU5f8ZtzgWe8s0rUPSTGy2HmK4P8T52MQsS+HTQAgZd3dMEA==";
       };
     }
     {
@@ -282,11 +282,11 @@
       };
     }
     {
-      name = "_babel_helpers___helpers_7.17.9.tgz";
+      name = "_babel_helpers___helpers_7.18.0.tgz";
       path = fetchurl {
-        name = "_babel_helpers___helpers_7.17.9.tgz";
-        url  = "https://registry.yarnpkg.com/@babel/helpers/-/helpers-7.17.9.tgz";
-        sha512 = "cPCt915ShDWUEzEp3+UNRktO2n6v49l5RSnG9M5pS24hA+2FAc5si+Pn1i4VVbQQ+jh+bIZhPFQOJOzbrOYY1Q==";
+        name = "_babel_helpers___helpers_7.18.0.tgz";
+        url  = "https://registry.yarnpkg.com/@babel/helpers/-/helpers-7.18.0.tgz";
+        sha512 = "AE+HMYhmlMIbho9nbvicHyxFwhrO+xhKB6AhRxzl8w46Yj0VXTZjEsAoBVC7rB2I0jzX+yWyVybnO08qkfx6kg==";
       };
     }
     {
@@ -298,11 +298,11 @@
       };
     }
     {
-      name = "_babel_parser___parser_7.17.10.tgz";
+      name = "_babel_parser___parser_7.18.0.tgz";
       path = fetchurl {
-        name = "_babel_parser___parser_7.17.10.tgz";
-        url  = "https://registry.yarnpkg.com/@babel/parser/-/parser-7.17.10.tgz";
-        sha512 = "n2Q6i+fnJqzOaq2VkdXxy2TCPCWQZHiCo0XqmrCvDWcZQKRyZzYi4Z0yxlBuN0w+r2ZHmre+Q087DSrw3pbJDQ==";
+        name = "_babel_parser___parser_7.18.0.tgz";
+        url  = "https://registry.yarnpkg.com/@babel/parser/-/parser-7.18.0.tgz";
+        sha512 = "AqDccGC+m5O/iUStSJy3DGRIUFu7WbY/CppZYwrEUB4N0tZlnI8CSTsgL7v5fHVFmUbRv2sd+yy27o8Ydt4MGg==";
       };
     }
     {
@@ -874,19 +874,19 @@
       };
     }
     {
-      name = "_babel_traverse___traverse_7.17.10.tgz";
+      name = "_babel_traverse___traverse_7.18.0.tgz";
       path = fetchurl {
-        name = "_babel_traverse___traverse_7.17.10.tgz";
-        url  = "https://registry.yarnpkg.com/@babel/traverse/-/traverse-7.17.10.tgz";
-        sha512 = "VmbrTHQteIdUUQNTb+zE12SHS/xQVIShmBPhlNP12hD5poF2pbITW1Z4172d03HegaQWhLffdkRJYtAzp0AGcw==";
+        name = "_babel_traverse___traverse_7.18.0.tgz";
+        url  = "https://registry.yarnpkg.com/@babel/traverse/-/traverse-7.18.0.tgz";
+        sha512 = "oNOO4vaoIQoGjDQ84LgtF/IAlxlyqL4TUuoQ7xLkQETFaHkY1F7yazhB4Kt3VcZGL0ZF/jhrEpnXqUb0M7V3sw==";
       };
     }
     {
-      name = "_babel_types___types_7.17.10.tgz";
+      name = "_babel_types___types_7.18.0.tgz";
       path = fetchurl {
-        name = "_babel_types___types_7.17.10.tgz";
-        url  = "https://registry.yarnpkg.com/@babel/types/-/types-7.17.10.tgz";
-        sha512 = "9O26jG0mBYfGkUYCYZRnBwbVLd1UZOICEr2Em6InB6jVfsAv1GKgwXHmrSg+WFWDmeKTA6vyTZiN8tCSM5Oo3A==";
+        name = "_babel_types___types_7.18.0.tgz";
+        url  = "https://registry.yarnpkg.com/@babel/types/-/types-7.18.0.tgz";
+        sha512 = "vhAmLPAiC8j9K2GnsnLPCIH5wCrPpYIVBCWRBFDCB7Y/BXLqi/O+1RSTTM2bsmg6U/551+FCf9PNPxjABmxHTw==";
       };
     }
     {
@@ -962,11 +962,11 @@
       };
     }
     {
-      name = "_jridgewell_gen_mapping___gen_mapping_0.1.1.tgz";
+      name = "_jridgewell_gen_mapping___gen_mapping_0.3.1.tgz";
       path = fetchurl {
-        name = "_jridgewell_gen_mapping___gen_mapping_0.1.1.tgz";
-        url  = "https://registry.yarnpkg.com/@jridgewell/gen-mapping/-/gen-mapping-0.1.1.tgz";
-        sha512 = "sQXCasFk+U8lWYEe66WxRDOE9PjVz4vSM51fTu3Hw+ClTpUSQb718772vH3pyS5pShp6lvQM7SxgIDXXXmOX7w==";
+        name = "_jridgewell_gen_mapping___gen_mapping_0.3.1.tgz";
+        url  = "https://registry.yarnpkg.com/@jridgewell/gen-mapping/-/gen-mapping-0.3.1.tgz";
+        sha512 = "GcHwniMlA2z+WFPWuY8lp3fsza0I8xPFMWL5+n8LYyP6PSvPrXf4+n8stDHZY2DM0zy9sVkRDy1jDI4XGzYVqg==";
       };
     }
     {
@@ -999,6 +999,14 @@
         name = "_jridgewell_trace_mapping___trace_mapping_0.3.4.tgz";
         url  = "https://registry.yarnpkg.com/@jridgewell/trace-mapping/-/trace-mapping-0.3.4.tgz";
         sha512 = "vFv9ttIedivx0ux3QSjhgtCVjPZd5l46ZOMDSCwnH1yUO2e964gO8LZGyv2QkqcgR6TnBU1v+1IFqmeoG+0UJQ==";
+      };
+    }
+    {
+      name = "_jridgewell_trace_mapping___trace_mapping_0.3.13.tgz";
+      path = fetchurl {
+        name = "_jridgewell_trace_mapping___trace_mapping_0.3.13.tgz";
+        url  = "https://registry.yarnpkg.com/@jridgewell/trace-mapping/-/trace-mapping-0.3.13.tgz";
+        sha512 = "o1xbKhp9qnIAoHJSWd6KlCZfqslL4valSF81H8ImioOAxluWYWOpWkpyktY2vnt4tbrX9XYaxovq6cgowaJp2w==";
       };
     }
     {
