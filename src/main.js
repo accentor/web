@@ -3,7 +3,7 @@ import "roboto-fontface/css/roboto/roboto-fontface.css";
 import Vue from "vue";
 import Vuetify from "vuetify/lib";
 import Meta from "vue-meta";
-import Main from "./Main.vue";
+import Root from "./Root.vue";
 import router from "./router";
 import store from "./store/store";
 import i18n from "./i18n";
@@ -41,5 +41,5 @@ new Vue({
       },
     },
   }),
-  render: (h) => h(Main),
+  render: (h) => h(Root),
 }).$mount("#main");
