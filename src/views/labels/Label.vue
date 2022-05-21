@@ -61,7 +61,7 @@ import Searchable from "../../mixins/Searchable";
 import { AlbumsScope } from "@accentor/api-client-js";
 
 export default {
-  name: "Label",
+  name: "LabelView",
   components: { AlbumCard, LabelActions },
   mixins: [Paginated, Searchable],
   metaInfo() {
