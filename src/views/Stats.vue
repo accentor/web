@@ -16,19 +16,19 @@
     </VRow>
     <div class="stats">
       <PlayCountCard
-        :plays="filteredPlays"
+        :playStats="playStats"
         title=""
         class="stats__play-count"
       />
       <TopTracksList
         class="stats__top-tracks"
-        :plays="filteredPlays"
+        :playStats="playStats"
         :use-track-length="useTrackLength"
         :title="$t('stats.topTracks')"
       />
       <PercentagePlayedCard
         class="stats__percentage-played"
-        :plays="filteredPlays"
+        :playStats="playStats"
         :use-track-length="useTrackLength"
         :tracks="filteredTracks"
         :title="
@@ -39,13 +39,13 @@
       />
       <TopAlbumsList
         class="stats__top-albums"
-        :plays="filteredPlays"
+        :playStats="playStats"
         :use-track-length="useTrackLength"
         :title="$t('stats.topAlbums')"
       />
       <TopArtistsList
         class="stats__top-artists"
-        :plays="filteredPlays"
+        :playStats="playStats"
         :use-track-length="useTrackLength"
         :title="$t('stats.topArtists')"
       />
@@ -69,6 +69,8 @@ import TopArtistsList from "@/components/TopArtistsList";
 import TopTracksList from "@/components/TopTracksList";
 import TopAlbumsList from "@/components/TopAlbumsList";
 import { filterPlaysByPeriod, filterPlaysByTracks } from "@/filters";
+import $api from "../api";
+import { PlaysScope } from "@accentor/api-client-js";
 
 export default {
   name: "Stats",
@@ -91,6 +93,7 @@ export default {
         end: null,
       },
       useTrackLength: false,
+      playStats: [],
     };
   },
   props: {
@@ -99,13 +102,11 @@ export default {
       default: null,
     },
   },
-  created() {
-    this.reloadPlays();
-  },
   computed: {
     ...mapGetters({
       plays: "plays/plays",
     }),
+
     ...mapState("artists", ["artists"]),
     artistName() {
       return this.artist_id && this.artists[this.artist_id]?.name;
@@ -138,13 +139,38 @@ export default {
       }
       return this.$store.getters["tracks/tracks"];
     },
+    playStatsScope() {
+      const scope = new PlaysScope();
+      if (this.period.start && this.period.end) {
+        scope.playedAfter(this.period.start);
+        scope.playedBefore(this.period.end);
+      }
+      if (this.artist_id) {
+        scope.artist(this.artist_id);
+      }
+      return scope;
+    },
   },
   methods: {
     async reloadPlays() {
       await this.$store.dispatch("plays/index");
     },
+    async loadPlayStats() {
+      const gen = $api.plays.stats(this.$store.state.auth, this.playStatsScope);
+      let done = false;
+      let results = [];
+      while (!done) {
+        let value = [];
+        ({ value, done } = await gen.next());
+        results.push(...value);
+      }
+      this.playStats = results;
+    },
   },
   watch: {
+    playStatsScope() {
+      this.loadPlayStats();
+    },
     useTrackLength() {
       if (this.useTrackLength.toString() !== this.$route.query.useTrackLength) {
         this.$router.replace({

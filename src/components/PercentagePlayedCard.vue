@@ -39,7 +39,7 @@ import { gsap } from "gsap";
 export default {
   name: "PercentagePlayedCard",
   props: {
-    plays: {
+    playStats: {
       type: Array,
       required: true,
     },
@@ -63,8 +63,7 @@ export default {
   },
   computed: {
     playedTracksInPeriod() {
-      const trackIds = this.plays.map((p) => p.track_id);
-      return [...new Set(trackIds)];
+      return this.playStats.map((p) => p.track_id);
     },
     playedTracksLength() {
       return this.playedTracksInPeriod.reduce((acc, cur) => {

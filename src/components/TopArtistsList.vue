@@ -7,13 +7,13 @@
 
 <script>
 import { mapState } from "vuex";
-import { calcPlayCountForArtists, calcPlayTimeForArtists } from "@/reducers";
+import { calcPlayStatsForArtists } from "@/reducers";
 import TopList from "@/components/TopList";
 
 export default {
   name: "TopArtistsList",
   props: {
-    plays: {
+    playStats: {
       type: Array,
       required: true,
     },
@@ -34,9 +34,11 @@ export default {
     ...mapState("tracks", ["tracks"]),
     topTracks() {
       return Object.entries(
-        this.useTrackLength
-          ? calcPlayTimeForArtists(this.plays, this.tracks)
-          : calcPlayCountForArtists(this.plays, this.tracks)
+        calcPlayStatsForArtists(
+          this.playStats,
+          this.tracks,
+          this.useTrackLength
+        )
       )
         .sort((t1, t2) => t2[1] - t1[1])
         .slice(0, 10);

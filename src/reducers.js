@@ -1,36 +1,15 @@
-export function calcPlayCountForTracks(plays) {
+export function calcPlayCountForAlbums(playStats, tracks, useAverage = false) {
   const acc = {};
-  for (const play of plays) {
-    if (!(play.track_id in acc)) {
-      acc[play.track_id] = 1;
-    } else {
-      acc[play.track_id]++;
-    }
-  }
-  return acc;
-}
-
-export function calcPlayTimeForTracks(plays, tracks) {
-  const acc = calcPlayCountForTracks(plays);
-  for (const track_id in acc) {
-    acc[track_id] = acc[track_id] * tracks[track_id]?.length || 0;
-  }
-  return acc;
-}
-
-export function calcPlayCountForAlbums(plays, tracks, useAverage = false) {
-  const playCounts = calcPlayCountForTracks(plays);
-  const acc = {};
-  for (const track_id in playCounts) {
-    const album_id = tracks[track_id]?.album_id;
+  for (const stat of playStats) {
+    const album_id = tracks[stat.track_id]?.album_id;
     if (!album_id) {
       continue;
     }
 
     if (!(album_id in acc)) {
-      acc[album_id] = playCounts[track_id];
+      acc[album_id] = stat.count;
     } else {
-      acc[album_id] += playCounts[track_id];
+      acc[album_id] += stat.count;
     }
   }
 
@@ -44,19 +23,18 @@ export function calcPlayCountForAlbums(plays, tracks, useAverage = false) {
   return acc;
 }
 
-export function calcPlayTimeForAlbums(plays, tracks, useAverage = false) {
-  const playCounts = calcPlayCountForTracks(plays);
+export function calcPlayTimeForAlbums(playStats, tracks, useAverage = false) {
   const acc = {};
-  for (const track_id in playCounts) {
-    const track = tracks[track_id];
-    if (!track) {
+  for (const stat of playStats) {
+    const album_id = tracks[stat.track_id]?.album_id;
+    if (!album_id) {
       continue;
     }
 
-    if (!(track.album_id in acc)) {
-      acc[track.album_id] = playCounts[track_id] * track.length;
+    if (!(album_id in acc)) {
+      acc[album_id] = stat.total_length;
     } else {
-      acc[track.album_id] += playCounts[track_id] * track.length;
+      acc[album_id] += stat.total_length;
     }
   }
 
@@ -73,36 +51,18 @@ export function calcPlayTimeForAlbums(plays, tracks, useAverage = false) {
   return acc;
 }
 
-export function calcPlayCountForArtists(plays, tracks) {
-  const playCounts = calcPlayCountForTracks(plays);
+export function calcPlayStatsForArtists(playStats, tracks, useTrackLength) {
+  const prop = useTrackLength ? "total_length" : "count";
   const acc = {};
-  for (const track_id in playCounts) {
-    const uniqueIds = (tracks[track_id]?.track_artists || [])
+  for (const stat of playStats) {
+    const uniqueIds = (tracks[stat.track_id]?.track_artists || [])
       .map((ta) => ta.artist_id)
       .filter((id, index, list) => list.indexOf(id) == index);
     for (const ta of uniqueIds) {
       if (!(ta in acc)) {
-        acc[ta] = playCounts[track_id];
+        acc[ta] = stat[prop];
       } else {
-        acc[ta] += playCounts[track_id];
-      }
-    }
-  }
-  return acc;
-}
-
-export function calcPlayTimeForArtists(plays, tracks) {
-  const playCounts = calcPlayCountForTracks(plays);
-  const acc = {};
-  for (const track_id in playCounts) {
-    const uniqueIds = (tracks[track_id]?.track_artists || [])
-      .map((ta) => ta.artist_id)
-      .filter((id, index, list) => list.indexOf(id) == index);
-    for (const ta of uniqueIds) {
-      if (!(ta in acc)) {
-        acc[ta] = playCounts[track_id] * tracks[track_id].length;
-      } else {
-        acc[ta] += playCounts[track_id] * tracks[track_id].length;
+        acc[ta] += stat[prop];
       }
     }
   }

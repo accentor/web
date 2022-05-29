@@ -7,13 +7,12 @@
 
 <script>
 import { mapState } from "vuex";
-import { calcPlayCountForTracks, calcPlayTimeForTracks } from "@/reducers";
 import TopList from "@/components/TopList";
 
 export default {
   name: "TopTracksList",
   props: {
-    plays: {
+    playStats: {
       type: Array,
       required: true,
     },
@@ -31,18 +30,17 @@ export default {
   },
   computed: {
     ...mapState("tracks", ["tracks"]),
+    useProp() {
+      return this.useTrackLength ? "total_length" : "count";
+    },
     topTracks() {
-      return Object.entries(
-        this.useTrackLength
-          ? calcPlayTimeForTracks(this.plays, this.tracks)
-          : calcPlayCountForTracks(this.plays)
-      )
-        .sort((t1, t2) => t2[1] - t1[1])
+      return [...this.playStats]
+        .sort((t1, t2) => t2[this.useProp] - t1[this.useProp])
         .slice(0, 10);
     },
     listData() {
       return [...this.topTracks].map((tt) => {
-        const track = this.tracks[tt[0]];
+        const track = this.tracks[tt.track_id];
         const trackArtists = track?.track_artists
           .filter((a) => !a.hidden)
           .map((ta) => ta)
@@ -51,7 +49,7 @@ export default {
           .join(" / ");
         const label = `${trackArtists} - ${track?.title}`;
         return {
-          count: tt[1],
+          count: tt[this.useProp],
           label,
         };
       });
