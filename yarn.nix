@@ -1418,11 +1418,11 @@
       };
     }
     {
-      name = "_vue_cli_overlay___cli_overlay_5.0.4.tgz";
+      name = "_vue_cli_overlay___cli_overlay_5.0.6.tgz";
       path = fetchurl {
-        name = "_vue_cli_overlay___cli_overlay_5.0.4.tgz";
-        url  = "https://registry.yarnpkg.com/@vue/cli-overlay/-/cli-overlay-5.0.4.tgz";
-        sha512 = "ZTLAAydILjvx0XHUGSNu/cQDpmvLTMYUutDf2vf6XGkSWYqncQ6RwkeMSQhvQNlgpa/ovwIgrlGxLoojFRwdVg==";
+        name = "_vue_cli_overlay___cli_overlay_5.0.6.tgz";
+        url  = "https://registry.yarnpkg.com/@vue/cli-overlay/-/cli-overlay-5.0.6.tgz";
+        sha512 = "rghCRMPVQ4FIKmQy8ipn8fKztdaQSQTktAKob2SGuEL/iBWfclSMAQCXfj908nyzOBymo+q/Sn/oiLhi07oHlA==";
       };
     }
     {
@@ -1442,27 +1442,27 @@
       };
     }
     {
-      name = "_vue_cli_plugin_router___cli_plugin_router_5.0.4.tgz";
+      name = "_vue_cli_plugin_router___cli_plugin_router_5.0.6.tgz";
       path = fetchurl {
-        name = "_vue_cli_plugin_router___cli_plugin_router_5.0.4.tgz";
-        url  = "https://registry.yarnpkg.com/@vue/cli-plugin-router/-/cli-plugin-router-5.0.4.tgz";
-        sha512 = "lylzCuH3Br0BcTz5IxxSffpyoF9dQ2k4jTdK8QlWrnRanWGw7P9C0kYMr9rohHaXpvAlu6bio392gbNIWpEepg==";
+        name = "_vue_cli_plugin_router___cli_plugin_router_5.0.6.tgz";
+        url  = "https://registry.yarnpkg.com/@vue/cli-plugin-router/-/cli-plugin-router-5.0.6.tgz";
+        sha512 = "5ikUdfsSoKqpBhB5GhGYijH6mJnU+ZGqDv3QBf0brDeeh7PhClntxNAOLkB73c+LNxjBrlNCTkItuByF+AD29w==";
       };
     }
     {
-      name = "_vue_cli_plugin_vuex___cli_plugin_vuex_5.0.4.tgz";
+      name = "_vue_cli_plugin_vuex___cli_plugin_vuex_5.0.6.tgz";
       path = fetchurl {
-        name = "_vue_cli_plugin_vuex___cli_plugin_vuex_5.0.4.tgz";
-        url  = "https://registry.yarnpkg.com/@vue/cli-plugin-vuex/-/cli-plugin-vuex-5.0.4.tgz";
-        sha512 = "dBwiD6mT9+V2HTHcwaWE8qFNgTk5I/NUvxYVeUN3Mmmpo4y/1RxXnr7BlKGnaQsTypb2RFk3KowqIJtg7s+E3Q==";
+        name = "_vue_cli_plugin_vuex___cli_plugin_vuex_5.0.6.tgz";
+        url  = "https://registry.yarnpkg.com/@vue/cli-plugin-vuex/-/cli-plugin-vuex-5.0.6.tgz";
+        sha512 = "9bwkaLxGqqrD5FPN7iNsIe5x60P0nScioMQvHf2ZIIoFAiM5yuTgOQkdSKGBhn0YG4IjYd1tnlVY4Q/P4ZHaTA==";
       };
     }
     {
-      name = "_vue_cli_service___cli_service_5.0.4.tgz";
+      name = "_vue_cli_service___cli_service_5.0.6.tgz";
       path = fetchurl {
-        name = "_vue_cli_service___cli_service_5.0.4.tgz";
-        url  = "https://registry.yarnpkg.com/@vue/cli-service/-/cli-service-5.0.4.tgz";
-        sha512 = "xRiLNTFYmMCT9edZpyYXHijW5xot3gbZpcWDOXUOhKPHN4qs4XqWALnZlU97JYjZOr3XIr/ZvyciyEfrlUVqSA==";
+        name = "_vue_cli_service___cli_service_5.0.6.tgz";
+        url  = "https://registry.yarnpkg.com/@vue/cli-service/-/cli-service-5.0.6.tgz";
+        sha512 = "XSiTCjUMk8adjvQIJXBxk3ltEBLyBme8rpqdhJrpgCgSj+8pcPPyYKs1M0petkhwLMv3mEXVPNQmXKFzpdWVrw==";
       };
     }
     {
@@ -1679,14 +1679,6 @@
         name = "acorn___acorn_7.4.1.tgz";
         url  = "https://registry.yarnpkg.com/acorn/-/acorn-7.4.1.tgz";
         sha512 = "nQyp0o1/mNdbTO1PO6kHkwSrmgZ0MT/jCCpNiwbUjGoRN4dlBhqJtoQuCnEOKzgTVwg0ZWiCoQy6SxMebQVh8A==";
-      };
-    }
-    {
-      name = "acorn___acorn_8.7.0.tgz";
-      path = fetchurl {
-        name = "acorn___acorn_8.7.0.tgz";
-        url  = "https://registry.yarnpkg.com/acorn/-/acorn-8.7.0.tgz";
-        sha512 = "V/LGr1APy+PXIwKebEWrkZPwoeoF+w1jiOBUmuxuiUIaOHtob8Qc9BTrYo7VuI5fR8tqsy+buA2WFooR5olqvQ==";
       };
     }
     {
@@ -2031,14 +2023,6 @@
         name = "braces___braces_3.0.2.tgz";
         url  = "https://registry.yarnpkg.com/braces/-/braces-3.0.2.tgz";
         sha512 = "b8um+L1RzM3WDSzvhm6gIz1yfTbBt6YTlcEKAvsmqCZZFw46z626lVj9j1yEPW33H5H+lBQpZMP1k8l+78Ha0A==";
-      };
-    }
-    {
-      name = "browserslist___browserslist_4.19.3.tgz";
-      path = fetchurl {
-        name = "browserslist___browserslist_4.19.3.tgz";
-        url  = "https://registry.yarnpkg.com/browserslist/-/browserslist-4.19.3.tgz";
-        sha512 = "XK3X4xtKJ+Txj8G5c30B4gsm71s69lqXlkYui4s6EkKxuv49qjYlY6oVd+IFJ73d4YymtM3+djvvt/R/iJwwDg==";
       };
     }
     {
@@ -2935,14 +2919,6 @@
         name = "electron_to_chromium___electron_to_chromium_1.4.129.tgz";
         url  = "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.129.tgz";
         sha512 = "GgtN6bsDtHdtXJtlMYZWGB/uOyjZWjmRDumXTas7dGBaB9zUyCjzHet1DY2KhyHN8R0GLbzZWqm4efeddqqyRQ==";
-      };
-    }
-    {
-      name = "electron_to_chromium___electron_to_chromium_1.4.71.tgz";
-      path = fetchurl {
-        name = "electron_to_chromium___electron_to_chromium_1.4.71.tgz";
-        url  = "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.71.tgz";
-        sha512 = "Hk61vXXKRb2cd3znPE9F+2pLWdIOmP7GjiTj45y6L3W/lO+hSnUSUhq+6lEaERWBdZOHbk2s3YV5c9xVl3boVw==";
       };
     }
     {
@@ -4855,14 +4831,6 @@
         name = "node_forge___node_forge_1.3.0.tgz";
         url  = "https://registry.yarnpkg.com/node-forge/-/node-forge-1.3.0.tgz";
         sha512 = "08ARB91bUi6zNKzVmaj3QO7cr397uiDT2nJ63cHjyNtCTWIgvS47j3eT0WfzUwS9+6Z5YshRaoasFkXCKrIYbA==";
-      };
-    }
-    {
-      name = "node_releases___node_releases_2.0.2.tgz";
-      path = fetchurl {
-        name = "node_releases___node_releases_2.0.2.tgz";
-        url  = "https://registry.yarnpkg.com/node-releases/-/node-releases-2.0.2.tgz";
-        sha512 = "XxYDdcQ6eKqp/YjI+tb2C5WM2LgjnZrfYg4vgQt49EK268b6gYCHsBLrK2qvJo4FmCtqmKezb0WZFK4fkrZNsg==";
       };
     }
     {
