@@ -10,11 +10,11 @@
       };
     }
     {
-      name = "_achrinza_node_ipc___node_ipc_9.2.2.tgz";
+      name = "_achrinza_node_ipc___node_ipc_9.2.5.tgz";
       path = fetchurl {
-        name = "_achrinza_node_ipc___node_ipc_9.2.2.tgz";
-        url  = "https://registry.yarnpkg.com/@achrinza/node-ipc/-/node-ipc-9.2.2.tgz";
-        sha512 = "b90U39dx0cU6emsOvy5hxU4ApNXnE3+Tuo8XQZfiKTGelDwpMwBVgBP7QX6dGTcJgu/miyJuNJ/2naFBliNWEw==";
+        name = "_achrinza_node_ipc___node_ipc_9.2.5.tgz";
+        url  = "https://registry.yarnpkg.com/@achrinza/node-ipc/-/node-ipc-9.2.5.tgz";
+        sha512 = "kBX7Ay911iXZ3VZ1pYltj3Rfu7Ow9H7sK4H4RSfWIfWR2JKNB40K808wppoRIEzE2j2hXLU+r6TJgCAliCGhyQ==";
       };
     }
     {
@@ -1434,11 +1434,11 @@
       };
     }
     {
-      name = "_vue_cli_plugin_eslint___cli_plugin_eslint_5.0.4.tgz";
+      name = "_vue_cli_plugin_eslint___cli_plugin_eslint_5.0.6.tgz";
       path = fetchurl {
-        name = "_vue_cli_plugin_eslint___cli_plugin_eslint_5.0.4.tgz";
-        url  = "https://registry.yarnpkg.com/@vue/cli-plugin-eslint/-/cli-plugin-eslint-5.0.4.tgz";
-        sha512 = "NLBEKFTFJhYHMzQ3z+sb6xlkcNaN/RcbZ3hiCY72aJe4YOO8jEAp0XkPzlHd4xYkMW7jrmOwwLOPw+3BJ4b77Q==";
+        name = "_vue_cli_plugin_eslint___cli_plugin_eslint_5.0.6.tgz";
+        url  = "https://registry.yarnpkg.com/@vue/cli-plugin-eslint/-/cli-plugin-eslint-5.0.6.tgz";
+        sha512 = "fuc8w2IujzoenA/cdr/QYYMq2yaI1fYr0Fqom/M55B+DmW19GIuIRxYQvh0CEeCbFB2hAl3Flrazfx96/nAaQA==";
       };
     }
     {
@@ -1466,11 +1466,11 @@
       };
     }
     {
-      name = "_vue_cli_shared_utils___cli_shared_utils_5.0.4.tgz";
+      name = "_vue_cli_shared_utils___cli_shared_utils_5.0.6.tgz";
       path = fetchurl {
-        name = "_vue_cli_shared_utils___cli_shared_utils_5.0.4.tgz";
-        url  = "https://registry.yarnpkg.com/@vue/cli-shared-utils/-/cli-shared-utils-5.0.4.tgz";
-        sha512 = "nfAsj8Nopu5sVHMBIaut/YL7NaJFVmTBSTJD7LM17jc5uytrM9JwiRtzCiv3JWRBG78Xdb/s2Xb/1YR4fkdmkQ==";
+        name = "_vue_cli_shared_utils___cli_shared_utils_5.0.6.tgz";
+        url  = "https://registry.yarnpkg.com/@vue/cli-shared-utils/-/cli-shared-utils-5.0.6.tgz";
+        sha512 = "5HmlRtMByOCFO0P3mMUx8dVruTRhZ3pqQ0f1cCH9TmAoDjetmD/Ib7yx/5KxTHV8QY3xZJxYvgAmOU5C49K5xA==";
       };
     }
     {
