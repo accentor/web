@@ -1354,11 +1354,11 @@
       };
     }
     {
-      name = "_vue_babel_preset_app___babel_preset_app_5.0.4.tgz";
+      name = "_vue_babel_preset_app___babel_preset_app_5.0.6.tgz";
       path = fetchurl {
-        name = "_vue_babel_preset_app___babel_preset_app_5.0.4.tgz";
-        url  = "https://registry.yarnpkg.com/@vue/babel-preset-app/-/babel-preset-app-5.0.4.tgz";
-        sha512 = "vf4KqrmuOSnoEYGUiHPeMoxhh6wpiucLWXISn7xYFU80pK1lqcuhbl6tpurAanUIyRO/ENDUQBH7RAdbLNq1bA==";
+        name = "_vue_babel_preset_app___babel_preset_app_5.0.6.tgz";
+        url  = "https://registry.yarnpkg.com/@vue/babel-preset-app/-/babel-preset-app-5.0.6.tgz";
+        sha512 = "hoVr5M5RIvAL8F6MX8ZG0RvjA7MB7eDOkykK+M+qThkkrsAvlianzygnE86xN1N7JVSq7kGOyZk0Te+L20KqeQ==";
       };
     }
     {
@@ -1426,11 +1426,11 @@
       };
     }
     {
-      name = "_vue_cli_plugin_babel___cli_plugin_babel_5.0.4.tgz";
+      name = "_vue_cli_plugin_babel___cli_plugin_babel_5.0.6.tgz";
       path = fetchurl {
-        name = "_vue_cli_plugin_babel___cli_plugin_babel_5.0.4.tgz";
-        url  = "https://registry.yarnpkg.com/@vue/cli-plugin-babel/-/cli-plugin-babel-5.0.4.tgz";
-        sha512 = "413ZwOWLtgw5vWJoMbrv36crW3qTas4Iru8sU7cRb0IqEZbS28R9X4PVtO8Pek2NYFbrs2XKRYOB7GblB6hVqg==";
+        name = "_vue_cli_plugin_babel___cli_plugin_babel_5.0.6.tgz";
+        url  = "https://registry.yarnpkg.com/@vue/cli-plugin-babel/-/cli-plugin-babel-5.0.6.tgz";
+        sha512 = "ruQhfhj2WM6Fe/VDQneQc/kqNp/p138SjQMfz7q/rxMTMG1kpV5B0jYWschXHXLQ6aDsFnqmBmIK+XjU3XTF3g==";
       };
     }
     {
