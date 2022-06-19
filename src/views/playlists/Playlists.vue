@@ -63,7 +63,7 @@ import PlaylistActions from "../../components/PlaylistActions";
 export default {
   name: "playlists",
   metaInfo() {
-    return { title: this.$tc("music.labels", 2) };
+    return { title: this.$tc("music.playlists", 2) };
   },
   components: { PlaylistActions },
   mixins: [Paginated, Searchable],

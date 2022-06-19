@@ -347,6 +347,8 @@
 			"create": "Create playlist",
 			"items": "Items | Item | Items",
 			"new": "New playlist",
+			"no-tracks-to-play": "There are no tracks to play",
+			"no-tracks-to-add": "There are no tracks to add",
 			"playlist_type": "Type",
 			"playlist_types": {
 				"album": "Album",

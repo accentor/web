@@ -52,7 +52,7 @@
                   <th>
                     {{
                       newPlaylist.playlist_type === "artist"
-                        ? $t("music.name")
+                        ? $t("common.name")
                         : $t("music.title")
                     }}
                   </th>

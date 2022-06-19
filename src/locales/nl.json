@@ -342,15 +342,17 @@
 			"add-item": "Voeg {obj} toe aan afspeellijst",
 			"create": "Maak afspeellijst aan",
 			"items": "Items | Item | Items",
-			"new": "Nieuwwe afspeellijst",
+			"new": "Nieuwe afspeellijst",
+			"no-tracks-to-play": "Er zijn geen nummers om af te spelen",
+			"no-tracks-to-add": "Er zijn geen nummers om toe te voegen",
 			"personal": {
 				"label": "Persoonlijk",
-				"explanation": "Allen jij kan deze afspeellijst aanpassen"
+				"explanation": "Alleen jij kan deze afspeellijst aanpassen"
 			},
 			"playlist_type": "Type",
 			"playlist_types": {
 				"album": "Album",
-				"artist": "Artist",
+				"artist": "Artiest",
 				"track": "Nummer"
 			},
 			"update": "Pas playlist aan"
