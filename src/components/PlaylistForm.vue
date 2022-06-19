@@ -196,7 +196,7 @@ export default {
       this.newPlaylist.description = this.playlist.description;
       this.newPlaylist.access = this.playlist.access;
       this.newPlaylist.playlist_type = this.playlist.playlist_type;
-      this.newPlaylist.item_ids = this.playlist.item_ids;
+      this.newPlaylist.item_ids = [...this.playlist.item_ids];
     },
     async submit() {
       let pendingResult = null;
