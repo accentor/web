@@ -121,16 +121,16 @@ export default {
       },
       playlistTypes: [
         {
+          value: "track",
+          text: this.$t("music.playlist.playlist_types.track"),
+        },
+        {
           value: "album",
           text: this.$t("music.playlist.playlist_types.album"),
         },
         {
           value: "artist",
           text: this.$t("music.playlist.playlist_types.artist"),
-        },
-        {
-          value: "track",
-          text: this.$t("music.playlist.playlist_types.track"),
         },
       ],
       accessOptions: [
