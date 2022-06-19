@@ -40,7 +40,12 @@
             </VBtn>
           </VCol>
         </VRow>
-        <VRow no-gutters align="center" justify="center">
+        <VRow
+          no-gutters
+          align="center"
+          justify="center"
+          v-if="newPlaylist.item_ids.length"
+        >
           <VCol md="9" sm="10" cols="12" @change.once="isDirty = true">
             <h4 class="text-h6 mt-6 ml-4">
               {{ $tc("music.playlist.items", 2) }}
