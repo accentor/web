@@ -12,39 +12,46 @@
       </VCol>
       <VCol cols="12" sm="8" md="6" lg="4" xl="2"> </VCol>
     </VRow>
-    <VRow no-gutters>
-      <VCol v-if="playlist.playlist_type === 'track'">
+    <VRow no-gutters v-if="playlist.playlist_type === 'track'">
+      <VCol>
         <TracksTable
           :tracks="items"
           :show-search="true"
           :show-mass-edit="false"
         />
       </VCol>
-      <VCol
-        :key="item.id"
-        lg="3"
-        md="4"
-        sm="6"
-        v-for="item of items"
-        xl="2"
-        cols="6"
-        v-else-if="playlist.playlist_type === 'album'"
-      >
-        <AlbumCard :album="item" />
-      </VCol>
-      <VCol
-        :key="item.id"
-        lg="3"
-        md="4"
-        sm="6"
-        v-for="item of items"
-        xl="2"
-        cols="6"
-        v-else-if="playlist.playlist_type === 'artist'"
-      >
-        <ArtistCard :artist="item" />
-      </VCol>
     </VRow>
+    <VDataIterator
+      :footer-props="{
+        disableItemsPerPage: true,
+        itemsPerPageOptions: [12],
+        showFirstLastPage: true,
+      }"
+      :items="items"
+      :items-per-page="12"
+      :page.sync="pagination.page"
+      v-else
+    >
+      <template v-slot:default="props">
+        <VRow>
+          <VCol
+            v-for="item in props.items"
+            :key="item.id"
+            lg="3"
+            md="4"
+            sm="6"
+            xl="2"
+            cols="6"
+          >
+            <AlbumCard
+              :album="item"
+              v-if="playlist.playlist_type === 'album'"
+            />
+            <ArtistCard :artist="item" v-else />
+          </VCol>
+        </VRow>
+      </template>
+    </VDataIterator>
   </VContainer>
 </template>
 
@@ -54,6 +61,7 @@ import AlbumCard from "../../components/AlbumCard";
 import ArtistCard from "../../components/ArtistCard";
 import TracksTable from "../../components/TracksTable";
 import PlaylistActions from "../../components/PlaylistActions";
+import Paginated from "../../mixins/Paginated";
 
 export default {
   name: "Playlist",
@@ -64,6 +72,7 @@ export default {
       required: false,
     },
   },
+  mixins: [Paginated],
   computed: {
     ...mapState("playlists", ["playlists"]),
     ...mapState("albums", ["albums"]),
