@@ -24,7 +24,7 @@
           <VRow>
             <VCol cols="12">
               <VCombobox
-                :items="editablePlaylists"
+                :items="playlistOptions"
                 :filter="filterName"
                 cache-items
                 item-text="name"
