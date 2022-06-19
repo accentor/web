@@ -54,13 +54,7 @@
               <thead>
                 <tr>
                   <th style="width: 1px" class="text-center">Sort</th>
-                  <th>
-                    {{
-                      newPlaylist.playlist_type === "artist"
-                        ? $t("common.name")
-                        : $t("music.title")
-                    }}
-                  </th>
+                  <th>{{ mainPropName }}</th>
                   <th></th>
                 </tr>
               </thead>
@@ -192,6 +186,11 @@ export default {
     },
     items() {
       return this[`${this.newPlaylist.playlist_type}s`];
+    },
+    mainPropName() {
+      return this.newPlaylist.playlist_type === "artist"
+        ? this.$t("common.name")
+        : this.$t("music.title");
     },
   },
   methods: {
