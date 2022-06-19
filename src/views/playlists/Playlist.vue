@@ -66,6 +66,9 @@ import Paginated from "../../mixins/Paginated";
 export default {
   name: "Playlist",
   components: { AlbumCard, ArtistCard, TracksTable, PlaylistActions },
+  metaInfo() {
+    return { title: this.playlist?.title };
+  },
   props: {
     id: {
       type: [String, Number],
