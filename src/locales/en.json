@@ -346,6 +346,11 @@
 			"add-item": "Add {obj} to playlist",
 			"create": "Create playlist",
 			"items": "Items | Item | Items",
+			"item_counts": {
+				"album": "0 albums | 1 album | {count} albums",
+				"artist": "0 artists | 1 artist | {count} artists",
+				"track": "0 tracks | 1 track | {count} tracks"
+			},
 			"new": "New playlist",
 			"no-tracks-to-play": "There are no tracks to play",
 			"no-tracks-to-add": "There are no tracks to add",

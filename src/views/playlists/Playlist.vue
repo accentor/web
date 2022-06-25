@@ -4,7 +4,21 @@
       <VCol cols="12" sm="4" md="6" lg="8" xl="10">
         <div>
           <h2 class="text-h4">{{ playlist.name }}</h2>
-          <span class="grey--text">{{ playlist.description }}</span>
+          <p class="grey--text mb-1">
+            <span v-if="playlist.access !== 'shared'">
+              {{ users[playlist.user_id].name }} &bull;
+            </span>
+            {{ $t(`music.playlist.access_options.${playlist.access}`) }}
+          </p>
+          <p class="grey--text mb-1">
+            {{
+              $tc(
+                `music.playlist.item_counts.${playlist.playlist_type}`,
+                playlist.item_ids.length
+              )
+            }}
+          </p>
+          <p class="grey--text mb-1">{{ playlist.description }}</p>
         </div>
         <div class="actions">
           <PlaylistActions :playlist="playlist" />
@@ -81,6 +95,7 @@ export default {
     ...mapState("albums", ["albums"]),
     ...mapState("artists", ["artists"]),
     ...mapState("tracks", ["tracks"]),
+    ...mapState("users", ["users"]),
     playlist() {
       return this.playlists[this.$route.params.id];
     },

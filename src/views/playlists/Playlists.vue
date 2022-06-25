@@ -43,6 +43,22 @@
               <VCardTitle>
                 {{ item.name }}
               </VCardTitle>
+              <VCardText>
+                <span class="d-block">
+                  <span v-if="item.access !== 'shared'">
+                    {{ users[item.user_id].name }} &bull;
+                  </span>
+                  {{ $t(`music.playlist.access_options.${item.access}`) }}
+                </span>
+                <span>
+                  {{
+                    $tc(
+                      `music.playlist.item_counts.${item.playlist_type}`,
+                      item.item_ids.length
+                    )
+                  }}
+                </span>
+              </VCardText>
               <VCardActions>
                 <PlaylistActions :playlist="item" />
               </VCardActions>
@@ -55,7 +71,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapState } from "vuex";
 import Paginated from "../../mixins/Paginated";
 import Searchable from "../../mixins/Searchable";
 import PlaylistActions from "../../components/PlaylistActions";
@@ -68,6 +84,7 @@ export default {
   components: { PlaylistActions },
   mixins: [Paginated, Searchable],
   computed: {
+    ...mapState("users", ["users"]),
     ...mapGetters("playlists", {
       playlists: "playlists",
     }),

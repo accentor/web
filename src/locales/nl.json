@@ -342,6 +342,11 @@
 			"add-item": "Voeg {obj} toe aan afspeellijst",
 			"create": "Maak afspeellijst aan",
 			"items": "Items | Item | Items",
+			"item_counts": {
+				"album": "0 albums | 1 album | {count} albums",
+				"artist": "0 artiesten | 1 artist | {count} artiesten",
+				"track": "0 nummers | 1 nummer | {count} nummers"
+			},
 			"new": "Nieuwe afspeellijst",
 			"no-tracks-to-play": "Er zijn geen nummers om af te spelen",
 			"no-tracks-to-add": "Er zijn geen nummers om toe te voegen",
