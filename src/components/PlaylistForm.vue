@@ -188,9 +188,11 @@ export default {
       return this[`${this.newPlaylist.playlist_type}s`];
     },
     mainPropName() {
-      return this.newPlaylist.playlist_type === "artist"
-        ? this.$t("common.name")
-        : this.$t("music.title");
+      return {
+        artist: this.$t("common.name"),
+        album: this.$t("music.title"),
+        track: this.$t("music.title"),
+      }[this.newPlaylist.playlist_type];
     },
   },
   methods: {
