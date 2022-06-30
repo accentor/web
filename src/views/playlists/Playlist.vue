@@ -5,9 +5,7 @@
         <div>
           <h2 class="text-h4">{{ playlist.name }}</h2>
           <p class="grey--text mb-1">
-            <span v-if="playlist.access !== 'shared'">
-              {{ users[playlist.user_id].name }} &bull;
-            </span>
+            {{ users[playlist.user_id].name }} &bull;
             {{ $t(`music.playlist.access_options.${playlist.access}`) }}
           </p>
           <p class="grey--text mb-1">

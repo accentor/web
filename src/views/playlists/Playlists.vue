@@ -45,9 +45,7 @@
               </VCardTitle>
               <VCardText>
                 <span class="d-block">
-                  <span v-if="item.access !== 'shared'">
-                    {{ users[item.user_id].name }} &bull;
-                  </span>
+                  {{ users[item.user_id].name }} &bull;
                   {{ $t(`music.playlist.access_options.${item.access}`) }}
                 </span>
                 <span>
