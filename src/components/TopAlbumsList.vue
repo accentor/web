@@ -27,7 +27,7 @@ import TopList from "@/components/TopList";
 export default {
   name: "TopAlbumsList",
   props: {
-    plays: {
+    playStats: {
       type: Array,
       required: true,
     },
@@ -54,8 +54,8 @@ export default {
     topAlbums() {
       return Object.entries(
         this.useTrackLength
-          ? calcPlayTimeForAlbums(this.plays, this.tracks, this.useAverage)
-          : calcPlayCountForAlbums(this.plays, this.tracks, this.useAverage)
+          ? calcPlayTimeForAlbums(this.playStats, this.tracks, this.useAverage)
+          : calcPlayCountForAlbums(this.playStats, this.tracks, this.useAverage)
       )
         .sort((a1, a2) => a2[1] - a1[1])
         .slice(0, 10);

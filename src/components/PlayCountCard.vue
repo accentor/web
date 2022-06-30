@@ -70,7 +70,7 @@ import { gsap } from "gsap";
 export default {
   name: "PlayCountCard",
   props: {
-    plays: {
+    playStats: {
       type: Array,
       required: true,
     },
@@ -92,12 +92,10 @@ export default {
   computed: {
     ...mapState("tracks", ["tracks"]),
     playCount() {
-      return this.plays.length;
+      return this.playStats.reduce((acc, cur) => acc + cur.count, 0);
     },
     playTime() {
-      return this.plays.reduce((acc, cur) => {
-        return acc + (this.tracks[cur.track_id]?.length || 0);
-      }, 0);
+      return this.playStats.reduce((acc, cur) => acc + cur.total_length, 0);
     },
   },
   watch: {
