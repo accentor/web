@@ -2,11 +2,11 @@
   offline_cache = linkFarm "offline" packages;
   packages = [
     {
-      name = "_accentor_api_client_js___api_client_js_0.17.0.tgz";
+      name = "_accentor_api_client_js___api_client_js_0.18.0.tgz";
       path = fetchurl {
-        name = "_accentor_api_client_js___api_client_js_0.17.0.tgz";
-        url  = "https://registry.yarnpkg.com/@accentor/api-client-js/-/api-client-js-0.17.0.tgz";
-        sha512 = "AcbgwmleguHmk6uQ7fXrpFUgPy9TDZy7ksX7UryplAm9TJfreNuzAAz9ho1ChmEPBggHBALoU8a33OL+v/dC/g==";
+        name = "_accentor_api_client_js___api_client_js_0.18.0.tgz";
+        url  = "https://registry.yarnpkg.com/@accentor/api-client-js/-/api-client-js-0.18.0.tgz";
+        sha512 = "TW9JDsfgN+/C7yUaK44CyV+aVrZk1sStWIAjU8QNvWKTU7ZWXhHaRh7Dsmw7QD0ctnrcpPpDlm7zjZL42hKD1w==";
       };
     }
     {
@@ -3327,14 +3327,6 @@
         name = "faye_websocket___faye_websocket_0.11.4.tgz";
         url  = "https://registry.yarnpkg.com/faye-websocket/-/faye-websocket-0.11.4.tgz";
         sha512 = "CzbClwlXAuiRQAlUyfqPgvPoNKTckTPGfwZV4ZdAhVcP2lh9KUxJg2b5GkE7XbjKQ3YJnQ9z6D9ntLAlB+tP8g==";
-      };
-    }
-    {
-      name = "fetch_retry___fetch_retry_4.1.1.tgz";
-      path = fetchurl {
-        name = "fetch_retry___fetch_retry_4.1.1.tgz";
-        url  = "https://registry.yarnpkg.com/fetch-retry/-/fetch-retry-4.1.1.tgz";
-        sha512 = "e6eB7zN6UBSwGVwrbWVH+gdLnkW9WwHhmq2YDK1Sh30pzx1onRVGBvogTlUeWxwTa+L86NYdo4hFkh7O8ZjSnA==";
       };
     }
     {

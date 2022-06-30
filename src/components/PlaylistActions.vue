@@ -16,7 +16,7 @@
           </VBtn>
         </span>
       </template>
-      <span>{{ $t("music.album.no-tracks-to-play") }}</span>
+      <span>{{ $t("music.playlist.no-tracks-to-play") }}</span>
     </VTooltip>
     <VTooltip bottom :disabled="playableTracks.length !== 0">
       <template v-slot:activator="{ on }">
@@ -35,17 +35,15 @@
           </VBtn>
         </span>
       </template>
-      <span>{{ $t("music.album.no-tracks-to-add") }}</span>
+      <span>{{ $t("music.playlist.no-tracks-to-add") }}</span>
     </VTooltip>
-    <AddToPlaylist :item="album" type="album" />
-    <EditReviewComment :item="album" :update="flag" />
-    <VTooltip bottom :disabled="!waitingForReload" v-if="isModerator">
+    <VTooltip bottom :disabled="!waitingForReload" v-if="isAllowedToEdit">
       <template v-slot:activator="{ on }">
         <span v-on="on">
           <VBtn
             :to="{
-              name: 'edit-album',
-              params: { id: album.id },
+              name: 'edit-playlist',
+              params: { id: playlist.id },
               query: { redirect: $route.fullPath },
             }"
             :disabled="waitingForReload"
@@ -61,16 +59,16 @@
       </template>
       <span>{{ $t("common.disabled-while-loading") }}</span>
     </VTooltip>
-    <VTooltip bottom :disabled="!waitingForReload" v-if="isModerator">
+    <VTooltip bottom :disabled="!waitingForReload" v-if="isAllowedToEdit">
       <template v-slot:activator="{ on }">
         <span v-on="on">
           <VBtn
-            @click.stop.prevent="deleteAlbum"
-            :disabled="album.loaded < startLoading"
+            @click.stop.prevent="deletePlaylist"
+            :disabled="waitingForReload"
             color="danger"
-            class="mr-0 actions__button"
-            text
+            class="actions__button mr-0"
             href="#"
+            text
             icon
             small
           >
@@ -82,46 +80,69 @@
     </VTooltip>
   </span>
 </template>
+
 <script>
-import { mapActions, mapGetters, mapState } from "vuex";
-import EditReviewComment from "./EditReviewComment";
-import AddToPlaylist from "./AddToPlaylist";
+import { mapActions, mapState } from "vuex";
 
 export default {
-  name: "AlbumActions",
-  components: { AddToPlaylist, EditReviewComment },
+  name: "PlaylistActions",
+  components: {},
   props: {
-    album: {
+    playlist: {
       type: Object,
       required: true,
     },
   },
   computed: {
-    ...mapGetters("auth", ["isModerator"]),
-    ...mapState("albums", ["startLoading"]),
-    tracks() {
-      return this.$store.getters["tracks/tracksFilterByAlbum"](this.album.id);
+    ...mapState("auth", { currentUser: "user_id" }),
+    ...mapState("playlists", ["startLoading"]),
+    ...mapState("tracks", ["tracks"]),
+    waitingForReload() {
+      return this.startLoading > this.playlist.loaded;
+    },
+    isAllowedToEdit() {
+      return (
+        this.playlist.access === "shared" ||
+        this.playlist.user_id === this.currentUser
+      );
+    },
+    playlistTracks() {
+      switch (this.playlist.playlist_type) {
+        case "album":
+          return this.playlist.item_ids
+            .map((album_id) =>
+              this.$store.getters["tracks/tracksFilterByAlbum"](album_id)
+            )
+            .flat();
+        case "artist":
+          return this.playlist.item_ids
+            .map((artist_id) =>
+              this.$store.getters["tracks/tracksFilterByArtist"](artist_id)
+            )
+            .flat();
+        case "track":
+          return this.playlist.item_ids.map((id) => this.tracks[id]);
+        default:
+          return [];
+      }
     },
     playableTracks() {
-      return this.tracks
+      return this.playlistTracks
         .filter((track) => track.length !== null)
         .map((obj) => obj.id);
     },
-    waitingForReload() {
-      return this.startLoading > this.album.loaded;
-    },
   },
   methods: {
-    ...mapActions("albums", ["destroy", "update"]),
-    deleteAlbum: function () {
+    ...mapActions("playlists", ["destroy", "update"]),
+    deletePlaylist: function () {
       if (confirm(this.$t("common.are-you-sure"))) {
-        this.destroy(this.album.id);
+        this.destroy(this.playlist.id);
       }
     },
     startTracks: function () {
       if (this.playableTracks.length > 0) {
         this.$store.commit("player/playTracks", this.playableTracks);
-        if (this.playableTracks.length !== this.tracks.length) {
+        if (this.playableTracks.length !== this.playlistTracks.length) {
           this.$store.commit("addError", {
             playlist: ["player.not-all-tracks-added"],
           });
@@ -135,7 +156,7 @@ export default {
     addTracks: function () {
       if (this.playableTracks.length > 0) {
         this.$store.commit("player/addTracks", this.playableTracks);
-        if (this.playableTracks.length !== this.tracks.length) {
+        if (this.playableTracks.length !== this.playlistTracks.length) {
           this.$store.commit("addError", {
             playlist: ["player.not-all-tracks-added"],
           });
@@ -145,12 +166,6 @@ export default {
           playlist: ["player.no-tracks-added"],
         });
       }
-    },
-    flag(id, reviewComment) {
-      return this.update({
-        id,
-        newAlbum: { review_comment: reviewComment },
-      });
     },
   },
 };

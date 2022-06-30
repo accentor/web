@@ -81,6 +81,16 @@
             </VListItemTitle>
           </VListItemContent>
         </VListItem>
+        <VListItem :to="{ name: 'playlists' }">
+          <VListItemAction>
+            <VIcon>mdi-playlist-music</VIcon>
+          </VListItemAction>
+          <VListItemContent>
+            <VListItemTitle>
+              {{ $tc("music.playlists", 2) }}
+            </VListItemTitle>
+          </VListItemContent>
+        </VListItem>
         <VListItem :to="{ name: 'stats' }">
           <VListItemAction>
             <VIcon>mdi-chart-bar</VIcon>
@@ -223,6 +233,7 @@ export default {
       pendingResults.push(this.$store.dispatch("codecConversions/index"));
       pendingResults.push(this.$store.dispatch("genres/index"));
       pendingResults.push(this.$store.dispatch("labels/index"));
+      pendingResults.push(this.$store.dispatch("playlists/index"));
       pendingResults.push(this.$store.dispatch("plays/index"));
       pendingResults.push(this.$store.dispatch("tracks/index"));
       pendingResults.push(this.$store.dispatch("users/index"));

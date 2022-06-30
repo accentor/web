@@ -50,6 +50,7 @@
 		"choose-file": "Choose file",
 		"choose-image": "Choose image",
 		"close": "Close",
+		"description": "Description",
 		"disabled-while-loading": "Disabled while loading",
 		"edit": "Edit",
 		"errors": "Errors | Error | Errors",
@@ -333,6 +334,34 @@
 			"title-search": "Search and replace title"
 		},
 		"play-count": "Played",
+		"playlists": "Playlists | Playlist | Playlists",
+		"playlist": {
+			"access": "Access",
+			"access_options": {
+				"secret": "Secret",
+				"shared": "Shared",
+				"personal": "Personal"
+			},
+			"add": "Add",
+			"add-item": "Add {obj} to playlist",
+			"create": "Create playlist",
+			"items": "Items | Item | Items",
+			"item_counts": {
+				"album": "0 albums | 1 album | {count} albums",
+				"artist": "0 artists | 1 artist | {count} artists",
+				"track": "0 tracks | 1 track | {count} tracks"
+			},
+			"new": "New playlist",
+			"no-tracks-to-play": "There are no tracks to play",
+			"no-tracks-to-add": "There are no tracks to add",
+			"playlist_type": "Type",
+			"playlist_types": {
+				"album": "Album",
+				"artist": "Artist",
+				"track": "Track"
+			},
+			"update": "Update playlist"
+		},
 		"title": "Title",
 		"track": {
 			"bitrate": "Bitrate",

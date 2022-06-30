@@ -2,12 +2,12 @@
 # yarn lockfile v1
 
 
-"@accentor/api-client-js@^0.17.0":
-  version "0.17.0"
-  resolved "https://registry.yarnpkg.com/@accentor/api-client-js/-/api-client-js-0.17.0.tgz#00da18459362e025d3897dde21ff5eeb222c137a"
-  integrity sha512-AcbgwmleguHmk6uQ7fXrpFUgPy9TDZy7ksX7UryplAm9TJfreNuzAAz9ho1ChmEPBggHBALoU8a33OL+v/dC/g==
+"@accentor/api-client-js@^0.18.0":
+  version "0.18.0"
+  resolved "https://registry.yarnpkg.com/@accentor/api-client-js/-/api-client-js-0.18.0.tgz#e5628194d1a25e9d0c35d4b69ad886404350126e"
+  integrity sha512-TW9JDsfgN+/C7yUaK44CyV+aVrZk1sStWIAjU8QNvWKTU7ZWXhHaRh7Dsmw7QD0ctnrcpPpDlm7zjZL42hKD1w==
   dependencies:
-    fetch-retry "^4.1.1"
+    fetch-retry "^5.0.2"
 
 "@achrinza/node-ipc@^9.2.5":
   version "9.2.5"
@@ -3289,11 +3289,6 @@ faye-websocket@^0.11.3:
   integrity sha512-CzbClwlXAuiRQAlUyfqPgvPoNKTckTPGfwZV4ZdAhVcP2lh9KUxJg2b5GkE7XbjKQ3YJnQ9z6D9ntLAlB+tP8g==
   dependencies:
     websocket-driver ">=0.5.1"
-
-fetch-retry@^4.1.1:
-  version "4.1.1"
-  resolved "https://registry.yarnpkg.com/fetch-retry/-/fetch-retry-4.1.1.tgz#fafe0bb22b54f4d0a9c788dff6dd7f8673ca63f3"
-  integrity sha512-e6eB7zN6UBSwGVwrbWVH+gdLnkW9WwHhmq2YDK1Sh30pzx1onRVGBvogTlUeWxwTa+L86NYdo4hFkh7O8ZjSnA==
 
 fetch-retry@^5.0.2:
   version "5.0.2"

@@ -50,6 +50,7 @@
 		"choose-file": "Bestand kiezen",
 		"choose-image": "Afbeelding kiezen",
 		"close": "Sluiten",
+		"description": "Beschrijving",
 		"disabled-while-loading": "Niet mogelijk tijdens het laden",
 		"edit": "Aanpassen",
 		"errors": "Fouten | Fout | Fouten",
@@ -329,6 +330,38 @@
 			"title-search": "Zoek en vervang in titel"
 		},
 		"play-count": "Afgespeeld",
+		"playlists": "Afspeellijsten | Afspeellijst | Afspeellijsten",
+		"playlist": {
+			"access": "Toegang",
+			"access_options": {
+				"secret": "Geheim",
+				"shared": "Gedeeld",
+				"personal": "Persoonlijk"
+			},
+			"add": "Voeg toe",
+			"add-item": "Voeg {obj} toe aan afspeellijst",
+			"create": "Maak afspeellijst aan",
+			"items": "Items | Item | Items",
+			"item_counts": {
+				"album": "0 albums | 1 album | {count} albums",
+				"artist": "0 artiesten | 1 artist | {count} artiesten",
+				"track": "0 nummers | 1 nummer | {count} nummers"
+			},
+			"new": "Nieuwe afspeellijst",
+			"no-tracks-to-play": "Er zijn geen nummers om af te spelen",
+			"no-tracks-to-add": "Er zijn geen nummers om toe te voegen",
+			"personal": {
+				"label": "Persoonlijk",
+				"explanation": "Alleen jij kan deze afspeellijst aanpassen"
+			},
+			"playlist_type": "Type",
+			"playlist_types": {
+				"album": "Album",
+				"artist": "Artiest",
+				"track": "Nummer"
+			},
+			"update": "Pas playlist aan"
+		},
 		"title": "Titel",
 		"track": {
 			"bitrate": "Bitrate",

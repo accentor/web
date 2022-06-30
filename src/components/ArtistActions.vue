@@ -14,6 +14,7 @@
     >
       <VIcon>mdi-chart-bar</VIcon>
     </VBtn>
+    <AddToPlaylist :item="artist" type="artist" />
     <EditReviewComment :item="artist" :update="flag" />
     <VTooltip bottom :disabled="!waitingForReload" v-if="isModerator">
       <template v-slot:activator="{ on }">
@@ -71,10 +72,11 @@
 import { mapActions, mapGetters, mapState } from "vuex";
 import EditReviewComment from "./EditReviewComment";
 import ArtistMergeDialog from "./ArtistMergeDialog";
+import AddToPlaylist from "./AddToPlaylist";
 
 export default {
   name: "ArtistActions",
-  components: { ArtistMergeDialog, EditReviewComment },
+  components: { AddToPlaylist, ArtistMergeDialog, EditReviewComment },
   props: {
     artist: {
       type: Object,

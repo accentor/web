@@ -36,6 +36,7 @@
       </template>
       <span>{{ $t("music.track.empty") }}</span>
     </VTooltip>
+    <AddToPlaylist :item="track" type="track" />
     <EditReviewComment :item="track" :update="flag" />
     <VMenu v-if="isModerator">
       <template v-slot:activator="{ on, attrs }">
@@ -184,9 +185,11 @@
 import { mapActions, mapGetters, mapState } from "vuex";
 import EditReviewComment from "./EditReviewComment";
 
+import AddToPlaylist from "./AddToPlaylist";
+
 export default {
   name: "TrackActions",
-  components: { EditReviewComment },
+  components: { AddToPlaylist, EditReviewComment },
   props: {
     track: { type: Object, required: true },
   },
