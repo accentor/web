@@ -148,6 +148,7 @@ const router = new Router({
           path: "playlists/:id",
           name: "playlist",
           component: Playlist,
+          props: true,
         },
         {
           path: "playlists/:id/edit",

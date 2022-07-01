@@ -68,7 +68,7 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapActions, mapState } from "vuex";
 import AlbumCard from "../../components/AlbumCard";
 import ArtistCard from "../../components/ArtistCard";
 import TracksTable from "../../components/TracksTable";
@@ -84,7 +84,13 @@ export default {
   props: {
     id: {
       type: [String, Number],
-      required: false,
+      required: true,
+    },
+  },
+  watch: {
+    id: {
+      handler: "fetchContent",
+      immediate: true,
     },
   },
   mixins: [Paginated],
@@ -100,6 +106,18 @@ export default {
     items() {
       let key = `${this.playlist?.playlist_type}s`;
       return this.playlist?.item_ids.map((id) => this[key][id]) || [];
+    },
+  },
+  methods: {
+    ...mapActions("playlists", ["read"]),
+    async fetchContent(newValue, oldValue) {
+      // After loading the content, the router will change the id from a string to a number
+      // but we don't actually want to load the content twice
+      if (newValue == oldValue) {
+        return;
+      }
+
+      await this.read(this.id);
     },
   },
 };

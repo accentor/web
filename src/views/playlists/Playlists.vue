@@ -69,7 +69,7 @@
 </template>
 
 <script>
-import { mapGetters, mapState } from "vuex";
+import { mapActions, mapGetters, mapState } from "vuex";
 import Paginated from "../../mixins/Paginated";
 import Searchable from "../../mixins/Searchable";
 import PlaylistActions from "../../components/PlaylistActions";
@@ -80,6 +80,9 @@ export default {
     return { title: this.$tc("music.playlists", 2) };
   },
   components: { PlaylistActions },
+  created() {
+    this.fetchContent();
+  },
   mixins: [Paginated, Searchable],
   computed: {
     ...mapState("users", ["users"]),
@@ -106,6 +109,12 @@ export default {
       } else {
         return 12;
       }
+    },
+  },
+  methods: {
+    ...mapActions("playlists", ["index"]),
+    async fetchContent() {
+      await this.index();
     },
   },
 };
