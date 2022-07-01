@@ -116,6 +116,6 @@ export default {
     async fetchContent() {
       await this.index();
     },
-  }
+  },
 };
 </script>

@@ -109,7 +109,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions("playlists", ["index"]),
+    ...mapActions("playlists", ["read"]),
     async fetchContent(newValue, oldValue) {
       // After loading the content, the router will change the id from a string to a number
       // but we don't actually want to load the content twice
@@ -118,7 +118,7 @@ export default {
       }
 
       await this.read(this.id);
-    }
-  }
+    },
+  },
 };
 </script>
