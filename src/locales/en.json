@@ -172,6 +172,9 @@
 			"track-skipped": "A track could not be loaded and was skipped."
 		},
 		"playlist": "Playlist",
+		"playlists": {
+			"name-blank": "Please fill in a name"
+		},
 		"permission": "Permission",
 		"resulting_codec": "Resulting codec",
 		"role": "Role",
