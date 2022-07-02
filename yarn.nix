@@ -6882,11 +6882,11 @@
       };
     }
     {
-      name = "vuetify___vuetify_2.6.6.tgz";
+      name = "vuetify___vuetify_2.6.7.tgz";
       path = fetchurl {
-        name = "vuetify___vuetify_2.6.6.tgz";
-        url  = "https://registry.yarnpkg.com/vuetify/-/vuetify-2.6.6.tgz";
-        sha512 = "H4KtxDFmDN8QiTRiGfBySyjMhVaHAJTKB0llGGKZT5jKxtnx9gvEtMWXKtVuRP0NJJP0H6xBPJHNOH7nT18qiQ==";
+        name = "vuetify___vuetify_2.6.7.tgz";
+        url  = "https://registry.yarnpkg.com/vuetify/-/vuetify-2.6.7.tgz";
+        sha512 = "1XxCv6mt1UsKaW7rqow0hF/jOw1ijT/fHH9euWLHgSVIcPAx8D2AY5ihTCBbMmV53Hj/YD0DUvzyk6cM/OGHvw==";
       };
     }
     {
