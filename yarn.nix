@@ -3370,11 +3370,11 @@
       };
     }
     {
-      name = "fetch_retry___fetch_retry_5.0.2.tgz";
+      name = "fetch_retry___fetch_retry_5.0.3.tgz";
       path = fetchurl {
-        name = "fetch_retry___fetch_retry_5.0.2.tgz";
-        url  = "https://registry.yarnpkg.com/fetch-retry/-/fetch-retry-5.0.2.tgz";
-        sha512 = "57Hmu+1kc6pKFUGVIobT7qw3NeAzY/uNN26bSevERLVvf6VGFR/ooDCOFBHMNDgAxBiU2YJq1D0vFzc6U1DcPw==";
+        name = "fetch_retry___fetch_retry_5.0.3.tgz";
+        url  = "https://registry.yarnpkg.com/fetch-retry/-/fetch-retry-5.0.3.tgz";
+        sha512 = "uJQyMrX5IJZkhoEUBQ3EjxkeiZkppBd5jS/fMTJmfZxLSiaQjv2zD0kTvuvkSH89uFvgSlB6ueGpjD3HWN7Bxw==";
       };
     }
     {
