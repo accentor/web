@@ -167,7 +167,10 @@
 			"not-all-tracks-added": "Niet alle nummers zijn toegevoegd aan de afspeellijst.",
 			"track-skipped": "Een nummer kon niet geladen worden en is overgeslagen."
 		},
-		"playlist": "Afspeellijst",
+		"playlist": "Playlist",
+		"playlists": {
+			"name-blank": "Vul een naam in voor deze playlist."
+		},
 		"permission": "Permissie",
 		"resulting_codec": "Uiteindelijke codec",
 		"role": "Rol",

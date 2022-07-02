@@ -7,7 +7,7 @@
             <VTextField
               :label="$t('common.name')"
               v-model="newPlaylist.name"
-              :rules="[(v) => !!v || $t('errors.playlist.name-blank')]"
+              :rules="[(v) => !!v || $t('errors.playlists.name-blank')]"
               required
             />
             <VTextarea
