@@ -71,7 +71,7 @@
                     <VBtn small icon text class="" data-draggable="handle">
                       <VIcon>mdi-drag-horizontal-variant</VIcon>
                     </VBtn>
-                    {{ index }}
+                    {{ index + 1 }}
                   </td>
                   <td class="play-queue__cell">
                     {{
