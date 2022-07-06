@@ -147,6 +147,8 @@
 			"ext-blank": "Please fill in an extionsion.",
 			"ext-taken": "This extension is already in use."
 		},
+		"items": "Playlist item",
+		"item-ids-contains-double": "The item you tried to add is already present in this playlist",
 		"label": {
 			"name-blank": "Please fill in a label name."
 		},

@@ -143,6 +143,8 @@
 			"ext-blank": "Vul een extensie in.",
 			"ext-taken": "Deze extensie wordt al gebruikt."
 		},
+		"items": "Afspeellijst items",
+		"item-ids-contains-double": "Het item dat je probeerde toevoegen, is al eerder toegevoegd.",
 		"label": {
 			"name-blank": "Vul een naam voor het label in."
 		},
