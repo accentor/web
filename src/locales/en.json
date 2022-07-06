@@ -350,6 +350,7 @@
 			"add": "Add",
 			"add-item": "Add {obj} to playlist",
 			"create": "Create playlist",
+			"item-already-present": "Already present in playlist",
 			"items": "Items | Item | Items",
 			"item_counts": {
 				"album": "0 albums | 1 album | {count} albums",

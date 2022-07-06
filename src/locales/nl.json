@@ -346,6 +346,7 @@
 			"add": "Voeg toe",
 			"add-item": "Voeg {obj} toe aan afspeellijst",
 			"create": "Maak afspeellijst aan",
+			"item-already-present": "Al aanwezig in deze afspeellijst",
 			"items": "Items | Item | Items",
 			"item_counts": {
 				"album": "0 albums | 1 album | {count} albums",
