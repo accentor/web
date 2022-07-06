@@ -46,6 +46,18 @@
             -
             {{ al.catalogue_number || $t("music.label.catalogue-number-none") }}
           </div>
+          <div class="grey--text mt-4 mb-4" v-if="playlists.length">
+            {{ $tc("music.album.in-playlists", playlists.length) }}
+            <ul>
+              <li v-for="playlist in playlists" :key="playlist.id">
+                <RouterLink
+                  :to="{ name: 'playlist', params: { id: playlist.id } }"
+                >
+                  {{ playlist.name }}
+                </RouterLink>
+              </li>
+            </ul>
+          </div>
           <div>
             <AlbumActions :album="album" class="actions--wide" />
           </div>
@@ -104,6 +116,11 @@ export default {
     album_labels: function () {
       return this.album.album_labels.filter(
         (al) => `${al.label_id}` in this.labels
+      );
+    },
+    playlists: function () {
+      return this.$store.getters["playlists/albumPlaylists"].filter((p) =>
+        p.item_ids.includes(this.album.id)
       );
     },
   },
