@@ -115,5 +115,7 @@ export default {
       ),
     albumPlaylists: (state, getters) =>
       getters.playlists.filter((p) => p.playlist_type === "album"),
+    artistPlaylists: (state, getters) =>
+      getters.playlists.filter((p) => p.playlist_type === "artist"),
   },
 };

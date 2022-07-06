@@ -275,6 +275,7 @@
 				"label": "Verberg in overzicht?",
 				"explanation": "Als een artiest verborgen is, wordt deze alleen getoonde in de detailweergaves."
 			},
+			"in-playlists": "In afspeellijsten | In afspeellijst | In afspeellijsten",
 			"merge": "Artiesten samenvoegen",
 			"merge-into": "Voeg {obj} samen met",
 			"new": "Nieuwe artiest",

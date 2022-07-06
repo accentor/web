@@ -23,6 +23,18 @@
         <div>
           <h2 class="text-h4">{{ artist.name }}</h2>
         </div>
+        <div class="grey--text mt-4 mb-4" v-if="playlists.length">
+          {{ $tc("music.artist.in-playlists", playlists.length) }}
+          <ul>
+            <li v-for="playlist in playlists" :key="playlist.id">
+              <RouterLink
+                :to="{ name: 'playlist', params: { id: playlist.id } }"
+              >
+                {{ playlist.name }}
+              </RouterLink>
+            </li>
+          </ul>
+        </div>
         <div>
           <ArtistActions :artist="artist" class="actions" :extended="true" />
         </div>
@@ -102,6 +114,11 @@ export default {
     },
     artist: function () {
       return this.artists[this.$route.params.id];
+    },
+    playlists: function () {
+      return this.$store.getters["playlists/artistPlaylists"].filter((p) =>
+        p.item_ids.includes(this.artist.id)
+      );
     },
   },
   methods: {

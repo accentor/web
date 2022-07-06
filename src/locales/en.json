@@ -279,6 +279,7 @@
 				"label": "Hide in overview?",
 				"explanation": "If an artist is hidden, they will only be shown in detailed lists."
 			},
+			"in-playlists": "In playlists | In playlist | In playlists",
 			"merge": "Merge artists",
 			"merge-into": "Merge {obj} into",
 			"new": "New artist",
