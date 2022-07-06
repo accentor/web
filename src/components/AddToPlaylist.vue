@@ -32,7 +32,13 @@
                 :label="$tc('music.playlists', 1)"
                 return-object
                 v-model="selectedPlaylist"
-              />
+              >
+                <template v-slot:item="props">
+                  <VListItem :disabled="props.item.item_ids.includes(item.id)">
+                    {{ props.item.name }}
+                  </VListItem>
+                </template>
+              </VCombobox>
             </VCol>
           </VRow>
         </VContainer>
