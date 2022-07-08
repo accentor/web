@@ -87,7 +87,7 @@ export default {
   computed: {
     ...mapState("users", ["users"]),
     ...mapGetters("playlists", {
-      playlists: "playlists",
+      playlists: "playlistsByName",
     }),
     filteredItems() {
       return this.playlists.filter(

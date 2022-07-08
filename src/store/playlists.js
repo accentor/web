@@ -1,6 +1,7 @@
 import Vue from "vue";
 import api from "@/api";
 import { fetchAll } from "./actions";
+import { compareStrings } from "../comparators";
 
 export default {
   namespaced: true,
@@ -104,8 +105,12 @@ export default {
   },
   getters: {
     playlists: (state) => Object.values(state.playlists),
+    playlistsByName: (state, getters) =>
+      getters.playlists.sort((p1, p2) =>
+        compareStrings(p1.name.toLowerCase(), p2.name.toLowerCase())
+      ),
     editablePlaylists: (state, getters, rootState) =>
-      getters.playlists.filter(
+      getters.playlistsByName.filter(
         (p) => p.access === "shared" || p.user_id === rootState.auth.user_id
       ),
   },
