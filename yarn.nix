@@ -1338,11 +1338,11 @@
       };
     }
     {
-      name = "_vue_babel_preset_app___babel_preset_app_5.0.6.tgz";
+      name = "_vue_babel_preset_app___babel_preset_app_5.0.8.tgz";
       path = fetchurl {
-        name = "_vue_babel_preset_app___babel_preset_app_5.0.6.tgz";
-        url  = "https://registry.yarnpkg.com/@vue/babel-preset-app/-/babel-preset-app-5.0.6.tgz";
-        sha512 = "hoVr5M5RIvAL8F6MX8ZG0RvjA7MB7eDOkykK+M+qThkkrsAvlianzygnE86xN1N7JVSq7kGOyZk0Te+L20KqeQ==";
+        name = "_vue_babel_preset_app___babel_preset_app_5.0.8.tgz";
+        url  = "https://registry.yarnpkg.com/@vue/babel-preset-app/-/babel-preset-app-5.0.8.tgz";
+        sha512 = "yl+5qhpjd8e1G4cMXfORkkBlvtPCIgmRf3IYCWYDKIQ7m+PPa5iTm4feiNmCMD6yGqQWMhhK/7M3oWGL9boKwg==";
       };
     }
     {
@@ -1410,11 +1410,11 @@
       };
     }
     {
-      name = "_vue_cli_plugin_babel___cli_plugin_babel_5.0.6.tgz";
+      name = "_vue_cli_plugin_babel___cli_plugin_babel_5.0.8.tgz";
       path = fetchurl {
-        name = "_vue_cli_plugin_babel___cli_plugin_babel_5.0.6.tgz";
-        url  = "https://registry.yarnpkg.com/@vue/cli-plugin-babel/-/cli-plugin-babel-5.0.6.tgz";
-        sha512 = "ruQhfhj2WM6Fe/VDQneQc/kqNp/p138SjQMfz7q/rxMTMG1kpV5B0jYWschXHXLQ6aDsFnqmBmIK+XjU3XTF3g==";
+        name = "_vue_cli_plugin_babel___cli_plugin_babel_5.0.8.tgz";
+        url  = "https://registry.yarnpkg.com/@vue/cli-plugin-babel/-/cli-plugin-babel-5.0.8.tgz";
+        sha512 = "a4qqkml3FAJ3auqB2kN2EMPocb/iu0ykeELwed+9B1c1nQ1HKgslKMHMPavYx3Cd/QAx2mBD4hwKBqZXEI/CsQ==";
       };
     }
     {
@@ -1450,11 +1450,11 @@
       };
     }
     {
-      name = "_vue_cli_shared_utils___cli_shared_utils_5.0.6.tgz";
+      name = "_vue_cli_shared_utils___cli_shared_utils_5.0.8.tgz";
       path = fetchurl {
-        name = "_vue_cli_shared_utils___cli_shared_utils_5.0.6.tgz";
-        url  = "https://registry.yarnpkg.com/@vue/cli-shared-utils/-/cli-shared-utils-5.0.6.tgz";
-        sha512 = "5HmlRtMByOCFO0P3mMUx8dVruTRhZ3pqQ0f1cCH9TmAoDjetmD/Ib7yx/5KxTHV8QY3xZJxYvgAmOU5C49K5xA==";
+        name = "_vue_cli_shared_utils___cli_shared_utils_5.0.8.tgz";
+        url  = "https://registry.yarnpkg.com/@vue/cli-shared-utils/-/cli-shared-utils-5.0.8.tgz";
+        sha512 = "uK2YB7bBVuQhjOJF+O52P9yFMXeJVj7ozqJkwYE9PlMHL1LMHjtCYm4cSdOebuPzyP+/9p0BimM/OqxsevIopQ==";
       };
     }
     {
