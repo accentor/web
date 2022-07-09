@@ -1,13 +1,13 @@
 <template>
-  <VCard class="pa-2">
+  <VCard class="pa-2" v-intersect="onIntersect">
     <VCardTitle>{{ title }}</VCardTitle>
     <!-- 
-      The viewbox represents:
-      24 * 22 (For the dots) + 30 (for the y-axis) + 11 (for the final x-axis label)
-      by
-      7 * 22 (for the dots) + 10 (for the x-axis)
-     -->
-    <svg viewBox="0 0 569 174" class="mx-4 mt-1">
+    The viewbox represents:
+    24 * 22 (For the dots) + 30 (for the y-axis) + 11 (for the final x-axis label)
+    by
+    7 * 22 (for the dots) + 10 (for the x-axis)
+    -->
+    <svg viewBox="0 0 569 174" class="mx-4 mt-1" v-if="isIntersecting">
       <!-- Offset 11 (half dot) + 1 (to visually center) -->
       <g y-axis transform="translate(0,12)">
         <text
@@ -90,6 +90,7 @@ export default {
         this.$t("common.shortWeekdays.sunday"),
       ],
       xLabels: [0, 6, 12, 18, 24],
+      isIntersecting: false,
     };
   },
   computed: {
@@ -117,6 +118,13 @@ export default {
         }
       });
       return dots;
+    },
+  },
+  methods: {
+    onIntersect(entries) {
+      // We only have one entry (the `VCard`)
+      // and simply check whether that is intersecting with the viewport
+      this.isIntersecting = entries[0].isIntersecting;
     },
   },
 };
