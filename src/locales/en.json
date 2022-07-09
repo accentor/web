@@ -263,6 +263,7 @@
 			"edition": "Release",
 			"edition-description": "Edition description",
 			"edition-information": "Add edition information",
+			"in-playlists": "In playlists | In playlist | In playlists",
 			"new": "New album",
 			"no-tracks-to-play": "There are no tracks to play",
 			"no-tracks-to-add": "There are no tracks to add",
@@ -278,6 +279,7 @@
 				"label": "Hide in overview?",
 				"explanation": "If an artist is hidden, they will only be shown in detailed lists."
 			},
+			"in-playlists": "In playlists | In playlist | In playlists",
 			"merge": "Merge artists",
 			"merge-into": "Merge {obj} into",
 			"new": "New artist",

@@ -113,5 +113,9 @@ export default {
       getters.playlistsByName.filter(
         (p) => p.access === "shared" || p.user_id === rootState.auth.user_id
       ),
+    albumPlaylists: (state, getters) =>
+      getters.playlistsByName.filter((p) => p.playlist_type === "album"),
+    artistPlaylists: (state, getters) =>
+      getters.playlistsByName.filter((p) => p.playlist_type === "artist"),
   },
 };
