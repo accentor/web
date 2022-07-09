@@ -1458,11 +1458,11 @@
       };
     }
     {
-      name = "_vue_compiler_sfc___compiler_sfc_2.7.0.tgz";
+      name = "_vue_compiler_sfc___compiler_sfc_2.7.4.tgz";
       path = fetchurl {
-        name = "_vue_compiler_sfc___compiler_sfc_2.7.0.tgz";
-        url  = "https://registry.yarnpkg.com/@vue/compiler-sfc/-/compiler-sfc-2.7.0.tgz";
-        sha512 = "hPOI15RsXO1G8aK6FNF93ld9C/D4e/uAJBE59K8NnL8giuKqeVksvamgu4jKhCJ9f9bbUpj5BuSV3sufIx2hmw==";
+        name = "_vue_compiler_sfc___compiler_sfc_2.7.4.tgz";
+        url  = "https://registry.yarnpkg.com/@vue/compiler-sfc/-/compiler-sfc-2.7.4.tgz";
+        sha512 = "WCaF33mlKLSvHDKvOD6FzTa5CI2FlMTeJf3MxJsNP0KDgRoI6RdXhHo9dtvCqV4Sywf9Owm17wTLT1Ymu/WsOQ==";
       };
     }
     {
@@ -6666,11 +6666,11 @@
       };
     }
     {
-      name = "vue_template_compiler___vue_template_compiler_2.7.0.tgz";
+      name = "vue_template_compiler___vue_template_compiler_2.7.4.tgz";
       path = fetchurl {
-        name = "vue_template_compiler___vue_template_compiler_2.7.0.tgz";
-        url  = "https://registry.yarnpkg.com/vue-template-compiler/-/vue-template-compiler-2.7.0.tgz";
-        sha512 = "b9kKOPNS6J2BVf9skXkKsUwQLP3Bjfb/gG6UoBt3fn4xUVEDko5TSWmkPGW6dSSeAOOvYEMALdouv9caKlTq0Q==";
+        name = "vue_template_compiler___vue_template_compiler_2.7.4.tgz";
+        url  = "https://registry.yarnpkg.com/vue-template-compiler/-/vue-template-compiler-2.7.4.tgz";
+        sha512 = "FgaeXI80FzhtDEsixq3WBrHLWpU2gzLb2DFusm62TrmCQyETsnUp0kTLpbExrTUw7g5YOnRf+xkh73nuEX+jGQ==";
       };
     }
     {
@@ -6682,11 +6682,11 @@
       };
     }
     {
-      name = "vue___vue_2.7.0.tgz";
+      name = "vue___vue_2.7.4.tgz";
       path = fetchurl {
-        name = "vue___vue_2.7.0.tgz";
-        url  = "https://registry.yarnpkg.com/vue/-/vue-2.7.0.tgz";
-        sha512 = "su25f1hocH+QNkVEqk+Oj7B+mkDIWU70l0YY7nYSJFEs3Z64njXxo65RUXnWH46ooEhKmEWyLdW6HcYn8coNrg==";
+        name = "vue___vue_2.7.4.tgz";
+        url  = "https://registry.yarnpkg.com/vue/-/vue-2.7.4.tgz";
+        sha512 = "8KGyyzFSj/FrKj1y7jyEpv8J4osgZx6Lk1lVzh1aP4BqsXZhATH1r0gdJNz00MMyBhK0/m2cNoPuOZ1NzeiUEw==";
       };
     }
     {
