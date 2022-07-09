@@ -1402,11 +1402,11 @@
       };
     }
     {
-      name = "_vue_cli_overlay___cli_overlay_5.0.6.tgz";
+      name = "_vue_cli_overlay___cli_overlay_5.0.8.tgz";
       path = fetchurl {
-        name = "_vue_cli_overlay___cli_overlay_5.0.6.tgz";
-        url  = "https://registry.yarnpkg.com/@vue/cli-overlay/-/cli-overlay-5.0.6.tgz";
-        sha512 = "rghCRMPVQ4FIKmQy8ipn8fKztdaQSQTktAKob2SGuEL/iBWfclSMAQCXfj908nyzOBymo+q/Sn/oiLhi07oHlA==";
+        name = "_vue_cli_overlay___cli_overlay_5.0.8.tgz";
+        url  = "https://registry.yarnpkg.com/@vue/cli-overlay/-/cli-overlay-5.0.8.tgz";
+        sha512 = "KmtievE/B4kcXp6SuM2gzsnSd8WebkQpg3XaB6GmFh1BJGRqa1UiW9up7L/Q67uOdTigHxr5Ar2lZms4RcDjwQ==";
       };
     }
     {
@@ -1426,35 +1426,35 @@
       };
     }
     {
-      name = "_vue_cli_plugin_router___cli_plugin_router_5.0.6.tgz";
+      name = "_vue_cli_plugin_router___cli_plugin_router_5.0.8.tgz";
       path = fetchurl {
-        name = "_vue_cli_plugin_router___cli_plugin_router_5.0.6.tgz";
-        url  = "https://registry.yarnpkg.com/@vue/cli-plugin-router/-/cli-plugin-router-5.0.6.tgz";
-        sha512 = "5ikUdfsSoKqpBhB5GhGYijH6mJnU+ZGqDv3QBf0brDeeh7PhClntxNAOLkB73c+LNxjBrlNCTkItuByF+AD29w==";
+        name = "_vue_cli_plugin_router___cli_plugin_router_5.0.8.tgz";
+        url  = "https://registry.yarnpkg.com/@vue/cli-plugin-router/-/cli-plugin-router-5.0.8.tgz";
+        sha512 = "Gmv4dsGdAsWPqVijz3Ux2OS2HkMrWi1ENj2cYL75nUeL+Xj5HEstSqdtfZ0b1q9NCce+BFB6QnHfTBXc/fCvMg==";
       };
     }
     {
-      name = "_vue_cli_plugin_vuex___cli_plugin_vuex_5.0.6.tgz";
+      name = "_vue_cli_plugin_vuex___cli_plugin_vuex_5.0.8.tgz";
       path = fetchurl {
-        name = "_vue_cli_plugin_vuex___cli_plugin_vuex_5.0.6.tgz";
-        url  = "https://registry.yarnpkg.com/@vue/cli-plugin-vuex/-/cli-plugin-vuex-5.0.6.tgz";
-        sha512 = "9bwkaLxGqqrD5FPN7iNsIe5x60P0nScioMQvHf2ZIIoFAiM5yuTgOQkdSKGBhn0YG4IjYd1tnlVY4Q/P4ZHaTA==";
+        name = "_vue_cli_plugin_vuex___cli_plugin_vuex_5.0.8.tgz";
+        url  = "https://registry.yarnpkg.com/@vue/cli-plugin-vuex/-/cli-plugin-vuex-5.0.8.tgz";
+        sha512 = "HSYWPqrunRE5ZZs8kVwiY6oWcn95qf/OQabwLfprhdpFWAGtLStShjsGED2aDpSSeGAskQETrtR/5h7VqgIlBA==";
       };
     }
     {
-      name = "_vue_cli_service___cli_service_5.0.6.tgz";
+      name = "_vue_cli_service___cli_service_5.0.8.tgz";
       path = fetchurl {
-        name = "_vue_cli_service___cli_service_5.0.6.tgz";
-        url  = "https://registry.yarnpkg.com/@vue/cli-service/-/cli-service-5.0.6.tgz";
-        sha512 = "XSiTCjUMk8adjvQIJXBxk3ltEBLyBme8rpqdhJrpgCgSj+8pcPPyYKs1M0petkhwLMv3mEXVPNQmXKFzpdWVrw==";
+        name = "_vue_cli_service___cli_service_5.0.8.tgz";
+        url  = "https://registry.yarnpkg.com/@vue/cli-service/-/cli-service-5.0.8.tgz";
+        sha512 = "nV7tYQLe7YsTtzFrfOMIHc5N2hp5lHG2rpYr0aNja9rNljdgcPZLyQRb2YRivTHqTv7lI962UXFURcpStHgyFw==";
       };
     }
     {
-      name = "_vue_cli_shared_utils___cli_shared_utils_5.0.6.tgz";
+      name = "_vue_cli_shared_utils___cli_shared_utils_5.0.8.tgz";
       path = fetchurl {
-        name = "_vue_cli_shared_utils___cli_shared_utils_5.0.6.tgz";
-        url  = "https://registry.yarnpkg.com/@vue/cli-shared-utils/-/cli-shared-utils-5.0.6.tgz";
-        sha512 = "5HmlRtMByOCFO0P3mMUx8dVruTRhZ3pqQ0f1cCH9TmAoDjetmD/Ib7yx/5KxTHV8QY3xZJxYvgAmOU5C49K5xA==";
+        name = "_vue_cli_shared_utils___cli_shared_utils_5.0.8.tgz";
+        url  = "https://registry.yarnpkg.com/@vue/cli-shared-utils/-/cli-shared-utils-5.0.8.tgz";
+        sha512 = "uK2YB7bBVuQhjOJF+O52P9yFMXeJVj7ozqJkwYE9PlMHL1LMHjtCYm4cSdOebuPzyP+/9p0BimM/OqxsevIopQ==";
       };
     }
     {
