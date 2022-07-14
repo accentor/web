@@ -32,7 +32,16 @@
                 :label="$tc('music.playlists', 1)"
                 return-object
                 v-model="selectedPlaylist"
-              />
+              >
+                <template v-slot:item="{ item, on }">
+                  <VListItem :disabled="item.disabled" v-on="on">
+                    {{ item.name }}
+                    <span v-if="item.disabled">
+                      &nbsp;({{ $t("music.playlist.item-already-present") }})
+                    </span>
+                  </VListItem>
+                </template>
+              </VCombobox>
             </VCol>
           </VRow>
         </VContainer>
@@ -79,9 +88,13 @@ export default {
     ...mapGetters("auth", ["currentUser"]),
     ...mapGetters("playlists", ["editablePlaylists"]),
     playlistOptions() {
-      return this.editablePlaylists.filter(
-        (p) => p.playlist_type === this.type
-      );
+      return structuredClone(this.editablePlaylists).reduce((options, p) => {
+        if (p.playlist_type === this.type) {
+          p.disabled = p.item_ids.includes(this.item.id);
+          options.push(p);
+        }
+        return options;
+      }, []);
     },
   },
   methods: {

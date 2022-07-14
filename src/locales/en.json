@@ -147,6 +147,8 @@
 			"ext-blank": "Please fill in an extionsion.",
 			"ext-taken": "This extension is already in use."
 		},
+		"items": "Playlist item",
+		"item-ids-contains-double": "The item you tried to add is already present in this playlist",
 		"label": {
 			"name-blank": "Please fill in a label name."
 		},
@@ -350,6 +352,7 @@
 			"add": "Add",
 			"add-item": "Add {obj} to playlist",
 			"create": "Create playlist",
+			"item-already-present": "Already present in playlist",
 			"items": "Items | Item | Items",
 			"item_counts": {
 				"album": "0 albums | 1 album | {count} albums",
