@@ -2578,14 +2578,6 @@
       };
     }
     {
-      name = "de_indent___de_indent_1.0.2.tgz";
-      path = fetchurl {
-        name = "de_indent___de_indent_1.0.2.tgz";
-        url  = "https://registry.yarnpkg.com/de-indent/-/de-indent-1.0.2.tgz";
-        sha512 = "e/1zu3xH5MQryN2zdVaF0OrdNLUbvWxzMbi+iNA6Bky7l1RoP8a2fIbRocyHclXt/arDrrR6lL3TqFD9pMQTsg==";
-      };
-    }
-    {
       name = "debug___debug_2.6.9.tgz";
       path = fetchurl {
         name = "debug___debug_2.6.9.tgz";
@@ -6663,14 +6655,6 @@
         name = "vue_style_loader___vue_style_loader_4.1.3.tgz";
         url  = "https://registry.yarnpkg.com/vue-style-loader/-/vue-style-loader-4.1.3.tgz";
         sha512 = "sFuh0xfbtpRlKfm39ss/ikqs9AbKCoXZBpHeVZ8Tx650o0k0q/YCM7FRvigtxpACezfq6af+a7JeqVTWvncqDg==";
-      };
-    }
-    {
-      name = "vue_template_compiler___vue_template_compiler_2.7.6.tgz";
-      path = fetchurl {
-        name = "vue_template_compiler___vue_template_compiler_2.7.6.tgz";
-        url  = "https://registry.yarnpkg.com/vue-template-compiler/-/vue-template-compiler-2.7.6.tgz";
-        sha512 = "z0xCDI/4eRTI6NihqDrxGNMkiH6XnUZ7Uh8UPwKRYYPxHyRHCqNuBQVf96+YYExPsJkLABZfexFHz9DClyfoXQ==";
       };
     }
     {
