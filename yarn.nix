@@ -2578,14 +2578,6 @@
       };
     }
     {
-      name = "de_indent___de_indent_1.0.2.tgz";
-      path = fetchurl {
-        name = "de_indent___de_indent_1.0.2.tgz";
-        url  = "https://registry.yarnpkg.com/de-indent/-/de-indent-1.0.2.tgz";
-        sha512 = "e/1zu3xH5MQryN2zdVaF0OrdNLUbvWxzMbi+iNA6Bky7l1RoP8a2fIbRocyHclXt/arDrrR6lL3TqFD9pMQTsg==";
-      };
-    }
-    {
       name = "debug___debug_2.6.9.tgz";
       path = fetchurl {
         name = "debug___debug_2.6.9.tgz";
@@ -6666,14 +6658,6 @@
       };
     }
     {
-      name = "vue_template_compiler___vue_template_compiler_2.7.6.tgz";
-      path = fetchurl {
-        name = "vue_template_compiler___vue_template_compiler_2.7.6.tgz";
-        url  = "https://registry.yarnpkg.com/vue-template-compiler/-/vue-template-compiler-2.7.6.tgz";
-        sha512 = "z0xCDI/4eRTI6NihqDrxGNMkiH6XnUZ7Uh8UPwKRYYPxHyRHCqNuBQVf96+YYExPsJkLABZfexFHz9DClyfoXQ==";
-      };
-    }
-    {
       name = "vue_template_es2015_compiler___vue_template_es2015_compiler_1.9.1.tgz";
       path = fetchurl {
         name = "vue_template_es2015_compiler___vue_template_es2015_compiler_1.9.1.tgz";
@@ -6698,11 +6682,11 @@
       };
     }
     {
-      name = "vuetify_loader___vuetify_loader_1.7.3.tgz";
+      name = "vuetify_loader___vuetify_loader_1.9.1.tgz";
       path = fetchurl {
-        name = "vuetify_loader___vuetify_loader_1.7.3.tgz";
-        url  = "https://registry.yarnpkg.com/vuetify-loader/-/vuetify-loader-1.7.3.tgz";
-        sha512 = "1Kt6Rfvuw3i9BBlxC9WTMnU3WEU7IBWQmDX+fYGAVGpzWCX7oHythUIwPCZGShHSYcPMKSDbXTPP8UvT5RNw8Q==";
+        name = "vuetify_loader___vuetify_loader_1.9.1.tgz";
+        url  = "https://registry.yarnpkg.com/vuetify-loader/-/vuetify-loader-1.9.1.tgz";
+        sha512 = "JQMDkksAw1Jrq3gSxCXipOAdTjpcjaadFQD0biBTCxo4/sbMxvSy3a4qOqxNui0KbBymSvzuC5eAgU5pd7oixw==";
       };
     }
     {
