@@ -954,11 +954,11 @@
       };
     }
     {
-      name = "_jridgewell_resolve_uri___resolve_uri_3.0.8.tgz";
+      name = "_jridgewell_resolve_uri___resolve_uri_3.1.0.tgz";
       path = fetchurl {
-        name = "_jridgewell_resolve_uri___resolve_uri_3.0.8.tgz";
-        url  = "https://registry.yarnpkg.com/@jridgewell/resolve-uri/-/resolve-uri-3.0.8.tgz";
-        sha512 = "YK5G9LaddzGbcucK4c8h5tWFmMPBvRZ/uyWmN1/SbBdIvqGUdWGkJ5BAaccgs6XbzVLsqbPJrBSFwKv3kT9i7w==";
+        name = "_jridgewell_resolve_uri___resolve_uri_3.1.0.tgz";
+        url  = "https://registry.yarnpkg.com/@jridgewell/resolve-uri/-/resolve-uri-3.1.0.tgz";
+        sha512 = "F2msla3tad+Mfht5cJq7LSXcdudKTWCVYUgw6pLFOOHSTtZlj6SWNYAp+AhuqLmWdBO2X5hPrLcu8cVP8fy28w==";
       };
     }
     {
@@ -6306,11 +6306,11 @@
       };
     }
     {
-      name = "terser___terser_5.14.1.tgz";
+      name = "terser___terser_5.14.2.tgz";
       path = fetchurl {
-        name = "terser___terser_5.14.1.tgz";
-        url  = "https://registry.yarnpkg.com/terser/-/terser-5.14.1.tgz";
-        sha512 = "+ahUAE+iheqBTDxXhTisdA8hgvbEG1hHOQ9xmNjeUJSoi6DU/gMrKNcfZjHkyY6Alnuyc+ikYJaxxfHkT3+WuQ==";
+        name = "terser___terser_5.14.2.tgz";
+        url  = "https://registry.yarnpkg.com/terser/-/terser-5.14.2.tgz";
+        sha512 = "oL0rGeM/WFQCUd0y2QrWxYnq7tfSuKBiqTjRPWrRgB46WD/kiwHwF8T23z78H6Q6kGCuuHcPB+KULHRdxvVGQA==";
       };
     }
     {
