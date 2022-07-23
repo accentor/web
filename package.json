@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@accentor/api-client-js": "^0.18.0",
-    "@mdi/font": "^6.9.96",
+    "@mdi/font": "^7.0.96",
     "@mdi/svg": "^7.0.96",
     "fetch-retry": "^5.0.3",
     "gsap": "^3.10.4",
