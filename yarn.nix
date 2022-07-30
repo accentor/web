@@ -6706,11 +6706,11 @@
       };
     }
     {
-      name = "vuetify_loader___vuetify_loader_1.9.1.tgz";
+      name = "vuetify_loader___vuetify_loader_1.9.2.tgz";
       path = fetchurl {
-        name = "vuetify_loader___vuetify_loader_1.9.1.tgz";
-        url  = "https://registry.yarnpkg.com/vuetify-loader/-/vuetify-loader-1.9.1.tgz";
-        sha512 = "JQMDkksAw1Jrq3gSxCXipOAdTjpcjaadFQD0biBTCxo4/sbMxvSy3a4qOqxNui0KbBymSvzuC5eAgU5pd7oixw==";
+        name = "vuetify_loader___vuetify_loader_1.9.2.tgz";
+        url  = "https://registry.yarnpkg.com/vuetify-loader/-/vuetify-loader-1.9.2.tgz";
+        sha512 = "8PP2w7aAs/rjA+Izec6qY7sHVb75MNrGQrDOTZJ5IEnvl+NiFhVpU2iWdRDZ3eMS842cWxSWStvkr+KJJKy+Iw==";
       };
     }
     {
