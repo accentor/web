@@ -1498,11 +1498,11 @@
       };
     }
     {
-      name = "_vue_compiler_sfc___compiler_sfc_2.7.8.tgz";
+      name = "_vue_compiler_sfc___compiler_sfc_2.7.9.tgz";
       path = fetchurl {
-        name = "_vue_compiler_sfc___compiler_sfc_2.7.8.tgz";
-        url  = "https://registry.yarnpkg.com/@vue/compiler-sfc/-/compiler-sfc-2.7.8.tgz";
-        sha512 = "2DK4YWKfgLnW9VDR9gnju1gcYRk3flKj8UNsms7fsRmFcg35slVTZEkqwBtX+wJBXaamFfn6NxSsZh3h12Ix/Q==";
+        name = "_vue_compiler_sfc___compiler_sfc_2.7.9.tgz";
+        url  = "https://registry.yarnpkg.com/@vue/compiler-sfc/-/compiler-sfc-2.7.9.tgz";
+        sha512 = "TD2FvT0fPUezw5RVP4tfwTZnKHP0QjeEUb39y7tORvOJQTjbOuHJEk4GPHUPsRaTeQ8rjuKjntyrYcEIx+ODxg==";
       };
     }
     {
@@ -6754,11 +6754,11 @@
       };
     }
     {
-      name = "vue___vue_2.7.8.tgz";
+      name = "vue___vue_2.7.9.tgz";
       path = fetchurl {
-        name = "vue___vue_2.7.8.tgz";
-        url  = "https://registry.yarnpkg.com/vue/-/vue-2.7.8.tgz";
-        sha512 = "ncwlZx5qOcn754bCu5/tS/IWPhXHopfit79cx+uIlLMyt3vCMGcXai5yCG5y+I6cDmEj4ukRYyZail9FTQh7lQ==";
+        name = "vue___vue_2.7.9.tgz";
+        url  = "https://registry.yarnpkg.com/vue/-/vue-2.7.9.tgz";
+        sha512 = "GeWCvAUkjzD5q4A3vgi8ka5r9bM6g8fmNmx/9VnHDKCaEzBcoVw+7UcQktZHrJ2jhlI+Zv8L57pMCIwM4h4MWg==";
       };
     }
     {
