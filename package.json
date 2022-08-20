@@ -17,7 +17,7 @@
     "localforage": "^1.10.0",
     "lodash.debounce": "^4.0.8",
     "roboto-fontface": "^0.10.0",
-    "vue": "^2.7.8",
+    "vue": "^2.7.9",
     "vue-global-events": "^1.2.1",
     "vue-i18n": "^8.27.2",
     "vue-meta": "^2.4.0",
