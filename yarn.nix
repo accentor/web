@@ -6658,11 +6658,11 @@
       };
     }
     {
-      name = "vue_cli_plugin_vuetify___vue_cli_plugin_vuetify_2.5.4.tgz";
+      name = "vue_cli_plugin_vuetify___vue_cli_plugin_vuetify_2.5.5.tgz";
       path = fetchurl {
-        name = "vue_cli_plugin_vuetify___vue_cli_plugin_vuetify_2.5.4.tgz";
-        url  = "https://registry.yarnpkg.com/vue-cli-plugin-vuetify/-/vue-cli-plugin-vuetify-2.5.4.tgz";
-        sha512 = "6o65u4yfXixxesWlBefSo2BbMbp5/vjin6+ymnJR0SGCiw20n+SdBbWhuvYTkPXMx3p8r4lqV0YVTrQ08z5p9g==";
+        name = "vue_cli_plugin_vuetify___vue_cli_plugin_vuetify_2.5.5.tgz";
+        url  = "https://registry.yarnpkg.com/vue-cli-plugin-vuetify/-/vue-cli-plugin-vuetify-2.5.5.tgz";
+        sha512 = "nV7g2wC5SBJe7UidLwnJKAasoc+XR1r5bKDOG6mhuUB17Y4kJlOCKpLDiIY/giHhGfjmsBh+DPC9fbQWNCN9mA==";
       };
     }
     {
