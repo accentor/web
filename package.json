@@ -21,7 +21,7 @@
     "vue-global-events": "^1.2.1",
     "vue-i18n": "^8.27.2",
     "vue-meta": "^2.4.0",
-    "vue-router": "^3.6.4",
+    "vue-router": "^3.6.5",
     "vuedraggable": "^2.24.3",
     "vuetify": "^2.6.9",
     "vuex": "^3.6.2",
