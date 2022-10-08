@@ -906,11 +906,11 @@
       };
     }
     {
-      name = "_eslint_eslintrc___eslintrc_1.3.2.tgz";
+      name = "_eslint_eslintrc___eslintrc_1.3.3.tgz";
       path = fetchurl {
-        name = "_eslint_eslintrc___eslintrc_1.3.2.tgz";
-        url  = "https://registry.yarnpkg.com/@eslint/eslintrc/-/eslintrc-1.3.2.tgz";
-        sha512 = "AXYd23w1S/bv3fTs3Lz0vjiYemS08jWkI3hYyS9I1ry+0f+Yjs1wm+sU0BS8qDOPrBIkp4qHYC16I8uVtpLajQ==";
+        name = "_eslint_eslintrc___eslintrc_1.3.3.tgz";
+        url  = "https://registry.yarnpkg.com/@eslint/eslintrc/-/eslintrc-1.3.3.tgz";
+        sha512 = "uj3pT6Mg+3t39fvLrj8iuCIJ38zKO9FpGtJ4BBJebJhEwjoT+KLVNCcHT5QC9NGRIEi7fZ0ZR8YRb884auB4Lg==";
       };
     }
     {
@@ -935,14 +935,6 @@
         name = "_humanwhocodes_config_array___config_array_0.10.5.tgz";
         url  = "https://registry.yarnpkg.com/@humanwhocodes/config-array/-/config-array-0.10.5.tgz";
         sha512 = "XVVDtp+dVvRxMoxSiSfasYaG02VEe1qH5cKgMQJWhol6HwzbcqoCMJi8dAGoYAO57jhUyhI6cWuRiTcRaDaYug==";
-      };
-    }
-    {
-      name = "_humanwhocodes_gitignore_to_minimatch___gitignore_to_minimatch_1.0.2.tgz";
-      path = fetchurl {
-        name = "_humanwhocodes_gitignore_to_minimatch___gitignore_to_minimatch_1.0.2.tgz";
-        url  = "https://registry.yarnpkg.com/@humanwhocodes/gitignore-to-minimatch/-/gitignore-to-minimatch-1.0.2.tgz";
-        sha512 = "rSqmMJDdLFUsyxR6FMtD00nfQKKLFb1kv+qBbOVKqErvloEIJLo5bDTJTQNTYgeyp78JsA7u/NPi5jT1GR/MuA==";
       };
     }
     {
@@ -3162,11 +3154,11 @@
       };
     }
     {
-      name = "eslint___eslint_8.24.0.tgz";
+      name = "eslint___eslint_8.25.0.tgz";
       path = fetchurl {
-        name = "eslint___eslint_8.24.0.tgz";
-        url  = "https://registry.yarnpkg.com/eslint/-/eslint-8.24.0.tgz";
-        sha512 = "dWFaPhGhTAiPcCgm3f6LI2MBWbogMnTJzFBbhXVRQDJPkr9pGZvVjlVfXd+vyDcWPA2Ic9L2AXPIQM0+vk/cSQ==";
+        name = "eslint___eslint_8.25.0.tgz";
+        url  = "https://registry.yarnpkg.com/eslint/-/eslint-8.25.0.tgz";
+        sha512 = "DVlJOZ4Pn50zcKW5bYH7GQK/9MsoQG2d5eDH0ebEkE8PbgzTTmtt/VTH9GGJ4BfeZCpBLqFfvsjX35UacUL83A==";
       };
     }
     {
