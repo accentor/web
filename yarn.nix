@@ -6770,11 +6770,11 @@
       };
     }
     {
-      name = "vue_i18n___vue_i18n_8.27.2.tgz";
+      name = "vue_i18n___vue_i18n_8.28.2.tgz";
       path = fetchurl {
-        name = "vue_i18n___vue_i18n_8.27.2.tgz";
-        url  = "https://registry.yarnpkg.com/vue-i18n/-/vue-i18n-8.27.2.tgz";
-        sha512 = "QVzn7u2WVH8F7eSKIM00lujC7x1mnuGPaTnDTmB01Hd709jDtB9kYtBqM+MWmp5AJRx3gnqAdZbee9MelqwFBg==";
+        name = "vue_i18n___vue_i18n_8.28.2.tgz";
+        url  = "https://registry.yarnpkg.com/vue-i18n/-/vue-i18n-8.28.2.tgz";
+        sha512 = "C5GZjs1tYlAqjwymaaCPDjCyGo10ajUphiwA922jKt9n7KPpqR7oM1PCwYzhB/E7+nT3wfdG3oRre5raIT1rKA==";
       };
     }
     {
