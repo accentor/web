@@ -3162,11 +3162,11 @@
       };
     }
     {
-      name = "eslint___eslint_8.27.0.tgz";
+      name = "eslint___eslint_8.28.0.tgz";
       path = fetchurl {
-        name = "eslint___eslint_8.27.0.tgz";
-        url  = "https://registry.yarnpkg.com/eslint/-/eslint-8.27.0.tgz";
-        sha512 = "0y1bfG2ho7mty+SiILVf9PfuRA49ek4Nc60Wmmu62QlobNR+CeXa4xXIJgcuwSQgZiWaPH+5BDsctpIW0PR/wQ==";
+        name = "eslint___eslint_8.28.0.tgz";
+        url  = "https://registry.yarnpkg.com/eslint/-/eslint-8.28.0.tgz";
+        sha512 = "S27Di+EVyMxcHiwDrFzk8dJYAaD+/5SoWKxL1ri/71CRHsnJnRDPNt2Kzj24+MT9FDupf4aqqyqPrvI8MvQ4VQ==";
       };
     }
     {
