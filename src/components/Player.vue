@@ -220,7 +220,7 @@ export default {
             });
           }
         } catch (error) {
-          this.commit("addError", error);
+          this.$store.commit("addError", error);
         }
       }
     },
