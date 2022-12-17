@@ -1066,11 +1066,11 @@
       };
     }
     {
-      name = "_mdi_svg___svg_7.0.96.tgz";
+      name = "_mdi_svg___svg_7.1.96.tgz";
       path = fetchurl {
-        name = "_mdi_svg___svg_7.0.96.tgz";
-        url  = "https://registry.yarnpkg.com/@mdi/svg/-/svg-7.0.96.tgz";
-        sha512 = "5DC+w7Kl2C82j4aTWCUf6wtHzgY60WBf1gT1qrpkLaMNcH6Vj9FpYPAXdSmtdkmSMvVMs8i1Rtv9cXWcHFQYpw==";
+        name = "_mdi_svg___svg_7.1.96.tgz";
+        url  = "https://registry.yarnpkg.com/@mdi/svg/-/svg-7.1.96.tgz";
+        sha512 = "QO+CyF7eZsYBJpyb9Q77r1O6PFdp/Ircx8FMV7+cFS7g0p5rF55PA9zrmzuZqi1LyPKANDpr0oULNLHgeQuXZQ==";
       };
     }
     {
