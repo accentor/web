@@ -1135,10 +1135,10 @@
   resolved "https://registry.yarnpkg.com/@mdi/font/-/font-7.0.96.tgz#9853c222623072f5575b4039c8c195ea929b61fc"
   integrity sha512-rzlxTfR64hqY8yiBzDjmANfcd8rv+T5C0Yedv/TWk2QyAQYdc66e0kaN1ipmnYU3RukHRTRcBARHzzm+tIhL7w==
 
-"@mdi/svg@^7.0.96":
-  version "7.0.96"
-  resolved "https://registry.yarnpkg.com/@mdi/svg/-/svg-7.0.96.tgz#c7275a318da8594337243368c6b4dca6a90154f6"
-  integrity sha512-5DC+w7Kl2C82j4aTWCUf6wtHzgY60WBf1gT1qrpkLaMNcH6Vj9FpYPAXdSmtdkmSMvVMs8i1Rtv9cXWcHFQYpw==
+"@mdi/svg@^7.1.96":
+  version "7.1.96"
+  resolved "https://registry.yarnpkg.com/@mdi/svg/-/svg-7.1.96.tgz#4911ee6d2f3457f016be8b7a454cf1a8e5c361f0"
+  integrity sha512-QO+CyF7eZsYBJpyb9Q77r1O6PFdp/Ircx8FMV7+cFS7g0p5rF55PA9zrmzuZqi1LyPKANDpr0oULNLHgeQuXZQ==
 
 "@nicolo-ribaudo/eslint-scope-5-internals@5.1.1-v1":
   version "5.1.1-v1"
