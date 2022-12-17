@@ -1058,11 +1058,11 @@
       };
     }
     {
-      name = "_mdi_font___font_7.0.96.tgz";
+      name = "_mdi_font___font_7.1.96.tgz";
       path = fetchurl {
-        name = "_mdi_font___font_7.0.96.tgz";
-        url  = "https://registry.yarnpkg.com/@mdi/font/-/font-7.0.96.tgz";
-        sha512 = "rzlxTfR64hqY8yiBzDjmANfcd8rv+T5C0Yedv/TWk2QyAQYdc66e0kaN1ipmnYU3RukHRTRcBARHzzm+tIhL7w==";
+        name = "_mdi_font___font_7.1.96.tgz";
+        url  = "https://registry.yarnpkg.com/@mdi/font/-/font-7.1.96.tgz";
+        sha512 = "Imag6npmfkBDi2Ze2jiZVAPTDIKLxhz2Sx82xJ2zctyAU5LYJejLI5ChnDwiD9bMkQfVuzEsI98Q8toHyC+HCg==";
       };
     }
     {
