@@ -4282,11 +4282,11 @@
       };
     }
     {
-      name = "json5___json5_1.0.1.tgz";
+      name = "json5___json5_1.0.2.tgz";
       path = fetchurl {
-        name = "json5___json5_1.0.1.tgz";
-        url  = "https://registry.yarnpkg.com/json5/-/json5-1.0.1.tgz";
-        sha512 = "aKS4WQjPenRxiQsC93MNfjx+nbF4PAdYzmd/1JIj8HYzqfbu86beTuNgXDzPknWk0n0uARlyewZo4s++ES36Ow==";
+        name = "json5___json5_1.0.2.tgz";
+        url  = "https://registry.yarnpkg.com/json5/-/json5-1.0.2.tgz";
+        sha512 = "g1MWMLBiz8FKi1e4w0UyVL3w+iJceWAFBAaBnnGKOpNa5f8TLktkbre1+s6oICydWAm+HRUGTmI+//xv2hvXYA==";
       };
     }
     {
@@ -4695,14 +4695,6 @@
         name = "minimist___minimist_1.2.7.tgz";
         url  = "https://registry.yarnpkg.com/minimist/-/minimist-1.2.7.tgz";
         sha512 = "bzfL1YUZsP41gmu/qjrEk0Q6i2ix/cVeAhbCbqH9u3zYutS1cLg00qhrD0M2MVdCcx4Sc0UpP2eBWo9rotpq6g==";
-      };
-    }
-    {
-      name = "minimist___minimist_1.2.6.tgz";
-      path = fetchurl {
-        name = "minimist___minimist_1.2.6.tgz";
-        url  = "https://registry.yarnpkg.com/minimist/-/minimist-1.2.6.tgz";
-        sha512 = "Jsjnk4bw3YJqYzbdyBiNsPWHPfO++UGG749Cxs6peCu5Xg4nrena6OVxOYxrQTqww0Jmwt+Ref8rggumkTLz9Q==";
       };
     }
     {
