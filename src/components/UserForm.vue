@@ -37,7 +37,7 @@
         v-model="newUser.permission"
       />
       <VBtn color="primary" class="ma-2" type="submit">
-        {{ $t("users.update") }}
+        {{ this.user ? $t("users.update") : $t("users.create") }}
       </VBtn>
     </VForm>
   </div>
