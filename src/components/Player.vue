@@ -152,6 +152,7 @@ export default {
       volume: 100,
       muted: false,
       intervalId: 0,
+      tries: 0,
     };
   },
   created() {
@@ -183,6 +184,7 @@ export default {
   },
   watch: {
     async currentTrackURL() {
+      this.tries = 0;
       if (this.currentTrackURL === null) {
         return;
       }
@@ -334,11 +336,18 @@ export default {
       }
     },
     onAudioError(event) {
-      if (this.playing && event.srcElement.networkState === 3) {
+      if (!this.playing || event.srcElement.networkState !== 3) {
+        return null;
+      }
+
+      if (this.tries >= 2) {
         this.nextTrack();
         this.$store.commit("addError", {
           playlist: ["player.track-skipped"],
         });
+      } else {
+        this.tries += 1;
+        this.$refs.audio.play();
       }
     },
     updatePlaylist({ newIndex, oldIndex }) {
