@@ -882,11 +882,19 @@
       };
     }
     {
-      name = "_eslint_eslintrc___eslintrc_1.4.1.tgz";
+      name = "_eslint_eslintrc___eslintrc_2.0.0.tgz";
       path = fetchurl {
-        name = "_eslint_eslintrc___eslintrc_1.4.1.tgz";
-        url  = "https://registry.yarnpkg.com/@eslint/eslintrc/-/eslintrc-1.4.1.tgz";
-        sha512 = "XXrH9Uarn0stsyldqDYq8r++mROmWRI1xKMXa640Bb//SY1+ECYX6VzT6Lcx5frD0V30XieqJ0oX9I2Xj5aoMA==";
+        name = "_eslint_eslintrc___eslintrc_2.0.0.tgz";
+        url  = "https://registry.yarnpkg.com/@eslint/eslintrc/-/eslintrc-2.0.0.tgz";
+        sha512 = "fluIaaV+GyV24CCu/ggiHdV+j4RNh85yQnAYS/G2mZODZgGmmlrgCydjUcV3YvxCm9x8nMAfThsqTni4KiXT4A==";
+      };
+    }
+    {
+      name = "_eslint_js___js_8.35.0.tgz";
+      path = fetchurl {
+        name = "_eslint_js___js_8.35.0.tgz";
+        url  = "https://registry.yarnpkg.com/@eslint/js/-/js-8.35.0.tgz";
+        sha512 = "JXdzbRiWclLVoD8sNUjR443VVlYqiYmDVT6rGUEIEHU5YJW0gaVZwV2xgM7D4arkvASqD0IlLUVjHiFuxaftRw==";
       };
     }
     {
@@ -3106,11 +3114,11 @@
       };
     }
     {
-      name = "eslint___eslint_8.34.0.tgz";
+      name = "eslint___eslint_8.35.0.tgz";
       path = fetchurl {
-        name = "eslint___eslint_8.34.0.tgz";
-        url  = "https://registry.yarnpkg.com/eslint/-/eslint-8.34.0.tgz";
-        sha512 = "1Z8iFsucw+7kSqXNZVslXS8Ioa4u2KM7GPwuKtkTFAqZ/cHMcEaR+1+Br0wLlot49cNxIiZk5wp8EAbPcYZxTg==";
+        name = "eslint___eslint_8.35.0.tgz";
+        url  = "https://registry.yarnpkg.com/eslint/-/eslint-8.35.0.tgz";
+        sha512 = "BxAf1fVL7w+JLRQhWl2pzGeSiGqbWumV4WNvc9Rhp6tiCtm4oHnyPBSEtMGZwrQgudFQ+otqzWoPB7x+hxoWsw==";
       };
     }
     {
@@ -3138,11 +3146,11 @@
       };
     }
     {
-      name = "esquery___esquery_1.4.0.tgz";
+      name = "esquery___esquery_1.5.0.tgz";
       path = fetchurl {
-        name = "esquery___esquery_1.4.0.tgz";
-        url  = "https://registry.yarnpkg.com/esquery/-/esquery-1.4.0.tgz";
-        sha512 = "cCDispWt5vHHtwMY2YrAQ4ibFkAL8RbH5YGBnZBc90MolvvfkkQcJro/aZiAQUlQ3qgrYS6D6v8Gc5G5CQsc9w==";
+        name = "esquery___esquery_1.5.0.tgz";
+        url  = "https://registry.yarnpkg.com/esquery/-/esquery-1.5.0.tgz";
+        sha512 = "YQLXUplAwJgCydQ78IMJywZCceoqk1oH01OERdSAJc/7U2AylwjhSCLDEtqwg811idIS/9fIU5GjG73IgjKMVg==";
       };
     }
     {
