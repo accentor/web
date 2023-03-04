@@ -12,7 +12,7 @@
     "@accentor/api-client-js": "^0.18.1",
     "@mdi/font": "^7.1.96",
     "@mdi/svg": "^7.1.96",
-    "fetch-retry": "^5.0.3",
+    "fetch-retry": "^5.0.4",
     "gsap": "^3.11.4",
     "localforage": "^1.10.0",
     "lodash.debounce": "^4.0.8",
