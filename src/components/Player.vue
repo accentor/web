@@ -347,7 +347,7 @@ export default {
         });
       } else {
         this.tries += 1;
-        this.$refs.audio.play();
+        setTimeout(() => this.$refs.audio.play(), this.tries * 500);
       }
     },
     updatePlaylist({ newIndex, oldIndex }) {
