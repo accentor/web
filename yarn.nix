@@ -5890,11 +5890,11 @@
       };
     }
     {
-      name = "sass___sass_1.58.3.tgz";
+      name = "sass___sass_1.59.2.tgz";
       path = fetchurl {
-        name = "sass___sass_1.58.3.tgz";
-        url  = "https://registry.yarnpkg.com/sass/-/sass-1.58.3.tgz";
-        sha512 = "Q7RaEtYf6BflYrQ+buPudKR26/lH+10EmO9bBqbmPh/KeLqv8bjpTNqxe71ocONqXq+jYiCbpPUmQMS+JJPk4A==";
+        name = "sass___sass_1.59.2.tgz";
+        url  = "https://registry.yarnpkg.com/sass/-/sass-1.59.2.tgz";
+        sha512 = "jJyO6SmbzkJexF8MUorHx5tAilcgabioYxT/BHbY4+OvoqmbHxsYlrjZ8Adhqcgl6Zqwie0TgMXLCAmPFxXOuw==";
       };
     }
     {
