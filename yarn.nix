@@ -3026,11 +3026,11 @@
       };
     }
     {
-      name = "eslint_config_prettier___eslint_config_prettier_8.7.0.tgz";
+      name = "eslint_config_prettier___eslint_config_prettier_8.8.0.tgz";
       path = fetchurl {
-        name = "eslint_config_prettier___eslint_config_prettier_8.7.0.tgz";
-        url  = "https://registry.yarnpkg.com/eslint-config-prettier/-/eslint-config-prettier-8.7.0.tgz";
-        sha512 = "HHVXLSlVUhMSmyW4ZzEuvjpwqamgmlfkutD53cYXLikh4pt/modINRcCIApJ84czDxM4GZInwUrromsDdTImTA==";
+        name = "eslint_config_prettier___eslint_config_prettier_8.8.0.tgz";
+        url  = "https://registry.yarnpkg.com/eslint-config-prettier/-/eslint-config-prettier-8.8.0.tgz";
+        sha512 = "wLbQiFre3tdGgpDv67NQKnJuTlcUVYHas3k+DZCc2U2BadthoEY4B7hLPvAxaqdyOGCzuLfii2fqGph10va7oA==";
       };
     }
     {
