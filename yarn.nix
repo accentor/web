@@ -4290,11 +4290,11 @@
       };
     }
     {
-      name = "klona___klona_2.0.5.tgz";
+      name = "klona___klona_2.0.6.tgz";
       path = fetchurl {
-        name = "klona___klona_2.0.5.tgz";
-        url  = "https://registry.yarnpkg.com/klona/-/klona-2.0.5.tgz";
-        sha512 = "pJiBpiXMbt7dkzXe8Ghj/u4FfXOOa98fPW+bihOJ4SjnoijweJrNThJfd3ifXpXhREjpoF2mZVH1GfS9LV3kHQ==";
+        name = "klona___klona_2.0.6.tgz";
+        url  = "https://registry.yarnpkg.com/klona/-/klona-2.0.6.tgz";
+        sha512 = "dhG34DXATL5hSxJbIexCft8FChFXtmskoZYnoPWjXQuebWYCNkVeV3KkGegCK9CP1oswI/vQibS2GY7Em/sJJA==";
       };
     }
     {
@@ -5890,11 +5890,11 @@
       };
     }
     {
-      name = "sass_loader___sass_loader_13.2.0.tgz";
+      name = "sass_loader___sass_loader_13.2.1.tgz";
       path = fetchurl {
-        name = "sass_loader___sass_loader_13.2.0.tgz";
-        url  = "https://registry.yarnpkg.com/sass-loader/-/sass-loader-13.2.0.tgz";
-        sha512 = "JWEp48djQA4nbZxmgC02/Wh0eroSUutulROUusYJO9P9zltRbNN80JCBHqRGzjd4cmZCa/r88xgfkjGD0TXsHg==";
+        name = "sass_loader___sass_loader_13.2.1.tgz";
+        url  = "https://registry.yarnpkg.com/sass-loader/-/sass-loader-13.2.1.tgz";
+        sha512 = "VQUrgUa5/waIzMrzyuko3sj5WD9NMsYph91cNICx+OaODbRtLl6To2fswLx8MH2qNxXFqRtpvdPQIa7mE93YOA==";
       };
     }
     {
