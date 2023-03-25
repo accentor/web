@@ -882,11 +882,11 @@
       };
     }
     {
-      name = "_eslint_community_eslint_utils___eslint_utils_4.2.0.tgz";
+      name = "_eslint_community_eslint_utils___eslint_utils_4.4.0.tgz";
       path = fetchurl {
-        name = "_eslint_community_eslint_utils___eslint_utils_4.2.0.tgz";
-        url  = "https://registry.yarnpkg.com/@eslint-community/eslint-utils/-/eslint-utils-4.2.0.tgz";
-        sha512 = "gB8T4H4DEfX2IV9zGDJPOBgP1e/DbfCPDTtEqUMckpvzS1OYtva8JdFYBqMwYk7xAQ429WGF/UPqn8uQ//h2vQ==";
+        name = "_eslint_community_eslint_utils___eslint_utils_4.4.0.tgz";
+        url  = "https://registry.yarnpkg.com/@eslint-community/eslint-utils/-/eslint-utils-4.4.0.tgz";
+        sha512 = "1/sA4dwrzBAyeUoQ6oxahHKmrZvsnLCg4RfxW3ZFGGmQkSNQPFNLV9CUEFQP1x9EYXHTo5p6xdhZM1Ne9p/AfA==";
       };
     }
     {
@@ -3050,11 +3050,11 @@
       };
     }
     {
-      name = "eslint_plugin_vue___eslint_plugin_vue_9.9.0.tgz";
+      name = "eslint_plugin_vue___eslint_plugin_vue_9.10.0.tgz";
       path = fetchurl {
-        name = "eslint_plugin_vue___eslint_plugin_vue_9.9.0.tgz";
-        url  = "https://registry.yarnpkg.com/eslint-plugin-vue/-/eslint-plugin-vue-9.9.0.tgz";
-        sha512 = "YbubS7eK0J7DCf0U2LxvVP7LMfs6rC6UltihIgval3azO3gyDwEGVgsCMe1TmDiEkl6GdMKfRpaME6QxIYtzDQ==";
+        name = "eslint_plugin_vue___eslint_plugin_vue_9.10.0.tgz";
+        url  = "https://registry.yarnpkg.com/eslint-plugin-vue/-/eslint-plugin-vue-9.10.0.tgz";
+        sha512 = "2MgP31OBf8YilUvtakdVMc8xVbcMp7z7/iQj8LHVpXrSXHPXSJRUIGSPFI6b6pyCx/buKaFJ45ycqfHvQRiW2g==";
       };
     }
     {
@@ -3087,14 +3087,6 @@
         name = "eslint_utils___eslint_utils_2.1.0.tgz";
         url  = "https://registry.yarnpkg.com/eslint-utils/-/eslint-utils-2.1.0.tgz";
         sha512 = "w94dQYoauyvlDc43XnGB8lU3Zt713vNChgt4EWwhXAP2XkBvndfxF0AgIqKOOasjPIPzj9JqgwkwbCYD0/V3Zg==";
-      };
-    }
-    {
-      name = "eslint_utils___eslint_utils_3.0.0.tgz";
-      path = fetchurl {
-        name = "eslint_utils___eslint_utils_3.0.0.tgz";
-        url  = "https://registry.yarnpkg.com/eslint-utils/-/eslint-utils-3.0.0.tgz";
-        sha512 = "uuQC43IGctw68pJA1RgbQS8/NP7rch6Cwd4j3ZBtgo4/8Flj4eGE7ZYSZRN3iq5pVUv6GPdW5Z1RFleo84uLDA==";
       };
     }
     {
