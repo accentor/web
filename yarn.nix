@@ -922,11 +922,11 @@
       };
     }
     {
-      name = "_eslint_js___js_8.37.0.tgz";
+      name = "_eslint_js___js_8.38.0.tgz";
       path = fetchurl {
-        name = "_eslint_js___js_8.37.0.tgz";
-        url  = "https://registry.yarnpkg.com/@eslint/js/-/js-8.37.0.tgz";
-        sha512 = "x5vzdtOOGgFVDCUs81QRB2+liax8rFg3+7hqM+QhBG0/G3F1ZsoYl97UrqgHgQ9KKT7G6c4V+aTUCgu/n22v1A==";
+        name = "_eslint_js___js_8.38.0.tgz";
+        url  = "https://registry.yarnpkg.com/@eslint/js/-/js-8.38.0.tgz";
+        sha512 = "IoD2MfUnOV58ghIHCiil01PcohxjbYR/qCxsoC+xNgUwh1EY8jOOrYmu3d3a71+tJJ23uscEV4X2HJWMsPJu4g==";
       };
     }
     {
@@ -3114,11 +3114,11 @@
       };
     }
     {
-      name = "eslint___eslint_8.37.0.tgz";
+      name = "eslint___eslint_8.38.0.tgz";
       path = fetchurl {
-        name = "eslint___eslint_8.37.0.tgz";
-        url  = "https://registry.yarnpkg.com/eslint/-/eslint-8.37.0.tgz";
-        sha512 = "NU3Ps9nI05GUoVMxcZx1J8CNR6xOvUT4jAUMH5+z8lpp3aEdPVCImKw6PWG4PY+Vfkpr+jvMpxs/qoE7wq0sPw==";
+        name = "eslint___eslint_8.38.0.tgz";
+        url  = "https://registry.yarnpkg.com/eslint/-/eslint-8.38.0.tgz";
+        sha512 = "pIdsD2jwlUGf/U38Jv97t8lq6HpaU/G9NKbYmpWpZGw3LdTNhZLbJePqxOXGB5+JEKfOPU/XLxYxFh03nr1KTg==";
       };
     }
     {
