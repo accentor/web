@@ -27,6 +27,10 @@ const mutations = {
       this.commit("auth/logout");
     }
     state.errors.push(error);
+
+    // We want to log our errors here, to help with debugging
+    // eslint-disable-next-line no-console
+    console.error(error);
   },
   clearErrors(state) {
     state.errors = [];
