@@ -22,7 +22,7 @@
     <VCard>
       <VCardTitle>
         <span class="text-h5">{{
-          $t("music.albums.merge-into", { obj: album.name })
+          $t("music.album.merge-into", { obj: album.name })
         }}</span>
       </VCardTitle>
       <VCardText>
