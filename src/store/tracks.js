@@ -47,6 +47,16 @@ export default {
         }
       }
     },
+    updateAlbumOccurence(state, { newID, oldID }) {
+      const oldTracks = state.tracks;
+      state.tracks = {};
+      for (const track of Object.values(oldTracks)) {
+        if (track.album_id == oldID) {
+          track.album_id = newID;
+        }
+        state.tracks[track.id] = track;
+      }
+    },
     removeArtistOccurence(state, oldID) {
       const oldTracks = state.tracks;
       state.tracks = {};
