@@ -50,11 +50,11 @@
       };
     }
     {
-      name = "_babel_core___core_7.21.5.tgz";
+      name = "_babel_core___core_7.21.8.tgz";
       path = fetchurl {
-        name = "_babel_core___core_7.21.5.tgz";
-        url  = "https://registry.yarnpkg.com/@babel/core/-/core-7.21.5.tgz";
-        sha512 = "9M398B/QH5DlfCOTKDZT1ozXr0x8uBEeFd+dJraGUZGiaNpGCDVGCc14hZexsMblw3XxltJ+6kSvogp9J+5a9g==";
+        name = "_babel_core___core_7.21.8.tgz";
+        url  = "https://registry.yarnpkg.com/@babel/core/-/core-7.21.8.tgz";
+        sha512 = "YeM22Sondbo523Sz0+CirSPnbj9bG3P0CdHcBZdqUuaeOaYEFbOLoGU7lebvGP6P5J/WE9wOn7u7C4J9HvS1xQ==";
       };
     }
     {
@@ -322,11 +322,11 @@
       };
     }
     {
-      name = "_babel_parser___parser_7.21.5.tgz";
+      name = "_babel_parser___parser_7.21.8.tgz";
       path = fetchurl {
-        name = "_babel_parser___parser_7.21.5.tgz";
-        url  = "https://registry.yarnpkg.com/@babel/parser/-/parser-7.21.5.tgz";
-        sha512 = "J+IxH2IsxV4HbnTrSWgMAQj0UEo61hDA4Ny8h8PCX0MLXiibqHbqIOVneqdocemSBc22VpBKxt4J6FQzy9HarQ==";
+        name = "_babel_parser___parser_7.21.8.tgz";
+        url  = "https://registry.yarnpkg.com/@babel/parser/-/parser-7.21.8.tgz";
+        sha512 = "6zavDGdzG3gUqAdWvlLFfk+36RilI+Pwyuuh7HItyeScCWP3k6i8vKclAQ0bM/0y/Kz/xiwvxhMv9MgTJP5gmA==";
       };
     }
     {
