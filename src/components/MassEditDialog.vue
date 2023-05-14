@@ -486,16 +486,17 @@ export default {
             transformed.track_artists = transformedArtists;
           } else {
             transformedArtists.forEach((a) => {
-              if (
-                transformed.track_artists.filter(
-                  (ta) =>
-                    ta.name === a.name &&
-                    ta.role === a.role &&
-                    ta.artist_id === a.artist_id
-                ).length === 0
-              ) {
+              const index = transformed.track_artists.findIndex(
+                (ta) =>
+                  ta.name === a.name &&
+                  ta.role === a.role &&
+                  ta.artist_id === a.artist_id
+              );
+              if (index === -1) {
                 a.order += t.track_artists.length;
                 transformed.track_artists.push(a);
+              } else {
+                transformed.track_artists[index].hidden = a.hidden;
               }
             });
           }
