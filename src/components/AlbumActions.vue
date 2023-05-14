@@ -64,6 +64,14 @@
     <VTooltip bottom :disabled="!waitingForReload" v-if="isModerator">
       <template v-slot:activator="{ on }">
         <span v-on="on">
+          <AlbumMergeDialog :album="album" :disabled="waitingForReload" />
+        </span>
+      </template>
+      <span>{{ $t("common.disabled-while-loading") }}</span>
+    </VTooltip>
+    <VTooltip bottom :disabled="!waitingForReload" v-if="isModerator">
+      <template v-slot:activator="{ on }">
+        <span v-on="on">
           <VBtn
             @click.stop.prevent="deleteAlbum"
             :disabled="album.loaded < startLoading"
@@ -86,10 +94,11 @@
 import { mapActions, mapGetters, mapState } from "vuex";
 import EditReviewComment from "./EditReviewComment";
 import AddToPlaylist from "./AddToPlaylist";
+import AlbumMergeDialog from "./AlbumMergeDialog.vue";
 
 export default {
   name: "AlbumActions",
-  components: { AddToPlaylist, EditReviewComment },
+  components: { AddToPlaylist, AlbumMergeDialog, EditReviewComment },
   props: {
     album: {
       type: Object,

@@ -266,6 +266,8 @@
 			"edition-description": "Edition description",
 			"edition-information": "Add edition information",
 			"in-playlists": "In playlists | In playlist | In playlists",
+			"merge": "Merge albums",
+			"merge-into": "Merge {obj} into",
 			"new": "New album",
 			"no-tracks-to-play": "There are no tracks to play",
 			"no-tracks-to-add": "There are no tracks to add",

@@ -166,6 +166,17 @@ export default {
         return false;
       }
     },
+    async merge({ commit, rootState }, { newID, oldID }) {
+      try {
+        await api.albums.merge(rootState.auth, newID, oldID);
+        commit("tracks/updateAlbumOccurence", { newID, oldID }, { root: true });
+        commit("removeAlbum", oldID);
+        return true;
+      } catch (error) {
+        commit("addError", error, { root: true });
+        return false;
+      }
+    },
   },
   getters: {
     albums: (state) => Object.values(state.albums),
