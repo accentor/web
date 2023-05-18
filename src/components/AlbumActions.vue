@@ -39,55 +39,68 @@
     </VTooltip>
     <AddToPlaylist :item="album" type="album" />
     <EditReviewComment :item="album" :update="flag" />
-    <VTooltip bottom :disabled="!waitingForReload" v-if="isModerator">
-      <template v-slot:activator="{ on }">
-        <span v-on="on">
-          <VBtn
-            :to="{
-              name: 'edit-album',
-              params: { id: album.id },
-              query: { redirect: $route.fullPath },
-            }"
-            :disabled="waitingForReload"
-            color="edit"
-            class="actions__button"
-            text
-            icon
-            small
-          >
-            <VIcon>mdi-pencil</VIcon>
-          </VBtn>
-        </span>
+    <VMenu v-if="isModerator">
+      <template v-slot:activator="{ on, attrs }">
+        <VBtn
+          class="actions__button mr-0"
+          small
+          icon
+          v-bind="attrs"
+          v-on="on"
+          @click.stop.prevent
+        >
+          <VIcon>mdi-dots-vertical</VIcon>
+        </VBtn>
       </template>
-      <span>{{ $t("common.disabled-while-loading") }}</span>
-    </VTooltip>
-    <VTooltip bottom :disabled="!waitingForReload" v-if="isModerator">
-      <template v-slot:activator="{ on }">
-        <span v-on="on">
-          <AlbumMergeDialog :album="album" :disabled="waitingForReload" />
-        </span>
-      </template>
-      <span>{{ $t("common.disabled-while-loading") }}</span>
-    </VTooltip>
-    <VTooltip bottom :disabled="!waitingForReload" v-if="isModerator">
-      <template v-slot:activator="{ on }">
-        <span v-on="on">
-          <VBtn
-            @click.stop.prevent="deleteAlbum"
-            :disabled="album.loaded < startLoading"
-            color="danger"
-            class="mr-0 actions__button"
-            text
-            href="#"
-            icon
-            small
-          >
-            <VIcon>mdi-delete</VIcon>
-          </VBtn>
-        </span>
-      </template>
-      <span>{{ $t("common.disabled-while-loading") }}</span>
-    </VTooltip>
+      <VList dense>
+        <VTooltip bottom :disabled="!waitingForReload">
+          <template v-slot:activator="{ on }">
+            <VListItem
+              :to="{
+                name: 'edit-album',
+                params: { id: album.id },
+                query: { redirect: $route.fullPath },
+              }"
+              :disabled="waitingForReload"
+              v-on="on"
+            >
+              <VListItemIcon>
+                <VIcon color="edit">mdi-pencil</VIcon>
+              </VListItemIcon>
+              <VListItemContent>
+                <VListItemTitle>{{ $t("music.album.edit") }}</VListItemTitle>
+              </VListItemContent>
+            </VListItem>
+          </template>
+          <span>{{ $t("common.disabled-while-loading") }}</span>
+        </VTooltip>
+        <VTooltip bottom :disabled="!waitingForReload">
+          <template v-slot:activator="{ on }">
+            <span v-on="on">
+              <AlbumMergeDialog :album="album" :disabled="waitingForReload" />
+            </span>
+          </template>
+          <span>{{ $t("common.disabled-while-loading") }}</span>
+        </VTooltip>
+        <VTooltip bottom :disabled="!waitingForReload" v-if="isModerator">
+          <template v-slot:activator="{ on }">
+            <VListItem
+              @click.stop.prevent="deleteAlbum"
+              :disabled="waitingForReload"
+              v-on="on"
+            >
+              <VListItemIcon>
+                <VIcon color="danger">mdi-delete</VIcon>
+              </VListItemIcon>
+              <VListItemContent>
+                <VListItemTitle>{{ $t("music.album.delete") }}</VListItemTitle>
+              </VListItemContent>
+            </VListItem>
+          </template>
+          <span>{{ $t("common.disabled-while-loading") }}</span>
+        </VTooltip>
+      </VList>
+    </VMenu>
   </span>
 </template>
 <script>

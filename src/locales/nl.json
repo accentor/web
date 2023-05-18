@@ -257,6 +257,8 @@
 	"music": {
 		"album": {
 			"add": "Voeg album toe",
+                        "edit": "Pas album aan",
+                        "delete": "Verwijder album",
 			"create": "Maak album aan",
 			"edition": "Editie",
 			"edition-description": "Beschrijving editie",
