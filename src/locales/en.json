@@ -262,6 +262,8 @@
 		"album": {
 			"add": "Add album",
 			"create": "Create album",
+			"delete": "Delete album",
+			"edit": "Edit album",
 			"edition": "Release",
 			"edition-description": "Edition description",
 			"edition-information": "Add edition information",

@@ -6,18 +6,14 @@
     width="600px"
   >
     <template v-slot:activator="{ on }">
-      <VBtn
-        v-on="on"
-        :disabled="disabled"
-        @click.stop.prevent
-        class="actions__button"
-        color="edit"
-        text
-        icon
-        small
-      >
-        <VIcon>mdi-merge</VIcon>
-      </VBtn>
+      <VListItem :disabled="disabled" v-on="on">
+        <VListItemIcon>
+          <VIcon color="edit">mdi-merge</VIcon>
+        </VListItemIcon>
+        <VListItemContent>
+          <VListItemTitle>{{ $t("music.album.merge") }}</VListItemTitle>
+        </VListItemContent>
+      </VListItem>
     </template>
     <VCard>
       <VCardTitle>

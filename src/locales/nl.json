@@ -258,6 +258,8 @@
 		"album": {
 			"add": "Voeg album toe",
 			"create": "Maak album aan",
+			"delete": "Verwijder album",
+			"edit": "Pas album aan",
 			"edition": "Editie",
 			"edition-description": "Beschrijving editie",
 			"edition-information": "Voeg informatie over deze editie toe",
