@@ -946,11 +946,11 @@
       };
     }
     {
-      name = "_eslint_js___js_8.41.0.tgz";
+      name = "_eslint_js___js_8.42.0.tgz";
       path = fetchurl {
-        name = "_eslint_js___js_8.41.0.tgz";
-        url  = "https://registry.yarnpkg.com/@eslint/js/-/js-8.41.0.tgz";
-        sha512 = "LxcyMGxwmTh2lY9FwHPGWOHmYFCZvbrFCBZL4FzSSsxsRPuhrYUg/49/0KDfW8tnIEaEHtfmn6+NPN+1DqaNmA==";
+        name = "_eslint_js___js_8.42.0.tgz";
+        url  = "https://registry.yarnpkg.com/@eslint/js/-/js-8.42.0.tgz";
+        sha512 = "6SWlXpWU5AvId8Ac7zjzmIOqMOba/JWY8XZ4A7q7Gn1Vlfg/SFFIlrtHXt9nPn4op9ZPAkl91Jao+QQv3r/ukw==";
       };
     }
     {
@@ -970,11 +970,11 @@
       };
     }
     {
-      name = "_humanwhocodes_config_array___config_array_0.11.8.tgz";
+      name = "_humanwhocodes_config_array___config_array_0.11.10.tgz";
       path = fetchurl {
-        name = "_humanwhocodes_config_array___config_array_0.11.8.tgz";
-        url  = "https://registry.yarnpkg.com/@humanwhocodes/config-array/-/config-array-0.11.8.tgz";
-        sha512 = "UybHIJzJnR5Qc/MsD9Kr+RpO2h+/P1GhOwdiLPXK5TWk5sgTdu88bTD9UP+CKbPPh5Rni1u0GjAdYQLemG8g+g==";
+        name = "_humanwhocodes_config_array___config_array_0.11.10.tgz";
+        url  = "https://registry.yarnpkg.com/@humanwhocodes/config-array/-/config-array-0.11.10.tgz";
+        sha512 = "KVVjQmNUepDVGXNuoRRdmmEjruj0KfiGSbS8LVc12LMsWDQzRXJ0qdhN8L8uUigKpfEHRhlaQFY0ib1tnUbNeQ==";
       };
     }
     {
@@ -3138,11 +3138,11 @@
       };
     }
     {
-      name = "eslint___eslint_8.41.0.tgz";
+      name = "eslint___eslint_8.42.0.tgz";
       path = fetchurl {
-        name = "eslint___eslint_8.41.0.tgz";
-        url  = "https://registry.yarnpkg.com/eslint/-/eslint-8.41.0.tgz";
-        sha512 = "WQDQpzGBOP5IrXPo4Hc0814r4/v2rrIsB0rhT7jtunIalgg6gYXWhRMOejVO8yH21T/FGaxjmFjBMNqcIlmH1Q==";
+        name = "eslint___eslint_8.42.0.tgz";
+        url  = "https://registry.yarnpkg.com/eslint/-/eslint-8.42.0.tgz";
+        sha512 = "ulg9Ms6E1WPf67PHaEY4/6E2tEn5/f7FXGzr3t9cBMugOmf1INYvuUwwh1aXQN4MfJ6a5K2iNwP3w4AColvI9A==";
       };
     }
     {
