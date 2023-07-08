@@ -5554,6 +5554,14 @@
       };
     }
     {
+      name = "prettier___prettier_3.0.0.tgz";
+      path = fetchurl {
+        name = "prettier___prettier_3.0.0.tgz";
+        url  = "https://registry.yarnpkg.com/prettier/-/prettier-3.0.0.tgz";
+        sha512 = "zBf5eHpwHOGPC47h0zrPyNn+eAEIdEzfywMoYn2XPi0P44Zp0tSq64rq0xAREh4auw2cJZHo9QUob+NqCQky4g==";
+      };
+    }
+    {
       name = "pretty_error___pretty_error_4.0.0.tgz";
       path = fetchurl {
         name = "pretty_error___pretty_error_4.0.0.tgz";
