@@ -3178,11 +3178,11 @@
       };
     }
     {
-      name = "eslint___eslint_8.44.0.tgz";
+      name = "eslint___eslint_8.45.0.tgz";
       path = fetchurl {
-        name = "eslint___eslint_8.44.0.tgz";
-        url  = "https://registry.yarnpkg.com/eslint/-/eslint-8.44.0.tgz";
-        sha512 = "0wpHoUbDUHgNCyvFB5aXLiQVfK9B0at6gUvzy83k4kAsQ/u769TQDX6iKC+aO4upIHO9WSaA3QoXYQDHbNwf1A==";
+        name = "eslint___eslint_8.45.0.tgz";
+        url  = "https://registry.yarnpkg.com/eslint/-/eslint-8.45.0.tgz";
+        sha512 = "pd8KSxiQpdYRfYa9Wufvdoct3ZPQQuVuU5O6scNgMuOMYuxvH0IGaYK0wUFjo4UYYQQCUndlXiMbnxopwvvTiw==";
       };
     }
     {
