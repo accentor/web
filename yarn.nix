@@ -3130,11 +3130,11 @@
       };
     }
     {
-      name = "eslint_plugin_vue___eslint_plugin_vue_9.15.1.tgz";
+      name = "eslint_plugin_vue___eslint_plugin_vue_9.16.1.tgz";
       path = fetchurl {
-        name = "eslint_plugin_vue___eslint_plugin_vue_9.15.1.tgz";
-        url  = "https://registry.yarnpkg.com/eslint-plugin-vue/-/eslint-plugin-vue-9.15.1.tgz";
-        sha512 = "CJE/oZOslvmAR9hf8SClTdQ9JLweghT6JCBQNrT2Iel1uVw0W0OLJxzvPd6CxmABKCvLrtyDnqGV37O7KQv6+A==";
+        name = "eslint_plugin_vue___eslint_plugin_vue_9.16.1.tgz";
+        url  = "https://registry.yarnpkg.com/eslint-plugin-vue/-/eslint-plugin-vue-9.16.1.tgz";
+        sha512 = "2FtnTqazA6aYONfDuOZTk0QzwhAwi7Z4+uJ7+GHeGxcKapjqWlDsRWDenvyG/utyOfAS5bVRmAG3cEWiYEz2bA==";
       };
     }
     {
@@ -5514,11 +5514,11 @@
       };
     }
     {
-      name = "postcss_selector_parser___postcss_selector_parser_6.0.11.tgz";
+      name = "postcss_selector_parser___postcss_selector_parser_6.0.13.tgz";
       path = fetchurl {
-        name = "postcss_selector_parser___postcss_selector_parser_6.0.11.tgz";
-        url  = "https://registry.yarnpkg.com/postcss-selector-parser/-/postcss-selector-parser-6.0.11.tgz";
-        sha512 = "zbARubNdogI9j7WY4nQJBiNqQf3sLS3wCP4WfOidu+p28LofJqDH1tcXypGrcmMHhDk2t9wGhCsYe/+szLTy1g==";
+        name = "postcss_selector_parser___postcss_selector_parser_6.0.13.tgz";
+        url  = "https://registry.yarnpkg.com/postcss-selector-parser/-/postcss-selector-parser-6.0.13.tgz";
+        sha512 = "EaV1Gl4mUEV4ddhDnv/xtj7sxwrwxdetHdWUGnT4VJQf+4d05v6lHYZr8N573k5Z0BViss7BDhfWtKS3+sfAqQ==";
       };
     }
     {
@@ -6714,11 +6714,11 @@
       };
     }
     {
-      name = "vue_eslint_parser___vue_eslint_parser_9.3.0.tgz";
+      name = "vue_eslint_parser___vue_eslint_parser_9.3.1.tgz";
       path = fetchurl {
-        name = "vue_eslint_parser___vue_eslint_parser_9.3.0.tgz";
-        url  = "https://registry.yarnpkg.com/vue-eslint-parser/-/vue-eslint-parser-9.3.0.tgz";
-        sha512 = "48IxT9d0+wArT1+3wNIy0tascRoywqSUe2E1YalIC1L8jsUGe5aJQItWfRok7DVFGz3UYvzEI7n5wiTXsCMAcQ==";
+        name = "vue_eslint_parser___vue_eslint_parser_9.3.1.tgz";
+        url  = "https://registry.yarnpkg.com/vue-eslint-parser/-/vue-eslint-parser-9.3.1.tgz";
+        sha512 = "Clr85iD2XFZ3lJ52/ppmUDG/spxQu6+MAeHXjjyI4I1NUYZ9xmenQp4N0oaHJhrA8OOxltCVxMRfANGa70vU0g==";
       };
     }
     {
