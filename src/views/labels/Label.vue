@@ -84,7 +84,7 @@ export default {
     ...mapState("labels", ["labels"]),
     albums: function () {
       return this.$store.getters["albums/albumsFilterByLabel"](
-        this.$route.params.id
+        this.$route.params.id,
       );
     },
     label: function () {
@@ -97,7 +97,7 @@ export default {
           item.title
             .toLocaleLowerCase()
             .indexOf(this.search.toLocaleLowerCase()) >= 0 ||
-          item.normalized_title.indexOf(this.search.toLocaleLowerCase()) >= 0
+          item.normalized_title.indexOf(this.search.toLocaleLowerCase()) >= 0,
       );
     },
   },

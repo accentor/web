@@ -104,12 +104,12 @@ export default {
     ...mapState("artists", ["artists"]),
     albums: function () {
       return this.$store.getters["albums/albumsFilterByArtist"](
-        this.$route.params.id
+        this.$route.params.id,
       );
     },
     tracks: function () {
       return this.$store.getters["tracks/tracksFilterByArtist"](
-        this.$route.params.id
+        this.$route.params.id,
       );
     },
     artist: function () {
@@ -117,7 +117,7 @@ export default {
     },
     playlists: function () {
       return this.$store.getters["playlists/artistPlaylists"].filter((p) =>
-        p.item_ids.includes(this.artist.id)
+        p.item_ids.includes(this.artist.id),
       );
     },
   },

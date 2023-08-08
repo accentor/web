@@ -93,7 +93,7 @@ export default {
       this.merge({ newID: this.mergeAlbum.id, oldID: this.album.id }).finally(
         () => {
           this.mergeModal = false;
-        }
+        },
       );
     },
   },

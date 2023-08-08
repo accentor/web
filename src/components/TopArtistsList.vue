@@ -37,8 +37,8 @@ export default {
         calcPlayStatsForArtists(
           this.playStats,
           this.tracks,
-          this.useTrackLength
-        )
+          this.useTrackLength,
+        ),
       )
         .sort((t1, t2) => t2[1] - t1[1])
         .slice(0, 10);

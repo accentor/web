@@ -55,7 +55,11 @@ export default {
       return Object.entries(
         this.useTrackLength
           ? calcPlayTimeForAlbums(this.playStats, this.tracks, this.useAverage)
-          : calcPlayCountForAlbums(this.playStats, this.tracks, this.useAverage)
+          : calcPlayCountForAlbums(
+              this.playStats,
+              this.tracks,
+              this.useAverage,
+            ),
       )
         .sort((a1, a2) => a2[1] - a1[1])
         .slice(0, 10);

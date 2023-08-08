@@ -46,7 +46,7 @@
                           $tc(
                             "music.flag.show",
                             tracksWithReviewComments.length,
-                            { count: tracksWithReviewComments.length }
+                            { count: tracksWithReviewComments.length },
                           )
                         }}
                       </span>
@@ -251,7 +251,7 @@
                         {{
                           $tc(
                             "music.flag.clear",
-                            tracksWithReviewComments.length
+                            tracksWithReviewComments.length,
                           )
                         }}
                       </span>
@@ -348,7 +348,7 @@ export default {
             const double = this.sortedGenres.some(
               (g) =>
                 g.name === newGenre ||
-                g.normalized_name === newGenre.toLowerCase()
+                g.normalized_name === newGenre.toLowerCase(),
             );
             if (double) {
               valid = this.$t("errors.genre.name-taken-obj", { obj: newGenre });
@@ -431,7 +431,7 @@ export default {
                 order: index + 1,
               });
             }
-          }
+          },
         );
         pendingResults.push(...mappedArtists);
       }
@@ -471,12 +471,12 @@ export default {
           if (this.titleReplacement.regex) {
             transformed.title = transformed.title.replace(
               new RegExp(this.titleReplacement.search),
-              this.titleReplacement.replace
+              this.titleReplacement.replace,
             );
           } else {
             transformed.title = transformed.title.replace(
               this.titleReplacement.search,
-              this.titleReplacement.replace
+              this.titleReplacement.replace,
             );
           }
         }
@@ -490,7 +490,7 @@ export default {
                 (ta) =>
                   ta.name === a.name &&
                   ta.role === a.role &&
-                  ta.artist_id === a.artist_id
+                  ta.artist_id === a.artist_id,
               );
               if (index === -1) {
                 a.order += t.track_artists.length;

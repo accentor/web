@@ -61,7 +61,7 @@ export default {
       try {
         const result = await api.cover_filenames.create(
           rootState.auth,
-          newCoverFilename
+          newCoverFilename,
         );
         commit("setCoverFilename", { id: result.id, coverFilename: result });
         return result.id;
@@ -75,7 +75,7 @@ export default {
         const result = await api.cover_filenames.update(
           rootState.auth,
           id,
-          newCoverFilename
+          newCoverFilename,
         );
         commit("setCoverFilename", { id, coverFilename: result });
         return true;

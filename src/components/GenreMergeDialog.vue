@@ -97,7 +97,7 @@ export default {
       this.merge({ newID: this.mergeGenre.id, oldID: this.genre.id }).finally(
         () => {
           this.mergeModal = false;
-        }
+        },
       );
     },
   },

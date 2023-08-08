@@ -161,7 +161,7 @@ export default {
       this.$refs.audio.addEventListener("ended", () => {
         this.createPlay(this.currentTrack.id);
         this.trackEnded();
-      })
+      }),
     );
     if ("mediaSession" in navigator) {
       navigator.mediaSession.setActionHandler("previoustrack", () => {

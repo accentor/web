@@ -38,7 +38,7 @@ export default {
     title() {
       return this.album_artists.reduce(
         (acc, cur) => `${acc}${cur.name}${cur.separator ?? ""}`,
-        ""
+        "",
       );
     },
   },

@@ -64,7 +64,7 @@ export default {
     catalogueNumber() {
       if (this.labelForCatNr) {
         return this.album.album_labels.find(
-          (al) => al.label_id === this.labelForCatNr.id
+          (al) => al.label_id === this.labelForCatNr.id,
         ).catalogue_number;
       } else {
         return undefined;

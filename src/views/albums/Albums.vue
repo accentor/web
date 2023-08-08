@@ -84,7 +84,7 @@ export default {
           item.title
             .toLocaleLowerCase()
             .indexOf(this.search.toLocaleLowerCase()) >= 0 ||
-          item.normalized_title.indexOf(this.search.toLocaleLowerCase()) >= 0
+          item.normalized_title.indexOf(this.search.toLocaleLowerCase()) >= 0,
       );
     },
   },

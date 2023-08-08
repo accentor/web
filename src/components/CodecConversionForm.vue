@@ -96,7 +96,7 @@ export default {
 
       const nameTaken = (v) => {
         const double = this.codecConversions.some(
-          (cc) => cc.name === v && cc.id !== this.codecConversion?.id
+          (cc) => cc.name === v && cc.id !== this.codecConversion?.id,
         );
         return !double || this.$t("errors.codecconv.name-taken");
       };

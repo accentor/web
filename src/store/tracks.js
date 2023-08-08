@@ -63,7 +63,7 @@ export default {
       for (let track of Object.values(oldTracks)) {
         if (track.track_artists.some((ta) => ta.artist_id === oldID)) {
           track.track_artists = track.track_artists.filter(
-            (ta) => ta.artist_id !== oldID
+            (ta) => ta.artist_id !== oldID,
           );
         }
         state.tracks[track.id] = track;
@@ -221,17 +221,17 @@ export default {
     },
     tracksFilterByAlbum: (state, getters) => (id) => {
       return (getters.tracksBinnedByAlbum[id] || []).sort(
-        (t1, t2) => t1.number - t2.number
+        (t1, t2) => t1.number - t2.number,
       );
     },
     tracksFilterByGenre: (state, getters, rootState) => (id) => {
       return (getters.tracksBinnedByGenre[id] || []).sort(
-        compareTracks(rootState.albums.albums)
+        compareTracks(rootState.albums.albums),
       );
     },
     tracksFilterByArtist: (state, getters, rootState) => (id) => {
       return (getters.tracksBinnedByArtist[id] || []).sort(
-        compareTracks(rootState.albums.albums)
+        compareTracks(rootState.albums.albums),
       );
     },
     tracksEmpty: (state, getters, rootState) => {

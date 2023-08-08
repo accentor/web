@@ -222,7 +222,7 @@ export default {
     mergeOptions: function () {
       if (this.limitTracksToAlbum) {
         return this.$store.getters["tracks/tracksFilterByAlbum"](
-          this.track.album_id
+          this.track.album_id,
         ).filter((t) => t.id != this.$route.params.id);
       } else {
         return this.tracks.filter((t) => t.id != this.$route.params.id);

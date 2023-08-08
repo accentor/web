@@ -124,7 +124,7 @@ export default {
     },
     filteredPlays() {
       let plays = this.plays.filter(
-        filterPlaysByPeriod(this.period.start, this.period.end)
+        filterPlaysByPeriod(this.period.start, this.period.end),
       );
       if (this.artist_id) {
         plays = plays.filter(filterPlaysByTracks(this.filteredTracks));
@@ -134,7 +134,7 @@ export default {
     filteredTracks() {
       if (this.artist_id) {
         return this.$store.getters["tracks/tracksFilterByArtist"](
-          this.artist_id
+          this.artist_id,
         );
       }
       return this.$store.getters["tracks/tracks"];

@@ -12,7 +12,7 @@
             {{
               $tc(
                 `music.playlist.item_counts.${playlist.playlist_type}`,
-                playlist.item_ids.length
+                playlist.item_ids.length,
               )
             }}
           </p>
