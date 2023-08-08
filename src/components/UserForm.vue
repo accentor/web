@@ -137,7 +137,7 @@ export default {
         const succeeded = await pendingResult;
         if (succeeded) {
           this.$router.push(
-            this.$route.query.redirect || { name: this.redirectFallback }
+            this.$route.query.redirect || { name: this.redirectFallback },
           );
         }
       }

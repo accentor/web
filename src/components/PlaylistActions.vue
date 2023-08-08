@@ -111,13 +111,13 @@ export default {
         case "album":
           return this.playlist.item_ids
             .map((album_id) =>
-              this.$store.getters["tracks/tracksFilterByAlbum"](album_id)
+              this.$store.getters["tracks/tracksFilterByAlbum"](album_id),
             )
             .flat();
         case "artist":
           return this.playlist.item_ids
             .map((artist_id) =>
-              this.$store.getters["tracks/tracksFilterByArtist"](artist_id)
+              this.$store.getters["tracks/tracksFilterByArtist"](artist_id),
             )
             .flat();
         case "track":

@@ -157,7 +157,7 @@ export default {
             const double = this.sortedGenres.some(
               (g) =>
                 g.name === newGenre ||
-                g.normalized_name === newGenre.toLowerCase()
+                g.normalized_name === newGenre.toLowerCase(),
             );
             if (double) {
               valid = this.$t("errors.genre.name-taken-obj", { obj: newGenre });
@@ -210,7 +210,7 @@ export default {
         })
         .sort((a1, a2) => a1.order - a2.order);
       this.newTrack.genre_ids = this.track.genre_ids.map(
-        (id) => this.genres[id]
+        (id) => this.genres[id],
       );
     },
     addArtist() {
@@ -273,7 +273,7 @@ export default {
               order: index + 1,
             });
           }
-        }
+        },
       );
 
       await Promise.all([...mappedGenres, ...mappedArtists]);

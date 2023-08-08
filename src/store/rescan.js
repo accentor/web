@@ -140,7 +140,7 @@ export default {
           processed: 0,
           error_text: "",
           warning_text: "",
-        }
+        },
       ),
     finishedAt: (state, getters) =>
       getters.rescans.reduce((acc, rescan) => {

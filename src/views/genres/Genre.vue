@@ -47,7 +47,7 @@ export default {
     ...mapState("genres", ["genres"]),
     tracks: function () {
       return this.$store.getters["tracks/tracksFilterByGenre"](
-        this.$route.params.id
+        this.$route.params.id,
       );
     },
     genre: function () {

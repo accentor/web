@@ -52,7 +52,7 @@
                   {{
                     $tc(
                       `music.playlist.item_counts.${item.playlist_type}`,
-                      item.item_ids.length
+                      item.item_ids.length,
                     )
                   }}
                 </span>
@@ -96,7 +96,7 @@ export default {
           item.name
             .toLocaleLowerCase()
             .indexOf(this.search.toLocaleLowerCase()) >= 0 ||
-          item.normalized_name.indexOf(this.search.toLocaleLowerCase()) >= 0
+          item.normalized_name.indexOf(this.search.toLocaleLowerCase()) >= 0,
       );
     },
     numberOfItems() {

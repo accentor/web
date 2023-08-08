@@ -184,7 +184,7 @@ export default {
       this.trackArtists.splice(
         index + direction,
         0,
-        this.trackArtists.splice(index, 1)[0]
+        this.trackArtists.splice(index, 1)[0],
       );
     },
     handleKeyUp(key, index) {

@@ -359,7 +359,7 @@ export default {
       this.newAlbum.album_artists.splice(
         index + direction,
         0,
-        this.newAlbum.album_artists.splice(index, 1)[0]
+        this.newAlbum.album_artists.splice(index, 1)[0],
       );
     },
     async submit() {
@@ -428,7 +428,7 @@ export default {
               order: index + 1,
             });
           }
-        }
+        },
       );
 
       await Promise.all([...mappedArtists, ...mappedLabels]);

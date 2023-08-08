@@ -233,7 +233,7 @@ store.watch(
     if (!store.getters["auth/loggedIn"]) {
       router.push({ name: "login" });
     }
-  }
+  },
 );
 
 router.beforeEach((to, from, next) => {

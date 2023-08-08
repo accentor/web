@@ -36,20 +36,20 @@ class VuexPersistentModule extends VuexPersistence {
       lowerCaseModule,
       capitilizedModule,
       storage,
-      store
+      store,
     ) => {
       const savedState = await storage.getItem(lowerCaseModule);
       if (savedState) {
         if (savedState.startLoading) {
           store.commit(
             `${lowerCaseModule}/setStartLoading`,
-            savedState.startLoading
+            savedState.startLoading,
           );
         }
         if (savedState[lowerCaseModule]) {
           store.commit(
             `${lowerCaseModule}/set${capitilizedModule}`,
-            savedState[lowerCaseModule]
+            savedState[lowerCaseModule],
           );
         }
       }
@@ -61,13 +61,13 @@ class VuexPersistentModule extends VuexPersistence {
         this.key,
         this.capitilizedModule,
         this.storage,
-        store
+        store,
       ).then(() => {
         // The subscriber is the same as in VuexPersistence, but we have to add it ourselves since we overwrite the plugin method
         this.subscriber(store)((mutation, state) => {
           if (this.filter(mutation)) {
             this._mutex.enqueue(
-              this.saveState(this.key, this.reducer(state), this.storage)
+              this.saveState(this.key, this.reducer(state), this.storage),
             );
           }
         });

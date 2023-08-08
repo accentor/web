@@ -97,7 +97,7 @@ export default {
       this.merge({ newID: this.mergeArtist.id, oldID: this.artist.id }).finally(
         () => {
           this.mergeModal = false;
-        }
+        },
       );
     },
   },

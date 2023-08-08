@@ -119,7 +119,7 @@ export default {
           mimetype: file.type,
           data: ev.target.result.replace(
             /^data:[a-zA-Z0-9!#$%^&\\*_\-+{}|'.`~]+\/[a-zA-Z0-9!#$%^&\\*_\-+{}|'.`~]+;base64,/,
-            ""
+            "",
           ),
         });
       };

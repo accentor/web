@@ -75,7 +75,7 @@ export default {
           });
           return acc;
         },
-        [{ text: this.$t("settings.codec-conversion.original"), value: null }]
+        [{ text: this.$t("settings.codec-conversion.original"), value: null }],
       );
     },
   },

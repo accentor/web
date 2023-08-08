@@ -209,7 +209,7 @@ export default {
           (r) =>
             `${r.release.slice(-5, -3)}` ===
               `${today.getMonth() + 1}`.padStart(2, "0") &&
-            `${r.release.slice(-2)}` === `${today.getDate()}`.padStart(2, "0")
+            `${r.release.slice(-2)}` === `${today.getDate()}`.padStart(2, "0"),
         )
         .sort(compareAlbumsByReleaseFirst());
     },

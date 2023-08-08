@@ -53,7 +53,7 @@
           {{
             $tc(
               "stats.count.playTime.minutes",
-              Math.floor(animatedTime.minutes)
+              Math.floor(animatedTime.minutes),
             )
           }}
         </span>

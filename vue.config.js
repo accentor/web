@@ -24,7 +24,7 @@ module.exports = {
       .tap((opt) =>
         Object.assign(opt, {
           cacheDirectory: process.env.SKIP_CACHE !== "true",
-        })
+        }),
       );
     config
       .plugin("eslint")
@@ -37,7 +37,9 @@ module.exports = {
         .oneOf(match)
         .use("sass-loader")
         .tap((opt) =>
-          Object.assign(opt, { additionalData: `@import '~@/sass/main.scss';` })
+          Object.assign(opt, {
+            additionalData: `@import '~@/sass/main.scss';`,
+          }),
         );
     });
   },

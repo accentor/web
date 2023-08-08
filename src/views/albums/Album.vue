@@ -107,7 +107,7 @@ export default {
     ...mapState("labels", ["labels"]),
     tracks: function () {
       return this.$store.getters["tracks/tracksFilterByAlbum"](
-        this.$route.params.id
+        this.$route.params.id,
       );
     },
     album: function () {
@@ -115,12 +115,12 @@ export default {
     },
     album_labels: function () {
       return this.album.album_labels.filter(
-        (al) => `${al.label_id}` in this.labels
+        (al) => `${al.label_id}` in this.labels,
       );
     },
     playlists: function () {
       return this.$store.getters["playlists/albumPlaylists"].filter((p) =>
-        p.item_ids.includes(this.album.id)
+        p.item_ids.includes(this.album.id),
       );
     },
   },
