@@ -27,10 +27,10 @@ Once you have the API running, you have two options for the frontend.
 ### Use a hosting service for static sites
 
 The project can be deployed to a static site hoster like Netlify.
-You only need to configure the following three things:
+You only need the following three things:
+* An environment variable for `VUE_APP_API_URL` pointing to the domain of your api.
 * Build command: `yarn build`.
 * Output directory: `dist/`.
-* An environment variable for `VUE_APP_API_URL` pointing to the domain of your api.
 
 ### Deploy on the same domain as the API
 
@@ -63,7 +63,7 @@ Think you have noticed a bug or have a great idea for a feature?
 ## Known issues
 
 ### Playback support depends on browser
-Playback of audio files depends on browser support entirerly. This can
+Playback of audio files depends on browser support entirely. This can
 cause three issues:
 1. No support for a codec: Not all browsers support all codecs, see
    [MDN](https://developer.mozilla.org/en-US/docs/Web/Media/Formats/Audio_codecs)
