@@ -34,10 +34,10 @@
     "@vue/cli-plugin-babel": "~5.0.8",
     "@vue/cli-plugin-eslint": "~5.0.8",
     "@vue/cli-service": "~5.0.8",
-    "@vue/eslint-config-prettier": "^7.1.0",
+    "@vue/eslint-config-prettier": "^8.0.0",
     "eslint": "^8.46.0",
     "eslint-config-prettier": "^9.0.0",
-    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-prettier": "^5.0.0",
     "eslint-plugin-vue": "^9.16.1",
     "eslint-plugin-vuetify": "^1.1.0",
     "prettier": "^3.0.1",
@@ -46,6 +46,6 @@
     "vue-cli-plugin-i18n": "^2.3.2",
     "vue-cli-plugin-vuetify": "^2.5.8",
     "vuetify-loader": "^1.9.2",
-    "webpack": "^5.0.0"
+    "webpack": "^5.88.2"
   }
 }
