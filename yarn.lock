@@ -7,12 +7,12 @@
   resolved "https://registry.yarnpkg.com/@aashutoshrathi/word-wrap/-/word-wrap-1.2.6.tgz#bd9154aec9983f77b3a034ecaa015c2e4201f6cf"
   integrity sha512-1Yjs2SvM8TflER/OD3cOjhWWOZb58A2t7wpE2S9XfBYTiIl+XFhQG2bjy4Pu1I+EAlCNUzRDYDdFwFYUKvXcIA==
 
-"@accentor/api-client-js@^0.19.0":
-  version "0.19.0"
-  resolved "https://registry.yarnpkg.com/@accentor/api-client-js/-/api-client-js-0.19.0.tgz#be84fb1ae7f610d6743fdef972ef7c3c8f0845ba"
-  integrity sha512-lZuTm8wDEDXS7pDbb+owkIFQKDUduGeOCDTmxC6QHJ1ABYXQkZNEsRnUm4aR3Cb58T4seunDxdJD5yXWaiwYaQ==
+"@accentor/api-client-js@^0.19.1":
+  version "0.19.1"
+  resolved "https://registry.yarnpkg.com/@accentor/api-client-js/-/api-client-js-0.19.1.tgz#cb1867fbf06cb29e5f4533ca5ff596e4a5a69001"
+  integrity sha512-DriWKP3Mw4fPvMtBMEn41TWlQzHsSJGtvnmkNbP/1Rh9XwzNTkRjIct7UyM2FlOcad9MbEWGob3Ce/2n+jHfRw==
   dependencies:
-    fetch-retry "^5.0.2"
+    fetch-retry "^5.0.6"
 
 "@achrinza/node-ipc@^9.2.5":
   version "9.2.6"
@@ -3562,7 +3562,7 @@ faye-websocket@^0.11.3:
   dependencies:
     websocket-driver ">=0.5.1"
 
-fetch-retry@^5.0.2, fetch-retry@^5.0.6:
+fetch-retry@^5.0.6:
   version "5.0.6"
   resolved "https://registry.yarnpkg.com/fetch-retry/-/fetch-retry-5.0.6.tgz#17d0bc90423405b7a88b74355bf364acd2a7fa56"
   integrity sha512-3yurQZ2hD9VISAhJJP9bpYFNQrHHBXE2JxxjY5aLEcDi46RmAzJE2OC9FAde0yis5ElW0jTTzs0zfg/Cca4XqQ==
