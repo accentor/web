@@ -978,11 +978,11 @@
       };
     }
     {
-      name = "_eslint_js___js_8.48.0.tgz";
+      name = "_eslint_js___js_8.49.0.tgz";
       path = fetchurl {
-        name = "_eslint_js___js_8.48.0.tgz";
-        url  = "https://registry.yarnpkg.com/@eslint/js/-/js-8.48.0.tgz";
-        sha512 = "ZSjtmelB7IJfWD2Fvb7+Z+ChTIKWq6kjda95fLcQKNS5aheVHn4IkfgRQE3sIIzTcSLwLcLZUD9UBt+V7+h+Pw==";
+        name = "_eslint_js___js_8.49.0.tgz";
+        url  = "https://registry.yarnpkg.com/@eslint/js/-/js-8.49.0.tgz";
+        sha512 = "1S8uAY/MTJqVx0SC4epBq+N2yhuwtNwLbJYNZyhL2pO1ZVKn5HFXav5T41Ryzy9K9V7ZId2JB2oy/W4aCd9/2w==";
       };
     }
     {
@@ -1002,11 +1002,11 @@
       };
     }
     {
-      name = "_humanwhocodes_config_array___config_array_0.11.10.tgz";
+      name = "_humanwhocodes_config_array___config_array_0.11.11.tgz";
       path = fetchurl {
-        name = "_humanwhocodes_config_array___config_array_0.11.10.tgz";
-        url  = "https://registry.yarnpkg.com/@humanwhocodes/config-array/-/config-array-0.11.10.tgz";
-        sha512 = "KVVjQmNUepDVGXNuoRRdmmEjruj0KfiGSbS8LVc12LMsWDQzRXJ0qdhN8L8uUigKpfEHRhlaQFY0ib1tnUbNeQ==";
+        name = "_humanwhocodes_config_array___config_array_0.11.11.tgz";
+        url  = "https://registry.yarnpkg.com/@humanwhocodes/config-array/-/config-array-0.11.11.tgz";
+        sha512 = "N2brEuAadi0CcdeMXUkhbZB84eskAc8MEX1By6qEchoVywSgXPIjou4rYsl0V3Hj0ZnuGycGCjdNgockbzeWNA==";
       };
     }
     {
@@ -3434,11 +3434,11 @@
       };
     }
     {
-      name = "eslint___eslint_8.48.0.tgz";
+      name = "eslint___eslint_8.49.0.tgz";
       path = fetchurl {
-        name = "eslint___eslint_8.48.0.tgz";
-        url  = "https://registry.yarnpkg.com/eslint/-/eslint-8.48.0.tgz";
-        sha512 = "sb6DLeIuRXxeM1YljSe1KEx9/YYeZFQWcV8Rq9HfigmdDEugjLEVEa1ozDjL6YDjBpQHPJxJzze+alxi4T3OLg==";
+        name = "eslint___eslint_8.49.0.tgz";
+        url  = "https://registry.yarnpkg.com/eslint/-/eslint-8.49.0.tgz";
+        sha512 = "jw03ENfm6VJI0jA9U+8H5zfl5b+FvuU3YYvZRdZHOlU2ggJkxrlkJH4HcDrZpj6YwD8kuYqvQM8LyesoazrSOQ==";
       };
     }
     {
