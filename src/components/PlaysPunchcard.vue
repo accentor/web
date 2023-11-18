@@ -31,8 +31,8 @@
             index === 0
               ? 'start'
               : index === xLabels.length - 1
-              ? 'end'
-              : 'middle'
+                ? 'end'
+                : 'middle'
           "
           fill="currentColor"
           class="grey--text text--darken-2 text-caption"
