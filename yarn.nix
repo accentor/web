@@ -58,11 +58,11 @@
       };
     }
     {
-      name = "_babel_core___core_7.23.6.tgz";
+      name = "_babel_core___core_7.23.7.tgz";
       path = fetchurl {
-        name = "_babel_core___core_7.23.6.tgz";
-        url  = "https://registry.yarnpkg.com/@babel/core/-/core-7.23.6.tgz";
-        sha512 = "FxpRyGjrMJXh7X3wGLGhNDCRiwpWEF74sKjTLDJSG5Kyvow3QZaG0Adbqzi9ZrVjTWpsX+2cxWXD71NMg93kdw==";
+        name = "_babel_core___core_7.23.7.tgz";
+        url  = "https://registry.yarnpkg.com/@babel/core/-/core-7.23.7.tgz";
+        sha512 = "+UpDgowcmqe36d4NwqvKsyPMlOLNGMsfMmQ5WGCu+siCe3t3dfe9njrzGfdN4qq+bcNUt0+Vw6haRxBOycs4dw==";
       };
     }
     {
@@ -338,11 +338,11 @@
       };
     }
     {
-      name = "_babel_helpers___helpers_7.23.6.tgz";
+      name = "_babel_helpers___helpers_7.23.7.tgz";
       path = fetchurl {
-        name = "_babel_helpers___helpers_7.23.6.tgz";
-        url  = "https://registry.yarnpkg.com/@babel/helpers/-/helpers-7.23.6.tgz";
-        sha512 = "wCfsbN4nBidDRhpDhvcKlzHWCTlgJYUUdSJfzXb2NuBssDSIjc3xcb+znA7l+zYsFljAcGM0aFkN40cR3lXiGA==";
+        name = "_babel_helpers___helpers_7.23.7.tgz";
+        url  = "https://registry.yarnpkg.com/@babel/helpers/-/helpers-7.23.7.tgz";
+        sha512 = "6AMnjCoC8wjqBzDHkuqpa7jAKwvMo4dC+lr/TFBz+ucfulO1XMpDnwWPGBNwClOKZ8h6xn5N81W/R5OrcKtCbQ==";
       };
     }
     {
@@ -938,11 +938,11 @@
       };
     }
     {
-      name = "_babel_traverse___traverse_7.23.6.tgz";
+      name = "_babel_traverse___traverse_7.23.7.tgz";
       path = fetchurl {
-        name = "_babel_traverse___traverse_7.23.6.tgz";
-        url  = "https://registry.yarnpkg.com/@babel/traverse/-/traverse-7.23.6.tgz";
-        sha512 = "czastdK1e8YByZqezMPFiZ8ahwVMh/ESl9vPgvgdB9AmFMGP5jfpFax74AQgl5zj4XHzqeYAg2l8PuUeRS1MgQ==";
+        name = "_babel_traverse___traverse_7.23.7.tgz";
+        url  = "https://registry.yarnpkg.com/@babel/traverse/-/traverse-7.23.7.tgz";
+        sha512 = "tY3mM8rH9jM0YHFGyfC0/xf+SB5eKUu7HPj7/k3fpi9dAlsMc5YbQvDi0Sh2QTPXqMhyaAtzAr807TIyfQrmyg==";
       };
     }
     {
