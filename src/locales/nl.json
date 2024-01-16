@@ -380,6 +380,7 @@
 			"bit_depth": "Bit depth",
 			"delete": "Verwijder nummer",
 			"delete-file-explanation": "Weet dat je het audio bestand ook moet verwijderen. Anders duikt het nummer weer op bij de volgende scan.",
+			"download": "Download",
 			"edit": "Pas nummer aan",
 			"empty": "Dit nummer heeft geen audio.",
 			"file": "Audiobestand",

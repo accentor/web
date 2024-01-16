@@ -115,6 +115,19 @@
             </VListItem>
           </VList>
         </VMenu>
+        <VListItem
+          v-if="track.length"
+          :href="downloadURL"
+          download
+          target="_blank"
+        >
+          <VListItemIcon>
+            <VIcon color="info">mdi-download</VIcon>
+          </VListItemIcon>
+          <VListItemContent>
+            <VListItemTitle>{{ $t("music.track.download") }}</VListItemTitle>
+          </VListItemContent>
+        </VListItem>
         <VTooltip bottom :disabled="!waitingForReload">
           <template v-slot:activator="{ on }">
             <VListItem
@@ -183,6 +196,7 @@
 
 <script>
 import { mapActions, mapGetters, mapState } from "vuex";
+import { baseURL } from "../api";
 import EditReviewComment from "./EditReviewComment";
 
 import AddToPlaylist from "./AddToPlaylist";
@@ -195,11 +209,15 @@ export default {
   },
   computed: {
     ...mapGetters("auth", ["isModerator"]),
+    ...mapState("auth", ["secret", "device_id"]),
     ...mapState("tracks", ["startLoading"]),
     ...mapState("codecs", ["codecs"]),
     ...mapState("locations", ["locations"]),
     waitingForReload() {
       return this.startLoading > this.track.loaded;
+    },
+    downloadURL() {
+      return `${baseURL}/tracks/${this.track.id}/download?secret=${this.secret}&device_id=${this.device_id}`;
     },
   },
   methods: {
