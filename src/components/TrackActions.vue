@@ -38,14 +38,14 @@
     </VTooltip>
     <AddToPlaylist :item="track" type="track" />
     <EditReviewComment :item="track" :update="flag" />
-    <VMenu v-if="isModerator">
+    <VMenu>
       <template v-slot:activator="{ on, attrs }">
         <VBtn class="actions__button mr-0" small icon v-bind="attrs" v-on="on">
           <VIcon>mdi-dots-vertical</VIcon>
         </VBtn>
       </template>
       <VList dense>
-        <VMenu open-on-hover offset-x left v-if="track.length">
+        <VMenu open-on-hover offset-x left v-if="track.length && isModerator">
           <template v-slot:activator="{ on }">
             <VListItem v-on="on">
               <VListItemIcon v-on="on">
@@ -115,7 +115,20 @@
             </VListItem>
           </VList>
         </VMenu>
-        <VTooltip bottom :disabled="!waitingForReload">
+        <VListItem
+          v-if="track.length"
+          :href="downloadURL"
+          download
+          target="_blank"
+        >
+          <VListItemIcon>
+            <VIcon color="info">mdi-download</VIcon>
+          </VListItemIcon>
+          <VListItemContent>
+            <VListItemTitle>{{ $t("music.track.download") }}</VListItemTitle>
+          </VListItemContent>
+        </VListItem>
+        <VTooltip bottom :disabled="!waitingForReload" v-if="isModerator">
           <template v-slot:activator="{ on }">
             <VListItem
               :to="{
@@ -136,7 +149,7 @@
           </template>
           <span>{{ $t("common.disabled-while-loading") }}</span>
         </VTooltip>
-        <VTooltip bottom :disabled="!waitingForReload">
+        <VTooltip bottom :disabled="!waitingForReload" v-if="isModerator">
           <template v-slot:activator="{ on }">
             <VListItem
               :to="{
@@ -159,7 +172,7 @@
           </template>
           <span>{{ $t("common.disabled-while-loading") }}</span>
         </VTooltip>
-        <VTooltip bottom :disabled="!waitingForReload">
+        <VTooltip bottom :disabled="!waitingForReload" v-if="isModerator">
           <template v-slot:activator="{ on }">
             <VListItem
               @click.stop.prevent="deleteTrack"
@@ -183,6 +196,7 @@
 
 <script>
 import { mapActions, mapGetters, mapState } from "vuex";
+import { baseURL } from "../api";
 import EditReviewComment from "./EditReviewComment";
 
 import AddToPlaylist from "./AddToPlaylist";
@@ -195,11 +209,15 @@ export default {
   },
   computed: {
     ...mapGetters("auth", ["isModerator"]),
+    ...mapState("auth", ["secret", "device_id"]),
     ...mapState("tracks", ["startLoading"]),
     ...mapState("codecs", ["codecs"]),
     ...mapState("locations", ["locations"]),
     waitingForReload() {
       return this.startLoading > this.track.loaded;
+    },
+    downloadURL() {
+      return `${baseURL}/tracks/${this.track.id}/download?secret=${this.secret}&device_id=${this.device_id}`;
     },
   },
   methods: {
