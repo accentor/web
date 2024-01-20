@@ -38,14 +38,14 @@
     </VTooltip>
     <AddToPlaylist :item="track" type="track" />
     <EditReviewComment :item="track" :update="flag" />
-    <VMenu v-if="isModerator">
+    <VMenu>
       <template v-slot:activator="{ on, attrs }">
         <VBtn class="actions__button mr-0" small icon v-bind="attrs" v-on="on">
           <VIcon>mdi-dots-vertical</VIcon>
         </VBtn>
       </template>
       <VList dense>
-        <VMenu open-on-hover offset-x left v-if="track.length">
+        <VMenu open-on-hover offset-x left v-if="track.length && isModerator">
           <template v-slot:activator="{ on }">
             <VListItem v-on="on">
               <VListItemIcon v-on="on">
@@ -128,7 +128,7 @@
             <VListItemTitle>{{ $t("music.track.download") }}</VListItemTitle>
           </VListItemContent>
         </VListItem>
-        <VTooltip bottom :disabled="!waitingForReload">
+        <VTooltip bottom :disabled="!waitingForReload" v-if="isModerator">
           <template v-slot:activator="{ on }">
             <VListItem
               :to="{
@@ -149,7 +149,7 @@
           </template>
           <span>{{ $t("common.disabled-while-loading") }}</span>
         </VTooltip>
-        <VTooltip bottom :disabled="!waitingForReload">
+        <VTooltip bottom :disabled="!waitingForReload" v-if="isModerator">
           <template v-slot:activator="{ on }">
             <VListItem
               :to="{
@@ -172,7 +172,7 @@
           </template>
           <span>{{ $t("common.disabled-while-loading") }}</span>
         </VTooltip>
-        <VTooltip bottom :disabled="!waitingForReload">
+        <VTooltip bottom :disabled="!waitingForReload" v-if="isModerator">
           <template v-slot:activator="{ on }">
             <VListItem
               @click.stop.prevent="deleteTrack"
