@@ -42,7 +42,7 @@
     "eslint-plugin-vuetify": "^1.1.0",
     "prettier": "^3.2.4",
     "sass": "^1.70.0",
-    "sass-loader": "^14.0.0",
+    "sass-loader": "^14.1.0",
     "vue-cli-plugin-i18n": "^2.3.2",
     "vue-cli-plugin-vuetify": "^2.5.8",
     "vuetify-loader": "^1.9.2",
