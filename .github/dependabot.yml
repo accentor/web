@@ -5,17 +5,30 @@ updates:
   schedule:
     interval: weekly
     day: saturday
-    time: "11:00"
+    time: "08:00"
     timezone: Europe/Brussels
   open-pull-requests-limit: 10
   reviewers:
   - chvp
+  groups:
+    babel:
+      patterns:
+        - "@babel*"
+    mdi:
+      patterns:
+        - "@mdi/*"
+    vue:
+      patterns:
+        - "@?vue*"
+    eslint:
+      patterns:
+        - "eslint*"
 - package-ecosystem: github-actions
   directory: "/"
   schedule:
     interval: weekly
     day: saturday
-    time: "11:00"
+    time: "08:00"
     timezone: Europe/Brussels
   open-pull-requests-limit: 10
   reviewers:
