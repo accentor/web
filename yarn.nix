@@ -3306,14 +3306,6 @@
       };
     }
     {
-      name = "eslint_plugin_vue___eslint_plugin_vue_7.20.0.tgz";
-      path = fetchurl {
-        name = "eslint_plugin_vue___eslint_plugin_vue_7.20.0.tgz";
-        url  = "https://registry.yarnpkg.com/eslint-plugin-vue/-/eslint-plugin-vue-7.20.0.tgz";
-        sha512 = "oVNDqzBC9h3GO+NTgWeLMhhGigy6/bQaQbHS+0z7C4YEu/qK/yxHvca/2PTZtGNPsCrHwOTgKMrwu02A9iPBmw==";
-      };
-    }
-    {
       name = "eslint_plugin_vue___eslint_plugin_vue_9.21.1.tgz";
       path = fetchurl {
         name = "eslint_plugin_vue___eslint_plugin_vue_9.21.1.tgz";
@@ -3322,11 +3314,11 @@
       };
     }
     {
-      name = "eslint_plugin_vuetify___eslint_plugin_vuetify_1.1.0.tgz";
+      name = "eslint_plugin_vuetify___eslint_plugin_vuetify_2.1.1.tgz";
       path = fetchurl {
-        name = "eslint_plugin_vuetify___eslint_plugin_vuetify_1.1.0.tgz";
-        url  = "https://registry.yarnpkg.com/eslint-plugin-vuetify/-/eslint-plugin-vuetify-1.1.0.tgz";
-        sha512 = "I1YRUCGkDqe8F7O0tdf63UZVKtk4734+8fzbZ24YIZKTTyQp/FIR0nSZYG8mPFhTWerzPta7oXNzliBOwP2XeQ==";
+        name = "eslint_plugin_vuetify___eslint_plugin_vuetify_2.1.1.tgz";
+        url  = "https://registry.yarnpkg.com/eslint-plugin-vuetify/-/eslint-plugin-vuetify-2.1.1.tgz";
+        sha512 = "86MX47xzD1HzbPRh2x5LVmukYj5SKfI3ooGT4fn71vKr83VyrhYCQzqFmYmTPqwNDwZFXcCYtZWVQFOneITVpg==";
       };
     }
     {
@@ -6943,14 +6935,6 @@
         name = "vue_cli_plugin_vuetify___vue_cli_plugin_vuetify_2.5.8.tgz";
         url  = "https://registry.yarnpkg.com/vue-cli-plugin-vuetify/-/vue-cli-plugin-vuetify-2.5.8.tgz";
         sha512 = "uqi0/URJETJBbWlQHD1l0pnY7JN8Ytu+AL1fw50HFlGByPa8/xx+mq19GkFXA9FcwFT01IqEc/TkxMPugchomg==";
-      };
-    }
-    {
-      name = "vue_eslint_parser___vue_eslint_parser_7.11.0.tgz";
-      path = fetchurl {
-        name = "vue_eslint_parser___vue_eslint_parser_7.11.0.tgz";
-        url  = "https://registry.yarnpkg.com/vue-eslint-parser/-/vue-eslint-parser-7.11.0.tgz";
-        sha512 = "qh3VhDLeh773wjgNTl7ss0VejY9bMMa0GoDG2fQVyDzRFdiU3L7fw74tWZDHNQXdZqxO3EveQroa9ct39D2nqg==";
       };
     }
     {
