@@ -92,6 +92,17 @@ export default {
         return false;
       }
     },
+    async addItem({ commit, rootState, dispatch }, { newItem }) {
+      try {
+        await api.playlist_items.create(rootState.auth, {
+          playlist_item: newItem,
+        });
+        await dispatch("read", newItem.playlist_id);
+      } catch (error) {
+        commit("addError", error, { root: true });
+        return false;
+      }
+    },
     async destroy({ commit, rootState }, id) {
       try {
         await api.playlists.destroy(rootState.auth, id);
@@ -107,11 +118,11 @@ export default {
     playlists: (state) => Object.values(state.playlists),
     playlistsByName: (state, getters) =>
       getters.playlists.sort((p1, p2) =>
-        compareStrings(p1.name.toLowerCase(), p2.name.toLowerCase()),
+        compareStrings(p1.name.toLowerCase(), p2.name.toLowerCase())
       ),
     editablePlaylists: (state, getters, rootState) =>
       getters.playlistsByName.filter(
-        (p) => p.access === "shared" || p.user_id === rootState.auth.user_id,
+        (p) => p.access === "shared" || p.user_id === rootState.auth.user_id
       ),
     albumPlaylists: (state, getters) =>
       getters.playlistsByName.filter((p) => p.playlist_type === "album"),
