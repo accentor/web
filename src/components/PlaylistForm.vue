@@ -46,7 +46,15 @@
           justify="center"
           v-if="newPlaylist.item_ids.length"
         >
-          <VCol md="9" sm="10" cols="12" @change.once="isDirty = true">
+          <VCol
+            md="9"
+            sm="10"
+            cols="12"
+            @change.once="
+              isDirty = true;
+              itemsDirty = true;
+            "
+          >
             <h4 class="text-h6 mt-6 ml-4">
               {{ $tc("music.playlist.items", 2) }}
             </h4>
@@ -161,6 +169,7 @@ export default {
         },
       ],
       isDirty: false,
+      itemsDirty: false,
       isValid: true,
     };
   },
@@ -207,9 +216,15 @@ export default {
     async submit() {
       let pendingResult = null;
       if (this.playlist) {
+        // Remove the `item_ids` from the update if it hasn't changed
+        const newPlaylist = { ...this.newPlaylist };
+        if (!this.itemsDirty) {
+          delete newPlaylist.item_ids;
+        }
+
         pendingResult = this.update({
           id: this.playlist.id,
-          newPlaylist: this.newPlaylist,
+          newPlaylist,
         });
       } else {
         pendingResult = this.create(this.newPlaylist);
