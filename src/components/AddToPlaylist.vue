@@ -98,7 +98,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions("playlists", ["update"]),
+    ...mapActions("playlists", ["addItem"]),
     filterName(item, queryText) {
       const search = queryText.toLowerCase();
       return item.name.toLowerCase().indexOf(search) > -1;
@@ -108,10 +108,16 @@ export default {
         return;
       }
 
-      const newItems = [...this.selectedPlaylist.item_ids, this.item.id];
-      this.update({
+      // Item type requires a capitalized string
+      const item_type =
+        this.selectedPlaylist.playlist_type.charAt(0).toUpperCase() +
+        this.selectedPlaylist.playlist_type.slice(1);
+      this.addItem({
         id: this.selectedPlaylist.id,
-        newPlaylist: { item_ids: newItems },
+        newItem: {
+          item_id: this.item.id,
+          item_type,
+        },
       }).finally(() => {
         this.dialog = false;
       });
