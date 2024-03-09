@@ -113,8 +113,8 @@ export default {
         this.selectedPlaylist.playlist_type.charAt(0).toUpperCase() +
         this.selectedPlaylist.playlist_type.slice(1);
       this.addItem({
+        id: this.selectedPlaylist.id,
         newItem: {
-          playlist_id: this.selectedPlaylist.id,
           item_id: this.item.id,
           item_type,
         },

@@ -92,9 +92,9 @@ export default {
         return false;
       }
     },
-    async addItem({ commit, rootState, dispatch }, { newItem }) {
+    async addItem({ commit, rootState, dispatch }, { id, newItem }) {
       try {
-        await api.playlist_items.create(rootState.auth, {
+        await api.playlists.addItem(rootState.auth, id, {
           playlist_item: newItem,
         });
         await dispatch("read", newItem.playlist_id);
