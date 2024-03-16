@@ -3514,11 +3514,11 @@
       };
     }
     {
-      name = "follow_redirects___follow_redirects_1.15.5.tgz";
+      name = "follow_redirects___follow_redirects_1.15.6.tgz";
       path = fetchurl {
-        name = "follow_redirects___follow_redirects_1.15.5.tgz";
-        url  = "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.15.5.tgz";
-        sha512 = "vSFWUON1B+yAw1VN4xMfxgn5fTUiaOzAJCKBwIIgT/+7CuGy9+r+5gITvP62j3RmaD5Ph65UaERdOSRGUzZtgw==";
+        name = "follow_redirects___follow_redirects_1.15.6.tgz";
+        url  = "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.15.6.tgz";
+        sha512 = "wWN62YITEaOpSK584EZXJafH1AGpO8RVgElfkuXbTOrPX4fIfOyEpW/CsiNd8JdYrAoOvafRTOEnvsO++qCqFA==";
       };
     }
     {
