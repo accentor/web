@@ -3426,6 +3426,14 @@
       };
     }
     {
+      name = "fetch_retry___fetch_retry_6.0.0.tgz";
+      path = fetchurl {
+        name = "fetch_retry___fetch_retry_6.0.0.tgz";
+        url  = "https://registry.yarnpkg.com/fetch-retry/-/fetch-retry-6.0.0.tgz";
+        sha512 = "BUFj1aMubgib37I3v4q78fYo63Po7t4HUPTpQ6/QE6yK6cIQrP+W43FYToeTEyg5m2Y7eFUtijUuAv/PDlWuag==";
+      };
+    }
+    {
       name = "figures___figures_2.0.0.tgz";
       path = fetchurl {
         name = "figures___figures_2.0.0.tgz";
