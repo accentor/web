@@ -2154,11 +2154,11 @@
       };
     }
     {
-      name = "body_parser___body_parser_1.20.1.tgz";
+      name = "body_parser___body_parser_1.20.2.tgz";
       path = fetchurl {
-        name = "body_parser___body_parser_1.20.1.tgz";
-        url  = "https://registry.yarnpkg.com/body-parser/-/body-parser-1.20.1.tgz";
-        sha512 = "jWi7abTbYwajOytWCQc37VulmWiRae5RyTpaCyDcS5/lMdtwSz5lOpDE67srw/HYe35f1z3fDQw+3txg7gNtWw==";
+        name = "body_parser___body_parser_1.20.2.tgz";
+        url  = "https://registry.yarnpkg.com/body-parser/-/body-parser-1.20.2.tgz";
+        sha512 = "ml9pReCu3M61kGlqoTm2umSXTlRTuGTx0bfYj+uIUKKYycG5NtSbeetV3faSU6R7ajOPw0g/J1PvK4qNy7s5bA==";
       };
     }
     {
@@ -2594,11 +2594,11 @@
       };
     }
     {
-      name = "cookie___cookie_0.5.0.tgz";
+      name = "cookie___cookie_0.6.0.tgz";
       path = fetchurl {
-        name = "cookie___cookie_0.5.0.tgz";
-        url  = "https://registry.yarnpkg.com/cookie/-/cookie-0.5.0.tgz";
-        sha512 = "YZ3GUyn/o8gfKJlnlX7g7xq4gyO6OSuhGPKaaGssGB2qgDUS0gPgtTvoyZLTt9Ab6dC4hfc9dV5arkvc/OCmrw==";
+        name = "cookie___cookie_0.6.0.tgz";
+        url  = "https://registry.yarnpkg.com/cookie/-/cookie-0.6.0.tgz";
+        sha512 = "U71cyTamuh1CRNCfpGY6to28lxvNwPG4Guz/EVjgf3Jmzv0vlDp1atT9eS5dDjMYHucpHbWns6Lwf3BKz6svdw==";
       };
     }
     {
@@ -3378,11 +3378,11 @@
       };
     }
     {
-      name = "express___express_4.18.2.tgz";
+      name = "express___express_4.19.2.tgz";
       path = fetchurl {
-        name = "express___express_4.18.2.tgz";
-        url  = "https://registry.yarnpkg.com/express/-/express-4.18.2.tgz";
-        sha512 = "5/PsL6iGPdfQ/lKM1UuielYgv3BUoJfz1aUwU9vHZ+J7gyvwdQXFEBIEIaxeGf0GIcreATNyBExtalisDbuMqQ==";
+        name = "express___express_4.19.2.tgz";
+        url  = "https://registry.yarnpkg.com/express/-/express-4.19.2.tgz";
+        sha512 = "5T6nhjsT+EOMzuck8JjBHARTHfMht0POzlA60WV2pMD3gyXw2LZnZ+ueGdNxG+0calOJcWKbpFcuzLZ91YWq9Q==";
       };
     }
     {
@@ -5818,11 +5818,11 @@
       };
     }
     {
-      name = "raw_body___raw_body_2.5.1.tgz";
+      name = "raw_body___raw_body_2.5.2.tgz";
       path = fetchurl {
-        name = "raw_body___raw_body_2.5.1.tgz";
-        url  = "https://registry.yarnpkg.com/raw-body/-/raw-body-2.5.1.tgz";
-        sha512 = "qqJBtEyVgS0ZmPGdCFPWJ3FreoqvG4MVQln/kCgF7Olq95IbOp0/BWyMwbdtn4VTvkM8Y7khCQ2Xgk/tcrCXig==";
+        name = "raw_body___raw_body_2.5.2.tgz";
+        url  = "https://registry.yarnpkg.com/raw-body/-/raw-body-2.5.2.tgz";
+        sha512 = "8zGqypfENjCIqGhgXToC8aB2r7YrBX+AQAfIPs/Mlk+BtPTztOvTS01NRW/3Eh60J+a48lt8qsCzirQ6loCVfA==";
       };
     }
     {
