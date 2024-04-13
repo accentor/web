@@ -21,6 +21,6 @@ jobs:
           nix_path: nixpkgs=channel:nixpkgs-unstable
       - name: Run yarn2nix
         run: nix-shell -p yarn2nix --run "yarn2nix > yarn.nix"
-      - uses: stefanzweifel/git-auto-commit-action@v5.0.0
+      - uses: stefanzweifel/git-auto-commit-action@v5.0.1
         with:
           commit_message: "Update yarn.nix"
