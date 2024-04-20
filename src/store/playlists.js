@@ -92,6 +92,17 @@ export default {
         return false;
       }
     },
+    async addItem({ commit, rootState, dispatch }, { id, newItem }) {
+      try {
+        await api.playlists.addItem(rootState.auth, id, {
+          playlist_item: newItem,
+        });
+        await dispatch("read", newItem.playlist_id);
+      } catch (error) {
+        commit("addError", error, { root: true });
+        return false;
+      }
+    },
     async destroy({ commit, rootState }, id) {
       try {
         await api.playlists.destroy(rootState.auth, id);

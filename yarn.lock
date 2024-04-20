@@ -7,12 +7,12 @@
   resolved "https://registry.yarnpkg.com/@aashutoshrathi/word-wrap/-/word-wrap-1.2.6.tgz#bd9154aec9983f77b3a034ecaa015c2e4201f6cf"
   integrity sha512-1Yjs2SvM8TflER/OD3cOjhWWOZb58A2t7wpE2S9XfBYTiIl+XFhQG2bjy4Pu1I+EAlCNUzRDYDdFwFYUKvXcIA==
 
-"@accentor/api-client-js@^0.19.1":
-  version "0.19.1"
-  resolved "https://registry.yarnpkg.com/@accentor/api-client-js/-/api-client-js-0.19.1.tgz#cb1867fbf06cb29e5f4533ca5ff596e4a5a69001"
-  integrity sha512-DriWKP3Mw4fPvMtBMEn41TWlQzHsSJGtvnmkNbP/1Rh9XwzNTkRjIct7UyM2FlOcad9MbEWGob3Ce/2n+jHfRw==
+"@accentor/api-client-js@^0.20.0":
+  version "0.20.0"
+  resolved "https://registry.yarnpkg.com/@accentor/api-client-js/-/api-client-js-0.20.0.tgz#df89da9cb387b3c313514659a633a6d0aea075e8"
+  integrity sha512-sZU4QUid6Di1OPsllB22QyorMGV/fasbVVNd1mBy3tIshXQEVlSzanf489tl3AgAm3Nbatb51a30FKKZuGRvEg==
   dependencies:
-    fetch-retry "^5.0.6"
+    fetch-retry "^6.0.0"
 
 "@achrinza/node-ipc@^9.2.5":
   version "9.2.8"
