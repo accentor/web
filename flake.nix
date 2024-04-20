@@ -27,7 +27,7 @@
           default = accentor-web;
           accentor-web = pkgs.mkYarnPackage rec {
             pname = "accentor-web";
-            version = "0.32.0";
+            version = "0.33.0";
 
             src = pkgs.lib.cleanSourceWith { filter = name: type: !(builtins.elem name [ ".github" "flake.lock" "flake.nix" ]); src = ./.; name = "source"; };
             packageJSON = ./package.json;
