@@ -10,11 +10,11 @@
       };
     }
     {
-      name = "_accentor_api_client_js___api_client_js_0.20.0.tgz";
+      name = "_accentor_api_client_js___api_client_js_0.20.1.tgz";
       path = fetchurl {
-        name = "_accentor_api_client_js___api_client_js_0.20.0.tgz";
-        url  = "https://registry.yarnpkg.com/@accentor/api-client-js/-/api-client-js-0.20.0.tgz";
-        sha512 = "sZU4QUid6Di1OPsllB22QyorMGV/fasbVVNd1mBy3tIshXQEVlSzanf489tl3AgAm3Nbatb51a30FKKZuGRvEg==";
+        name = "_accentor_api_client_js___api_client_js_0.20.1.tgz";
+        url  = "https://registry.yarnpkg.com/@accentor/api-client-js/-/api-client-js-0.20.1.tgz";
+        sha512 = "rZRbCZuJjFfN4d+PVctQFK9t38LJabLndGNxOGgbeGUkkliHvLNYWhC1BIqrxLDcstED6LO6h0huhq0Pw83QLA==";
       };
     }
     {
