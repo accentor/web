@@ -97,7 +97,7 @@ export default {
         await api.playlists.addItem(rootState.auth, id, {
           playlist: newItem,
         });
-        await dispatch("read", newItem.playlist_id);
+        await dispatch("read", id);
       } catch (error) {
         commit("addError", error, { root: true });
         return false;
