@@ -95,9 +95,9 @@ export default {
     async addItem({ commit, rootState, dispatch }, { id, newItem }) {
       try {
         await api.playlists.addItem(rootState.auth, id, {
-          playlist_item: newItem,
+          playlist: newItem,
         });
-        await dispatch("read", newItem.playlist_id);
+        await dispatch("read", id);
       } catch (error) {
         commit("addError", error, { root: true });
         return false;
