@@ -94,7 +94,7 @@
                       icon
                       text
                       class="ma-2 red--text"
-                      @click="() => newPlaylist.item_ids.splice(index, 1)"
+                      @click="() => removeItem(index)"
                     >
                       <VIcon>mdi-close</VIcon>
                     </VBtn>
@@ -212,6 +212,11 @@ export default {
       this.newPlaylist.access = this.playlist.access;
       this.newPlaylist.playlist_type = this.playlist.playlist_type;
       this.newPlaylist.item_ids = [...this.playlist.item_ids];
+    },
+    removeItem(index) {
+      this.isDirty = true;
+      this.itemsDirty = true;
+      this.newPlaylist.item_ids.splice(index, 1);
     },
     async submit() {
       let pendingResult = null;
