@@ -18,7 +18,7 @@ jobs:
       - uses: cachix/install-nix-action@V27
         with:
           github_access_token: ${{ secrets.GITHUB_TOKEN }}
-          nix_path: nixpkgs=channel:nixpkgs-unstable
+          nix_path: nixpkgs=https://github.com/NixOS/nixpkgs/archive/refs/heads/nixos-unstable.tar.gz
       - name: Run yarn2nix
         run: nix-shell -p yarn2nix --run "yarn2nix > yarn.nix"
       - uses: stefanzweifel/git-auto-commit-action@v5.0.1
