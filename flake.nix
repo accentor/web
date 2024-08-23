@@ -9,10 +9,7 @@
     };
     devshell = {
       url = "github:numtide/devshell";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        systems.follows = "systems";
-      };
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     systems.url = "github:nix-systems/default";
   };
