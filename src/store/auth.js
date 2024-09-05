@@ -56,7 +56,12 @@ export default {
   actions: {
     async login({ commit }, data) {
       try {
-        const result = await api.auth_tokens.create(data);
+        const result = await api.auth_tokens.create({
+          auth_token: {
+            application: process.env.APPLICATION_VERSION,
+          },
+          ...data,
+        });
         commit("login", result);
         return true;
       } catch (error) {

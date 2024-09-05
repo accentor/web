@@ -1,3 +1,6 @@
+const version = require("./package.json").version;
+const webpack = require("webpack");
+
 module.exports = {
   pluginOptions: {
     i18n: {
@@ -16,6 +19,14 @@ module.exports = {
   },
   configureWebpack: (config) => {
     config.cache = process.env.SKIP_CACHE !== "true";
+    config.plugins.push(
+      new webpack.DefinePlugin({
+        "process.env": {
+          // When building, this value will just be printed without quotes, so we add them explicitly
+          APPLICATION_VERSION: `"Accentor Web v${version}"`,
+        },
+      }),
+    );
   },
   chainWebpack: (config) => {
     config.module
