@@ -1,7 +1,6 @@
 import Vue from "vue";
 import api from "@/api";
 import { fetchAll } from "./actions";
-import { APPLICATION_VERSION } from "../version";
 
 export default {
   namespaced: true,
@@ -58,7 +57,9 @@ export default {
     async login({ commit }, data) {
       try {
         const result = await api.auth_tokens.create({
-          auth_token: { application: APPLICATION_VERSION },
+          auth_token: {
+            application: process.env.APPLICATION_VERSION,
+          },
           ...data,
         });
         commit("login", result);
