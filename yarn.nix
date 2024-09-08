@@ -3242,11 +3242,11 @@
       };
     }
     {
-      name = "eslint_plugin_vue___eslint_plugin_vue_9.27.0.tgz";
+      name = "eslint_plugin_vue___eslint_plugin_vue_9.28.0.tgz";
       path = fetchurl {
-        name = "eslint_plugin_vue___eslint_plugin_vue_9.27.0.tgz";
-        url  = "https://registry.yarnpkg.com/eslint-plugin-vue/-/eslint-plugin-vue-9.27.0.tgz";
-        sha512 = "5Dw3yxEyuBSXTzT5/Ge1X5kIkRTQ3nvBn/VwPwInNiZBSJOO/timWMUaflONnFBzU6NhB68lxnCda7ULV5N7LA==";
+        name = "eslint_plugin_vue___eslint_plugin_vue_9.28.0.tgz";
+        url  = "https://registry.yarnpkg.com/eslint-plugin-vue/-/eslint-plugin-vue-9.28.0.tgz";
+        sha512 = "ShrihdjIhOTxs+MfWun6oJWuk+g/LAhN+CiuOl/jjkG3l0F2AuK5NMTaWqyvBgkFtpYmyks6P4603mLmhNJW8g==";
       };
     }
     {
@@ -6210,11 +6210,11 @@
       };
     }
     {
-      name = "semver___semver_7.6.0.tgz";
+      name = "semver___semver_7.6.3.tgz";
       path = fetchurl {
-        name = "semver___semver_7.6.0.tgz";
-        url  = "https://registry.yarnpkg.com/semver/-/semver-7.6.0.tgz";
-        sha512 = "EnwXhrlwXMk9gKu5/flx5sv/an57AkRplG3hTK68W7FRDN+k+OWBj65M7719OkA82XLBxrcX0KSHj+X5COhOVg==";
+        name = "semver___semver_7.6.3.tgz";
+        url  = "https://registry.yarnpkg.com/semver/-/semver-7.6.3.tgz";
+        sha512 = "oVekP1cKtI+CTDvHWYFUcMtsK/00wmAEfyqKfNdARm8u1wNVhSgaX7A8d4UuIlUI5e84iEwOhs7ZPYRmzU9U6A==";
       };
     }
     {
