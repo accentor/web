@@ -2402,6 +2402,14 @@
       };
     }
     {
+      name = "chokidar___chokidar_4.0.0.tgz";
+      path = fetchurl {
+        name = "chokidar___chokidar_4.0.0.tgz";
+        url  = "https://registry.yarnpkg.com/chokidar/-/chokidar-4.0.0.tgz";
+        sha512 = "mxIojEAQcuEvT/lyXq+jf/3cO/KoA6z4CeNDGGevTybECPOMFCnQy3OPahluUkbqgPNGw5Bi78UC7Po6Lhy+NA==";
+      };
+    }
+    {
       name = "chrome_trace_event___chrome_trace_event_1.0.3.tgz";
       path = fetchurl {
         name = "chrome_trace_event___chrome_trace_event_1.0.3.tgz";
@@ -5986,6 +5994,14 @@
       };
     }
     {
+      name = "readdirp___readdirp_4.0.1.tgz";
+      path = fetchurl {
+        name = "readdirp___readdirp_4.0.1.tgz";
+        url  = "https://registry.yarnpkg.com/readdirp/-/readdirp-4.0.1.tgz";
+        sha512 = "GkMg9uOTpIWWKbSsgwb5fA4EavTR+SG/PMPoAY8hkhHfEEY0/vqljY+XHqtDf2cr2IJtoNRDbrrEpZUiZCkYRw==";
+      };
+    }
+    {
       name = "readdirp___readdirp_3.6.0.tgz";
       path = fetchurl {
         name = "readdirp___readdirp_3.6.0.tgz";
@@ -6202,11 +6218,11 @@
       };
     }
     {
-      name = "sass___sass_1.78.0.tgz";
+      name = "sass___sass_1.79.3.tgz";
       path = fetchurl {
-        name = "sass___sass_1.78.0.tgz";
-        url  = "https://registry.yarnpkg.com/sass/-/sass-1.78.0.tgz";
-        sha512 = "AaIqGSrjo5lA2Yg7RvFZrlXDBCp3nV4XP73GrLGvdRWWwk+8H3l0SDvq/5bA4eF+0RFPLuWUk3E+P1U/YqnpsQ==";
+        name = "sass___sass_1.79.3.tgz";
+        url  = "https://registry.yarnpkg.com/sass/-/sass-1.79.3.tgz";
+        sha512 = "m7dZxh0W9EZ3cw50Me5GOuYm/tVAJAn91SUnohLRo9cXBixGUOdvmryN+dXpwR831bhoY3Zv7rEFt85PUwTmzA==";
       };
     }
     {
