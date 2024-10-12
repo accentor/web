@@ -1250,6 +1250,110 @@
       };
     }
     {
+      name = "_parcel_watcher_android_arm64___watcher_android_arm64_2.4.1.tgz";
+      path = fetchurl {
+        name = "_parcel_watcher_android_arm64___watcher_android_arm64_2.4.1.tgz";
+        url  = "https://registry.yarnpkg.com/@parcel/watcher-android-arm64/-/watcher-android-arm64-2.4.1.tgz";
+        sha512 = "LOi/WTbbh3aTn2RYddrO8pnapixAziFl6SMxHM69r3tvdSm94JtCenaKgk1GRg5FJ5wpMCpHeW+7yqPlvZv7kg==";
+      };
+    }
+    {
+      name = "_parcel_watcher_darwin_arm64___watcher_darwin_arm64_2.4.1.tgz";
+      path = fetchurl {
+        name = "_parcel_watcher_darwin_arm64___watcher_darwin_arm64_2.4.1.tgz";
+        url  = "https://registry.yarnpkg.com/@parcel/watcher-darwin-arm64/-/watcher-darwin-arm64-2.4.1.tgz";
+        sha512 = "ln41eihm5YXIY043vBrrHfn94SIBlqOWmoROhsMVTSXGh0QahKGy77tfEywQ7v3NywyxBBkGIfrWRHm0hsKtzA==";
+      };
+    }
+    {
+      name = "_parcel_watcher_darwin_x64___watcher_darwin_x64_2.4.1.tgz";
+      path = fetchurl {
+        name = "_parcel_watcher_darwin_x64___watcher_darwin_x64_2.4.1.tgz";
+        url  = "https://registry.yarnpkg.com/@parcel/watcher-darwin-x64/-/watcher-darwin-x64-2.4.1.tgz";
+        sha512 = "yrw81BRLjjtHyDu7J61oPuSoeYWR3lDElcPGJyOvIXmor6DEo7/G2u1o7I38cwlcoBHQFULqF6nesIX3tsEXMg==";
+      };
+    }
+    {
+      name = "_parcel_watcher_freebsd_x64___watcher_freebsd_x64_2.4.1.tgz";
+      path = fetchurl {
+        name = "_parcel_watcher_freebsd_x64___watcher_freebsd_x64_2.4.1.tgz";
+        url  = "https://registry.yarnpkg.com/@parcel/watcher-freebsd-x64/-/watcher-freebsd-x64-2.4.1.tgz";
+        sha512 = "TJa3Pex/gX3CWIx/Co8k+ykNdDCLx+TuZj3f3h7eOjgpdKM+Mnix37RYsYU4LHhiYJz3DK5nFCCra81p6g050w==";
+      };
+    }
+    {
+      name = "_parcel_watcher_linux_arm_glibc___watcher_linux_arm_glibc_2.4.1.tgz";
+      path = fetchurl {
+        name = "_parcel_watcher_linux_arm_glibc___watcher_linux_arm_glibc_2.4.1.tgz";
+        url  = "https://registry.yarnpkg.com/@parcel/watcher-linux-arm-glibc/-/watcher-linux-arm-glibc-2.4.1.tgz";
+        sha512 = "4rVYDlsMEYfa537BRXxJ5UF4ddNwnr2/1O4MHM5PjI9cvV2qymvhwZSFgXqbS8YoTk5i/JR0L0JDs69BUn45YA==";
+      };
+    }
+    {
+      name = "_parcel_watcher_linux_arm64_glibc___watcher_linux_arm64_glibc_2.4.1.tgz";
+      path = fetchurl {
+        name = "_parcel_watcher_linux_arm64_glibc___watcher_linux_arm64_glibc_2.4.1.tgz";
+        url  = "https://registry.yarnpkg.com/@parcel/watcher-linux-arm64-glibc/-/watcher-linux-arm64-glibc-2.4.1.tgz";
+        sha512 = "BJ7mH985OADVLpbrzCLgrJ3TOpiZggE9FMblfO65PlOCdG++xJpKUJ0Aol74ZUIYfb8WsRlUdgrZxKkz3zXWYA==";
+      };
+    }
+    {
+      name = "_parcel_watcher_linux_arm64_musl___watcher_linux_arm64_musl_2.4.1.tgz";
+      path = fetchurl {
+        name = "_parcel_watcher_linux_arm64_musl___watcher_linux_arm64_musl_2.4.1.tgz";
+        url  = "https://registry.yarnpkg.com/@parcel/watcher-linux-arm64-musl/-/watcher-linux-arm64-musl-2.4.1.tgz";
+        sha512 = "p4Xb7JGq3MLgAfYhslU2SjoV9G0kI0Xry0kuxeG/41UfpjHGOhv7UoUDAz/jb1u2elbhazy4rRBL8PegPJFBhA==";
+      };
+    }
+    {
+      name = "_parcel_watcher_linux_x64_glibc___watcher_linux_x64_glibc_2.4.1.tgz";
+      path = fetchurl {
+        name = "_parcel_watcher_linux_x64_glibc___watcher_linux_x64_glibc_2.4.1.tgz";
+        url  = "https://registry.yarnpkg.com/@parcel/watcher-linux-x64-glibc/-/watcher-linux-x64-glibc-2.4.1.tgz";
+        sha512 = "s9O3fByZ/2pyYDPoLM6zt92yu6P4E39a03zvO0qCHOTjxmt3GHRMLuRZEWhWLASTMSrrnVNWdVI/+pUElJBBBg==";
+      };
+    }
+    {
+      name = "_parcel_watcher_linux_x64_musl___watcher_linux_x64_musl_2.4.1.tgz";
+      path = fetchurl {
+        name = "_parcel_watcher_linux_x64_musl___watcher_linux_x64_musl_2.4.1.tgz";
+        url  = "https://registry.yarnpkg.com/@parcel/watcher-linux-x64-musl/-/watcher-linux-x64-musl-2.4.1.tgz";
+        sha512 = "L2nZTYR1myLNST0O632g0Dx9LyMNHrn6TOt76sYxWLdff3cB22/GZX2UPtJnaqQPdCRoszoY5rcOj4oMTtp5fQ==";
+      };
+    }
+    {
+      name = "_parcel_watcher_win32_arm64___watcher_win32_arm64_2.4.1.tgz";
+      path = fetchurl {
+        name = "_parcel_watcher_win32_arm64___watcher_win32_arm64_2.4.1.tgz";
+        url  = "https://registry.yarnpkg.com/@parcel/watcher-win32-arm64/-/watcher-win32-arm64-2.4.1.tgz";
+        sha512 = "Uq2BPp5GWhrq/lcuItCHoqxjULU1QYEcyjSO5jqqOK8RNFDBQnenMMx4gAl3v8GiWa59E9+uDM7yZ6LxwUIfRg==";
+      };
+    }
+    {
+      name = "_parcel_watcher_win32_ia32___watcher_win32_ia32_2.4.1.tgz";
+      path = fetchurl {
+        name = "_parcel_watcher_win32_ia32___watcher_win32_ia32_2.4.1.tgz";
+        url  = "https://registry.yarnpkg.com/@parcel/watcher-win32-ia32/-/watcher-win32-ia32-2.4.1.tgz";
+        sha512 = "maNRit5QQV2kgHFSYwftmPBxiuK5u4DXjbXx7q6eKjq5dsLXZ4FJiVvlcw35QXzk0KrUecJmuVFbj4uV9oYrcw==";
+      };
+    }
+    {
+      name = "_parcel_watcher_win32_x64___watcher_win32_x64_2.4.1.tgz";
+      path = fetchurl {
+        name = "_parcel_watcher_win32_x64___watcher_win32_x64_2.4.1.tgz";
+        url  = "https://registry.yarnpkg.com/@parcel/watcher-win32-x64/-/watcher-win32-x64-2.4.1.tgz";
+        sha512 = "+DvS92F9ezicfswqrvIRM2njcYJbd5mb9CUgtrHCHmvn7pPPa+nMDRu1o1bYYz/l5IB2NVGNJWiH7h1E58IF2A==";
+      };
+    }
+    {
+      name = "_parcel_watcher___watcher_2.4.1.tgz";
+      path = fetchurl {
+        name = "_parcel_watcher___watcher_2.4.1.tgz";
+        url  = "https://registry.yarnpkg.com/@parcel/watcher/-/watcher-2.4.1.tgz";
+        sha512 = "HNjmfLQEVRZmHRET336f20H/8kOozUGwk7yajvsonjNxbj2wBTK1WsQuHkD5yYh9RxFGL2EyDHryOihOwUoKDA==";
+      };
+    }
+    {
       name = "_pkgr_core___core_0.1.1.tgz";
       path = fetchurl {
         name = "_pkgr_core___core_0.1.1.tgz";
@@ -2967,6 +3071,14 @@
         name = "destroy___destroy_1.2.0.tgz";
         url  = "https://registry.yarnpkg.com/destroy/-/destroy-1.2.0.tgz";
         sha512 = "2sJGJTaXIIaR1w4iJSNoN0hnMY7Gpc/n8D4qSCJw8QqFWXf7cuAgnEHxBpweaVcPevC2l3KpjYCx3NypQQgaJg==";
+      };
+    }
+    {
+      name = "detect_libc___detect_libc_1.0.3.tgz";
+      path = fetchurl {
+        name = "detect_libc___detect_libc_1.0.3.tgz";
+        url  = "https://registry.yarnpkg.com/detect-libc/-/detect-libc-1.0.3.tgz";
+        sha512 = "pGjwhsmsp4kL2RTz08wcOlGN83otlqHeD/Z5T8GXZB+/YcpQ/dgo+lbU8ZsGxV0HIvqqxo9l7mqYwyYMD9bKDg==";
       };
     }
     {
@@ -5098,6 +5210,14 @@
       };
     }
     {
+      name = "node_addon_api___node_addon_api_7.1.1.tgz";
+      path = fetchurl {
+        name = "node_addon_api___node_addon_api_7.1.1.tgz";
+        url  = "https://registry.yarnpkg.com/node-addon-api/-/node-addon-api-7.1.1.tgz";
+        sha512 = "5m3bsyrjFWE1xf7nz7YXdN4udnVtXK6/Yfgn5qnahL6bCkf2yKt4k3nuTKAtT4r3IG8JNR2ncsIMdZuAzJjHQQ==";
+      };
+    }
+    {
       name = "node_fetch___node_fetch_2.7.0.tgz";
       path = fetchurl {
         name = "node_fetch___node_fetch_2.7.0.tgz";
@@ -6226,11 +6346,11 @@
       };
     }
     {
-      name = "sass___sass_1.79.4.tgz";
+      name = "sass___sass_1.79.5.tgz";
       path = fetchurl {
-        name = "sass___sass_1.79.4.tgz";
-        url  = "https://registry.yarnpkg.com/sass/-/sass-1.79.4.tgz";
-        sha512 = "K0QDSNPXgyqO4GZq2HO5Q70TLxTH6cIT59RdoCHMivrC8rqzaTw5ab9prjz9KUN1El4FLXrBXJhik61JR4HcGg==";
+        name = "sass___sass_1.79.5.tgz";
+        url  = "https://registry.yarnpkg.com/sass/-/sass-1.79.5.tgz";
+        sha512 = "W1h5kp6bdhqFh2tk3DsI771MoEJjvrSY/2ihJRJS4pjIyfJCw0nTsxqhnrUzaLMOJjFchj8rOvraI/YUVjtx5g==";
       };
     }
     {
