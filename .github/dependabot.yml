@@ -28,6 +28,8 @@ updates:
       update-types: ["version-update:semver-major"]
     - dependency-name: "eslint"
       update-types: ["version-update:semver-major"]
+    - dependency-name: "@vue/eslint-config-prettier"
+      update-types: ["version-update:semver-major"]
 - package-ecosystem: github-actions
   directory: "/"
   schedule:
