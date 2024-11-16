@@ -4242,11 +4242,11 @@
       };
     }
     {
-      name = "immutable___immutable_4.3.4.tgz";
+      name = "immutable___immutable_5.0.2.tgz";
       path = fetchurl {
-        name = "immutable___immutable_4.3.4.tgz";
-        url  = "https://registry.yarnpkg.com/immutable/-/immutable-4.3.4.tgz";
-        sha512 = "fsXeu4J4i6WNWSikpI88v/PcVflZz+6kMhUfIwc5SY+poQRPnaf5V7qds6SUyUN3cVxEzuCab7QIoLOQ+DQ1wA==";
+        name = "immutable___immutable_5.0.2.tgz";
+        url  = "https://registry.yarnpkg.com/immutable/-/immutable-5.0.2.tgz";
+        sha512 = "1NU7hWZDkV7hJ4PJ9dur9gTNQ4ePNPN4k9/0YhwjzykTi/+3Q5pF93YU5QoVj8BuOnhLgaY8gs0U2pj4kSYVcw==";
       };
     }
     {
@@ -6330,11 +6330,11 @@
       };
     }
     {
-      name = "sass___sass_1.80.6.tgz";
+      name = "sass___sass_1.81.0.tgz";
       path = fetchurl {
-        name = "sass___sass_1.80.6.tgz";
-        url  = "https://registry.yarnpkg.com/sass/-/sass-1.80.6.tgz";
-        sha512 = "ccZgdHNiBF1NHBsWvacvT5rju3y1d/Eu+8Ex6c21nHp2lZGLBEtuwc415QfiI1PJa1TpCo3iXwwSRjRpn2Ckjg==";
+        name = "sass___sass_1.81.0.tgz";
+        url  = "https://registry.yarnpkg.com/sass/-/sass-1.81.0.tgz";
+        sha512 = "Q4fOxRfhmv3sqCLoGfvrC9pRV8btc0UtqL9mN6Yrv6Qi9ScL55CVH1vlPP863ISLEEMNLLuu9P+enCeGHlnzhA==";
       };
     }
     {
