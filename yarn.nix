@@ -3386,11 +3386,11 @@
       };
     }
     {
-      name = "eslint_plugin_vue___eslint_plugin_vue_9.30.0.tgz";
+      name = "eslint_plugin_vue___eslint_plugin_vue_9.31.0.tgz";
       path = fetchurl {
-        name = "eslint_plugin_vue___eslint_plugin_vue_9.30.0.tgz";
-        url  = "https://registry.yarnpkg.com/eslint-plugin-vue/-/eslint-plugin-vue-9.30.0.tgz";
-        sha512 = "CyqlRgShvljFkOeYK8wN5frh/OGTvkj1S7wlr2Q2pUvwq+X5VYiLd6ZjujpgSgLnys2W8qrBLkXQ41SUYaoPIQ==";
+        name = "eslint_plugin_vue___eslint_plugin_vue_9.31.0.tgz";
+        url  = "https://registry.yarnpkg.com/eslint-plugin-vue/-/eslint-plugin-vue-9.31.0.tgz";
+        sha512 = "aYMUCgivhz1o4tLkRHj5oq9YgYPM4/EJc0M7TAKRLCUA5OYxRLAhYEVD2nLtTwLyixEFI+/QXSvKU9ESZFgqjQ==";
       };
     }
     {
