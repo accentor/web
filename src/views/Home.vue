@@ -269,6 +269,8 @@ import {
   compareStrings,
 } from "../comparators";
 
+const RANDOM_SEED_MAX = 10_000;
+
 export default {
   name: "Home",
   components: { AlbumCard, ArtistCard },
@@ -292,12 +294,10 @@ export default {
       return artists.sort(compareByRecentlyPlayed(this.playStatsByArtist));
     },
     randomSort(items) {
-      const newItems = [...items];
-      for (let i = newItems.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [newItems[i], newItems[j]] = [newItems[j], newItems[i]];
-      }
-      return newItems;
+      return items.sort(
+        (i1, i2) =>
+          Math.sin(i2.id + this.randomSeed) - Math.sin(i1.id + this.randomSeed),
+      );
     },
   },
   computed: {
@@ -308,6 +308,9 @@ export default {
       playStatsByAlbum: "plays/playStatsByAlbum",
       playStatsByArtist: "plays/playStatsByArtist",
     }),
+    randomSeed() {
+      return Math.round(Math.random() * RANDOM_SEED_MAX);
+    },
     randomAlbums() {
       return this.randomSort(this.albums);
     },
