@@ -3362,6 +3362,14 @@
       };
     }
     {
+      name = "eslint_config_prettier___eslint_config_prettier_10.0.1.tgz";
+      path = fetchurl {
+        name = "eslint_config_prettier___eslint_config_prettier_10.0.1.tgz";
+        url  = "https://registry.yarnpkg.com/eslint-config-prettier/-/eslint-config-prettier-10.0.1.tgz";
+        sha512 = "lZBts941cyJyeaooiKxAtzoPHTN+GbQTJFAIdQbRhA4/8whaAraEh47Whw/ZFfrjNSnlAxqfm9i0XVAEkULjCw==";
+      };
+    }
+    {
       name = "eslint_config_prettier___eslint_config_prettier_9.1.0.tgz";
       path = fetchurl {
         name = "eslint_config_prettier___eslint_config_prettier_9.1.0.tgz";
@@ -3370,11 +3378,11 @@
       };
     }
     {
-      name = "eslint_plugin_prettier___eslint_plugin_prettier_5.2.1.tgz";
+      name = "eslint_plugin_prettier___eslint_plugin_prettier_5.2.2.tgz";
       path = fetchurl {
-        name = "eslint_plugin_prettier___eslint_plugin_prettier_5.2.1.tgz";
-        url  = "https://registry.yarnpkg.com/eslint-plugin-prettier/-/eslint-plugin-prettier-5.2.1.tgz";
-        sha512 = "gH3iR3g4JfF+yYPaJYkN7jEl9QbweL/YfkoRlNnuIEHEz1vHVlCmWOS+eGGiRuzHQXdJFCOTxRgvju9b8VUmrw==";
+        name = "eslint_plugin_prettier___eslint_plugin_prettier_5.2.2.tgz";
+        url  = "https://registry.yarnpkg.com/eslint-plugin-prettier/-/eslint-plugin-prettier-5.2.2.tgz";
+        sha512 = "1yI3/hf35wmlq66C8yOyrujQnel+v5l1Vop5Cl2I6ylyNTT1JbuUUnV3/41PzwTzcyDp/oF0jWE3HXvcH5AQOQ==";
       };
     }
     {
