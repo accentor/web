@@ -13,7 +13,7 @@
     "@mdi/font": "^7.4.47",
     "@mdi/svg": "^7.4.47",
     "fetch-retry": "^6.0.0",
-    "gsap": "^3.12.5",
+    "gsap": "^3.12.7",
     "localforage": "^1.10.0",
     "lodash.debounce": "^4.0.8",
     "roboto-fontface": "^0.10.0",
