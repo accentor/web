@@ -294,7 +294,7 @@ export default {
       return artists.sort(compareByRecentlyPlayed(this.playStatsByArtist));
     },
     randomSort(items) {
-      return items.sort(
+      return [...items].sort(
         (i1, i2) =>
           Math.sin(i2.id + this.randomSeed) - Math.sin(i1.id + this.randomSeed),
       );
