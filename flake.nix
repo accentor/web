@@ -54,7 +54,8 @@
             packages = with pkgs; [
               nixpkgs-fmt
               yarn2nix
-              yarn
+              # NOTE: We can remove this override when `@achrinza/node-ipc` is updated to a version that supports nodejs 22.x
+              (yarn.override { nodejs = nodejs_20; })
             ];
           };
         };
