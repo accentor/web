@@ -6,22 +6,19 @@ export default {
   namespaced: true,
   state: {
     authTokens: {},
-    device_id: null,
-    secret: null,
+    apiToken: null,
     user_id: null,
     id: null,
     startLoading: new Date(0),
   },
   mutations: {
     login(state, payload) {
-      state.device_id = payload.device_id;
-      state.secret = payload.secret;
+      state.apiToken = payload.token;
       state.user_id = payload.user_id;
       state.id = payload.id;
     },
     logout(state) {
-      state.device_id = null;
-      state.secret = null;
+      state.apiToken = null;
       state.user_id = null;
       state.id = null;
     },
@@ -80,7 +77,7 @@ export default {
       }
     },
     async index({ commit, rootState }) {
-      const generator = api.auth_tokens.index(rootState.auth);
+      const generator = api.auth_tokens.index(rootState.auth.apiToken);
       try {
         await fetchAll(commit, generator, "setAuthTokens");
         return true;
@@ -91,7 +88,7 @@ export default {
     },
     async destroy({ commit, rootState }, id) {
       try {
-        await api.auth_tokens.destroy(rootState.auth, id);
+        await api.auth_tokens.destroy(rootState.auth.apiToken, id);
         commit("removeAuthToken", id);
         return true;
       } catch (error) {
@@ -104,7 +101,7 @@ export default {
     authTokens: (state) =>
       Object.values(state.authTokens).sort((a1, a2) => a1.id - a2.id),
     loggedIn: (state) => {
-      return state.secret !== null && state.device_id !== null;
+      return state.apiToken !== null;
     },
     currentSession: (state) => {
       return state.id;

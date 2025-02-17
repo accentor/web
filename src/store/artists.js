@@ -50,7 +50,7 @@ export default {
   },
   actions: {
     async index({ commit, rootState }, scope = new ArtistsScope()) {
-      const generator = api.artists.index(rootState.auth, scope);
+      const generator = api.artists.index(rootState.auth.apiToken, scope);
       try {
         await this.artistsRestored;
         await fetchAll(commit, generator, "setArtists", scope);
@@ -62,7 +62,7 @@ export default {
     },
     async create({ commit, rootState }, newArtist) {
       try {
-        const result = await api.artists.create(rootState.auth, {
+        const result = await api.artists.create(rootState.auth.apiToken, {
           artist: newArtist,
         });
         commit("setArtist", { id: result.id, artist: result });
@@ -74,7 +74,7 @@ export default {
     },
     async read({ commit, rootState }, id) {
       try {
-        const result = await api.artists.read(rootState.auth, id);
+        const result = await api.artists.read(rootState.auth.apiToken, id);
         await this.artistsRestored;
         commit("setArtist", { id, artist: result });
         return result.id;
@@ -85,7 +85,7 @@ export default {
     },
     async update({ commit, rootState }, { id, newArtist }) {
       try {
-        const result = await api.artists.update(rootState.auth, id, {
+        const result = await api.artists.update(rootState.auth.apiToken, id, {
           artist: newArtist,
         });
         commit("setArtist", { id, artist: result });
@@ -97,7 +97,7 @@ export default {
     },
     async destroy({ commit, rootState }, id) {
       try {
-        await api.artists.destroy(rootState.auth, id);
+        await api.artists.destroy(rootState.auth.apiToken, id);
         commit("albums/removeArtistOccurence", id, { root: true });
         commit("tracks/removeArtistOccurence", id, { root: true });
         commit("removeArtist", id);
@@ -109,7 +109,7 @@ export default {
     },
     async destroyEmpty({ commit, dispatch, rootState }) {
       try {
-        await api.artists.destroyEmpty(rootState.auth);
+        await api.artists.destroyEmpty(rootState.auth.apiToken);
         await dispatch("index");
         return true;
       } catch (error) {
@@ -119,7 +119,7 @@ export default {
     },
     async merge({ commit, rootState }, { newID, oldID }) {
       try {
-        await api.artists.merge(rootState.auth, newID, oldID);
+        await api.artists.merge(rootState.auth.apiToken, newID, oldID);
         commit(
           "tracks/updateArtistOccurence",
           { newID, oldID },

@@ -45,7 +45,7 @@ export default {
   },
   actions: {
     async index({ commit, rootState }, scope = new TracksScope()) {
-      const generator = api.plays.index(rootState.auth, scope);
+      const generator = api.plays.index(rootState.auth.apiToken, scope);
       try {
         await this.playsRestored;
         await fetchAll(commit, generator, "setPlays", scope);
@@ -57,7 +57,7 @@ export default {
     },
     async create({ commit, rootState }, track_id) {
       try {
-        const result = await api.plays.create(rootState.auth, {
+        const result = await api.plays.create(rootState.auth.apiToken, {
           play: {
             track_id,
             played_at: new Date(),

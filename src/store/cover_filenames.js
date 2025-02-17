@@ -48,7 +48,7 @@ export default {
   },
   actions: {
     async index({ commit, rootState }) {
-      const generator = api.cover_filenames.index(rootState.auth);
+      const generator = api.cover_filenames.index(rootState.auth.apiToken);
       try {
         await fetchAll(commit, generator, "setCoverFilenames");
         return true;
@@ -60,7 +60,7 @@ export default {
     async create({ commit, rootState }, newCoverFilename) {
       try {
         const result = await api.cover_filenames.create(
-          rootState.auth,
+          rootState.auth.apiToken,
           newCoverFilename,
         );
         commit("setCoverFilename", { id: result.id, coverFilename: result });
@@ -73,7 +73,7 @@ export default {
     async update({ commit, rootState }, { id, newCoverFilename }) {
       try {
         const result = await api.cover_filenames.update(
-          rootState.auth,
+          rootState.auth.apiToken,
           id,
           newCoverFilename,
         );
@@ -86,7 +86,7 @@ export default {
     },
     async destroy({ commit, rootState }, id) {
       try {
-        await api.cover_filenames.destroy(rootState.auth, id);
+        await api.cover_filenames.destroy(rootState.auth.apiToken, id);
         commit("removeCoverFilename", id);
         return true;
       } catch (error) {
