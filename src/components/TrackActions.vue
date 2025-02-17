@@ -209,7 +209,7 @@ export default {
   },
   computed: {
     ...mapGetters("auth", ["isModerator"]),
-    ...mapState("auth", ["secret", "device_id"]),
+    ...mapState("auth", ["apiToken"]),
     ...mapState("tracks", ["startLoading"]),
     ...mapState("codecs", ["codecs"]),
     ...mapState("locations", ["locations"]),
@@ -217,7 +217,7 @@ export default {
       return this.startLoading > this.track.loaded;
     },
     downloadURL() {
-      return `${baseURL}/tracks/${this.track.id}/download?secret=${this.secret}&device_id=${this.device_id}`;
+      return `${baseURL}/tracks/${this.track.id}/download?token=${this.apiToken}`;
     },
   },
   methods: {

@@ -111,7 +111,7 @@ export default {
   },
   actions: {
     async index({ commit, rootState }, scope = new TracksScope()) {
-      const generator = api.tracks.index(rootState.auth, scope);
+      const generator = api.tracks.index(rootState.auth.apiToken, scope);
       try {
         await this.tracksRestored;
         await fetchAll(commit, generator, "setTracks", scope);
@@ -123,7 +123,7 @@ export default {
     },
     async create({ commit, rootState }, newTrack) {
       try {
-        const result = await api.tracks.create(rootState.auth, {
+        const result = await api.tracks.create(rootState.auth.apiToken, {
           track: newTrack,
         });
         commit("setTrack", { id: result.id, track: result });
@@ -135,7 +135,7 @@ export default {
     },
     async read({ commit, rootState }, id) {
       try {
-        const track = await api.tracks.read(rootState.auth, id);
+        const track = await api.tracks.read(rootState.auth.apiToken, id);
         await this.tracksRestored;
         commit("setTrack", { id, track });
         return true;
@@ -146,7 +146,7 @@ export default {
     },
     async update({ commit, rootState }, { id, newTrack }) {
       try {
-        const result = await api.tracks.update(rootState.auth, id, {
+        const result = await api.tracks.update(rootState.auth.apiToken, id, {
           track: newTrack,
         });
         commit("setTrack", { id, track: result });
@@ -158,7 +158,7 @@ export default {
     },
     async destroy({ commit, rootState }, id) {
       try {
-        await api.tracks.destroy(rootState.auth, id);
+        await api.tracks.destroy(rootState.auth.apiToken, id);
         commit("removeTrack", id);
         return true;
       } catch (error) {
@@ -168,7 +168,7 @@ export default {
     },
     async merge({ commit, dispatch, rootState }, { newID, oldID }) {
       try {
-        await api.tracks.merge(rootState.auth, newID, oldID);
+        await api.tracks.merge(rootState.auth.apiToken, newID, oldID);
         await dispatch("read", newID);
         commit("removeTrack", oldID);
         return true;
