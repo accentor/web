@@ -57,7 +57,7 @@ export default {
       try {
         commit("setLoading", true);
         do {
-          const generator = api.rescans.index(rootState.auth);
+          const generator = api.rescans.index(rootState.auth.apiToken);
           await fetchAll(commit, generator, "setRescans");
           await new Promise((resolve) => setTimeout(resolve, 1000));
         } while (
@@ -79,7 +79,7 @@ export default {
         commit("setLoading", true);
         let result = null;
         do {
-          result = await api.rescans.show(rootState.auth, id);
+          result = await api.rescans.show(rootState.auth.apiToken, id);
           commit("setRescan", { id, rescan: result });
           await new Promise((resolve) => setTimeout(resolve, 1000));
         } while (
@@ -97,7 +97,7 @@ export default {
     async startAll({ commit, dispatch, rootState }) {
       commit("setLastClick", new Date());
       try {
-        await api.rescans.startAll(rootState.auth);
+        await api.rescans.startAll(rootState.auth.apiToken);
         setTimeout(() => dispatch("index"), 2500);
         return true;
       } catch (error) {
@@ -108,7 +108,7 @@ export default {
     async start({ commit, dispatch, rootState }, id) {
       commit("setLastClick", new Date());
       try {
-        const result = await api.rescans.start(rootState.auth, id);
+        const result = await api.rescans.start(rootState.auth.apiToken, id);
         result.running = true;
         commit("setRescan", { id, rescan: result });
         setTimeout(() => dispatch("show", id), 1000);

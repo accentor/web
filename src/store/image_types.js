@@ -48,7 +48,7 @@ export default {
   },
   actions: {
     async index({ commit, rootState }) {
-      const generator = api.image_types.index(rootState.auth);
+      const generator = api.image_types.index(rootState.auth.apiToken);
       try {
         await fetchAll(commit, generator, "setImageTypes");
         return true;
@@ -59,7 +59,7 @@ export default {
     },
     async create({ commit, rootState }, newImageType) {
       try {
-        const result = await api.image_types.create(rootState.auth, {
+        const result = await api.image_types.create(rootState.auth.apiToken, {
           image_type: newImageType,
         });
         commit("setImageType", { id: result.id, imageType: result });
@@ -71,9 +71,13 @@ export default {
     },
     async update({ commit, rootState }, { id, newImageType }) {
       try {
-        const result = await api.image_types.update(rootState.auth, id, {
-          image_type: newImageType,
-        });
+        const result = await api.image_types.update(
+          rootState.auth.apiToken,
+          id,
+          {
+            image_type: newImageType,
+          },
+        );
         commit("setImageType", { id, imageType: result });
         return true;
       } catch (error) {
@@ -83,7 +87,7 @@ export default {
     },
     async destroy({ commit, rootState }, id) {
       try {
-        await api.image_types.destroy(rootState.auth, id);
+        await api.image_types.destroy(rootState.auth.apiToken, id);
         commit("removeImageType", id);
         return true;
       } catch (error) {

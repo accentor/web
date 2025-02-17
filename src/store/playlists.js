@@ -49,7 +49,7 @@ export default {
   },
   actions: {
     async index({ commit, rootState }) {
-      const generator = api.playlists.index(rootState.auth);
+      const generator = api.playlists.index(rootState.auth.apiToken);
       try {
         await fetchAll(commit, generator, "setPlaylists");
         return true;
@@ -60,7 +60,7 @@ export default {
     },
     async create({ commit, rootState }, newPlaylist) {
       try {
-        const result = await api.playlists.create(rootState.auth, {
+        const result = await api.playlists.create(rootState.auth.apiToken, {
           playlist: newPlaylist,
         });
         commit("setPlaylist", { id: result.id, playlist: result });
@@ -72,7 +72,7 @@ export default {
     },
     async read({ commit, rootState }, id) {
       try {
-        const result = await api.playlists.read(rootState.auth, id);
+        const result = await api.playlists.read(rootState.auth.apiToken, id);
         commit("setPlaylist", { id, playlist: result });
         return result.id;
       } catch (error) {
@@ -82,7 +82,7 @@ export default {
     },
     async update({ commit, rootState }, { id, newPlaylist }) {
       try {
-        const result = await api.playlists.update(rootState.auth, id, {
+        const result = await api.playlists.update(rootState.auth.apiToken, id, {
           playlist: newPlaylist,
         });
         commit("setPlaylist", { id, playlist: result });
@@ -94,7 +94,7 @@ export default {
     },
     async addItem({ commit, rootState, dispatch }, { id, newItem }) {
       try {
-        await api.playlists.addItem(rootState.auth, id, {
+        await api.playlists.addItem(rootState.auth.apiToken, id, {
           playlist: newItem,
         });
         await dispatch("read", id);
@@ -105,7 +105,7 @@ export default {
     },
     async destroy({ commit, rootState }, id) {
       try {
-        await api.playlists.destroy(rootState.auth, id);
+        await api.playlists.destroy(rootState.auth.apiToken, id);
         commit("removePlaylist", id);
         return true;
       } catch (error) {

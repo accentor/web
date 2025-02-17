@@ -48,7 +48,7 @@ export default {
   },
   actions: {
     async index({ commit, rootState }) {
-      const generator = api.codec_conversions.index(rootState.auth);
+      const generator = api.codec_conversions.index(rootState.auth.apiToken);
       try {
         await fetchAll(commit, generator, "setCodecConversions");
         return true;
@@ -59,9 +59,12 @@ export default {
     },
     async create({ commit, rootState }, newCodecConversion) {
       try {
-        const result = await api.codec_conversions.create(rootState.auth, {
-          codec_conversion: newCodecConversion,
-        });
+        const result = await api.codec_conversions.create(
+          rootState.auth.apiToken,
+          {
+            codec_conversion: newCodecConversion,
+          },
+        );
         commit("setCodecConversion", {
           id: result.id,
           codecConversion: result,
@@ -74,9 +77,13 @@ export default {
     },
     async update({ commit, rootState }, { id, newCodecConversion }) {
       try {
-        const result = await api.codec_conversions.update(rootState.auth, id, {
-          codec_conversion: newCodecConversion,
-        });
+        const result = await api.codec_conversions.update(
+          rootState.auth.apiToken,
+          id,
+          {
+            codec_conversion: newCodecConversion,
+          },
+        );
         commit("setCodecConversion", { id, codecConversion: result });
         return true;
       } catch (error) {
@@ -86,7 +93,7 @@ export default {
     },
     async destroy({ commit, rootState }, id) {
       try {
-        await api.codec_conversions.destroy(rootState.auth, id);
+        await api.codec_conversions.destroy(rootState.auth.apiToken, id);
         commit("removeCodecConversion", id);
         return true;
       } catch (error) {
