@@ -156,7 +156,10 @@ export default {
       await this.$store.dispatch("plays/index");
     },
     async loadPlayStats() {
-      const gen = $api.plays.stats(this.$store.state.auth, this.playStatsScope);
+      const gen = $api.plays.stats(
+        this.$store.state.auth.apiToken,
+        this.playStatsScope,
+      );
       let done = false;
       let results = [];
       while (!done) {
