@@ -24,6 +24,8 @@ updates:
       patterns:
         - "eslint*"
   ignore:
+    - dependency-name: "eslint-plugin-vue"
+      update-types: ["version-update:semver-major"]
     - dependency-name: "eslint-plugin-vuetify"
       update-types: ["version-update:semver-major"]
     - dependency-name: "eslint"
