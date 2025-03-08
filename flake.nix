@@ -54,7 +54,7 @@
             packages = with pkgs; [
               nixpkgs-fmt
               yarn2nix
-              yarn
+              (yarn.override { nodejs = nodejs_20; })
             ];
           };
         };
