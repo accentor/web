@@ -101,7 +101,7 @@ export default {
   },
   actions: {
     async index({ commit, rootState }, scope = new AlbumsScope()) {
-      const generator = api.albums.index(rootState.auth, scope);
+      const generator = api.albums.index(rootState.auth.apiToken, scope);
       try {
         await this.albumsRestored;
         await fetchAll(commit, generator, "setAlbums", scope);
@@ -113,7 +113,7 @@ export default {
     },
     async create({ commit, rootState }, newAlbum) {
       try {
-        const result = await api.albums.create(rootState.auth, {
+        const result = await api.albums.create(rootState.auth.apiToken, {
           album: newAlbum,
         });
         commit("setAlbum", { id: result.id, album: result });
@@ -125,7 +125,7 @@ export default {
     },
     async read({ commit, rootState }, id) {
       try {
-        const result = await api.albums.read(rootState.auth, id);
+        const result = await api.albums.read(rootState.auth.apiToken, id);
         await this.albumsRestored;
         commit("setAlbum", { id, album: result });
         return result.id;
@@ -136,7 +136,7 @@ export default {
     },
     async update({ commit, rootState }, { id, newAlbum }) {
       try {
-        const result = await api.albums.update(rootState.auth, id, {
+        const result = await api.albums.update(rootState.auth.apiToken, id, {
           album: newAlbum,
         });
         commit("setAlbum", { id, album: result });
@@ -148,7 +148,7 @@ export default {
     },
     async destroy({ commit, rootState }, id) {
       try {
-        await api.albums.destroy(rootState.auth, id);
+        await api.albums.destroy(rootState.auth.apiToken, id);
         commit("removeAlbum", id);
         return true;
       } catch (error) {
@@ -158,7 +158,7 @@ export default {
     },
     async destroyEmpty({ commit, dispatch, rootState }) {
       try {
-        await api.albums.destroyEmpty(rootState.auth);
+        await api.albums.destroyEmpty(rootState.auth.apiToken);
         await dispatch("index");
         return true;
       } catch (error) {
@@ -168,7 +168,7 @@ export default {
     },
     async merge({ commit, rootState }, { newID, oldID }) {
       try {
-        await api.albums.merge(rootState.auth, newID, oldID);
+        await api.albums.merge(rootState.auth.apiToken, newID, oldID);
         commit("tracks/updateAlbumOccurence", { newID, oldID }, { root: true });
         commit("removeAlbum", oldID);
         return true;

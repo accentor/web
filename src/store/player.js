@@ -154,11 +154,10 @@ export default {
       return state.current >= 0 ? getters.playlistTracks[state.current] : null;
     },
     currentTrackURL(state, getters, rootState, rootGetters) {
-      const secret = rootState.auth.secret;
-      const device_id = rootState.auth.device_id;
+      const apiToken = rootState.auth.apiToken;
       const codecConversion =
         rootGetters["userSettings/codecConversion"]?.id ?? "";
-      const params = `/audio?secret=${secret}&device_id=${device_id}&codec_conversion_id=${codecConversion}`;
+      const params = `/audio?token=${apiToken}&codec_conversion_id=${codecConversion}`;
       const tracks = `${baseURL}/tracks/`;
       return (
         getters.currentTrack && `${tracks}${getters.currentTrack.id}${params}`

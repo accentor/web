@@ -48,7 +48,7 @@ export default {
   },
   actions: {
     async index({ commit, rootState }) {
-      const generator = api.codecs.index(rootState.auth);
+      const generator = api.codecs.index(rootState.auth.apiToken);
       try {
         await fetchAll(commit, generator, "setCodecs");
         return true;
@@ -59,7 +59,7 @@ export default {
     },
     async create({ commit, rootState }, newCodec) {
       try {
-        const result = await api.codecs.create(rootState.auth, {
+        const result = await api.codecs.create(rootState.auth.apiToken, {
           codec: newCodec,
         });
         commit("setCodec", { id: result.id, codec: result });
@@ -71,7 +71,7 @@ export default {
     },
     async update({ commit, rootState }, { id, newCodec }) {
       try {
-        const result = await api.codecs.update(rootState.auth, id, {
+        const result = await api.codecs.update(rootState.auth.apiToken, id, {
           codec: newCodec,
         });
         commit("setCodec", { id, codec: result });
@@ -83,7 +83,7 @@ export default {
     },
     async destroy({ commit, rootState }, id) {
       try {
-        await api.codecs.destroy(rootState.auth, id);
+        await api.codecs.destroy(rootState.auth.apiToken, id);
         commit("removeCodec", id);
         return true;
       } catch (error) {

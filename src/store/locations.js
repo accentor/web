@@ -48,7 +48,7 @@ export default {
   },
   actions: {
     async index({ commit, rootState }) {
-      const generator = api.locations.index(rootState.auth);
+      const generator = api.locations.index(rootState.auth.apiToken);
       try {
         await fetchAll(commit, generator, "setLocations");
         return true;
@@ -59,7 +59,7 @@ export default {
     },
     async create({ commit, rootState }, newLocation) {
       try {
-        const result = await api.locations.create(rootState.auth, {
+        const result = await api.locations.create(rootState.auth.apiToken, {
           location: newLocation,
         });
         commit("setLocation", { id: result.id, location: result });
@@ -71,7 +71,7 @@ export default {
     },
     async destroy({ commit, rootState }, id) {
       try {
-        await api.locations.destroy(rootState.auth, id);
+        await api.locations.destroy(rootState.auth.apiToken, id);
         commit("removeLocation", id);
         return true;
       } catch (error) {
