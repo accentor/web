@@ -66,11 +66,11 @@
       };
     }
     {
-      name = "_babel_eslint_parser___eslint_parser_7.26.10.tgz";
+      name = "_babel_eslint_parser___eslint_parser_7.27.0.tgz";
       path = fetchurl {
-        name = "_babel_eslint_parser___eslint_parser_7.26.10.tgz";
-        url  = "https://registry.yarnpkg.com/@babel/eslint-parser/-/eslint-parser-7.26.10.tgz";
-        sha512 = "QsfQZr4AiLpKqn7fz+j7SN+f43z2DZCgGyYbNJ2vJOqKfG4E6MZer1+jqGZqKJaxq/gdO2DC/nUu45+pOL5p2Q==";
+        name = "_babel_eslint_parser___eslint_parser_7.27.0.tgz";
+        url  = "https://registry.yarnpkg.com/@babel/eslint-parser/-/eslint-parser-7.27.0.tgz";
+        sha512 = "dtnzmSjXfgL/HDgMcmsLSzyGbEosi4DrGWoCNfuI+W4IkVJw6izpTe7LtOdwAXnkDqw5yweboYCTkM2rQizCng==";
       };
     }
     {
