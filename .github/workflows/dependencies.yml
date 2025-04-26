@@ -21,6 +21,6 @@ jobs:
           nix_path: nixpkgs=https://github.com/NixOS/nixpkgs/archive/refs/heads/nixos-unstable.tar.gz
       - name: Run yarn2nix
         run: nix-shell -p yarn2nix --run "yarn2nix > yarn.nix"
-      - uses: stefanzweifel/git-auto-commit-action@v5.1.0
+      - uses: stefanzweifel/git-auto-commit-action@v5.2.0
         with:
           commit_message: "Update yarn.nix"
