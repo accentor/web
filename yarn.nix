@@ -4186,11 +4186,11 @@
       };
     }
     {
-      name = "http_proxy_middleware___http_proxy_middleware_2.0.7.tgz";
+      name = "http_proxy_middleware___http_proxy_middleware_2.0.9.tgz";
       path = fetchurl {
-        name = "http_proxy_middleware___http_proxy_middleware_2.0.7.tgz";
-        url  = "https://registry.yarnpkg.com/http-proxy-middleware/-/http-proxy-middleware-2.0.7.tgz";
-        sha512 = "fgVY8AV7qU7z/MmXJ/rxwbrtQH4jBQ9m7kp3llF0liB7glmFeVZFBepQb32T3y8n8k2+AEYuMPCpinYW+/CuRA==";
+        name = "http_proxy_middleware___http_proxy_middleware_2.0.9.tgz";
+        url  = "https://registry.yarnpkg.com/http-proxy-middleware/-/http-proxy-middleware-2.0.9.tgz";
+        sha512 = "c1IyJYLYppU574+YI7R4QyX2ystMtVXZwIdzazUIPIJsHuWNd+mho2j+bKoHftndicGj9yh+xjd+l0yj7VeT1Q==";
       };
     }
     {
