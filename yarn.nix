@@ -1338,11 +1338,11 @@
       };
     }
     {
-      name = "_pkgr_core___core_0.2.0.tgz";
+      name = "_pkgr_core___core_0.2.4.tgz";
       path = fetchurl {
-        name = "_pkgr_core___core_0.2.0.tgz";
-        url  = "https://registry.yarnpkg.com/@pkgr/core/-/core-0.2.0.tgz";
-        sha512 = "vsJDAkYR6qCPu+ioGScGiMYR7LvZYIXh/dlQeviqoTWNCVfKTLYD/LkNWH4Mxsv2a5vpIRc77FN5DnmK1eBggQ==";
+        name = "_pkgr_core___core_0.2.4.tgz";
+        url  = "https://registry.yarnpkg.com/@pkgr/core/-/core-0.2.4.tgz";
+        sha512 = "ROFF39F6ZrnzSUEmQQZUar0Jt4xVoP9WnDRdWwF4NNcXs3xBTLgBUDoOwW141y1jP+S8nahIbdxbFC7IShw9Iw==";
       };
     }
     {
@@ -3378,11 +3378,11 @@
       };
     }
     {
-      name = "eslint_plugin_prettier___eslint_plugin_prettier_5.4.0.tgz";
+      name = "eslint_plugin_prettier___eslint_plugin_prettier_5.4.1.tgz";
       path = fetchurl {
-        name = "eslint_plugin_prettier___eslint_plugin_prettier_5.4.0.tgz";
-        url  = "https://registry.yarnpkg.com/eslint-plugin-prettier/-/eslint-plugin-prettier-5.4.0.tgz";
-        sha512 = "BvQOvUhkVQM1i63iMETK9Hjud9QhqBnbtT1Zc642p9ynzBuCe5pybkOnvqZIBypXmMlsGcnU4HZ8sCTPfpAexA==";
+        name = "eslint_plugin_prettier___eslint_plugin_prettier_5.4.1.tgz";
+        url  = "https://registry.yarnpkg.com/eslint-plugin-prettier/-/eslint-plugin-prettier-5.4.1.tgz";
+        sha512 = "9dF+KuU/Ilkq27A8idRP7N2DH8iUR6qXcjF3FR2wETY21PZdBrIjwCau8oboyGj9b7etWmTGEeM8e7oOed6ZWg==";
       };
     }
     {
@@ -6834,11 +6834,11 @@
       };
     }
     {
-      name = "synckit___synckit_0.11.2.tgz";
+      name = "synckit___synckit_0.11.8.tgz";
       path = fetchurl {
-        name = "synckit___synckit_0.11.2.tgz";
-        url  = "https://registry.yarnpkg.com/synckit/-/synckit-0.11.2.tgz";
-        sha512 = "1IUffI8zZ8qUMB3NUJIjk0RpLroG/8NkQDAWH1NbB2iJ0/5pn3M8rxfNzMz4GH9OnYaGYn31LEDSXJp/qIlxgA==";
+        name = "synckit___synckit_0.11.8.tgz";
+        url  = "https://registry.yarnpkg.com/synckit/-/synckit-0.11.8.tgz";
+        sha512 = "+XZ+r1XGIJGeQk3VvXhT6xx/VpbHsRzsTkGgF6E5RX9TTXD0118l87puaEBZ566FhqblC6U0d4XnubznJDm30A==";
       };
     }
     {
@@ -6943,14 +6943,6 @@
         name = "tslib___tslib_2.6.2.tgz";
         url  = "https://registry.yarnpkg.com/tslib/-/tslib-2.6.2.tgz";
         sha512 = "AEYxH93jGFPn/a2iVAwW87VuUIkR1FVUKB77NwMF7nBTDkDrrT/Hpt/IrCJ0QXhW27jTBDcf5ZY7w6RiqTMw2Q==";
-      };
-    }
-    {
-      name = "tslib___tslib_2.8.1.tgz";
-      path = fetchurl {
-        name = "tslib___tslib_2.8.1.tgz";
-        url  = "https://registry.yarnpkg.com/tslib/-/tslib-2.8.1.tgz";
-        sha512 = "oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w==";
       };
     }
     {
