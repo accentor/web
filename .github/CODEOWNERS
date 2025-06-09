@@ -1,0 +1,5 @@
+* @chvp @robbevp
+package.json @chvp
+yarn.lock @chvp
+yarn.nix @chvp
+.github/* @chvp
