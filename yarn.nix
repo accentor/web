@@ -1762,11 +1762,11 @@
       };
     }
     {
-      name = "_vue_cli_plugin_eslint___cli_plugin_eslint_5.0.8.tgz";
+      name = "_vue_cli_plugin_eslint___cli_plugin_eslint_5.0.9.tgz";
       path = fetchurl {
-        name = "_vue_cli_plugin_eslint___cli_plugin_eslint_5.0.8.tgz";
-        url  = "https://registry.yarnpkg.com/@vue/cli-plugin-eslint/-/cli-plugin-eslint-5.0.8.tgz";
-        sha512 = "d11+I5ONYaAPW1KyZj9GlrV/E6HZePq5L5eAF5GgoVdu6sxr6bDgEoxzhcS1Pk2eh8rn1MxG/FyyR+eCBj/CNg==";
+        name = "_vue_cli_plugin_eslint___cli_plugin_eslint_5.0.9.tgz";
+        url  = "https://registry.yarnpkg.com/@vue/cli-plugin-eslint/-/cli-plugin-eslint-5.0.9.tgz";
+        sha512 = "OfAa85qhP0dKSprI8+9qjbXW8BzOlOvEtXwdrTrAKlD6aN8oa/u6k4vbfJGdYbpsbpkj8FXYdCRkTgNG8KZbxg==";
       };
     }
     {
@@ -1794,11 +1794,11 @@
       };
     }
     {
-      name = "_vue_cli_shared_utils___cli_shared_utils_5.0.8.tgz";
+      name = "_vue_cli_shared_utils___cli_shared_utils_5.0.9.tgz";
       path = fetchurl {
-        name = "_vue_cli_shared_utils___cli_shared_utils_5.0.8.tgz";
-        url  = "https://registry.yarnpkg.com/@vue/cli-shared-utils/-/cli-shared-utils-5.0.8.tgz";
-        sha512 = "uK2YB7bBVuQhjOJF+O52P9yFMXeJVj7ozqJkwYE9PlMHL1LMHjtCYm4cSdOebuPzyP+/9p0BimM/OqxsevIopQ==";
+        name = "_vue_cli_shared_utils___cli_shared_utils_5.0.9.tgz";
+        url  = "https://registry.yarnpkg.com/@vue/cli-shared-utils/-/cli-shared-utils-5.0.9.tgz";
+        sha512 = "lf4KykiG8j9KwvNVi7fKtASmHuLsxCcCsflVU2b2CHMRuR4weOIV3zuuCrjWKjk0APn/MHJhgCjJGzHMbTtd5w==";
       };
     }
     {
