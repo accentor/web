@@ -5226,11 +5226,11 @@
       };
     }
     {
-      name = "node_forge___node_forge_1.3.1.tgz";
+      name = "node_forge___node_forge_1.3.2.tgz";
       path = fetchurl {
-        name = "node_forge___node_forge_1.3.1.tgz";
-        url  = "https://registry.yarnpkg.com/node-forge/-/node-forge-1.3.1.tgz";
-        sha512 = "dPEtOeMvF9VMcYV/1Wb8CPoVAXtp6MKMlcbAt4ddqmGqUJ6fQZFXkNZNkNlfevtNkGtaSoXf/vNNNSvgrdXwtA==";
+        name = "node_forge___node_forge_1.3.2.tgz";
+        url  = "https://registry.yarnpkg.com/node-forge/-/node-forge-1.3.2.tgz";
+        sha512 = "6xKiQ+cph9KImrRh0VsjH2d8/GXA4FIMlgU4B757iI1ApvcyA9VlouP0yZJha01V+huImO+kKMU7ih+2+E14fw==";
       };
     }
     {
