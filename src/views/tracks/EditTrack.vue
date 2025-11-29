@@ -30,7 +30,14 @@
             item-value="id"
             :label="$tc('music.albums', 1)"
             v-model="newTrack.album_id"
-          />
+          >
+            <template v-slot:item="{ item }">
+              {{ item.title }}
+              <span class="grey--text pl-2 ml-auto text-body-2">
+                {{ item.id }}
+              </span>
+            </template>
+          </VAutocomplete>
           <VCombobox
             :items="sortedGenres"
             :filter="filterName"
