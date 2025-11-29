@@ -38,7 +38,14 @@
                 :label="$tc('music.artists', 1)"
                 return-object
                 v-model="mergeArtist"
-              />
+              >
+                <template v-slot:item="{ item }">
+                  {{ item.name }}
+                  <span class="grey--text pl-2 ml-auto text-body-2">
+                    {{ item.id }}
+                  </span>
+                </template>
+              </VCombobox>
             </VCol>
           </VRow>
         </VContainer>

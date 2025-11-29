@@ -153,14 +153,21 @@
                   <VAutocomplete
                     :items="sortedAlbums"
                     :filter="filterTitle"
-                    item-text="title"
                     item-value="id"
+                    item-text="title"
                     label="Album"
                     hide-details="true"
                     v-model="album.album"
                     :rules="rules.album"
                     v-if="album.enabled"
-                  />
+                  >
+                    <template v-slot:item="{ item }">
+                      {{ item.title }}
+                      <span class="grey--text pl-2 ml-auto text-body-2">
+                        {{ item.id }}
+                      </span>
+                    </template>
+                  </VAutocomplete>
                 </VCol>
               </VRow>
             </VContainer>
