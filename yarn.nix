@@ -3986,11 +3986,11 @@
       };
     }
     {
-      name = "gsap___gsap_3.13.0.tgz";
+      name = "gsap___gsap_3.14.2.tgz";
       path = fetchurl {
-        name = "gsap___gsap_3.13.0.tgz";
-        url  = "https://registry.yarnpkg.com/gsap/-/gsap-3.13.0.tgz";
-        sha512 = "QL7MJ2WMjm1PHWsoFrAQH/J8wUeqZvMtHO58qdekHpCfhvhSL4gSiz6vJf5EeMP0LOn3ZCprL2ki/gjED8ghVw==";
+        name = "gsap___gsap_3.14.2.tgz";
+        url  = "https://registry.yarnpkg.com/gsap/-/gsap-3.14.2.tgz";
+        sha512 = "P8/mMxVLU7o4+55+1TCnQrPmgjPKnwkzkXOK1asnR9Jg2lna4tEY5qBJjMmAaOBDDZWtlRjBXjLa0w53G/uBLA==";
       };
     }
     {
