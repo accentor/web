@@ -1482,11 +1482,11 @@
       };
     }
     {
-      name = "js_yaml___js_yaml_4.1.0.tgz";
+      name = "js_yaml___js_yaml_4.1.1.tgz";
       path = fetchurl {
-        name = "js_yaml___js_yaml_4.1.0.tgz";
-        url  = "https://registry.yarnpkg.com/js-yaml/-/js-yaml-4.1.0.tgz";
-        sha512 = "wpxZs9NoxZaJESJGIZTyDEaYpl0FKSA+FB9aJiyemKhMwkxQg63h4T1KJgUGHpTqPDNRcmmYLugrRjJlBtWvRA==";
+        name = "js_yaml___js_yaml_4.1.1.tgz";
+        url  = "https://registry.yarnpkg.com/js-yaml/-/js-yaml-4.1.1.tgz";
+        sha512 = "qQKT4zQxXl8lLwBtHMWwaTcGfFOZviOJet3Oy/xmGk2gZH677CJM9EvtfdSkgWcATZhj/55JZ0rmy3myCT5lsA==";
       };
     }
     {
