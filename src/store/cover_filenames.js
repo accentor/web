@@ -1,6 +1,8 @@
 import Vue from "vue";
 import api from "@/api";
 import { fetchAll } from "./actions";
+import { useErrorsStore } from "./errors";
+import { useAuthStore } from "./auth";
 
 export default {
   namespaced: true,
@@ -47,50 +49,50 @@ export default {
     },
   },
   actions: {
-    async index({ commit, rootState }) {
-      const generator = api.cover_filenames.index(rootState.auth.apiToken);
+    async index({ commit }) {
+      const generator = api.cover_filenames.index(useAuthStore().apiToken);
       try {
         await fetchAll(commit, generator, "setCoverFilenames");
         return true;
       } catch (error) {
-        commit("addError", error, { root: true });
+        useErrorsStore().addError(error);
         return false;
       }
     },
-    async create({ commit, rootState }, newCoverFilename) {
+    async create({ commit }, newCoverFilename) {
       try {
         const result = await api.cover_filenames.create(
-          rootState.auth.apiToken,
+          useAuthStore().apiToken,
           newCoverFilename,
         );
         commit("setCoverFilename", { id: result.id, coverFilename: result });
         return result.id;
       } catch (error) {
-        commit("addError", error, { root: true });
+        useErrorsStore().addError(error);
         return false;
       }
     },
-    async update({ commit, rootState }, { id, newCoverFilename }) {
+    async update({ commit }, { id, newCoverFilename }) {
       try {
         const result = await api.cover_filenames.update(
-          rootState.auth.apiToken,
+          useAuthStore().apiToken,
           id,
           newCoverFilename,
         );
         commit("setCoverFilename", { id, coverFilename: result });
         return true;
       } catch (error) {
-        commit("addError", error, { root: true });
+        useErrorsStore().addError(error);
         return false;
       }
     },
-    async destroy({ commit, rootState }, id) {
+    async destroy({ commit }, id) {
       try {
-        await api.cover_filenames.destroy(rootState.auth.apiToken, id);
+        await api.cover_filenames.destroy(useAuthStore().apiToken, id);
         commit("removeCoverFilename", id);
         return true;
       } catch (error) {
-        commit("addError", error, { root: true });
+        useErrorsStore().addError(error);
         return false;
       }
     },

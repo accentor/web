@@ -9,8 +9,9 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
 import UserForm from "../../components/UserForm.vue";
+import { useUsersStore } from "../../store/users";
+import { mapState } from "pinia";
 
 export default {
   name: "EditUser",
@@ -19,7 +20,7 @@ export default {
   },
   components: { UserForm },
   computed: {
-    ...mapState("users", ["users"]),
+    ...mapState(useUsersStore, ["users"]),
     user: function () {
       return this.users[this.$route.params.id];
     },

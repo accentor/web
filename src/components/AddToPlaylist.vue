@@ -65,6 +65,8 @@
 
 <script>
 import { mapActions, mapGetters } from "vuex";
+import { mapState } from "pinia";
+import { useAuthStore } from "../store/auth";
 
 export default {
   name: "AddToPlaylistDialog",
@@ -85,7 +87,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters("auth", ["currentUser"]),
+    ...mapState(useAuthStore, ["currentUser"]),
     ...mapGetters("playlists", ["editablePlaylists"]),
     playlistOptions() {
       return structuredClone(this.editablePlaylists).reduce((options, p) => {

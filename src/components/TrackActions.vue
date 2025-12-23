@@ -195,10 +195,12 @@
 </template>
 
 <script>
-import { mapActions, mapGetters, mapState } from "vuex";
+import { mapActions, mapState } from "vuex";
+import { mapState as mapPiniaState } from "pinia";
 import { baseURL } from "../api";
 import EditReviewComment from "./EditReviewComment.vue";
 import AddToPlaylist from "./AddToPlaylist.vue";
+import { useAuthStore } from "../store/auth";
 
 export default {
   name: "TrackActions",
@@ -207,8 +209,7 @@ export default {
     track: { type: Object, required: true },
   },
   computed: {
-    ...mapGetters("auth", ["isModerator"]),
-    ...mapState("auth", ["apiToken"]),
+    ...mapPiniaState(useAuthStore, ["isModerator", "apiToken"]),
     ...mapState("tracks", ["startLoading"]),
     ...mapState("codecs", ["codecs"]),
     ...mapState("locations", ["locations"]),

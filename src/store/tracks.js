@@ -3,6 +3,8 @@ import api from "@/api";
 import { fetchAll } from "./actions";
 import { compareTracks } from "../comparators";
 import { TracksScope } from "@accentor/api-client-js";
+import { useAuthStore } from "./auth";
+import { useErrorsStore } from "./errors";
 
 export default {
   namespaced: true,
@@ -110,70 +112,70 @@ export default {
     },
   },
   actions: {
-    async index({ commit, rootState }, scope = new TracksScope()) {
-      const generator = api.tracks.index(rootState.auth.apiToken, scope);
+    async index({ commit }, scope = new TracksScope()) {
+      const generator = api.tracks.index(useAuthStore().apiToken, scope);
       try {
         await this.tracksRestored;
         await fetchAll(commit, generator, "setTracks", scope);
         return true;
       } catch (error) {
-        commit("addError", error, { root: true });
+        useErrorsStore().addError(error);
         return false;
       }
     },
-    async create({ commit, rootState }, newTrack) {
+    async create({ commit }, newTrack) {
       try {
-        const result = await api.tracks.create(rootState.auth.apiToken, {
+        const result = await api.tracks.create(useAuthStore().apiToken, {
           track: newTrack,
         });
         commit("setTrack", { id: result.id, track: result });
         return result.id;
       } catch (error) {
-        commit("addError", error, { root: true });
+        useErrorsStore().addError(error);
         return false;
       }
     },
-    async read({ commit, rootState }, id) {
+    async read({ commit }, id) {
       try {
-        const track = await api.tracks.read(rootState.auth.apiToken, id);
+        const track = await api.tracks.read(useAuthStore().apiToken, id);
         await this.tracksRestored;
         commit("setTrack", { id, track });
         return true;
       } catch (error) {
-        commit("addError", error, { root: true });
+        useErrorsStore().addError(error);
         return false;
       }
     },
-    async update({ commit, rootState }, { id, newTrack }) {
+    async update({ commit }, { id, newTrack }) {
       try {
-        const result = await api.tracks.update(rootState.auth.apiToken, id, {
+        const result = await api.tracks.update(useAuthStore().apiToken, id, {
           track: newTrack,
         });
         commit("setTrack", { id, track: result });
         return true;
       } catch (error) {
-        commit("addError", error, { root: true });
+        useErrorsStore().addError(error);
         return false;
       }
     },
-    async destroy({ commit, rootState }, id) {
+    async destroy({ commit }, id) {
       try {
-        await api.tracks.destroy(rootState.auth.apiToken, id);
+        await api.tracks.destroy(useAuthStore().apiToken, id);
         commit("removeTrack", id);
         return true;
       } catch (error) {
-        commit("addError", error, { root: true });
+        useErrorsStore().addError(error);
         return false;
       }
     },
-    async merge({ commit, dispatch, rootState }, { newID, oldID }) {
+    async merge({ commit, dispatch }, { newID, oldID }) {
       try {
-        await api.tracks.merge(rootState.auth.apiToken, newID, oldID);
+        await api.tracks.merge(useAuthStore().apiToken, newID, oldID);
         await dispatch("read", newID);
         commit("removeTrack", oldID);
         return true;
       } catch (error) {
-        commit("addError", error, { root: true });
+        useErrorsStore().addError(error);
         return false;
       }
     },

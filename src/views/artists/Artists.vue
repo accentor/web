@@ -57,6 +57,8 @@ import { mapGetters } from "vuex";
 import ArtistCard from "../../components/ArtistCard.vue";
 import Paginated from "../../mixins/Paginated";
 import Searchable from "../../mixins/Searchable";
+import { useAuthStore } from "../../store/auth";
+import { mapState } from "pinia";
 
 export default {
   name: "artists",
@@ -66,7 +68,7 @@ export default {
   },
   mixins: [Paginated, Searchable],
   computed: {
-    ...mapGetters("auth", ["isModerator"]),
+    ...mapState(useAuthStore, ["isModerator"]),
     ...mapGetters("artists", {
       artists: "artistsByName",
     }),

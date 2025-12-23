@@ -53,8 +53,10 @@
 </template>
 
 <script>
-import { mapActions, mapGetters, mapState } from "vuex";
+import { mapActions, mapState } from "vuex";
+import { mapState as mapPiniaState } from "pinia";
 import GenreMergeDialog from "./GenreMergeDialog.vue";
+import { useAuthStore } from "../store/auth";
 
 export default {
   name: "GenreActions",
@@ -68,7 +70,7 @@ export default {
     },
   },
   computed: {
-    ...mapGetters("auth", ["isModerator"]),
+    ...mapPiniaState(useAuthStore, ["isModerator"]),
     ...mapState("genres", ["startLoading"]),
     waitingForReload() {
       return this.startLoading > this.genre.loaded;

@@ -58,7 +58,9 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
+import { mapActions } from "vuex";
+import { mapState } from "pinia";
+import { useAuthStore } from "../store/auth";
 
 export default {
   name: "AlbumMergeDialog",
@@ -79,7 +81,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters("auth", ["isModerator"]),
+    ...mapState(useAuthStore, ["isModerator"]),
     sortedAlbums() {
       const getter = this.$store.getters["albums/albumsByTitle"];
       return getter.filter((a) => {

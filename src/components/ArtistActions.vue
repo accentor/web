@@ -69,10 +69,12 @@
 </template>
 
 <script>
-import { mapActions, mapGetters, mapState } from "vuex";
+import { mapActions, mapState } from "vuex";
+import { mapState as mapPiniaState } from "pinia";
 import EditReviewComment from "./EditReviewComment.vue";
 import ArtistMergeDialog from "./ArtistMergeDialog.vue";
 import AddToPlaylist from "./AddToPlaylist.vue";
+import { useAuthStore } from "../store/auth";
 
 export default {
   name: "ArtistActions",
@@ -88,7 +90,7 @@ export default {
     },
   },
   computed: {
-    ...mapGetters("auth", ["isModerator"]),
+    ...mapPiniaState(useAuthStore, ["isModerator"]),
     ...mapState("artists", ["startLoading"]),
     waitingForReload() {
       return this.startLoading > this.artist.loaded;

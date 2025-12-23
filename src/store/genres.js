@@ -2,6 +2,8 @@ import Vue from "vue";
 import api from "@/api";
 import { fetchAll } from "./actions";
 import { compareStrings } from "../comparators";
+import { useErrorsStore } from "./errors";
+import { useAuthStore } from "./auth";
 
 export default {
   namespaced: true,
@@ -48,81 +50,81 @@ export default {
     },
   },
   actions: {
-    async index({ commit, rootState }) {
-      const generator = api.genres.index(rootState.auth.apiToken);
+    async index({ commit }) {
+      const generator = api.genres.index(useAuthStore().apiToken);
       try {
         await this.genresRestored;
         await fetchAll(commit, generator, "setGenres");
         return true;
       } catch (error) {
-        commit("addError", error, { root: true });
+        useErrorsStore().addError(error);
         return false;
       }
     },
-    async create({ commit, rootState }, newGenre) {
+    async create({ commit }, newGenre) {
       try {
-        const result = await api.genres.create(rootState.auth.apiToken, {
+        const result = await api.genres.create(useAuthStore().apiToken, {
           genre: newGenre,
         });
         commit("setGenre", { id: result.id, genre: result });
         return result.id;
       } catch (error) {
-        commit("addError", error, { root: true });
+        useErrorsStore().addError(error);
         return false;
       }
     },
-    async read({ commit, rootState }, id) {
+    async read({ commit }, id) {
       try {
-        const result = await api.genres.read(rootState.auth.apiToken, id);
+        const result = await api.genres.read(useAuthStore().apiToken, id);
         await this.genresRestored;
         commit("setGenre", { id, genre: result });
         return result.id;
       } catch (error) {
-        commit("addError", error, { root: true });
+        useErrorsStore().addError(error);
         return false;
       }
     },
-    async update({ commit, rootState }, { id, newGenre }) {
+    async update({ commit }, { id, newGenre }) {
       try {
-        const result = await api.genres.update(rootState.auth.apiToken, id, {
+        const result = await api.genres.update(useAuthStore().apiToken, id, {
           genre: newGenre,
         });
         commit("setGenre", { id, genre: result });
         return true;
       } catch (error) {
-        commit("addError", error, { root: true });
+        useErrorsStore().addError(error);
         return false;
       }
     },
-    async destroy({ commit, rootState }, id) {
+    async destroy({ commit }, id) {
       try {
-        await api.genres.destroy(rootState.auth.apiToken, id);
+        await api.genres.destroy(useAuthStore().apiToken, id);
         commit("tracks/removeGenreOccurence", id, { root: true });
         commit("removeGenre", id);
         return true;
       } catch (error) {
-        commit("addError", error, { root: true });
+        useErrorsStore().addError(error);
         return false;
       }
     },
-    async destroyEmpty({ commit, dispatch, rootState }) {
+    async destroyEmpty({ dispatch }) {
       try {
-        await api.genres.destroyEmpty(rootState.auth.apiToken);
+        await api.genres.destroyEmpty(useAuthStore().apiToken);
         await dispatch("index");
         return true;
       } catch (error) {
-        commit("addError", error, { root: true });
+        useErrorsStore().addError(error);
         return false;
       }
     },
-    async merge({ commit, rootState }, { newID, oldID }) {
+    async merge({ commit }, { newID, oldID }) {
       try {
-        await api.genres.merge(rootState.auth.apiToken, newID, oldID);
+        await api.genres.merge(useAuthStore().apiToken, newID, oldID);
         commit("tracks/updateGenreOccurence", { newID, oldID }, { root: true });
         commit("removeGenre", oldID);
         return true;
       } catch (error) {
-        commit("addError", error, { root: true });
+        useErrorsStore().addError(error);
         return false;
       }
     },

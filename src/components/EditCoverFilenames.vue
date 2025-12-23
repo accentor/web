@@ -12,6 +12,8 @@
 <script>
 import { mapGetters } from "vuex";
 import CoverFilenameForm from "./CoverFilenameForm.vue";
+import { useAuthStore } from "../store/auth";
+import { mapState } from "pinia";
 
 export default {
   name: "EditCoverFilenames",
@@ -21,7 +23,7 @@ export default {
   },
   computed: {
     ...mapGetters("coverFilenames", ["coverFilenames"]),
-    ...mapGetters("auth", ["isModerator"]),
+    ...mapState(useAuthStore, ["isModerator"]),
   },
 };
 </script>

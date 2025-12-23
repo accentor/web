@@ -53,12 +53,14 @@
 </template>
 
 <script>
-import { mapActions, mapGetters, mapState } from "vuex";
+import { mapActions, mapState } from "vuex";
+import { mapState as mapPiniaState } from "pinia";
 import AlbumCard from "../../components/AlbumCard.vue";
 import LabelActions from "@/components/LabelActions.vue";
 import Paginated from "../../mixins/Paginated";
 import Searchable from "../../mixins/Searchable";
 import { AlbumsScope } from "@accentor/api-client-js";
+import { useAuthStore } from "../../store/auth";
 
 export default {
   name: "LabelView",
@@ -80,7 +82,7 @@ export default {
     },
   },
   computed: {
-    ...mapGetters("auth", ["isModerator"]),
+    ...mapPiniaState(useAuthStore, ["isModerator"]),
     ...mapState("labels", ["labels"]),
     albums: function () {
       return this.$store.getters["albums/albumsFilterByLabel"](

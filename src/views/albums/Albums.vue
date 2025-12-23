@@ -53,9 +53,11 @@
 
 <script>
 import { mapActions, mapGetters } from "vuex";
+import { mapState } from "pinia";
 import AlbumCard from "../../components/AlbumCard.vue";
 import Paginated from "../../mixins/Paginated";
 import Searchable from "../../mixins/Searchable";
+import { useAuthStore } from "@/store/auth";
 
 export default {
   name: "albums",
@@ -73,7 +75,7 @@ export default {
     },
   },
   computed: {
-    ...mapGetters("auth", ["isModerator"]),
+    ...mapState(useAuthStore, ["isModerator"]),
     ...mapGetters("albums", {
       albums: "albumsByTitle",
     }),

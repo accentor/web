@@ -181,6 +181,9 @@
 
 <script>
 import { mapGetters, mapState } from "vuex";
+import { mapActions, mapState as mapPiniaState } from "pinia";
+import { useAuthStore } from "@/store/auth";
+import { useUsersStore } from "@/store/users";
 import Errors from "../components/Errors.vue";
 import Player from "../components/Player.vue";
 
@@ -218,16 +221,18 @@ export default {
     },
   },
   computed: {
-    ...mapGetters("auth", ["isModerator"]),
+    ...mapPiniaState(useAuthStore, ["isModerator"]),
     ...mapGetters(["numberOfFlaggedItems"]),
     ...mapGetters("rescan", ["finishedAt"]),
     ...mapState("userSettings", ["locale"]),
   },
   methods: {
+    ...mapActions(useAuthStore, { authIndex: "index" }),
+    ...mapActions(useUsersStore, { usersIndex: "index" }),
     async loadData() {
       this.loading = true;
       let pendingResults = [];
-      pendingResults.push(this.$store.dispatch("auth/index"));
+      pendingResults.push(this.authIndex());
       pendingResults.push(this.$store.dispatch("albums/index"));
       pendingResults.push(this.$store.dispatch("artists/index"));
       pendingResults.push(this.$store.dispatch("codecConversions/index"));
@@ -236,7 +241,7 @@ export default {
       pendingResults.push(this.$store.dispatch("playlists/index"));
       pendingResults.push(this.$store.dispatch("plays/index"));
       pendingResults.push(this.$store.dispatch("tracks/index"));
-      pendingResults.push(this.$store.dispatch("users/index"));
+      pendingResults.push(this.usersIndex());
       try {
         await Promise.all(pendingResults);
       } finally {

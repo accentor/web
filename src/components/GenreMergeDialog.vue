@@ -62,7 +62,9 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
+import { mapActions } from "vuex";
+import { useAuthStore } from "../store/auth";
+import { mapState } from "pinia";
 
 export default {
   name: "GenreMergeDialog",
@@ -83,7 +85,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters("auth", ["isModerator"]),
+    ...mapState(useAuthStore, ["isModerator"]),
     sortedGenres() {
       const getter = this.$store.getters["genres/genresByName"];
       return getter.filter((g) => {

@@ -1,6 +1,8 @@
 import api from "@/api";
 import { TracksScope } from "@accentor/api-client-js";
 import { fetchAll } from "./actions";
+import { useErrorsStore } from "./errors";
+import { useAuthStore } from "./auth";
 
 export default {
   namespaced: true,
@@ -44,20 +46,20 @@ export default {
     },
   },
   actions: {
-    async index({ commit, rootState }, scope = new TracksScope()) {
-      const generator = api.plays.index(rootState.auth.apiToken, scope);
+    async index({ commit }, scope = new TracksScope()) {
+      const generator = api.plays.index(useAuthStore().apiToken, scope);
       try {
         await this.playsRestored;
         await fetchAll(commit, generator, "setPlays", scope);
         return true;
       } catch (error) {
-        commit("addError", error, { root: true });
+        useErrorsStore().addError(error);
         return false;
       }
     },
-    async create({ commit, rootState }, track_id) {
+    async create({ commit }, track_id) {
       try {
-        const result = await api.plays.create(rootState.auth.apiToken, {
+        const result = await api.plays.create(useAuthStore().apiToken, {
           play: {
             track_id,
             played_at: new Date(),
@@ -66,7 +68,7 @@ export default {
         commit("setPlay", { id: result.id, play: result });
         return result.id;
       } catch (error) {
-        commit("addError", error, { root: true });
+        useErrorsStore().addError(error);
         return false;
       }
     },

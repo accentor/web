@@ -104,10 +104,12 @@
   </span>
 </template>
 <script>
-import { mapActions, mapGetters, mapState } from "vuex";
+import { mapActions, mapState } from "vuex";
+import { mapState as mapPiniaState } from "pinia";
 import EditReviewComment from "./EditReviewComment.vue";
 import AddToPlaylist from "./AddToPlaylist.vue";
 import AlbumMergeDialog from "./AlbumMergeDialog.vue";
+import { useAuthStore } from "../store/auth";
 
 export default {
   name: "AlbumActions",
@@ -119,7 +121,7 @@ export default {
     },
   },
   computed: {
-    ...mapGetters("auth", ["isModerator"]),
+    ...mapPiniaState(useAuthStore, ["isModerator"]),
     ...mapState("albums", ["startLoading"]),
     tracks() {
       return this.$store.getters["tracks/tracksFilterByAlbum"](this.album.id);

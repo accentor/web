@@ -8,6 +8,8 @@
 <script>
 import { mapGetters } from "vuex";
 import ImageTypeForm from "./ImageTypeForm.vue";
+import { useAuthStore } from "../store/auth";
+import { mapState } from "pinia";
 
 export default {
   name: "EditImageTypes",
@@ -17,7 +19,7 @@ export default {
   },
   computed: {
     ...mapGetters("imageTypes", ["imageTypes"]),
-    ...mapGetters("auth", ["isModerator"]),
+    ...mapState(useAuthStore, ["isModerator"]),
   },
 };
 </script>

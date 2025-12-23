@@ -40,8 +40,10 @@
 </template>
 
 <script>
-import { mapActions, mapMutations } from "vuex";
 import Errors from "../components/Errors.vue";
+import { mapActions } from "pinia";
+import { useErrorsStore } from "../store/errors";
+import { useAuthStore } from "../store/auth";
 
 export default {
   name: "login",
@@ -57,8 +59,8 @@ export default {
     };
   },
   methods: {
-    ...mapActions("auth", ["login"]),
-    ...mapMutations(["clearErrors"]),
+    ...mapActions(useAuthStore, ["login"]),
+    ...mapActions(useErrorsStore, ["clearErrors"]),
     async submit() {
       this.clearErrors();
       const succeeded = await this.login({

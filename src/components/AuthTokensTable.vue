@@ -44,7 +44,8 @@
 </template>
 <script>
 import Paginated from "../mixins/Paginated";
-import { mapActions } from "vuex";
+import { useAuthStore } from "../store/auth";
+import { mapActions, mapState } from "pinia";
 
 export default {
   name: "AuthTokensTable",
@@ -80,15 +81,23 @@ export default {
     };
   },
   computed: {
+    ...mapState(useAuthStore, {
+      storeAuthTokens: "authTokens",
+      currentSession: "currentSession",
+    }),
     authTokens() {
-      const getter = this.$store.getters["auth/authTokens"];
-      const currentSession = this.$store.getters["auth/currentSession"];
-      getter.find(({ id }) => id === currentSession).isSelectable = false;
-      return getter;
+      const result = [];
+      for (const token of this.storeAuthTokens) {
+        result.push({
+          ...token,
+          isSelectable: token.id !== this.currentSession,
+        });
+      }
+      return result;
     },
   },
   methods: {
-    ...mapActions("auth", ["destroy"]),
+    ...mapActions(useAuthStore, ["destroy"]),
     deleteAuthToken: function (item) {
       if (confirm(this.$t("common.are-you-sure"))) {
         this.destroy(item.id);

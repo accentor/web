@@ -66,11 +66,13 @@
 </template>
 
 <script>
-import { mapActions, mapGetters, mapState } from "vuex";
+import { mapActions, mapState } from "vuex";
+import { mapState as mapPiniaState } from "pinia";
 import AlbumCard from "../../components/AlbumCard.vue";
 import ArtistActions from "../../components/ArtistActions.vue";
 import TracksTable from "../../components/TracksTable.vue";
 import { AlbumsScope, TracksScope } from "@accentor/api-client-js";
+import { useAuthStore } from "../../store/auth";
 
 export default {
   name: "Artist",
@@ -100,7 +102,7 @@ export default {
     },
   },
   computed: {
-    ...mapGetters("auth", ["isModerator"]),
+    ...mapPiniaState(useAuthStore, ["isModerator"]),
     ...mapState("artists", ["artists"]),
     albums: function () {
       return this.$store.getters["albums/albumsFilterByArtist"](

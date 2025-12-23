@@ -1,6 +1,8 @@
 import Vue from "vue";
 import api from "@/api";
 import { fetchAll } from "./actions";
+import { useErrorsStore } from "./errors";
+import { useAuthStore } from "./auth";
 
 export default {
   namespaced: true,
@@ -47,35 +49,35 @@ export default {
     },
   },
   actions: {
-    async index({ commit, rootState }) {
-      const generator = api.locations.index(rootState.auth.apiToken);
+    async index({ commit }) {
+      const generator = api.locations.index(useAuthStore().apiToken);
       try {
         await fetchAll(commit, generator, "setLocations");
         return true;
       } catch (error) {
-        commit("addError", error, { root: true });
+        useErrorsStore().addError(error);
         return false;
       }
     },
-    async create({ commit, rootState }, newLocation) {
+    async create({ commit }, newLocation) {
       try {
-        const result = await api.locations.create(rootState.auth.apiToken, {
+        const result = await api.locations.create(useAuthStore().apiToken, {
           location: newLocation,
         });
         commit("setLocation", { id: result.id, location: result });
         return result.id;
       } catch (error) {
-        commit("addError", error, { root: true });
+        useErrorsStore().addError(error);
         return false;
       }
     },
-    async destroy({ commit, rootState }, id) {
+    async destroy({ commit }, id) {
       try {
-        await api.locations.destroy(rootState.auth.apiToken, id);
+        await api.locations.destroy(useAuthStore().apiToken, id);
         commit("removeLocation", id);
         return true;
       } catch (error) {
-        commit("addError", error, { root: true });
+        useErrorsStore().addError(error);
         return false;
       }
     },

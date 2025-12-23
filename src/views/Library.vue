@@ -133,12 +133,14 @@
 
 <script>
 import { mapActions, mapGetters, mapState } from "vuex";
+import { mapState as mapPiniaState } from "pinia";
 import EditCodecs from "../components/EditCodecs.vue";
 import EditCodecConversions from "../components/EditCodecConversions.vue";
 import EditCoverFilenames from "../components/EditCoverFilenames.vue";
 import EditImageTypes from "../components/EditImageTypes.vue";
 import EditLocations from "../components/EditLocations.vue";
 import MaintenanceActions from "../components/MaintenanceActions.vue";
+import { useAuthStore } from "../store/auth";
 
 export default {
   name: "Library",
@@ -157,7 +159,7 @@ export default {
     this.loadData();
   },
   computed: {
-    ...mapGetters("auth", ["isModerator"]),
+    ...mapPiniaState(useAuthStore, ["isModerator"]),
     ...mapGetters("rescan", ["rescans"]),
     ...mapGetters("rescan", ["combinedRescans"]),
     ...mapState("locations", ["locations"]),

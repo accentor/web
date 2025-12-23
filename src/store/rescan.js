@@ -1,5 +1,7 @@
 import api from "@/api";
 import { fetchAll } from "./actions";
+import { useErrorsStore } from "./errors";
+import { useAuthStore } from "./auth";
 
 export default {
   namespaced: true,
@@ -57,7 +59,7 @@ export default {
       try {
         commit("setLoading", true);
         do {
-          const generator = api.rescans.index(rootState.auth.apiToken);
+          const generator = api.rescans.index(useAuthStore().apiToken);
           await fetchAll(commit, generator, "setRescans");
           await new Promise((resolve) => setTimeout(resolve, 1000));
         } while (
@@ -67,7 +69,7 @@ export default {
         commit("setLoading", false);
         return true;
       } catch (error) {
-        commit("addError", error, { root: true });
+        useErrorsStore().addError(error);
         return false;
       }
     },
@@ -79,7 +81,7 @@ export default {
         commit("setLoading", true);
         let result = null;
         do {
-          result = await api.rescans.show(rootState.auth.apiToken, id);
+          result = await api.rescans.show(useAuthStore().apiToken, id);
           commit("setRescan", { id, rescan: result });
           await new Promise((resolve) => setTimeout(resolve, 1000));
         } while (
@@ -89,32 +91,32 @@ export default {
         commit("setLoading", false);
         return true;
       } catch (error) {
-        commit("addError", error, { root: true });
+        useErrorsStore().addError(error);
         commit("setLoading", false);
         return false;
       }
     },
-    async startAll({ commit, dispatch, rootState }) {
+    async startAll({ commit, dispatch }) {
       commit("setLastClick", new Date());
       try {
-        await api.rescans.startAll(rootState.auth.apiToken);
+        await api.rescans.startAll(useAuthStore().apiToken);
         setTimeout(() => dispatch("index"), 2500);
         return true;
       } catch (error) {
-        commit("addError", error, { root: true });
+        useErrorsStore().addError(error);
         return false;
       }
     },
-    async start({ commit, dispatch, rootState }, id) {
+    async start({ commit, dispatch }, id) {
       commit("setLastClick", new Date());
       try {
-        const result = await api.rescans.start(rootState.auth.apiToken, id);
+        const result = await api.rescans.start(useAuthStore().apiToken, id);
         result.running = true;
         commit("setRescan", { id, rescan: result });
         setTimeout(() => dispatch("show", id), 1000);
         return true;
       } catch (error) {
-        commit("addError", error, { root: true });
+        useErrorsStore().addError(error);
         return false;
       }
     },

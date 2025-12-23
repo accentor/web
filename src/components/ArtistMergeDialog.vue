@@ -62,7 +62,9 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
+import { mapActions } from "vuex";
+import { useAuthStore } from "../store/auth";
+import { mapState } from "pinia";
 
 export default {
   name: "ArtistMergeDialog",
@@ -83,7 +85,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters("auth", ["isModerator"]),
+    ...mapState(useAuthStore, ["isModerator"]),
     sortedArtists() {
       const getter = this.$store.getters["artists/artistsByName"];
       return getter.filter((a) => {

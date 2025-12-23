@@ -83,6 +83,8 @@
 
 <script>
 import { mapActions, mapState } from "vuex";
+import { mapState as mapPiniaState } from "pinia";
+import { useAuthStore } from "../store/auth";
 
 export default {
   name: "PlaylistActions",
@@ -94,7 +96,7 @@ export default {
     },
   },
   computed: {
-    ...mapState("auth", { currentUser: "user_id" }),
+    ...mapPiniaState(useAuthStore, ["currentUser"]),
     ...mapState("playlists", ["startLoading"]),
     ...mapState("tracks", ["tracks"]),
     waitingForReload() {
@@ -103,7 +105,7 @@ export default {
     isAllowedToEdit() {
       return (
         this.playlist.access === "shared" ||
-        this.playlist.user_id === this.currentUser
+        this.playlist.user_id === this.currentUser.id
       );
     },
     playlistTracks() {
