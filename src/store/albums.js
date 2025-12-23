@@ -1,4 +1,3 @@
-import Vue from "vue";
 import api from "@/api";
 import { fetchAll } from "./actions";
 import {
@@ -39,7 +38,7 @@ export default {
       state.startLoading = new Date();
     },
     removeAlbum(state, id) {
-      Vue.delete(state.albums, id);
+      delete state.albums[id];
     },
     removeOld(state) {
       const oldAlbums = state.albums;

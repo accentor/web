@@ -1,4 +1,3 @@
-import Vue from "vue";
 import api from "@/api";
 import { fetchAll } from "./actions";
 
@@ -34,7 +33,7 @@ export default {
       state.startLoading = new Date();
     },
     removeCodecConversion(state, id) {
-      Vue.delete(state.codecConversions, id);
+      delete state.codecConversions[id];
     },
     removeOld(state) {
       const oldCodecConversions = state.codecConversions;

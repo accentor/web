@@ -3,7 +3,9 @@
     <VContainer fluid>
       <VRow>
         <VCol>
-          <h2 class="text-h4">{{ $tc("music.artists", 2) }}</h2>
+          <h2 class="text-h4">
+            {{ $tc("music.artists", 2) }}
+          </h2>
         </VCol>
       </VRow>
       <VDataIterator
@@ -11,7 +13,7 @@
         :items="artists"
         :items-per-page="6"
       >
-        <template v-slot:default="props">
+        <template #default="props">
           <VRow class="mb-0">
             <VCol
               v-for="item in props.items"
@@ -31,7 +33,9 @@
     <VContainer fluid>
       <VRow>
         <VCol>
-          <h2 class="text-h4">{{ $tc("music.albums", 2) }}</h2>
+          <h2 class="text-h4">
+            {{ $tc("music.albums", 2) }}
+          </h2>
         </VCol>
       </VRow>
       <VDataIterator
@@ -39,7 +43,7 @@
         :items="albums"
         :items-per-page="6"
       >
-        <template v-slot:default="props">
+        <template #default="props">
           <VRow class="mb-0">
             <VCol
               v-for="item in props.items"
@@ -60,7 +64,9 @@
       <VRow class="flex-column">
         <VRow>
           <VCol>
-            <h2 class="text-h4">{{ $tc("music.tracks", 2) }}</h2>
+            <h2 class="text-h4">
+              {{ $tc("music.tracks", 2) }}
+            </h2>
           </VCol>
         </VRow>
         <VRow>

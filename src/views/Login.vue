@@ -13,19 +13,19 @@
               <VForm @submit.prevent="submit">
                 <Errors />
                 <VTextField
+                  v-model="name"
                   :label="$t('users.name')"
                   :placeholder="$t('users.name')"
                   prepend-icon="mdi-account"
                   autocomplete="username"
-                  v-model="name"
                 />
                 <VTextField
+                  v-model="password"
                   :label="$t('users.password')"
                   :placeholder="$t('users.password')"
                   prepend-icon="mdi-key"
                   type="password"
                   autocomplete="current-password"
-                  v-model="password"
                 />
                 <VBtn color="primary" class="ma-2" type="submit">
                   {{ $t("common.login") }}
@@ -44,7 +44,7 @@ import { mapActions, mapMutations } from "vuex";
 import Errors from "../components/Errors.vue";
 
 export default {
-  name: "login",
+  name: "Login",
   components: { Errors },
   metaInfo() {
     return { title: this.$t("common.login") };

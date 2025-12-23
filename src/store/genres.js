@@ -1,4 +1,3 @@
-import Vue from "vue";
 import api from "@/api";
 import { fetchAll } from "./actions";
 import { compareStrings } from "../comparators";
@@ -35,7 +34,7 @@ export default {
       state.startLoading = new Date();
     },
     removeGenre(state, id) {
-      Vue.delete(state.genres, id);
+      delete state.genres[id];
     },
     removeOld(state) {
       const oldGenres = state.genres;

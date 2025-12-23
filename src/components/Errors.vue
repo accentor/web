@@ -1,13 +1,13 @@
 <template>
   <VAlert
     :value="errors.length > 0"
-    dismissible
+    closable
     type="error"
-    v-on:input="clearErrors"
+    @update:model-value="clearErrors"
   >
-    <div :key="index" v-for="(error, index) in errors">
-      <div :key="key" v-for="(value, key) in error">
-        <div :key="index" v-for="(e, index) in value">
+    <div v-for="(error, index) in errors" :key="index">
+      <div v-for="(value, key) in error" :key="key">
+        <div v-for="(e, index) in value" :key="index">
           <strong>{{ $t(`errors.${key}`) }}:</strong>
           {{ $t(`errors.${e}`) }}
         </div>

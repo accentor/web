@@ -1,11 +1,11 @@
 <template>
-  <VContainer class="fill-height" fluid v-if="label">
+  <VContainer v-if="label" class="fill-height" fluid>
     <VRow no-gutters align="center" justify="center">
       <VCol md="4" sm="8" cols="12" @change.once="isDirty = true">
         <VForm v-model="isValid" @submit.prevent="submit">
           <VTextField
-            :label="$t('common.name')"
             v-model="newLabel.name"
+            :label="$t('common.name')"
             :rules="[(v) => !!v || $t('errors.label.name-blank')]"
             required
           />
@@ -35,16 +35,16 @@ export default {
       isValid: true,
     };
   },
-  async created() {
-    await this.read(this.$route.params.id);
-    this.fillValues();
-  },
   watch: {
     label: function () {
       if (this.label && !this.isDirty) {
         this.fillValues();
       }
     },
+  },
+  async created() {
+    await this.read(this.$route.params.id);
+    this.fillValues();
   },
   computed: {
     ...mapState("labels", ["labels"]),

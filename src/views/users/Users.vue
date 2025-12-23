@@ -1,20 +1,20 @@
 <template>
   <VContainer fluid>
     <VRow justify="end">
-      <VBtn :to="{ name: 'new-user' }" color="success" v-if="isAdmin">
-        <VIcon left>mdi-plus</VIcon>
+      <VBtn v-if="isAdmin" :to="{ name: 'new-user' }" color="success">
+        <VIcon start> mdi-plus </VIcon>
         {{ $t("users.new") }}
       </VBtn>
     </VRow>
     <VRow v-if="users.length > 0">
       <VCol
+        v-for="user in users"
         :key="user.id"
         xl="2"
         lg="3"
         md="4"
         sm="6"
         cols="12"
-        v-for="user in users"
       >
         <VCard :to="{ name: 'user', params: { id: user.id } }">
           <VCardTitle class="pb-0">
@@ -25,14 +25,14 @@
           </VCardText>
           <VCardActions v-if="isAdmin">
             <VBtn
-              @click.stop.prevent="deleteUser(user.id)"
               color="danger"
               class="ma-2"
               dark
               fab
               href="#"
-              outlined
-              small
+              variant="outlined"
+              size="small"
+              @click.stop.prevent="deleteUser(user.id)"
             >
               <VIcon>mdi-delete</VIcon>
             </VBtn>
@@ -46,8 +46,8 @@
               class="ma-2"
               dark
               fab
-              outlined
-              small
+              variant="outlined"
+              size="small"
             >
               <VIcon>mdi-pencil</VIcon>
             </VBtn>

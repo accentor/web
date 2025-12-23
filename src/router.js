@@ -1,5 +1,3 @@
-import Vue from "vue";
-import Router from "vue-router";
 import store from "./store/store";
 import Album from "./views/albums/Album.vue";
 import Albums from "./views/albums/Albums.vue";
@@ -34,12 +32,10 @@ import Playlists from "./views/playlists/Playlists.vue";
 import Playlist from "./views/playlists/Playlist.vue";
 import NewPlaylist from "./views/playlists/NewPlaylist.vue";
 import EditPlaylist from "./views/playlists/EditPlaylist.vue";
+import { createRouter, createWebHistory } from "vue-router";
 
-Vue.use(Router);
-
-const router = new Router({
-  mode: "history",
-  base: import.meta.env.BASE_URL,
+const router = createRouter({
+  history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: "/app/",
@@ -216,7 +212,6 @@ const router = new Router({
         authOptional: true,
       },
     },
-    { path: "*", redirect: "/app/" },
   ],
   scrollBehavior(to, from, savedPosition) {
     if (to.path === from.path) {

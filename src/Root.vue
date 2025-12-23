@@ -15,7 +15,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import "vuetify/src/styles/styles.sass";
+@import "vuetify/settings";
 
 // Additional resets
 a {
@@ -34,7 +34,7 @@ a {
   }
 }
 
-@media (min-width: map-get($grid-breakpoints, "sm")) {
+@media (min-width: map-get($display-breakpoints, "sm")) {
   .actions--sm-wide {
     .actions__button {
       margin: 8px 16px 8px 0;

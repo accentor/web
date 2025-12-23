@@ -1,11 +1,11 @@
 <template>
-  <VContainer class="fill-height" fluid v-if="genre">
+  <VContainer v-if="genre" class="fill-height" fluid>
     <VRow no-gutters align="center" justify="center">
       <VCol md="4" sm="8" cols="12" @change.once="isDirty = true">
         <VForm v-model="isValid" @submit.prevent="submit">
           <VTextField
-            :label="$t('common.name')"
             v-model="newGenre.name"
+            :label="$t('common.name')"
             :rules="[(v) => !!v || $t('errors.genre.name-blank')]"
             required
           />
@@ -35,18 +35,18 @@ export default {
       isValid: true,
     };
   },
-  async created() {
-    if (this.genre) {
-      await this.read(this.genre.id);
-      this.fillValues();
-    }
-  },
   watch: {
     genre: function () {
       if (this.genre && !this.isDirty) {
         this.fillValues();
       }
     },
+  },
+  async created() {
+    if (this.genre) {
+      await this.read(this.genre.id);
+      this.fillValues();
+    }
   },
   computed: {
     ...mapState("genres", ["genres"]),

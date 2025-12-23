@@ -1,9 +1,11 @@
 <template>
-  <VContainer fluid v-if="genre">
+  <VContainer v-if="genre" fluid>
     <VRow>
       <VCol cols="12">
         <div>
-          <h2 class="text-h4">{{ genre.name }}</h2>
+          <h2 class="text-h4">
+            {{ genre.name }}
+          </h2>
         </div>
         <div>
           <GenreActions :genre="genre" class="actions--wide" />

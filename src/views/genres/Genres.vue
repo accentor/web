@@ -1,6 +1,8 @@
 <template>
   <VContainer fluid>
     <VDataIterator
+      v-if="genres.length > 0"
+      v-model:page="pagination.page"
       :footer-props="{
         disableItemsPerPage: true,
         itemsPerPageOptions: [12],
@@ -8,10 +10,8 @@
       }"
       :items="filteredItems"
       :items-per-page="12"
-      :page.sync="pagination.page"
-      v-if="genres.length > 0"
     >
-      <template v-slot:header>
+      <template #header>
         <VRow class="mb-2" justify="end" align="baseline">
           <VCol cols="12" sm="8" md="6" lg="4" xl="2">
             <VTextField
@@ -24,7 +24,7 @@
           </VCol>
         </VRow>
       </template>
-      <template v-slot:default="props">
+      <template #default="props">
         <VRow>
           <VCol
             v-for="item in props.items"
@@ -50,7 +50,7 @@ import GenreCard from "../../components/GenreCard.vue";
 import Searchable from "../../mixins/Searchable";
 
 export default {
-  name: "genres",
+  name: "Genres",
   metaInfo() {
     return { title: this.$tc("music.genres", 2) };
   },

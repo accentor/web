@@ -1,14 +1,14 @@
 <template>
-  <VDialog v-model="dialog" width="600px" v-if="playlistOptions.length">
-    <template v-slot:activator="{ on }">
+  <VDialog v-if="playlistOptions.length" v-model="dialog" width="600px">
+    <template #activator="{ on }">
       <VBtn
-        v-on="on"
-        @click.stop.prevent
         class="actions__button"
         color="primary"
-        text
+        variant="text"
         icon
-        small
+        size="small"
+        v-on="on"
+        @click.stop.prevent
       >
         <VIcon>mdi-playlist-plus</VIcon>
       </VBtn>
@@ -24,16 +24,16 @@
           <VRow>
             <VCol cols="12">
               <VCombobox
+                v-model="selectedPlaylist"
                 :items="playlistOptions"
-                :filter="filterName"
+                :custom-filter="filterName"
                 cache-items
-                item-text="name"
+                item-title="name"
                 item-value="id"
                 :label="$tc('music.playlists', 1)"
                 return-object
-                v-model="selectedPlaylist"
               >
-                <template v-slot:item="{ item, on }">
+                <template #item="{ item, on }">
                   <VListItem :disabled="item.disabled" v-on="on">
                     {{ item.name }}
                     <span v-if="item.disabled">
@@ -46,9 +46,9 @@
           </VRow>
         </VContainer>
       </VCardText>
-      <VDivider></VDivider>
+      <VDivider />
       <VCardActions>
-        <VSpacer></VSpacer>
+        <VSpacer />
         <VBtn
           color="primary"
           class="ma-2"

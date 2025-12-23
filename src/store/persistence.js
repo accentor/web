@@ -1,4 +1,4 @@
-import VuexPersistence from "vuex-persist";
+import VuexPersister from "vuex-persister";
 import localForage from "localforage";
 import debounce from "lodash.debounce";
 
@@ -6,7 +6,7 @@ import debounce from "lodash.debounce";
 // Should be provided with a module and an async storage
 // IMPORTANT: This class assumes a lot about the structure of state and mutations available in each module
 // If this structure changes, we inevitably have to update this class
-class VuexPersistentModule extends VuexPersistence {
+class VuexPersistentModule extends VuexPersister {
   constructor(module, storage) {
     const lowerCaseModule = module.toLowerCase();
     // Write startLoading and the main collection (as an array) to storage
@@ -86,7 +86,7 @@ const plugins = [
   "Tracks",
 ].map((module) => {
   const plugin = new VuexPersistentModule(module, localForage);
-  return plugin.plugin;
+  return plugin.persist;
 });
 
 const localStorageModules = [
@@ -100,7 +100,7 @@ const localStorageModules = [
   "userSettings",
 ];
 
-export const vuexLocalStorage = new VuexPersistence({
+export const vuexLocalStorage = new VuexPersister({
   storage: window.localStorage,
   strictMode: !import.meta.env.PROD,
   modules: localStorageModules,
@@ -108,6 +108,6 @@ export const vuexLocalStorage = new VuexPersistence({
     localStorageModules.includes(m.type.substring(0, m.type.indexOf("/"))),
 });
 
-plugins.push(vuexLocalStorage.plugin);
+plugins.push(vuexLocalStorage.persist);
 
 export default plugins;

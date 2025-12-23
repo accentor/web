@@ -1,7 +1,7 @@
 <template>
   <VCard class="px-2 py-4">
     <div
-      class="text-center mb-4 text-h6 font-weight-regular grey--text text--darken-3"
+      class="text-center mb-4 text-h6 font-weight-regular text-grey-darken-3"
     >
       {{ $t("stats.count.playCount.before") }}
       <span
@@ -14,7 +14,7 @@
     </div>
     <div class="text-center text-h6 font-weight-regular">
       {{ $t("stats.count.playTime.before") }}
-      <div class="play-time grey--text text--darken-3">
+      <div class="play-time text-grey-darken-3">
         <span
           class="text-h4 d-block text-right text--darken-1"
           :class="animatedTime.days ? 'primary--text' : 'grey--text'"

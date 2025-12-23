@@ -1,25 +1,27 @@
 <template>
-  <VContainer class="fill-height" v-if="track">
+  <VContainer v-if="track" class="fill-height">
     <VRow>
       <VCol lg="9" md="8" sm="6" cols="12">
         <div class="text-h4">
           {{ $t("music.track.merge.title", { obj: track.title }) }}
         </div>
-        <div class="grey--text">
+        <div class="text-grey">
           {{ $t("music.track.merge.explanation") }}
         </div>
       </VCol>
     </VRow>
     <VRow>
-      <VSimpleTable class="text-left merge-table">
-        <template v-slot:default>
+      <v-table class="text-left merge-table">
+        <template #default>
           <thead>
             <tr>
               <th>{{ $t("music.track.merge.original") }}</th>
               <th class="text-center">
                 {{ $t("music.track.merge.result") }}
               </th>
-              <th class="text-right">{{ $t("music.track.merge.selected") }}</th>
+              <th class="text-right">
+                {{ $t("music.track.merge.selected") }}
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -28,7 +30,7 @@
                 <span class="my-auto"
                   >{{ track.number }}. {{ track.title }}</span
                 >
-                <VIcon v-if="!reversed && newID">mdi-arrow-right</VIcon>
+                <VIcon v-if="!reversed && newID"> mdi-arrow-right </VIcon>
               </td>
               <td class="text-center">
                 <span v-if="result.number">{{ result.number }}. </span
@@ -38,7 +40,7 @@
                 class="text-right"
                 :class="{ 'd-flex justify-space-between': reversed }"
               >
-                <VIcon v-if="reversed && newID">mdi-arrow-left</VIcon>
+                <VIcon v-if="reversed && newID"> mdi-arrow-left </VIcon>
                 <span class="my-auto">
                   <span v-if="selectedTrack.number"
                     >{{ selectedTrack.number }}. </span
@@ -49,7 +51,7 @@
             <tr>
               <td :class="{ 'd-flex justify-space-between': !reversed }">
                 <span class="my-auto">{{ albums[track.album_id].title }}</span>
-                <VIcon v-if="!reversed && newID">mdi-arrow-right</VIcon>
+                <VIcon v-if="!reversed && newID"> mdi-arrow-right </VIcon>
               </td>
               <td class="text-center">
                 {{ result.album_id ? albums[result.album_id].title : "-" }}
@@ -58,7 +60,7 @@
                 class="text-right"
                 :class="{ 'd-flex justify-space-between': reversed }"
               >
-                <VIcon v-if="reversed && newID">mdi-arrow-left</VIcon>
+                <VIcon v-if="reversed && newID"> mdi-arrow-left </VIcon>
                 <span class="my-auto">
                   {{
                     selectedTrack.album_id
@@ -71,18 +73,18 @@
             <tr>
               <td :class="{ 'd-flex justify-space-between': !reversed }">
                 <TrackArtists class="my-auto" :track="track" />
-                <VIcon v-if="!reversed && newID">mdi-arrow-right</VIcon>
+                <VIcon v-if="!reversed && newID"> mdi-arrow-right </VIcon>
               </td>
               <td class="text-center">
-                <TrackArtists :track="result" v-if="result.track_artists" />
+                <TrackArtists v-if="result.track_artists" :track="result" />
                 <span v-else>-</span>
               </td>
               <td :class="{ 'd-flex justify-space-between': reversed }">
-                <VIcon v-if="reversed && newID">mdi-arrow-left</VIcon>
+                <VIcon v-if="reversed && newID"> mdi-arrow-left </VIcon>
                 <TrackArtists
+                  v-if="selectedTrack.track_artists"
                   class="my-auto text-right"
                   :track="selectedTrack"
-                  v-if="selectedTrack.track_artists"
                 />
                 <span v-else>-</span>
               </td>
@@ -90,18 +92,18 @@
             <tr>
               <td :class="{ 'd-flex justify-space-between': !reversed }">
                 <TrackGenres class="my-auto" :track="track" />
-                <VIcon v-if="!reversed && newID">mdi-arrow-right</VIcon>
+                <VIcon v-if="!reversed && newID"> mdi-arrow-right </VIcon>
               </td>
               <td class="text-center">
-                <TrackGenres :track="result" v-if="result.genre_ids" />
+                <TrackGenres v-if="result.genre_ids" :track="result" />
                 <span v-else>-</span>
               </td>
               <td :class="{ 'd-flex justify-space-between': reversed }">
-                <VIcon v-if="reversed && newID">mdi-arrow-left</VIcon>
+                <VIcon v-if="reversed && newID"> mdi-arrow-left </VIcon>
                 <TrackGenres
+                  v-if="selectedTrack.genre_ids"
                   class="my-auto text-right"
                   :track="selectedTrack"
-                  v-if="selectedTrack.genre_ids"
                 />
                 <span v-else>-</span>
               </td>
@@ -117,9 +119,9 @@
                     track.filename ? track.filename : $t("music.track.empty")
                   }}
                 </span>
-                <VIcon v-if="!result.file.selected && track.filename && newID"
-                  >mdi-arrow-right</VIcon
-                >
+                <VIcon v-if="!result.file.selected && track.filename && newID">
+                  mdi-arrow-right
+                </VIcon>
               </td>
               <td class="text-center">
                 {{
@@ -135,21 +137,22 @@
               >
                 <VIcon
                   v-if="result.file.selected && selectedTrack.filename && newID"
-                  >mdi-arrow-left</VIcon
                 >
-                <span class="my-auto text-right" v-if="selectedTrack">
+                  mdi-arrow-left
+                </VIcon>
+                <span v-if="selectedTrack" class="my-auto text-right">
                   {{
                     selectedTrack.filename
                       ? selectedTrack.filename
                       : $t("music.track.empty")
                   }}
                 </span>
-                <span class="my-auto text-right" v-else> - </span>
+                <span v-else class="my-auto text-right"> - </span>
               </td>
             </tr>
           </tbody>
         </template>
-      </VSimpleTable>
+      </v-table>
     </VRow>
     <VRow>
       <VCol class="d-flex justify-center">
@@ -186,10 +189,10 @@
       <VCol>
         <TracksTable
           :tracks="mergeOptions"
-          :showSearch="true"
-          :showActions="false"
-          :showMassEdit="false"
-          :singleSelect="true"
+          :show-search="true"
+          :show-actions="false"
+          :show-mass-edit="false"
+          :single-select="true"
           @selected="setNewID"
         />
       </VCol>

@@ -1,4 +1,3 @@
-import Vue from "vue";
 import api from "@/api";
 import { fetchAll } from "./actions";
 
@@ -34,7 +33,7 @@ export default {
       state.startLoading = new Date();
     },
     removeLocation(state, id) {
-      Vue.delete(state.locations, id);
+      delete state.locations[id];
     },
     removeOld(state) {
       const oldLocations = state.locations;

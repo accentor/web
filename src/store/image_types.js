@@ -1,4 +1,3 @@
-import Vue from "vue";
 import api from "@/api";
 import { fetchAll } from "./actions";
 
@@ -34,7 +33,7 @@ export default {
       state.startLoading = new Date();
     },
     removeImageType(state, id) {
-      Vue.delete(state.imageTypes, id);
+      delete state.imageTypes[id];
     },
     removeOld(state) {
       const oldImageTypes = state.imageTypes;

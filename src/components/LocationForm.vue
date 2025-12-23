@@ -1,5 +1,5 @@
 <template>
-  <VForm v-model="isValid" ref="form" lazy-validation>
+  <VForm ref="form" v-model="isValid" lazy-validation>
     <VRow>
       <VCol cols="5">
         <VTextField
@@ -12,25 +12,25 @@
       </VCol>
       <VCol cols="2" sm="1">
         <VBtn
+          v-if="!location"
           :disabled="!isValid"
           icon
-          outlined
+          variant="outlined"
           color="success"
           class="ma-2"
           @click="saveLocation"
-          v-if="!location"
         >
-          <VIcon color="success">mdi-plus</VIcon>
+          <VIcon color="success"> mdi-plus </VIcon>
         </VBtn>
         <VBtn
-          icon
-          outlined
           v-if="location"
+          icon
+          variant="outlined"
           color="danger"
           class="ma-2"
           @click="deleteLocation"
         >
-          <VIcon color="danger">mdi-delete</VIcon>
+          <VIcon color="danger"> mdi-delete </VIcon>
         </VBtn>
       </VCol>
     </VRow>
@@ -51,19 +51,19 @@ export default {
       isValid: true,
     };
   },
-  created() {
-    this.$nextTick(() => {
-      if (this.location) {
-        this.fillValues();
-      }
-    });
-  },
   watch: {
     album: function () {
       if (this.location) {
         this.fillValues();
       }
     },
+  },
+  created() {
+    this.$nextTick(() => {
+      if (this.location) {
+        this.fillValues();
+      }
+    });
   },
   computed: {
     ...mapGetters("locations", ["locations"]),

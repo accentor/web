@@ -1,5 +1,5 @@
 <template>
-  <VForm v-model="isValid" ref="form" lazy-validation>
+  <VForm ref="form" v-model="isValid" lazy-validation>
     <VRow>
       <VCol cols="6">
         <VTextField
@@ -22,7 +22,7 @@
         <VBtn
           :disabled="!isValid"
           icon
-          outlined
+          variant="outlined"
           :color="(imageType && 'info') || 'success'"
           class="ma-2"
           @click="saveImageType"
@@ -32,14 +32,14 @@
           </VIcon>
         </VBtn>
         <VBtn
-          icon
-          outlined
           v-if="imageType"
+          icon
+          variant="outlined"
           color="danger"
           class="ma-2"
           @click="deleteImageType"
         >
-          <VIcon color="danger">mdi-delete</VIcon>
+          <VIcon color="danger"> mdi-delete </VIcon>
         </VBtn>
       </VCol>
     </VRow>
@@ -61,19 +61,19 @@ export default {
       isValid: true,
     };
   },
-  created() {
-    this.$nextTick(() => {
-      if (this.imageType) {
-        this.fillValues();
-      }
-    });
-  },
   watch: {
     album: function () {
       if (this.imageType) {
         this.fillValues();
       }
     },
+  },
+  created() {
+    this.$nextTick(() => {
+      if (this.imageType) {
+        this.fillValues();
+      }
+    });
   },
   computed: {
     ...mapGetters("imageTypes", ["imageTypes"]),

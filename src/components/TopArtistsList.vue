@@ -12,6 +12,9 @@ import TopList from "@/components/TopList.vue";
 
 export default {
   name: "TopArtistsList",
+  components: {
+    TopList,
+  },
   props: {
     playStats: {
       type: Array,
@@ -25,9 +28,6 @@ export default {
       type: Boolean,
       default: false,
     },
-  },
-  components: {
-    TopList,
   },
   computed: {
     ...mapState("artists", ["artists"]),

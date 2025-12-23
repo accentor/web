@@ -1,26 +1,26 @@
 <template>
   <div>
     <VSelect
+      v-model="selectedPreset"
       :items="periodPresets"
       :label="$t('components.dateRangeSelect.label')"
-      v-model="selectedPreset"
     >
-      <template v-slot:item="{ item, on, attrs }">
+      <template #item="{ item, on, attrs }">
         <VListItem
-          v-on="on"
           v-bind="attrs"
+          v-on="on"
           @click="showCustomRangeModal = item.value === 'customRange'"
         >
           {{ item.text }}
         </VListItem>
       </template>
-      <template v-slot:selection="{ item }">
+      <template #selection="{ item }">
         <span>
           {{ item.value === "customRange" ? customRangeText : item.text }}
         </span>
       </template>
     </VSelect>
-    <VDialog persistent width="290px" v-model="showCustomRangeModal">
+    <VDialog v-model="showCustomRangeModal" persistent width="290px">
       <VDatePicker
         v-model="customRange"
         scrollable
@@ -28,16 +28,21 @@
         :first-day-of-week="1"
         :locale="locale"
       >
-        <VSpacer></VSpacer>
+        <VSpacer />
         <VBtn
-          text
+          variant="text"
           color="primary"
           class="ma-2"
           @click="showCustomRangeModal = false"
         >
           {{ $t("common.cancel") }}
         </VBtn>
-        <VBtn text color="primary" class="ma-2" @click="emitSelection">
+        <VBtn
+          variant="text"
+          color="primary"
+          class="ma-2"
+          @click="emitSelection"
+        >
           {{ $t("common.ok") }}
         </VBtn>
       </VDatePicker>

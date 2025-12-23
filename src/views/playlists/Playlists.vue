@@ -1,6 +1,7 @@
 <template>
   <VContainer fluid>
     <VDataIterator
+      v-model:page="pagination.page"
       :footer-props="{
         disableItemsPerPage: true,
         itemsPerPageOptions: [numberOfItems],
@@ -8,34 +9,33 @@
       }"
       :items="filteredItems"
       :items-per-page="numberOfItems"
-      :page.sync="pagination.page"
     >
-      <template v-slot:header>
+      <template #header>
         <VRow class="mb-2" justify="end">
           <VCol lg="4" md="6" sm="8" xl="2" cols="12">
             <VTextField
+              v-if="playlists.length > numberOfItems"
+              v-model="search"
               :label="$t('common.search')"
               hide-details
               prepend-inner-icon="mdi-magnify"
               single-line
-              v-if="playlists.length > numberOfItems"
-              v-model="search"
             />
           </VCol>
           <VBtn :to="{ name: 'new-playlist' }" color="success" class="ma-2">
-            <VIcon left>mdi-plus</VIcon>
+            <VIcon start> mdi-plus </VIcon>
             {{ $t("music.playlist.new") }}
           </VBtn>
         </VRow>
       </template>
-      <template v-slot:default="props">
+      <template #default="props">
         <VRow>
           <VCol
+            v-for="item in props.items"
             :key="item.id"
             lg="3"
             md="4"
             sm="6"
-            v-for="item in props.items"
             xl="2"
             cols="6"
           >
@@ -75,15 +75,15 @@ import Searchable from "../../mixins/Searchable";
 import PlaylistActions from "../../components/PlaylistActions.vue";
 
 export default {
-  name: "playlists",
+  name: "Playlists",
   metaInfo() {
     return { title: this.$tc("music.playlists", 2) };
   },
   components: { PlaylistActions },
+  mixins: [Paginated, Searchable],
   created() {
     this.fetchContent();
   },
-  mixins: [Paginated, Searchable],
   computed: {
     ...mapState("users", ["users"]),
     ...mapGetters("playlists", {

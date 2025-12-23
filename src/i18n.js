@@ -1,7 +1,4 @@
-import Vue from "vue";
-import VueI18n from "vue-i18n";
-
-Vue.use(VueI18n);
+import { createI18n } from "vue-i18n";
 
 function loadLocaleMessages() {
   const modules = import.meta.glob("@/locales/**/*.json", { eager: true });
@@ -13,7 +10,7 @@ function loadLocaleMessages() {
   return messages;
 }
 
-const dateTimeFormats = {
+const datetimeFormats = {
   en: {
     short: {
       year: "numeric",
@@ -46,9 +43,9 @@ const dateTimeFormats = {
   },
 };
 
-export default new VueI18n({
+export const i18n = createI18n({
   locale: import.meta.env.VITE_I18N_LOCALE || "en",
   fallbackLocale: import.meta.env.VITE_I18N_FALLBACK_LOCALE || "en",
   messages: loadLocaleMessages(),
-  dateTimeFormats,
+  datetimeFormats,
 });

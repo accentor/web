@@ -1,40 +1,49 @@
 <template>
-  <VContainer fluid v-if="isModerator">
+  <VContainer v-if="isModerator" fluid>
     <VRow class="mb-2">
-      <h2 class="text-h5">{{ $t("library.maintenance") }}</h2>
+      <h2 class="text-h5">
+        {{ $t("library.maintenance") }}
+      </h2>
     </VRow>
     <VRow class="mb-4">
       <MaintenanceActions />
     </VRow>
     <VRow class="mb-2">
-      <h2 class="text-h5">{{ $t("library.rescan") }}</h2>
+      <h2 class="text-h5">
+        {{ $t("library.rescan") }}
+      </h2>
     </VRow>
     <VRow v-if="combinedRescans" class="mb-2">
       <div class="button-group ma-2">
         <VBtn
-          @click="startAll"
           :disabled="rescans.length === 0 || rescanRunning"
           color="success"
           class="button-group__button"
-          depressed
+          variant="flat"
+          @click="startAll"
         >
-          <VIcon left class="white--text">
+          <VIcon start class="text-white">
             mdi-refresh
             {{ rescanRunning ? "mdi-spin" : "" }}
           </VIcon>
           {{ $t("library.start-scan") }}
         </VBtn>
-        <VMenu offset-y bottom left close-on-click v-if="rescans.length > 1">
-          <template v-slot:activator="{ on, attrs }">
+        <VMenu
+          v-if="rescans.length > 1"
+          offset-y
+          location="bottom left"
+          :persistent="false"
+        >
+          <template #activator="{ on, attrs }">
             <VBtn
               color="success"
-              depressed
+              variant="flat"
               v-bind="attrs"
-              v-on="on"
               min-width="0"
               class="button-group__button px-2"
+              v-on="on"
             >
-              <VIcon class="white--text">mdi-menu-down</VIcon>
+              <VIcon class="text-white"> mdi-menu-down </VIcon>
             </VBtn>
           </template>
           <VList>
@@ -51,7 +60,7 @@
         </VMenu>
       </div>
     </VRow>
-    <VRow class="flex-column mb-4" v-if="combinedRescans">
+    <VRow v-if="combinedRescans" class="flex-column mb-4">
       <div>
         <strong>{{ $t("library.finished-at") }}: </strong>
         {{
@@ -66,13 +75,17 @@
       </div>
       <div v-if="combinedRescans.warning_text">
         <div>
-          <h3 class="text-h6">{{ $t("library.warnings") }}</h3>
+          <h3 class="text-h6">
+            {{ $t("library.warnings") }}
+          </h3>
         </div>
         <pre class="text-body-2">{{ combinedRescans.warning_text }}</pre>
       </div>
       <div v-if="combinedRescans.error_text">
         <div>
-          <h3 class="text-h6">{{ $t("library.errors") }}</h3>
+          <h3 class="text-h6">
+            {{ $t("library.errors") }}
+          </h3>
         </div>
         <pre class="text-body-2">{{ combinedRescans.error_text }}</pre>
       </div>
@@ -83,11 +96,15 @@
           !combinedRescans.warning_text
         "
       >
-        <h3 class="text-h6">{{ $t("library.no-errors-warnings") }}</h3>
+        <h3 class="text-h6">
+          {{ $t("library.no-errors-warnings") }}
+        </h3>
       </div>
     </VRow>
     <VRow class="mb-2">
-      <h2 class="text-h5">{{ $t("library.codecs") }}</h2>
+      <h2 class="text-h5">
+        {{ $t("library.codecs") }}
+      </h2>
     </VRow>
     <VRow>
       <VCol cols="12">
@@ -95,7 +112,9 @@
       </VCol>
     </VRow>
     <VRow class="mb-2">
-      <h2 class="text-h5">{{ $t("library.codec-conversions") }}</h2>
+      <h2 class="text-h5">
+        {{ $t("library.codec-conversions") }}
+      </h2>
     </VRow>
     <VRow>
       <VCol cols="12">
@@ -103,7 +122,9 @@
       </VCol>
     </VRow>
     <VRow class="mb-2">
-      <h2 class="text-h5">{{ $t("library.cover-filenames") }}</h2>
+      <h2 class="text-h5">
+        {{ $t("library.cover-filenames") }}
+      </h2>
     </VRow>
     <VRow>
       <VCol cols="12">
@@ -121,7 +142,9 @@
       </VCol>
     </VRow>
     <VRow class="mb-2">
-      <h2 class="text-h5">{{ $t("library.locations") }}</h2>
+      <h2 class="text-h5">
+        {{ $t("library.locations") }}
+      </h2>
     </VRow>
     <VRow>
       <VCol cols="12">

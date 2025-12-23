@@ -1,9 +1,11 @@
 <template>
-  <VContainer fluid v-if="user">
+  <VContainer v-if="user" fluid>
     <VRow>
       <VCol>
-        <div class="text-h4">{{ user.name }}</div>
-        <span class="grey--text">
+        <div class="text-h4">
+          {{ user.name }}
+        </div>
+        <span class="text-grey">
           {{ user.permission }}
         </span>
       </VCol>

@@ -1,5 +1,3 @@
-import Vue from "vue";
-import Vuex from "vuex";
 import persistencePlugins, { vuexLocalStorage } from "./persistence";
 import albums from "./albums";
 import artists from "./artists";
@@ -18,8 +16,7 @@ import rescan from "./rescan";
 import tracks from "./tracks";
 import users from "./users";
 import userSettings from "./user_settings";
-
-Vue.use(Vuex);
+import { createStore } from "vuex";
 
 const mutations = {
   addError(state, error) {
@@ -29,7 +26,7 @@ const mutations = {
     state.errors.push(error);
 
     // We want to log our errors here, to help with debugging
-    // eslint-disable-next-line no-console
+
     console.error(error);
   },
   clearErrors(state) {
@@ -40,11 +37,7 @@ const mutations = {
   },
 };
 
-if (!import.meta.env.PROD) {
-  mutations.RESTORE_MUTATION = vuexLocalStorage.RESTORE_MUTATION;
-}
-
-export default new Vuex.Store({
+export default createStore({
   plugins: persistencePlugins,
   strict: !import.meta.env.PROD,
   modules: {

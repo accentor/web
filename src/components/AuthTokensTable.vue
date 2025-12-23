@@ -1,40 +1,40 @@
 <template>
   <div>
     <VDataTable
+      ref="table"
+      v-model="selected"
+      v-model:page="pagination.page"
       :footer-props="{
         disableItemsPerPage: true,
         itemsPerPageOptions: [30],
         showFirstLastPage: true,
       }"
-      v-model="selected"
       :headers="headers"
       :items="authTokens"
       :items-per-page="30"
-      :page.sync="pagination.page"
       show-select
       class="elevation-3"
-      ref="table"
     >
-      <template v-slot:header.actions>
+      <template #header.actions>
         <VBtn
-          @click.stop.prevent="deleteAuthTokens"
           color="danger"
           class="ma-2"
           :disabled="selected.length === 0"
+          @click.stop.prevent="deleteAuthTokens"
         >
           {{ $t("users.auth.destroy-selected") }}
         </VBtn>
       </template>
-      <template v-slot:item.actions="props">
+      <template #item.actions="props">
         <VBtn
-          @click.stop.prevent="deleteAuthToken(props.item)"
           color="danger"
           class="ma-1"
           href="#"
-          text
+          variant="text"
           icon
-          small
+          size="small"
           :disabled="props.item.isSelectable === false"
+          @click.stop.prevent="deleteAuthToken(props.item)"
         >
           <VIcon>mdi-delete</VIcon>
         </VBtn>

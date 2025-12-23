@@ -1,6 +1,8 @@
 <template>
   <VContainer fluid>
     <VDataIterator
+      v-if="artists.length > 0"
+      v-model:page="pagination.page"
       :footer-props="{
         disableItemsPerPage: true,
         itemsPerPageOptions: [12],
@@ -8,15 +10,13 @@
       }"
       :items="filteredItems"
       :items-per-page="12"
-      :page.sync="pagination.page"
-      v-if="artists.length > 0"
     >
-      <template v-slot:header>
+      <template #header>
         <VRow class="mb-2" align="baseline" justify="end">
           <VCol lg="4" md="6" sm="8" xl="2" cols="12">
             <VTextField
-              :label="$t('common.search')"
               v-model="search"
+              :label="$t('common.search')"
               hide-details
               prepend-inner-icon="mdi-magnify"
               single-line
@@ -28,12 +28,12 @@
             class="ma-2"
             color="success"
           >
-            <VIcon left>mdi-plus</VIcon>
+            <VIcon start> mdi-plus </VIcon>
             {{ $t("music.artist.new") }}
           </VBtn>
         </VRow>
       </template>
-      <template v-slot:default="props">
+      <template #default="props">
         <VRow>
           <VCol
             v-for="item in props.items"
@@ -59,7 +59,7 @@ import Paginated from "../../mixins/Paginated";
 import Searchable from "../../mixins/Searchable";
 
 export default {
-  name: "artists",
+  name: "Artists",
   components: { ArtistCard },
   metaInfo() {
     return { title: this.$tc("music.artists", 2) };

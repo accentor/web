@@ -26,6 +26,9 @@ import TopList from "@/components/TopList.vue";
 
 export default {
   name: "TopAlbumsList",
+  components: {
+    TopList,
+  },
   props: {
     playStats: {
       type: Array,
@@ -44,9 +47,6 @@ export default {
     return {
       useAverage: true,
     };
-  },
-  components: {
-    TopList,
   },
   computed: {
     ...mapState("albums", ["albums"]),

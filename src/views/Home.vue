@@ -10,10 +10,12 @@
         :custom-sort="releaseSort"
         :items-per-page="numberOfItems"
       >
-        <template v-slot:header>
-          <h2 class="text-h4">{{ $t("home.recently-released") }}</h2>
+        <template #header>
+          <h2 class="text-h4">
+            {{ $t("home.recently-released") }}
+          </h2>
         </template>
-        <template v-slot:default="props">
+        <template #default="props">
           <VRow class="my-0">
             <VCol
               v-for="item in props.items"
@@ -40,12 +42,12 @@
         :custom-sort="createdSort"
         :items-per-page="numberOfItems"
       >
-        <template v-slot:header>
+        <template #header>
           <h2 class="text-h4">
             {{ $t("home.recently-added-albums") }}
           </h2>
         </template>
-        <template v-slot:default="props">
+        <template #default="props">
           <VRow class="my-0">
             <VCol
               v-for="item in props.items"
@@ -72,12 +74,12 @@
         :custom-sort="createdSort"
         :items-per-page="numberOfItems"
       >
-        <template v-slot:header>
+        <template #header>
           <h2 class="text-h4">
             {{ $t("home.recently-added-artists") }}
           </h2>
         </template>
-        <template v-slot:default="props">
+        <template #default="props">
           <VRow class="my-0">
             <VCol
               v-for="item in props.items"
@@ -104,15 +106,17 @@
         :custom-sort="releaseSort"
         :items-per-page="numberOfItems"
       >
-        <template v-slot:header>
-          <h2 class="text-h4">{{ $t("home.on-this-day") }}</h2>
+        <template #header>
+          <h2 class="text-h4">
+            {{ $t("home.on-this-day") }}
+          </h2>
         </template>
-        <template v-slot:no-data>
+        <template #no-data>
           <v-alert :value="true" color="info" icon="mdi-information" dark>
             {{ $t("home.on-this-day-empty") }}
           </v-alert>
         </template>
-        <template v-slot:default="props">
+        <template #default="props">
           <VRow class="my-0">
             <VCol
               v-for="item in props.items"
@@ -139,12 +143,12 @@
         :items="randomAlbums"
         :items-per-page="numberOfItems"
       >
-        <template v-slot:header>
+        <template #header>
           <h2 class="text-h4">
             {{ $t("home.random-albums") }}
           </h2>
         </template>
-        <template v-slot:default="props">
+        <template #default="props">
           <VRow class="my-0">
             <VCol
               v-for="item in props.items"
@@ -170,12 +174,12 @@
         :items="randomArtists"
         :items-per-page="numberOfItems"
       >
-        <template v-slot:header>
+        <template #header>
           <h2 class="text-h4">
             {{ $t("home.random-artists") }}
           </h2>
         </template>
-        <template v-slot:default="props">
+        <template #default="props">
           <VRow class="my-0">
             <VCol
               v-for="item in props.items"
@@ -202,12 +206,12 @@
         :custom-sort="recentlyPlayedAlbumsSort"
         :items-per-page="numberOfItems"
       >
-        <template v-slot:header>
+        <template #header>
           <h2 class="text-h4">
             {{ $t("home.recently-played-albums") }}
           </h2>
         </template>
-        <template v-slot:default="props">
+        <template #default="props">
           <VRow class="my-0">
             <VCol
               v-for="item in props.items"
@@ -234,12 +238,12 @@
         :custom-sort="recentlyPlayedArtistsSort"
         :items-per-page="numberOfItems"
       >
-        <template v-slot:header>
+        <template #header>
           <h2 class="text-h4">
             {{ $t("home.recently-played-artists") }}
           </h2>
         </template>
-        <template v-slot:default="props">
+        <template #default="props">
           <VRow class="my-0">
             <VCol
               v-for="item in props.items"

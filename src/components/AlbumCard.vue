@@ -1,26 +1,26 @@
 <template>
   <VCard :to="{ name: 'album', params: { id: album.id } }">
     <VImg
+      v-if="album.image500 && !imageUnavailable"
       :aspect-ratio="1"
       :src="album.image500"
-      v-if="album.image500 && !imageUnavailable"
       @error="setImageUnavailable"
     />
     <VImg
+      v-else-if="album.image && !imageUnavailable"
       :aspect-ratio="1"
       :src="album.image"
-      v-else-if="album.image && !imageUnavailable"
       @error="setImageUnavailable"
     />
     <VImg
+      v-else
       :aspect-ratio="1"
       :src="require('@mdi/svg/svg/album.svg')"
-      v-else
-      class="grey lighten-3"
+      class="bg-grey-lighten-3"
     />
     <VCardTitle class="pb-0 d-block text-truncate" :title="full_title">
       {{ album.title }}&nbsp;
-      <span v-if="album.edition_description !== null" class="grey--text">
+      <span v-if="album.edition_description !== null" class="text-grey">
         ({{ album.edition_description }})
       </span>
     </VCardTitle>
@@ -28,8 +28,10 @@
       <AlbumArtists :album="album" :truncate="true" />
     </VCardText>
     <VCardText>
-      <div class="grey--text">{{ album.release }}</div>
-      <div v-if="labelForCatNr" class="grey--text">
+      <div class="text-grey">
+        {{ album.release }}
+      </div>
+      <div v-if="labelForCatNr" class="text-grey">
         {{ catalogueNumber || $t("music.label.catalogue-number-none") }}
       </div>
     </VCardText>

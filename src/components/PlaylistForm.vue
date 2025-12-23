@@ -5,26 +5,26 @@
         <VRow no-gutters align="center" justify="center">
           <VCol md="6" sm="8" cols="12" @change.once="isDirty = true">
             <VTextField
-              :label="$t('common.name')"
               v-model="newPlaylist.name"
+              :label="$t('common.name')"
               :rules="[(v) => !!v || $t('errors.playlists.name-blank')]"
               required
             />
             <VTextarea
+              v-model="newPlaylist.description"
               :label="$t('common.description')"
               rows="3"
-              v-model="newPlaylist.description"
             />
             <VAutocomplete
+              v-model="newPlaylist.playlist_type"
               :items="playlistTypes"
               :label="$t('music.playlist.playlist_type')"
-              v-model="newPlaylist.playlist_type"
               :disabled="hasItems"
             />
             <VAutocomplete
+              v-model="newPlaylist.access"
               :items="accessOptions"
               :label="$t('music.playlist.access')"
-              v-model="newPlaylist.access"
             />
             <VBtn
               :disabled="!isValid"
@@ -33,7 +33,7 @@
               type="submit"
             >
               {{
-                this.playlist
+                playlist
                   ? $t("music.playlist.update")
                   : $t("music.playlist.create")
               }}
@@ -41,10 +41,10 @@
           </VCol>
         </VRow>
         <VRow
+          v-if="newPlaylist.item_ids.length"
           no-gutters
           align="center"
           justify="center"
-          v-if="newPlaylist.item_ids.length"
         >
           <VCol
             md="9"
@@ -58,17 +58,17 @@
             <h4 class="text-h6 mt-6 ml-4">
               {{ $tc("music.playlist.items", 2) }}
             </h4>
-            <VSimpleTable>
+            <v-table>
               <thead>
                 <tr>
                   <th style="width: 1px" class="text-center">Sort</th>
                   <th>{{ mainPropName }}</th>
-                  <th></th>
+                  <th />
                 </tr>
               </thead>
               <Draggable
-                tag="tbody"
                 v-model="newPlaylist.item_ids"
+                tag="tbody"
                 handle="[data-draggable=handle]"
               >
                 <tr
@@ -76,7 +76,13 @@
                   :key="item_id"
                 >
                   <td class="text-no-wrap">
-                    <VBtn small icon text class="" data-draggable="handle">
+                    <VBtn
+                      size="small"
+                      icon
+                      variant="text"
+                      class=""
+                      data-draggable="handle"
+                    >
                       <VIcon>mdi-drag-horizontal-variant</VIcon>
                     </VBtn>
                     {{ index + 1 }}
@@ -90,10 +96,10 @@
                   </td>
                   <td class="text-right">
                     <VBtn
-                      small
+                      size="small"
                       icon
-                      text
-                      class="ma-2 red--text"
+                      variant="text"
+                      class="ma-2 text-red"
                       @click="() => removeItem(index)"
                     >
                       <VIcon>mdi-close</VIcon>
@@ -101,7 +107,7 @@
                   </td>
                 </tr>
               </Draggable>
-            </VSimpleTable>
+            </v-table>
           </VCol>
         </VRow>
       </VForm>
@@ -173,18 +179,18 @@ export default {
       isValid: true,
     };
   },
-  async created() {
-    if (this.playlist) {
-      await this.read(this.$route.params.id);
-      this.fillValues();
-    }
-  },
   watch: {
     playlist: function () {
       if (this.playlist && !this.isDirty) {
         this.fillValues();
       }
     },
+  },
+  async created() {
+    if (this.playlist) {
+      await this.read(this.$route.params.id);
+      this.fillValues();
+    }
   },
   computed: {
     ...mapState("albums", ["albums"]),

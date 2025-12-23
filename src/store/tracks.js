@@ -1,4 +1,3 @@
-import Vue from "vue";
 import api from "@/api";
 import { fetchAll } from "./actions";
 import { compareTracks } from "../comparators";
@@ -36,7 +35,7 @@ export default {
       state.startLoading = new Date();
     },
     removeTrack(state, id) {
-      Vue.delete(state.tracks, id);
+      delete state.tracks[id];
     },
     removeOld(state) {
       const oldTracks = state.tracks;

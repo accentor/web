@@ -1,36 +1,28 @@
 import "@mdi/font/css/materialdesignicons.css";
 import "roboto-fontface/css/roboto/roboto-fontface.css";
-import Vue from "vue";
-import Vuetify from "vuetify/lib";
-import Meta from "vue-meta";
-import Root from "./Root.vue";
+import { createApp } from "vue";
+
+import "vuetify/styles";
+import { createVuetify } from "vuetify";
+import { createVueI18nAdapter } from "vuetify/locale/adapters/vue-i18n";
+import colors from "vuetify/util/colors";
+
+import { i18n } from "./i18n";
+import { useI18n } from "vue-i18n";
+
 import router from "./router";
 import store from "./store/store";
-import i18n from "./i18n";
-import colors from "vuetify/lib/util/colors";
-import ClickOutside from "vuetify/lib/directives/click-outside";
 
-Vue.config.productionTip = false;
+import Root from "./Root.vue";
 
-Vue.filter("length", (l) => {
-  const hours = Math.floor(l / 3600);
-  const minutes = Math.floor((l % 3600) / 60);
-  const seconds = `${l % 60}`.padStart(2, "0");
-  return hours
-    ? `${hours}:${minutes.toString().padStart(2, "0")}:${seconds}`
-    : `${minutes}:${seconds}`;
-});
+const app = createApp(Root);
 
-Vue.use(Vuetify);
-Vue.directive("click-outside", ClickOutside);
-Vue.use(Meta, { refreshOnceOnNavigation: true });
-
-new Vue({
-  router,
-  store,
-  i18n,
-  vuetify: new Vuetify({
-    lang: { t: (key, ...params) => i18n.t(key, params) },
+app.use(i18n);
+app.use(
+  createVuetify({
+    locale: {
+      adapter: createVueI18nAdapter({ i18n, useI18n }),
+    },
     theme: {
       themes: {
         light: {
@@ -43,5 +35,20 @@ new Vue({
       },
     },
   }),
-  render: (h) => h(Root),
-}).$mount("#main");
+);
+
+app.use(router);
+app.use(store);
+
+app.config.globalProperties.$filters = {
+  length: (l) => {
+    const hours = Math.floor(l / 3600);
+    const minutes = Math.floor((l % 3600) / 60);
+    const seconds = `${l % 60}`.padStart(2, "0");
+    return hours
+      ? `${hours}:${minutes.toString().padStart(2, "0")}:${seconds}`
+      : `${minutes}:${seconds}`;
+  },
+};
+
+app.mount("#main");

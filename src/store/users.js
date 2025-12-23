@@ -1,4 +1,3 @@
-import Vue from "vue";
 import api from "@/api";
 import { fetchAll } from "./actions";
 import { compareStrings } from "../comparators";
@@ -35,7 +34,7 @@ export default {
       state.startLoading = new Date();
     },
     removeUser(state, id) {
-      Vue.delete(state.users, id);
+      delete state.users[id];
     },
     removeOld(state) {
       const oldUsers = state.users;

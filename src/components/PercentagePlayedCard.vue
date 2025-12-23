@@ -1,6 +1,8 @@
 <template>
   <VCard class="pa-2">
-    <VCardTitle class="break-word">{{ title }}</VCardTitle>
+    <VCardTitle class="break-word">
+      {{ title }}
+    </VCardTitle>
     <div class="ma-2">
       <svg viewBox="0 0 250 250">
         <circle
@@ -11,20 +13,20 @@
           stroke="currentColor"
           stroke-width="30"
           :stroke-dasharray="circumference"
-          class="grey--text text--lighten-2"
-        ></circle>
+          class="text-grey-lighten-2"
+        />
         <circle
           cx="125"
           cy="125"
           r="100"
           fill="transparent"
           stroke="currentColor"
-          class="primary--text"
+          class="text-primary"
           stroke-width="30"
           :stroke-dasharray="circumference"
           :stroke-dashoffset="strokeDashOffset"
           transform="rotate(-90, 125, 125)"
-        ></circle>
+        />
         <text x="130" y="125" text-anchor="middle" class="text-h6">
           {{ Math.round(animatedPercentage * 1000) / 10.0 }}%
         </text>

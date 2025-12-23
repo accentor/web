@@ -1,4 +1,3 @@
-import Vue from "vue";
 import api from "@/api";
 import { fetchAll } from "./actions";
 
@@ -34,7 +33,7 @@ export default {
       state.startLoading = new Date();
     },
     removeCoverFilename(state, id) {
-      Vue.delete(state.coverFilenames, id);
+      delete state.coverFilenames[id];
     },
     removeOld(state) {
       const oldCoverFilenames = state.coverFilenames;
