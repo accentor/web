@@ -151,7 +151,7 @@ export default {
         key: "title",
         class: "text-no-wrap",
         sortRaw: (t1, t2) =>
-            compareStrings(t1.normalized_title, t2.normalized_title)
+          compareStrings(t1.normalized_title, t2.normalized_title),
       },
       {
         text: this.$t("music.track.length"),
@@ -185,8 +185,8 @@ export default {
         width: "1px",
         class: "text-no-wrap",
         sortRaw: (t1, t2) =>
-            (this.playStatsByTrack[t1.id]?.count || 0) -
-            (this.playStatsByTrack[t2.id]?.count || 0)
+          (this.playStatsByTrack[t1.id]?.count || 0) -
+          (this.playStatsByTrack[t2.id]?.count || 0),
       },
       {
         text: this.$t("common.actions"),

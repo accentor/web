@@ -15,7 +15,8 @@ export default {
 </script>
 
 <style lang="scss">
-@import "vuetify/settings";
+@use "sass:map";
+@use "vuetify/settings";
 
 // Additional resets
 a {
@@ -34,7 +35,7 @@ a {
   }
 }
 
-@media (min-width: map-get($display-breakpoints, "sm")) {
+@media (min-width: map.get(settings.$display-breakpoints, "sm")) {
   .actions--sm-wide {
     .actions__button {
       margin: 8px 16px 8px 0;

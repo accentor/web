@@ -370,7 +370,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "vuetify/settings";
+@use "sass:map";
+@use "vuetify/settings";
 
 .player {
   width: 100%;
@@ -390,7 +391,7 @@ export default {
     padding-left: 10px;
     padding-right: 10px;
     margin-right: auto;
-    @media (min-width: map-get($display-breakpoints, "md")) {
+    @media (min-width: map.get(settings.$display-breakpoints, "md")) {
       padding-right: 20px;
     }
   }
@@ -398,13 +399,13 @@ export default {
   &__button {
     margin: 4px;
 
-    @media (min-width: map-get($display-breakpoints, "md")) {
+    @media (min-width: map.get(settings.$display-breakpoints, "md")) {
       margin: 8px;
     }
 
     &--sm-and-up {
       display: none;
-      @media (min-width: map-get($display-breakpoints, "sm")) {
+      @media (min-width: map.get(settings.$display-breakpoints, "sm")) {
         display: unset;
       }
     }
@@ -424,11 +425,11 @@ export default {
     flex-basis: 0%;
     padding-right: 10px;
 
-    @media (min-width: map-get($display-breakpoints, "sm")) {
+    @media (min-width: map.get(settings.$display-breakpoints, "sm")) {
       display: inline-flex;
     }
 
-    @media (min-width: map-get($display-breakpoints, "md")) {
+    @media (min-width: map.get(settings.$display-breakpoints, "md")) {
       padding-right: 20px;
     }
   }
@@ -437,7 +438,7 @@ export default {
     min-width: 6rem;
     flex-grow: 0;
 
-    @media (min-width: map-get($display-breakpoints, "md")) {
+    @media (min-width: map.get(settings.$display-breakpoints, "md")) {
       width: 9rem;
     }
   }
@@ -451,7 +452,7 @@ export default {
     margin-left: auto;
     padding-left: 10px;
     padding-right: 10px;
-    @media (min-width: map-get($display-breakpoints, "md")) {
+    @media (min-width: map.get(settings.$display-breakpoints, "md")) {
       padding-left: 20px;
     }
   }
@@ -461,11 +462,11 @@ export default {
     margin: 4px;
     min-width: 50px;
     max-width: 250px;
-    @media (min-width: map-get($display-breakpoints, "sm")) {
+    @media (min-width: map.get(settings.$display-breakpoints, "sm")) {
       display: flex;
     }
 
-    @media (min-width: map-get($display-breakpoints, "md")) {
+    @media (min-width: map.get(settings.$display-breakpoints, "md")) {
       margin: 8px;
       min-width: 100px;
     }

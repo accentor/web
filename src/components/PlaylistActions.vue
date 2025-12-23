@@ -20,18 +20,18 @@
     </VTooltip>
     <VTooltip location="bottom" :disabled="playableTracks.length !== 0">
       <template #activator="{ props }">
-          <VBtn
-            :disabled="playableTracks.length === 0"
-            color="success"
-            class="actions__button"
-            variant="text"
-            icon
-            size="small"
-            @click.stop.prevent="addTracks"
-            v-bind="props"
-          >
-            <VIcon>mdi-plus</VIcon>
-          </VBtn>
+        <VBtn
+          :disabled="playableTracks.length === 0"
+          color="success"
+          class="actions__button"
+          variant="text"
+          icon
+          size="small"
+          v-bind="props"
+          @click.stop.prevent="addTracks"
+        >
+          <VIcon>mdi-plus</VIcon>
+        </VBtn>
       </template>
       <span>{{ $t("music.playlist.no-tracks-to-add") }}</span>
     </VTooltip>

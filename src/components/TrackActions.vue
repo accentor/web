@@ -40,21 +40,12 @@
     <EditReviewComment :item="track" :update="flag" />
     <VMenu>
       <template #activator="{ props }">
-        <VBtn
-          class="actions__button mr-0"
-          size="small"
-          icon
-          v-bind="props"
-        >
+        <VBtn class="actions__button mr-0" size="small" icon v-bind="props">
           <VIcon>mdi-dots-vertical</VIcon>
         </VBtn>
       </template>
       <VList density="compact">
-        <VMenu
-          v-if="track.length && isModerator"
-          open-on-hover
-          location="left"
-        >
+        <VMenu v-if="track.length && isModerator" open-on-hover location="left">
           <template #activator="{ props }">
             <VListItem v-bind="props">
               <template #prepend>
@@ -181,8 +172,8 @@
           <template #activator="{ props }">
             <VListItem
               :disabled="waitingForReload"
-              @click.stop.prevent="deleteTrack"
               v-bind="props"
+              @click.stop.prevent="deleteTrack"
             >
               <template #prepend>
                 <VIcon color="danger">mdi-delete</VIcon>
