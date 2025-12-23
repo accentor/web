@@ -40,7 +40,6 @@
 
             installPhase = ''
               cp -r deps/accentor/dist $out
-              rm $out/**/*.map
             '';
 
             distPhase = "true";
