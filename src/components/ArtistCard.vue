@@ -15,7 +15,7 @@
     <VImg
       v-else
       :aspect-ratio="1"
-      :src="require('@mdi/svg/svg/account-music.svg')"
+      :src="artistSvgUrl"
       class="bg-grey-lighten-3"
     />
     <VCardTitle class="d-block text-truncate" :title="artist.name">
@@ -29,6 +29,7 @@
 
 <script>
 import ArtistActions from "./ArtistActions.vue";
+import artistSvgUrl from "@mdi/svg/svg/account-music.svg";
 
 export default {
   name: "ArtistCard",
@@ -38,6 +39,7 @@ export default {
   },
   data() {
     return {
+      artistSvgUrl,
       imageUnavailable: false,
     };
   },

@@ -1,5 +1,5 @@
 <template>
-  <VForm ref="form" v-model="isValid" lazy-validation>
+  <VForm ref="form" v-model="isValid">
     <VRow>
       <VCol cols="5">
         <VTextField

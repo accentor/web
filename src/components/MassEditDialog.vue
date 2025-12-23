@@ -1,7 +1,12 @@
 <template>
   <VDialog v-model="dialog" fullscreen scrollable>
-    <template #activator="{ on }">
-      <VBtn color="edit" class="ma-2" :disabled="tracks.length === 0" v-on="on">
+    <template #activator="{ props: activatorProps }">
+      <VBtn
+        color="edit"
+        class="ma-2"
+        :disabled="tracks.length === 0"
+        v-bind="activatorProps"
+      >
         {{
           $tc("music.mass.edit-tracks", tracks.length, { count: tracks.length })
         }}
@@ -9,7 +14,7 @@
     </template>
     <VCard>
       <VToolbar dark color="primary" class="flex-grow-0">
-        <VBtn icon dark @click="dialog = false">
+        <VBtn icon @click="dialog = false">
           <VIcon>mdi-close</VIcon>
         </VBtn>
         <VToolbarTitle>
@@ -197,7 +202,6 @@
                     v-model="changeGenres.genres"
                     :items="sortedGenres"
                     :custom-filter="filterName"
-                    cache-items
                     chips
                     closable-chips
                     item-title="name"

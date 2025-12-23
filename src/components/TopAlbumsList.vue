@@ -23,6 +23,7 @@
 import { mapState } from "vuex";
 import { calcPlayCountForAlbums, calcPlayTimeForAlbums } from "@/reducers";
 import TopList from "@/components/TopList.vue";
+import albumSvgUrl from "@mdi/svg/svg/album.svg";
 
 export default {
   name: "TopAlbumsList",
@@ -75,7 +76,7 @@ export default {
         return {
           count: this.useAverage ? tt[1].toFixed(2) : tt[1],
           label: `${albumArtists} - ${album?.title}`,
-          image: album?.image100 || require("@mdi/svg/svg/album.svg"),
+          image: album?.image100 || albumSvgUrl,
         };
       });
     },

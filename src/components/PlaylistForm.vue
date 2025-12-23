@@ -179,19 +179,6 @@ export default {
       isValid: true,
     };
   },
-  watch: {
-    playlist: function () {
-      if (this.playlist && !this.isDirty) {
-        this.fillValues();
-      }
-    },
-  },
-  async created() {
-    if (this.playlist) {
-      await this.read(this.$route.params.id);
-      this.fillValues();
-    }
-  },
   computed: {
     ...mapState("albums", ["albums"]),
     ...mapState("artists", ["artists"]),
@@ -209,6 +196,19 @@ export default {
         track: this.$t("music.title"),
       }[this.newPlaylist.playlist_type];
     },
+  },
+  watch: {
+    playlist: function () {
+      if (this.playlist && !this.isDirty) {
+        this.fillValues();
+      }
+    },
+  },
+  async created() {
+    if (this.playlist) {
+      await this.read(this.$route.params.id);
+      this.fillValues();
+    }
   },
   methods: {
     ...mapActions("playlists", ["create", "read", "update"]),

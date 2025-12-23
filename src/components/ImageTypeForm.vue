@@ -1,5 +1,5 @@
 <template>
-  <VForm ref="form" v-model="isValid" lazy-validation>
+  <VForm ref="form" v-model="isValid">
     <VRow>
       <VCol cols="6">
         <VTextField
@@ -61,20 +61,6 @@ export default {
       isValid: true,
     };
   },
-  watch: {
-    album: function () {
-      if (this.imageType) {
-        this.fillValues();
-      }
-    },
-  },
-  created() {
-    this.$nextTick(() => {
-      if (this.imageType) {
-        this.fillValues();
-      }
-    });
-  },
   computed: {
     ...mapGetters("imageTypes", ["imageTypes"]),
     rules() {
@@ -91,6 +77,20 @@ export default {
 
       return rules;
     },
+  },
+  watch: {
+    album: function () {
+      if (this.imageType) {
+        this.fillValues();
+      }
+    },
+  },
+  created() {
+    this.$nextTick(() => {
+      if (this.imageType) {
+        this.fillValues();
+      }
+    });
   },
   methods: {
     fillValues() {

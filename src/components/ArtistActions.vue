@@ -21,8 +21,8 @@
       location="bottom"
       :disabled="!waitingForReload"
     >
-      <template #activator="{ on }">
-        <span v-on="on">
+      <template #activator="{ props }">
+        <span v-bind="props">
           <VBtn
             :to="{
               name: 'edit-artist',
@@ -47,8 +47,8 @@
       location="bottom"
       :disabled="!waitingForReload"
     >
-      <template #activator="{ on }">
-        <span v-on="on">
+      <template #activator="{ props }">
+        <span v-bind="props">
           <ArtistMergeDialog :artist="artist" :disabled="waitingForReload" />
         </span>
       </template>
@@ -59,8 +59,8 @@
       location="bottom"
       :disabled="!waitingForReload"
     >
-      <template #activator="{ on }">
-        <span v-on="on">
+      <template #activator="{ props }">
+        <span v-bind="props">
           <VBtn
             :disabled="waitingForReload"
             color="danger"

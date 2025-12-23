@@ -5,7 +5,7 @@
     v-model="mergeModal"
     width="600px"
   >
-    <template #activator="{ on }">
+    <template #activator="{ props: activatorProps }">
       <VBtn
         :disabled="disabled"
         class="actions__button"
@@ -13,7 +13,7 @@
         variant="text"
         icon
         size="small"
-        v-on="on"
+        v-bind="activatorProps"
         @click.stop.prevent
       >
         <VIcon>mdi-merge</VIcon>
@@ -33,7 +33,6 @@
                 v-model="mergeArtist"
                 :items="sortedArtists"
                 :custom-filter="filterName"
-                cache-items
                 item-title="name"
                 item-value="id"
                 :label="$tc('music.artists', 1)"

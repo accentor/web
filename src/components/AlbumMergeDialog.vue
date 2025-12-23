@@ -5,11 +5,11 @@
     v-model="mergeModal"
     width="600px"
   >
-    <template #activator="{ on }">
-      <VListItem :disabled="disabled" v-on="on">
-        <VListItemIcon>
-          <VIcon color="edit"> mdi-merge </VIcon>
-        </VListItemIcon>
+    <template #activator="{ props: activatorProps }">
+      <VListItem :disabled="disabled" v-bind="activatorProps">
+        <template #prepend>
+          <VIcon color="edit">mdi-merge</VIcon>
+        </template>
 
         <VListItemTitle>{{ $t("music.album.merge") }}</VListItemTitle>
       </VListItem>
@@ -28,7 +28,6 @@
                 v-model="mergeAlbum"
                 :items="sortedAlbums"
                 :custom-filter="filterTitle"
-                cache-items
                 item-title="title"
                 item-value="id"
                 :label="$tc('music.albums', 1)"

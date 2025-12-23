@@ -1,8 +1,8 @@
 <template>
   <span class="actions">
     <VTooltip location="bottom" :disabled="playableTracks.length !== 0">
-      <template #activator="{ on }">
-        <span v-on="on">
+      <template #activator="{ props }">
+        <span v-bind="props">
           <VBtn
             :disabled="playableTracks.length === 0"
             color="primary"
@@ -19,8 +19,7 @@
       <span>{{ $t("music.playlist.no-tracks-to-play") }}</span>
     </VTooltip>
     <VTooltip location="bottom" :disabled="playableTracks.length !== 0">
-      <template #activator="{ on }">
-        <span v-on="on">
+      <template #activator="{ props }">
           <VBtn
             :disabled="playableTracks.length === 0"
             color="success"
@@ -29,11 +28,10 @@
             icon
             size="small"
             @click.stop.prevent="addTracks"
-            v-on="on"
+            v-bind="props"
           >
             <VIcon>mdi-plus</VIcon>
           </VBtn>
-        </span>
       </template>
       <span>{{ $t("music.playlist.no-tracks-to-add") }}</span>
     </VTooltip>
@@ -42,8 +40,8 @@
       location="bottom"
       :disabled="!waitingForReload"
     >
-      <template #activator="{ on }">
-        <span v-on="on">
+      <template #activator="{ props }">
+        <span v-bind="props">
           <VBtn
             :to="{
               name: 'edit-playlist',
@@ -68,8 +66,8 @@
       location="bottom"
       :disabled="!waitingForReload"
     >
-      <template #activator="{ on }">
-        <span v-on="on">
+      <template #activator="{ props }">
+        <span v-bind="props">
           <VBtn
             :disabled="waitingForReload"
             color="danger"

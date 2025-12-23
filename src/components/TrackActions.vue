@@ -1,8 +1,8 @@
 <template>
   <span class="text-no-wrap actions">
     <VTooltip location="bottom" :disabled="track.length !== null">
-      <template #activator="{ on }">
-        <span v-on="on">
+      <template #activator="{ props }">
+        <span v-bind="props">
           <VBtn
             :disabled="track.length === null"
             color="primary"
@@ -19,8 +19,8 @@
       <span>{{ $t("music.track.empty") }}</span>
     </VTooltip>
     <VTooltip location="bottom" :disabled="track.length !== null">
-      <template #activator="{ on }">
-        <span v-on="on">
+      <template #activator="{ props }">
+        <span v-bind="props">
           <VBtn
             :disabled="track.length === null"
             color="success"
@@ -39,13 +39,12 @@
     <AddToPlaylist :item="track" type="track" />
     <EditReviewComment :item="track" :update="flag" />
     <VMenu>
-      <template #activator="{ on, attrs }">
+      <template #activator="{ props }">
         <VBtn
           class="actions__button mr-0"
           size="small"
           icon
-          v-bind="attrs"
-          v-on="on"
+          v-bind="props"
         >
           <VIcon>mdi-dots-vertical</VIcon>
         </VBtn>
@@ -54,14 +53,13 @@
         <VMenu
           v-if="track.length && isModerator"
           open-on-hover
-          offset-x
           location="left"
         >
-          <template #activator="{ on }">
-            <VListItem v-on="on">
-              <VListItemIcon v-on="on">
+          <template #activator="{ props }">
+            <VListItem v-bind="props">
+              <template #prepend>
                 <VIcon color="info">mdi-file-music</VIcon>
-              </VListItemIcon>
+              </template>
 
               <VListItemTitle>
                 {{ $t("music.track.file") }}
@@ -130,7 +128,7 @@
           location="bottom"
           :disabled="!waitingForReload"
         >
-          <template #activator="{ on }">
+          <template #activator="{ props }">
             <VListItem
               :to="{
                 name: 'edit-track',
@@ -138,11 +136,11 @@
                 query: { redirect: $route.fullPath },
               }"
               :disabled="waitingForReload"
-              v-on="on"
+              v-bind="props"
             >
-              <VListItemIcon>
+              <template #prepend>
                 <VIcon color="edit">mdi-pencil</VIcon>
-              </VListItemIcon>
+              </template>
 
               <VListItemTitle>{{ $t("music.track.edit") }}</VListItemTitle>
             </VListItem>
@@ -154,7 +152,7 @@
           location="bottom"
           :disabled="!waitingForReload"
         >
-          <template #activator="{ on }">
+          <template #activator="{ props }">
             <VListItem
               :to="{
                 name: 'merge-track',
@@ -162,11 +160,11 @@
                 query: { redirect: $route.fullPath },
               }"
               :disabled="waitingForReload"
-              v-on="on"
+              v-bind="props"
             >
-              <VListItemIcon>
+              <template #prepend>
                 <VIcon color="edit">mdi-merge</VIcon>
-              </VListItemIcon>
+              </template>
 
               <VListItemTitle>
                 {{ $t("music.track.merge.merge") }}
@@ -180,15 +178,15 @@
           location="bottom"
           :disabled="!waitingForReload"
         >
-          <template #activator="{ on }">
+          <template #activator="{ props }">
             <VListItem
               :disabled="waitingForReload"
               @click.stop.prevent="deleteTrack"
-              v-on="on"
+              v-bind="props"
             >
-              <VListItemIcon>
+              <template #prepend>
                 <VIcon color="danger">mdi-delete</VIcon>
-              </VListItemIcon>
+              </template>
 
               <VListItemTitle>{{ $t("music.track.delete") }}</VListItemTitle>
             </VListItem>

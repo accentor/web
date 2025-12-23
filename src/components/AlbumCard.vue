@@ -15,7 +15,7 @@
     <VImg
       v-else
       :aspect-ratio="1"
-      :src="require('@mdi/svg/svg/album.svg')"
+      :src="albumSvgUrl"
       class="bg-grey-lighten-3"
     />
     <VCardTitle class="pb-0 d-block text-truncate" :title="full_title">
@@ -43,6 +43,7 @@
 <script>
 import AlbumActions from "./AlbumActions.vue";
 import AlbumArtists from "./AlbumArtists.vue";
+import albumSvgUrl from "@mdi/svg/svg/album.svg";
 
 export default {
   name: "AlbumCard",
@@ -55,10 +56,12 @@ export default {
     labelForCatNr: {
       type: Object,
       required: false,
+      default: undefined,
     },
   },
   data() {
     return {
+      albumSvgUrl,
       imageUnavailable: false,
     };
   },

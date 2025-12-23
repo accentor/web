@@ -22,14 +22,14 @@
           :src="previewSrc"
           height="200"
           width="200"
-          contain
+          cover
         />
         <VImg
           v-else-if="value === null && currentImg"
           :src="currentImg"
           height="200"
           width="200"
-          contain
+          cover
         />
         <VImg
           v-else
@@ -38,14 +38,13 @@
           class="bg-grey-lighten-3"
           height="200"
           width="200"
-          contain
+          cover
         />
       </VCol>
       <VCol class="flex-column d-flex flex-grow-0 justify-center">
         <VBtn
           color="primary"
           class="ma-2"
-          dark
           @click="passthrough"
           @dragover.prevent="() => {}"
           @drop.prevent="handleDrop"

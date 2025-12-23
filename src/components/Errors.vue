@@ -7,7 +7,7 @@
   >
     <div v-for="(error, index) in errors" :key="index">
       <div v-for="(value, key) in error" :key="key">
-        <div v-for="(e, index) in value" :key="index">
+        <div v-for="(e, innerIndex) in value" :key="innerIndex">
           <strong>{{ $t(`errors.${key}`) }}:</strong>
           {{ $t(`errors.${e}`) }}
         </div>

@@ -1,5 +1,5 @@
 <template>
-  <VForm ref="form" v-model="isValid" lazy-validation>
+  <VForm ref="form" v-model="isValid" >
     <VRow>
       <VCol cols="5">
         <VTextField
@@ -51,20 +51,6 @@ export default {
       isValid: true,
     };
   },
-  watch: {
-    album: function () {
-      if (this.location) {
-        this.fillValues();
-      }
-    },
-  },
-  created() {
-    this.$nextTick(() => {
-      if (this.location) {
-        this.fillValues();
-      }
-    });
-  },
   computed: {
     ...mapGetters("locations", ["locations"]),
     rules() {
@@ -81,6 +67,20 @@ export default {
 
       return rules;
     },
+  },
+  watch: {
+    album: function () {
+      if (this.location) {
+        this.fillValues();
+      }
+    },
+  },
+  created() {
+    this.$nextTick(() => {
+      if (this.location) {
+        this.fillValues();
+      }
+    });
   },
   methods: {
     fillValues() {

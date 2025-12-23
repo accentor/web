@@ -81,12 +81,11 @@
               <template #label>
                 {{ $t("music.artist.hide.label") }}
                 <VTooltip location="bottom">
-                  <template #activator="{ on, attrs }">
+                  <template #activator="{ props }">
                     <VIcon
                       class="ml-2"
-                      :size="true ? 'small' : undefined"
-                      v-bind="attrs"
-                      v-on="on"
+                      size="small"
+                      v-bind="props"
                     >
                       mdi-information
                     </VIcon>

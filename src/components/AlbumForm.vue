@@ -23,19 +23,18 @@
           persistent
           width="290px"
         >
-          <template #activator="{ on }">
+          <template #activator="{ props: activatorProps }">
             <VTextField
               v-model="newAlbum.release"
               :label="$t('music.album.release')"
               readonly
-              v-on="on"
+              v-bind="activatorProps"
             />
           </template>
           <VDatePicker
             v-model="newAlbum.release"
             scrollable
             :first-day-of-week="1"
-            :locale="locale"
           >
             <VSpacer />
             <VBtn
@@ -68,20 +67,19 @@
           persistent
           width="290px"
         >
-          <template #activator="{ on }">
+          <template #activator="{ props: activatorProps }">
             <VTextField
               v-model="newAlbum.edition"
               :label="$t('music.album.edition')"
               readonly
               clearable
-              v-on="on"
+              v-bind="activatorProps"
             />
           </template>
           <VDatePicker
             v-model="newAlbum.edition"
             scrollable
             :first-day-of-week="1"
-            :locale="locale"
           >
             <VSpacer />
             <VBtn
@@ -111,7 +109,7 @@
         <ImagePicker
           v-model="newAlbum.image"
           :current-img="album && album.image250"
-          :placeholder="require('@mdi/svg/svg/album.svg')"
+          :placeholder="albumSvgUrl"
         />
         <h4 class="text-subtitle-1">
           {{ $tc("music.artists", 2) }}
@@ -239,6 +237,7 @@
 <script>
 import { mapGetters, mapActions, mapState } from "vuex";
 import ImagePicker from "./ImagePicker.vue";
+import albumSvgUrl from "@mdi/svg/svg/album.svg";
 
 export default {
   name: "AlbumForm",
@@ -273,7 +272,19 @@ export default {
       },
       clear_review_comment: true,
       editionInformation: false,
+      albumSvgUrl,
     };
+  },
+  computed: {
+    ...mapState("artists", ["artists"]),
+    ...mapState("labels", ["labels"]),
+    ...mapState("userSettings", ["locale"]),
+    ...mapGetters("artists", {
+      sortedArtists: "artistsByName",
+    }),
+    ...mapGetters("labels", {
+      sortedLabels: "labelsByName",
+    }),
   },
   watch: {
     album: function () {
@@ -287,17 +298,6 @@ export default {
       await this.read(this.album.id);
       this.fillValues();
     }
-  },
-  computed: {
-    ...mapState("artists", ["artists"]),
-    ...mapState("labels", ["labels"]),
-    ...mapState("userSettings", ["locale"]),
-    ...mapGetters("artists", {
-      sortedArtists: "artistsByName",
-    }),
-    ...mapGetters("labels", {
-      sortedLabels: "labelsByName",
-    }),
   },
   methods: {
     ...mapActions("albums", ["create", "read", "update"]),

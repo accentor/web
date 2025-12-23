@@ -1,5 +1,5 @@
 <template>
-  <VForm ref="form" v-model="isValid" lazy-validation>
+  <VForm ref="form" v-model="isValid">
     <VRow>
       <VCol cols="3">
         <VTextField
@@ -72,20 +72,6 @@ export default {
       isValid: true,
     };
   },
-  watch: {
-    album: function () {
-      if (this.codecConversion) {
-        this.fillValues();
-      }
-    },
-  },
-  created() {
-    this.$nextTick(() => {
-      if (this.codecConversion) {
-        this.fillValues();
-      }
-    });
-  },
   computed: {
     ...mapGetters("codecs", ["codecs"]),
     ...mapGetters("codecConversions", ["codecConversions"]),
@@ -103,6 +89,20 @@ export default {
       rules.name.push(nameTaken);
       return rules;
     },
+  },
+  watch: {
+    album: function () {
+      if (this.codecConversion) {
+        this.fillValues();
+      }
+    },
+  },
+  created() {
+    this.$nextTick(() => {
+      if (this.codecConversion) {
+        this.fillValues();
+      }
+    });
   },
   methods: {
     fillValues() {

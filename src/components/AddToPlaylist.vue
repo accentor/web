@@ -1,65 +1,68 @@
 <template>
   <VDialog v-if="playlistOptions.length" v-model="dialog" width="600px">
-    <template #activator="{ on }">
+    <template #activator="{ props: activatorProps }">
       <VBtn
         class="actions__button"
         color="primary"
         variant="text"
         icon
         size="small"
-        v-on="on"
+        v-bind="activatorProps"
         @click.stop.prevent
       >
         <VIcon>mdi-playlist-plus</VIcon>
       </VBtn>
     </template>
-    <VCard>
-      <VCardTitle>
-        <span class="text-h5">{{
-          $t("music.playlist.add-item", { obj: item.name || item.title })
-        }}</span>
-      </VCardTitle>
-      <VCardText>
-        <VContainer>
-          <VRow>
-            <VCol cols="12">
-              <VCombobox
-                v-model="selectedPlaylist"
-                :items="playlistOptions"
-                :custom-filter="filterName"
-                cache-items
-                item-title="name"
-                item-value="id"
-                :label="$tc('music.playlists', 1)"
-                return-object
-              >
-                <template #item="{ item, on }">
-                  <VListItem :disabled="item.disabled" v-on="on">
-                    {{ item.name }}
-                    <span v-if="item.disabled">
-                      &nbsp;({{ $t("music.playlist.item-already-present") }})
-                    </span>
-                  </VListItem>
-                </template>
-              </VCombobox>
-            </VCol>
-          </VRow>
-        </VContainer>
-      </VCardText>
-      <VDivider />
-      <VCardActions>
-        <VSpacer />
-        <VBtn
-          color="primary"
-          class="ma-2"
-          type="submit"
-          :disabled="selectedPlaylist === null"
-          @click="addItemToPlaylist"
-        >
-          {{ $t("music.playlist.add") }}
-        </VBtn>
-      </VCardActions>
-    </VCard>
+    <template #default>
+      <VCard>
+        <VCardTitle>
+          <span class="text-h5">
+            {{
+              $t("music.playlist.add-item", { obj: item.name || item.title })
+            }}
+          </span>
+        </VCardTitle>
+        <VCardText>
+          <VContainer>
+            <VRow>
+              <VCol cols="12">
+                <VCombobox
+                  v-model="selectedPlaylist"
+                  :items="playlistOptions"
+                  :custom-filter="filterName"
+                  item-title="name"
+                  item-value="id"
+                  :label="$tc('music.playlists', 1)"
+                  return-object
+                >
+                  <template #item="{ item: innerItem, props }">
+                    <VListItem :disabled="innerItem.disabled" v-bind="props">
+                      {{ innerItem.name }}
+                      <span v-if="innerItem.disabled">
+                        &nbsp;({{ $t("music.playlist.item-already-present") }})
+                      </span>
+                    </VListItem>
+                  </template>
+                </VCombobox>
+              </VCol>
+            </VRow>
+          </VContainer>
+        </VCardText>
+        <VDivider />
+        <VCardActions>
+          <VSpacer />
+          <VBtn
+            color="primary"
+            class="ma-2"
+            type="submit"
+            :disabled="selectedPlaylist === null"
+            @click="addItemToPlaylist"
+          >
+            {{ $t("music.playlist.add") }}
+          </VBtn>
+        </VCardActions>
+      </VCard>
+    </template>
   </VDialog>
 </template>
 
