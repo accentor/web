@@ -22,7 +22,7 @@
 <script>
 import { mapState } from "vuex";
 import { calcPlayCountForAlbums, calcPlayTimeForAlbums } from "@/reducers";
-import TopList from "@/components/TopList";
+import TopList from "@/components/TopList.vue";
 
 export default {
   name: "TopAlbumsList",

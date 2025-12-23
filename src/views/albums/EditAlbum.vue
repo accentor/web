@@ -6,7 +6,7 @@
 
 <script>
 import { mapState } from "vuex";
-import AlbumForm from "../../components/AlbumForm";
+import AlbumForm from "../../components/AlbumForm.vue";
 
 export default {
   name: "EditAlbum",

@@ -236,7 +236,7 @@
 
 <script>
 import { mapGetters, mapActions, mapState } from "vuex";
-import ImagePicker from "./ImagePicker";
+import ImagePicker from "./ImagePicker.vue";
 
 export default {
   name: "AlbumForm",

@@ -261,8 +261,8 @@
 
 <script>
 import { mapGetters } from "vuex";
-import AlbumCard from "../components/AlbumCard";
-import ArtistCard from "../components/ArtistCard";
+import AlbumCard from "../components/AlbumCard.vue";
+import ArtistCard from "../components/ArtistCard.vue";
 import {
   compareAlbumsByReleaseFirst,
   compareByRecentlyPlayed,

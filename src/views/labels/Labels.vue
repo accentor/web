@@ -46,7 +46,7 @@
 
 <script>
 import { mapGetters } from "vuex";
-import LabelCard from "../../components/LabelCard";
+import LabelCard from "../../components/LabelCard.vue";
 import Paginated from "../../mixins/Paginated";
 import Searchable from "../../mixins/Searchable";
 

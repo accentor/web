@@ -54,7 +54,7 @@
 
 <script>
 import { mapGetters } from "vuex";
-import ArtistCard from "../../components/ArtistCard";
+import ArtistCard from "../../components/ArtistCard.vue";
 import Paginated from "../../mixins/Paginated";
 import Searchable from "../../mixins/Searchable";
 

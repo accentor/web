@@ -20,8 +20,8 @@
 
 <script>
 import { mapActions, mapGetters, mapState } from "vuex";
-import GenreActions from "@/components/GenreActions";
-import TracksTable from "../../components/TracksTable";
+import GenreActions from "@/components/GenreActions.vue";
+import TracksTable from "@/components/TracksTable.vue";
 import { TracksScope } from "@accentor/api-client-js";
 
 export default {

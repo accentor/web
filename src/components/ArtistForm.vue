@@ -36,7 +36,7 @@
 
 <script>
 import { mapActions } from "vuex";
-import ImagePicker from "./ImagePicker";
+import ImagePicker from "./ImagePicker.vue";
 
 export default {
   name: "ArtistForm",

@@ -7,7 +7,7 @@
 
 <script>
 import { mapGetters } from "vuex";
-import LocationForm from "./LocationForm";
+import LocationForm from "./LocationForm.vue";
 
 export default {
   name: "EditLocations",

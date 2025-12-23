@@ -53,7 +53,7 @@
 
 <script>
 import { mapActions, mapGetters } from "vuex";
-import AlbumCard from "../../components/AlbumCard";
+import AlbumCard from "../../components/AlbumCard.vue";
 import Paginated from "../../mixins/Paginated";
 import Searchable from "../../mixins/Searchable";
 

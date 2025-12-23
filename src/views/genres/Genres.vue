@@ -46,7 +46,7 @@
 <script>
 import { mapGetters } from "vuex";
 import Paginated from "../../mixins/Paginated";
-import GenreCard from "../../components/GenreCard";
+import GenreCard from "../../components/GenreCard.vue";
 import Searchable from "../../mixins/Searchable";
 
 export default {

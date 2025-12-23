@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import ArtistActions from "./ArtistActions";
+import ArtistActions from "./ArtistActions.vue";
 
 export default {
   name: "ArtistCard",

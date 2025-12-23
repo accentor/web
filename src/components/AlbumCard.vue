@@ -39,8 +39,8 @@
   </VCard>
 </template>
 <script>
-import AlbumActions from "./AlbumActions";
-import AlbumArtists from "./AlbumArtists";
+import AlbumActions from "./AlbumActions.vue";
+import AlbumArtists from "./AlbumArtists.vue";
 
 export default {
   name: "AlbumCard",

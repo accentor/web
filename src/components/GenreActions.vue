@@ -54,7 +54,7 @@
 
 <script>
 import { mapActions, mapGetters, mapState } from "vuex";
-import GenreMergeDialog from "./GenreMergeDialog";
+import GenreMergeDialog from "./GenreMergeDialog.vue";
 
 export default {
   name: "GenreActions",

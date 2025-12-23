@@ -11,7 +11,7 @@
 
 <script>
 import { mapGetters } from "vuex";
-import CoverFilenameForm from "./CoverFilenameForm";
+import CoverFilenameForm from "./CoverFilenameForm.vue";
 
 export default {
   name: "EditCoverFilenames",

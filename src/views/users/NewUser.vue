@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import UserForm from "@/components/UserForm";
+import UserForm from "@/components/UserForm.vue";
 
 export default {
   name: "NewUser",

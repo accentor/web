@@ -104,14 +104,14 @@
 </template>
 
 <script>
-import TrackActions from "./TrackActions";
+import TrackActions from "./TrackActions.vue";
 import Paginated from "../mixins/Paginated";
 import { mapGetters, mapState } from "vuex";
 import Searchable from "../mixins/Searchable";
 import Sortable from "../mixins/Sortable";
-import TrackArtists from "./TrackArtists";
-import TrackGenres from "./TrackGenres";
-import MassEditDialog from "./MassEditDialog";
+import TrackArtists from "./TrackArtists.vue";
+import TrackGenres from "./TrackGenres.vue";
+import MassEditDialog from "./MassEditDialog.vue";
 import {
   compareStrings,
   compareTracks,

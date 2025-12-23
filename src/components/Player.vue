@@ -141,7 +141,7 @@
 import { mapActions, mapGetters, mapMutations, mapState } from "vuex";
 import Draggable from "vuedraggable";
 import GlobalEvents from "vue-global-events";
-import TrackArtists from "./TrackArtists";
+import TrackArtists from "./TrackArtists.vue";
 
 export default {
   name: "Player",

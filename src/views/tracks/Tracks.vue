@@ -14,7 +14,7 @@
 
 <script>
 import { mapGetters } from "vuex";
-import TracksTable from "../../components/TracksTable";
+import TracksTable from "../../components/TracksTable.vue";
 
 export default {
   name: "Tracks",

@@ -41,7 +41,7 @@
 
 <script>
 import { mapActions, mapMutations } from "vuex";
-import Errors from "../components/Errors";
+import Errors from "../components/Errors.vue";
 
 export default {
   name: "login",
