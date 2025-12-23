@@ -30,6 +30,9 @@
 		"datePicker": {
 			"itemsSelected": "{0} geselecteerd"
 		},
+        "input": {
+            "prependAction": "Vooraan toevoegen"
+        },
 		"noDataText": "Geen gegevens beschikbaar",
 		"carousel": {
 			"prev": "Vorig beeld",
