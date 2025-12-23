@@ -8,6 +8,7 @@ import router from "./router";
 import store from "./store/store";
 import i18n from "./i18n";
 import colors from "vuetify/lib/util/colors";
+import ClickOutside from "vuetify/lib/directives/click-outside";
 
 Vue.config.productionTip = false;
 
@@ -21,6 +22,7 @@ Vue.filter("length", (l) => {
 });
 
 Vue.use(Vuetify);
+Vue.directive("click-outside", ClickOutside);
 Vue.use(Meta, { refreshOnceOnNavigation: true });
 
 new Vue({

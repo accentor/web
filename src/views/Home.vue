@@ -269,7 +269,7 @@ import {
   compareStrings,
 } from "../comparators";
 
-const RANDOM_SEED_MAX = 10_000;
+const RANDOM_SEED_MAX = 10000;
 
 export default {
   name: "Home",

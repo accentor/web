@@ -40,13 +40,13 @@ const mutations = {
   },
 };
 
-if (process.env.NODE_ENV !== "production") {
+if (!import.meta.env.PROD) {
   mutations.RESTORE_MUTATION = vuexLocalStorage.RESTORE_MUTATION;
 }
 
 export default new Vuex.Store({
   plugins: persistencePlugins,
-  strict: process.env.NODE_ENV !== "production",
+  strict: !import.meta.env.PROD,
   modules: {
     albums,
     artists,

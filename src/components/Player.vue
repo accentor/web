@@ -361,7 +361,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~vuetify/src/styles/styles.sass";
+@import "vuetify/src/styles/styles.sass";
 
 .player {
   width: 100%;

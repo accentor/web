@@ -4,18 +4,11 @@ import VueI18n from "vue-i18n";
 Vue.use(VueI18n);
 
 function loadLocaleMessages() {
-  const locales = require.context(
-    "./locales",
-    true,
-    /[A-Za-z0-9-_,\s]+\.json$/i,
-  );
+  const modules = import.meta.glob("@/locales/**/*.json", { eager: true });
   const messages = {};
-  locales.keys().forEach((key) => {
-    const matched = key.match(/([A-Za-z0-9-_]+)\./i);
-    if (matched && matched.length > 1) {
-      const locale = matched[1];
-      messages[locale] = locales(key);
-    }
+  Object.keys(modules).forEach((path) => {
+    const locale = path.match(/\/([A-Za-z0-9-_]+)\.json$/i)[1];
+    messages[locale] = modules[path];
   });
   return messages;
 }
@@ -54,8 +47,8 @@ const dateTimeFormats = {
 };
 
 export default new VueI18n({
-  locale: process.env.VUE_APP_I18N_LOCALE || "en",
-  fallbackLocale: process.env.VUE_APP_I18N_FALLBACK_LOCALE || "en",
+  locale: import.meta.env.VITE_I18N_LOCALE || "en",
+  fallbackLocale: import.meta.env.VITE_I18N_FALLBACK_LOCALE || "en",
   messages: loadLocaleMessages(),
   dateTimeFormats,
 });
