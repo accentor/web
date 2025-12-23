@@ -29,7 +29,10 @@ export default defineConfig({
   css: {
     preprocessorOptions: {
       scss: {
-        additionalData: `@import "@/sass/main.scss";`
+          additionalData: `@import "@/sass/main.scss";\n`
+      },
+      sass: {
+          additionalData: `@import "@/sass/main.scss";\n`
       }
     }
   },
