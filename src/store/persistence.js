@@ -29,12 +29,12 @@ class VuexPersistentModule extends VuexPersister {
       saveState: debounce(saveModule, 60000),
     });
 
-    this.capitilizedModule = module;
+    this.capitalizedModule = module;
 
     // Get item from an async storage and commit them back to the store
     this.replaceState = async (
       lowerCaseModule,
-      capitilizedModule,
+      capitalizedModule,
       storage,
       store,
     ) => {
@@ -48,7 +48,7 @@ class VuexPersistentModule extends VuexPersister {
         }
         if (savedState[lowerCaseModule]) {
           store.commit(
-            `${lowerCaseModule}/set${capitilizedModule}`,
+            `${lowerCaseModule}/set${capitalizedModule}`,
             savedState[lowerCaseModule],
           );
         }
@@ -59,7 +59,7 @@ class VuexPersistentModule extends VuexPersister {
     this.plugin = (store) => {
       store[`${this.key}Restored`] = this.replaceState(
         this.key,
-        this.capitilizedModule,
+        this.capitalizedModule,
         this.storage,
         store,
       ).then(() => {
@@ -100,7 +100,7 @@ const localStorageModules = [
   "userSettings",
 ];
 
-export const vuexLocalStorage = new VuexPersister({
+const vuexLocalStorage = new VuexPersister({
   storage: window.localStorage,
   strictMode: !import.meta.env.PROD,
   modules: localStorageModules,

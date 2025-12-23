@@ -1,4 +1,4 @@
-import persistencePlugins, { vuexLocalStorage } from "./persistence";
+import persistencePlugins from "./persistence";
 import albums from "./albums";
 import artists from "./artists";
 import auth from "./auth";

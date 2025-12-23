@@ -1,6 +1,7 @@
 import api from "@/api";
 import { TracksScope } from "@accentor/api-client-js";
 import { fetchAll } from "./actions";
+import { shallowRef } from "vue";
 
 export default {
   namespaced: true,
@@ -18,7 +19,7 @@ export default {
       const loaded = new Date();
       for (let play of payload) {
         play.loaded = loaded;
-        state.plays[play.id] = play;
+        state.plays[play.id] = shallowRef(play);
       }
     },
     setPlay(state, { id, play }) {
@@ -28,7 +29,7 @@ export default {
         state.plays[id] = oldPlays[id];
       }
       play.loaded = new Date();
-      state.plays[id] = play;
+      state.plays[id] = shallowRef(play);
     },
     setStartLoading(state) {
       state.startLoading = new Date();

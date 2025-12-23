@@ -1,5 +1,6 @@
 import api from "@/api";
 import { fetchAll } from "./actions";
+import { shallowRef } from "vue";
 
 export default {
   namespaced: true,
@@ -17,7 +18,7 @@ export default {
       const loaded = new Date();
       for (let obj of payload) {
         obj.loaded = loaded;
-        state.coverFilenames[obj.id] = obj;
+        state.coverFilenames[obj.id] = shallowRef(obj);
       }
     },
     setCoverFilename(state, { id, coverFilename }) {
@@ -27,7 +28,7 @@ export default {
         state.coverFilenames[id] = oldCoverFilenames[id];
       }
       coverFilename.loaded = new Date();
-      state.coverFilenames[id] = coverFilename;
+      state.coverFilenames[id] = shallowRef(coverFilename);
     },
     setStartLoading(state) {
       state.startLoading = new Date();

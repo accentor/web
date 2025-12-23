@@ -5,6 +5,7 @@ import {
   compareAlbumsByTitleFirst,
 } from "../comparators";
 import { AlbumsScope } from "@accentor/api-client-js";
+import { shallowRef } from "vue";
 
 export default {
   namespaced: true,
@@ -22,7 +23,7 @@ export default {
       const loaded = new Date();
       for (let album of payload) {
         album.loaded = loaded;
-        state.albums[album.id] = album;
+        state.albums[album.id] = shallowRef(album);
       }
     },
     setAlbum(state, { id, album }) {
@@ -32,7 +33,7 @@ export default {
         state.albums[id] = oldAlbums[id];
       }
       album.loaded = new Date();
-      state.albums[id] = album;
+      state.albums[id] = shallowRef(album);
     },
     setStartLoading(state) {
       state.startLoading = new Date();

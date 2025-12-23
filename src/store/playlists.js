@@ -1,6 +1,7 @@
 import api from "@/api";
 import { fetchAll } from "./actions";
 import { compareStrings } from "../comparators";
+import { shallowRef } from "vue";
 
 export default {
   namespaced: true,
@@ -18,7 +19,7 @@ export default {
       const loaded = new Date();
       for (let list of payload) {
         list.loaded = loaded;
-        state.playlists[list.id] = list;
+        state.playlists[list.id] = shallowRef(list);
       }
     },
     setPlaylist(state, { id, playlist }) {
@@ -28,7 +29,7 @@ export default {
         state.playlists[id] = oldLists[id];
       }
       playlist.loaded = new Date();
-      state.playlists[id] = playlist;
+      state.playlists[id] = shallowRef(playlist);
     },
     setStartLoading(state) {
       state.startLoading = new Date();

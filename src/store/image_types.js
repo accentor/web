@@ -1,5 +1,6 @@
 import api from "@/api";
 import { fetchAll } from "./actions";
+import { shallowRef } from "vue";
 
 export default {
   namespaced: true,
@@ -17,7 +18,7 @@ export default {
       const loaded = new Date();
       for (let obj of payload) {
         obj.loaded = loaded;
-        state.imageTypes[obj.id] = obj;
+        state.imageTypes[obj.id] = shallowRef(obj);
       }
     },
     setImageType(state, { id, imageType }) {
@@ -27,7 +28,7 @@ export default {
         state.imageTypes[id] = oldImageTypes[id];
       }
       imageType.loaded = new Date();
-      state.imageTypes[id] = imageType;
+      state.imageTypes[id] = shallowRef(imageType);
     },
     setStartLoading(state) {
       state.startLoading = new Date();

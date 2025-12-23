@@ -1,5 +1,6 @@
 import api from "@/api";
 import { fetchAll } from "./actions";
+import { shallowRef } from "vue";
 
 export default {
   namespaced: true,
@@ -17,7 +18,7 @@ export default {
       const loaded = new Date();
       for (let obj of payload) {
         obj.loaded = loaded;
-        state.locations[obj.id] = obj;
+        state.locations[obj.id] = shallowRef(obj);
       }
     },
     setLocation(state, { id, location }) {
@@ -27,7 +28,7 @@ export default {
         state.locations[id] = oldLocations[id];
       }
       location.loaded = new Date();
-      state.locations[id] = location;
+      state.locations[id] = shallowRef(location);
     },
     setStartLoading(state) {
       state.startLoading = new Date();

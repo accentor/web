@@ -11,7 +11,7 @@
             </VToolbar>
             <VCardText>
               <VForm @submit.prevent="submit">
-                <Errors />
+                <Errors class="mb-4" />
                 <VTextField
                   v-model="name"
                   :label="$t('users.name')"

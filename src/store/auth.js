@@ -1,5 +1,6 @@
 import api from "@/api";
 import { fetchAll } from "./actions";
+import { shallowRef } from "vue";
 
 export default {
   namespaced: true,
@@ -30,7 +31,7 @@ export default {
       const loaded = new Date();
       for (let obj of payload) {
         obj.loaded = loaded;
-        state.authTokens[obj.id] = obj;
+        state.authTokens[obj.id] = shallowRef(obj);
       }
     },
     setStartLoading(state) {
@@ -55,7 +56,7 @@ export default {
         const result = await api.auth_tokens.create({
           auth_token: {
             // This is defined by vite at build time
-
+            // eslint-disable-next-line no-undef
             application: __APPLICATION_VERSION__,
           },
           ...data,

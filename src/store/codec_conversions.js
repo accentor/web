@@ -1,5 +1,6 @@
 import api from "@/api";
 import { fetchAll } from "./actions";
+import { shallowRef } from "vue";
 
 export default {
   namespaced: true,
@@ -17,7 +18,7 @@ export default {
       const loaded = new Date();
       for (let obj of payload) {
         obj.loaded = loaded;
-        state.codecConversions[obj.id] = obj;
+        state.codecConversions[obj.id] = shallowRef(obj);
       }
     },
     setCodecConversion(state, { id, codecConversion }) {
@@ -27,7 +28,7 @@ export default {
         state.codecConversions[id] = oldCodecConversions[id];
       }
       codecConversion.loaded = new Date();
-      state.codecConversions[id] = codecConversion;
+      state.codecConversions[id] = shallowRef(codecConversion);
     },
     setStartLoading(state) {
       state.startLoading = new Date();

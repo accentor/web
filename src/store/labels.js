@@ -1,6 +1,7 @@
 import api from "@/api";
 import { fetchAll } from "./actions";
 import { compareStrings } from "../comparators";
+import { shallowRef } from "vue";
 
 export default {
   namespaced: true,
@@ -18,7 +19,7 @@ export default {
       const loaded = new Date();
       for (let obj of payload) {
         obj.loaded = loaded;
-        state.labels[obj.id] = obj;
+        state.labels[obj.id] = shallowRef(obj);
       }
     },
     setLabel(state, { id, label }) {
@@ -28,7 +29,7 @@ export default {
         state.labels[id] = oldLabels[id];
       }
       label.loaded = new Date();
-      state.labels[id] = label;
+      state.labels[id] = shallowRef(label);
     },
     setStartLoading(state) {
       state.startLoading = new Date();

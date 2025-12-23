@@ -87,10 +87,11 @@ export default {
     ...mapGetters("auth", ["currentUser"]),
     ...mapGetters("playlists", ["editablePlaylists"]),
     playlistOptions() {
-      return structuredClone(this.editablePlaylists).reduce((options, p) => {
-        if (p.playlist_type === this.type) {
-          p.disabled = p.item_ids.includes(this.item.id);
-          options.push(p);
+      return [...this.editablePlaylists].reduce((options, p) => {
+        const clone = { ...p };
+        if (clone.playlist_type === this.type) {
+          clone.disabled = clone.item_ids.includes(this.item.id);
+          options.push(clone);
         }
         return options;
       }, []);

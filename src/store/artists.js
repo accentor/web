@@ -2,6 +2,7 @@ import api from "@/api";
 import { fetchAll } from "./actions";
 import { compareStrings } from "../comparators";
 import { ArtistsScope } from "@accentor/api-client-js";
+import { shallowRef } from "vue";
 
 export default {
   namespaced: true,
@@ -19,7 +20,7 @@ export default {
       const loaded = new Date();
       for (let artist of payload) {
         artist.loaded = loaded;
-        state.artists[artist.id] = artist;
+        state.artists[artist.id] = shallowRef(artist);
       }
     },
     setArtist(state, { id, artist }) {
@@ -29,7 +30,7 @@ export default {
         state.artists[id] = oldArtists[id];
       }
       artist.loaded = new Date();
-      state.artists[id] = artist;
+      state.artists[id] = shallowRef(artist);
     },
     setStartLoading(state) {
       state.startLoading = new Date();

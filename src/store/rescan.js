@@ -1,5 +1,6 @@
 import api from "@/api";
 import { fetchAll } from "./actions";
+import { shallowRef } from "vue";
 
 export default {
   namespaced: true,
@@ -18,7 +19,7 @@ export default {
       const loaded = new Date();
       for (let rescan of payload) {
         rescan.loaded = loaded;
-        state.rescans[rescan.id] = rescan;
+        state.rescans[rescan.id] = shallowRef(rescan);
       }
     },
     setRescan(state, { id, rescan }) {
@@ -28,7 +29,7 @@ export default {
         state.rescans[id] = oldRescans[id];
       }
       rescan.loaded = new Date();
-      state.rescans[id] = rescan;
+      state.rescans[id] = shallowRef(rescan);
     },
     setStartLoading(state) {
       state.startLoading = new Date();

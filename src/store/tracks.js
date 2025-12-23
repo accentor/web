@@ -2,6 +2,7 @@ import api from "@/api";
 import { fetchAll } from "./actions";
 import { compareTracks } from "../comparators";
 import { TracksScope } from "@accentor/api-client-js";
+import { shallowRef } from "vue";
 
 export default {
   namespaced: true,
@@ -19,7 +20,7 @@ export default {
       const loaded = new Date();
       for (let track of payload) {
         track.loaded = loaded;
-        state.tracks[track.id] = track;
+        state.tracks[track.id] = shallowRef(track);
       }
     },
     setTrack(state, { id, track }) {
@@ -29,7 +30,7 @@ export default {
         state.tracks[id] = oldTracks[id];
       }
       track.loaded = new Date();
-      state.tracks[id] = track;
+      state.tracks[id] = shallowRef(track);
     },
     setStartLoading(state) {
       state.startLoading = new Date();

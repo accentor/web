@@ -1,6 +1,7 @@
 import api from "@/api";
 import { fetchAll } from "./actions";
 import { compareStrings } from "../comparators";
+import { shallowRef } from "vue";
 
 export default {
   namespaced: true,
@@ -18,7 +19,7 @@ export default {
       const loaded = new Date();
       for (let obj of payload) {
         obj.loaded = loaded;
-        state.genres[obj.id] = obj;
+        state.genres[obj.id] = shallowRef(obj);
       }
     },
     setGenre(state, { id, genre }) {
@@ -28,7 +29,7 @@ export default {
         state.genres[id] = oldGenres[id];
       }
       genre.loaded = new Date();
-      state.genres[id] = genre;
+      state.genres[id] = shallowRef(genre);
     },
     setStartLoading(state) {
       state.startLoading = new Date();
