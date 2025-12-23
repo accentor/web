@@ -172,7 +172,7 @@ export default {
     MaintenanceActions,
   },
   metaInfo() {
-    return { title: this.$t("library-settings") };
+    return { title: this.$t("librarySettings") };
   },
   computed: {
     ...mapGetters("auth", ["isModerator"]),

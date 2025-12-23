@@ -93,7 +93,7 @@
           </VListItemAction>
 
           <VListItemTitle>
-            {{ $t("library-settings") }}
+            {{ $t("librarySettings") }}
           </VListItemTitle>
         </VListItem>
         <VDivider />
