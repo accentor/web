@@ -7,7 +7,7 @@
 
 <script>
 import { mapGetters } from "vuex";
-import ImageTypeForm from "./ImageTypeForm";
+import ImageTypeForm from "./ImageTypeForm.vue";
 
 export default {
   name: "EditImageTypes",

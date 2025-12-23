@@ -197,9 +197,8 @@
 <script>
 import { mapActions, mapGetters, mapState } from "vuex";
 import { baseURL } from "../api";
-import EditReviewComment from "./EditReviewComment";
-
-import AddToPlaylist from "./AddToPlaylist";
+import EditReviewComment from "./EditReviewComment.vue";
+import AddToPlaylist from "./AddToPlaylist.vue";
 
 export default {
   name: "TrackActions",

@@ -54,7 +54,7 @@
 
 <script>
 import { mapActions, mapGetters, mapState } from "vuex";
-import LabelMergeDialog from "./LabelMergeDialog";
+import LabelMergeDialog from "./LabelMergeDialog.vue";
 
 export default {
   name: "LabelActions",

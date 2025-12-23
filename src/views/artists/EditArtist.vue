@@ -6,7 +6,7 @@
 
 <script>
 import { mapState } from "vuex";
-import ArtistForm from "../../components/ArtistForm";
+import ArtistForm from "../../components/ArtistForm.vue";
 
 export default {
   name: "EditArtist",

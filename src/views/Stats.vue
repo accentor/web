@@ -61,13 +61,13 @@
 
 <script>
 import { mapGetters, mapState } from "vuex";
-import DateRangeSelect from "@/components/DateRangeSelect";
-import PercentagePlayedCard from "@/components/PercentagePlayedCard";
-import PlayCountCard from "@/components/PlayCountCard";
-import PlaysPunchcard from "@/components/PlaysPunchcard";
-import TopArtistsList from "@/components/TopArtistsList";
-import TopTracksList from "@/components/TopTracksList";
-import TopAlbumsList from "@/components/TopAlbumsList";
+import DateRangeSelect from "@/components/DateRangeSelect.vue";
+import PercentagePlayedCard from "@/components/PercentagePlayedCard.vue";
+import PlayCountCard from "@/components/PlayCountCard.vue";
+import PlaysPunchcard from "@/components/PlaysPunchcard.vue";
+import TopArtistsList from "@/components/TopArtistsList.vue";
+import TopTracksList from "@/components/TopTracksList.vue";
+import TopAlbumsList from "@/components/TopAlbumsList.vue";
 import { filterPlaysByPeriod, filterPlaysByTracks } from "@/filters";
 import $api from "../api";
 import { PlaysScope } from "@accentor/api-client-js";

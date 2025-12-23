@@ -54,8 +54,8 @@
 
 <script>
 import { mapActions, mapGetters, mapState } from "vuex";
-import AlbumCard from "../../components/AlbumCard";
-import LabelActions from "@/components/LabelActions";
+import AlbumCard from "../../components/AlbumCard.vue";
+import LabelActions from "@/components/LabelActions.vue";
 import Paginated from "../../mixins/Paginated";
 import Searchable from "../../mixins/Searchable";
 import { AlbumsScope } from "@accentor/api-client-js";

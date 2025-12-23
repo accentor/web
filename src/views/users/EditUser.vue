@@ -10,7 +10,7 @@
 
 <script>
 import { mapState } from "vuex";
-import UserForm from "../../components/UserForm";
+import UserForm from "../../components/UserForm.vue";
 
 export default {
   name: "EditUser",

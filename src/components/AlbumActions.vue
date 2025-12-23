@@ -105,8 +105,8 @@
 </template>
 <script>
 import { mapActions, mapGetters, mapState } from "vuex";
-import EditReviewComment from "./EditReviewComment";
-import AddToPlaylist from "./AddToPlaylist";
+import EditReviewComment from "./EditReviewComment.vue";
+import AddToPlaylist from "./AddToPlaylist.vue";
 import AlbumMergeDialog from "./AlbumMergeDialog.vue";
 
 export default {

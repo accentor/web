@@ -133,12 +133,12 @@
 
 <script>
 import { mapActions, mapGetters, mapState } from "vuex";
-import EditCodecs from "../components/EditCodecs";
-import EditCodecConversions from "../components/EditCodecConversions";
-import EditCoverFilenames from "../components/EditCoverFilenames";
-import EditImageTypes from "../components/EditImageTypes";
-import EditLocations from "../components/EditLocations";
-import MaintenanceActions from "../components/MaintenanceActions";
+import EditCodecs from "../components/EditCodecs.vue";
+import EditCodecConversions from "../components/EditCodecConversions.vue";
+import EditCoverFilenames from "../components/EditCoverFilenames.vue";
+import EditImageTypes from "../components/EditImageTypes.vue";
+import EditLocations from "../components/EditLocations.vue";
+import MaintenanceActions from "../components/MaintenanceActions.vue";
 
 export default {
   name: "Library",

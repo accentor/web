@@ -8,7 +8,7 @@
 <script>
 import { mapState } from "vuex";
 import { calcPlayStatsForArtists } from "@/reducers";
-import TopList from "@/components/TopList";
+import TopList from "@/components/TopList.vue";
 
 export default {
   name: "TopArtistsList",

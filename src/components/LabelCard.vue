@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import LabelActions from "./LabelActions";
+import LabelActions from "./LabelActions.vue";
 
 export default {
   name: "LabelCard",

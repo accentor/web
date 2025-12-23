@@ -74,9 +74,9 @@
 
 <script>
 import { mapState, mapActions } from "vuex";
-import AlbumActions from "../../components/AlbumActions";
-import TracksTable from "../../components/TracksTable";
-import AlbumArtists from "../../components/AlbumArtists";
+import AlbumActions from "../../components/AlbumActions.vue";
+import TracksTable from "../../components/TracksTable.vue";
+import AlbumArtists from "../../components/AlbumArtists.vue";
 import { PlaysScope, TracksScope } from "@accentor/api-client-js";
 
 export default {

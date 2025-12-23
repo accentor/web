@@ -80,9 +80,9 @@
 
 <script>
 import { mapGetters } from "vuex";
-import TracksTable from "../../components/TracksTable";
-import ArtistCard from "../../components/ArtistCard";
-import AlbumCard from "../../components/AlbumCard";
+import TracksTable from "../../components/TracksTable.vue";
+import ArtistCard from "../../components/ArtistCard.vue";
+import AlbumCard from "../../components/AlbumCard.vue";
 
 export default {
   name: "Flags",

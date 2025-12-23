@@ -1,45 +1,45 @@
 import Vue from "vue";
 import Router from "vue-router";
 import store from "./store/store";
-import Album from "./views/albums/Album";
-import Albums from "./views/albums/Albums";
-import EditAlbum from "./views/albums/EditAlbum";
-import NewAlbum from "./views/albums/NewAlbum";
+import Album from "./views/albums/Album.vue";
+import Albums from "./views/albums/Albums.vue";
+import EditAlbum from "./views/albums/EditAlbum.vue";
+import NewAlbum from "./views/albums/NewAlbum.vue";
 import App from "./views/App.vue";
-import Artist from "./views/artists/Artist";
-import Artists from "./views/artists/Artists";
-import EditArtist from "./views/artists/EditArtist";
-import NewArtist from "./views/artists/NewArtist";
-import Home from "./views/Home";
-import Login from "./views/Login";
-import Library from "./views/Library";
-import Stats from "./views/Stats";
-import EditTrack from "./views/tracks/EditTrack";
-import TracksWithoutAudio from "./views/tracks/TracksWithoutAudio";
-import MergeTrack from "./views/tracks/MergeTrack";
-import Tracks from "./views/tracks/Tracks";
-import EditUser from "./views/users/EditUser";
-import NewUser from "./views/users/NewUser";
-import User from "./views/users/User";
-import Users from "./views/users/Users";
-import Settings from "./views/settings/Settings";
-import Flags from "./views/flags/Flags";
-import Labels from "./views/labels/Labels";
-import Label from "./views/labels/Label";
-import EditLabel from "./views/labels/EditLabel";
-import Genres from "./views/genres/Genres";
-import Genre from "./views/genres/Genre";
-import EditGenre from "./views/genres/EditGenre";
-import Playlists from "./views/playlists/Playlists";
-import Playlist from "./views/playlists/Playlist";
-import NewPlaylist from "./views/playlists/NewPlaylist";
-import EditPlaylist from "./views/playlists/EditPlaylist";
+import Artist from "./views/artists/Artist.vue";
+import Artists from "./views/artists/Artists.vue";
+import EditArtist from "./views/artists/EditArtist.vue";
+import NewArtist from "./views/artists/NewArtist.vue";
+import Home from "./views/Home.vue";
+import Login from "./views/Login.vue";
+import Library from "./views/Library.vue";
+import Stats from "./views/Stats.vue";
+import EditTrack from "./views/tracks/EditTrack.vue";
+import TracksWithoutAudio from "./views/tracks/TracksWithoutAudio.vue";
+import MergeTrack from "./views/tracks/MergeTrack.vue";
+import Tracks from "./views/tracks/Tracks.vue";
+import EditUser from "./views/users/EditUser.vue";
+import NewUser from "./views/users/NewUser.vue";
+import User from "./views/users/User.vue";
+import Users from "./views/users/Users.vue";
+import Settings from "./views/settings/Settings.vue";
+import Flags from "./views/flags/Flags.vue";
+import Labels from "./views/labels/Labels.vue";
+import Label from "./views/labels/Label.vue";
+import EditLabel from "./views/labels/EditLabel.vue";
+import Genres from "./views/genres/Genres.vue";
+import Genre from "./views/genres/Genre.vue";
+import EditGenre from "./views/genres/EditGenre.vue";
+import Playlists from "./views/playlists/Playlists.vue";
+import Playlist from "./views/playlists/Playlist.vue";
+import NewPlaylist from "./views/playlists/NewPlaylist.vue";
+import EditPlaylist from "./views/playlists/EditPlaylist.vue";
 
 Vue.use(Router);
 
 const router = new Router({
   mode: "history",
-  base: process.env.BASE_URL,
+  base: import.meta.env.BASE_URL,
   routes: [
     {
       path: "/app/",

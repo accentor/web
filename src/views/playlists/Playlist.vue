@@ -69,10 +69,10 @@
 
 <script>
 import { mapActions, mapState } from "vuex";
-import AlbumCard from "../../components/AlbumCard";
-import ArtistCard from "../../components/ArtistCard";
-import TracksTable from "../../components/TracksTable";
-import PlaylistActions from "../../components/PlaylistActions";
+import AlbumCard from "../../components/AlbumCard.vue";
+import ArtistCard from "../../components/ArtistCard.vue";
+import TracksTable from "../../components/TracksTable.vue";
+import PlaylistActions from "../../components/PlaylistActions.vue";
 import Paginated from "../../mixins/Paginated";
 
 export default {

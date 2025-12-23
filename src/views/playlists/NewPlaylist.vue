@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import PlaylistForm from "../../components/PlaylistForm";
+import PlaylistForm from "../../components/PlaylistForm.vue";
 
 export default {
   name: "NewPlaylist",

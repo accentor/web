@@ -277,7 +277,7 @@
 <script>
 import { mapActions, mapGetters, mapState } from "vuex";
 import { compareTracks } from "../comparators";
-import Errors from "./Errors";
+import Errors from "./Errors.vue";
 import TrackFormArtists from "./TrackFormArtists.vue";
 
 export default {

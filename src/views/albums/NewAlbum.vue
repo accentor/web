@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import AlbumForm from "../../components/AlbumForm";
+import AlbumForm from "../../components/AlbumForm.vue";
 
 export default {
   name: "NewAlbum",

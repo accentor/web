@@ -72,7 +72,7 @@
 import { mapActions, mapGetters, mapState } from "vuex";
 import Paginated from "../../mixins/Paginated";
 import Searchable from "../../mixins/Searchable";
-import PlaylistActions from "../../components/PlaylistActions";
+import PlaylistActions from "../../components/PlaylistActions.vue";
 
 export default {
   name: "playlists",

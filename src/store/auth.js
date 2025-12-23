@@ -55,7 +55,9 @@ export default {
       try {
         const result = await api.auth_tokens.create({
           auth_token: {
-            application: process.env.APPLICATION_VERSION,
+            // This is defined by vite at build time
+            // eslint-disable-next-line no-undef
+            application: __APPLICATION_VERSION__,
           },
           ...data,
         });

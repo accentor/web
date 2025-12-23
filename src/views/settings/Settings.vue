@@ -32,8 +32,8 @@
 
 <script>
 import { mapGetters, mapMutations, mapState } from "vuex";
-import AuthTokensTable from "../../components/AuthTokensTable";
-import UserForm from "@/components/UserForm";
+import AuthTokensTable from "../../components/AuthTokensTable.vue";
+import UserForm from "@/components/UserForm.vue";
 
 export default {
   name: "Settings",

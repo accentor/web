@@ -7,7 +7,7 @@
 
 <script>
 import { mapGetters } from "vuex";
-import CodecForm from "./CodecForm";
+import CodecForm from "./CodecForm.vue";
 
 export default {
   name: "EditCodecs",

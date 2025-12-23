@@ -6,7 +6,7 @@
 
 <script>
 import { mapState } from "vuex";
-import PlaylistForm from "../../components/PlaylistForm";
+import PlaylistForm from "../../components/PlaylistForm.vue";
 
 export default {
   name: "EditPlaylist",

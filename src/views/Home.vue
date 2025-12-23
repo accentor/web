@@ -261,15 +261,15 @@
 
 <script>
 import { mapGetters } from "vuex";
-import AlbumCard from "../components/AlbumCard";
-import ArtistCard from "../components/ArtistCard";
+import AlbumCard from "../components/AlbumCard.vue";
+import ArtistCard from "../components/ArtistCard.vue";
 import {
   compareAlbumsByReleaseFirst,
   compareByRecentlyPlayed,
   compareStrings,
 } from "../comparators";
 
-const RANDOM_SEED_MAX = 10_000;
+const RANDOM_SEED_MAX = 10000;
 
 export default {
   name: "Home",

@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import ArtistForm from "../../components/ArtistForm";
+import ArtistForm from "../../components/ArtistForm.vue";
 
 export default {
   name: "NewArtist",

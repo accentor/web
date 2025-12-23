@@ -70,9 +70,9 @@
 
 <script>
 import { mapActions, mapGetters, mapState } from "vuex";
-import EditReviewComment from "./EditReviewComment";
-import ArtistMergeDialog from "./ArtistMergeDialog";
-import AddToPlaylist from "./AddToPlaylist";
+import EditReviewComment from "./EditReviewComment.vue";
+import ArtistMergeDialog from "./ArtistMergeDialog.vue";
+import AddToPlaylist from "./AddToPlaylist.vue";
 
 export default {
   name: "ArtistActions",

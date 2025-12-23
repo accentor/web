@@ -7,7 +7,7 @@
 
 <script>
 import { mapState } from "vuex";
-import TopList from "@/components/TopList";
+import TopList from "@/components/TopList.vue";
 
 export default {
   name: "TopTracksList",

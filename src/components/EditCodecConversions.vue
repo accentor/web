@@ -11,7 +11,7 @@
 
 <script>
 import { mapGetters } from "vuex";
-import CodecConversionForm from "./CodecConversionForm";
+import CodecConversionForm from "./CodecConversionForm.vue";
 
 export default {
   name: "EditCodecConversions",

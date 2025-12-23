@@ -28,7 +28,7 @@ Once you have the API running, you have two options for the frontend.
 
 The project can be deployed to a static site hoster like Netlify.
 You only need the following three things:
-* An environment variable for `VUE_APP_API_URL` pointing to the domain of your api.
+* An environment variable for `VITE_API_URL` pointing to the domain of your api.
 * Build command: `yarn build`.
 * Output directory: `dist/`.
 
@@ -48,7 +48,7 @@ To run and develop locally:
 
 You will also need an API to interact with. For this you can
 * [Run the API locally](https://github.com/accentor/api) (Recommended)
-* Set an environment variable for `VUE_APP_API_URL` pointing to an
+* Set an environment variable for `VITE_API_URL` pointing to an
   existing API.
 
 ## Help

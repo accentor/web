@@ -181,8 +181,8 @@
 
 <script>
 import { mapGetters, mapState } from "vuex";
-import Errors from "../components/Errors";
-import Player from "../components/Player";
+import Errors from "../components/Errors.vue";
+import Player from "../components/Player.vue";
 
 export default {
   name: "app",

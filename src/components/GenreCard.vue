@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import GenreActions from "./GenreActions";
+import GenreActions from "./GenreActions.vue";
 
 export default {
   name: "GenreCard",

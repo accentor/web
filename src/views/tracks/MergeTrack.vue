@@ -199,9 +199,9 @@
 
 <script>
 import { mapGetters, mapState, mapActions } from "vuex";
-import TrackGenres from "@/components/TrackGenres";
-import TrackArtists from "@/components/TrackArtists";
-import TracksTable from "@/components/TracksTable";
+import TrackGenres from "@/components/TrackGenres.vue";
+import TrackArtists from "@/components/TrackArtists.vue";
+import TracksTable from "@/components/TracksTable.vue";
 
 export default {
   name: "MergeTrack",
