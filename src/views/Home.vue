@@ -112,7 +112,7 @@
           </h2>
         </template>
         <template #no-data>
-          <v-alert :value="true" color="info" icon="mdi-information" dark>
+          <v-alert :value="true" color="info" icon="mdi-information">
             {{ $t("home.on-this-day-empty") }}
           </v-alert>
         </template>
@@ -281,29 +281,6 @@ export default {
   metaInfo() {
     return { title: this.$t("common.home") };
   },
-  methods: {
-    releaseSort(items) {
-      return items.sort(compareAlbumsByReleaseFirst(true));
-    },
-    createdSort(items) {
-      items.sort((a1, a2) => {
-        return compareStrings(a2.created_at, a1.created_at);
-      });
-      return items;
-    },
-    recentlyPlayedAlbumsSort(albums) {
-      return albums.sort(compareByRecentlyPlayed(this.playStatsByAlbum));
-    },
-    recentlyPlayedArtistsSort(artists) {
-      return artists.sort(compareByRecentlyPlayed(this.playStatsByArtist));
-    },
-    randomSort(items) {
-      return [...items].sort(
-        (i1, i2) =>
-          Math.sin(i2.id + this.randomSeed) - Math.sin(i1.id + this.randomSeed),
-      );
-    },
-  },
   computed: {
     ...mapGetters({
       albums: "albums/albums",
@@ -329,6 +306,29 @@ export default {
       } else {
         return 4;
       }
+    },
+  },
+  methods: {
+    releaseSort(items) {
+      return items.sort(compareAlbumsByReleaseFirst(true));
+    },
+    createdSort(items) {
+      items.sort((a1, a2) => {
+        return compareStrings(a2.created_at, a1.created_at);
+      });
+      return items;
+    },
+    recentlyPlayedAlbumsSort(albums) {
+      return albums.sort(compareByRecentlyPlayed(this.playStatsByAlbum));
+    },
+    recentlyPlayedArtistsSort(artists) {
+      return artists.sort(compareByRecentlyPlayed(this.playStatsByArtist));
+    },
+    randomSort(items) {
+      return [...items].sort(
+        (i1, i2) =>
+          Math.sin(i2.id + this.randomSeed) - Math.sin(i1.id + this.randomSeed),
+      );
     },
   },
 };

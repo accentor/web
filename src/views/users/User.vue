@@ -21,17 +21,17 @@ export default {
   metaInfo() {
     return { title: this.user.name };
   },
+  computed: {
+    ...mapState("users", ["users"]),
+    user: function () {
+      return this.users[this.$route.params.id];
+    },
+  },
   watch: {
     user: function () {
       if (this.user === undefined) {
         this.$router.go(-1);
       }
-    },
-  },
-  computed: {
-    ...mapState("users", ["users"]),
-    user: function () {
-      return this.users[this.$route.params.id];
     },
   },
 };

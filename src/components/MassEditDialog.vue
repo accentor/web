@@ -290,6 +290,7 @@ export default {
   props: {
     tracks: { default: () => [], type: Array },
   },
+  emits: ["close"],
   data() {
     return {
       dialog: false,

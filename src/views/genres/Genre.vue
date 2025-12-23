@@ -38,12 +38,6 @@ export default {
       required: true,
     },
   },
-  watch: {
-    id: {
-      handler: "fetchContent",
-      immediate: true,
-    },
-  },
   computed: {
     ...mapGetters("auth", ["isModerator"]),
     ...mapState("genres", ["genres"]),
@@ -54,6 +48,12 @@ export default {
     },
     genre: function () {
       return this.genres[this.$route.params.id];
+    },
+  },
+  watch: {
+    id: {
+      handler: "fetchContent",
+      immediate: true,
     },
   },
   methods: {

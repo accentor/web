@@ -81,9 +81,6 @@ export default {
   },
   components: { PlaylistActions },
   mixins: [Paginated, Searchable],
-  created() {
-    this.fetchContent();
-  },
   computed: {
     ...mapState("users", ["users"]),
     ...mapGetters("playlists", {
@@ -110,6 +107,9 @@ export default {
         return 12;
       }
     },
+  },
+  created() {
+    this.fetchContent();
   },
   methods: {
     ...mapActions("playlists", ["index"]),

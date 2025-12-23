@@ -96,12 +96,6 @@ export default {
       imageUnavailable: false,
     };
   },
-  watch: {
-    id: {
-      handler: "fetchContent",
-      immediate: true,
-    },
-  },
   computed: {
     ...mapState("albums", ["albums"]),
     ...mapState("labels", ["labels"]),
@@ -122,6 +116,12 @@ export default {
       return this.$store.getters["playlists/albumPlaylists"].filter((p) =>
         p.item_ids.includes(this.album.id),
       );
+    },
+  },
+  watch: {
+    id: {
+      handler: "fetchContent",
+      immediate: true,
     },
   },
   methods: {

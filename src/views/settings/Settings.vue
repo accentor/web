@@ -47,16 +47,6 @@ export default {
       newCodecConversion: null,
     };
   },
-  watch: {
-    locale() {
-      this.fillValues();
-    },
-  },
-  created() {
-    this.$nextTick(() => {
-      this.fillValues();
-    });
-  },
   computed: {
     ...mapGetters("auth", { user: "currentUser" }),
     ...mapGetters("auth", ["authTokens"]),
@@ -74,6 +64,16 @@ export default {
         [{ text: this.$t("settings.codec-conversion.original"), value: null }],
       );
     },
+  },
+  watch: {
+    locale() {
+      this.fillValues();
+    },
+  },
+  created() {
+    this.$nextTick(() => {
+      this.fillValues();
+    });
   },
   methods: {
     ...mapMutations("userSettings", ["setSettings"]),

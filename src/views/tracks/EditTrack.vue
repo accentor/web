@@ -42,7 +42,6 @@
             v-model="newTrack.genre_ids"
             :items="sortedGenres"
             :custom-filter="filterName"
-            cache-items
             chips
             closable-chips
             item-title="name"
@@ -116,21 +115,6 @@ export default {
       loaded: false,
     };
   },
-  watch: {
-    track: function () {
-      if (this.track && !this.isDirty) {
-        this.loaded = true;
-        this.fillValues();
-      }
-    },
-  },
-  async created() {
-    if (this.track) {
-      await this.read(this.track.id);
-      this.loaded = true;
-      this.fillValues();
-    }
-  },
   computed: {
     ...mapState("albums", ["albums"]),
     ...mapState("artists", ["artists"]),
@@ -181,6 +165,21 @@ export default {
 
       return rules;
     },
+  },
+  watch: {
+    track: function () {
+      if (this.track && !this.isDirty) {
+        this.loaded = true;
+        this.fillValues();
+      }
+    },
+  },
+  async created() {
+    if (this.track) {
+      await this.read(this.track.id);
+      this.loaded = true;
+      this.fillValues();
+    }
   },
   methods: {
     ...mapActions("tracks", ["read", "update"]),

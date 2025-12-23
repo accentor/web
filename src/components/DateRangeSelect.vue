@@ -20,12 +20,7 @@
       </template>
     </VSelect>
     <VDialog v-model="showCustomRangeModal" persistent width="290px">
-      <VDatePicker
-        v-model="customRange"
-        scrollable
-        range
-        :first-day-of-week="1"
-      >
+      <VDatePicker v-model="customRange" scrollable :first-day-of-week="1">
         <VSpacer />
         <VBtn
           variant="text"
@@ -53,6 +48,7 @@ import { mapState } from "vuex";
 
 export default {
   name: "DateRangeSelect",
+  emits: ["input"],
   data() {
     return {
       periodPresets: [

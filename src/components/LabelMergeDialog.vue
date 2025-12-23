@@ -33,7 +33,6 @@
                 v-model="mergeLabel"
                 :items="sortedLabels"
                 :custom-filter="filterName"
-                cache-items
                 item-title="name"
                 item-value="id"
                 :label="$tc('music.labels', 1)"

@@ -35,6 +35,12 @@ export default {
       isValid: true,
     };
   },
+  computed: {
+    ...mapState("genres", ["genres"]),
+    genre: function () {
+      return this.genres[this.$route.params.id];
+    },
+  },
   watch: {
     genre: function () {
       if (this.genre && !this.isDirty) {
@@ -47,12 +53,6 @@ export default {
       await this.read(this.genre.id);
       this.fillValues();
     }
-  },
-  computed: {
-    ...mapState("genres", ["genres"]),
-    genre: function () {
-      return this.genres[this.$route.params.id];
-    },
   },
   methods: {
     ...mapActions("genres", ["read", "update"]),

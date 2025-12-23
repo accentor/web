@@ -113,6 +113,7 @@ export default {
       required: true,
     },
   },
+  emits: ["update:value"],
   data() {
     return {
       roles: [
@@ -148,6 +149,16 @@ export default {
       trackArtists: [],
     };
   },
+  computed: {
+    ...mapGetters("artists", {
+      sortedArtists: "artistsByName",
+    }),
+    rules() {
+      const artistValidation = (v) =>
+        !!v || this.$t("errors.artists.artist-blank");
+      return [artistValidation];
+    },
+  },
   watch: {
     trackArtists(newValue) {
       this.$emit("update:value", newValue);
@@ -157,16 +168,6 @@ export default {
         this.trackArtists = this.value;
       },
       immediate: true,
-    },
-  },
-  computed: {
-    ...mapGetters("artists", {
-      sortedArtists: "artistsByName",
-    }),
-    rules() {
-      const artistValidation = (v) =>
-        !!v || this.$t("errors.artists.artist-blank");
-      return [artistValidation];
     },
   },
   methods: {

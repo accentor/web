@@ -92,12 +92,6 @@ export default {
       required: true,
     },
   },
-  watch: {
-    id: {
-      handler: "fetchContent",
-      immediate: true,
-    },
-  },
   computed: {
     ...mapState("playlists", ["playlists"]),
     ...mapState("albums", ["albums"]),
@@ -110,6 +104,12 @@ export default {
     items() {
       let key = `${this.playlist?.playlist_type}s`;
       return this.playlist?.item_ids.map((id) => this[key][id]) || [];
+    },
+  },
+  watch: {
+    id: {
+      handler: "fetchContent",
+      immediate: true,
     },
   },
   methods: {

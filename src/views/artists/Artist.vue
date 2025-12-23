@@ -95,12 +95,6 @@ export default {
       imageUnavailable: false,
     };
   },
-  watch: {
-    id: {
-      handler: "fetchContent",
-      immediate: true,
-    },
-  },
   computed: {
     ...mapGetters("auth", ["isModerator"]),
     ...mapState("artists", ["artists"]),
@@ -121,6 +115,12 @@ export default {
       return this.$store.getters["playlists/artistPlaylists"].filter((p) =>
         p.item_ids.includes(this.artist.id),
       );
+    },
+  },
+  watch: {
+    id: {
+      handler: "fetchContent",
+      immediate: true,
     },
   },
   methods: {

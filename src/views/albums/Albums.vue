@@ -64,14 +64,6 @@ export default {
     return { title: this.$tc("music.albums", 2) };
   },
   mixins: [Paginated, Searchable],
-  methods: {
-    ...mapActions("albums", ["destroy"]),
-    deleteAlbum: function (id) {
-      if (confirm(this.$t("common.are-you-sure"))) {
-        this.destroy(id);
-      }
-    },
-  },
   computed: {
     ...mapGetters("auth", ["isModerator"]),
     ...mapGetters("albums", {
@@ -86,6 +78,14 @@ export default {
             .indexOf(this.search.toLocaleLowerCase()) >= 0 ||
           item.normalized_title.indexOf(this.search.toLocaleLowerCase()) >= 0,
       );
+    },
+  },
+  methods: {
+    ...mapActions("albums", ["destroy"]),
+    deleteAlbum: function (id) {
+      if (confirm(this.$t("common.are-you-sure"))) {
+        this.destroy(id);
+      }
     },
   },
 };

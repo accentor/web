@@ -36,7 +36,7 @@
         :use-track-length="useTrackLength"
         :tracks="filteredTracks"
         :title="
-          artist_id
+          artistId
             ? $t('stats.percentageArtistPlayed', { artist: artistName })
             : $t('stats.percentageLibraryPlayed')
         "
@@ -91,7 +91,7 @@ export default {
     TopTracksList,
   },
   props: {
-    artist_id: {
+    artistId: {
       type: Number,
       default: null,
     },
@@ -113,7 +113,7 @@ export default {
 
     ...mapState("artists", ["artists"]),
     artistName() {
-      return this.artist_id && this.artists[this.artist_id]?.name;
+      return this.artistId && this.artists[this.artistId]?.name;
     },
     pageTitle() {
       return this.artistName
@@ -130,15 +130,15 @@ export default {
       let plays = this.plays.filter(
         filterPlaysByPeriod(this.period.start, this.period.end),
       );
-      if (this.artist_id) {
+      if (this.artistId) {
         plays = plays.filter(filterPlaysByTracks(this.filteredTracks));
       }
       return plays;
     },
     filteredTracks() {
-      if (this.artist_id) {
+      if (this.artistId) {
         return this.$store.getters["tracks/tracksFilterByArtist"](
-          this.artist_id,
+          this.artistId,
         );
       }
       return this.$store.getters["tracks/tracks"];
@@ -149,8 +149,8 @@ export default {
         scope.playedAfter(this.period.start);
         scope.playedBefore(this.period.end);
       }
-      if (this.artist_id) {
-        scope.artist(this.artist_id);
+      if (this.artistId) {
+        scope.artist(this.artistId);
       }
       return scope;
     },

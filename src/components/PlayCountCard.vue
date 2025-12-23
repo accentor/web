@@ -6,7 +6,7 @@
       {{ $t("stats.count.playCount.before") }}
       <span
         class="text-h4 d-block"
-        :class="animatedCount ? 'primary--text' : 'grey--text text--darken-1'"
+        :class="animatedCount ? 'primary--text' : 'text-grey-darken-1'"
       >
         {{ Math.floor(animatedCount) }}
       </span>
@@ -16,8 +16,10 @@
       {{ $t("stats.count.playTime.before") }}
       <div class="play-time text-grey-darken-3">
         <span
-          class="text-h4 d-block text-right text--darken-1"
-          :class="animatedTime.days ? 'primary--text' : 'grey--text'"
+          class="text-h4 d-block text-right"
+          :class="
+            animatedTime.days ? 'text-primary-darken-1' : 'text-grey-darken-1'
+          "
         >
           {{ Math.floor(animatedTime.days) }}
         </span>
@@ -25,11 +27,11 @@
           {{ $tc("stats.count.playTime.days", Math.floor(animatedTime.days)) }}
         </span>
         <span
-          class="text-h4 d-block text-right text--darken-1"
+          class="text-h4 d-block text-right"
           :class="
             animatedTime.days + animatedTime.hours
-              ? 'primary--text'
-              : 'grey--text'
+              ? 'text-primary-darken-1'
+              : 'text-grey-darken-1'
           "
         >
           {{ Math.floor(animatedTime.hours) }}
@@ -40,11 +42,11 @@
           }}
         </span>
         <span
-          class="text-h4 d-block text-right text--darken-1"
+          class="text-h4 d-block text-right"
           :class="
             animatedTime.days + animatedTime.hours + animatedTime.minutes
-              ? 'primary--text'
-              : 'grey--text'
+              ? 'text-primary-darken-1'
+              : 'text-grey-darken-1'
           "
         >
           {{ Math.floor(animatedTime.minutes) }}

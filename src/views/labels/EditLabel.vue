@@ -35,6 +35,12 @@ export default {
       isValid: true,
     };
   },
+  computed: {
+    ...mapState("labels", ["labels"]),
+    label: function () {
+      return this.labels[this.$route.params.id];
+    },
+  },
   watch: {
     label: function () {
       if (this.label && !this.isDirty) {
@@ -45,12 +51,6 @@ export default {
   async created() {
     await this.read(this.$route.params.id);
     this.fillValues();
-  },
-  computed: {
-    ...mapState("labels", ["labels"]),
-    label: function () {
-      return this.labels[this.$route.params.id];
-    },
   },
   methods: {
     ...mapActions("labels", ["read", "update"]),

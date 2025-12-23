@@ -26,9 +26,7 @@
           <VCardActions v-if="isAdmin">
             <VBtn
               color="danger"
-              class="ma-2"
-              dark
-              fab
+              class="ma-2 rounded-circle"
               href="#"
               variant="outlined"
               size="small"
@@ -43,9 +41,7 @@
                 query: { redirect: $route.fullPath },
               }"
               color="edit"
-              class="ma-2"
-              dark
-              fab
+              class="ma-2 rounded-circle"
               variant="outlined"
               size="small"
             >
@@ -66,6 +62,12 @@ export default {
   metaInfo() {
     return { title: this.$tc("users.users", 2) };
   },
+  computed: {
+    ...mapGetters("auth", ["isAdmin"]),
+    ...mapGetters("users", {
+      users: "usersByName",
+    }),
+  },
   methods: {
     ...mapActions("users", ["destroy"]),
     deleteUser: function (id) {
@@ -73,12 +75,6 @@ export default {
         this.destroy(id);
       }
     },
-  },
-  computed: {
-    ...mapGetters("auth", ["isAdmin"]),
-    ...mapGetters("users", {
-      users: "usersByName",
-    }),
   },
 };
 </script>

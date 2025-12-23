@@ -108,9 +108,9 @@
           download
           target="_blank"
         >
-          <VListItemIcon>
+          <template #prepend>
             <VIcon color="info">mdi-download</VIcon>
-          </VListItemIcon>
+          </template>
 
           <VListItemTitle>{{ $t("music.track.download") }}</VListItemTitle>
         </VListItem>

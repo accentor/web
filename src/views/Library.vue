@@ -30,7 +30,6 @@
         </VBtn>
         <VMenu
           v-if="rescans.length > 1"
-          offset-y
           location="bottom left"
           :persistent="false"
         >
@@ -175,9 +174,6 @@ export default {
   metaInfo() {
     return { title: this.$t("library-settings") };
   },
-  created() {
-    this.loadData();
-  },
   computed: {
     ...mapGetters("auth", ["isModerator"]),
     ...mapGetters("rescan", ["rescans"]),
@@ -190,6 +186,9 @@ export default {
         ? true
         : false;
     },
+  },
+  created() {
+    this.loadData();
   },
   methods: {
     ...mapActions("rescan", ["start", "startAll"]),

@@ -51,7 +51,7 @@
         />
       </template>
       <template v-if="singleSelect" #item.data-table-select="item">
-        <VRadioGroup v-model="selectedIds" :multiple="true" :mandatory="false">
+        <VRadioGroup v-model="selectedIds" :mandatory="false">
           <VRadio
             :value="item.item.id"
             :model-value="item.isSelected"
@@ -70,8 +70,8 @@
           {{ $filters.length(props.value) }}
         </span>
         <VTooltip v-else location="bottom">
-          <template #activator="{ props }">
-            <span class="white-space-nowrap" v-bind="props">
+          <template #activator="{ props: innerProps }">
+            <span class="white-space-nowrap" v-bind="innerProps">
               <VIcon size="small" color="red" class="pr-2">mdi-alert</VIcon
               >--:--
             </span>
@@ -134,8 +134,9 @@ export default {
     showMassEdit: { default: true, type: Boolean },
     showSearch: { default: false, type: Boolean },
     singleSelect: { default: false, type: Boolean },
-    title: { required: false, type: String },
+    title: { required: false, type: String, default: undefined },
   },
+  emits: ["selected"],
   data() {
     const headers = [
       {

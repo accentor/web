@@ -71,20 +71,6 @@ export default {
       isValid: true,
     };
   },
-  watch: {
-    user: function () {
-      if (this.user && !this.isDirty) {
-        this.fillValues();
-      }
-    },
-  },
-  created() {
-    this.$nextTick(() => {
-      if (this.user) {
-        this.fillValues();
-      }
-    });
-  },
   computed: {
     ...mapGetters("auth", ["currentUser"]),
     rules() {
@@ -115,6 +101,20 @@ export default {
       }
       return rules;
     },
+  },
+  watch: {
+    user: function () {
+      if (this.user && !this.isDirty) {
+        this.fillValues();
+      }
+    },
+  },
+  created() {
+    this.$nextTick(() => {
+      if (this.user) {
+        this.fillValues();
+      }
+    });
   },
   methods: {
     ...mapActions("users", ["create", "update"]),

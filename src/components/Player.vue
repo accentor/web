@@ -164,6 +164,54 @@ export default {
       tries: 0,
     };
   },
+  computed: {
+    ...mapState("albums", ["albums"]),
+    ...mapState("artist", ["artists"]),
+    ...mapState("player", [
+      "playing",
+      "seekTime",
+      "doSeek",
+      "current",
+      "repeatMode",
+    ]),
+    ...mapGetters("player", [
+      "playlistTracks",
+      "currentTrack",
+      "currentTrackURL",
+    ]),
+    repeatModeIcon() {
+      switch (this.repeatMode) {
+        case "off":
+        case "all":
+          return "mdi-repeat";
+        case "single":
+          return "mdi-repeat-once";
+        default:
+          return "mdi-repeat";
+      }
+    },
+    repeatModeColor() {
+      switch (this.repeatMode) {
+        case "off":
+          return undefined;
+        case "all":
+        case "single":
+          return "info";
+        default:
+          return undefined;
+      }
+    },
+    audioIcon() {
+      if (this.muted) {
+        return "mdi-volume-off";
+      } else if (this.volume < 33) {
+        return "mdi-volume-low";
+      } else if (this.volume < 66) {
+        return "mdi-volume-medium";
+      }
+      return "mdi-volume-high";
+    },
+  },
   watch: {
     async currentTrackURL() {
       this.tries = 0;
@@ -274,54 +322,6 @@ export default {
   beforeUnmount() {
     clearInterval(this.intervalId);
     this.setPlaying(false);
-  },
-  computed: {
-    ...mapState("albums", ["albums"]),
-    ...mapState("artist", ["artists"]),
-    ...mapState("player", [
-      "playing",
-      "seekTime",
-      "doSeek",
-      "current",
-      "repeatMode",
-    ]),
-    ...mapGetters("player", [
-      "playlistTracks",
-      "currentTrack",
-      "currentTrackURL",
-    ]),
-    repeatModeIcon() {
-      switch (this.repeatMode) {
-        case "off":
-        case "all":
-          return "mdi-repeat";
-        case "single":
-          return "mdi-repeat-once";
-        default:
-          return "mdi-repeat";
-      }
-    },
-    repeatModeColor() {
-      switch (this.repeatMode) {
-        case "off":
-          return undefined;
-        case "all":
-        case "single":
-          return "info";
-        default:
-          return undefined;
-      }
-    },
-    audioIcon() {
-      if (this.muted) {
-        return "mdi-volume-off";
-      } else if (this.volume < 33) {
-        return "mdi-volume-low";
-      } else if (this.volume < 66) {
-        return "mdi-volume-medium";
-      }
-      return "mdi-volume-high";
-    },
   },
   methods: {
     ...mapActions("plays", { createPlay: "create" }),

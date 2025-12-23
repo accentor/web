@@ -1,6 +1,6 @@
 <template>
   <div>
-    <VAppBar app clipped-left color="primary" dark>
+    <VAppBar color="primary">
       <VAppBarNavIcon @click.stop="drawer = !drawer" />
       <VToolbarTitle class="font-weight-medium"> Accentor </VToolbarTitle>
       <VSpacer />
@@ -12,13 +12,7 @@
       </VBtn>
     </VAppBar>
 
-    <VNavigationDrawer
-      v-model="drawer"
-      :mobile-breakpoint="1500"
-      app
-      clipped
-      left
-    >
+    <VNavigationDrawer v-model="drawer" :mobile-breakpoint="1500" left>
       <VList>
         <VListItem :to="{ name: 'home' }" exact>
           <VListItemAction>
@@ -116,7 +110,6 @@
             <VBtn
               rounded
               size="x-small"
-              dark
               color="primary"
               variant="outlined"
               class="text-caption font-weight-medium"
@@ -162,7 +155,7 @@
       </VContainer>
     </VMain>
 
-    <VFooter app color="white" inset fixed height="auto" class="pa-0">
+    <VFooter app color="white" inset height="auto" class="pa-0">
       <Player />
     </VFooter>
   </div>
@@ -182,6 +175,12 @@ export default {
       drawer: null,
       loading: false,
     };
+  },
+  computed: {
+    ...mapGetters("auth", ["isModerator"]),
+    ...mapGetters(["numberOfFlaggedItems"]),
+    ...mapGetters("rescan", ["finishedAt"]),
+    ...mapState("userSettings", ["locale"]),
   },
   watch: {
     locale() {
@@ -205,12 +204,6 @@ export default {
   },
   beforeUnmount() {
     clearInterval(this.$options.interval);
-  },
-  computed: {
-    ...mapGetters("auth", ["isModerator"]),
-    ...mapGetters(["numberOfFlaggedItems"]),
-    ...mapGetters("rescan", ["finishedAt"]),
-    ...mapState("userSettings", ["locale"]),
   },
   methods: {
     async loadData() {

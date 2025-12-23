@@ -75,12 +75,6 @@ export default {
       required: true,
     },
   },
-  watch: {
-    id: {
-      handler: "fetchContent",
-      immediate: true,
-    },
-  },
   computed: {
     ...mapGetters("auth", ["isModerator"]),
     ...mapState("labels", ["labels"]),
@@ -101,6 +95,12 @@ export default {
             .indexOf(this.search.toLocaleLowerCase()) >= 0 ||
           item.normalized_title.indexOf(this.search.toLocaleLowerCase()) >= 0,
       );
+    },
+  },
+  watch: {
+    id: {
+      handler: "fetchContent",
+      immediate: true,
     },
   },
   methods: {
