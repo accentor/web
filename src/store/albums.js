@@ -6,6 +6,8 @@ import {
   compareAlbumsByTitleFirst,
 } from "../comparators";
 import { AlbumsScope } from "@accentor/api-client-js";
+import { useAuthStore } from "./auth";
+import { useErrorsStore } from "./errors";
 
 export default {
   namespaced: true,
@@ -100,80 +102,80 @@ export default {
     },
   },
   actions: {
-    async index({ commit, rootState }, scope = new AlbumsScope()) {
-      const generator = api.albums.index(rootState.auth.apiToken, scope);
+    async index({ commit }, scope = new AlbumsScope()) {
+      const generator = api.albums.index(useAuthStore().apiToken, scope);
       try {
         await this.albumsRestored;
         await fetchAll(commit, generator, "setAlbums", scope);
         return true;
       } catch (error) {
-        commit("addError", error, { root: true });
+        useErrorsStore().addError(error);
         return false;
       }
     },
-    async create({ commit, rootState }, newAlbum) {
+    async create({ commit }, newAlbum) {
       try {
-        const result = await api.albums.create(rootState.auth.apiToken, {
+        const result = await api.albums.create(useAuthStore().apiToken, {
           album: newAlbum,
         });
         commit("setAlbum", { id: result.id, album: result });
         return result.id;
       } catch (error) {
-        commit("addError", error, { root: true });
+        useErrorsStore().addError(error);
         return false;
       }
     },
-    async read({ commit, rootState }, id) {
+    async read({ commit }, id) {
       try {
-        const result = await api.albums.read(rootState.auth.apiToken, id);
+        const result = await api.albums.read(useAuthStore().apiToken, id);
         await this.albumsRestored;
         commit("setAlbum", { id, album: result });
         return result.id;
       } catch (error) {
-        commit("addError", error, { root: true });
+        useErrorsStore().addError(error);
         return false;
       }
     },
-    async update({ commit, rootState }, { id, newAlbum }) {
+    async update({ commit }, { id, newAlbum }) {
       try {
-        const result = await api.albums.update(rootState.auth.apiToken, id, {
+        const result = await api.albums.update(useAuthStore().apiToken, id, {
           album: newAlbum,
         });
         commit("setAlbum", { id, album: result });
         return true;
       } catch (error) {
-        commit("addError", error, { root: true });
+        useErrorsStore().addError(error);
         return false;
       }
     },
-    async destroy({ commit, rootState }, id) {
+    async destroy({ commit }, id) {
       try {
-        await api.albums.destroy(rootState.auth.apiToken, id);
+        await api.albums.destroy(useAuthStore().apiToken, id);
         commit("removeAlbum", id);
         return true;
       } catch (error) {
-        commit("addError", error, { root: true });
+        useErrorsStore().addError(error);
         return false;
       }
     },
-    async destroyEmpty({ commit, dispatch, rootState }) {
+    async destroyEmpty({ dispatch }) {
       try {
-        await api.albums.destroyEmpty(rootState.auth.apiToken);
+        await api.albums.destroyEmpty(useAuthStore().apiToken);
         await dispatch("index");
         return true;
       } catch (error) {
-        commit("addError", error, { root: true });
+        useErrorsStore().addError(error);
         return false;
       }
     },
-    async merge({ commit, rootState }, { newID, oldID }) {
+    async merge({ commit }, { newID, oldID }) {
       try {
-        await api.albums.merge(rootState.auth.apiToken, newID, oldID);
+        await api.albums.merge(useAuthStore().apiToken, newID, oldID);
         commit("tracks/updateAlbumOccurence", { newID, oldID }, { root: true });
         commit("removeAlbum", oldID);
         return true;
       } catch (error) {
-        commit("addError", error, { root: true });
+        useErrorsStore().addError(error);
         return false;
       }
     },

@@ -12,6 +12,8 @@
 <script>
 import { mapGetters } from "vuex";
 import CodecConversionForm from "./CodecConversionForm.vue";
+import { useAuthStore } from "../store/auth";
+import { mapState } from "pinia";
 
 export default {
   name: "EditCodecConversions",
@@ -21,7 +23,7 @@ export default {
   },
   computed: {
     ...mapGetters("codecConversions", ["codecConversions"]),
-    ...mapGetters("auth", ["isModerator"]),
+    ...mapState(useAuthStore, ["isModerator"]),
   },
 };
 </script>

@@ -16,6 +16,8 @@
 <script>
 import { mapGetters } from "vuex";
 import TracksTable from "../../components/TracksTable.vue";
+import { useAuthStore } from "../../store/auth";
+import { mapState } from "pinia";
 
 export default {
   name: "EmptyTracks",
@@ -24,7 +26,7 @@ export default {
     return { title: this.$t("music.tracks-without-audio") };
   },
   computed: {
-    ...mapGetters("auth", ["isModerator"]),
+    ...mapState(useAuthStore, ["isModerator"]),
     ...mapGetters("tracks", {
       tracks: "tracksEmpty",
     }),

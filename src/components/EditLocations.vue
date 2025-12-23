@@ -8,6 +8,8 @@
 <script>
 import { mapGetters } from "vuex";
 import LocationForm from "./LocationForm.vue";
+import { useAuthStore } from "../store/auth";
+import { mapState } from "pinia";
 
 export default {
   name: "EditLocations",
@@ -17,7 +19,7 @@ export default {
   },
   computed: {
     ...mapGetters("locations", ["locations"]),
-    ...mapGetters("auth", ["isModerator"]),
+    ...mapState(useAuthStore, ["isModerator"]),
   },
 };
 </script>

@@ -3,7 +3,6 @@ import Vuex from "vuex";
 import persistencePlugins, { vuexLocalStorage } from "./persistence";
 import albums from "./albums";
 import artists from "./artists";
-import auth from "./auth";
 import codecs from "./codecs";
 import codecConversions from "./codec_conversions";
 import coverFilenames from "./cover_filenames";
@@ -16,25 +15,11 @@ import playlists from "./playlists";
 import plays from "./plays";
 import rescan from "./rescan";
 import tracks from "./tracks";
-import users from "./users";
 import userSettings from "./user_settings";
 
 Vue.use(Vuex);
 
 const mutations = {
-  addError(state, error) {
-    if (error.unauthorized) {
-      this.commit("auth/logout");
-    }
-    state.errors.push(error);
-
-    // We want to log our errors here, to help with debugging
-    // eslint-disable-next-line no-console
-    console.error(error);
-  },
-  clearErrors(state) {
-    state.errors = [];
-  },
   updateCurrentDay(state) {
     state.currentDay = new Date().setHours(0, 0, 0, 0);
   },
@@ -50,7 +35,6 @@ export default new Vuex.Store({
   modules: {
     albums,
     artists,
-    auth,
     codecs,
     codecConversions,
     coverFilenames,
@@ -63,11 +47,9 @@ export default new Vuex.Store({
     plays,
     rescan,
     tracks,
-    users,
     userSettings,
   },
   state: {
-    errors: [],
     currentDay: new Date().setHours(0, 0, 0, 0),
   },
   mutations,

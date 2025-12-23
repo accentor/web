@@ -3,6 +3,8 @@ import api from "@/api";
 import { fetchAll } from "./actions";
 import { compareStrings } from "../comparators";
 import { ArtistsScope } from "@accentor/api-client-js";
+import { useErrorsStore } from "./errors";
+import { useAuthStore } from "./auth";
 
 export default {
   namespaced: true,
@@ -49,77 +51,77 @@ export default {
     },
   },
   actions: {
-    async index({ commit, rootState }, scope = new ArtistsScope()) {
-      const generator = api.artists.index(rootState.auth.apiToken, scope);
+    async index({ commit }, scope = new ArtistsScope()) {
+      const generator = api.artists.index(useAuthStore().apiToken, scope);
       try {
         await this.artistsRestored;
         await fetchAll(commit, generator, "setArtists", scope);
         return true;
       } catch (error) {
-        commit("addError", error, { root: true });
+        useErrorsStore().addError(error);
         return false;
       }
     },
-    async create({ commit, rootState }, newArtist) {
+    async create({ commit }, newArtist) {
       try {
-        const result = await api.artists.create(rootState.auth.apiToken, {
+        const result = await api.artists.create(useAuthStore().apiToken, {
           artist: newArtist,
         });
         commit("setArtist", { id: result.id, artist: result });
         return result.id;
       } catch (error) {
-        commit("addError", error, { root: true });
+        useErrorsStore().addError(error);
         return false;
       }
     },
-    async read({ commit, rootState }, id) {
+    async read({ commit }, id) {
       try {
-        const result = await api.artists.read(rootState.auth.apiToken, id);
+        const result = await api.artists.read(useAuthStore().apiToken, id);
         await this.artistsRestored;
         commit("setArtist", { id, artist: result });
         return result.id;
       } catch (error) {
-        commit("addError", error, { root: true });
+        useErrorsStore().addError(error);
         return false;
       }
     },
-    async update({ commit, rootState }, { id, newArtist }) {
+    async update({ commit }, { id, newArtist }) {
       try {
-        const result = await api.artists.update(rootState.auth.apiToken, id, {
+        const result = await api.artists.update(useAuthStore().apiToken, id, {
           artist: newArtist,
         });
         commit("setArtist", { id, artist: result });
         return true;
       } catch (error) {
-        commit("addError", error, { root: true });
+        useErrorsStore().addError(error);
         return false;
       }
     },
-    async destroy({ commit, rootState }, id) {
+    async destroy({ commit }, id) {
       try {
-        await api.artists.destroy(rootState.auth.apiToken, id);
+        await api.artists.destroy(useAuthStore().apiToken, id);
         commit("albums/removeArtistOccurence", id, { root: true });
         commit("tracks/removeArtistOccurence", id, { root: true });
         commit("removeArtist", id);
         return true;
       } catch (error) {
-        commit("addError", error, { root: true });
+        useErrorsStore().addError(error);
         return false;
       }
     },
-    async destroyEmpty({ commit, dispatch, rootState }) {
+    async destroyEmpty({ dispatch }) {
       try {
-        await api.artists.destroyEmpty(rootState.auth.apiToken);
+        await api.artists.destroyEmpty(useAuthStore().apiToken);
         await dispatch("index");
         return true;
       } catch (error) {
-        commit("addError", error, { root: true });
+        useErrorsStore().addError(error);
         return false;
       }
     },
-    async merge({ commit, rootState }, { newID, oldID }) {
+    async merge({ commit }, { newID, oldID }) {
       try {
-        await api.artists.merge(rootState.auth.apiToken, newID, oldID);
+        await api.artists.merge(useAuthStore().apiToken, newID, oldID);
         commit(
           "tracks/updateArtistOccurence",
           { newID, oldID },
@@ -133,7 +135,7 @@ export default {
         commit("removeArtist", oldID);
         return true;
       } catch (error) {
-        commit("addError", error, { root: true });
+        useErrorsStore().addError(error);
         return false;
       }
     },

@@ -104,9 +104,10 @@
 </template>
 
 <script>
+import { mapGetters, mapState } from "vuex";
+import { mapState as mapPiniaState } from "pinia";
 import TrackActions from "./TrackActions.vue";
 import Paginated from "../mixins/Paginated";
-import { mapGetters, mapState } from "vuex";
 import Searchable from "../mixins/Searchable";
 import Sortable from "../mixins/Sortable";
 import TrackArtists from "./TrackArtists.vue";
@@ -118,6 +119,7 @@ import {
   compareTracksByArtist,
   compareTracksByGenre,
 } from "@/comparators";
+import { useAuthStore } from "../store/auth";
 
 export default {
   name: "TracksTable",
@@ -198,7 +200,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters("auth", ["isModerator"]),
+    ...mapPiniaState(useAuthStore, ["isModerator"]),
     ...mapGetters("player", ["currentTrack"]),
     ...mapGetters("plays", ["playStatsByTrack"]),
     ...mapState("albums", ["albums"]),

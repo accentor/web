@@ -1,4 +1,5 @@
 import { baseURL } from "@/api";
+import { useAuthStore } from "./auth";
 
 const repeatModes = ["off", "all", "single"];
 
@@ -154,7 +155,7 @@ export default {
       return state.current >= 0 ? getters.playlistTracks[state.current] : null;
     },
     currentTrackURL(state, getters, rootState, rootGetters) {
-      const apiToken = rootState.auth.apiToken;
+      const apiToken = useAuthStore().apiToken;
       const codecConversion =
         rootGetters["userSettings/codecConversion"]?.id ?? "";
       const params = `/audio?token=${apiToken}&codec_conversion_id=${codecConversion}`;

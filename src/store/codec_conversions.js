@@ -1,6 +1,8 @@
 import Vue from "vue";
 import api from "@/api";
 import { fetchAll } from "./actions";
+import { useErrorsStore } from "./errors";
+import { useAuthStore } from "./auth";
 
 export default {
   namespaced: true,
@@ -47,20 +49,20 @@ export default {
     },
   },
   actions: {
-    async index({ commit, rootState }) {
-      const generator = api.codec_conversions.index(rootState.auth.apiToken);
+    async index({ commit }) {
+      const generator = api.codec_conversions.index(useAuthStore().apiToken);
       try {
         await fetchAll(commit, generator, "setCodecConversions");
         return true;
       } catch (error) {
-        commit("addError", error, { root: true });
+        useErrorsStore().addError(error);
         return false;
       }
     },
-    async create({ commit, rootState }, newCodecConversion) {
+    async create({ commit }, newCodecConversion) {
       try {
         const result = await api.codec_conversions.create(
-          rootState.auth.apiToken,
+          useAuthStore().apiToken,
           {
             codec_conversion: newCodecConversion,
           },
@@ -71,14 +73,14 @@ export default {
         });
         return result.id;
       } catch (error) {
-        commit("addError", error, { root: true });
+        useErrorsStore().addError(error);
         return false;
       }
     },
-    async update({ commit, rootState }, { id, newCodecConversion }) {
+    async update({ commit }, { id, newCodecConversion }) {
       try {
         const result = await api.codec_conversions.update(
-          rootState.auth.apiToken,
+          useAuthStore().apiToken,
           id,
           {
             codec_conversion: newCodecConversion,
@@ -87,17 +89,17 @@ export default {
         commit("setCodecConversion", { id, codecConversion: result });
         return true;
       } catch (error) {
-        commit("addError", error, { root: true });
+        useErrorsStore().addError(error);
         return false;
       }
     },
-    async destroy({ commit, rootState }, id) {
+    async destroy({ commit }, id) {
       try {
-        await api.codec_conversions.destroy(rootState.auth.apiToken, id);
+        await api.codec_conversions.destroy(useAuthStore().apiToken, id);
         commit("removeCodecConversion", id);
         return true;
       } catch (error) {
-        commit("addError", error, { root: true });
+        useErrorsStore().addError(error);
         return false;
       }
     },

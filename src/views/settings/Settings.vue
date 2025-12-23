@@ -32,8 +32,10 @@
 
 <script>
 import { mapGetters, mapMutations, mapState } from "vuex";
+import { mapState as mapPiniaState } from "pinia";
 import AuthTokensTable from "../../components/AuthTokensTable.vue";
 import UserForm from "@/components/UserForm.vue";
+import { useAuthStore } from "../../store/auth";
 
 export default {
   name: "Settings",
@@ -62,8 +64,8 @@ export default {
     },
   },
   computed: {
-    ...mapGetters("auth", { user: "currentUser" }),
-    ...mapGetters("auth", ["authTokens"]),
+    ...mapPiniaState(useAuthStore, { user: "currentUser" }),
+    ...mapPiniaState(useAuthStore, ["authTokens"]),
     ...mapGetters("userSettings", ["codecConversion"]),
     ...mapState("userSettings", ["locale"]),
     codecConversions() {

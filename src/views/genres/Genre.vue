@@ -19,10 +19,12 @@
 </template>
 
 <script>
-import { mapActions, mapGetters, mapState } from "vuex";
+import { mapActions, mapState } from "vuex";
+import { mapState as mapPiniaState } from "pinia";
 import GenreActions from "@/components/GenreActions.vue";
 import TracksTable from "@/components/TracksTable.vue";
 import { TracksScope } from "@accentor/api-client-js";
+import { useAuthStore } from "../../store/auth";
 
 export default {
   name: "Genre",
@@ -43,7 +45,7 @@ export default {
     },
   },
   computed: {
-    ...mapGetters("auth", ["isModerator"]),
+    ...mapPiniaState(useAuthStore, ["isModerator"]),
     ...mapState("genres", ["genres"]),
     tracks: function () {
       return this.$store.getters["tracks/tracksFilterByGenre"](

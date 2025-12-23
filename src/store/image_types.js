@@ -1,6 +1,8 @@
 import Vue from "vue";
 import api from "@/api";
 import { fetchAll } from "./actions";
+import { useErrorsStore } from "./errors";
+import { useAuthStore } from "./auth";
 
 export default {
   namespaced: true,
@@ -47,32 +49,32 @@ export default {
     },
   },
   actions: {
-    async index({ commit, rootState }) {
-      const generator = api.image_types.index(rootState.auth.apiToken);
+    async index({ commit }) {
+      const generator = api.image_types.index(useAuthStore().apiToken);
       try {
         await fetchAll(commit, generator, "setImageTypes");
         return true;
       } catch (error) {
-        commit("addError", error, { root: true });
+        useErrorsStore().addError(error);
         return false;
       }
     },
-    async create({ commit, rootState }, newImageType) {
+    async create({ commit }, newImageType) {
       try {
-        const result = await api.image_types.create(rootState.auth.apiToken, {
+        const result = await api.image_types.create(useAuthStore().apiToken, {
           image_type: newImageType,
         });
         commit("setImageType", { id: result.id, imageType: result });
         return result.id;
       } catch (error) {
-        commit("addError", error, { root: true });
+        useErrorsStore().addError(error);
         return false;
       }
     },
-    async update({ commit, rootState }, { id, newImageType }) {
+    async update({ commit }, { id, newImageType }) {
       try {
         const result = await api.image_types.update(
-          rootState.auth.apiToken,
+          useAuthStore().apiToken,
           id,
           {
             image_type: newImageType,
@@ -81,17 +83,17 @@ export default {
         commit("setImageType", { id, imageType: result });
         return true;
       } catch (error) {
-        commit("addError", error, { root: true });
+        useErrorsStore().addError(error);
         return false;
       }
     },
-    async destroy({ commit, rootState }, id) {
+    async destroy({ commit }, id) {
       try {
-        await api.image_types.destroy(rootState.auth.apiToken, id);
+        await api.image_types.destroy(useAuthStore().apiToken, id);
         commit("removeImageType", id);
         return true;
       } catch (error) {
-        commit("addError", error, { root: true });
+        useErrorsStore().addError(error);
         return false;
       }
     },

@@ -1,6 +1,7 @@
 import VuexPersistence from "vuex-persist";
 import localForage from "localforage";
 import debounce from "lodash.debounce";
+import { markRaw } from "vue";
 
 // A subclass for VuexPersistence to deal with single namespaced modules and large collections
 // Should be provided with a module and an async storage
@@ -111,3 +112,15 @@ export const vuexLocalStorage = new VuexPersistence({
 plugins.push(vuexLocalStorage.plugin);
 
 export default plugins;
+
+export const ShallowObjectSerializer = {
+  write: (value) => JSON.stringify(value),
+  read: (value) => {
+    let obj = value ? JSON.parse(value) : {};
+    let result = {};
+    for (let id in obj) {
+      result[id] = markRaw(obj[id]);
+    }
+    return result;
+  },
+};

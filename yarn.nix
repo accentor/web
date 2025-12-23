@@ -698,6 +698,14 @@
       };
     }
     {
+      name = "_types_web_bluetooth___web_bluetooth_0.0.20.tgz";
+      path = fetchurl {
+        name = "_types_web_bluetooth___web_bluetooth_0.0.20.tgz";
+        url  = "https://registry.yarnpkg.com/@types/web-bluetooth/-/web-bluetooth-0.0.20.tgz";
+        sha512 = "g9gZnnXVq7gM7v3tJCWV/qw7w+KeOlSHAhgF9RytFyifW6AF61hdT2ucrYhPq9hLs5JIryeupHV3qGk95dH9ow==";
+      };
+    }
+    {
       name = "_ungap_structured_clone___structured_clone_1.2.0.tgz";
       path = fetchurl {
         name = "_ungap_structured_clone___structured_clone_1.2.0.tgz";
@@ -722,11 +730,43 @@
       };
     }
     {
+      name = "_vue_devtools_api___devtools_api_6.6.4.tgz";
+      path = fetchurl {
+        name = "_vue_devtools_api___devtools_api_6.6.4.tgz";
+        url  = "https://registry.yarnpkg.com/@vue/devtools-api/-/devtools-api-6.6.4.tgz";
+        sha512 = "sGhTPMuXqZ1rVOk32RylztWkfXTRhuS7vgAKv0zjqk8gbsHkJ7xfFf+jbySxt7tWObEJwyKaHMikV/WGDiQm8g==";
+      };
+    }
+    {
       name = "_vue_eslint_config_prettier___eslint_config_prettier_9.0.0.tgz";
       path = fetchurl {
         name = "_vue_eslint_config_prettier___eslint_config_prettier_9.0.0.tgz";
         url  = "https://registry.yarnpkg.com/@vue/eslint-config-prettier/-/eslint-config-prettier-9.0.0.tgz";
         sha512 = "z1ZIAAUS9pKzo/ANEfd2sO+v2IUalz7cM/cTLOZ7vRFOPk5/xuRKQteOu1DErFLAh/lYGXMVZ0IfYKlyInuDVg==";
+      };
+    }
+    {
+      name = "_vueuse_core___core_11.3.0.tgz";
+      path = fetchurl {
+        name = "_vueuse_core___core_11.3.0.tgz";
+        url  = "https://registry.yarnpkg.com/@vueuse/core/-/core-11.3.0.tgz";
+        sha512 = "7OC4Rl1f9G8IT6rUfi9JrKiXy4bfmHhZ5x2Ceojy0jnd3mHNEvV4JaRygH362ror6/NZ+Nl+n13LPzGiPN8cKA==";
+      };
+    }
+    {
+      name = "_vueuse_metadata___metadata_11.3.0.tgz";
+      path = fetchurl {
+        name = "_vueuse_metadata___metadata_11.3.0.tgz";
+        url  = "https://registry.yarnpkg.com/@vueuse/metadata/-/metadata-11.3.0.tgz";
+        sha512 = "pwDnDspTqtTo2HwfLw4Rp6yywuuBdYnPYDq+mO38ZYKGebCUQC/nVj/PXSiK9HX5otxLz8Fn7ECPbjiRz2CC3g==";
+      };
+    }
+    {
+      name = "_vueuse_shared___shared_11.3.0.tgz";
+      path = fetchurl {
+        name = "_vueuse_shared___shared_11.3.0.tgz";
+        url  = "https://registry.yarnpkg.com/@vueuse/shared/-/shared-11.3.0.tgz";
+        sha512 = "P8gSSWQeucH5821ek2mn/ciCk+MS/zoRKqdQIM3bHq6p7GXDAJLmnRRKmF5F65sAVJIfzQlwR3aDzwCn10s8hA==";
       };
     }
     {
@@ -1762,6 +1802,14 @@
       };
     }
     {
+      name = "pinia___pinia_2.3.1.tgz";
+      path = fetchurl {
+        name = "pinia___pinia_2.3.1.tgz";
+        url  = "https://registry.yarnpkg.com/pinia/-/pinia-2.3.1.tgz";
+        sha512 = "khUlZSwt9xXCaTbbxFYBKDc/bWAGWJjOgvxETwkTN7KRm66EeT1ZdZj6i2ceh9sP2Pzqsbc704r2yngBrxBVug==";
+      };
+    }
+    {
       name = "pkg_types___pkg_types_1.3.1.tgz";
       path = fetchurl {
         name = "pkg_types___pkg_types_1.3.1.tgz";
@@ -2127,6 +2175,14 @@
         name = "vite___vite_7.3.0.tgz";
         url  = "https://registry.yarnpkg.com/vite/-/vite-7.3.0.tgz";
         sha512 = "dZwN5L1VlUBewiP6H9s2+B3e3Jg96D0vzN+Ry73sOefebhYr9f94wwkMNN/9ouoU8pV1BqA1d1zGk8928cx0rg==";
+      };
+    }
+    {
+      name = "vue_demi___vue_demi_0.14.10.tgz";
+      path = fetchurl {
+        name = "vue_demi___vue_demi_0.14.10.tgz";
+        url  = "https://registry.yarnpkg.com/vue-demi/-/vue-demi-0.14.10.tgz";
+        sha512 = "nMZBOwuzabUO0nLgIcc6rycZEebF6eeUfaiQx9+WSk8e29IbLvPU9feI6tqW4kTo3hvoYAJkMh8n8D0fuISphg==";
       };
     }
     {

@@ -2,6 +2,8 @@ import Vue from "vue";
 import api from "@/api";
 import { fetchAll } from "./actions";
 import { compareStrings } from "../comparators";
+import { useErrorsStore } from "./errors";
+import { useAuthStore } from "./auth";
 
 export default {
   namespaced: true,
@@ -48,68 +50,68 @@ export default {
     },
   },
   actions: {
-    async index({ commit, rootState }) {
-      const generator = api.playlists.index(rootState.auth.apiToken);
+    async index({ commit }) {
+      const generator = api.playlists.index(useAuthStore().apiToken);
       try {
         await fetchAll(commit, generator, "setPlaylists");
         return true;
       } catch (error) {
-        commit("addError", error, { root: true });
+        useErrorsStore().addError(error);
         return false;
       }
     },
-    async create({ commit, rootState }, newPlaylist) {
+    async create({ commit }, newPlaylist) {
       try {
-        const result = await api.playlists.create(rootState.auth.apiToken, {
+        const result = await api.playlists.create(useAuthStore().apiToken, {
           playlist: newPlaylist,
         });
         commit("setPlaylist", { id: result.id, playlist: result });
         return result.id;
       } catch (error) {
-        commit("addError", error, { root: true });
+        useErrorsStore().addError(error);
         return false;
       }
     },
-    async read({ commit, rootState }, id) {
+    async read({ commit }, id) {
       try {
-        const result = await api.playlists.read(rootState.auth.apiToken, id);
+        const result = await api.playlists.read(useAuthStore().apiToken, id);
         commit("setPlaylist", { id, playlist: result });
         return result.id;
       } catch (error) {
-        commit("addError", error, { root: true });
+        useErrorsStore().addError(error);
         return false;
       }
     },
-    async update({ commit, rootState }, { id, newPlaylist }) {
+    async update({ commit }, { id, newPlaylist }) {
       try {
-        const result = await api.playlists.update(rootState.auth.apiToken, id, {
+        const result = await api.playlists.update(useAuthStore().apiToken, id, {
           playlist: newPlaylist,
         });
         commit("setPlaylist", { id, playlist: result });
         return true;
       } catch (error) {
-        commit("addError", error, { root: true });
+        useErrorsStore().addError(error);
         return false;
       }
     },
-    async addItem({ commit, rootState, dispatch }, { id, newItem }) {
+    async addItem({ dispatch }, { id, newItem }) {
       try {
-        await api.playlists.addItem(rootState.auth.apiToken, id, {
+        await api.playlists.addItem(useAuthStore().apiToken, id, {
           playlist: newItem,
         });
         await dispatch("read", id);
       } catch (error) {
-        commit("addError", error, { root: true });
+        useErrorsStore().addError(error);
         return false;
       }
     },
-    async destroy({ commit, rootState }, id) {
+    async destroy({ commit }, id) {
       try {
-        await api.playlists.destroy(rootState.auth.apiToken, id);
+        await api.playlists.destroy(useAuthStore().apiToken, id);
         commit("removePlaylist", id);
         return true;
       } catch (error) {
-        commit("addError", error, { root: true });
+        useErrorsStore().addError(error);
         return false;
       }
     },

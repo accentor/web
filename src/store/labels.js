@@ -2,6 +2,8 @@ import Vue from "vue";
 import api from "@/api";
 import { fetchAll } from "./actions";
 import { compareStrings } from "../comparators";
+import { useErrorsStore } from "./errors";
+import { useAuthStore } from "./auth";
 
 export default {
   namespaced: true,
@@ -48,81 +50,81 @@ export default {
     },
   },
   actions: {
-    async index({ commit, rootState }) {
-      const generator = api.labels.index(rootState.auth.apiToken);
+    async index({ commit }) {
+      const generator = api.labels.index(useAuthStore().apiToken);
       try {
         await this.labelsRestored;
         await fetchAll(commit, generator, "setLabels");
         return true;
       } catch (error) {
-        commit("addError", error, { root: true });
+        useErrorsStore().addError(error);
         return false;
       }
     },
-    async create({ commit, rootState }, newLabel) {
+    async create({ commit }, newLabel) {
       try {
-        const result = await api.labels.create(rootState.auth.apiToken, {
+        const result = await api.labels.create(useAuthStore().apiToken, {
           label: newLabel,
         });
         commit("setLabel", { id: result.id, label: result });
         return result.id;
       } catch (error) {
-        commit("addError", error, { root: true });
+        useErrorsStore().addError(error);
         return false;
       }
     },
-    async read({ commit, rootState }, id) {
+    async read({ commit }, id) {
       try {
-        const result = await api.labels.read(rootState.auth.apiToken, id);
+        const result = await api.labels.read(useAuthStore().apiToken, id);
         await this.labelsRestored;
         commit("setLabel", { id, label: result });
         return result.id;
       } catch (error) {
-        commit("addError", error, { root: true });
+        useErrorsStore().addError(error);
         return false;
       }
     },
-    async update({ commit, rootState }, { id, newLabel }) {
+    async update({ commit }, { id, newLabel }) {
       try {
-        const result = await api.labels.update(rootState.auth.apiToken, id, {
+        const result = await api.labels.update(useAuthStore().apiToken, id, {
           label: newLabel,
         });
         commit("setLabel", { id, label: result });
         return true;
       } catch (error) {
-        commit("addError", error, { root: true });
+        useErrorsStore().addError(error);
         return false;
       }
     },
-    async destroy({ commit, rootState }, id) {
+    async destroy({ commit }, id) {
       try {
-        await api.labels.destroy(rootState.auth.apiToken, id);
+        await api.labels.destroy(useAuthStore().apiToken, id);
         commit("albums/removeLabelOccurence", id, { root: true });
         commit("removeLabel", id);
         return true;
       } catch (error) {
-        commit("addError", error, { root: true });
+        useErrorsStore().addError(error);
         return false;
       }
     },
-    async destroyEmpty({ commit, dispatch, rootState }) {
+    async destroyEmpty({ dispatch }) {
       try {
-        await api.labels.destroyEmpty(rootState.auth.apiToken);
+        await api.labels.destroyEmpty(useAuthStore().apiToken);
         await dispatch("index");
         return true;
       } catch (error) {
-        commit("addError", error, { root: true });
+        useErrorsStore().addError(error);
         return false;
       }
     },
-    async merge({ commit, rootState }, { newID, oldID }) {
+    async merge({ commit }, { newID, oldID }) {
       try {
-        await api.labels.merge(rootState.auth.apiToken, newID, oldID);
+        await api.labels.merge(useAuthStore().apiToken, newID, oldID);
         commit("albums/updateLabelOccurence", { newID, oldID }, { root: true });
         commit("removeLabel", oldID);
         return true;
       } catch (error) {
-        commit("addError", error, { root: true });
+        useErrorsStore().addError(error);
         return false;
       }
     },

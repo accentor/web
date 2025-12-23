@@ -62,7 +62,9 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
+import { mapActions } from "vuex";
+import { mapState } from "pinia";
+import { useAuthStore } from "../store/auth";
 
 export default {
   name: "LabelMergeDialog",
@@ -83,7 +85,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters("auth", ["isModerator"]),
+    ...mapState(useAuthStore, ["isModerator"]),
     sortedLabels() {
       const getter = this.$store.getters["labels/labelsByName"];
       return getter.filter((l) => {
