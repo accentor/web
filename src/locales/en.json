@@ -260,7 +260,7 @@
 		"start-scan": "Start scan",
 		"warnings": "Warnings"
 	},
-	"library-settings": "Library settings",
+	"librarySettings": "Library settings",
 	"music": {
 		"album": {
 			"add": "Add album",

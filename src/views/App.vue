@@ -107,7 +107,7 @@
           </VListItemAction>
           <VListItemContent>
             <VListItemTitle>
-              {{ $t("library-settings") }}
+              {{ $t("librarySettings") }}
             </VListItemTitle>
           </VListItemContent>
         </VListItem>
