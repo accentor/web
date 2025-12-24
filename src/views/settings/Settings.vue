@@ -36,6 +36,8 @@ import { mapState as mapPiniaState } from "pinia";
 import AuthTokensTable from "../../components/AuthTokensTable.vue";
 import UserForm from "@/components/UserForm.vue";
 import { useAuthStore } from "../../store/auth";
+import { useAuthTokensStore } from "../../store/auth_tokens";
+import { useCodecConversionsStore } from "../../store/codec_conversions";
 
 export default {
   name: "Settings",
@@ -65,11 +67,14 @@ export default {
   },
   computed: {
     ...mapPiniaState(useAuthStore, { user: "currentUser" }),
-    ...mapPiniaState(useAuthStore, ["authTokens"]),
+    ...mapPiniaState(useAuthTokensStore, ["authTokens"]),
+    ...mapPiniaState(useCodecConversionsStore, {
+      storeCodecConversions: "allCodecConversions",
+    }),
     ...mapGetters("userSettings", ["codecConversion"]),
     ...mapState("userSettings", ["locale"]),
     codecConversions() {
-      return this.$store.getters["codecConversions/codecConversions"].reduce(
+      return this.storeCodecConversions.reduce(
         (acc, cc) => {
           acc.push({
             text: cc.name,

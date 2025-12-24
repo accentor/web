@@ -1,3 +1,5 @@
+import { useCodecConversionsStore } from "./codec_conversions";
+
 export default {
   namespaced: true,
   state: {
@@ -11,10 +13,7 @@ export default {
     },
   },
   getters: {
-    codecConversion: (state, getters, rootState) => {
-      return rootState.codecConversions.codecConversions[
-        state.codecConversionID
-      ];
-    },
+    codecConversion: (state) =>
+      useCodecConversionsStore().codecConversions[state.codecConversionID],
   },
 };

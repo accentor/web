@@ -46,6 +46,7 @@
 import Paginated from "../mixins/Paginated";
 import { useAuthStore } from "../store/auth";
 import { mapActions, mapState } from "pinia";
+import { useAuthTokensStore } from "../store/auth_tokens";
 
 export default {
   name: "AuthTokensTable",
@@ -81,10 +82,8 @@ export default {
     };
   },
   computed: {
-    ...mapState(useAuthStore, {
-      storeAuthTokens: "authTokens",
-      currentSession: "currentSession",
-    }),
+    ...mapState(useAuthStore, ["currentSession"]),
+    ...mapState(useAuthTokensStore, { storeAuthTokens: "authTokens" }),
     authTokens() {
       const result = [];
       for (const token of this.storeAuthTokens) {
@@ -97,7 +96,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions(useAuthStore, ["destroy"]),
+    ...mapActions(useAuthTokensStore, ["destroy"]),
     deleteAuthToken: function (item) {
       if (confirm(this.$t("common.are-you-sure"))) {
         this.destroy(item.id);

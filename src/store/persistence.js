@@ -113,7 +113,7 @@ plugins.push(vuexLocalStorage.plugin);
 
 export default plugins;
 
-export const ShallowObjectSerializer = {
+export const RawObjectSerializer = {
   write: (value) => JSON.stringify(value),
   read: (value) => {
     let obj = value ? JSON.parse(value) : {};
