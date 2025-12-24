@@ -1,13 +1,10 @@
-import { ref, del, computed, watch, markRaw } from "vue";
+import { computed, watch } from "vue";
 import { defineStore } from "pinia";
-
 import api from "@/api";
-import { fetchAllPinia } from "@/store/actions";
 import { useErrorsStore } from "@/store/errors";
 import { useUsersStore } from "@/store/users";
 import router from "@/router";
 import { StorageSerializers, useLocalStorage } from "@vueuse/core";
-import { ShallowObjectSerializer } from "./persistence";
 
 export const useAuthStore = defineStore("auth", () => {
   const errorsStore = useErrorsStore();
@@ -22,12 +19,6 @@ export const useAuthStore = defineStore("auth", () => {
   const id = useLocalStorage("auth.id", null, {
     serializer: StorageSerializers.object,
   });
-  const startLoading = ref(new Date(0));
-  const authTokens = useLocalStorage(
-    "auth.authTokens",
-    {},
-    { serializer: ShallowObjectSerializer },
-  );
 
   async function login(data) {
     try {
@@ -66,62 +57,6 @@ export const useAuthStore = defineStore("auth", () => {
     }
   }
 
-  function setAuthTokens(payload) {
-    const oldAuthTokens = authTokens.value;
-    authTokens.value = {};
-    for (let id in oldAuthTokens) {
-      authTokens.value[id] = oldAuthTokens[id];
-    }
-    const loaded = new Date();
-    for (let obj of payload) {
-      obj.loaded = loaded;
-      authTokens.value[obj.id] = markRaw(obj);
-    }
-  }
-
-  function setStartLoading() {
-    startLoading.value = new Date();
-  }
-
-  function removeAuthToken(id) {
-    del(authTokens.value, id);
-  }
-
-  function removeOld() {
-    const oldAuthTokens = authTokens.value;
-    authTokens.value = {};
-    for (let id in oldAuthTokens) {
-      if (oldAuthTokens[id].loaded > startLoading.value) {
-        authTokens.value[id] = oldAuthTokens[id];
-      }
-    }
-  }
-
-  async function index() {
-    const generator = api.auth_tokens.index(apiToken.value);
-    try {
-      await fetchAllPinia(generator, setAuthTokens, setStartLoading, removeOld);
-      return true;
-    } catch (error) {
-      errorsStore.addError(error);
-      return false;
-    }
-  }
-
-  async function destroy(id) {
-    try {
-      await api.auth_tokens.destroy(apiToken.value, id);
-      removeAuthToken(id);
-      return true;
-    } catch (error) {
-      errorsStore.addError(error);
-      return false;
-    }
-  }
-
-  const sortedAuthTokens = computed(() =>
-    Object.values(authTokens.value).sort((a1, a2) => a1.id - a2.id),
-  );
   const loggedIn = computed(() => apiToken.value !== null);
   const currentSession = computed(() => id.value);
   const currentUser = computed(() => usersStore.users[userId.value]);
@@ -138,7 +73,6 @@ export const useAuthStore = defineStore("auth", () => {
 
   return {
     apiToken,
-    authTokens: sortedAuthTokens,
     loggedIn,
     currentSession,
     currentUser,
@@ -147,7 +81,5 @@ export const useAuthStore = defineStore("auth", () => {
     login,
     clearAuthData,
     logout,
-    destroy,
-    index,
   };
 });

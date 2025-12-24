@@ -133,7 +133,10 @@
 
 <script>
 import { mapActions, mapGetters, mapState } from "vuex";
-import { mapState as mapPiniaState } from "pinia";
+import {
+  mapState as mapPiniaState,
+  mapActions as mapPiniaActions,
+} from "pinia";
 import EditCodecs from "../components/EditCodecs.vue";
 import EditCodecConversions from "../components/EditCodecConversions.vue";
 import EditCoverFilenames from "../components/EditCoverFilenames.vue";
@@ -141,6 +144,7 @@ import EditImageTypes from "../components/EditImageTypes.vue";
 import EditLocations from "../components/EditLocations.vue";
 import MaintenanceActions from "../components/MaintenanceActions.vue";
 import { useAuthStore } from "../store/auth";
+import { useCodecConversionsStore } from "../store/codec_conversions";
 
 export default {
   name: "Library",
@@ -172,13 +176,16 @@ export default {
     },
   },
   methods: {
+    ...mapPiniaActions(useCodecConversionsStore, {
+      codecConversionsIndex: "index",
+    }),
     ...mapActions("rescan", ["start", "startAll"]),
     async loadData() {
       let pendingResults = [];
       if (this.isModerator) {
         pendingResults.push(this.$store.dispatch("rescan/index"));
         pendingResults.push(this.$store.dispatch("codecs/index"));
-        pendingResults.push(this.$store.dispatch("codecConversions/index"));
+        pendingResults.push(this.codecConversionsIndex());
         pendingResults.push(this.$store.dispatch("coverFilenames/index"));
         pendingResults.push(this.$store.dispatch("imageTypes/index"));
         pendingResults.push(this.$store.dispatch("locations/index"));

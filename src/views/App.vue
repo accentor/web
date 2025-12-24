@@ -184,6 +184,8 @@ import { mapGetters, mapState } from "vuex";
 import { mapActions, mapState as mapPiniaState } from "pinia";
 import { useAuthStore } from "@/store/auth";
 import { useUsersStore } from "@/store/users";
+import { useAuthTokensStore } from "@/store/auth_tokens";
+import { useCodecConversionsStore } from "@/store/codec_conversions";
 import Errors from "../components/Errors.vue";
 import Player from "../components/Player.vue";
 
@@ -227,15 +229,17 @@ export default {
     ...mapState("userSettings", ["locale"]),
   },
   methods: {
-    ...mapActions(useAuthStore, { authIndex: "index" }),
+    ...mapActions(useAuthStore, ["logout"]),
+    ...mapActions(useAuthTokensStore, { authTokensIndex: "index" }),
     ...mapActions(useUsersStore, { usersIndex: "index" }),
+    ...mapActions(useCodecConversionsStore, { codecConversionsIndex: "index" }),
     async loadData() {
       this.loading = true;
       let pendingResults = [];
-      pendingResults.push(this.authIndex());
+      pendingResults.push(this.authTokensIndex());
       pendingResults.push(this.$store.dispatch("albums/index"));
       pendingResults.push(this.$store.dispatch("artists/index"));
-      pendingResults.push(this.$store.dispatch("codecConversions/index"));
+      pendingResults.push(this.codecConversionsIndex());
       pendingResults.push(this.$store.dispatch("genres/index"));
       pendingResults.push(this.$store.dispatch("labels/index"));
       pendingResults.push(this.$store.dispatch("playlists/index"));
@@ -247,10 +251,6 @@ export default {
       } finally {
         this.loading = false;
       }
-    },
-    async logout() {
-      await this.$store.dispatch("auth/logout");
-      this.$router.push({ name: "login" });
     },
   },
 };
