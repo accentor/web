@@ -74,10 +74,12 @@
 
 <script>
 import { mapState, mapActions } from "vuex";
+import { mapState as mapPiniaState } from "pinia";
 import AlbumActions from "../../components/AlbumActions.vue";
 import TracksTable from "../../components/TracksTable.vue";
 import AlbumArtists from "../../components/AlbumArtists.vue";
 import { PlaysScope, TracksScope } from "@accentor/api-client-js";
+import { usePlaylistsStore } from "../../store/playlists";
 
 export default {
   name: "Album",
@@ -105,6 +107,7 @@ export default {
   computed: {
     ...mapState("albums", ["albums"]),
     ...mapState("labels", ["labels"]),
+    ...mapPiniaState(usePlaylistsStore, { storePlaylists: "albumPlaylists" }),
     tracks: function () {
       return this.$store.getters["tracks/tracksFilterByAlbum"](
         this.$route.params.id,
@@ -119,7 +122,7 @@ export default {
       );
     },
     playlists: function () {
-      return this.$store.getters["playlists/albumPlaylists"].filter((p) =>
+      return this.storePlaylists.filter((p) =>
         p.item_ids.includes(this.album.id),
       );
     },

@@ -82,6 +82,17 @@ export function useBaseModelStore(apiModule, localStorageKey, crudKey) {
     }
   }
 
+  async function read(id) {
+    try {
+      const result = await apiModule.read(authStore.apiToken, id);
+      setItem(id, result);
+      return result.id;
+    } catch (error) {
+      errorsStore.addError(error);
+      return false;
+    }
+  }
+
   async function update(id, updatedItem) {
     try {
       const result = await apiModule.update(authStore.apiToken, id, {
@@ -113,6 +124,7 @@ export function useBaseModelStore(apiModule, localStorageKey, crudKey) {
     setItems,
     index,
     create,
+    read,
     update,
     destroy,
   };

@@ -6,7 +6,6 @@ import artists from "./artists";
 import genres from "./genres";
 import labels from "./labels";
 import player from "./player";
-import playlists from "./playlists";
 import plays from "./plays";
 import tracks from "./tracks";
 
@@ -27,7 +26,6 @@ export default new Vuex.Store({
     genres,
     labels,
     player,
-    playlists,
     plays,
     tracks,
   },

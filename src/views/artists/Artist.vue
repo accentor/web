@@ -73,6 +73,7 @@ import ArtistActions from "../../components/ArtistActions.vue";
 import TracksTable from "../../components/TracksTable.vue";
 import { AlbumsScope, TracksScope } from "@accentor/api-client-js";
 import { useAuthStore } from "../../store/auth";
+import { usePlaylistsStore } from "../../store/playlists";
 
 export default {
   name: "Artist",
@@ -103,6 +104,7 @@ export default {
   },
   computed: {
     ...mapPiniaState(useAuthStore, ["isModerator"]),
+    ...mapPiniaState(usePlaylistsStore, { storePlaylists: "artistPlaylists" }),
     ...mapState("artists", ["artists"]),
     albums: function () {
       return this.$store.getters["albums/albumsFilterByArtist"](
@@ -118,7 +120,7 @@ export default {
       return this.artists[this.$route.params.id];
     },
     playlists: function () {
-      return this.$store.getters["playlists/artistPlaylists"].filter((p) =>
+      return this.storePlaylists.filter((p) =>
         p.item_ids.includes(this.artist.id),
       );
     },
