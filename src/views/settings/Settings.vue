@@ -31,13 +31,13 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations, mapState } from "vuex";
-import { mapState as mapPiniaState } from "pinia";
+import {mapActions, mapState} from "pinia";
 import AuthTokensTable from "../../components/AuthTokensTable.vue";
 import UserForm from "@/components/UserForm.vue";
 import { useAuthStore } from "../../store/auth";
 import { useAuthTokensStore } from "../../store/auth_tokens";
 import { useCodecConversionsStore } from "../../store/codec_conversions";
+import {useUserSettingsStore} from "../../store/user_settings";
 
 export default {
   name: "Settings",
@@ -66,13 +66,12 @@ export default {
     },
   },
   computed: {
-    ...mapPiniaState(useAuthStore, { user: "currentUser" }),
-    ...mapPiniaState(useAuthTokensStore, ["authTokens"]),
-    ...mapPiniaState(useCodecConversionsStore, {
+    ...mapState(useAuthStore, { user: "currentUser" }),
+    ...mapState(useAuthTokensStore, ["authTokens"]),
+    ...mapState(useCodecConversionsStore, {
       storeCodecConversions: "allCodecConversions",
     }),
-    ...mapGetters("userSettings", ["codecConversion"]),
-    ...mapState("userSettings", ["locale"]),
+    ...mapState(useUserSettingsStore, ["locale", "codecConversion"]),
     codecConversions() {
       return this.storeCodecConversions.reduce(
         (acc, cc) => {
@@ -87,7 +86,7 @@ export default {
     },
   },
   methods: {
-    ...mapMutations("userSettings", ["setSettings"]),
+    ...mapActions(useUserSettingsStore, ["setSettings"]),
     fillValues() {
       if (this.locale) {
         this.newLocale = this.locale;

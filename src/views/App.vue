@@ -180,14 +180,15 @@
 </template>
 
 <script>
-import { mapGetters, mapState } from "vuex";
-import { mapActions, mapState as mapPiniaState } from "pinia";
+import { mapGetters } from "vuex";
+import { mapActions, mapState } from "pinia";
 import { useAuthStore } from "@/store/auth";
 import { useUsersStore } from "@/store/users";
 import { useAuthTokensStore } from "@/store/auth_tokens";
 import { useCodecConversionsStore } from "@/store/codec_conversions";
 import Errors from "../components/Errors.vue";
 import Player from "../components/Player.vue";
+import {useUserSettingsStore} from "../store/user_settings";
 
 export default {
   name: "app",
@@ -223,10 +224,10 @@ export default {
     },
   },
   computed: {
-    ...mapPiniaState(useAuthStore, ["isModerator"]),
+    ...mapState(useAuthStore, ["isModerator"]),
     ...mapGetters(["numberOfFlaggedItems"]),
     ...mapGetters("rescan", ["finishedAt"]),
-    ...mapState("userSettings", ["locale"]),
+    ...mapState(useUserSettingsStore, ["locale"]),
   },
   methods: {
     ...mapActions(useAuthStore, ["logout"]),

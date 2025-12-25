@@ -10,15 +10,18 @@ export const useAuthStore = defineStore("auth", () => {
   const errorsStore = useErrorsStore();
   const usersStore = useUsersStore();
 
-  const apiToken = useLocalStorage("auth.apiToken", null, {
+  const _apiToken = useLocalStorage("auth.apiToken", null, {
     serializer: StorageSerializers.object,
   });
-  const userId = useLocalStorage("auth.userId", null, {
+  const apiToken = computed(() => _apiToken.value);
+  const _userId = useLocalStorage("auth.userId", null, {
     serializer: StorageSerializers.object,
   });
-  const id = useLocalStorage("auth.id", null, {
+  const userId = computed(() => _userId.value);
+  const _id = useLocalStorage("auth.id", null, {
     serializer: StorageSerializers.object,
   });
+  const id = computed(() => _id.value);
 
   async function login(data) {
     try {
@@ -30,9 +33,9 @@ export const useAuthStore = defineStore("auth", () => {
         },
         ...data,
       });
-      apiToken.value = result.token;
-      userId.value = result.user_id;
-      id.value = result.id;
+      _apiToken.value = result.token;
+      _userId.value = result.user_id;
+      _id.value = result.id;
       return true;
     } catch (error) {
       errorsStore.addError(error);
@@ -41,9 +44,9 @@ export const useAuthStore = defineStore("auth", () => {
   }
 
   function clearAuthData() {
-    apiToken.value = null;
-    userId.value = null;
-    id.value = null;
+    _apiToken.value = null;
+    _userId.value = null;
+    _id.value = null;
   }
 
   async function logout() {

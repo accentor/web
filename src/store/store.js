@@ -14,7 +14,6 @@ import playlists from "./playlists";
 import plays from "./plays";
 import rescan from "./rescan";
 import tracks from "./tracks";
-import userSettings from "./user_settings";
 
 Vue.use(Vuex);
 
@@ -45,7 +44,6 @@ export default new Vuex.Store({
     plays,
     rescan,
     tracks,
-    userSettings,
   },
   state: {
     currentDay: new Date().setHours(0, 0, 0, 0),
