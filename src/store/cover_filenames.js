@@ -1,104 +1,26 @@
-import Vue from "vue";
+import Vue, {computed} from "vue";
 import api from "@/api";
 import { fetchAll } from "./actions";
 import { useErrorsStore } from "./errors";
 import { useAuthStore } from "./auth";
+import {defineStore} from "pinia";
+import {useBaseModelStore} from "./base";
 
-export default {
-  namespaced: true,
-  state: {
-    coverFilenames: {},
-    startLoading: new Date(0),
-  },
-  mutations: {
-    setCoverFilenames(state, payload) {
-      const oldCoverFilenames = state.coverFilenames;
-      state.coverFilenames = {};
-      for (let id in oldCoverFilenames) {
-        state.coverFilenames[id] = oldCoverFilenames[id];
-      }
-      const loaded = new Date();
-      for (let obj of payload) {
-        obj.loaded = loaded;
-        state.coverFilenames[obj.id] = obj;
-      }
-    },
-    setCoverFilename(state, { id, coverFilename }) {
-      const oldCoverFilenames = state.coverFilenames;
-      state.coverFilenames = {};
-      for (let id in oldCoverFilenames) {
-        state.coverFilenames[id] = oldCoverFilenames[id];
-      }
-      coverFilename.loaded = new Date();
-      state.coverFilenames[id] = coverFilename;
-    },
-    setStartLoading(state) {
-      state.startLoading = new Date();
-    },
-    removeCoverFilename(state, id) {
-      Vue.delete(state.coverFilenames, id);
-    },
-    removeOld(state) {
-      const oldCoverFilenames = state.coverFilenames;
-      state.coverFilenames = {};
-      for (let id in oldCoverFilenames) {
-        if (oldCoverFilenames[id].loaded > state.startLoading) {
-          state.coverFilenames[id] = oldCoverFilenames[id];
-        }
-      }
-    },
-  },
-  actions: {
-    async index({ commit }) {
-      const generator = api.cover_filenames.index(useAuthStore().apiToken);
-      try {
-        await fetchAll(commit, generator, "setCoverFilenames");
-        return true;
-      } catch (error) {
-        useErrorsStore().addError(error);
-        return false;
-      }
-    },
-    async create({ commit }, newCoverFilename) {
-      try {
-        const result = await api.cover_filenames.create(
-          useAuthStore().apiToken,
-          newCoverFilename,
-        );
-        commit("setCoverFilename", { id: result.id, coverFilename: result });
-        return result.id;
-      } catch (error) {
-        useErrorsStore().addError(error);
-        return false;
-      }
-    },
-    async update({ commit }, { id, newCoverFilename }) {
-      try {
-        const result = await api.cover_filenames.update(
-          useAuthStore().apiToken,
-          id,
-          newCoverFilename,
-        );
-        commit("setCoverFilename", { id, coverFilename: result });
-        return true;
-      } catch (error) {
-        useErrorsStore().addError(error);
-        return false;
-      }
-    },
-    async destroy({ commit }, id) {
-      try {
-        await api.cover_filenames.destroy(useAuthStore().apiToken, id);
-        commit("removeCoverFilename", id);
-        return true;
-      } catch (error) {
-        useErrorsStore().addError(error);
-        return false;
-      }
-    },
-  },
-  getters: {
-    coverFilenames: (state) =>
-      Object.values(state.coverFilenames).sort((cf1, cf2) => cf1.id - cf2.id),
-  },
-};
+export const useCoverFilenamesStore = defineStore('cover-filenames', () => {
+    const {
+        items: coverFilenames,
+        index,
+        create,
+        destroy,
+    } = useBaseModelStore(api.cover_filenames, 'cover_filenames.cover_filenames', 'cover_filename');
+
+    const allCoverFilenames = computed(() => Object.values(coverFilenames.value).sort((cf1, cf2) => cf1.id - cf2.id));
+
+    return {
+        coverFilenames,
+        allCoverFilenames,
+        index,
+        create,
+        destroy,
+    }
+})

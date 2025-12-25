@@ -10,10 +10,10 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapState } from "pinia";
 import CoverFilenameForm from "./CoverFilenameForm.vue";
 import { useAuthStore } from "../store/auth";
-import { mapState } from "pinia";
+import {useCoverFilenamesStore} from "../store/cover_filenames";
 
 export default {
   name: "EditCoverFilenames",
@@ -22,7 +22,7 @@ export default {
     return {};
   },
   computed: {
-    ...mapGetters("coverFilenames", ["coverFilenames"]),
+    ...mapState(useCoverFilenamesStore, {coverFilenames: "allCoverFilenames"}),
     ...mapState(useAuthStore, ["isModerator"]),
   },
 };
