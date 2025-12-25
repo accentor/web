@@ -132,11 +132,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters, mapState } from "vuex";
-import {
-  mapState as mapPiniaState,
-  mapActions as mapPiniaActions,
-} from "pinia";
+import { mapState, mapActions } from "pinia";
 import EditCodecs from "../components/EditCodecs.vue";
 import EditCodecConversions from "../components/EditCodecConversions.vue";
 import EditCoverFilenames from "../components/EditCoverFilenames.vue";
@@ -149,6 +145,7 @@ import { useCodecsStore } from "../store/codecs";
 import { useCoverFilenamesStore } from "../store/cover_filenames";
 import { useImageTypesStore } from "../store/image_types";
 import { useLocationsStore } from "../store/locations";
+import { useRescansStore } from "../store/rescan";
 
 export default {
   name: "Library",
@@ -167,11 +164,13 @@ export default {
     this.loadData();
   },
   computed: {
-    ...mapPiniaState(useAuthStore, ["isModerator"]),
-    ...mapGetters("rescan", ["rescans"]),
-    ...mapGetters("rescan", ["combinedRescans"]),
-    ...mapPiniaState(useLocationsStore, ["locations"]),
-    ...mapState("rescan", ["lastClick"]),
+    ...mapState(useAuthStore, ["isModerator"]),
+    ...mapState(useRescansStore, {
+      rescans: "allRescans",
+      combinedRescans: "combinedRescans",
+      lastClick: "lastClick",
+    }),
+    ...mapState(useLocationsStore, ["locations"]),
     rescanRunning() {
       return this.combinedRescans.running ||
         this.lastClick > new Date(this.combinedRescans.finished_at)
@@ -180,20 +179,24 @@ export default {
     },
   },
   methods: {
-    ...mapPiniaActions(useCodecConversionsStore, {
+    ...mapActions(useCodecConversionsStore, {
       codecConversionsIndex: "index",
     }),
-    ...mapPiniaActions(useCodecsStore, { codecsIndex: "index" }),
-    ...mapPiniaActions(useCoverFilenamesStore, {
+    ...mapActions(useCodecsStore, { codecsIndex: "index" }),
+    ...mapActions(useCoverFilenamesStore, {
       coverFilenamesIndex: "index",
     }),
-    ...mapPiniaActions(useImageTypesStore, { imageTypesIndex: "index" }),
-    ...mapPiniaActions(useLocationsStore, { locationsIndex: "index" }),
-    ...mapActions("rescan", ["start", "startAll"]),
+    ...mapActions(useImageTypesStore, { imageTypesIndex: "index" }),
+    ...mapActions(useLocationsStore, { locationsIndex: "index" }),
+    ...mapActions(useRescansStore, {
+      rescansIndex: "index",
+      start: "start",
+      startAll: "startAll",
+    }),
     async loadData() {
       let pendingResults = [];
       if (this.isModerator) {
-        pendingResults.push(this.$store.dispatch("rescan/index"));
+        pendingResults.push(this.rescansIndex());
         pendingResults.push(this.codecsIndex());
         pendingResults.push(this.codecConversionsIndex());
         pendingResults.push(this.coverFilenamesIndex());

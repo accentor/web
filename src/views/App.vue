@@ -189,6 +189,7 @@ import { useCodecConversionsStore } from "@/store/codec_conversions";
 import Errors from "../components/Errors.vue";
 import Player from "../components/Player.vue";
 import { useUserSettingsStore } from "../store/user_settings";
+import { useRescansStore } from "../store/rescan";
 
 export default {
   name: "app",
@@ -226,7 +227,7 @@ export default {
   computed: {
     ...mapState(useAuthStore, ["isModerator"]),
     ...mapGetters(["numberOfFlaggedItems"]),
-    ...mapGetters("rescan", ["finishedAt"]),
+    ...mapState(useRescansStore, ["finishedAt"]),
     ...mapState(useUserSettingsStore, ["locale"]),
   },
   methods: {
