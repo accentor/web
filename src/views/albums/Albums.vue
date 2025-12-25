@@ -52,22 +52,22 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
-import { mapState } from "pinia";
+import { mapState, mapActions } from "pinia";
 import AlbumCard from "../../components/AlbumCard.vue";
 import Paginated from "../../mixins/Paginated";
 import Searchable from "../../mixins/Searchable";
 import { useAuthStore } from "@/store/auth";
+import { useAlbumsStore } from "../../store/albums";
 
 export default {
-  name: "albums",
+  name: "Albums",
   components: { AlbumCard },
   metaInfo() {
     return { title: this.$tc("music.albums", 2) };
   },
   mixins: [Paginated, Searchable],
   methods: {
-    ...mapActions("albums", ["destroy"]),
+    ...mapActions(useAlbumsStore, ["destroy"]),
     deleteAlbum: function (id) {
       if (confirm(this.$t("common.are-you-sure"))) {
         this.destroy(id);
@@ -76,9 +76,7 @@ export default {
   },
   computed: {
     ...mapState(useAuthStore, ["isModerator"]),
-    ...mapGetters("albums", {
-      albums: "albumsByTitle",
-    }),
+    ...mapState(useAlbumsStore, { albums: "albumsByTitle" }),
     filteredItems() {
       return this.albums.filter(
         (item) =>

@@ -37,7 +37,7 @@
 <script>
 import { mapActions } from "pinia";
 import ImagePicker from "./ImagePicker.vue";
-import {useArtistsStore} from "../store/artists";
+import { useArtistsStore } from "../store/artists";
 import artistSvgUrl from "@mdi/svg/svg/account-music.svg";
 
 export default {
@@ -82,10 +82,7 @@ export default {
         : this.newArtist.review_comment;
       let pendingResult = null;
       if (this.artist) {
-        pendingResult = this.update(
-          this.artist.id,
-          this.newArtist,
-        );
+        pendingResult = this.update(this.artist.id, this.newArtist);
       } else {
         pendingResult = this.create(this.newArtist);
       }

@@ -180,7 +180,6 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
 import { mapActions, mapState } from "pinia";
 import { useAuthStore } from "@/store/auth";
 import { useUsersStore } from "@/store/users";
@@ -193,7 +192,11 @@ import { useRescansStore } from "../store/rescan";
 import { usePlaylistsStore } from "../store/playlists";
 import { useLabelsStore } from "../store/labels";
 import { useGenresStore } from "../store/genres";
-import {useArtistsStore} from "../store/artists";
+import { useArtistsStore } from "../store/artists";
+import { useAlbumsStore } from "../store/albums";
+import { useUtilityStore } from "../store/utility";
+import { useTracksStore } from "../store/tracks";
+import { usePlaysStore } from "../store/plays";
 
 export default {
   name: "app",
@@ -208,7 +211,7 @@ export default {
   created() {
     this.loadData();
     this.$options.interval = setInterval(() => {
-      this.$store.commit("updateCurrentDay");
+      useUtilityStore().updateCurrentDay();
     }, 60000);
   },
   beforeDestroy() {
@@ -230,11 +233,12 @@ export default {
   },
   computed: {
     ...mapState(useAuthStore, ["isModerator"]),
-    ...mapGetters(["numberOfFlaggedItems"]),
+    ...mapState(useUtilityStore, ["numberOfFlaggedItems"]),
     ...mapState(useRescansStore, ["finishedAt"]),
     ...mapState(useUserSettingsStore, ["locale"]),
   },
   methods: {
+    ...mapActions(useAlbumsStore, { albumsIndex: "index" }),
     ...mapActions(useArtistsStore, { artistsIndex: "index" }),
     ...mapActions(useAuthStore, ["logout"]),
     ...mapActions(useAuthTokensStore, { authTokensIndex: "index" }),
@@ -242,19 +246,21 @@ export default {
     ...mapActions(useGenresStore, { genresIndex: "index" }),
     ...mapActions(useLabelsStore, { labelsIndex: "index" }),
     ...mapActions(usePlaylistsStore, { playlistsIndex: "index" }),
+    ...mapActions(usePlaysStore, { playsIndex: "index" }),
+    ...mapActions(useTracksStore, { tracksIndex: "index" }),
     ...mapActions(useUsersStore, { usersIndex: "index" }),
     async loadData() {
       this.loading = true;
       let pendingResults = [];
       pendingResults.push(this.authTokensIndex());
-      pendingResults.push(this.$store.dispatch("albums/index"));
+      pendingResults.push(this.albumsIndex());
       pendingResults.push(this.artistsIndex());
       pendingResults.push(this.codecConversionsIndex());
       pendingResults.push(this.genresIndex());
       pendingResults.push(this.labelsIndex());
       pendingResults.push(this.playlistsIndex());
-      pendingResults.push(this.$store.dispatch("plays/index"));
-      pendingResults.push(this.$store.dispatch("tracks/index"));
+      pendingResults.push(this.playsIndex());
+      pendingResults.push(this.tracksIndex());
       pendingResults.push(this.usersIndex());
       try {
         await Promise.all(pendingResults);

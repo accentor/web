@@ -35,8 +35,8 @@
 </template>
 
 <script>
-import {mapState } from "pinia";
-import {useArtistsStore} from "../store/artists";
+import { mapState } from "pinia";
+import { useArtistsStore } from "../store/artists";
 
 export default {
   name: "TrackArtists",

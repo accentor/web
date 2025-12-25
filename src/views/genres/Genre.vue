@@ -19,13 +19,13 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
-import { mapState, mapActions as mapPiniaActions } from "pinia";
+import { mapState, mapActions } from "pinia";
 import GenreActions from "@/components/GenreActions.vue";
 import TracksTable from "@/components/TracksTable.vue";
 import { TracksScope } from "@accentor/api-client-js";
 import { useAuthStore } from "../../store/auth";
 import { useGenresStore } from "../../store/genres";
+import { useTracksStore } from "../../store/tracks";
 
 export default {
   name: "Genre",
@@ -49,17 +49,15 @@ export default {
     ...mapState(useAuthStore, ["isModerator"]),
     ...mapState(useGenresStore, ["genres"]),
     tracks: function () {
-      return this.$store.getters["tracks/tracksFilterByGenre"](
-        this.$route.params.id,
-      );
+      return useTracksStore().tracksFilterByGenre(this.$route.params.id);
     },
     genre: function () {
       return this.genres[this.$route.params.id];
     },
   },
   methods: {
-    ...mapPiniaActions(useGenresStore, ["read"]),
-    ...mapActions("tracks", { indexTracks: "index" }),
+    ...mapActions(useGenresStore, ["read"]),
+    ...mapActions(useTracksStore, { indexTracks: "index" }),
     async fetchContent(newValue, oldValue) {
       // After loading the content, the router will change the id from a string to a number
       // but we don't actually want to load the content twice

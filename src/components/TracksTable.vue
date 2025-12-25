@@ -104,8 +104,7 @@
 </template>
 
 <script>
-import { mapGetters, mapState } from "vuex";
-import { mapState as mapPiniaState } from "pinia";
+import { mapState } from "pinia";
 import TrackActions from "./TrackActions.vue";
 import Paginated from "../mixins/Paginated";
 import Searchable from "../mixins/Searchable";
@@ -121,6 +120,10 @@ import {
 } from "@/comparators";
 import { useAuthStore } from "../store/auth";
 import { useGenresStore } from "../store/genres";
+import { useAlbumsStore } from "../store/albums";
+import { useTracksStore } from "../store/tracks";
+import { usePlaysStore } from "../store/plays";
+import { usePlayerStore } from "../store/player";
 
 export default {
   name: "TracksTable",
@@ -201,12 +204,12 @@ export default {
     };
   },
   computed: {
-    ...mapPiniaState(useAuthStore, ["isModerator"]),
-    ...mapGetters("player", ["currentTrack"]),
-    ...mapGetters("plays", ["playStatsByTrack"]),
-    ...mapState("albums", ["albums"]),
-    ...mapPiniaState(useGenresStore, ["genres"]),
-    ...mapState("tracks", { tracksObj: "tracks" }),
+    ...mapState(useAuthStore, ["isModerator"]),
+    ...mapState(usePlayerStore, ["currentTrack"]),
+    ...mapState(useAlbumsStore, ["albums"]),
+    ...mapState(useGenresStore, ["genres"]),
+    ...mapState(usePlaysStore, ["playStatsByTrack"]),
+    ...mapState(useTracksStore, { tracksObj: "tracks" }),
     filteredItems() {
       return this.tracks.filter(
         (item) =>

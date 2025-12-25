@@ -1,41 +1,35 @@
-import Vue, { ref, markRaw, computed } from "vue";
-import { useStorageAsync} from "@vueuse/core";
+import { ref, markRaw, computed } from "vue";
+import { useStorageAsync } from "@vueuse/core";
 import localForage from "localforage";
 import { useErrorsStore } from "./errors";
 import { useAuthStore } from "./auth";
 import { fetchAllPinia } from "./actions";
 
 const RawObjectSerializer = {
-    write: async (value) => value,
-    read: async (value) => {
-        let obj = value ?? {};
-        let result = {};
-        for (let id in obj) {
-            result[id] = markRaw(obj[id]);
-        }
-        return result;
-    },
+  write: async (value) => value,
+  read: async (value) => markRaw(value),
 };
 
 export function useBaseModelStore(
   apiModule,
   localStorageKey,
   crudKey,
-  { extraMergeOperations = () => {}, extraDestroyOperations = () => {}, baseScope = null } = {},
+  {
+    extraMergeOperations = () => {},
+    extraDestroyOperations = () => {},
+    baseScope = null,
+  } = {},
 ) {
   const errorsStore = useErrorsStore();
   const authStore = useAuthStore();
 
-  const _items = useStorageAsync(
-    localStorageKey,
-    {},
-    localForage,
-    { serializer: RawObjectSerializer },
-  );
+  const _items = useStorageAsync(localStorageKey, {}, localForage, {
+    serializer: RawObjectSerializer,
+  });
   const items = computed(() => _items.value);
   const startLoading = ref(new Date(0));
 
-  function setItems(payload) {
+  function addItems(payload) {
     const newItems = {};
     for (let id in _items.value) {
       newItems[id] = _items.value[id];
@@ -43,9 +37,13 @@ export function useBaseModelStore(
     const loaded = new Date();
     for (let obj of payload) {
       obj.loaded = loaded;
-      newItems[obj.id] = markRaw(obj);
+      newItems[obj.id] = obj;
     }
-    _items.value = newItems;
+    _items.value = markRaw(newItems);
+  }
+
+  function setItems(payload) {
+    _items.value = markRaw(payload);
   }
 
   function setItem(id, item) {
@@ -54,8 +52,8 @@ export function useBaseModelStore(
       newItems[id] = _items.value[id];
     }
     item.loaded = new Date();
-    newItems[id] = markRaw(item);
-    _items.value = newItems;
+    newItems[id] = item;
+    _items.value = markRaw(newItems);
   }
 
   function setStartLoading() {
@@ -63,23 +61,35 @@ export function useBaseModelStore(
   }
 
   function removeItem(id) {
-    Vue.delete(_items.value, id);
+    const newItems = {};
+    for (let itemId in _items.value) {
+      if (itemId !== id) {
+        newItems[itemId] = _items.value[itemId];
+      }
+    }
+    _items.value = markRaw(newItems);
   }
 
   function removeOld() {
-    const oldItems = _items.value;
-    _items.value = {};
-    for (let id in oldItems) {
-      if (oldItems[id].loaded > startLoading.value) {
-        _items.value[id] = oldItems[id];
+    const newItems = {};
+    for (let id in _items.value) {
+      if (_items.value[id].loaded > startLoading.value) {
+        newItems[id] = _items.value[id];
       }
     }
+    _items.value = markRaw(newItems);
   }
 
   async function index(scope = baseScope) {
     const generator = apiModule.index(authStore.apiToken, scope);
     try {
-      await fetchAllPinia(generator, setItems, setStartLoading, removeOld, scope);
+      await fetchAllPinia(
+        generator,
+        addItems,
+        setStartLoading,
+        removeOld,
+        scope,
+      );
       return true;
     } catch (error) {
       errorsStore.addError(error);

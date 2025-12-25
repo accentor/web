@@ -1,11 +1,13 @@
 import { computed } from "vue";
 import { defineStore } from "pinia";
-import vuexStore from "./store";
 import api from "@/api";
 import { compareStrings } from "../comparators";
 import { useBaseModelStore } from "./base";
+import { useAlbumsStore } from "./albums";
 
 export const useLabelsStore = defineStore("labels", () => {
+  const albumsStore = useAlbumsStore();
+
   const {
     items: labels,
     index,
@@ -17,14 +19,9 @@ export const useLabelsStore = defineStore("labels", () => {
     merge,
     startLoading,
   } = useBaseModelStore(api.labels, "labels.labels", "label", {
-    extraDestroyOperations: (id) => vuexStore.commit("albums/removeLabelOccurence", id, { root: true }),
-    extraMergeOperations: (newId, oldId) => {
-      vuexStore.commit(
-        "albums/updateLabelOccurence",
-        { newId, oldId },
-        { root: true },
-      );
-    },
+    extraDestroyOperations: (id) => albumsStore.removeLabelOccurence(id),
+    extraMergeOperations: (newId, oldId) =>
+      albumsStore.updateLabelOccurence(newId, oldId),
   });
 
   const allLabels = computed(() => Object.values(labels.value));

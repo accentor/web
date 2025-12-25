@@ -64,11 +64,12 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
-import { mapActions as mapPiniaActions } from "pinia";
+import { mapActions, mapState } from "pinia";
 import { useLabelsStore } from "../store/labels";
 import { useGenresStore } from "../store/genres";
-import {useArtistsStore} from "../store/artists";
+import { useArtistsStore } from "../store/artists";
+import { useAlbumsStore } from "../store/albums";
+import { useTracksStore } from "../store/tracks";
 
 export default {
   name: "MaintenanceActions",
@@ -81,13 +82,13 @@ export default {
     };
   },
   computed: {
-    ...mapGetters("tracks", ["tracksEmpty"]),
+    ...mapState(useTracksStore, ["tracksEmpty"]),
   },
   methods: {
-    ...mapActions({ destroyAlbums: "albums/destroyEmpty" }),
-    ...mapPiniaActions(useArtistsStore, { destroyArtists: "destroyEmpty" }),
-    ...mapPiniaActions(useLabelsStore, { destroyLabels: "destroyEmpty" }),
-    ...mapPiniaActions(useGenresStore, { destroyGenres: "destroyEmpty" }),
+    ...mapActions(useAlbumsStore, { destroyAlbums: "destroyEmpty" }),
+    ...mapActions(useArtistsStore, { destroyArtists: "destroyEmpty" }),
+    ...mapActions(useLabelsStore, { destroyLabels: "destroyEmpty" }),
+    ...mapActions(useGenresStore, { destroyGenres: "destroyEmpty" }),
     destroyEmptyArtists: function () {
       if (confirm(this.$t("common.are-you-sure"))) {
         this.artistsDisabled = true;

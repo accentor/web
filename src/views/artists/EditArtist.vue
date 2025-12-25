@@ -7,7 +7,7 @@
 <script>
 import { mapState } from "pinia";
 import ArtistForm from "../../components/ArtistForm.vue";
-import {useArtistsStore} from "../../store/artists";
+import { useArtistsStore } from "../../store/artists";
 
 export default {
   name: "EditArtist",

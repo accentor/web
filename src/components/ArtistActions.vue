@@ -69,12 +69,12 @@
 </template>
 
 <script>
-import {mapActions, mapState} from "pinia";
+import { mapActions, mapState } from "pinia";
 import EditReviewComment from "./EditReviewComment.vue";
 import ArtistMergeDialog from "./ArtistMergeDialog.vue";
 import AddToPlaylist from "./AddToPlaylist.vue";
 import { useAuthStore } from "../store/auth";
-import {useArtistsStore} from "../store/artists";
+import { useArtistsStore } from "../store/artists";
 
 export default {
   name: "ArtistActions",
@@ -104,10 +104,7 @@ export default {
       }
     },
     flag(id, reviewComment) {
-      return this.update(
-        id,
-        { review_comment: reviewComment },
-      );
+      return this.update(id, { review_comment: reviewComment });
     },
   },
 };

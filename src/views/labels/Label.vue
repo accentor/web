@@ -53,8 +53,7 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
-import { mapState, mapActions as mapPiniaActions } from "pinia";
+import { mapState, mapActions } from "pinia";
 import AlbumCard from "../../components/AlbumCard.vue";
 import LabelActions from "@/components/LabelActions.vue";
 import Paginated from "../../mixins/Paginated";
@@ -62,6 +61,7 @@ import Searchable from "../../mixins/Searchable";
 import { AlbumsScope } from "@accentor/api-client-js";
 import { useAuthStore } from "../../store/auth";
 import { useLabelsStore } from "../../store/labels";
+import { useAlbumsStore } from "../../store/albums";
 
 export default {
   name: "LabelView",
@@ -86,9 +86,7 @@ export default {
     ...mapState(useAuthStore, ["isModerator"]),
     ...mapState(useLabelsStore, ["labels"]),
     albums: function () {
-      return this.$store.getters["albums/albumsFilterByLabel"](
-        this.$route.params.id,
-      );
+      return useAlbumsStore().albumsFilterByLabel(this.$route.params.id);
     },
     label: function () {
       return this.labels[this.$route.params.id];
@@ -105,8 +103,8 @@ export default {
     },
   },
   methods: {
-    ...mapPiniaActions(useLabelsStore, ["read"]),
-    ...mapActions("albums", { indexAlbums: "index" }),
+    ...mapActions(useLabelsStore, ["read"]),
+    ...mapActions(useAlbumsStore, { indexAlbums: "index" }),
     async fetchContent(newValue, oldValue) {
       // After loading the content, the router will change the id from a string to a number
       // but we don't actually want to load the content twice

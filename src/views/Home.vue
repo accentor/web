@@ -260,7 +260,6 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
 import AlbumCard from "../components/AlbumCard.vue";
 import ArtistCard from "../components/ArtistCard.vue";
 import {
@@ -268,8 +267,10 @@ import {
   compareByRecentlyPlayed,
   compareStrings,
 } from "../comparators";
-import {mapState} from "pinia";
-import {useArtistsStore} from "../store/artists";
+import { mapState } from "pinia";
+import { useArtistsStore } from "../store/artists";
+import { useAlbumsStore } from "../store/albums";
+import { usePlaysStore } from "../store/plays";
 
 const RANDOM_SEED_MAX = 10000;
 
@@ -303,13 +304,12 @@ export default {
     },
   },
   computed: {
-    ...mapGetters({
-      albums: "albums/albums",
-      albumsOnThisDay: "albums/albumsOnThisDay",
-      playStatsByAlbum: "plays/playStatsByAlbum",
-      playStatsByArtist: "plays/playStatsByArtist",
+    ...mapState(useAlbumsStore, {
+      albums: "allAlbums",
+      albumsOnThisDay: "albumsOnThisDay",
     }),
     ...mapState(useArtistsStore, { artists: "allArtists" }),
+    ...mapState(usePlaysStore, ["playStatsByAlbum", "playStatsByArtist"]),
     randomSeed() {
       return Math.round(Math.random() * RANDOM_SEED_MAX);
     },

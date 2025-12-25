@@ -1,149 +1,104 @@
 import api from "@/api";
-import { TracksScope } from "@accentor/api-client-js";
-import { fetchAll } from "./actions";
-import { useErrorsStore } from "./errors";
-import { useAuthStore } from "./auth";
+import { PlaysScope } from "@accentor/api-client-js";
+import { defineStore } from "pinia";
+import { useBaseModelStore } from "./base";
+import { computed } from "vue";
+import { useTracksStore } from "./tracks";
 
-export default {
-  namespaced: true,
-  state: {
-    plays: {},
-    startLoading: new Date(0),
-  },
-  mutations: {
-    setPlays(state, payload) {
-      const oldPlays = state.plays;
-      state.plays = {};
-      for (let id in oldPlays) {
-        state.plays[id] = oldPlays[id];
-      }
-      const loaded = new Date();
-      for (let play of payload) {
-        play.loaded = loaded;
-        state.plays[play.id] = play;
-      }
-    },
-    setPlay(state, { id, play }) {
-      const oldPlays = state.plays;
-      state.plays = {};
-      for (let id in oldPlays) {
-        state.plays[id] = oldPlays[id];
-      }
-      play.loaded = new Date();
-      state.plays[id] = play;
-    },
-    setStartLoading(state) {
-      state.startLoading = new Date();
-    },
-    removeOld(state) {
-      const oldPlays = state.plays;
-      state.plays = {};
-      for (let id in oldPlays) {
-        if (oldPlays[id].loaded > state.startLoading) {
-          state.plays[id] = oldPlays[id];
+export const usePlaysStore = defineStore("plays", () => {
+  const tracksStore = useTracksStore();
+
+  const {
+    items: plays,
+    index,
+    create: baseCreate,
+  } = useBaseModelStore(api.plays, "plays.plays", "play", {
+    baseScope: new PlaysScope(),
+  });
+  const allPlays = computed(() => Object.values(plays.value));
+  const playStatsByTrack = computed(() => {
+    const result = {};
+    for (let play of allPlays.value) {
+      if (!(play.track_id in result)) {
+        result[play.track_id] = {
+          count: 1,
+          last_played_at: new Date(play.played_at),
+        };
+      } else {
+        result[play.track_id].count++;
+
+        if (result[play.track_id].last_played_at < new Date(play.played_at)) {
+          result[play.track_id].last_played_at = new Date(play.played_at);
         }
       }
-    },
-  },
-  actions: {
-    async index({ commit }, scope = new TracksScope()) {
-      const generator = api.plays.index(useAuthStore().apiToken, scope);
-      try {
-        await this.playsRestored;
-        await fetchAll(commit, generator, "setPlays", scope);
-        return true;
-      } catch (error) {
-        useErrorsStore().addError(error);
-        return false;
+    }
+    return result;
+  });
+
+  const playStatsByAlbum = computed(() => {
+    const result = {};
+    for (let track_id in playStatsByTrack.value) {
+      // If this track is not (yet) loaded, we need to skip it
+      if (!tracksStore.tracks[track_id]) {
+        continue;
       }
-    },
-    async create({ commit }, track_id) {
-      try {
-        const result = await api.plays.create(useAuthStore().apiToken, {
-          play: {
-            track_id,
-            played_at: new Date(),
-          },
-        });
-        commit("setPlay", { id: result.id, play: result });
-        return result.id;
-      } catch (error) {
-        useErrorsStore().addError(error);
-        return false;
+
+      const album_id = tracksStore.tracks[track_id].album_id;
+      if (!(album_id in result)) {
+        result[album_id] = {
+          last_played_at: playStatsByTrack.value[track_id].last_played_at,
+        };
+      } else if (
+        result[album_id].last_played_at <
+        playStatsByTrack.value[track_id].last_played_at
+      ) {
+        result[album_id].last_played_at =
+          playStatsByTrack.value[track_id].last_played_at;
       }
-    },
-  },
-  getters: {
-    plays: (state) => Object.values(state.plays),
-    playStatsByTrack: (state, getters) => {
-      const result = {};
-      for (let play of getters.plays) {
-        if (!(play.track_id in result)) {
-          result[play.track_id] = {
-            count: 1,
-            last_played_at: new Date(play.played_at),
+    }
+    return result;
+  });
+
+  const playStatsByArtist = computed(() => {
+    const result = {};
+    for (let track_id in playStatsByTrack.value) {
+      // If this track is not (yet) loaded, we need to skip it
+      if (!tracksStore.tracks[track_id]) {
+        continue;
+      }
+
+      for (let ta of tracksStore.tracks[track_id].track_artists) {
+        if (!(ta.artist_id in result)) {
+          result[ta.artist_id] = {
+            count: playStatsByTrack.value[track_id].count,
+            last_played_at: playStatsByTrack.value[track_id].last_played_at,
           };
         } else {
-          result[play.track_id].count++;
-
-          if (result[play.track_id].last_played_at < new Date(play.played_at)) {
-            result[play.track_id].last_played_at = new Date(play.played_at);
+          result[ta.artist_id].count += playStatsByTrack.value[track_id].count;
+          if (
+            result[ta.artist_id].last_played_at <
+            playStatsByTrack.value[track_id].last_played_at
+          ) {
+            result[ta.artist_id].last_played_at =
+              playStatsByTrack.value[track_id].last_played_at;
           }
         }
       }
-      return result;
-    },
-    playStatsByAlbum: (state, getters, rootState) => {
-      const result = {};
-      for (let track_id in getters.playStatsByTrack) {
-        // If this track is not (yet) loaded, we need to skip it
-        if (!rootState.tracks.tracks[track_id]) {
-          continue;
-        }
+    }
+    return result;
+  });
 
-        const album_id = rootState.tracks.tracks[track_id].album_id;
-        if (!(album_id in result)) {
-          result[album_id] = {
-            last_played_at: getters.playStatsByTrack[track_id].last_played_at,
-          };
-        } else if (
-          result[album_id].last_played_at <
-          getters.playStatsByTrack[track_id].last_played_at
-        ) {
-          result[album_id].last_played_at =
-            getters.playStatsByTrack[track_id].last_played_at;
-        }
-      }
-      return result;
-    },
-    playStatsByArtist: (state, getters, rootState) => {
-      const result = {};
-      for (let track_id in getters.playStatsByTrack) {
-        // If this track is not (yet) loaded, we need to skip it
-        if (!rootState.tracks.tracks[track_id]) {
-          continue;
-        }
+  async function create(trackId) {
+    return await baseCreate({ track_id: trackId, played_at: new Date() });
+  }
 
-        for (let ta of rootState.tracks.tracks[track_id].track_artists) {
-          if (!(ta.artist_id in result)) {
-            result[ta.artist_id] = {
-              count: getters.playStatsByTrack[track_id].count,
-              last_played_at: getters.playStatsByTrack[track_id].last_played_at,
-            };
-          } else {
-            result[ta.artist_id].count +=
-              getters.playStatsByTrack[track_id].count;
-            if (
-              result[ta.artist_id].last_played_at <
-              getters.playStatsByTrack[track_id].last_played_at
-            ) {
-              result[ta.artist_id].last_played_at =
-                getters.playStatsByTrack[track_id].last_played_at;
-            }
-          }
-        }
-      }
-      return result;
-    },
-  },
-};
+  return {
+    plays,
+    allPlays,
+    index,
+    create,
+    playStatsByAlbum,
+    playStatsByArtist,
+    playStatsByTrack,
+  };
+});

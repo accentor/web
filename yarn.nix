@@ -1602,14 +1602,6 @@
       };
     }
     {
-      name = "lodash.debounce___lodash.debounce_4.0.8.tgz";
-      path = fetchurl {
-        name = "lodash.debounce___lodash.debounce_4.0.8.tgz";
-        url  = "https://registry.yarnpkg.com/lodash.debounce/-/lodash.debounce-4.0.8.tgz";
-        sha512 = "FT1yDzDYEoYWhnSGnpE/4Kj1fLZkDFyqRb7fNt6FdYOSxlUWAtp42Eh6Wb0rGIv/m9Bgo7x4GhQbm5Ys4SG5ow==";
-      };
-    }
-    {
       name = "lodash.merge___lodash.merge_4.6.2.tgz";
       path = fetchurl {
         name = "lodash.merge___lodash.merge_4.6.2.tgz";
@@ -2263,22 +2255,6 @@
         name = "vuetify___vuetify_2.7.2.tgz";
         url  = "https://registry.yarnpkg.com/vuetify/-/vuetify-2.7.2.tgz";
         sha512 = "qr04ww7uzAPQbpk751x4fSdjsJ+zREzjQ/rBlcQGuWS6MIMFMXcXcwvp4+/tnGsULZxPMWfQ0kmZmg5Yc/XzgQ==";
-      };
-    }
-    {
-      name = "vuex_persist___vuex_persist_3.1.3.tgz";
-      path = fetchurl {
-        name = "vuex_persist___vuex_persist_3.1.3.tgz";
-        url  = "https://registry.yarnpkg.com/vuex-persist/-/vuex-persist-3.1.3.tgz";
-        sha512 = "QWOpP4SxmJDC5Y1+0+Yl/F4n7z27syd1St/oP+IYCGe0X0GFio0Zan6kngZFufdIhJm+5dFGDo3VG5kdkCGeRQ==";
-      };
-    }
-    {
-      name = "vuex___vuex_3.6.2.tgz";
-      path = fetchurl {
-        name = "vuex___vuex_3.6.2.tgz";
-        url  = "https://registry.yarnpkg.com/vuex/-/vuex-3.6.2.tgz";
-        sha512 = "ETW44IqCgBpVomy520DT5jf8n0zoCac+sxWnn+hMe/CzaSejb/eVw2YToiXYX+Ex/AuHHia28vWTq4goAexFbw==";
       };
     }
     {
