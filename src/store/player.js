@@ -1,6 +1,6 @@
 import { baseURL } from "@/api";
 import { useAuthStore } from "./auth";
-import {useUserSettingsStore} from "./user_settings";
+import { useUserSettingsStore } from "./user_settings";
 
 const repeatModes = ["off", "all", "single"];
 

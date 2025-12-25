@@ -31,13 +31,13 @@
 </template>
 
 <script>
-import {mapActions, mapState} from "pinia";
+import { mapActions, mapState } from "pinia";
 import AuthTokensTable from "../../components/AuthTokensTable.vue";
 import UserForm from "@/components/UserForm.vue";
 import { useAuthStore } from "../../store/auth";
 import { useAuthTokensStore } from "../../store/auth_tokens";
 import { useCodecConversionsStore } from "../../store/codec_conversions";
-import {useUserSettingsStore} from "../../store/user_settings";
+import { useUserSettingsStore } from "../../store/user_settings";
 
 export default {
   name: "Settings",

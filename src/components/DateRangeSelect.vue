@@ -47,7 +47,7 @@
 
 <script>
 import { mapState } from "pinia";
-import {useUserSettingsStore} from "../store/user_settings";
+import { useUserSettingsStore } from "../store/user_settings";
 
 export default {
   name: "DateRangeSelect",

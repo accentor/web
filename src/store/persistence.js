@@ -90,11 +90,7 @@ const plugins = [
   return plugin.plugin;
 });
 
-const localStorageModules = [
-  "imageTypes",
-  "locations",
-  "users",
-];
+const localStorageModules = ["locations"];
 
 export const vuexLocalStorage = new VuexPersistence({
   storage: window.localStorage,

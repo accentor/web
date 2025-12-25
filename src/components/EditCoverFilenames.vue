@@ -13,7 +13,7 @@
 import { mapState } from "pinia";
 import CoverFilenameForm from "./CoverFilenameForm.vue";
 import { useAuthStore } from "../store/auth";
-import {useCoverFilenamesStore} from "../store/cover_filenames";
+import { useCoverFilenamesStore } from "../store/cover_filenames";
 
 export default {
   name: "EditCoverFilenames",
@@ -22,7 +22,9 @@ export default {
     return {};
   },
   computed: {
-    ...mapState(useCoverFilenamesStore, {coverFilenames: "allCoverFilenames"}),
+    ...mapState(useCoverFilenamesStore, {
+      coverFilenames: "allCoverFilenames",
+    }),
     ...mapState(useAuthStore, ["isModerator"]),
   },
 };

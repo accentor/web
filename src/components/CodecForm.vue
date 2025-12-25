@@ -46,8 +46,8 @@
 </template>
 
 <script>
-import {mapActions, mapState} from "pinia";
-import {useCodecsStore} from "../store/codecs";
+import { mapActions, mapState } from "pinia";
+import { useCodecsStore } from "../store/codecs";
 
 export default {
   name: "CodecForm",

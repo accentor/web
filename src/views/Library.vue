@@ -145,8 +145,9 @@ import EditLocations from "../components/EditLocations.vue";
 import MaintenanceActions from "../components/MaintenanceActions.vue";
 import { useAuthStore } from "../store/auth";
 import { useCodecConversionsStore } from "../store/codec_conversions";
-import {useCodecsStore} from "../store/codecs";
-import {useCoverFilenamesStore} from "../store/cover_filenames";
+import { useCodecsStore } from "../store/codecs";
+import { useCoverFilenamesStore } from "../store/cover_filenames";
+import { useImageTypesStore } from "../store/image_types";
 
 export default {
   name: "Library",
@@ -182,7 +183,10 @@ export default {
       codecConversionsIndex: "index",
     }),
     ...mapPiniaActions(useCodecsStore, { codecsIndex: "index" }),
-    ...mapPiniaActions(useCoverFilenamesStore, { coverFilenamesIndex: "index" }),
+    ...mapPiniaActions(useCoverFilenamesStore, {
+      coverFilenamesIndex: "index",
+    }),
+    ...mapPiniaActions(useImageTypesStore, { imageTypesIndex: "index" }),
     ...mapActions("rescan", ["start", "startAll"]),
     async loadData() {
       let pendingResults = [];
@@ -191,7 +195,7 @@ export default {
         pendingResults.push(this.codecsIndex());
         pendingResults.push(this.codecConversionsIndex());
         pendingResults.push(this.coverFilenamesIndex());
-        pendingResults.push(this.$store.dispatch("imageTypes/index"));
+        pendingResults.push(this.imageTypesIndex());
         pendingResults.push(this.$store.dispatch("locations/index"));
       }
       await Promise.all(pendingResults);

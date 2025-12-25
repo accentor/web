@@ -188,7 +188,7 @@ import { useAuthTokensStore } from "@/store/auth_tokens";
 import { useCodecConversionsStore } from "@/store/codec_conversions";
 import Errors from "../components/Errors.vue";
 import Player from "../components/Player.vue";
-import {useUserSettingsStore} from "../store/user_settings";
+import { useUserSettingsStore } from "../store/user_settings";
 
 export default {
   name: "app",

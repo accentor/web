@@ -57,10 +57,9 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
 import { mapActions, mapState } from "pinia";
 import { useCodecConversionsStore } from "@/store/codec_conversions";
-import {useCodecsStore} from "../store/codecs";
+import { useCodecsStore } from "../store/codecs";
 
 export default {
   name: "CodecConversionForm",
@@ -90,7 +89,7 @@ export default {
     },
   },
   computed: {
-    ...mapState(useCodecsStore, {codecs: "allCodecs"}),
+    ...mapState(useCodecsStore, { codecs: "allCodecs" }),
     ...mapState(useCodecConversionsStore, {
       codecConversions: "allCodecConversions",
     }),
