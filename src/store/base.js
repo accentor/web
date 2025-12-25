@@ -6,9 +6,9 @@ import { useAuthStore } from "./auth";
 import { fetchAllPinia } from "./actions";
 
 const RawObjectSerializer = {
-    write: async (value) => JSON.stringify(value),
+    write: async (value) => value,
     read: async (value) => {
-        let obj = value ? JSON.parse(value) : {};
+        let obj = value ?? {};
         let result = {};
         for (let id in obj) {
             result[id] = markRaw(obj[id]);
