@@ -201,7 +201,7 @@ import { baseURL } from "../api";
 import EditReviewComment from "./EditReviewComment.vue";
 import AddToPlaylist from "./AddToPlaylist.vue";
 import { useAuthStore } from "../store/auth";
-import {useCodecsStore} from "../store/codecs";
+import { useCodecsStore } from "../store/codecs";
 
 export default {
   name: "TrackActions",

@@ -47,7 +47,8 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
+import { mapActions, mapState } from "pinia";
+import { useImageTypesStore } from "../store/image_types";
 
 export default {
   name: "ImageTypeForm",
@@ -76,7 +77,7 @@ export default {
     },
   },
   computed: {
-    ...mapGetters("imageTypes", ["imageTypes"]),
+    ...mapState(useImageTypesStore, { imageTypes: "allImageTypes" }),
     rules() {
       const rules = {
         ext: [(v) => !!v || this.$t("errors.image.ext-blank")],
@@ -97,7 +98,7 @@ export default {
       this.newImageType.extension = this.imageType.extension;
       this.newImageType.mimetype = this.imageType.mimetype;
     },
-    ...mapActions("imageTypes", ["destroy", "update", "create"]),
+    ...mapActions(useImageTypesStore, ["destroy", "update", "create"]),
     async saveImageType() {
       if (this.$refs.form.validate()) {
         if (this.imageType === null) {
@@ -107,10 +108,7 @@ export default {
             this.newImageType.mimetype = "";
           }
         } else {
-          this.update({
-            id: this.imageType.id,
-            newImageType: this.newImageType,
-          });
+          this.update(this.imageType.id, this.newImageType);
         }
       }
     },

@@ -4,7 +4,6 @@ import persistencePlugins, { vuexLocalStorage } from "./persistence";
 import albums from "./albums";
 import artists from "./artists";
 import genres from "./genres";
-import imageTypes from "./image_types";
 import labels from "./labels";
 import locations from "./locations";
 import player from "./player";
@@ -32,7 +31,6 @@ export default new Vuex.Store({
     albums,
     artists,
     genres,
-    imageTypes,
     labels,
     locations,
     player,

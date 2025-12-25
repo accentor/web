@@ -236,9 +236,9 @@
 
 <script>
 import { mapGetters, mapActions, mapState } from "vuex";
-import { mapState as mapPiniaState } from 'pinia';
+import { mapState as mapPiniaState } from "pinia";
 import ImagePicker from "./ImagePicker.vue";
-import {useUserSettingsStore} from "../store/user_settings";
+import { useUserSettingsStore } from "../store/user_settings";
 import albumSvgUrl from "@mdi/svg/svg/album.svg";
 
 export default {

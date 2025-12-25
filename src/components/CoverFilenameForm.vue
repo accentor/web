@@ -38,8 +38,8 @@
 </template>
 
 <script>
-import {useCoverFilenamesStore} from "../store/cover_filenames";
-import {mapActions} from "pinia";
+import { useCoverFilenamesStore } from "../store/cover_filenames";
+import { mapActions } from "pinia";
 
 export default {
   name: "CoverFilenameForm",
@@ -70,7 +70,7 @@ export default {
     fillValues() {
       this.newCoverFilename.filename = this.coverFilename.filename;
     },
-    ...mapActions(useCoverFilenamesStore, ["destroy",  "create"]),
+    ...mapActions(useCoverFilenamesStore, ["destroy", "create"]),
     async saveCoverFilename() {
       if (this.$refs.form.validate()) {
         const id = await this.create(this.newCoverFilename);
