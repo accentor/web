@@ -83,14 +83,3 @@ export default ["Albums", "Plays", "Tracks"].map((module) => {
   return plugin.plugin;
 });
 
-export const RawObjectSerializer = {
-  write: (value) => JSON.stringify(value),
-  read: (value) => {
-    let obj = value ? JSON.parse(value) : {};
-    let result = {};
-    for (let id in obj) {
-      result[id] = markRaw(obj[id]);
-    }
-    return result;
-  },
-};
