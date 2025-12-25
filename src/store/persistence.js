@@ -78,12 +78,10 @@ class VuexPersistentModule extends VuexPersistence {
   }
 }
 
-export default ["Albums", "Artists", "Genres", "Plays", "Tracks"].map(
-  (module) => {
-    const plugin = new VuexPersistentModule(module, localForage);
-    return plugin.plugin;
-  },
-);
+export default ["Albums", "Artists", "Plays", "Tracks"].map((module) => {
+  const plugin = new VuexPersistentModule(module, localForage);
+  return plugin.plugin;
+});
 
 export const RawObjectSerializer = {
   write: (value) => JSON.stringify(value),

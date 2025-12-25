@@ -120,6 +120,7 @@ import {
   compareTracksByGenre,
 } from "@/comparators";
 import { useAuthStore } from "../store/auth";
+import { useGenresStore } from "../store/genres";
 
 export default {
   name: "TracksTable",
@@ -204,7 +205,7 @@ export default {
     ...mapGetters("player", ["currentTrack"]),
     ...mapGetters("plays", ["playStatsByTrack"]),
     ...mapState("albums", ["albums"]),
-    ...mapState("genres", ["genres"]),
+    ...mapPiniaState(useGenresStore, ["genres"]),
     ...mapState("tracks", { tracksObj: "tracks" }),
     filteredItems() {
       return this.tracks.filter(
