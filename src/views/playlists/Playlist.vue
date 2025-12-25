@@ -68,8 +68,7 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
-import { mapActions, mapState as mapPiniaState } from "pinia";
+import { mapActions, mapState } from "pinia";
 import AlbumCard from "../../components/AlbumCard.vue";
 import ArtistCard from "../../components/ArtistCard.vue";
 import TracksTable from "../../components/TracksTable.vue";
@@ -77,7 +76,9 @@ import PlaylistActions from "../../components/PlaylistActions.vue";
 import Paginated from "../../mixins/Paginated";
 import { usePlaylistsStore } from "../../store/playlists";
 import { useUsersStore } from "../../store/users";
-import {useArtistsStore} from "../../store/artists";
+import { useArtistsStore } from "../../store/artists";
+import { useAlbumsStore } from "../../store/albums";
+import { useTracksStore } from "../../store/tracks";
 
 export default {
   name: "Playlist",
@@ -99,11 +100,11 @@ export default {
   },
   mixins: [Paginated],
   computed: {
-    ...mapPiniaState(usePlaylistsStore, ["playlists"]),
-    ...mapState("albums", ["albums"]),
-    ...mapPiniaState(useArtistsStore, ["artists"]),
-    ...mapState("tracks", ["tracks"]),
-    ...mapPiniaState(useUsersStore, ["users"]),
+    ...mapState(usePlaylistsStore, ["playlists"]),
+    ...mapState(useAlbumsStore, ["albums"]),
+    ...mapState(useArtistsStore, ["artists"]),
+    ...mapState(useTracksStore, ["tracks"]),
+    ...mapState(useUsersStore, ["users"]),
     playlist() {
       return this.playlists[this.$route.params.id];
     },

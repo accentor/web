@@ -58,9 +58,9 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
-import { mapState } from "pinia";
+import { mapState, mapActions } from "pinia";
 import { useAuthStore } from "../store/auth";
+import { useAlbumsStore } from "../store/albums";
 
 export default {
   name: "AlbumMergeDialog",
@@ -82,15 +82,13 @@ export default {
   },
   computed: {
     ...mapState(useAuthStore, ["isModerator"]),
+    ...mapState(useAlbumsStore, ["albumsByTitle"]),
     sortedAlbums() {
-      const getter = this.$store.getters["albums/albumsByTitle"];
-      return getter.filter((a) => {
-        return a.id !== this.album.id;
-      });
+      return this.albumsByTitle.filter((a) => a.id !== this.album.id);
     },
   },
   methods: {
-    ...mapActions("albums", ["merge"]),
+    ...mapActions(useAlbumsStore, ["merge"]),
     filterTitle(item, queryText) {
       const search = queryText.toLowerCase();
       return (
@@ -99,10 +97,8 @@ export default {
       );
     },
     mergeAlbums() {
-      this.merge({ newID: this.mergeAlbum.id, oldID: this.album.id }).finally(
-        () => {
-          this.mergeModal = false;
-        },
+      this.merge(this.mergeAlbum.id, this.album.id).finally(
+        () => (this.mergeModal = false),
       );
     },
   },

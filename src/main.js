@@ -5,7 +5,6 @@ import Vuetify from "vuetify/lib";
 import Meta from "vue-meta";
 import Root from "./Root.vue";
 import router from "./router";
-import store from "./store/store";
 import i18n from "./i18n";
 import colors from "vuetify/lib/util/colors";
 import ClickOutside from "vuetify/lib/directives/click-outside";
@@ -34,7 +33,6 @@ const pinia = createPinia();
 new Vue({
   pinia,
   router,
-  store,
   i18n,
   vuetify: new Vuetify({
     lang: { t: (key, ...params) => i18n.t(key, params) },

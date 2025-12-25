@@ -14,10 +14,10 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapState } from "pinia";
 import TracksTable from "../../components/TracksTable.vue";
 import { useAuthStore } from "../../store/auth";
-import { mapState } from "pinia";
+import { useTracksStore } from "../../store/tracks";
 
 export default {
   name: "EmptyTracks",
@@ -27,9 +27,7 @@ export default {
   },
   computed: {
     ...mapState(useAuthStore, ["isModerator"]),
-    ...mapGetters("tracks", {
-      tracks: "tracksEmpty",
-    }),
+    ...mapState(useTracksStore, { tracks: "tracksEmpty" }),
   },
 };
 </script>

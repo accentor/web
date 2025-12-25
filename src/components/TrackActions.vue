@@ -195,14 +195,16 @@
 </template>
 
 <script>
-import { mapActions, mapState } from "vuex";
-import { mapState as mapPiniaState } from "pinia";
+import { mapActions, mapState } from "pinia";
 import { baseURL } from "../api";
 import EditReviewComment from "./EditReviewComment.vue";
 import AddToPlaylist from "./AddToPlaylist.vue";
 import { useAuthStore } from "../store/auth";
 import { useCodecsStore } from "../store/codecs";
 import { useLocationsStore } from "../store/locations";
+import { useTracksStore } from "../store/tracks";
+import { usePlayerStore } from "../store/player";
+import { useErrorsStore } from "../store/errors";
 
 export default {
   name: "TrackActions",
@@ -211,10 +213,10 @@ export default {
     track: { type: Object, required: true },
   },
   computed: {
-    ...mapPiniaState(useAuthStore, ["isModerator", "apiToken"]),
-    ...mapState("tracks", ["startLoading"]),
-    ...mapPiniaState(useCodecsStore, ["codecs"]),
-    ...mapPiniaState(useLocationsStore, ["locations"]),
+    ...mapState(useAuthStore, ["isModerator", "apiToken"]),
+    ...mapState(useTracksStore, ["startLoading"]),
+    ...mapState(useCodecsStore, ["codecs"]),
+    ...mapState(useLocationsStore, ["locations"]),
     waitingForReload() {
       return this.startLoading > this.track.loaded;
     },
@@ -223,7 +225,12 @@ export default {
     },
   },
   methods: {
-    ...mapActions("tracks", ["destroy", "update"]),
+    ...mapActions(useErrorsStore, ["addError"]),
+    ...mapActions(usePlayerStore, {
+      playTrack: "playTrack",
+      addTrackToPlayer: "addTrack",
+    }),
+    ...mapActions(useTracksStore, ["destroy", "update"]),
     deleteTrack: function () {
       let message = this.$t("common.are-you-sure");
       if (this.track.length) {
@@ -235,27 +242,20 @@ export default {
     },
     startTrack: function () {
       if (this.track.length !== null) {
-        this.$store.commit("player/playTrack", this.track.id);
+        this.playTrack(this.track.id);
       } else {
-        this.$store.commit("addError", {
-          playlist: ["player.no-tracks-added"],
-        });
+        this.addError({ playlist: ["player.no-tracks-added"] });
       }
     },
     addTrack: function () {
       if (this.track.length !== null) {
-        this.$store.commit("player/addTrack", this.track.id);
+        this.addTrackToPlayer(this.track.id);
       } else {
-        this.$store.commit("addError", {
-          playlist: ["player.no-tracks-added"],
-        });
+        this.addError({ playlist: ["player.no-tracks-added"] });
       }
     },
     flag(id, reviewComment) {
-      return this.update({
-        id,
-        newTrack: { review_comment: reviewComment },
-      });
+      return this.update(id, { review_comment: reviewComment });
     },
   },
 };

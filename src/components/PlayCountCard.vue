@@ -64,8 +64,9 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState } from "pinia";
 import { gsap } from "gsap";
+import { useTracksStore } from "../store/tracks";
 
 export default {
   name: "PlayCountCard",
@@ -90,7 +91,7 @@ export default {
     };
   },
   computed: {
-    ...mapState("tracks", ["tracks"]),
+    ...mapState(useTracksStore, ["tracks"]),
     playCount() {
       return this.playStats.reduce((acc, cur) => acc + cur.count, 0);
     },

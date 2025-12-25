@@ -99,9 +99,9 @@
 </template>
 
 <script>
-import {mapState} from "pinia";
+import { mapState } from "pinia";
 import Draggable from "vuedraggable";
-import {useArtistsStore} from "../store/artists";
+import { useArtistsStore } from "../store/artists";
 
 export default {
   name: "TrackFormArtists",

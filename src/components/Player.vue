@@ -9,7 +9,7 @@
       <table class="play-queue__table">
         <Draggable
           tag="tbody"
-          @end="updatePlaylist"
+          @end="({ newIndex, oldIndex }) => updatePlaylist(newIndex, oldIndex)"
           handle="[data-draggable=handle]"
         >
           <tr v-for="(track, index) of playlistTracks" :key="track.id">
@@ -138,12 +138,15 @@
 </template>
 
 <script>
-import { mapActions, mapGetters, mapMutations, mapState } from "vuex";
-import { mapState as mapPiniaState } from 'pinia';
+import { mapState, mapActions } from "pinia";
 import Draggable from "vuedraggable";
 import GlobalEvents from "vue-global-events";
 import TrackArtists from "./TrackArtists.vue";
-import {useArtistsStore} from "../store/artists";
+import { useArtistsStore } from "../store/artists";
+import { useAlbumsStore } from "../store/albums";
+import { usePlaysStore } from "../store/plays";
+import { usePlayerStore } from "../store/player";
+import { useErrorsStore } from "../store/errors";
 
 export default {
   name: "Player",
@@ -224,7 +227,7 @@ export default {
             });
           }
         } catch (error) {
-          this.$store.commit("addError", error);
+          this.addError(error);
         }
       }
     },
@@ -236,7 +239,7 @@ export default {
     },
     doSeek() {
       if (this.doSeek) {
-        this.$store.commit("player/setDoSeek");
+        usePlayerStore().setDoSeek();
         if (Number.isFinite(this.seekTime)) {
           this.$refs.audio.currentTime = this.seekTime;
           if (this.playing) {
@@ -269,16 +272,14 @@ export default {
     },
   },
   computed: {
-    ...mapState("albums", ["albums"]),
-    ...mapPiniaState(useArtistsStore, ["artists"]),
-    ...mapState("player", [
+    ...mapState(useAlbumsStore, ["albums"]),
+    ...mapState(useArtistsStore, ["artists"]),
+    ...mapState(usePlayerStore, [
       "playing",
       "seekTime",
       "doSeek",
       "current",
       "repeatMode",
-    ]),
-    ...mapGetters("player", [
       "playlistTracks",
       "currentTrack",
       "currentTrackURL",
@@ -317,9 +318,10 @@ export default {
     },
   },
   methods: {
-    ...mapActions("plays", { createPlay: "create" }),
-    ...mapActions("player", ["togglePlaying"]),
-    ...mapMutations("player", [
+    ...mapActions(useErrorsStore, ["addError"]),
+    ...mapActions(usePlaysStore, { createPlay: "create" }),
+    ...mapActions(usePlayerStore, [
+      "togglePlaying",
       "setSeekTime",
       "seek",
       "setPlaying",
@@ -330,6 +332,7 @@ export default {
       "trackEnded",
       "nextRepeatMode",
       "shuffle",
+      "updatePlaylist",
     ]),
     checkTime() {
       const time = Math.floor(this.$refs.audio.currentTime);
@@ -344,16 +347,11 @@ export default {
 
       if (this.tries >= 2) {
         this.nextTrack();
-        this.$store.commit("addError", {
-          playlist: ["player.track-skipped"],
-        });
+        this.addError({ playlist: ["player.track-skipped"] });
       } else {
         this.tries += 1;
         setTimeout(() => this.$refs.audio.play(), this.tries * 500);
       }
-    },
-    updatePlaylist({ newIndex, oldIndex }) {
-      this.$store.commit("player/updatePlaylist", { newIndex, oldIndex });
     },
     clickOutside() {
       this.open = false;

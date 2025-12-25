@@ -89,14 +89,12 @@
 </template>
 
 <script>
-import { mapActions, mapGetters, mapState } from "vuex";
-import {
-  mapState as mapPiniaState,
-  mapActions as mapPiniaActions,
-} from "pinia";
+import { mapState, mapActions } from "pinia";
 import TrackFormArtists from "@/components/TrackFormArtists.vue";
 import { useGenresStore } from "../../store/genres";
-import {useArtistsStore} from "../../store/artists";
+import { useArtistsStore } from "../../store/artists";
+import { useAlbumsStore } from "../../store/albums";
+import { useTracksStore } from "../../store/tracks";
 
 export default {
   components: { TrackFormArtists },
@@ -136,20 +134,20 @@ export default {
     },
   },
   computed: {
-    ...mapPiniaState(useArtistsStore, {artists: "artists", sortedArtists: "artistsByName"}),
-    ...mapPiniaState(useGenresStore, {
+    ...mapState(useArtistsStore, {
+      artists: "artists",
+      sortedArtists: "artistsByName",
+    }),
+    ...mapState(useGenresStore, {
       genres: "genres",
       sortedGenres: "genresByName",
     }),
-    ...mapState("albums", ["albums"]),
-    ...mapGetters("albums", {
+    ...mapState(useAlbumsStore, {
+      albums: "albums",
       sortedAlbums: "albumsByTitle",
     }),
     track: function () {
-      return (
-        this.$store.state.tracks &&
-        this.$store.state.tracks.tracks[this.$route.params.id]
-      );
+      return useTracksStore().tracks[this.$route.params.id];
     },
     rules: function () {
       const rules = {
@@ -184,9 +182,9 @@ export default {
     },
   },
   methods: {
-    ...mapActions("tracks", ["read", "update"]),
-    ...mapPiniaActions(useArtistsStore, { createArtist: "create" }),
-    ...mapPiniaActions(useGenresStore, { createGenre: "create" }),
+    ...mapActions(useTracksStore, ["read", "update"]),
+    ...mapActions(useArtistsStore, { createArtist: "create" }),
+    ...mapActions(useGenresStore, { createGenre: "create" }),
     filterName(item, queryText) {
       const search = queryText.toLowerCase();
       return (
@@ -285,10 +283,7 @@ export default {
       );
 
       await Promise.all([...mappedGenres, ...mappedArtists]);
-      const succeeded = await this.update({
-        id: this.track.id,
-        newTrack: transformed,
-      });
+      const succeeded = await this.update(this.track.id, transformed);
       if (succeeded) {
         this.$router.push(this.$route.query.redirect || { name: "tracks" });
       }

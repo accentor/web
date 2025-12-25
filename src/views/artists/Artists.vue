@@ -53,13 +53,12 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
 import ArtistCard from "../../components/ArtistCard.vue";
 import Paginated from "../../mixins/Paginated";
 import Searchable from "../../mixins/Searchable";
 import { useAuthStore } from "../../store/auth";
 import { mapState } from "pinia";
-import {useArtistsStore} from "../../store/artists";
+import { useArtistsStore } from "../../store/artists";
 
 export default {
   name: "Artists",

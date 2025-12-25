@@ -6,11 +6,11 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
-import { mapState as mapPiniaState } from "pinia";
+import { mapState } from "pinia";
 import { calcPlayStatsForArtists } from "@/reducers";
 import TopList from "@/components/TopList.vue";
-import {useArtistsStore} from "../store/artists";
+import { useArtistsStore } from "../store/artists";
+import { useTracksStore } from "../store/tracks";
 
 export default {
   name: "TopArtistsList",
@@ -32,8 +32,8 @@ export default {
     TopList,
   },
   computed: {
-    ...mapPiniaState(useArtistsStore, ["artists"]),
-    ...mapState("tracks", ["tracks"]),
+    ...mapState(useArtistsStore, ["artists"]),
+    ...mapState(useTracksStore, ["tracks"]),
     topTracks() {
       return Object.entries(
         calcPlayStatsForArtists(

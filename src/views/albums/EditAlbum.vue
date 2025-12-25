@@ -5,8 +5,9 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState } from "pinia";
 import AlbumForm from "../../components/AlbumForm.vue";
+import { useAlbumsStore } from "../../store/albums";
 
 export default {
   name: "EditAlbum",
@@ -15,7 +16,7 @@ export default {
   },
   components: { AlbumForm },
   computed: {
-    ...mapState("albums", ["albums"]),
+    ...mapState(useAlbumsStore, ["albums"]),
     album: function () {
       return this.albums[this.$route.params.id];
     },

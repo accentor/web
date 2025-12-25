@@ -104,12 +104,15 @@
   </span>
 </template>
 <script>
-import { mapActions, mapState } from "vuex";
-import { mapState as mapPiniaState } from "pinia";
+import { mapState, mapActions } from "pinia";
 import EditReviewComment from "./EditReviewComment.vue";
 import AddToPlaylist from "./AddToPlaylist.vue";
 import AlbumMergeDialog from "./AlbumMergeDialog.vue";
 import { useAuthStore } from "../store/auth";
+import { useAlbumsStore } from "../store/albums";
+import { useTracksStore } from "../store/tracks";
+import { usePlayerStore } from "../store/player";
+import { useErrorsStore } from "../store/errors";
 
 export default {
   name: "AlbumActions",
@@ -121,10 +124,10 @@ export default {
     },
   },
   computed: {
-    ...mapPiniaState(useAuthStore, ["isModerator"]),
-    ...mapState("albums", ["startLoading"]),
+    ...mapState(useAuthStore, ["isModerator"]),
+    ...mapState(useAlbumsStore, ["startLoading"]),
     tracks() {
-      return this.$store.getters["tracks/tracksFilterByAlbum"](this.album.id);
+      return useTracksStore().tracksFilterByAlbum(this.album.id);
     },
     playableTracks() {
       return this.tracks
@@ -136,7 +139,12 @@ export default {
     },
   },
   methods: {
-    ...mapActions("albums", ["destroy", "update"]),
+    ...mapActions(useAlbumsStore, ["destroy", "update"]),
+    ...mapActions(usePlayerStore, {
+      playTracks: "playTracks",
+      addTracksToPlayer: "addTracks",
+    }),
+    ...mapActions(useErrorsStore, ["addError"]),
     deleteAlbum: function () {
       if (confirm(this.$t("common.are-you-sure"))) {
         this.destroy(this.album.id);
@@ -144,37 +152,26 @@ export default {
     },
     startTracks: function () {
       if (this.playableTracks.length > 0) {
-        this.$store.commit("player/playTracks", this.playableTracks);
+        this.playTracks(this.playableTracks);
         if (this.playableTracks.length !== this.tracks.length) {
-          this.$store.commit("addError", {
-            playlist: ["player.not-all-tracks-added"],
-          });
+          this.addError({ playlist: ["player.not-all-tracks-added"] });
         }
       } else {
-        this.$store.commit("addError", {
-          playlist: ["player.no-tracks-added"],
-        });
+        this.addError({ playlist: ["player.no-tracks-added"] });
       }
     },
     addTracks: function () {
       if (this.playableTracks.length > 0) {
-        this.$store.commit("player/addTracks", this.playableTracks);
+        this.addTracksToPlayer(this.playableTracks);
         if (this.playableTracks.length !== this.tracks.length) {
-          this.$store.commit("addError", {
-            playlist: ["player.not-all-tracks-added"],
-          });
+          this.addError({ playlist: ["player.not-all-tracks-added"] });
         }
       } else {
-        this.$store.commit("addError", {
-          playlist: ["player.no-tracks-added"],
-        });
+        this.addError({ playlist: ["player.no-tracks-added"] });
       }
     },
     flag(id, reviewComment) {
-      return this.update({
-        id,
-        newAlbum: { review_comment: reviewComment },
-      });
+      return this.update(id, { review_comment: reviewComment });
     },
   },
 };

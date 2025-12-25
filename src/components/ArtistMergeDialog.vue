@@ -63,8 +63,8 @@
 
 <script>
 import { useAuthStore } from "../store/auth";
-import {mapActions, mapState} from "pinia";
-import {useArtistsStore} from "../store/artists";
+import { mapActions, mapState } from "pinia";
+import { useArtistsStore } from "../store/artists";
 
 export default {
   name: "ArtistMergeDialog",
@@ -101,10 +101,8 @@ export default {
       );
     },
     mergeArtists() {
-      this.merge({ newID: this.mergeArtist.id, oldID: this.artist.id }).finally(
-        () => {
-          this.mergeModal = false;
-        },
+      this.merge(this.mergeArtist.id, this.artist.id).finally(
+        () => (this.mergeModal = false),
       );
     },
   },

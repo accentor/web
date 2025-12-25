@@ -235,12 +235,12 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
-import {mapState, mapActions as mapPiniaActions,} from "pinia";
+import { mapState, mapActions } from "pinia";
 import ImagePicker from "./ImagePicker.vue";
 import { useUserSettingsStore } from "../store/user_settings";
 import { useLabelsStore } from "../store/labels";
-import {useArtistsStore} from "../store/artists";
+import { useArtistsStore } from "../store/artists";
+import { useAlbumsStore } from "../store/albums";
 
 export default {
   name: "AlbumForm",
@@ -302,9 +302,9 @@ export default {
     ...mapState(useUserSettingsStore, ["locale"]),
   },
   methods: {
-    ...mapActions("albums", ["create", "read", "update"]),
-    ...mapPiniaActions(useArtistsStore, { createArtist: "create" }),
-    ...mapPiniaActions(useLabelsStore, { createLabel: "create" }),
+    ...mapActions(useAlbumsStore, ["create", "read", "update"]),
+    ...mapActions(useArtistsStore, { createArtist: "create" }),
+    ...mapActions(useLabelsStore, { createLabel: "create" }),
     filterName(item, queryText) {
       const search = queryText.toLowerCase();
       return (
@@ -436,10 +436,7 @@ export default {
       await Promise.all([...mappedArtists, ...mappedLabels]);
       let pendingResult = null;
       if (this.album) {
-        pendingResult = this.update({
-          id: this.album.id,
-          newAlbum: transformed,
-        });
+        pendingResult = this.update(this.album.id, transformed);
       } else {
         pendingResult = this.create(transformed);
       }
