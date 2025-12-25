@@ -91,14 +91,11 @@ const plugins = [
 });
 
 const localStorageModules = [
-  "auth",
-  "codecConversions",
   "codecs",
   "coverFilenames",
   "imageTypes",
   "locations",
   "users",
-  "userSettings",
 ];
 
 export const vuexLocalStorage = new VuexPersistence({

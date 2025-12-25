@@ -46,7 +46,8 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState } from "pinia";
+import {useUserSettingsStore} from "../store/user_settings";
 
 export default {
   name: "DateRangeSelect",
@@ -80,7 +81,7 @@ export default {
     };
   },
   computed: {
-    ...mapState("userSettings", ["locale"]),
+    ...mapState(useUserSettingsStore, ["locale"]),
     customRangeText() {
       return this.customRange.join(" - ");
     },

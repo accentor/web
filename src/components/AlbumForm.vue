@@ -236,7 +236,9 @@
 
 <script>
 import { mapGetters, mapActions, mapState } from "vuex";
+import { mapState as mapPiniaState } from 'pinia';
 import ImagePicker from "./ImagePicker.vue";
+import {useUserSettingsStore} from "../store/user_settings";
 import albumSvgUrl from "@mdi/svg/svg/album.svg";
 
 export default {
@@ -291,7 +293,7 @@ export default {
   computed: {
     ...mapState("artists", ["artists"]),
     ...mapState("labels", ["labels"]),
-    ...mapState("userSettings", ["locale"]),
+    ...mapPiniaState(useUserSettingsStore, ["locale"]),
     ...mapGetters("artists", {
       sortedArtists: "artistsByName",
     }),
