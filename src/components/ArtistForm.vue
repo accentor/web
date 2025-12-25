@@ -35,8 +35,9 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions } from "pinia";
 import ImagePicker from "./ImagePicker.vue";
+import {useArtistsStore} from "../store/artists";
 
 export default {
   name: "ArtistForm",
@@ -68,7 +69,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions("artists", ["create", "read", "update"]),
+    ...mapActions(useArtistsStore, ["create", "read", "update"]),
     fillValues() {
       this.newArtist.name = this.artist.name;
       this.newArtist.review_comment = this.artist.review_comment;
@@ -79,10 +80,10 @@ export default {
         : this.newArtist.review_comment;
       let pendingResult = null;
       if (this.artist) {
-        pendingResult = this.update({
-          id: this.artist.id,
-          newArtist: this.newArtist,
-        });
+        pendingResult = this.update(
+          this.artist.id,
+          this.newArtist,
+        );
       } else {
         pendingResult = this.create(this.newArtist);
       }

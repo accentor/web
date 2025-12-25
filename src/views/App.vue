@@ -193,6 +193,7 @@ import { useRescansStore } from "../store/rescan";
 import { usePlaylistsStore } from "../store/playlists";
 import { useLabelsStore } from "../store/labels";
 import { useGenresStore } from "../store/genres";
+import {useArtistsStore} from "../store/artists";
 
 export default {
   name: "app",
@@ -234,6 +235,7 @@ export default {
     ...mapState(useUserSettingsStore, ["locale"]),
   },
   methods: {
+    ...mapActions(useArtistsStore, { artistsIndex: "index" }),
     ...mapActions(useAuthStore, ["logout"]),
     ...mapActions(useAuthTokensStore, { authTokensIndex: "index" }),
     ...mapActions(useCodecConversionsStore, { codecConversionsIndex: "index" }),
@@ -246,7 +248,7 @@ export default {
       let pendingResults = [];
       pendingResults.push(this.authTokensIndex());
       pendingResults.push(this.$store.dispatch("albums/index"));
-      pendingResults.push(this.$store.dispatch("artists/index"));
+      pendingResults.push(this.artistsIndex());
       pendingResults.push(this.codecConversionsIndex());
       pendingResults.push(this.genresIndex());
       pendingResults.push(this.labelsIndex());

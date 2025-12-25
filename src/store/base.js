@@ -9,7 +9,7 @@ export function useBaseModelStore(
   apiModule,
   localStorageKey,
   crudKey,
-  { extraMergeOperations = () => {}, extraDestroyOperations = () => {} } = {},
+  { extraMergeOperations = () => {}, extraDestroyOperations = () => {}, baseScope = null } = {},
 ) {
   const errorsStore = useErrorsStore();
   const authStore = useAuthStore();
@@ -63,10 +63,10 @@ export function useBaseModelStore(
     }
   }
 
-  async function index() {
-    const generator = apiModule.index(authStore.apiToken);
+  async function index(scope = baseScope) {
+    const generator = apiModule.index(authStore.apiToken, scope);
     try {
-      await fetchAllPinia(generator, setItems, setStartLoading, removeOld);
+      await fetchAllPinia(generator, setItems, setStartLoading, removeOld, scope);
       return true;
     } catch (error) {
       errorsStore.addError(error);

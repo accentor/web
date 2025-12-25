@@ -68,6 +68,7 @@ import { mapActions, mapGetters } from "vuex";
 import { mapActions as mapPiniaActions } from "pinia";
 import { useLabelsStore } from "../store/labels";
 import { useGenresStore } from "../store/genres";
+import {useArtistsStore} from "../store/artists";
 
 export default {
   name: "MaintenanceActions",
@@ -83,10 +84,8 @@ export default {
     ...mapGetters("tracks", ["tracksEmpty"]),
   },
   methods: {
-    ...mapActions({
-      destroyArtists: "artists/destroyEmpty",
-      destroyAlbums: "albums/destroyEmpty",
-    }),
+    ...mapActions({ destroyAlbums: "albums/destroyEmpty" }),
+    ...mapPiniaActions(useArtistsStore, { destroyArtists: "destroyEmpty" }),
     ...mapPiniaActions(useLabelsStore, { destroyLabels: "destroyEmpty" }),
     ...mapPiniaActions(useGenresStore, { destroyGenres: "destroyEmpty" }),
     destroyEmptyArtists: function () {

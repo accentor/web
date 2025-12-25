@@ -2,10 +2,10 @@ import Vue from "vue";
 import Vuex from "vuex";
 import persistencePlugins from "./persistence";
 import albums from "./albums";
-import artists from "./artists";
 import player from "./player";
 import plays from "./plays";
 import tracks from "./tracks";
+import {useArtistsStore} from "./artists";
 
 Vue.use(Vuex);
 
@@ -20,7 +20,6 @@ export default new Vuex.Store({
   strict: !import.meta.env.PROD,
   modules: {
     albums,
-    artists,
     player,
     plays,
     tracks,
@@ -33,8 +32,7 @@ export default new Vuex.Store({
   getters: {
     numberOfFlaggedItems(state, getters) {
       return (
-        getters["artists/artists"].filter((a) => a.review_comment !== null)
-          .length +
+        useArtistsStore().artistsFlagged.length +
         getters["albums/albums"].filter((a) => a.review_comment !== null)
           .length +
         getters["tracks/tracks"].filter((t) => t.review_comment !== null).length

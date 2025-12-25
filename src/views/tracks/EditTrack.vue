@@ -96,6 +96,7 @@ import {
 } from "pinia";
 import TrackFormArtists from "@/components/TrackFormArtists.vue";
 import { useGenresStore } from "../../store/genres";
+import {useArtistsStore} from "../../store/artists";
 
 export default {
   components: { TrackFormArtists },
@@ -135,17 +136,14 @@ export default {
     },
   },
   computed: {
-    ...mapState("albums", ["albums"]),
-    ...mapState("artists", ["artists"]),
+    ...mapPiniaState(useArtistsStore, {artists: "artists", sortedArtists: "artistsByName"}),
     ...mapPiniaState(useGenresStore, {
       genres: "genres",
       sortedGenres: "genresByName",
     }),
+    ...mapState("albums", ["albums"]),
     ...mapGetters("albums", {
       sortedAlbums: "albumsByTitle",
-    }),
-    ...mapGetters("artists", {
-      sortedArtists: "artistsByName",
     }),
     track: function () {
       return (
@@ -187,7 +185,7 @@ export default {
   },
   methods: {
     ...mapActions("tracks", ["read", "update"]),
-    ...mapActions({ createArtist: "artists/create" }),
+    ...mapPiniaActions(useArtistsStore, { createArtist: "create" }),
     ...mapPiniaActions(useGenresStore, { createGenre: "create" }),
     filterName(item, queryText) {
       const search = queryText.toLowerCase();

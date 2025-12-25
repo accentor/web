@@ -17,9 +17,7 @@ export const useGenresStore = defineStore("genres", () => {
     merge,
     startLoading,
   } = useBaseModelStore(api.genres, "genres.genres", "genre", {
-    extraDestroyOperations: (id) => {
-      vuexStore.commit("tracks/removeGenreOccurence", id, { root: true });
-    },
+    extraDestroyOperations: (id) => vuexStore.commit("tracks/removeGenreOccurence", id, { root: true }),
     extraMergeOperations: (newId, oldId) => {
       vuexStore.commit(
         "tracks/updateGenreOccurence",

@@ -35,7 +35,8 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import {mapState } from "pinia";
+import {useArtistsStore} from "../store/artists";
 
 export default {
   name: "TrackArtists",
@@ -46,7 +47,7 @@ export default {
     },
   },
   computed: {
-    ...mapState("artists", ["artists"]),
+    ...mapState(useArtistsStore, ["artists"]),
     track_artists() {
       return this.track.track_artists
         .map((ta) => ta)

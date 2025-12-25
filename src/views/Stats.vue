@@ -60,7 +60,8 @@
 </template>
 
 <script>
-import { mapGetters, mapState } from "vuex";
+import { mapGetters } from "vuex";
+import { mapState } from "pinia";
 import DateRangeSelect from "@/components/DateRangeSelect.vue";
 import PercentagePlayedCard from "@/components/PercentagePlayedCard.vue";
 import PlayCountCard from "@/components/PlayCountCard.vue";
@@ -71,6 +72,7 @@ import TopAlbumsList from "@/components/TopAlbumsList.vue";
 import { filterPlaysByPeriod, filterPlaysByTracks } from "@/filters";
 import $api from "../api";
 import { PlaysScope } from "@accentor/api-client-js";
+import {useArtistsStore} from "../store/artists";
 
 export default {
   name: "Stats",
@@ -106,8 +108,7 @@ export default {
     ...mapGetters({
       plays: "plays/plays",
     }),
-
-    ...mapState("artists", ["artists"]),
+    ...mapState(useArtistsStore, ["artists"]),
     artistName() {
       return this.artist_id && this.artists[this.artist_id]?.name;
     },
