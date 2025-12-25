@@ -8,7 +8,6 @@ import labels from "./labels";
 import player from "./player";
 import playlists from "./playlists";
 import plays from "./plays";
-import rescan from "./rescan";
 import tracks from "./tracks";
 
 Vue.use(Vuex);
@@ -30,7 +29,6 @@ export default new Vuex.Store({
     player,
     playlists,
     plays,
-    rescan,
     tracks,
   },
   state: {
