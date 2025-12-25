@@ -69,12 +69,12 @@
 </template>
 
 <script>
-import { mapActions, mapState } from "vuex";
-import { mapState as mapPiniaState } from "pinia";
+import {mapActions, mapState} from "pinia";
 import EditReviewComment from "./EditReviewComment.vue";
 import ArtistMergeDialog from "./ArtistMergeDialog.vue";
 import AddToPlaylist from "./AddToPlaylist.vue";
 import { useAuthStore } from "../store/auth";
+import {useArtistsStore} from "../store/artists";
 
 export default {
   name: "ArtistActions",
@@ -90,24 +90,24 @@ export default {
     },
   },
   computed: {
-    ...mapPiniaState(useAuthStore, ["isModerator"]),
-    ...mapState("artists", ["startLoading"]),
+    ...mapState(useAuthStore, ["isModerator"]),
+    ...mapState(useArtistsStore, ["startLoading"]),
     waitingForReload() {
       return this.startLoading > this.artist.loaded;
     },
   },
   methods: {
-    ...mapActions("artists", ["destroy", "update"]),
+    ...mapActions(useArtistsStore, ["destroy", "update"]),
     deleteArtist: function () {
       if (confirm(this.$t("common.are-you-sure"))) {
         this.destroy(this.artist.id);
       }
     },
     flag(id, reviewComment) {
-      return this.update({
+      return this.update(
         id,
-        newArtist: { review_comment: reviewComment },
-      });
+        { review_comment: reviewComment },
+      );
     },
   },
 };

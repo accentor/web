@@ -7,8 +7,10 @@
 
 <script>
 import { mapState } from "vuex";
+import { mapState as mapPiniaState } from "pinia";
 import { calcPlayStatsForArtists } from "@/reducers";
 import TopList from "@/components/TopList.vue";
+import {useArtistsStore} from "../store/artists";
 import artistSvgUrl from "@mdi/svg/svg/account-music.svg";
 
 export default {
@@ -31,7 +33,7 @@ export default {
     TopList,
   },
   computed: {
-    ...mapState("artists", ["artists"]),
+    ...mapPiniaState(useArtistsStore, ["artists"]),
     ...mapState("tracks", ["tracks"]),
     topTracks() {
       return Object.entries(

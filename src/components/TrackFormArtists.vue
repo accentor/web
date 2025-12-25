@@ -99,8 +99,9 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import {mapState} from "pinia";
 import Draggable from "vuedraggable";
+import {useArtistsStore} from "../store/artists";
 
 export default {
   name: "TrackFormArtists",
@@ -160,9 +161,7 @@ export default {
     },
   },
   computed: {
-    ...mapGetters("artists", {
-      sortedArtists: "artistsByName",
-    }),
+    ...mapState(useArtistsStore, { sortedArtists: "artistsByName" }),
     rules() {
       const artistValidation = (v) =>
         !!v || this.$t("errors.artists.artist-blank");

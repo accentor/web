@@ -77,6 +77,7 @@ import PlaylistActions from "../../components/PlaylistActions.vue";
 import Paginated from "../../mixins/Paginated";
 import { usePlaylistsStore } from "../../store/playlists";
 import { useUsersStore } from "../../store/users";
+import {useArtistsStore} from "../../store/artists";
 
 export default {
   name: "Playlist",
@@ -100,7 +101,7 @@ export default {
   computed: {
     ...mapPiniaState(usePlaylistsStore, ["playlists"]),
     ...mapState("albums", ["albums"]),
-    ...mapState("artists", ["artists"]),
+    ...mapPiniaState(useArtistsStore, ["artists"]),
     ...mapState("tracks", ["tracks"]),
     ...mapPiniaState(useUsersStore, ["users"]),
     playlist() {

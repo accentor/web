@@ -268,6 +268,8 @@ import {
   compareByRecentlyPlayed,
   compareStrings,
 } from "../comparators";
+import {mapState} from "pinia";
+import {useArtistsStore} from "../store/artists";
 
 const RANDOM_SEED_MAX = 10000;
 
@@ -304,10 +306,10 @@ export default {
     ...mapGetters({
       albums: "albums/albums",
       albumsOnThisDay: "albums/albumsOnThisDay",
-      artists: "artists/artists",
       playStatsByAlbum: "plays/playStatsByAlbum",
       playStatsByArtist: "plays/playStatsByArtist",
     }),
+    ...mapState(useArtistsStore, { artists: "allArtists" }),
     randomSeed() {
       return Math.round(Math.random() * RANDOM_SEED_MAX);
     },

@@ -66,14 +66,15 @@
 </template>
 
 <script>
-import { mapActions, mapState } from "vuex";
-import { mapState as mapPiniaState } from "pinia";
+import { mapActions  } from "vuex";
+import { mapState, mapActions as mapPiniaActions } from "pinia";
 import AlbumCard from "../../components/AlbumCard.vue";
 import ArtistActions from "../../components/ArtistActions.vue";
 import TracksTable from "../../components/TracksTable.vue";
 import { AlbumsScope, TracksScope } from "@accentor/api-client-js";
 import { useAuthStore } from "../../store/auth";
 import { usePlaylistsStore } from "../../store/playlists";
+import {useArtistsStore} from "../../store/artists";
 
 export default {
   name: "Artist",
@@ -103,9 +104,9 @@ export default {
     },
   },
   computed: {
-    ...mapPiniaState(useAuthStore, ["isModerator"]),
-    ...mapPiniaState(usePlaylistsStore, { storePlaylists: "artistPlaylists" }),
-    ...mapState("artists", ["artists"]),
+    ...mapState(useAuthStore, ["isModerator"]),
+    ...mapState(usePlaylistsStore, { storePlaylists: "artistPlaylists" }),
+    ...mapState(useArtistsStore, ["artists"]),
     albums: function () {
       return this.$store.getters["albums/albumsFilterByArtist"](
         this.$route.params.id,
@@ -127,7 +128,7 @@ export default {
   },
   methods: {
     ...mapActions("albums", { indexAlbums: "index" }),
-    ...mapActions("artists", ["read"]),
+    ...mapPiniaActions(useArtistsStore, ["read"]),
     ...mapActions("tracks", { indexTracks: "index" }),
     async fetchContent(newValue, oldValue) {
       // After loading the content, the router will change the id from a string to a number

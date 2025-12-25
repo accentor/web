@@ -83,6 +83,8 @@ import { mapGetters } from "vuex";
 import TracksTable from "../../components/TracksTable.vue";
 import ArtistCard from "../../components/ArtistCard.vue";
 import AlbumCard from "../../components/AlbumCard.vue";
+import {mapState} from "pinia";
+import {useArtistsStore} from "../../store/artists";
 
 export default {
   name: "Flags",
@@ -93,9 +95,9 @@ export default {
   computed: {
     ...mapGetters({
       albums: "albums/albumsFlagged",
-      artists: "artists/artistsFlagged",
       tracks: "tracks/tracksFlagged",
     }),
+    ...mapState(useArtistsStore, { artists: "artistsFlagged" }),
   },
 };
 </script>

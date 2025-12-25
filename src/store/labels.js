@@ -17,6 +17,7 @@ export const useLabelsStore = defineStore("labels", () => {
     merge,
     startLoading,
   } = useBaseModelStore(api.labels, "labels.labels", "label", {
+    extraDestroyOperations: (id) => vuexStore.commit("albums/removeLabelOccurence", id, { root: true }),
     extraMergeOperations: (newId, oldId) => {
       vuexStore.commit(
         "albums/updateLabelOccurence",

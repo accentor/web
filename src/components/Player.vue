@@ -139,9 +139,11 @@
 
 <script>
 import { mapActions, mapGetters, mapMutations, mapState } from "vuex";
+import { mapState as mapPiniaState } from 'pinia';
 import Draggable from "vuedraggable";
 import GlobalEvents from "vue-global-events";
 import TrackArtists from "./TrackArtists.vue";
+import {useArtistsStore} from "../store/artists";
 
 export default {
   name: "Player",
@@ -268,7 +270,7 @@ export default {
   },
   computed: {
     ...mapState("albums", ["albums"]),
-    ...mapState("artist", ["artists"]),
+    ...mapPiniaState(useArtistsStore, ["artists"]),
     ...mapState("player", [
       "playing",
       "seekTime",

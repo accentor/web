@@ -62,9 +62,9 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
 import { useAuthStore } from "../store/auth";
-import { mapState } from "pinia";
+import {mapActions, mapState} from "pinia";
+import {useArtistsStore} from "../store/artists";
 
 export default {
   name: "ArtistMergeDialog",
@@ -86,15 +86,13 @@ export default {
   },
   computed: {
     ...mapState(useAuthStore, ["isModerator"]),
+    ...mapState(useArtistsStore, ["artistsByName"]),
     sortedArtists() {
-      const getter = this.$store.getters["artists/artistsByName"];
-      return getter.filter((a) => {
-        return a.id !== this.artist.id;
-      });
+      return this.artistsByName.filter((a) => a.id !== this.artist.id);
     },
   },
   methods: {
-    ...mapActions("artists", ["merge"]),
+    ...mapActions(useArtistsStore, ["merge"]),
     filterName(item, queryText) {
       const search = queryText.toLowerCase();
       return (

@@ -111,9 +111,10 @@
 
 <script>
 import { mapState } from "vuex";
-import { mapActions } from "pinia";
+import { mapActions, mapState as mapPiniaState } from "pinia";
 import Draggable from "vuedraggable";
 import { usePlaylistsStore } from "../store/playlists";
+import {useArtistsStore} from "../store/artists";
 
 export default {
   name: "PlaylistForm",
@@ -190,7 +191,7 @@ export default {
   },
   computed: {
     ...mapState("albums", ["albums"]),
-    ...mapState("artists", ["artists"]),
+    ...mapPiniaState(useArtistsStore, ["artists"]),
     ...mapState("tracks", ["tracks"]),
     hasItems() {
       return this.newPlaylist.item_ids.length > 0;

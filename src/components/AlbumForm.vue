@@ -235,14 +235,12 @@
 </template>
 
 <script>
-import { mapGetters, mapActions, mapState } from "vuex";
-import {
-  mapState as mapPiniaState,
-  mapActions as mapPiniaActions,
-} from "pinia";
+import { mapActions } from "vuex";
+import {mapState, mapActions as mapPiniaActions,} from "pinia";
 import ImagePicker from "./ImagePicker.vue";
 import { useUserSettingsStore } from "../store/user_settings";
 import { useLabelsStore } from "../store/labels";
+import {useArtistsStore} from "../store/artists";
 import albumSvgUrl from "@mdi/svg/svg/album.svg";
 
 export default {
@@ -295,17 +293,19 @@ export default {
     },
   },
   computed: {
-    ...mapState("artists", ["artists"]),
-    ...mapPiniaState(useLabelsStore, {
+    ...mapState(useArtistsStore, {
+      artists: "artists",
+      sortedArtists: "artistsByName",
+    }),
+    ...mapState(useLabelsStore, {
       labels: "labels",
       sortedLabels: "labelsByName",
     }),
-    ...mapPiniaState(useUserSettingsStore, ["locale"]),
-    ...mapGetters("artists", { sortedArtists: "artistsByName" }),
+    ...mapState(useUserSettingsStore, ["locale"]),
   },
   methods: {
     ...mapActions("albums", ["create", "read", "update"]),
-    ...mapActions({ createArtist: "artists/create" }),
+    ...mapPiniaActions(useArtistsStore, { createArtist: "create" }),
     ...mapPiniaActions(useLabelsStore, { createLabel: "create" }),
     filterName(item, queryText) {
       const search = queryText.toLowerCase();

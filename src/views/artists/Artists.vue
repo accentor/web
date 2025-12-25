@@ -59,9 +59,10 @@ import Paginated from "../../mixins/Paginated";
 import Searchable from "../../mixins/Searchable";
 import { useAuthStore } from "../../store/auth";
 import { mapState } from "pinia";
+import {useArtistsStore} from "../../store/artists";
 
 export default {
-  name: "artists",
+  name: "Artists",
   components: { ArtistCard },
   metaInfo() {
     return { title: this.$tc("music.artists", 2) };
@@ -69,9 +70,7 @@ export default {
   mixins: [Paginated, Searchable],
   computed: {
     ...mapState(useAuthStore, ["isModerator"]),
-    ...mapGetters("artists", {
-      artists: "artistsByName",
-    }),
+    ...mapState(useArtistsStore, { artists: "artistsByName" }),
     filteredItems() {
       return this.artists.filter(
         (item) =>
