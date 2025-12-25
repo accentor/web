@@ -82,9 +82,10 @@
 </template>
 
 <script>
-import { mapActions, mapState } from "vuex";
-import { mapState as mapPiniaState } from "pinia";
+import { mapState } from "vuex";
+import { mapActions, mapState as mapPiniaState } from "pinia";
 import { useAuthStore } from "../store/auth";
+import { usePlaylistsStore } from "../store/playlists";
 
 export default {
   name: "PlaylistActions",
@@ -97,7 +98,7 @@ export default {
   },
   computed: {
     ...mapPiniaState(useAuthStore, ["currentUser"]),
-    ...mapState("playlists", ["startLoading"]),
+    ...mapPiniaState(usePlaylistsStore, ["startLoading"]),
     ...mapState("tracks", ["tracks"]),
     waitingForReload() {
       return this.startLoading > this.playlist.loaded;
@@ -135,7 +136,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions("playlists", ["destroy", "update"]),
+    ...mapActions(usePlaylistsStore, ["destroy", "update"]),
     deletePlaylist: function () {
       if (confirm(this.$t("common.are-you-sure"))) {
         this.destroy(this.playlist.id);

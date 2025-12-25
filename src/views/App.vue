@@ -190,6 +190,7 @@ import Errors from "../components/Errors.vue";
 import Player from "../components/Player.vue";
 import { useUserSettingsStore } from "../store/user_settings";
 import { useRescansStore } from "../store/rescan";
+import { usePlaylistsStore } from "../store/playlists";
 
 export default {
   name: "app",
@@ -233,8 +234,9 @@ export default {
   methods: {
     ...mapActions(useAuthStore, ["logout"]),
     ...mapActions(useAuthTokensStore, { authTokensIndex: "index" }),
-    ...mapActions(useUsersStore, { usersIndex: "index" }),
     ...mapActions(useCodecConversionsStore, { codecConversionsIndex: "index" }),
+    ...mapActions(usePlaylistsStore, { playlistsIndex: "index" }),
+    ...mapActions(useUsersStore, { usersIndex: "index" }),
     async loadData() {
       this.loading = true;
       let pendingResults = [];
@@ -244,7 +246,7 @@ export default {
       pendingResults.push(this.codecConversionsIndex());
       pendingResults.push(this.$store.dispatch("genres/index"));
       pendingResults.push(this.$store.dispatch("labels/index"));
-      pendingResults.push(this.$store.dispatch("playlists/index"));
+      pendingResults.push(this.playlistsIndex());
       pendingResults.push(this.$store.dispatch("plays/index"));
       pendingResults.push(this.$store.dispatch("tracks/index"));
       pendingResults.push(this.usersIndex());
