@@ -80,6 +80,7 @@ import TracksTable from "../../components/TracksTable.vue";
 import AlbumArtists from "../../components/AlbumArtists.vue";
 import { PlaysScope, TracksScope } from "@accentor/api-client-js";
 import { usePlaylistsStore } from "../../store/playlists";
+import { useLabelsStore } from "../../store/labels";
 
 export default {
   name: "Album",
@@ -106,7 +107,7 @@ export default {
   },
   computed: {
     ...mapState("albums", ["albums"]),
-    ...mapState("labels", ["labels"]),
+    ...mapPiniaState(useLabelsStore, ["labels"]),
     ...mapPiniaState(usePlaylistsStore, { storePlaylists: "albumPlaylists" }),
     tracks: function () {
       return this.$store.getters["tracks/tracksFilterByAlbum"](
