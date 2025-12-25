@@ -14,7 +14,7 @@
     />
     <VImg
       :aspect-ratio="1"
-      :src="require('@mdi/svg/svg/album.svg')"
+      :src="albumSvgUrl"
       v-else
       class="grey lighten-3"
     />
@@ -41,6 +41,7 @@
 <script>
 import AlbumActions from "./AlbumActions.vue";
 import AlbumArtists from "./AlbumArtists.vue";
+import albumSvgUrl from "@mdi/svg/svg/album.svg";
 
 export default {
   name: "AlbumCard",
@@ -58,6 +59,7 @@ export default {
   data() {
     return {
       imageUnavailable: false,
+      albumSvgUrl,
     };
   },
   computed: {
