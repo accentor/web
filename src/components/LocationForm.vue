@@ -38,7 +38,8 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
+import { mapActions, mapState } from "pinia";
+import { useLocationsStore } from "../store/locations";
 
 export default {
   name: "LocationForm",
@@ -66,7 +67,7 @@ export default {
     },
   },
   computed: {
-    ...mapGetters("locations", ["locations"]),
+    ...mapState(useLocationsStore, { locations: "allLocations" }),
     rules() {
       const rules = {
         path: [(v) => !!v || this.$t("errors.location.path-blank")],
@@ -86,7 +87,7 @@ export default {
     fillValues() {
       this.newLocation.path = this.location.path;
     },
-    ...mapActions("locations", ["destroy", "update", "create"]),
+    ...mapActions(useLocationsStore, ["destroy", "create"]),
     async saveLocation() {
       if (this.$refs.form.validate()) {
         const id = await this.create(this.newLocation);

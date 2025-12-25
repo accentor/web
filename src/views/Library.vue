@@ -148,6 +148,7 @@ import { useCodecConversionsStore } from "../store/codec_conversions";
 import { useCodecsStore } from "../store/codecs";
 import { useCoverFilenamesStore } from "../store/cover_filenames";
 import { useImageTypesStore } from "../store/image_types";
+import { useLocationsStore } from "../store/locations";
 
 export default {
   name: "Library",
@@ -169,7 +170,7 @@ export default {
     ...mapPiniaState(useAuthStore, ["isModerator"]),
     ...mapGetters("rescan", ["rescans"]),
     ...mapGetters("rescan", ["combinedRescans"]),
-    ...mapState("locations", ["locations"]),
+    ...mapPiniaState(useLocationsStore, ["locations"]),
     ...mapState("rescan", ["lastClick"]),
     rescanRunning() {
       return this.combinedRescans.running ||
@@ -187,6 +188,7 @@ export default {
       coverFilenamesIndex: "index",
     }),
     ...mapPiniaActions(useImageTypesStore, { imageTypesIndex: "index" }),
+    ...mapPiniaActions(useLocationsStore, { locationsIndex: "index" }),
     ...mapActions("rescan", ["start", "startAll"]),
     async loadData() {
       let pendingResults = [];
@@ -196,7 +198,7 @@ export default {
         pendingResults.push(this.codecConversionsIndex());
         pendingResults.push(this.coverFilenamesIndex());
         pendingResults.push(this.imageTypesIndex());
-        pendingResults.push(this.$store.dispatch("locations/index"));
+        pendingResults.push(this.locationsIndex());
       }
       await Promise.all(pendingResults);
     },

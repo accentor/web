@@ -1,11 +1,10 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import persistencePlugins, { vuexLocalStorage } from "./persistence";
+import persistencePlugins from "./persistence";
 import albums from "./albums";
 import artists from "./artists";
 import genres from "./genres";
 import labels from "./labels";
-import locations from "./locations";
 import player from "./player";
 import playlists from "./playlists";
 import plays from "./plays";
@@ -20,10 +19,6 @@ const mutations = {
   },
 };
 
-if (!import.meta.env.PROD) {
-  mutations.RESTORE_MUTATION = vuexLocalStorage.RESTORE_MUTATION;
-}
-
 export default new Vuex.Store({
   plugins: persistencePlugins,
   strict: !import.meta.env.PROD,
@@ -32,7 +27,6 @@ export default new Vuex.Store({
     artists,
     genres,
     labels,
-    locations,
     player,
     playlists,
     plays,

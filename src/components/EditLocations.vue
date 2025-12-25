@@ -6,10 +6,10 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapState } from "pinia";
 import LocationForm from "./LocationForm.vue";
 import { useAuthStore } from "../store/auth";
-import { mapState } from "pinia";
+import { useLocationsStore } from "../store/locations";
 
 export default {
   name: "EditLocations",
@@ -18,7 +18,7 @@ export default {
     return {};
   },
   computed: {
-    ...mapGetters("locations", ["locations"]),
+    ...mapState(useLocationsStore, { locations: "allLocations" }),
     ...mapState(useAuthStore, ["isModerator"]),
   },
 };

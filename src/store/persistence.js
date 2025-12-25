@@ -78,31 +78,12 @@ class VuexPersistentModule extends VuexPersistence {
   }
 }
 
-const plugins = [
-  "Albums",
-  "Artists",
-  "Genres",
-  "Labels",
-  "Plays",
-  "Tracks",
-].map((module) => {
-  const plugin = new VuexPersistentModule(module, localForage);
-  return plugin.plugin;
-});
-
-const localStorageModules = ["locations"];
-
-export const vuexLocalStorage = new VuexPersistence({
-  storage: window.localStorage,
-  strictMode: !import.meta.env.PROD,
-  modules: localStorageModules,
-  filter: (m) =>
-    localStorageModules.includes(m.type.substring(0, m.type.indexOf("/"))),
-});
-
-plugins.push(vuexLocalStorage.plugin);
-
-export default plugins;
+export default ["Albums", "Artists", "Genres", "Labels", "Plays", "Tracks"].map(
+  (module) => {
+    const plugin = new VuexPersistentModule(module, localForage);
+    return plugin.plugin;
+  },
+);
 
 export const RawObjectSerializer = {
   write: (value) => JSON.stringify(value),
