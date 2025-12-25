@@ -91,7 +91,6 @@ const plugins = [
 });
 
 const localStorageModules = [
-  "codecs",
   "coverFilenames",
   "imageTypes",
   "locations",

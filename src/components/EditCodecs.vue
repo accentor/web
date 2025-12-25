@@ -6,10 +6,10 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapState } from "pinia";
 import CodecForm from "./CodecForm.vue";
 import { useAuthStore } from "../store/auth";
-import { mapState } from "pinia";
+import {useCodecsStore} from "../store/codecs";
 
 export default {
   name: "EditCodecs",
@@ -18,8 +18,8 @@ export default {
     return {};
   },
   computed: {
-    ...mapGetters("codecs", ["codecs"]),
     ...mapState(useAuthStore, ["isModerator"]),
+    ...mapState(useCodecsStore, {codecs: "allCodecs"}),
   },
 };
 </script>

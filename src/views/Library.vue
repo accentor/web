@@ -145,6 +145,7 @@ import EditLocations from "../components/EditLocations.vue";
 import MaintenanceActions from "../components/MaintenanceActions.vue";
 import { useAuthStore } from "../store/auth";
 import { useCodecConversionsStore } from "../store/codec_conversions";
+import {useCodecsStore} from "../store/codecs";
 
 export default {
   name: "Library",
@@ -179,12 +180,13 @@ export default {
     ...mapPiniaActions(useCodecConversionsStore, {
       codecConversionsIndex: "index",
     }),
+    ...mapPiniaActions(useCodecsStore, { codecsIndex: "index" }),
     ...mapActions("rescan", ["start", "startAll"]),
     async loadData() {
       let pendingResults = [];
       if (this.isModerator) {
         pendingResults.push(this.$store.dispatch("rescan/index"));
-        pendingResults.push(this.$store.dispatch("codecs/index"));
+        pendingResults.push(this.codecsIndex());
         pendingResults.push(this.codecConversionsIndex());
         pendingResults.push(this.$store.dispatch("coverFilenames/index"));
         pendingResults.push(this.$store.dispatch("imageTypes/index"));
