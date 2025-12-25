@@ -14,7 +14,7 @@
     />
     <VImg
       :aspect-ratio="1"
-      :src="require('@mdi/svg/svg/account-music.svg')"
+      :src="artistSvgUrl"
       v-else
       class="grey lighten-3"
     />
@@ -29,6 +29,7 @@
 
 <script>
 import ArtistActions from "./ArtistActions.vue";
+import artistSvgUrl from "@mdi/svg/svg/account-music.svg";
 
 export default {
   name: "ArtistCard",
@@ -39,6 +40,7 @@ export default {
   data() {
     return {
       imageUnavailable: false,
+      artistSvgUrl,
     };
   },
   methods: {
