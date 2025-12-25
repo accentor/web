@@ -1,9 +1,21 @@
 import Vue, { ref, markRaw, computed } from "vue";
-import { useLocalStorage } from "@vueuse/core";
-import { RawObjectSerializer } from "./persistence";
+import { useStorageAsync} from "@vueuse/core";
+import localForage from "localforage";
 import { useErrorsStore } from "./errors";
 import { useAuthStore } from "./auth";
 import { fetchAllPinia } from "./actions";
+
+const RawObjectSerializer = {
+    write: async (value) => JSON.stringify(value),
+    read: async (value) => {
+        let obj = value ? JSON.parse(value) : {};
+        let result = {};
+        for (let id in obj) {
+            result[id] = markRaw(obj[id]);
+        }
+        return result;
+    },
+};
 
 export function useBaseModelStore(
   apiModule,
@@ -14,9 +26,10 @@ export function useBaseModelStore(
   const errorsStore = useErrorsStore();
   const authStore = useAuthStore();
 
-  const _items = useLocalStorage(
+  const _items = useStorageAsync(
     localStorageKey,
     {},
+    localForage,
     { serializer: RawObjectSerializer },
   );
   const items = computed(() => _items.value);
