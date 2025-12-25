@@ -201,6 +201,7 @@ import { baseURL } from "../api";
 import EditReviewComment from "./EditReviewComment.vue";
 import AddToPlaylist from "./AddToPlaylist.vue";
 import { useAuthStore } from "../store/auth";
+import {useCodecsStore} from "../store/codecs";
 
 export default {
   name: "TrackActions",
@@ -211,7 +212,7 @@ export default {
   computed: {
     ...mapPiniaState(useAuthStore, ["isModerator", "apiToken"]),
     ...mapState("tracks", ["startLoading"]),
-    ...mapState("codecs", ["codecs"]),
+    ...mapPiniaState(useCodecsStore, ["codecs"]),
     ...mapState("locations", ["locations"]),
     waitingForReload() {
       return this.startLoading > this.track.loaded;

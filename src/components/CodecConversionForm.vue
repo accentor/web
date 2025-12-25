@@ -60,6 +60,7 @@
 import { mapGetters } from "vuex";
 import { mapActions, mapState } from "pinia";
 import { useCodecConversionsStore } from "@/store/codec_conversions";
+import {useCodecsStore} from "../store/codecs";
 
 export default {
   name: "CodecConversionForm",
@@ -89,7 +90,7 @@ export default {
     },
   },
   computed: {
-    ...mapGetters("codecs", ["codecs"]),
+    ...mapState(useCodecsStore, {codecs: "allCodecs"}),
     ...mapState(useCodecConversionsStore, {
       codecConversions: "allCodecConversions",
     }),

@@ -3,7 +3,6 @@ import Vuex from "vuex";
 import persistencePlugins, { vuexLocalStorage } from "./persistence";
 import albums from "./albums";
 import artists from "./artists";
-import codecs from "./codecs";
 import coverFilenames from "./cover_filenames";
 import genres from "./genres";
 import imageTypes from "./image_types";
@@ -33,7 +32,6 @@ export default new Vuex.Store({
   modules: {
     albums,
     artists,
-    codecs,
     coverFilenames,
     genres,
     imageTypes,
