@@ -70,8 +70,7 @@ export default {
     listData() {
       return [...this.topAlbums].map((tt) => {
         const album = this.albums[tt[0]];
-        const albumArtists = album?.album_artists
-          .map((aa) => aa)
+        const albumArtists = [...(album?.album_artists || [])]
           .sort((a1, a2) => a1.order - a2.order)
           .map((a) => a.name)
           .join(" / ");
