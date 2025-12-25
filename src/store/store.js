@@ -3,7 +3,6 @@ import Vuex from "vuex";
 import persistencePlugins from "./persistence";
 import albums from "./albums";
 import artists from "./artists";
-import genres from "./genres";
 import player from "./player";
 import plays from "./plays";
 import tracks from "./tracks";
@@ -22,7 +21,6 @@ export default new Vuex.Store({
   modules: {
     albums,
     artists,
-    genres,
     player,
     plays,
     tracks,

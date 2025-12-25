@@ -19,12 +19,13 @@
 </template>
 
 <script>
-import { mapActions, mapState } from "vuex";
-import { mapState as mapPiniaState } from "pinia";
+import { mapActions } from "vuex";
+import { mapState, mapActions as mapPiniaActions } from "pinia";
 import GenreActions from "@/components/GenreActions.vue";
 import TracksTable from "@/components/TracksTable.vue";
 import { TracksScope } from "@accentor/api-client-js";
 import { useAuthStore } from "../../store/auth";
+import { useGenresStore } from "../../store/genres";
 
 export default {
   name: "Genre",
@@ -45,8 +46,8 @@ export default {
     },
   },
   computed: {
-    ...mapPiniaState(useAuthStore, ["isModerator"]),
-    ...mapState("genres", ["genres"]),
+    ...mapState(useAuthStore, ["isModerator"]),
+    ...mapState(useGenresStore, ["genres"]),
     tracks: function () {
       return this.$store.getters["tracks/tracksFilterByGenre"](
         this.$route.params.id,
@@ -57,7 +58,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions("genres", ["read"]),
+    ...mapPiniaActions(useGenresStore, ["read"]),
     ...mapActions("tracks", { indexTracks: "index" }),
     async fetchContent(newValue, oldValue) {
       // After loading the content, the router will change the id from a string to a number

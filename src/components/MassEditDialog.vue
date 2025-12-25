@@ -276,9 +276,14 @@
 
 <script>
 import { mapActions, mapGetters, mapState } from "vuex";
+import {
+  mapState as mapPiniaState,
+  mapActions as mapPiniaActions,
+} from "pinia";
 import { compareTracks } from "../comparators";
 import Errors from "./Errors.vue";
 import TrackFormArtists from "./TrackFormArtists.vue";
+import { useGenresStore } from "../store/genres";
 
 export default {
   name: "MassEditDialog",
@@ -328,12 +333,12 @@ export default {
   computed: {
     ...mapState("albums", ["albums"]),
     ...mapState("artists", ["artists"]),
-    ...mapState("genres", ["genres"]),
+    ...mapPiniaState(useGenresStore, {
+      genres: "genres",
+      sortedGenres: "genresByName",
+    }),
     ...mapGetters("albums", {
       sortedAlbums: "albumsByTitle",
-    }),
-    ...mapGetters("genres", {
-      sortedGenres: "genresByName",
     }),
     sortedTracks() {
       return [...this.tracks].sort(compareTracks(this.albums));
@@ -381,10 +386,8 @@ export default {
   },
   methods: {
     ...mapActions("tracks", ["update"]),
-    ...mapActions({
-      createArtist: "artists/create",
-      createGenre: "genres/create",
-    }),
+    ...mapActions({ createArtist: "artists/create" }),
+    ...mapPiniaActions(useGenresStore, { createGenre: "create" }),
     filterName(item, queryText) {
       const search = queryText.toLowerCase();
       return (

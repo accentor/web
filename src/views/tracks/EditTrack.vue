@@ -90,7 +90,12 @@
 
 <script>
 import { mapActions, mapGetters, mapState } from "vuex";
+import {
+  mapState as mapPiniaState,
+  mapActions as mapPiniaActions,
+} from "pinia";
 import TrackFormArtists from "@/components/TrackFormArtists.vue";
+import { useGenresStore } from "../../store/genres";
 
 export default {
   components: { TrackFormArtists },
@@ -132,15 +137,15 @@ export default {
   computed: {
     ...mapState("albums", ["albums"]),
     ...mapState("artists", ["artists"]),
-    ...mapState("genres", ["genres"]),
+    ...mapPiniaState(useGenresStore, {
+      genres: "genres",
+      sortedGenres: "genresByName",
+    }),
     ...mapGetters("albums", {
       sortedAlbums: "albumsByTitle",
     }),
     ...mapGetters("artists", {
       sortedArtists: "artistsByName",
-    }),
-    ...mapGetters("genres", {
-      sortedGenres: "genresByName",
     }),
     track: function () {
       return (
@@ -182,10 +187,8 @@ export default {
   },
   methods: {
     ...mapActions("tracks", ["read", "update"]),
-    ...mapActions({
-      createArtist: "artists/create",
-      createGenre: "genres/create",
-    }),
+    ...mapActions({ createArtist: "artists/create" }),
+    ...mapPiniaActions(useGenresStore, { createGenre: "create" }),
     filterName(item, queryText) {
       const search = queryText.toLowerCase();
       return (
