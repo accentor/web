@@ -5,7 +5,12 @@ import { useErrorsStore } from "./errors";
 import { useAuthStore } from "./auth";
 import { fetchAllPinia } from "./actions";
 
-export function useBaseModelStore(apiModule, localStorageKey, crudKey) {
+export function useBaseModelStore(
+  apiModule,
+  localStorageKey,
+  crudKey,
+  { extraMergeOperations = (_newId, _oldId) => {} } = {},
+) {
   const errorsStore = useErrorsStore();
   const authStore = useAuthStore();
 
@@ -117,6 +122,29 @@ export function useBaseModelStore(apiModule, localStorageKey, crudKey) {
     }
   }
 
+  async function destroyEmpty() {
+    try {
+      await apiModule.destroyEmpty(authStore.apiToken);
+      await index();
+      return true;
+    } catch (error) {
+      errorsStore.addError(error);
+      return false;
+    }
+  }
+
+  async function merge(newId, oldId) {
+    try {
+      await apiModule.merge(authStore.apiToken, newId, oldId);
+      extraMergeOperations(newId, oldId);
+      removeItem(oldId);
+      return true;
+    } catch (error) {
+      errorsStore.addError(error);
+      return false;
+    }
+  }
+
   return {
     items,
     startLoading,
@@ -127,5 +155,7 @@ export function useBaseModelStore(apiModule, localStorageKey, crudKey) {
     read,
     update,
     destroy,
+    destroyEmpty,
+    merge,
   };
 }

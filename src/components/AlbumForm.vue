@@ -236,9 +236,13 @@
 
 <script>
 import { mapGetters, mapActions, mapState } from "vuex";
-import { mapState as mapPiniaState } from "pinia";
+import {
+  mapState as mapPiniaState,
+  mapActions as mapPiniaActions,
+} from "pinia";
 import ImagePicker from "./ImagePicker.vue";
 import { useUserSettingsStore } from "../store/user_settings";
+import { useLabelsStore } from "../store/labels";
 
 export default {
   name: "AlbumForm",
@@ -290,21 +294,17 @@ export default {
   },
   computed: {
     ...mapState("artists", ["artists"]),
-    ...mapState("labels", ["labels"]),
-    ...mapPiniaState(useUserSettingsStore, ["locale"]),
-    ...mapGetters("artists", {
-      sortedArtists: "artistsByName",
-    }),
-    ...mapGetters("labels", {
+    ...mapPiniaState(useLabelsStore, {
+      labels: "labels",
       sortedLabels: "labelsByName",
     }),
+    ...mapPiniaState(useUserSettingsStore, ["locale"]),
+    ...mapGetters("artists", { sortedArtists: "artistsByName" }),
   },
   methods: {
     ...mapActions("albums", ["create", "read", "update"]),
-    ...mapActions({
-      createArtist: "artists/create",
-      createLabel: "labels/create",
-    }),
+    ...mapActions({ createArtist: "artists/create" }),
+    ...mapPiniaActions(useLabelsStore, { createLabel: "create" }),
     filterName(item, queryText) {
       const search = queryText.toLowerCase();
       return (

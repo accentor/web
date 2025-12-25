@@ -78,7 +78,7 @@ class VuexPersistentModule extends VuexPersistence {
   }
 }
 
-export default ["Albums", "Artists", "Genres", "Labels", "Plays", "Tracks"].map(
+export default ["Albums", "Artists", "Genres", "Plays", "Tracks"].map(
   (module) => {
     const plugin = new VuexPersistentModule(module, localForage);
     return plugin.plugin;

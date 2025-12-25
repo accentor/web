@@ -191,6 +191,7 @@ import Player from "../components/Player.vue";
 import { useUserSettingsStore } from "../store/user_settings";
 import { useRescansStore } from "../store/rescan";
 import { usePlaylistsStore } from "../store/playlists";
+import { useLabelsStore } from "../store/labels";
 
 export default {
   name: "app",
@@ -235,6 +236,7 @@ export default {
     ...mapActions(useAuthStore, ["logout"]),
     ...mapActions(useAuthTokensStore, { authTokensIndex: "index" }),
     ...mapActions(useCodecConversionsStore, { codecConversionsIndex: "index" }),
+    ...mapActions(useLabelsStore, { labelsIndex: "index" }),
     ...mapActions(usePlaylistsStore, { playlistsIndex: "index" }),
     ...mapActions(useUsersStore, { usersIndex: "index" }),
     async loadData() {
@@ -245,7 +247,7 @@ export default {
       pendingResults.push(this.$store.dispatch("artists/index"));
       pendingResults.push(this.codecConversionsIndex());
       pendingResults.push(this.$store.dispatch("genres/index"));
-      pendingResults.push(this.$store.dispatch("labels/index"));
+      pendingResults.push(this.labelsIndex());
       pendingResults.push(this.playlistsIndex());
       pendingResults.push(this.$store.dispatch("plays/index"));
       pendingResults.push(this.$store.dispatch("tracks/index"));

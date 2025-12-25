@@ -19,7 +19,8 @@
 </template>
 
 <script>
-import { mapActions, mapState } from "vuex";
+import { useLabelsStore } from "../../store/labels";
+import { mapActions, mapState } from "pinia";
 
 export default {
   name: "EditLabel",
@@ -47,21 +48,18 @@ export default {
     },
   },
   computed: {
-    ...mapState("labels", ["labels"]),
+    ...mapState(useLabelsStore, ["labels"]),
     label: function () {
       return this.labels[this.$route.params.id];
     },
   },
   methods: {
-    ...mapActions("labels", ["read", "update"]),
+    ...mapActions(useLabelsStore, ["read", "update"]),
     fillValues() {
       this.newLabel.name = this.label.name;
     },
     async submit() {
-      const succeeded = await this.update({
-        id: this.label.id,
-        newLabel: this.newLabel,
-      });
+      const succeeded = await this.update(this.label.id, this.newLabel);
       if (succeeded) {
         this.$router.push(this.$route.query.redirect || { name: "labels" });
       }

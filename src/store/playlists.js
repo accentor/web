@@ -23,7 +23,7 @@ export const usePlaylistsStore = defineStore("playlists", () => {
   const allPlaylists = computed(() => Object.values(playlists.value));
   const playlistsByName = computed(() =>
     [...allPlaylists.value].sort((p1, p2) =>
-      compareStrings(p1.name.toLowercase(), p2.name.toLowercase()),
+      compareStrings(p1.name.toLowerCase(), p2.name.toLowerCase()),
     ),
   );
   const editablePlaylists = computed(() =>

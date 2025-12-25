@@ -65,6 +65,8 @@
 
 <script>
 import { mapActions, mapGetters } from "vuex";
+import { mapActions as mapPiniaActions } from "pinia";
+import { useLabelsStore } from "../store/labels";
 
 export default {
   name: "MaintenanceActions",
@@ -84,8 +86,8 @@ export default {
       destroyArtists: "artists/destroyEmpty",
       destroyAlbums: "albums/destroyEmpty",
       destroyGenres: "genres/destroyEmpty",
-      destroyLabels: "labels/destroyEmpty",
     }),
+    ...mapPiniaActions(useLabelsStore, { destroyLabels: "destroyEmpty" }),
     destroyEmptyArtists: function () {
       if (confirm(this.$t("common.are-you-sure"))) {
         this.artistsDisabled = true;
