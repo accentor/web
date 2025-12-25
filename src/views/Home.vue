@@ -282,19 +282,18 @@ export default {
   },
   methods: {
     releaseSort(items) {
-      return items.sort(compareAlbumsByReleaseFirst(true));
+      return [...items].sort(compareAlbumsByReleaseFirst(true));
     },
     createdSort(items) {
-      items.sort((a1, a2) => {
+      return [...items].sort((a1, a2) => {
         return compareStrings(a2.created_at, a1.created_at);
       });
-      return items;
     },
     recentlyPlayedAlbumsSort(albums) {
-      return albums.sort(compareByRecentlyPlayed(this.playStatsByAlbum));
+      return [...albums].sort(compareByRecentlyPlayed(this.playStatsByAlbum));
     },
     recentlyPlayedArtistsSort(artists) {
-      return artists.sort(compareByRecentlyPlayed(this.playStatsByArtist));
+      return [...artists].sort(compareByRecentlyPlayed(this.playStatsByArtist));
     },
     randomSort(items) {
       return [...items].sort(

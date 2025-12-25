@@ -42,9 +42,8 @@ export default {
     listData() {
       return [...this.topTracks].map((tt) => {
         const track = this.tracks[tt.track_id];
-        const trackArtists = track?.track_artists
+        const trackArtists = (track?.track_artists || [])
           .filter((a) => !a.hidden)
-          .map((ta) => ta)
           .sort((a1, a2) => a1.order - a2.order)
           .map((a) => a.name)
           .join(" / ");

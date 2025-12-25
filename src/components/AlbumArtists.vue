@@ -31,9 +31,9 @@ export default {
   },
   computed: {
     album_artists() {
-      return this.album.album_artists
-        .map((aa) => aa)
-        .sort((a1, a2) => a1.order - a2.order);
+      return [...this.album.album_artists].sort(
+        (a1, a2) => a1.order - a2.order,
+      );
     },
     title() {
       return this.album_artists.reduce(

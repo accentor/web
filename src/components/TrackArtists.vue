@@ -49,9 +49,9 @@ export default {
   computed: {
     ...mapState(useArtistsStore, ["artists"]),
     track_artists() {
-      return this.track.track_artists
-        .map((ta) => ta)
-        .sort((a1, a2) => a1.order - a2.order);
+      return [...this.track.track_artists].sort(
+        (a1, a2) => a1.order - a2.order,
+      );
     },
   },
   methods: {

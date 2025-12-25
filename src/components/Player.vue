@@ -201,8 +201,7 @@ export default {
           if ("mediaSession" in navigator) {
             navigator.mediaSession.metadata = new window.MediaMetadata({
               title: this.currentTrack.title,
-              artist: this.currentTrack.track_artists
-                .map((ta) => ta)
+              artist: [...this.currentTrack.track_artists]
                 .sort((a1, a2) => a1.order - a2.order)
                 .map((a) => a.name)
                 .join(" / "),
