@@ -31,7 +31,7 @@
               >
             </td>
             <td class="play-queue__cell text-right">
-              {{ track.length | length }}
+              {{ $filters.length(track.length) }}
             </td>
             <td class="play-queue__cell">
               <TrackArtists :track="track" />
@@ -99,8 +99,8 @@
           hide-details
         />
         <span class="controls__time-display">
-          {{ seekTime | length }} /
-          {{ currentTrack ? currentTrack.length : 0 | length }}
+          {{ $filters.length(seekTime) }} /
+          {{ $filters.length(currentTrack ? currentTrack.length : 0) }}
         </span>
       </div>
       <div class="controls__right">
