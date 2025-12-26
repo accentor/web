@@ -212,6 +212,7 @@ const router = createRouter({
         authOptional: true,
       },
     },
+    { path: "/:catchAll(.*)", redirect: "/app/" },
   ],
   scrollBehavior(to, from, savedPosition) {
     if (to.path === from.path) {
