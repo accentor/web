@@ -1,15 +1,15 @@
 <template>
   <span>
-    <VTooltip bottom :disabled="tracksEmpty.length > 0">
-      <template v-slot:activator="{ on }">
+    <VTooltip location="bottom" :disabled="tracksEmpty.length > 0">
+      <template #activator="{ on }">
         <span v-on="on">
           <VBtn
             :to="{ name: 'tracks-without-audio' }"
             :disabled="tracksEmpty.length === 0"
             color="info"
-            class="ma-2 white--text"
+            class="ma-2 text-white"
           >
-            <VIcon left>mdi-alert-octagon</VIcon>
+            <VIcon start>mdi-alert-octagon</VIcon>
             {{ $t("library.overview-tracks-without-audio") }}
           </VBtn>
         </span>
@@ -17,45 +17,45 @@
       <span>{{ $t("library.no-tracks-without-audio") }}</span>
     </VTooltip>
     <VBtn
-      @click="destroyEmptyArtists"
       color="danger"
-      class="ma-2 white--text"
+      class="ma-2 text-white"
       :disabled="artistsDisabled"
+      @click="destroyEmptyArtists"
     >
-      <VIcon left>
+      <VIcon start>
         {{ artistsDisabled ? "mdi-refresh mdi-spin" : "mdi-alert-octagon" }}
       </VIcon>
       {{ $t("library.delete-empty-artists") }}
     </VBtn>
     <VBtn
-      @click="destroyEmptyAlbums"
       color="danger"
-      class="ma-2 white--text"
+      class="ma-2 text-white"
       :disabled="albumsDisabled"
+      @click="destroyEmptyAlbums"
     >
-      <VIcon left>
+      <VIcon start>
         {{ albumsDisabled ? "mdi-refresh mdi-spin" : "mdi-alert-octagon" }}
       </VIcon>
       {{ $t("library.delete-empty-albums") }}
     </VBtn>
     <VBtn
-      @click="destroyEmptyGenres"
       color="danger"
-      class="ma-2 white--text"
+      class="ma-2 text-white"
       :disabled="genresDisabled"
+      @click="destroyEmptyGenres"
     >
-      <VIcon left>
+      <VIcon start>
         {{ genresDisabled ? "mdi-refresh mdi-spin" : "mdi-alert-octagon" }}
       </VIcon>
       {{ $t("library.delete-empty-genres") }}
     </VBtn>
     <VBtn
-      @click="destroyEmptyLabels"
       color="danger"
-      class="ma-2 white--text"
+      class="ma-2 text-white"
       :disabled="labelsDisabled"
+      @click="destroyEmptyLabels"
     >
-      <VIcon left>
+      <VIcon start>
         {{ labelsDisabled ? "mdi-refresh mdi-spin" : "mdi-alert-octagon" }}
       </VIcon>
       {{ $t("library.delete-empty-labels") }}

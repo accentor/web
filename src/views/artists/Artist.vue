@@ -1,20 +1,20 @@
 <template>
-  <VContainer fluid v-if="artist">
+  <VContainer v-if="artist" fluid>
     <VRow>
       <VCol
+        v-if="artist.image500 && !imageUnavailable"
         lg="3"
         md="4"
         sm="6"
-        v-if="artist.image500 && !imageUnavailable"
         cols="12"
       >
         <VImg :src="artist.image500" class="elevation-3" />
       </VCol>
       <VCol
+        v-else-if="artist.image && !imageUnavailable"
         lg="3"
         md="4"
         sm="6"
-        v-else-if="artist.image && !imageUnavailable"
         cols="12"
       >
         <VImg :src="artist.image" class="elevation-3" />
@@ -23,7 +23,7 @@
         <div>
           <h2 class="text-h4">{{ artist.name }}</h2>
         </div>
-        <div class="grey--text mt-4 mb-4" v-if="playlists.length">
+        <div v-if="playlists.length" class="text-grey mt-4 mb-4">
           {{ $tc("music.artist.in-playlists", playlists.length) }}
           <ul>
             <li v-for="playlist in playlists" :key="playlist.id">
@@ -42,11 +42,11 @@
     </VRow>
     <VRow>
       <VCol
+        v-for="item of albums"
         :key="item.id"
         lg="3"
         md="4"
         sm="6"
-        v-for="item of albums"
         xl="2"
         cols="6"
       >
@@ -98,12 +98,6 @@ export default {
       imageUnavailable: false,
     };
   },
-  watch: {
-    id: {
-      handler: "fetchContent",
-      immediate: true,
-    },
-  },
   computed: {
     ...mapState(useAuthStore, ["isModerator"]),
     ...mapState(usePlaylistsStore, { storePlaylists: "artistPlaylists" }),
@@ -121,6 +115,12 @@ export default {
       return this.storePlaylists.filter((p) =>
         p.item_ids.includes(this.artist.id),
       );
+    },
+  },
+  watch: {
+    id: {
+      handler: "fetchContent",
+      immediate: true,
     },
   },
   methods: {

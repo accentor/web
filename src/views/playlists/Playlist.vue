@@ -1,14 +1,14 @@
 <template>
-  <VContainer fluid v-if="playlist">
+  <VContainer v-if="playlist" fluid>
     <VRow class="mb-2" justify="space-between" align="baseline">
       <VCol cols="12" sm="4" md="6" lg="8" xl="10">
         <div>
           <h2 class="text-h4">{{ playlist.name }}</h2>
-          <p class="grey--text mb-1">
+          <p class="text-grey mb-1">
             {{ users[playlist.user_id].name }} &bull;
             {{ $t(`music.playlist.access_options.${playlist.access}`) }}
           </p>
-          <p class="grey--text mb-1">
+          <p class="text-grey mb-1">
             {{
               $tc(
                 `music.playlist.item_counts.${playlist.playlist_type}`,
@@ -16,7 +16,7 @@
               )
             }}
           </p>
-          <p class="grey--text mb-1">{{ playlist.description }}</p>
+          <p class="text-grey mb-1">{{ playlist.description }}</p>
         </div>
         <div class="actions">
           <PlaylistActions :playlist="playlist" />
@@ -24,7 +24,7 @@
       </VCol>
       <VCol cols="12" sm="8" md="6" lg="4" xl="2"> </VCol>
     </VRow>
-    <VRow no-gutters v-if="playlist.playlist_type === 'track'">
+    <VRow v-if="playlist.playlist_type === 'track'" no-gutters>
       <VCol>
         <TracksTable
           :tracks="items"
@@ -34,6 +34,8 @@
       </VCol>
     </VRow>
     <VDataIterator
+      v-else
+      v-model:page="pagination.page"
       :footer-props="{
         disableItemsPerPage: true,
         itemsPerPageOptions: [12],
@@ -41,10 +43,8 @@
       }"
       :items="items"
       :items-per-page="12"
-      :page.sync="pagination.page"
-      v-else
     >
-      <template v-slot:default="props">
+      <template #default="props">
         <VRow>
           <VCol
             v-for="item in props.items"
@@ -56,10 +56,10 @@
             cols="6"
           >
             <AlbumCard
-              :album="item"
               v-if="playlist.playlist_type === 'album'"
+              :album="item"
             />
-            <ArtistCard :artist="item" v-else />
+            <ArtistCard v-else :artist="item" />
           </VCol>
         </VRow>
       </template>
@@ -86,19 +86,13 @@ export default {
   metaInfo() {
     return { title: this.playlist?.title };
   },
+  mixins: [Paginated],
   props: {
     id: {
       type: [String, Number],
       required: true,
     },
   },
-  watch: {
-    id: {
-      handler: "fetchContent",
-      immediate: true,
-    },
-  },
-  mixins: [Paginated],
   computed: {
     ...mapState(usePlaylistsStore, ["playlists"]),
     ...mapState(useAlbumsStore, ["albums"]),
@@ -111,6 +105,12 @@ export default {
     items() {
       let key = `${this.playlist?.playlist_type}s`;
       return this.playlist?.item_ids.map((id) => this[key][id]) || [];
+    },
+  },
+  watch: {
+    id: {
+      handler: "fetchContent",
+      immediate: true,
     },
   },
   methods: {

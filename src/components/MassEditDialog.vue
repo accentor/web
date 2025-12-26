@@ -1,7 +1,7 @@
 <template>
   <VDialog v-model="dialog" fullscreen scrollable>
-    <template v-slot:activator="{ on }">
-      <VBtn v-on="on" color="edit" class="ma-2" :disabled="tracks.length === 0">
+    <template #activator="{ on }">
+      <VBtn color="edit" class="ma-2" :disabled="tracks.length === 0" v-on="on">
         {{
           $tc("music.mass.edit-tracks", tracks.length, { count: tracks.length })
         }}
@@ -9,7 +9,7 @@
     </template>
     <VCard>
       <VToolbar dark color="primary" class="flex-grow-0">
-        <VBtn icon dark @click="dialog = false">
+        <VBtn icon @click="dialog = false">
           <VIcon>mdi-close</VIcon>
         </VBtn>
         <VToolbarTitle>
@@ -21,7 +21,7 @@
         </VToolbarTitle>
         <VSpacer></VSpacer>
         <VToolbarItems>
-          <VBtn icon @click="saveTracks" :disabled="saving">
+          <VBtn icon :disabled="saving" @click="saveTracks">
             <VIcon>
               {{ saving ? "mdi-refresh mdi-spin" : "mdi-content-save" }}
             </VIcon>
@@ -29,19 +29,19 @@
         </VToolbarItems>
       </VToolbar>
       <div style="overflow-y: auto; backface-visibility: hidden">
-        <VForm v-model="isValid" ref="form" @submit.prevent="saveTracks">
+        <VForm ref="form" v-model="isValid" @submit.prevent="saveTracks">
           <VContainer>
             <Errors />
             <VContainer
-              fluid
               v-if="tracksWithReviewComments.length > 0"
               key="showReviewComments"
+              fluid
             >
               <VRow dense>
                 <VCol cols="12">
                   <VCheckbox v-model="showReviewComments">
-                    <template v-slot:label>
-                      <span class="black--text">
+                    <template #label>
+                      <span class="text-black">
                         {{
                           $tc(
                             "music.flag.show",
@@ -79,12 +79,12 @@
               </VRow>
             </VContainer>
             <VDivider v-if="tracksWithReviewComments.length > 0" />
-            <VContainer fluid key="increaseTrackNumbers">
+            <VContainer key="increaseTrackNumbers" fluid>
               <VRow dense>
                 <VCol cols="12" sm="6">
                   <VCheckbox v-model="number.enabled">
-                    <template v-slot:label>
-                      <span class="black--text">
+                    <template #label>
+                      <span class="text-black">
                         {{ $t("music.mass.increase-track") }}
                       </span>
                     </template>
@@ -92,23 +92,23 @@
                 </VCol>
                 <VCol cols="12" sm="6">
                   <VTextField
+                    v-if="number.enabled"
                     v-model="number.amount"
                     :label="$t('common.amount')"
                     type="number"
                     step="1"
-                    v-if="number.enabled"
                     hide-details="true"
                   />
                 </VCol>
               </VRow>
             </VContainer>
             <VDivider />
-            <VContainer fluid key="searchAndReplaceTitle">
+            <VContainer key="searchAndReplaceTitle" fluid>
               <VRow dense>
                 <VCol cols="12" sm="6">
                   <VCheckbox v-model="titleReplacement.enabled">
-                    <template v-slot:label>
-                      <span class="black--text">
+                    <template #label>
+                      <span class="text-black">
                         {{ $t("music.mass.title-search") }}
                       </span>
                     </template>
@@ -116,34 +116,34 @@
                 </VCol>
                 <VCol cols="12" sm="6">
                   <VCheckbox
+                    v-if="titleReplacement.enabled"
                     v-model="titleReplacement.regex"
                     :label="$t('music.mass.regex')"
-                    v-if="titleReplacement.enabled"
                   />
                 </VCol>
               </VRow>
               <VRow v-if="titleReplacement.enabled">
                 <VCol cols="12" sm="6">
                   <VTextField
-                    :label="$t('common.search')"
                     v-model="titleReplacement.search"
+                    :label="$t('common.search')"
                   />
                 </VCol>
                 <VCol cols="12" sm="6">
                   <VTextField
-                    :label="$t('common.replace')"
                     v-model="titleReplacement.replace"
+                    :label="$t('common.replace')"
                   />
                 </VCol>
               </VRow>
             </VContainer>
             <VDivider />
-            <VContainer fluid key="setAlbum">
+            <VContainer key="setAlbum" fluid>
               <VRow dense>
                 <VCol cols="12" sm="6">
                   <VCheckbox v-model="album.enabled">
-                    <template v-slot:label>
-                      <span class="black--text">
+                    <template #label>
+                      <span class="text-black">
                         {{ $t("music.mass.set-album") }}
                       </span>
                     </template>
@@ -151,19 +151,19 @@
                 </VCol>
                 <VCol cols="12" sm="6">
                   <VAutocomplete
+                    v-if="album.enabled"
+                    v-model="album.album"
                     :items="sortedAlbums"
-                    :filter="filterTitle"
+                    :custom-filter="filterTitle"
                     item-value="id"
-                    item-text="title"
+                    item-title="title"
                     label="Album"
                     hide-details="true"
-                    v-model="album.album"
                     :rules="rules.album"
-                    v-if="album.enabled"
                   >
-                    <template v-slot:item="{ item }">
+                    <template #item="{ item }">
                       {{ item.title }}
-                      <span class="grey--text pl-2 ml-auto text-body-2">
+                      <span class="text-grey pl-2 ml-auto text-body-2">
                         {{ item.id }}
                       </span>
                     </template>
@@ -172,12 +172,12 @@
               </VRow>
             </VContainer>
             <VDivider />
-            <VContainer fluid key="changeGenres">
+            <VContainer key="changeGenres" fluid>
               <VRow dense>
                 <VCol cols="12" sm="6">
                   <VCheckbox v-model="changeGenres.enabled">
-                    <template v-slot:label>
-                      <span class="black--text">
+                    <template #label>
+                      <span class="text-black">
                         {{ $t("music.mass.change-genres") }}
                       </span>
                     </template>
@@ -185,39 +185,38 @@
                 </VCol>
                 <VCol cols="12" sm="6">
                   <VCheckbox
+                    v-if="changeGenres.enabled"
                     v-model="changeGenres.replace"
                     :label="$t('music.mass.replace-instead-genres')"
-                    v-if="changeGenres.enabled"
                   />
                 </VCol>
               </VRow>
               <VRow v-if="changeGenres.enabled">
                 <VCol cols="12" sm="6">
                   <VCombobox
+                    v-model="changeGenres.genres"
                     :items="sortedGenres"
-                    :filter="filterName"
-                    cache-items
+                    :custom-filter="filterName"
                     chips
-                    deletable-chips
-                    item-text="name"
+                    closable-chips
+                    item-title="name"
                     item-value="id"
                     :label="$t('music.genre-s')"
                     multiple
                     return-object
-                    v-model="changeGenres.genres"
                     :rules="rules.genre"
-                    validate-on-blur
+                    validate-on="blur"
                   />
                 </VCol>
               </VRow>
             </VContainer>
             <VDivider />
-            <VContainer fluid key="changeArtists">
+            <VContainer key="changeArtists" fluid>
               <VRow dense>
                 <VCol cols="12" sm="6">
                   <VCheckbox v-model="changeArtists.enabled">
-                    <template v-slot:label>
-                      <span class="black--text">
+                    <template #label>
+                      <span class="text-black">
                         {{ $t("music.mass.change-artists") }}
                       </span>
                     </template>
@@ -225,36 +224,36 @@
                 </VCol>
                 <VCol cols="12" sm="6">
                   <VCheckbox
+                    v-if="changeArtists.enabled"
                     v-model="changeArtists.replace"
                     :label="$t('music.mass.replace-instead-artists')"
-                    v-if="changeArtists.enabled"
                   />
                 </VCol>
               </VRow>
               <TrackFormArtists
-                v-model="changeArtists.track_artists"
                 v-if="changeArtists.enabled"
+                v-model="changeArtists.track_artists"
               />
               <VBtn
-                @click="addArtist"
+                v-if="changeArtists.enabled"
                 color="success"
                 class="ma-2"
-                v-if="changeArtists.enabled"
+                @click="addArtist"
               >
                 {{ $t("music.artist.add") }}
               </VBtn>
             </VContainer>
             <VDivider v-if="tracksWithReviewComments.length > 0" />
             <VContainer
-              fluid
               v-if="tracksWithReviewComments.length > 0"
               key="clearReviewComments"
+              fluid
             >
               <VRow dense>
                 <VCol cols="12" sm="6">
                   <VCheckbox v-model="clearReviewComments">
-                    <template v-slot:label>
-                      <span class="black--text">
+                    <template #label>
+                      <span class="text-black">
                         {{
                           $tc(
                             "music.flag.clear",
@@ -290,6 +289,7 @@ export default {
   props: {
     tracks: { default: () => [], type: Array },
   },
+  emits: ["close"],
   data() {
     return {
       dialog: false,

@@ -1,5 +1,5 @@
 <template>
-  <VCard class="pa-2" v-intersect="onIntersect">
+  <VCard v-intersect="onIntersect" class="pa-2">
     <VCardTitle>{{ title }}</VCardTitle>
     <!-- 
     The viewbox represents:
@@ -7,17 +7,17 @@
     by
     7 * 22 (for the dots) + 10 (for the x-axis)
     -->
-    <svg viewBox="0 0 569 174" class="mx-4 mt-1" v-if="isIntersecting">
+    <svg v-if="isIntersecting" viewBox="0 0 569 174" class="mx-4 mt-1">
       <!-- Offset 11 (half dot) + 1 (to visually center) -->
       <g y-axis transform="translate(0,12)">
         <text
-          class="grey--text text--darken-2 text-caption"
+          v-for="(label, index) in yLabels"
+          :key="label"
+          class="text-grey-darken-2 text-caption"
           fill="currentColor"
           x="28"
           :y="2 + 22 * index"
           text-anchor="end"
-          v-for="(label, index) in yLabels"
-          :key="label"
         >
           {{ label }}
         </text>
@@ -25,6 +25,8 @@
       <!-- Offset 40 (for y axis) by 176 (area for dots) -->
       <g x-axis transform="translate(30,164)">
         <text
+          v-for="(hour, index) in xLabels"
+          :key="hour"
           :x="hour * 22"
           y="5"
           :text-anchor="
@@ -35,9 +37,7 @@
                 : 'middle'
           "
           fill="currentColor"
-          class="grey--text text--darken-2 text-caption"
-          v-for="(hour, index) in xLabels"
-          :key="hour"
+          class="text-grey-darken-2 text-caption"
         >
           {{ hour }}
         </text>
@@ -45,12 +45,12 @@
       <!-- Move all dots to the appropriate area: offset for y axis and half dot in each direction -->
       <g transform="translate(41,11)">
         <circle
-          class="primary--text text--darken-1"
+          v-for="(dot, index) in svgData"
+          :key="index"
+          class="text-primary-darken-1"
           :cx="dot.cx"
           :cy="dot.cy"
           :r="dot.r"
-          v-for="(dot, index) in svgData"
-          :key="index"
           fill="currentColor"
         />
       </g>
