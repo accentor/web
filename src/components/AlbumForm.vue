@@ -111,7 +111,7 @@
         <ImagePicker
           v-model="newAlbum.image"
           :currentImg="album && album.image250"
-          :placeholder="require('@mdi/svg/svg/album.svg')"
+          :placeholder="albumSvgUrl"
         />
         <h4 class="text-subtitle-1">{{ $tc("music.artists", 2) }}</h4>
         <VRow
@@ -237,6 +237,7 @@
 <script>
 import { mapGetters, mapActions, mapState } from "vuex";
 import ImagePicker from "./ImagePicker.vue";
+import albumSvgUrl from "@mdi/svg/svg/album.svg";
 
 export default {
   name: "AlbumForm",
@@ -271,6 +272,7 @@ export default {
       },
       clear_review_comment: true,
       editionInformation: false,
+      albumSvgUrl,
     };
   },
   async created() {

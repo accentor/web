@@ -9,6 +9,7 @@
 import { mapState } from "vuex";
 import { calcPlayStatsForArtists } from "@/reducers";
 import TopList from "@/components/TopList.vue";
+import artistSvgUrl from "@mdi/svg/svg/account-music.svg";
 
 export default {
   name: "TopArtistsList",
@@ -49,7 +50,7 @@ export default {
         return {
           count: tt[1],
           label: artist?.name,
-          image: artist?.image100 || require("@mdi/svg/svg/account-music.svg"),
+          image: artist?.image100 || artistSvgUrl,
         };
       });
     },

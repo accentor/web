@@ -19,7 +19,7 @@
         <ImagePicker
           v-model="newArtist.image"
           :currentImg="artist && artist.image250"
-          :placeholder="require('@mdi/svg/svg/account-music.svg')"
+          :placeholder="artistSvgUrl"
         />
         <VCheckbox
           v-if="artist && artist.review_comment !== null"
@@ -37,6 +37,7 @@
 <script>
 import { mapActions } from "vuex";
 import ImagePicker from "./ImagePicker.vue";
+import artistSvgUrl from "@mdi/svg/svg/account-music.svg";
 
 export default {
   name: "ArtistForm",
@@ -52,6 +53,7 @@ export default {
       clear_review_comment: true,
       isDirty: false,
       isValid: true,
+      artistSvgUrl,
     };
   },
   async created() {
