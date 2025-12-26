@@ -2,9 +2,9 @@
   <VBtn
     color="flag"
     class="actions__button"
-    text
+    variant="text"
     icon
-    small
+    size="small"
     @click.stop.prevent="show = true"
   >
     <VIcon>mdi-flag</VIcon>
@@ -15,8 +15,8 @@
         </VCardTitle>
         <VCardText>
           <VTextField
-            :label="$t('music.flag.comment')"
             v-model="newReviewComment"
+            :label="$t('music.flag.comment')"
           />
         </VCardText>
         <VCardActions>
@@ -33,12 +33,6 @@
 <script>
 export default {
   name: "EditReviewComment",
-  data() {
-    return {
-      show: false,
-      newReviewComment: "",
-    };
-  },
   props: {
     update: {
       type: Function,
@@ -48,6 +42,12 @@ export default {
       type: Object,
       required: true,
     },
+  },
+  data() {
+    return {
+      show: false,
+      newReviewComment: "",
+    };
   },
   created() {
     this.newReviewComment = this.item.review_comment;

@@ -1,17 +1,17 @@
 <template>
-  <VContainer fluid v-if="label">
+  <VContainer v-if="label" fluid>
     <VDataIterator
+      v-if="albums.length > 0"
+      v-model:page="pagination.page"
       :footer-props="{
         disableItemsPerPage: true,
         itemsPerPageOptions: [12],
         showFirstLastPage: true,
       }"
       :items="filteredItems"
-      :page.sync="pagination.page"
       :items-per-page="12"
-      v-if="albums.length > 0"
     >
-      <template v-slot:header>
+      <template #header>
         <VRow class="mb-2" justify="space-between" align="baseline">
           <VCol cols="12" sm="4" md="6" lg="8" xl="10">
             <div>
@@ -33,7 +33,7 @@
           </VCol>
         </VRow>
       </template>
-      <template v-slot:default="props">
+      <template #default="props">
         <VRow>
           <VCol
             v-for="item in props.items"
@@ -44,7 +44,7 @@
             xl="2"
             cols="6"
           >
-            <AlbumCard :album="item" :labelForCatNr="label" />
+            <AlbumCard :album="item" :label-for-cat-nr="label" />
           </VCol>
         </VRow>
       </template>
@@ -76,12 +76,6 @@ export default {
       required: true,
     },
   },
-  watch: {
-    id: {
-      handler: "fetchContent",
-      immediate: true,
-    },
-  },
   computed: {
     ...mapState(useAuthStore, ["isModerator"]),
     ...mapState(useLabelsStore, ["labels"]),
@@ -100,6 +94,12 @@ export default {
             .indexOf(this.search.toLocaleLowerCase()) >= 0 ||
           item.normalized_title.indexOf(this.search.toLocaleLowerCase()) >= 0,
       );
+    },
+  },
+  watch: {
+    id: {
+      handler: "fetchContent",
+      immediate: true,
     },
   },
   methods: {

@@ -1,8 +1,8 @@
 <template>
-  <VContainer class="fill-height" fluid v-if="user">
+  <VContainer v-if="user" class="fill-height" fluid>
     <VRow no-gutters align="center" justify="center">
       <VCol md="4" sm="8" cols="12">
-        <UserForm :user="user" :showPermissions="true" />
+        <UserForm :user="user" :show-permissions="true" />
       </VCol>
     </VRow>
   </VContainer>

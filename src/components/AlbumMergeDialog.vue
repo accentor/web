@@ -1,18 +1,17 @@
 <template>
   <VDialog
+    v-if="isModerator"
     ref="dialogMerge"
     v-model="mergeModal"
-    v-if="isModerator"
     width="600px"
   >
-    <template v-slot:activator="{ on }">
+    <template #activator="{ on }">
       <VListItem :disabled="disabled" v-on="on">
-        <VListItemIcon>
+        <template #prepend>
           <VIcon color="edit">mdi-merge</VIcon>
-        </VListItemIcon>
-        <VListItemContent>
-          <VListItemTitle>{{ $t("music.album.merge") }}</VListItemTitle>
-        </VListItemContent>
+        </template>
+
+        <VListItemTitle>{{ $t("music.album.merge") }}</VListItemTitle>
       </VListItem>
     </template>
     <VCard>
@@ -26,18 +25,17 @@
           <VRow>
             <VCol cols="12">
               <VCombobox
+                v-model="mergeAlbum"
                 :items="sortedAlbums"
-                :filter="filterTitle"
-                cache-items
-                item-text="title"
+                :custom-filter="filterTitle"
+                item-title="title"
                 item-value="id"
                 :label="$tc('music.albums', 1)"
                 return-object
-                v-model="mergeAlbum"
               >
-                <template v-slot:item="{ item }">
+                <template #item="{ item }">
                   {{ item.title }}
-                  <span class="grey--text pl-2 ml-auto text-body-2">
+                  <span class="text-grey pl-2 ml-auto text-body-2">
                     {{ item.id }}
                   </span>
                 </template>

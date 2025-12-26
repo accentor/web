@@ -11,7 +11,7 @@
         :items="artists"
         :items-per-page="6"
       >
-        <template v-slot:default="props">
+        <template #default="props">
           <VRow class="mb-0">
             <VCol
               v-for="item in props.items"
@@ -39,7 +39,7 @@
         :items="albums"
         :items-per-page="6"
       >
-        <template v-slot:default="props">
+        <template #default="props">
           <VRow class="mb-0">
             <VCol
               v-for="item in props.items"

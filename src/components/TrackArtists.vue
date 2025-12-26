@@ -1,7 +1,7 @@
 <template>
   <div v-if="track_artists.length !== 0">
-    <VMenu open-on-hover offset-y>
-      <template v-slot:activator="{ on }">
+    <VMenu open-on-hover>
+      <template #activator="{ on }">
         <div v-on="on">
           {{
             track_artists
@@ -11,23 +11,21 @@
           }}
         </div>
       </template>
-      <VList dense>
+      <VList density="compact">
         <VListItem
           v-for="ta of track_artists"
           :key="`${ta.artist_id} ${ta.name} ${ta.role}`"
         >
-          <VListItemContent>
-            <span>
-              <RouterLink
-                :to="{ name: 'artist', params: { id: ta.artist_id } }"
-                >{{ artist_name(ta) }}</RouterLink
-              >
-              ({{ $t(`music.artist.roles.${ta.role}`) }})
-              <span v-if="ta.name !== artist_name(ta)">
-                {{ $t("common.as") }} {{ ta.name }}
-              </span>
+          <span>
+            <RouterLink
+              :to="{ name: 'artist', params: { id: ta.artist_id } }"
+              >{{ artist_name(ta) }}</RouterLink
+            >
+            ({{ $t(`music.artist.roles.${ta.role}`) }})
+            <span v-if="ta.name !== artist_name(ta)">
+              {{ $t("common.as") }} {{ ta.name }}
             </span>
-          </VListItemContent>
+          </span>
         </VListItem>
       </VList>
     </VMenu>

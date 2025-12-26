@@ -12,6 +12,9 @@ import { useTracksStore } from "../store/tracks";
 
 export default {
   name: "TopTracksList",
+  components: {
+    TopList,
+  },
   props: {
     playStats: {
       type: Array,
@@ -25,9 +28,6 @@ export default {
       type: Boolean,
       default: false,
     },
-  },
-  components: {
-    TopList,
   },
   computed: {
     ...mapState(useTracksStore, ["tracks"]),

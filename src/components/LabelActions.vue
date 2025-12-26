@@ -1,7 +1,7 @@
 <template>
   <span v-if="isModerator" class="actions">
-    <VTooltip bottom :disabled="!waitingForReload">
-      <template v-slot:activator="{ on }">
+    <VTooltip location="bottom" :disabled="!waitingForReload">
+      <template #activator="{ on }">
         <span v-on="on">
           <VBtn
             :to="{
@@ -12,9 +12,9 @@
             :disabled="waitingForReload"
             color="edit"
             class="actions__button"
-            text
+            variant="text"
             icon
-            small
+            size="small"
           >
             <VIcon>mdi-pencil</VIcon>
           </VBtn>
@@ -22,26 +22,26 @@
       </template>
       <span>{{ $t("common.disabled-while-loading") }}</span>
     </VTooltip>
-    <VTooltip bottom :disabled="!waitingForReload">
-      <template v-slot:activator="{ on }">
+    <VTooltip location="bottom" :disabled="!waitingForReload">
+      <template #activator="{ on }">
         <span v-on="on">
           <LabelMergeDialog :label="label" :disabled="waitingForReload" />
         </span>
       </template>
       <span>{{ $t("common.disabled-while-loading") }}</span>
     </VTooltip>
-    <VTooltip bottom :disabled="!waitingForReload">
-      <template v-slot:activator="{ on }">
+    <VTooltip location="bottom" :disabled="!waitingForReload">
+      <template #activator="{ on }">
         <span v-on="on">
           <VBtn
-            @click.stop.prevent="deleteLabel"
             :disabled="waitingForReload"
             color="danger"
             class="mr-0 actions__button"
             href="#"
-            text
+            variant="text"
             icon
-            small
+            size="small"
+            @click.stop.prevent="deleteLabel"
           >
             <VIcon>mdi-delete</VIcon>
           </VBtn>
