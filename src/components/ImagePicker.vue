@@ -14,7 +14,7 @@
     <VRow>
       <VCol
         class="flex-column flex-grow-0"
-        @dragover.prevent="/* just here to prevent file from opening */"
+        @dragover.prevent="() => {}"
         @drop.prevent="handleDrop"
       >
         <VImg
@@ -44,7 +44,7 @@
       <VCol class="flex-column d-flex flex-grow-0 justify-center">
         <VBtn
           @click="passthrough"
-          @dragover.prevent="/* just here to prevent file from opening */"
+          @dragover.prevent="() => {}"
           @drop.prevent="handleDrop"
           color="primary"
           class="ma-2"
