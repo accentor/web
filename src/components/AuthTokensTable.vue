@@ -4,11 +4,7 @@
       ref="table"
       v-model="selected"
       v-model:page="pagination.page"
-      :footer-props="{
-        disableItemsPerPage: true,
-        itemsPerPageOptions: [30],
-        showFirstLastPage: true,
-      }"
+      :items-per-page-options="[30]"
       :headers="headers"
       :items="authTokens"
       :items-per-page="30"
