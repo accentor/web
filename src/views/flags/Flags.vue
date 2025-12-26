@@ -15,14 +15,14 @@
           <VRow class="mb-0">
             <VCol
               v-for="item in props.items"
-              :key="`artist${item.id}`"
+              :key="`artist${item.raw.id}`"
               lg="3"
               md="4"
               sm="6"
               xl="2"
               cols="12"
             >
-              <ArtistCard :artist="item" />
+              <ArtistCard :artist="item.raw" />
             </VCol>
           </VRow>
         </template>
@@ -43,14 +43,14 @@
           <VRow class="mb-0">
             <VCol
               v-for="item in props.items"
-              :key="`album${item.id}`"
+              :key="`album${item.raw.id}`"
               lg="3"
               md="4"
               sm="6"
               xl="2"
               cols="12"
             >
-              <AlbumCard :album="item" />
+              <AlbumCard :album="item.raw" />
             </VCol>
           </VRow>
         </template>

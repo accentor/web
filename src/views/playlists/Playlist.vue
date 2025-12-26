@@ -48,7 +48,7 @@
         <VRow>
           <VCol
             v-for="item in props.items"
-            :key="item.id"
+            :key="item.raw.id"
             lg="3"
             md="4"
             sm="6"
@@ -57,9 +57,9 @@
           >
             <AlbumCard
               v-if="playlist.playlist_type === 'album'"
-              :album="item"
+              :album="item.raw"
             />
-            <ArtistCard v-else :artist="item" />
+            <ArtistCard v-else :artist="item.raw" />
           </VCol>
         </VRow>
       </template>
