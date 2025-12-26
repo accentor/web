@@ -1,5 +1,5 @@
 <template>
-  <VForm v-model="isValid" ref="form" lazy-validation>
+  <VForm ref="form" v-model="isValid">
     <VRow>
       <VCol cols="5">
         <VTextField
@@ -12,20 +12,20 @@
       </VCol>
       <VCol cols="2" sm="1">
         <VBtn
+          v-if="!coverFilename"
           :disabled="!isValid"
           icon
-          outlined
+          variant="outlined"
           color="success"
           class="ma-2"
           @click="saveCoverFilename"
-          v-if="!coverFilename"
         >
           <VIcon color="success">mdi-plus</VIcon>
         </VBtn>
         <VBtn
-          icon
-          outlined
           v-if="coverFilename"
+          icon
+          variant="outlined"
           color="danger"
           class="ma-2"
           @click="deleteCoverFilename"
@@ -52,19 +52,19 @@ export default {
       isValid: true,
     };
   },
-  created() {
-    this.$nextTick(() => {
-      if (this.coverFilename) {
-        this.fillValues();
-      }
-    });
-  },
   watch: {
     album: function () {
       if (this.coverFilename) {
         this.fillValues();
       }
     },
+  },
+  created() {
+    this.$nextTick(() => {
+      if (this.coverFilename) {
+        this.fillValues();
+      }
+    });
   },
   methods: {
     fillValues() {

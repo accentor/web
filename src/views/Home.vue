@@ -10,21 +10,21 @@
         :custom-sort="releaseSort"
         :items-per-page="numberOfItems"
       >
-        <template v-slot:header>
+        <template #header>
           <h2 class="text-h4">{{ $t("home.recently-released") }}</h2>
         </template>
-        <template v-slot:default="props">
+        <template #default="props">
           <VRow class="my-0">
             <VCol
               v-for="item in props.items"
-              :key="item.id"
+              :key="item.raw.id"
               lg="3"
               md="4"
               sm="6"
               xl="2"
               cols="6"
             >
-              <AlbumCard :album="item" />
+              <AlbumCard :album="item.raw" />
             </VCol>
           </VRow>
         </template>
@@ -40,23 +40,23 @@
         :custom-sort="createdSort"
         :items-per-page="numberOfItems"
       >
-        <template v-slot:header>
+        <template #header>
           <h2 class="text-h4">
             {{ $t("home.recently-added-albums") }}
           </h2>
         </template>
-        <template v-slot:default="props">
+        <template #default="props">
           <VRow class="my-0">
             <VCol
               v-for="item in props.items"
-              :key="item.id"
+              :key="item.raw.id"
               lg="3"
               md="4"
               sm="6"
               xl="2"
               cols="6"
             >
-              <AlbumCard :album="item" />
+              <AlbumCard :album="item.raw" />
             </VCol>
           </VRow>
         </template>
@@ -72,23 +72,23 @@
         :custom-sort="createdSort"
         :items-per-page="numberOfItems"
       >
-        <template v-slot:header>
+        <template #header>
           <h2 class="text-h4">
             {{ $t("home.recently-added-artists") }}
           </h2>
         </template>
-        <template v-slot:default="props">
+        <template #default="props">
           <VRow class="my-0">
             <VCol
               v-for="item in props.items"
-              :key="item.id"
+              :key="item.raw.id"
               lg="3"
               md="4"
               sm="6"
               xl="2"
               cols="6"
             >
-              <ArtistCard :artist="item" />
+              <ArtistCard :artist="item.raw" />
             </VCol>
           </VRow>
         </template>
@@ -104,26 +104,26 @@
         :custom-sort="releaseSort"
         :items-per-page="numberOfItems"
       >
-        <template v-slot:header>
+        <template #header>
           <h2 class="text-h4">{{ $t("home.on-this-day") }}</h2>
         </template>
-        <template v-slot:no-data>
-          <v-alert :value="true" color="info" icon="mdi-information" dark>
+        <template #no-data>
+          <v-alert :value="true" color="info" icon="mdi-information">
             {{ $t("home.on-this-day-empty") }}
           </v-alert>
         </template>
-        <template v-slot:default="props">
+        <template #default="props">
           <VRow class="my-0">
             <VCol
               v-for="item in props.items"
-              :key="item.id"
+              :key="item.raw.id"
               lg="3"
               md="4"
               sm="6"
               xl="2"
               cols="6"
             >
-              <AlbumCard :album="item" />
+              <AlbumCard :album="item.raw" />
             </VCol>
           </VRow>
         </template>
@@ -139,23 +139,23 @@
         :items="randomAlbums"
         :items-per-page="numberOfItems"
       >
-        <template v-slot:header>
+        <template #header>
           <h2 class="text-h4">
             {{ $t("home.random-albums") }}
           </h2>
         </template>
-        <template v-slot:default="props">
+        <template #default="props">
           <VRow class="my-0">
             <VCol
               v-for="item in props.items"
-              :key="item.id"
+              :key="item.raw.id"
               lg="3"
               md="4"
               sm="6"
               xl="2"
               cols="6"
             >
-              <AlbumCard :album="item" />
+              <AlbumCard :album="item.raw" />
             </VCol>
           </VRow>
         </template>
@@ -170,23 +170,23 @@
         :items="randomArtists"
         :items-per-page="numberOfItems"
       >
-        <template v-slot:header>
+        <template #header>
           <h2 class="text-h4">
             {{ $t("home.random-artists") }}
           </h2>
         </template>
-        <template v-slot:default="props">
+        <template #default="props">
           <VRow class="my-0">
             <VCol
               v-for="item in props.items"
-              :key="item.id"
+              :key="item.raw.id"
               lg="3"
               md="4"
               sm="6"
               xl="2"
               cols="6"
             >
-              <ArtistCard :artist="item" />
+              <ArtistCard :artist="item.raw" />
             </VCol>
           </VRow>
         </template>
@@ -202,23 +202,23 @@
         :custom-sort="recentlyPlayedAlbumsSort"
         :items-per-page="numberOfItems"
       >
-        <template v-slot:header>
+        <template #header>
           <h2 class="text-h4">
             {{ $t("home.recently-played-albums") }}
           </h2>
         </template>
-        <template v-slot:default="props">
+        <template #default="props">
           <VRow class="my-0">
             <VCol
               v-for="item in props.items"
-              :key="item.id"
+              :key="item.raw.id"
               lg="3"
               md="4"
               sm="6"
               xl="2"
               cols="6"
             >
-              <AlbumCard :album="item" />
+              <AlbumCard :album="item.raw" />
             </VCol>
           </VRow>
         </template>
@@ -234,23 +234,23 @@
         :custom-sort="recentlyPlayedArtistsSort"
         :items-per-page="numberOfItems"
       >
-        <template v-slot:header>
+        <template #header>
           <h2 class="text-h4">
             {{ $t("home.recently-played-artists") }}
           </h2>
         </template>
-        <template v-slot:default="props">
+        <template #default="props">
           <VRow class="my-0">
             <VCol
               v-for="item in props.items"
-              :key="item.id"
+              :key="item.raw.id"
               lg="3"
               md="4"
               sm="6"
               xl="2"
               cols="6"
             >
-              <ArtistCard :artist="item" />
+              <ArtistCard :artist="item.raw" />
             </VCol>
           </VRow>
         </template>
@@ -280,6 +280,32 @@ export default {
   metaInfo() {
     return { title: this.$t("common.home") };
   },
+  computed: {
+    ...mapState(useAlbumsStore, {
+      albums: "allAlbums",
+      albumsOnThisDay: "albumsOnThisDay",
+    }),
+    ...mapState(useArtistsStore, { artists: "allArtists" }),
+    ...mapState(usePlaysStore, ["playStatsByAlbum", "playStatsByArtist"]),
+    randomSeed() {
+      return Math.round(Math.random() * RANDOM_SEED_MAX);
+    },
+    randomAlbums() {
+      return this.randomSort(this.albums);
+    },
+    randomArtists() {
+      return this.randomSort(this.artists);
+    },
+    numberOfItems() {
+      if (this.$vuetify.display.xl) {
+        return 6;
+      } else if (this.$vuetify.display.md) {
+        return 3;
+      } else {
+        return 4;
+      }
+    },
+  },
   methods: {
     releaseSort(items) {
       return [...items].sort(compareAlbumsByReleaseFirst(true));
@@ -300,32 +326,6 @@ export default {
         (i1, i2) =>
           Math.sin(i2.id + this.randomSeed) - Math.sin(i1.id + this.randomSeed),
       );
-    },
-  },
-  computed: {
-    ...mapState(useAlbumsStore, {
-      albums: "allAlbums",
-      albumsOnThisDay: "albumsOnThisDay",
-    }),
-    ...mapState(useArtistsStore, { artists: "allArtists" }),
-    ...mapState(usePlaysStore, ["playStatsByAlbum", "playStatsByArtist"]),
-    randomSeed() {
-      return Math.round(Math.random() * RANDOM_SEED_MAX);
-    },
-    randomAlbums() {
-      return this.randomSort(this.albums);
-    },
-    randomArtists() {
-      return this.randomSort(this.artists);
-    },
-    numberOfItems() {
-      if (this.$vuetify.breakpoint.name === "xl") {
-        return 6;
-      } else if (this.$vuetify.breakpoint.name === "md") {
-        return 3;
-      } else {
-        return 4;
-      }
     },
   },
 };

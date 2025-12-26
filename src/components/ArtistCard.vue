@@ -1,22 +1,22 @@
 <template>
   <VCard :to="{ name: 'artist', params: { id: artist.id } }">
     <VImg
+      v-if="artist.image500 && !imageUnavailable"
       :aspect-ratio="1"
       :src="artist.image500"
-      v-if="artist.image500 && !imageUnavailable"
       @error="setImageUnavailable"
     />
     <VImg
+      v-else-if="artist.image"
       :aspect-ratio="1"
       :src="artist.image"
-      v-else-if="artist.image"
       @error="setImageUnavailable"
     />
     <VImg
-      :aspect-ratio="1"
-      :src="require('@mdi/svg/svg/account-music.svg')"
       v-else
-      class="grey lighten-3"
+      :aspect-ratio="1"
+      :src="artistSvgUrl"
+      class="bg-grey-lighten-3"
     />
     <VCardTitle class="d-block text-truncate" :title="artist.name">
       {{ artist.name }}
@@ -29,6 +29,7 @@
 
 <script>
 import ArtistActions from "./ArtistActions.vue";
+import artistSvgUrl from "@mdi/svg/svg/account-music.svg";
 
 export default {
   name: "ArtistCard",
@@ -39,6 +40,7 @@ export default {
   data() {
     return {
       imageUnavailable: false,
+      artistSvgUrl,
     };
   },
   methods: {

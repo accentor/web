@@ -1,6 +1,7 @@
 <template>
   <VContainer fluid>
     <VDataIterator
+      v-model:page="pagination.page"
       :footer-props="{
         disableItemsPerPage: true,
         itemsPerPageOptions: [numberOfItems],
@@ -8,57 +9,56 @@
       }"
       :items="filteredItems"
       :items-per-page="numberOfItems"
-      :page.sync="pagination.page"
     >
-      <template v-slot:header>
+      <template #header>
         <VRow class="mb-2" justify="end">
           <VCol lg="4" md="6" sm="8" xl="2" cols="12">
             <VTextField
+              v-if="playlists.length > numberOfItems"
+              v-model="search"
               :label="$t('common.search')"
               hide-details
               prepend-inner-icon="mdi-magnify"
               single-line
-              v-if="playlists.length > numberOfItems"
-              v-model="search"
             />
           </VCol>
           <VBtn :to="{ name: 'new-playlist' }" color="success" class="ma-2">
-            <VIcon left>mdi-plus</VIcon>
+            <VIcon start>mdi-plus</VIcon>
             {{ $t("music.playlist.new") }}
           </VBtn>
         </VRow>
       </template>
-      <template v-slot:default="props">
+      <template #default="props">
         <VRow>
           <VCol
-            :key="item.id"
+            v-for="item in props.items"
+            :key="item.raw.id"
             lg="3"
             md="4"
             sm="6"
-            v-for="item in props.items"
             xl="2"
             cols="6"
           >
-            <VCard :to="{ name: 'playlist', params: { id: item.id } }">
+            <VCard :to="{ name: 'playlist', params: { id: item.raw.id } }">
               <VCardTitle>
-                {{ item.name }}
+                {{ item.raw.name }}
               </VCardTitle>
               <VCardText>
                 <span class="d-block">
-                  {{ users[item.user_id].name }} &bull;
-                  {{ $t(`music.playlist.access_options.${item.access}`) }}
+                  {{ users[item.raw.user_id].name }} &bull;
+                  {{ $t(`music.playlist.access_options.${item.raw.access}`) }}
                 </span>
                 <span>
                   {{
                     $tc(
-                      `music.playlist.item_counts.${item.playlist_type}`,
-                      item.item_ids.length,
+                      `music.playlist.item_counts.${item.raw.playlist_type}`,
+                      item.raw.item_ids.length,
                     )
                   }}
                 </span>
               </VCardText>
               <VCardActions>
-                <PlaylistActions :playlist="item" />
+                <PlaylistActions :playlist="item.raw" />
               </VCardActions>
             </VCard>
           </VCol>
@@ -82,9 +82,6 @@ export default {
     return { title: this.$tc("music.playlists", 2) };
   },
   components: { PlaylistActions },
-  created() {
-    this.fetchContent();
-  },
   mixins: [Paginated, Searchable],
   computed: {
     ...mapState(usePlaylistsStore, { playlists: "playlistsByName" }),
@@ -100,16 +97,19 @@ export default {
       );
     },
     numberOfItems() {
-      if (this.$vuetify.breakpoint.name === "xl") {
+      if (this.$vuetify.display.xl) {
         return 30;
-      } else if (this.$vuetify.breakpoint.name === "lg") {
+      } else if (this.$vuetify.display.lg) {
         return 20;
-      } else if (this.$vuetify.breakpoint.name === "md") {
+      } else if (this.$vuetify.display.md) {
         return 15;
       } else {
         return 12;
       }
     },
+  },
+  created() {
+    this.fetchContent();
   },
   methods: {
     ...mapActions(usePlaylistsStore, ["index"]),

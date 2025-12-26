@@ -16,19 +16,19 @@
     </VRow>
     <div class="stats">
       <PlayCountCard
-        :playStats="playStats"
+        :play-stats="playStats"
         title=""
         class="stats__play-count"
       />
       <TopTracksList
         class="stats__top-tracks"
-        :playStats="playStats"
+        :play-stats="playStats"
         :use-track-length="useTrackLength"
         :title="$t('stats.topTracks')"
       />
       <PercentagePlayedCard
         class="stats__percentage-played"
-        :playStats="playStats"
+        :play-stats="playStats"
         :use-track-length="useTrackLength"
         :tracks="filteredTracks"
         :title="
@@ -39,13 +39,13 @@
       />
       <TopAlbumsList
         class="stats__top-albums"
-        :playStats="playStats"
+        :play-stats="playStats"
         :use-track-length="useTrackLength"
         :title="$t('stats.topAlbums')"
       />
       <TopArtistsList
         class="stats__top-artists"
-        :playStats="playStats"
+        :play-stats="playStats"
         :use-track-length="useTrackLength"
         :title="$t('stats.topArtists')"
       />
@@ -90,6 +90,12 @@ export default {
     TopArtistsList,
     TopTracksList,
   },
+  props: {
+    artistId: {
+      type: Number,
+      default: null,
+    },
+  },
   data() {
     return {
       period: {
@@ -99,12 +105,6 @@ export default {
       useTrackLength: false,
       playStats: [],
     };
-  },
-  props: {
-    artist_id: {
-      type: Number,
-      default: null,
-    },
   },
   computed: {
     ...mapState(usePlaysStore, { plays: "allPlays" }),
@@ -151,23 +151,6 @@ export default {
       return scope;
     },
   },
-  methods: {
-    ...mapActions(usePlaysStore, { reloadPlays: "index" }),
-    async loadPlayStats() {
-      const gen = $api.plays.stats(
-        useAuthStore().apiToken,
-        this.playStatsScope,
-      );
-      let done = false;
-      let results = [];
-      while (!done) {
-        let value = [];
-        ({ value, done } = await gen.next());
-        results.push(...value);
-      }
-      this.playStats = results;
-    },
-  },
   watch: {
     playStatsScope() {
       this.loadPlayStats();
@@ -189,10 +172,30 @@ export default {
       immediate: true,
     },
   },
+  methods: {
+    ...mapActions(usePlaysStore, { reloadPlays: "index" }),
+    async loadPlayStats() {
+      const gen = $api.plays.stats(
+        useAuthStore().apiToken,
+        this.playStatsScope,
+      );
+      let done = false;
+      let results = [];
+      while (!done) {
+        let value = [];
+        ({ value, done } = await gen.next());
+        results.push(...value);
+      }
+      this.playStats = results;
+    },
+  },
 };
 </script>
 
 <style lang="scss" scoped>
+@use "sass:map";
+@use "vuetify/settings";
+
 .stats {
   display: grid;
   grid-auto-columns: 1fr;
@@ -205,7 +208,7 @@ export default {
     "topArtists"
     "punchcard";
 
-  @media (min-width: map-get($grid-breakpoints, "sm")) {
+  @media (min-width: map.get(settings.$display-breakpoints, "sm")) {
     grid-template-areas:
       "topTracks topTracks"
       "playCount percentagePlayed"
@@ -214,7 +217,7 @@ export default {
       "punchcard punchcard";
   }
 
-  @media (min-width: map-get($grid-breakpoints, "md")) {
+  @media (min-width: map.get(settings.$display-breakpoints, "md")) {
     grid-template-areas:
       "topTracks topTracks topTracks topTracks playCount playCount"
       "topTracks topTracks topTracks topTracks percentagePlayed percentagePlayed"

@@ -1,16 +1,16 @@
 <template>
   <span class="actions">
-    <VTooltip bottom :disabled="playableTracks.length !== 0">
-      <template v-slot:activator="{ on }">
-        <span v-on="on">
+    <VTooltip location="bottom" :disabled="playableTracks.length !== 0">
+      <template #activator="{ props }">
+        <span v-bind="props">
           <VBtn
-            @click.stop.prevent="startTracks"
             :disabled="playableTracks.length === 0"
             color="primary"
             class="actions__button"
-            text
+            variant="text"
             icon
-            small
+            size="small"
+            @click.stop.prevent="startTracks"
           >
             <VIcon>mdi-play</VIcon>
           </VBtn>
@@ -18,18 +18,17 @@
       </template>
       <span>{{ $t("music.album.no-tracks-to-play") }}</span>
     </VTooltip>
-    <VTooltip bottom :disabled="playableTracks.length !== 0">
-      <template v-slot:activator="{ on }">
-        <span v-on="on">
+    <VTooltip location="bottom" :disabled="playableTracks.length !== 0">
+      <template #activator="{ props }">
+        <span v-bind="props">
           <VBtn
-            @click.stop.prevent="addTracks"
             :disabled="playableTracks.length === 0"
             color="success"
             class="actions__button"
-            text
+            variant="text"
             icon
-            small
-            v-on="on"
+            size="small"
+            @click.stop.prevent="addTracks"
           >
             <VIcon>mdi-plus</VIcon>
           </VBtn>
@@ -40,21 +39,20 @@
     <AddToPlaylist :item="album" type="album" />
     <EditReviewComment :item="album" :update="flag" />
     <VMenu v-if="isModerator">
-      <template v-slot:activator="{ on, attrs }">
+      <template #activator="{ props }">
         <VBtn
           class="actions__button mr-0"
-          small
+          size="small"
           icon
-          v-bind="attrs"
-          v-on="on"
+          v-bind="props"
           @click.stop.prevent
         >
           <VIcon>mdi-dots-vertical</VIcon>
         </VBtn>
       </template>
-      <VList dense>
-        <VTooltip bottom :disabled="!waitingForReload">
-          <template v-slot:activator="{ on }">
+      <VList density="compact">
+        <VTooltip location="bottom" :disabled="!waitingForReload">
+          <template #activator="{ props }">
             <VListItem
               :to="{
                 name: 'edit-album',
@@ -62,39 +60,41 @@
                 query: { redirect: $route.fullPath },
               }"
               :disabled="waitingForReload"
-              v-on="on"
+              v-bind="props"
             >
-              <VListItemIcon>
+              <template #prepend>
                 <VIcon color="edit">mdi-pencil</VIcon>
-              </VListItemIcon>
-              <VListItemContent>
-                <VListItemTitle>{{ $t("music.album.edit") }}</VListItemTitle>
-              </VListItemContent>
+              </template>
+
+              <VListItemTitle>{{ $t("music.album.edit") }}</VListItemTitle>
             </VListItem>
           </template>
           <span>{{ $t("common.disabled-while-loading") }}</span>
         </VTooltip>
-        <VTooltip bottom :disabled="!waitingForReload">
-          <template v-slot:activator="{ on }">
-            <span v-on="on">
+        <VTooltip location="bottom" :disabled="!waitingForReload">
+          <template #activator="{ props }">
+            <span v-bind="props">
               <AlbumMergeDialog :album="album" :disabled="waitingForReload" />
             </span>
           </template>
           <span>{{ $t("common.disabled-while-loading") }}</span>
         </VTooltip>
-        <VTooltip bottom :disabled="!waitingForReload" v-if="isModerator">
-          <template v-slot:activator="{ on }">
+        <VTooltip
+          v-if="isModerator"
+          location="bottom"
+          :disabled="!waitingForReload"
+        >
+          <template #activator="{ props }">
             <VListItem
-              @click.stop.prevent="deleteAlbum"
               :disabled="waitingForReload"
-              v-on="on"
+              v-bind="props"
+              @click.stop.prevent="deleteAlbum"
             >
-              <VListItemIcon>
+              <template #prepend>
                 <VIcon color="danger">mdi-delete</VIcon>
-              </VListItemIcon>
-              <VListItemContent>
-                <VListItemTitle>{{ $t("music.album.delete") }}</VListItemTitle>
-              </VListItemContent>
+              </template>
+
+              <VListItemTitle>{{ $t("music.album.delete") }}</VListItemTitle>
             </VListItem>
           </template>
           <span>{{ $t("common.disabled-while-loading") }}</span>

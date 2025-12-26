@@ -1,7 +1,7 @@
 <template>
   <div>
     <VRow class="mb-2" justify="end" align="baseline">
-      <VCol cols="12" md="6" lg="8" xl="10" v-if="title !== null">
+      <VCol v-if="title !== null" cols="12" md="6" lg="8" xl="10">
         <h2 class="text-h4">{{ title }}</h2>
       </VCol>
       <VCol v-if="showSearch" cols="12" sm="8" md="6" lg="4" xl="2">
@@ -15,62 +15,56 @@
       </VCol>
     </VRow>
     <VDataTable
+      ref="table"
       v-model="selected"
-      :footer-props="{
-        disableItemsPerPage: true,
-        itemsPerPageOptions: [30],
-        showFirstLastPage: true,
-      }"
+      v-model:page="pagination.page"
       :headers="headers"
       :items="filteredItems"
       :items-per-page="30"
-      :page.sync="pagination.page"
-      :sort-by.sync="sortable.sortBy"
-      :sort-desc.sync="sortable.sortDesc"
+      :items-per-page-options="[30]"
       :show-select="isModerator"
       :single-select="singleSelect"
-      :custom-sort="sortFunction"
       class="elevation-3"
-      ref="table"
       @item-selected="emitSelected"
     >
-      <template v-slot:header.actions v-if="isModerator && showMassEdit">
+      <template v-if="isModerator && showMassEdit" #header.actions>
         <MassEditDialog :tracks="selected" @close="reloadSelected" />
       </template>
-      <template v-slot:header.data-table-select="props" v-if="!singleSelect">
+      <template v-if="!singleSelect" #header.data-table-select="props">
         <VCheckbox
-          :input-value="props.props.value"
-          :value="props.props.value"
-          :indeterminate="props.props.indeterminate"
+          :model-value="props.value"
+          :value="props.value"
+          :indeterminate="props.indeterminate"
           hide-details
           primary
-          @click.stop="toggleAll"
           class="pb-4"
+          @click.stop="toggleAll"
         />
       </template>
-      <template v-slot:item.data-table-select="item" v-if="singleSelect">
-        <VRadioGroup v-model="selectedIds" :multiple="true" :mandatory="false">
+      <template v-if="singleSelect" #item.data-table-select="item">
+        <VRadioGroup v-model="selectedIds" :mandatory="false">
           <VRadio
             :value="item.item.id"
-            :input-value="item.isSelected"
+            :model-value="item.isSelected"
             @click="(val) => item.select(val)"
           />
         </VRadioGroup>
       </template>
-      <template v-slot:item.number="props">
+      <template #item.number="props">
         <span v-if="currentTrack !== null && props.item.id === currentTrack.id">
           <VIcon>mdi-volume-high</VIcon>
         </span>
         <span v-else>{{ props.value }}</span>
       </template>
-      <template v-slot:item.length="props">
+      <template #item.length="props">
         <span v-if="props.value !== null">
-          {{ props.value | length }}
+          {{ $filters.length(props.value) }}
         </span>
-        <VTooltip v-else bottom>
-          <template v-slot:activator="{ on }">
-            <span v-on="on" class="white-space-nowrap">
-              <VIcon small color="red" class="pr-2">mdi-alert</VIcon>--:--
+        <VTooltip v-else location="bottom">
+          <template #activator="{ props: innerProps }">
+            <span class="white-space-nowrap" v-bind="innerProps">
+              <VIcon size="small" color="red" class="pr-2">mdi-alert</VIcon
+              >--:--
             </span>
           </template>
           <span>
@@ -78,25 +72,25 @@
           </span>
         </VTooltip>
       </template>
-      <template v-slot:item.album_id="props">
+      <template #item.album_id="props">
         <RouterLink :to="{ name: 'album', params: { id: props.value } }">
           {{ albums[props.value] ? albums[props.value].title : "" }}
         </RouterLink>
       </template>
-      <template v-slot:item.track_artists="props">
+      <template #item.track_artists="props">
         <TrackArtists :track="props.item" />
       </template>
-      <template v-slot:item.genre_ids="props">
+      <template #item.genre_ids="props">
         <TrackGenres :track="props.item" />
       </template>
-      <template v-slot:item.play_count="props">
+      <template #item.play_count="props">
         {{
           (playStatsByTrack[props.item.id] &&
             playStatsByTrack[props.item.id].count) ||
           0
         }}
       </template>
-      <template v-slot:item.actions="props">
+      <template #item.actions="props">
         <TrackActions :track="props.item" />
       </template>
     </VDataTable>
@@ -137,54 +131,61 @@ export default {
     showMassEdit: { default: true, type: Boolean },
     showSearch: { default: false, type: Boolean },
     singleSelect: { default: false, type: Boolean },
-    title: { required: false, type: String },
+    title: { required: false, type: String, default: undefined },
   },
+  emits: ["selected"],
   data() {
     const headers = [
       {
-        text: "#",
+        title: "#",
         value: "number",
-        sortable: true,
         align: "center",
         width: "1px",
         class: "text-no-wrap",
+        key: "number",
       },
       {
-        text: this.$t("music.title"),
+        title: this.$t("music.title"),
         value: "title",
         class: "text-no-wrap",
+        sortRaw: (t1, t2) => compareStrings(t1.normalized_title, t2.normalized_title),
       },
       {
-        text: this.$t("music.track.length"),
+        title: this.$t("music.track.length"),
         value: "length",
         align: "end",
         width: "1px",
         class: "text-no-wrap",
+        key: "length"
       },
       {
-        text: this.$tc("music.albums", 1),
+        title: this.$tc("music.albums", 1),
         value: "album_id",
         class: "text-no-wrap",
+        sortRaw: compareTracks(this.albums),
       },
       {
-        text: this.$t("music.artist.artist-s"),
+        title: this.$t("music.artist.artist-s"),
         value: "track_artists",
         class: "text-no-wrap",
+        sortRaw: compareTracksByArtist,
       },
       {
-        text: this.$t("music.genre-s"),
+        title: this.$t("music.genre-s"),
         value: "genre_ids",
         class: "text-no-wrap",
+        sortRaw: compareTracksByGenre(this.genres),
       },
       {
-        text: this.$t("music.play-count"),
+        title: this.$t("music.play-count"),
         value: "play_count",
         align: "end",
         width: "1px",
         class: "text-no-wrap",
+        sortRaw: (t1, t2) => (this.playStatsByTrack[t1.id]?.count || 0) - (this.playStatsByTrack[t2.id]?.count || 0),
       },
       {
-        text: this.$t("common.actions"),
+        title: this.$t("common.actions"),
         value: "actions",
         sortable: false,
         align: "end",
@@ -237,36 +238,6 @@ export default {
     },
     reloadSelected() {
       this.selected = this.selected.map((s) => this.tracksObj[s.id]);
-    },
-    sortFunction(items, sortBy, sortDesc) {
-      let sortFunction = null;
-      switch (sortBy[0]) {
-        case "album_id":
-          sortFunction = compareTracks(this.albums);
-          break;
-        case "genre_ids":
-          sortFunction = compareTracksByGenre(this.genres);
-          break;
-        case "length":
-          sortFunction = (t1, t2) => t1.length - t2.length;
-          break;
-        case "number":
-          sortFunction = (t1, t2) => t1.number - t2.number;
-          break;
-        case "play_count":
-          sortFunction = (t1, t2) =>
-            (this.playStatsByTrack[t1.id]?.count || 0) -
-            (this.playStatsByTrack[t2.id]?.count || 0);
-          break;
-        case "title":
-          sortFunction = (t1, t2) =>
-            compareStrings(t1.normalized_title, t2.normalized_title);
-          break;
-        case "track_artists":
-          sortFunction = compareTracksByArtist;
-      }
-      const sorted = sortFunction ? items.sort(sortFunction) : items;
-      return sortDesc[0] ? sorted.reverse() : sorted;
     },
   },
 };

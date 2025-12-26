@@ -25,9 +25,13 @@ import { calcPlayCountForAlbums, calcPlayTimeForAlbums } from "@/reducers";
 import TopList from "@/components/TopList.vue";
 import { useAlbumsStore } from "../store/albums";
 import { useTracksStore } from "../store/tracks";
+import albumSvgUrl from "@mdi/svg/svg/album.svg";
 
 export default {
   name: "TopAlbumsList",
+  components: {
+    TopList,
+  },
   props: {
     playStats: {
       type: Array,
@@ -46,9 +50,6 @@ export default {
     return {
       useAverage: true,
     };
-  },
-  components: {
-    TopList,
   },
   computed: {
     ...mapState(useAlbumsStore, ["albums"]),
@@ -76,7 +77,7 @@ export default {
         return {
           count: this.useAverage ? tt[1].toFixed(2) : tt[1],
           label: `${albumArtists} - ${album?.title}`,
-          image: album?.image100 || require("@mdi/svg/svg/album.svg"),
+          image: album?.image100 || albumSvgUrl,
         };
       });
     },

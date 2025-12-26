@@ -1,6 +1,8 @@
 <template>
   <VContainer fluid>
     <VDataIterator
+      v-if="labels.length > 0"
+      v-model:page="pagination.page"
       :footer-props="{
         disableItemsPerPage: true,
         itemsPerPageOptions: [numberOfItems],
@@ -8,35 +10,33 @@
       }"
       :items="filteredItems"
       :items-per-page="numberOfItems"
-      :page.sync="pagination.page"
-      v-if="labels.length > 0"
     >
-      <template v-slot:header>
+      <template #header>
         <VRow class="mb-2" justify="end">
           <VCol lg="4" md="6" sm="8" xl="2" cols="12">
             <VTextField
+              v-if="labels.length > numberOfItems"
+              v-model="search"
               :label="$t('common.search')"
               hide-details
               prepend-inner-icon="mdi-magnify"
               single-line
-              v-if="labels.length > numberOfItems"
-              v-model="search"
             />
           </VCol>
         </VRow>
       </template>
-      <template v-slot:default="props">
+      <template #default="props">
         <VRow>
           <VCol
-            :key="item.id"
+            v-for="item in props.items"
+            :key="item.raw.id"
             lg="3"
             md="4"
             sm="6"
-            v-for="item in props.items"
             xl="2"
             cols="6"
           >
-            <LabelCard :label="item" />
+            <LabelCard :label="item.raw" />
           </VCol>
         </VRow>
       </template>
@@ -71,11 +71,11 @@ export default {
       );
     },
     numberOfItems() {
-      if (this.$vuetify.breakpoint.name === "xl") {
+      if (this.$vuetify.display.xl) {
         return 30;
-      } else if (this.$vuetify.breakpoint.name === "lg") {
+      } else if (this.$vuetify.display.lg) {
         return 20;
-      } else if (this.$vuetify.breakpoint.name === "md") {
+      } else if (this.$vuetify.display.md) {
         return 15;
       } else {
         return 12;

@@ -1,4 +1,4 @@
-import Router from "vue-router";
+import { createRouter, createWebHistory } from "vue-router";
 import Album from "./views/albums/Album.vue";
 import Albums from "./views/albums/Albums.vue";
 import EditAlbum from "./views/albums/EditAlbum.vue";
@@ -34,9 +34,8 @@ import NewPlaylist from "./views/playlists/NewPlaylist.vue";
 import EditPlaylist from "./views/playlists/EditPlaylist.vue";
 import { useAuthStore } from "./store/auth";
 
-const router = new Router({
-  mode: "history",
-  base: import.meta.env.BASE_URL,
+const router = createRouter({
+  history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: "/app/",
@@ -161,7 +160,7 @@ const router = new Router({
           path: "stats",
           name: "stats",
           component: Stats,
-          props: (route) => ({ artist_id: +route.query.artist_id || null }),
+          props: (route) => ({ artistId: +route.query.artist_id || null }),
         },
         {
           path: "tracks",
@@ -213,7 +212,7 @@ const router = new Router({
         authOptional: true,
       },
     },
-    { path: "*", redirect: "/app/" },
+    { path: "/:catchAll(.*)", redirect: "/app/" },
   ],
   scrollBehavior(to, from, savedPosition) {
     if (to.path === from.path) {

@@ -11,15 +11,15 @@
       </VAlert>
       <VForm v-model="isValid" @submit.prevent="submit">
         <VTextField
-          :label="$t('common.name')"
           v-model="newArtist.name"
+          :label="$t('common.name')"
           :rules="[(v) => !!v || $t('errors.artists.name-blank')]"
           required
         />
         <ImagePicker
           v-model="newArtist.image"
-          :currentImg="artist && artist.image250"
-          :placeholder="require('@mdi/svg/svg/account-music.svg')"
+          :current-img="artist && artist.image250"
+          :placeholder="artistSvgUrl"
         />
         <VCheckbox
           v-if="artist && artist.review_comment !== null"
@@ -27,7 +27,7 @@
           :label="$tc('music.flag.clear', 1)"
         />
         <VBtn :disabled="!isValid" color="primary" class="ma-2" type="submit">
-          {{ this.artist ? $t("music.artist.update") : $t("music.artist.add") }}
+          {{ artist ? $t("music.artist.update") : $t("music.artist.add") }}
         </VBtn>
       </VForm>
     </VCol>
@@ -38,6 +38,7 @@
 import { mapActions } from "pinia";
 import ImagePicker from "./ImagePicker.vue";
 import { useArtistsStore } from "../store/artists";
+import artistSvgUrl from "@mdi/svg/svg/account-music.svg";
 
 export default {
   name: "ArtistForm",
@@ -53,13 +54,8 @@ export default {
       clear_review_comment: true,
       isDirty: false,
       isValid: true,
+      artistSvgUrl,
     };
-  },
-  async created() {
-    if (this.artist) {
-      await this.read(this.artist.id);
-      this.fillValues();
-    }
   },
   watch: {
     artist: function () {
@@ -67,6 +63,12 @@ export default {
         this.fillValues();
       }
     },
+  },
+  async created() {
+    if (this.artist) {
+      await this.read(this.artist.id);
+      this.fillValues();
+    }
   },
   methods: {
     ...mapActions(useArtistsStore, ["create", "read", "update"]),

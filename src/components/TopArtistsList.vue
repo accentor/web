@@ -11,9 +11,13 @@ import { calcPlayStatsForArtists } from "@/reducers";
 import TopList from "@/components/TopList.vue";
 import { useArtistsStore } from "../store/artists";
 import { useTracksStore } from "../store/tracks";
+import artistSvgUrl from "@mdi/svg/svg/account-music.svg";
 
 export default {
   name: "TopArtistsList",
+  components: {
+    TopList,
+  },
   props: {
     playStats: {
       type: Array,
@@ -27,9 +31,6 @@ export default {
       type: Boolean,
       default: false,
     },
-  },
-  components: {
-    TopList,
   },
   computed: {
     ...mapState(useArtistsStore, ["artists"]),
@@ -51,7 +52,7 @@ export default {
         return {
           count: tt[1],
           label: artist?.name,
-          image: artist?.image100 || require("@mdi/svg/svg/account-music.svg"),
+          image: artist?.image100 || artistSvgUrl,
         };
       });
     },

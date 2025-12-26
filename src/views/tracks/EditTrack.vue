@@ -1,5 +1,5 @@
 <template>
-  <VContainer class="fill-height" fluid v-if="track">
+  <VContainer v-if="track" class="fill-height" fluid>
     <VRow no-gutters align="center" justify="center">
       <VCol md="6" sm="8" cols="12" @change.once="isDirty = true">
         <VAlert
@@ -9,49 +9,48 @@
         >
           {{ track.review_comment }}
         </VAlert>
-        <VForm v-model="isValid" @submit.prevent="submit" v-if="loaded">
+        <VForm v-if="loaded" v-model="isValid" @submit.prevent="submit">
           <VTextField
+            v-model="newTrack.number"
             type="number"
             :label="$t('music.track.number')"
             :rules="rules.number"
             min="0"
             step="1"
-            v-model="newTrack.number"
           />
           <VTextField
+            v-model="newTrack.title"
             :label="$t('music.title')"
             :rules="[(v) => !!v || $t('errors.tracks.title-blank')]"
-            v-model="newTrack.title"
           />
           <VAutocomplete
+            v-model="newTrack.album_id"
             :items="sortedAlbums"
-            :filter="filterTitle"
-            item-text="title"
+            :custom-filter="filterTitle"
+            item-title="title"
             item-value="id"
             :label="$tc('music.albums', 1)"
-            v-model="newTrack.album_id"
           >
-            <template v-slot:item="{ item }">
+            <template #item="{ item }">
               {{ item.title }}
-              <span class="grey--text pl-2 ml-auto text-body-2">
+              <span class="text-grey pl-2 ml-auto text-body-2">
                 {{ item.id }}
               </span>
             </template>
           </VAutocomplete>
           <VCombobox
+            v-model="newTrack.genre_ids"
             :items="sortedGenres"
-            :filter="filterName"
-            cache-items
+            :custom-filter="filterName"
             chips
-            deletable-chips
-            item-text="name"
+            closable-chips
+            item-title="name"
             item-value="id"
             :label="$t('music.genre-s')"
             multiple
             return-object
             :rules="rules.genre"
-            validate-on-blur
-            v-model="newTrack.genre_ids"
+            validate-on="blur"
           />
           <h4 class="text-subtitle-1">{{ $tc("music.artists", 2) }}</h4>
           <TrackFormArtists
@@ -74,10 +73,10 @@
             </VBtn>
             <VSpacer />
             <VBtn
-              @click="addArtist"
-              @click.once="isDirty = true"
               color="success"
               class="ma-2"
+              @click="addArtist"
+              @click.once="isDirty = true"
             >
               {{ $t("music.artist.add") }}
             </VBtn>
@@ -97,8 +96,8 @@ import { useAlbumsStore } from "../../store/albums";
 import { useTracksStore } from "../../store/tracks";
 
 export default {
-  components: { TrackFormArtists },
   name: "EditTrack",
+  components: { TrackFormArtists },
   metaInfo() {
     return { title: this.$t("page-titles.edit", { obj: this.track.title }) };
   },
@@ -117,21 +116,6 @@ export default {
       isValid: true,
       loaded: false,
     };
-  },
-  async created() {
-    if (this.track) {
-      await this.read(this.track.id);
-      this.loaded = true;
-      this.fillValues();
-    }
-  },
-  watch: {
-    track: function () {
-      if (this.track && !this.isDirty) {
-        this.loaded = true;
-        this.fillValues();
-      }
-    },
   },
   computed: {
     ...mapState(useArtistsStore, {
@@ -180,6 +164,21 @@ export default {
 
       return rules;
     },
+  },
+  watch: {
+    track: function () {
+      if (this.track && !this.isDirty) {
+        this.loaded = true;
+        this.fillValues();
+      }
+    },
+  },
+  async created() {
+    if (this.track) {
+      await this.read(this.track.id);
+      this.loaded = true;
+      this.fillValues();
+    }
   },
   methods: {
     ...mapActions(useTracksStore, ["read", "update"]),
