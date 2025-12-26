@@ -29,14 +29,14 @@
         <VRow>
           <VCol
             v-for="item in props.items"
-            :key="item.id"
+            :key="item.raw.id"
             lg="3"
             md="4"
             sm="6"
             xl="2"
             cols="6"
           >
-            <LabelCard :label="item" />
+            <LabelCard :label="item.raw" />
           </VCol>
         </VRow>
       </template>
