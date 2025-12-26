@@ -23,12 +23,12 @@
           persistent
           width="290px"
         >
-          <template #activator="{ on }">
+          <template #activator="{ props }">
             <VTextField
               v-model="newAlbum.release"
               :label="$t('music.album.release')"
               readonly
-              v-on="on"
+              v-bind="props"
             ></VTextField>
           </template>
           <VDatePicker
@@ -67,13 +67,13 @@
           persistent
           width="290px"
         >
-          <template #activator="{ on }">
+          <template #activator="{ props }">
             <VTextField
               v-model="newAlbum.edition"
               :label="$t('music.album.edition')"
               readonly
               clearable
-              v-on="on"
+              v-bind="props"
             ></VTextField>
           </template>
           <VDatePicker

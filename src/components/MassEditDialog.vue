@@ -1,7 +1,12 @@
 <template>
   <VDialog v-model="dialog" fullscreen scrollable>
-    <template #activator="{ on }">
-      <VBtn color="edit" class="ma-2" :disabled="tracks.length === 0" v-on="on">
+    <template #activator="{ props }">
+      <VBtn
+        color="edit"
+        class="ma-2"
+        :disabled="tracks.length === 0"
+        v-bind="props"
+      >
         {{
           $tc("music.mass.edit-tracks", tracks.length, { count: tracks.length })
         }}
