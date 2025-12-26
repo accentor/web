@@ -5,7 +5,7 @@
     v-model="mergeModal"
     width="600px"
   >
-    <template #activator="{ on }">
+    <template #activator="{ props }">
       <VBtn
         :disabled="disabled"
         class="actions__button"
@@ -13,7 +13,7 @@
         variant="text"
         icon
         size="small"
-        v-on="on"
+        v-bind="props"
         @click.stop.prevent
       >
         <VIcon>mdi-merge</VIcon>

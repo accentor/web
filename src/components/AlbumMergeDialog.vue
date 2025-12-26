@@ -5,8 +5,8 @@
     v-model="mergeModal"
     width="600px"
   >
-    <template #activator="{ on }">
-      <VListItem :disabled="disabled" v-on="on">
+    <template #activator="{ props }">
+      <VListItem :disabled="disabled" v-bind="props">
         <template #prepend>
           <VIcon color="edit">mdi-merge</VIcon>
         </template>
