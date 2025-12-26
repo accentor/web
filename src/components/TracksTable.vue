@@ -18,19 +18,12 @@
       ref="table"
       v-model="selected"
       v-model:page="pagination.page"
-      v-model:sort-by="sortable.sortBy"
-      v-model:sort-desc="sortable.sortDesc"
-      :footer-props="{
-        disableItemsPerPage: true,
-        itemsPerPageOptions: [30],
-        showFirstLastPage: true,
-      }"
       :headers="headers"
       :items="filteredItems"
       :items-per-page="30"
+      :items-per-page-options="[30]"
       :show-select="isModerator"
       :single-select="singleSelect"
-      :custom-sort="sortFunction"
       class="elevation-3"
       @item-selected="emitSelected"
     >
@@ -39,9 +32,9 @@
       </template>
       <template v-if="!singleSelect" #header.data-table-select="props">
         <VCheckbox
-          :model-value="props.props.value"
-          :value="props.props.value"
-          :indeterminate="props.props.indeterminate"
+          :model-value="props.value"
+          :value="props.value"
+          :indeterminate="props.indeterminate"
           hide-details
           primary
           class="pb-4"
@@ -144,49 +137,58 @@ export default {
   data() {
     const headers = [
       {
-        text: "#",
+        title: "#",
         value: "number",
-        sortable: true,
         align: "center",
         width: "1px",
         class: "text-no-wrap",
+        key: "number",
       },
       {
-        text: this.$t("music.title"),
+        title: this.$t("music.title"),
         value: "title",
         class: "text-no-wrap",
+        sortRaw: (t1, t2) =>
+          compareStrings(t1.normalized_title, t2.normalized_title),
       },
       {
-        text: this.$t("music.track.length"),
+        title: this.$t("music.track.length"),
         value: "length",
         align: "end",
         width: "1px",
         class: "text-no-wrap",
+        key: "length",
       },
       {
-        text: this.$tc("music.albums", 1),
+        title: this.$tc("music.albums", 1),
         value: "album_id",
         class: "text-no-wrap",
+        sortRaw: compareTracks(this.albums),
       },
       {
-        text: this.$t("music.artist.artist-s"),
+        title: this.$t("music.artist.artist-s"),
         value: "track_artists",
         class: "text-no-wrap",
+        sortRaw: compareTracksByArtist,
       },
       {
-        text: this.$t("music.genre-s"),
+        title: this.$t("music.genre-s"),
         value: "genre_ids",
         class: "text-no-wrap",
+        sortRaw: compareTracksByGenre(this.genres),
       },
       {
-        text: this.$t("music.play-count"),
+        title: this.$t("music.play-count"),
         value: "play_count",
         align: "end",
         width: "1px",
         class: "text-no-wrap",
+        sortRaw: (t1, t2) =>
+          (this.playStatsByTrack[t1.id]?.count || 0) -
+          (this.playStatsByTrack[t2.id]?.count || 0),
       },
       {
-        text: this.$t("common.actions"),
+        title: this.$t("common.actions"),
         value: "actions",
         sortable: false,
         align: "end",
@@ -239,36 +241,6 @@ export default {
     },
     reloadSelected() {
       this.selected = this.selected.map((s) => this.tracksObj[s.id]);
-    },
-    sortFunction(items, sortBy, sortDesc) {
-      let sortFunction = null;
-      switch (sortBy[0]) {
-        case "album_id":
-          sortFunction = compareTracks(this.albums);
-          break;
-        case "genre_ids":
-          sortFunction = compareTracksByGenre(this.genres);
-          break;
-        case "length":
-          sortFunction = (t1, t2) => t1.length - t2.length;
-          break;
-        case "number":
-          sortFunction = (t1, t2) => t1.number - t2.number;
-          break;
-        case "play_count":
-          sortFunction = (t1, t2) =>
-            (this.playStatsByTrack[t1.id]?.count || 0) -
-            (this.playStatsByTrack[t2.id]?.count || 0);
-          break;
-        case "title":
-          sortFunction = (t1, t2) =>
-            compareStrings(t1.normalized_title, t2.normalized_title);
-          break;
-        case "track_artists":
-          sortFunction = compareTracksByArtist;
-      }
-      const sorted = sortFunction ? items.sort(sortFunction) : items;
-      return sortDesc[0] ? sorted.reverse() : sorted;
     },
   },
 };
