@@ -32,33 +32,33 @@
         <VRow>
           <VCol
             v-for="item in props.items"
-            :key="item.id"
+            :key="item.raw.id"
             lg="3"
             md="4"
             sm="6"
             xl="2"
             cols="6"
           >
-            <VCard :to="{ name: 'playlist', params: { id: item.id } }">
+            <VCard :to="{ name: 'playlist', params: { id: item.raw.id } }">
               <VCardTitle>
-                {{ item.name }}
+                {{ item.raw.name }}
               </VCardTitle>
               <VCardText>
                 <span class="d-block">
-                  {{ users[item.user_id].name }} &bull;
-                  {{ $t(`music.playlist.access_options.${item.access}`) }}
+                  {{ users[item.raw.user_id].name }} &bull;
+                  {{ $t(`music.playlist.access_options.${item.raw.access}`) }}
                 </span>
                 <span>
                   {{
                     $tc(
-                      `music.playlist.item_counts.${item.playlist_type}`,
-                      item.item_ids.length,
+                      `music.playlist.item_counts.${item.raw.playlist_type}`,
+                      item.raw.item_ids.length,
                     )
                   }}
                 </span>
               </VCardText>
               <VCardActions>
-                <PlaylistActions :playlist="item" />
+                <PlaylistActions :playlist="item.raw" />
               </VCardActions>
             </VCard>
           </VCol>

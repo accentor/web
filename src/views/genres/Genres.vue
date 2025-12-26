@@ -28,14 +28,14 @@
         <VRow>
           <VCol
             v-for="item in props.items"
-            :key="item.name"
+            :key="item.raw.name"
             lg="3"
             md="4"
             sm="6"
             xl="2"
             cols="6"
           >
-            <GenreCard :genre="item" />
+            <GenreCard :genre="item.raw" />
           </VCol>
         </VRow>
       </template>
