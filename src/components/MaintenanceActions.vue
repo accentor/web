@@ -1,8 +1,8 @@
 <template>
   <span>
     <VTooltip location="bottom" :disabled="tracksEmpty.length > 0">
-      <template #activator="{ on }">
-        <span v-on="on">
+      <template #activator="{ props }">
+        <span v-bind="props">
           <VBtn
             :to="{ name: 'tracks-without-audio' }"
             :disabled="tracksEmpty.length === 0"
