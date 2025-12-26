@@ -20,7 +20,7 @@
               class="top-item__count font-weight-medium white--text"
               v-if="widths[index] > 10 && showLength"
             >
-              {{ item.count | length }}
+              {{ $filters.length(item.count) }}
             </span>
             <span
               class="top-item__count font-weight-medium white--text"
@@ -34,7 +34,7 @@
             :style="{ 'margin-left': `${animatedWidths[index]}%` }"
             v-if="widths[index] <= 10 && showLength"
           >
-            {{ item.count | length }}
+            {{ $filters.length(item.count) }}
           </span>
           <span
             class="top-item__count top-item__count--backup font-weight-medium primary--text"
