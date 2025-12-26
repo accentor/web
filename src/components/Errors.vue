@@ -1,6 +1,6 @@
 <template>
   <VAlert
-    :value="errors.length > 0"
+    :model-value="errors.length > 0"
     closable
     type="error"
     @update:model-value="clearErrors"
