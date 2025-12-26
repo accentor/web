@@ -1,8 +1,8 @@
 <template>
   <span v-if="isModerator">
     <VTooltip location="bottom" :disabled="!waitingForReload">
-      <template #activator="{ on }">
-        <span v-on="on">
+      <template #activator="{ props }">
+        <span v-bind="props">
           <VBtn
             :to="{
               name: 'edit-genre',
@@ -23,16 +23,16 @@
       <span>{{ $t("common.disabled-while-loading") }}</span>
     </VTooltip>
     <VTooltip location="bottom" :disabled="!waitingForReload">
-      <template #activator="{ on }">
-        <span v-on="on">
+      <template #activator="{ props }">
+        <span v-bind="props">
           <GenreMergeDialog :genre="genre" :disabled="waitingForReload" />
         </span>
       </template>
       <span>{{ $t("common.disabled-while-loading") }}</span>
     </VTooltip>
     <VTooltip location="bottom" :disabled="!waitingForReload">
-      <template #activator="{ on }">
-        <span v-on="on">
+      <template #activator="{ props }">
+        <span v-bind="props">
           <VBtn
             :disabled="waitingForReload"
             color="danger"

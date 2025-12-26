@@ -5,10 +5,9 @@
       :items="periodPresets"
       :label="$t('components.dateRangeSelect.label')"
     >
-      <template #item="{ item, on, attrs }">
+      <template #item="{ item, props }">
         <VListItem
-          v-bind="attrs"
-          v-on="on"
+          v-bind="props"
           @click="showCustomRangeModal = item.value === 'customRange'"
         >
           {{ item.text }}

@@ -68,8 +68,8 @@
           {{ $filters.length(props.value) }}
         </span>
         <VTooltip v-else location="bottom">
-          <template #activator="{ on }">
-            <span class="white-space-nowrap" v-on="on">
+          <template #activator="{ props: innerProps }">
+            <span class="white-space-nowrap" v-bind="innerProps">
               <VIcon size="small" color="red" class="pr-2">mdi-alert</VIcon
               >--:--
             </span>

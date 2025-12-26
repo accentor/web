@@ -1,13 +1,13 @@
 <template>
   <VDialog v-if="playlistOptions.length" v-model="dialog" width="600px">
-    <template #activator="{ on }">
+    <template #activator="{ props }">
       <VBtn
         class="actions__button"
         color="primary"
         variant="text"
         icon
         size="small"
-        v-on="on"
+        v-bind="props"
         @click.stop.prevent
       >
         <VIcon>mdi-playlist-plus</VIcon>
@@ -32,8 +32,8 @@
                 :label="$tc('music.playlists', 1)"
                 return-object
               >
-                <template #item="{ item: innerItem, on }">
-                  <VListItem :disabled="innerItem.disabled" v-on="on">
+                <template #item="{ item: innerItem, props }">
+                  <VListItem :disabled="innerItem.disabled" v-bind="props">
                     {{ innerItem.name }}
                     <span v-if="innerItem.disabled">
                       &nbsp;({{ $t("music.playlist.item-already-present") }})

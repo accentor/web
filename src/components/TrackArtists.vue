@@ -1,8 +1,8 @@
 <template>
   <div v-if="track_artists.length !== 0">
     <VMenu open-on-hover>
-      <template #activator="{ on }">
-        <div v-on="on">
+      <template #activator="{ props }">
+        <div v-bind="props">
           {{
             track_artists
               .filter((a) => !a.hidden)

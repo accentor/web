@@ -29,14 +29,13 @@
           location="bottom left"
           :persistent="false"
         >
-          <template #activator="{ on, attrs }">
+          <template #activator="{ props }">
             <VBtn
               color="success"
               variant="flat"
-              v-bind="attrs"
+              v-bind="props"
               min-width="0"
               class="button-group__button px-2"
-              v-on="on"
             >
               <VIcon class="text-white">mdi-menu-down</VIcon>
             </VBtn>
