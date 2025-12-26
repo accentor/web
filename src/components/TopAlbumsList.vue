@@ -29,6 +29,9 @@ import albumSvgUrl from "@mdi/svg/svg/album.svg";
 
 export default {
   name: "TopAlbumsList",
+  components: {
+    TopList,
+  },
   props: {
     playStats: {
       type: Array,
@@ -47,9 +50,6 @@ export default {
     return {
       useAverage: true,
     };
-  },
-  components: {
-    TopList,
   },
   computed: {
     ...mapState(useAlbumsStore, ["albums"]),

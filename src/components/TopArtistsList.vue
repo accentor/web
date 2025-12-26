@@ -15,6 +15,9 @@ import artistSvgUrl from "@mdi/svg/svg/account-music.svg";
 
 export default {
   name: "TopArtistsList",
+  components: {
+    TopList,
+  },
   props: {
     playStats: {
       type: Array,
@@ -28,9 +31,6 @@ export default {
       type: Boolean,
       default: false,
     },
-  },
-  components: {
-    TopList,
   },
   computed: {
     ...mapState(useArtistsStore, ["artists"]),

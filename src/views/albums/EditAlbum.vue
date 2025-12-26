@@ -1,5 +1,5 @@
 <template>
-  <VContainer class="fill-height" fluid v-if="album">
+  <VContainer v-if="album" class="fill-height" fluid>
     <AlbumForm :album="album" />
   </VContainer>
 </template>

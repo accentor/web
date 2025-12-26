@@ -1,7 +1,7 @@
 <template>
   <ol class="top-list">
     <li v-for="(item, index) in listData" :key="index" class="top-item">
-      <VImg :src="item.image" class="top-item__cover" v-if="item.image" />
+      <VImg v-if="item.image" :src="item.image" class="top-item__cover" />
       <div class="top-item__stat">
         <span class="top-item__text">
           <span class="top-item__position font-weight-medium">
@@ -13,33 +13,33 @@
         </span>
         <div class="top-item__bg-wrapper">
           <div
-            class="top-item__bg primary"
+            class="top-item__bg bg-primary"
             :style="{ width: `${animatedWidths[index]}%` }"
           >
             <span
-              class="top-item__count font-weight-medium white--text"
               v-if="widths[index] > 10 && showLength"
+              class="top-item__count font-weight-medium text-white"
             >
               {{ $filters.length(item.count) }}
             </span>
             <span
-              class="top-item__count font-weight-medium white--text"
               v-else-if="widths[index] > 10"
+              class="top-item__count font-weight-medium text-white"
             >
               {{ item.count }}
             </span>
           </div>
           <span
-            class="top-item__count top-item__count--backup font-weight-medium primary--text"
-            :style="{ 'margin-left': `${animatedWidths[index]}%` }"
             v-if="widths[index] <= 10 && showLength"
+            class="top-item__count top-item__count--backup font-weight-medium text-primary"
+            :style="{ 'margin-left': `${animatedWidths[index]}%` }"
           >
             {{ $filters.length(item.count) }}
           </span>
           <span
-            class="top-item__count top-item__count--backup font-weight-medium primary--text"
-            :style="{ 'margin-left': `${animatedWidths[index]}%` }"
             v-else-if="widths[index] <= 10"
+            class="top-item__count top-item__count--backup font-weight-medium text-primary"
+            :style="{ 'margin-left': `${animatedWidths[index]}%` }"
           >
             {{ item.count }}
           </span>

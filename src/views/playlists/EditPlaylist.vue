@@ -1,5 +1,5 @@
 <template>
-  <VContainer class="fill-height" fluid v-if="playlist">
+  <VContainer v-if="playlist" class="fill-height" fluid>
     <PlaylistForm :playlist="playlist" />
   </VContainer>
 </template>

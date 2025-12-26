@@ -1,5 +1,5 @@
 <template>
-  <VContainer fluid v-if="genre">
+  <VContainer v-if="genre" fluid>
     <VRow>
       <VCol cols="12">
         <div>
@@ -39,12 +39,6 @@ export default {
       required: true,
     },
   },
-  watch: {
-    id: {
-      handler: "fetchContent",
-      immediate: true,
-    },
-  },
   computed: {
     ...mapState(useAuthStore, ["isModerator"]),
     ...mapState(useGenresStore, ["genres"]),
@@ -53,6 +47,12 @@ export default {
     },
     genre: function () {
       return this.genres[this.$route.params.id];
+    },
+  },
+  watch: {
+    id: {
+      handler: "fetchContent",
+      immediate: true,
     },
   },
   methods: {

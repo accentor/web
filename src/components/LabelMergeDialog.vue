@@ -1,20 +1,20 @@
 <template>
   <VDialog
+    v-if="isModerator"
     ref="dialogMerge"
     v-model="mergeModal"
-    v-if="isModerator"
     width="600px"
   >
-    <template v-slot:activator="{ on }">
+    <template #activator="{ on }">
       <VBtn
-        v-on="on"
         :disabled="disabled"
-        @click.stop.prevent
         class="actions__button"
         color="edit"
-        text
+        variant="text"
         icon
-        small
+        size="small"
+        v-on="on"
+        @click.stop.prevent
       >
         <VIcon>mdi-merge</VIcon>
       </VBtn>
@@ -30,18 +30,17 @@
           <VRow>
             <VCol cols="12">
               <VCombobox
+                v-model="mergeLabel"
                 :items="sortedLabels"
-                :filter="filterName"
-                cache-items
-                item-text="name"
+                :custom-filter="filterName"
+                item-title="name"
                 item-value="id"
                 :label="$tc('music.labels', 1)"
                 return-object
-                v-model="mergeLabel"
               >
-                <template v-slot:item="{ item }">
+                <template #item="{ item }">
                   {{ item.name }}
-                  <span class="grey--text pl-2 ml-auto text-body-2">
+                  <span class="text-grey pl-2 ml-auto text-body-2">
                     {{ item.id }}
                   </span>
                 </template>

@@ -1,5 +1,5 @@
 <template>
-  <VForm v-model="isValid" ref="form" lazy-validation>
+  <VForm ref="form" v-model="isValid">
     <VRow>
       <VCol cols="6">
         <VTextField
@@ -21,7 +21,7 @@
         <VBtn
           :disabled="!isValid"
           icon
-          outlined
+          variant="outlined"
           :color="(codec && 'info') || 'success'"
           class="ma-2"
           @click="saveCodec"
@@ -31,9 +31,9 @@
           </VIcon>
         </VBtn>
         <VBtn
-          icon
-          outlined
           v-if="codec"
+          icon
+          variant="outlined"
           color="danger"
           class="ma-2"
           @click="deleteCodec"
@@ -61,20 +61,6 @@ export default {
       isValid: true,
     };
   },
-  created() {
-    this.$nextTick(() => {
-      if (this.codec) {
-        this.fillValues();
-      }
-    });
-  },
-  watch: {
-    album: function () {
-      if (this.codec) {
-        this.fillValues();
-      }
-    },
-  },
   computed: {
     ...mapState(useCodecsStore, { codecs: "allCodecs" }),
     rules() {
@@ -91,6 +77,20 @@ export default {
 
       return rules;
     },
+  },
+  watch: {
+    album: function () {
+      if (this.codec) {
+        this.fillValues();
+      }
+    },
+  },
+  created() {
+    this.$nextTick(() => {
+      if (this.codec) {
+        this.fillValues();
+      }
+    });
   },
   methods: {
     ...mapActions(useCodecsStore, ["destroy", "update", "create"]),

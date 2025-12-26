@@ -1,18 +1,18 @@
 <template>
-  <VContainer class="fill-height" v-if="track">
+  <VContainer v-if="track" class="fill-height">
     <VRow>
       <VCol lg="9" md="8" sm="6" cols="12">
         <div class="text-h4">
           {{ $t("music.track.merge.title", { obj: track.title }) }}
         </div>
-        <div class="grey--text">
+        <div class="text-grey">
           {{ $t("music.track.merge.explanation") }}
         </div>
       </VCol>
     </VRow>
     <VRow>
-      <VSimpleTable class="text-left merge-table">
-        <template v-slot:default>
+      <v-table class="text-left merge-table">
+        <template #default>
           <thead>
             <tr>
               <th>{{ $t("music.track.merge.original") }}</th>
@@ -74,15 +74,15 @@
                 <VIcon v-if="!reversed && newID">mdi-arrow-right</VIcon>
               </td>
               <td class="text-center">
-                <TrackArtists :track="result" v-if="result.track_artists" />
+                <TrackArtists v-if="result.track_artists" :track="result" />
                 <span v-else>-</span>
               </td>
               <td :class="{ 'd-flex justify-space-between': reversed }">
                 <VIcon v-if="reversed && newID">mdi-arrow-left</VIcon>
                 <TrackArtists
+                  v-if="selectedTrack.track_artists"
                   class="my-auto text-right"
                   :track="selectedTrack"
-                  v-if="selectedTrack.track_artists"
                 />
                 <span v-else>-</span>
               </td>
@@ -93,15 +93,15 @@
                 <VIcon v-if="!reversed && newID">mdi-arrow-right</VIcon>
               </td>
               <td class="text-center">
-                <TrackGenres :track="result" v-if="result.genre_ids" />
+                <TrackGenres v-if="result.genre_ids" :track="result" />
                 <span v-else>-</span>
               </td>
               <td :class="{ 'd-flex justify-space-between': reversed }">
                 <VIcon v-if="reversed && newID">mdi-arrow-left</VIcon>
                 <TrackGenres
+                  v-if="selectedTrack.genre_ids"
                   class="my-auto text-right"
                   :track="selectedTrack"
-                  v-if="selectedTrack.genre_ids"
                 />
                 <span v-else>-</span>
               </td>
@@ -137,19 +137,19 @@
                   v-if="result.file.selected && selectedTrack.filename && newID"
                   >mdi-arrow-left</VIcon
                 >
-                <span class="my-auto text-right" v-if="selectedTrack">
+                <span v-if="selectedTrack" class="my-auto text-right">
                   {{
                     selectedTrack.filename
                       ? selectedTrack.filename
                       : $t("music.track.empty")
                   }}
                 </span>
-                <span class="my-auto text-right" v-else> - </span>
+                <span v-else class="my-auto text-right"> - </span>
               </td>
             </tr>
           </tbody>
         </template>
-      </VSimpleTable>
+      </v-table>
     </VRow>
     <VRow>
       <VCol class="d-flex justify-center">
@@ -186,10 +186,10 @@
       <VCol>
         <TracksTable
           :tracks="mergeOptions"
-          :showSearch="true"
-          :showActions="false"
-          :showMassEdit="false"
-          :singleSelect="true"
+          :show-search="true"
+          :show-actions="false"
+          :show-mass-edit="false"
+          :single-select="true"
           @selected="setNewID"
         />
       </VCol>

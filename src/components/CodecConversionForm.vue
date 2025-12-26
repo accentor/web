@@ -1,5 +1,5 @@
 <template>
-  <VForm v-model="isValid" ref="form" lazy-validation>
+  <VForm ref="form" v-model="isValid">
     <VRow>
       <VCol cols="3">
         <VTextField
@@ -19,11 +19,11 @@
       </VCol>
       <VCol cols="3">
         <VAutocomplete
+          v-model="newCodecConversion.resulting_codec_id"
           :items="codecs"
           :label="$t('library.resulting-codec')"
-          v-model="newCodecConversion.resulting_codec_id"
           item-value="id"
-          item-text="extension"
+          item-title="extension"
           required
           :rules="[(v) => !!v || $t('errors.codecconv.result-blank')]"
         />
@@ -31,7 +31,7 @@
       <VCol cols="2" sm="1">
         <VBtn
           icon
-          outlined
+          variant="outlined"
           :disabled="!isValid"
           :color="(codecConversion && 'info') || 'success'"
           class="ma-2"
@@ -42,9 +42,9 @@
           </VIcon>
         </VBtn>
         <VBtn
-          icon
-          outlined
           v-if="codecConversion"
+          icon
+          variant="outlined"
           color="danger"
           class="ma-2"
           @click="deleteCodecConversion"
@@ -74,20 +74,6 @@ export default {
       isValid: true,
     };
   },
-  created() {
-    this.$nextTick(() => {
-      if (this.codecConversion) {
-        this.fillValues();
-      }
-    });
-  },
-  watch: {
-    album: function () {
-      if (this.codecConversion) {
-        this.fillValues();
-      }
-    },
-  },
   computed: {
     ...mapState(useCodecsStore, { codecs: "allCodecs" }),
     ...mapState(useCodecConversionsStore, {
@@ -107,6 +93,20 @@ export default {
       rules.name.push(nameTaken);
       return rules;
     },
+  },
+  watch: {
+    album: function () {
+      if (this.codecConversion) {
+        this.fillValues();
+      }
+    },
+  },
+  created() {
+    this.$nextTick(() => {
+      if (this.codecConversion) {
+        this.fillValues();
+      }
+    });
   },
   methods: {
     fillValues() {

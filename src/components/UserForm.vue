@@ -1,43 +1,43 @@
 <template>
   <div @change="isDirty = true">
-    <VForm v-model="isValid" ref="userForm" @submit.prevent="submit">
+    <VForm ref="userForm" v-model="isValid" @submit.prevent="submit">
       <VTextField
-        :label="$t('common.name')"
         v-model="newUser.name"
+        :label="$t('common.name')"
         autocomplete="username"
         required
         :rules="[(v) => !!v || $t('errors.user.name-blank')]"
       />
       <VTextField
         v-if="user === currentUser"
+        v-model="newUser.current_password"
         :label="$t('users.current-password')"
         type="password"
         autocomplete="current-password"
-        v-model="newUser.current_password"
         :rules="rules.current"
       />
       <VTextField
+        v-model="newUser.password"
         :label="$t('users.password')"
         type="password"
         autocomplete="new-password"
-        v-model="newUser.password"
         :rules="rules.password"
       />
       <VTextField
+        v-model="newUser.password_confirmation"
         :label="$t('users.confirm-password')"
         type="password"
         autocomplete="new-password"
-        v-model="newUser.password_confirmation"
         :rules="rules.confirmation"
       />
       <VSelect
         v-if="showPermissions"
+        v-model="newUser.permission"
         :items="permissionOptions"
         :label="$t('users.permissions')"
-        v-model="newUser.permission"
       />
       <VBtn color="primary" class="ma-2" type="submit">
-        {{ this.user ? $t("users.update") : $t("users.create") }}
+        {{ user ? $t("users.update") : $t("users.create") }}
       </VBtn>
     </VForm>
   </div>
@@ -73,20 +73,6 @@ export default {
       isValid: true,
     };
   },
-  created() {
-    this.$nextTick(() => {
-      if (this.user) {
-        this.fillValues();
-      }
-    });
-  },
-  watch: {
-    user: function () {
-      if (this.user && !this.isDirty) {
-        this.fillValues();
-      }
-    },
-  },
   computed: {
     ...mapState(useAuthStore, ["currentUser"]),
     rules() {
@@ -117,6 +103,20 @@ export default {
       }
       return rules;
     },
+  },
+  watch: {
+    user: function () {
+      if (this.user && !this.isDirty) {
+        this.fillValues();
+      }
+    },
+  },
+  created() {
+    this.$nextTick(() => {
+      if (this.user) {
+        this.fillValues();
+      }
+    });
   },
   methods: {
     ...mapActions(useUsersStore, ["create", "update"]),
