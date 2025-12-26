@@ -22,16 +22,5 @@ export default defineConfig({
     alias: {
       '@': path.resolve(__dirname, './src'),
     }
-  },
-  css: {
-    preprocessorOptions: {
-      // Vuetify somehow needs this to be in sass, while the rest of the build needs it to be in scss
-      scss: {
-          additionalData: `@import "@/sass/main.scss";\n`
-      },
-      sass: {
-          additionalData: `@import "@/sass/main.scss";\n`
-      }
-    }
-  },
+  }
 });
