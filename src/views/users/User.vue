@@ -1,9 +1,9 @@
 <template>
-  <VContainer fluid v-if="user">
+  <VContainer v-if="user" fluid>
     <VRow>
       <VCol>
         <div class="text-h4">{{ user.name }}</div>
-        <span class="grey--text">
+        <span class="text-grey">
           {{ user.permission }}
         </span>
       </VCol>
@@ -20,17 +20,17 @@ export default {
   metaInfo() {
     return { title: this.user.name };
   },
+  computed: {
+    ...mapState(useUsersStore, ["users"]),
+    user: function () {
+      return this.users[this.$route.params.id];
+    },
+  },
   watch: {
     user: function () {
       if (this.user === undefined) {
         this.$router.go(-1);
       }
-    },
-  },
-  computed: {
-    ...mapState(useUsersStore, ["users"]),
-    user: function () {
-      return this.users[this.$route.params.id];
     },
   },
 };

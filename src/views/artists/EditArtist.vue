@@ -1,5 +1,5 @@
 <template>
-  <VContainer class="fill-height" fluid v-if="artist">
+  <VContainer v-if="artist" class="fill-height" fluid>
     <ArtistForm :artist="artist" />
   </VContainer>
 </template>

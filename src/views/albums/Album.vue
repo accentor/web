@@ -1,20 +1,20 @@
 <template>
-  <VContainer fluid v-if="album">
+  <VContainer v-if="album" fluid>
     <VRow>
       <VCol
+        v-if="album.image500 && !imageUnavailable"
         lg="3"
         md="4"
         sm="6"
-        v-if="album.image500 && !imageUnavailable"
         cols="12"
       >
         <VImg :src="album.image500" class="elevation-3" />
       </VCol>
       <VCol
+        v-else-if="album.image && !imageUnavailable"
         lg="3"
         md="4"
         sm="6"
-        v-else-if="album.image && !imageUnavailable"
         cols="12"
       >
         <VImg :src="album.image" class="elevation-3" />
@@ -23,22 +23,22 @@
         <div>
           <div class="text-h4">
             {{ album.title }}
-            <span v-if="album.edition_description !== null" class="grey--text">
+            <span v-if="album.edition_description !== null" class="text-grey">
               ({{ album.edition_description }})
             </span>
           </div>
           <AlbumArtists :album="album" />
-          <div class="grey--text" v-if="album.edition === null">
+          <div v-if="album.edition === null" class="text-grey">
             {{ album.release }}
           </div>
-          <div class="grey--text" v-else>
+          <div v-else class="text-grey">
             <div>{{ album.release }} ({{ $t("music.album.original") }})</div>
             <div>{{ album.edition }} ({{ $t("music.album.edition") }})</div>
           </div>
           <div
-            class="grey--text"
             v-for="al of album_labels"
             :key="`${al.label_id} ${al.catalogue_number}`"
+            class="text-grey"
           >
             <RouterLink :to="{ name: 'label', params: { id: al.label_id } }">
               {{ labels[al.label_id].name }}
@@ -46,7 +46,7 @@
             -
             {{ al.catalogue_number || $t("music.label.catalogue-number-none") }}
           </div>
-          <div class="grey--text mt-4 mb-4" v-if="playlists.length">
+          <div v-if="playlists.length" class="text-grey mt-4 mb-4">
             {{ $tc("music.album.in-playlists", playlists.length) }}
             <ul>
               <li v-for="playlist in playlists" :key="playlist.id">
@@ -101,12 +101,6 @@ export default {
       imageUnavailable: false,
     };
   },
-  watch: {
-    id: {
-      handler: "fetchContent",
-      immediate: true,
-    },
-  },
   computed: {
     ...mapState(useAlbumsStore, ["albums"]),
     ...mapState(useLabelsStore, ["labels"]),
@@ -126,6 +120,12 @@ export default {
       return this.storePlaylists.filter((p) =>
         p.item_ids.includes(this.album.id),
       );
+    },
+  },
+  watch: {
+    id: {
+      handler: "fetchContent",
+      immediate: true,
     },
   },
   methods: {

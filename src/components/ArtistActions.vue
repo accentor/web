@@ -1,23 +1,27 @@
 <template>
   <span class="actions">
     <VBtn
+      v-if="extended"
       :to="{
         name: 'stats',
         query: { artist_id: artist.id },
       }"
       color="primary"
       class="actions__button"
-      text
+      variant="text"
       icon
-      small
-      v-if="extended"
+      size="small"
     >
       <VIcon>mdi-chart-bar</VIcon>
     </VBtn>
     <AddToPlaylist :item="artist" type="artist" />
     <EditReviewComment :item="artist" :update="flag" />
-    <VTooltip bottom :disabled="!waitingForReload" v-if="isModerator">
-      <template v-slot:activator="{ on }">
+    <VTooltip
+      v-if="isModerator"
+      location="bottom"
+      :disabled="!waitingForReload"
+    >
+      <template #activator="{ on }">
         <span v-on="on">
           <VBtn
             :to="{
@@ -28,9 +32,9 @@
             :disabled="waitingForReload"
             color="edit"
             class="actions__button"
-            text
+            variant="text"
             icon
-            small
+            size="small"
           >
             <VIcon>mdi-pencil</VIcon>
           </VBtn>
@@ -38,26 +42,34 @@
       </template>
       <span>{{ $t("common.disabled-while-loading") }}</span>
     </VTooltip>
-    <VTooltip bottom :disabled="!waitingForReload" v-if="isModerator">
-      <template v-slot:activator="{ on }">
+    <VTooltip
+      v-if="isModerator"
+      location="bottom"
+      :disabled="!waitingForReload"
+    >
+      <template #activator="{ on }">
         <span v-on="on">
           <ArtistMergeDialog :artist="artist" :disabled="waitingForReload" />
         </span>
       </template>
       <span>{{ $t("common.disabled-while-loading") }}</span>
     </VTooltip>
-    <VTooltip bottom :disabled="!waitingForReload" v-if="isModerator">
-      <template v-slot:activator="{ on }">
+    <VTooltip
+      v-if="isModerator"
+      location="bottom"
+      :disabled="!waitingForReload"
+    >
+      <template #activator="{ on }">
         <span v-on="on">
           <VBtn
-            @click.stop.prevent="deleteArtist"
             :disabled="waitingForReload"
             color="danger"
             class="actions__button mr-0"
             href="#"
-            text
+            variant="text"
             icon
-            small
+            size="small"
+            @click.stop.prevent="deleteArtist"
           >
             <VIcon>mdi-delete</VIcon>
           </VBtn>

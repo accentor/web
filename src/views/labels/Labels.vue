@@ -1,6 +1,8 @@
 <template>
   <VContainer fluid>
     <VDataIterator
+      v-if="labels.length > 0"
+      v-model:page="pagination.page"
       :footer-props="{
         disableItemsPerPage: true,
         itemsPerPageOptions: [numberOfItems],
@@ -8,31 +10,29 @@
       }"
       :items="filteredItems"
       :items-per-page="numberOfItems"
-      :page.sync="pagination.page"
-      v-if="labels.length > 0"
     >
-      <template v-slot:header>
+      <template #header>
         <VRow class="mb-2" justify="end">
           <VCol lg="4" md="6" sm="8" xl="2" cols="12">
             <VTextField
+              v-if="labels.length > numberOfItems"
+              v-model="search"
               :label="$t('common.search')"
               hide-details
               prepend-inner-icon="mdi-magnify"
               single-line
-              v-if="labels.length > numberOfItems"
-              v-model="search"
             />
           </VCol>
         </VRow>
       </template>
-      <template v-slot:default="props">
+      <template #default="props">
         <VRow>
           <VCol
+            v-for="item in props.items"
             :key="item.id"
             lg="3"
             md="4"
             sm="6"
-            v-for="item in props.items"
             xl="2"
             cols="6"
           >

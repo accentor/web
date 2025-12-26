@@ -1,5 +1,5 @@
 <template>
-  <VContainer class="fill-height" fluid v-if="user">
+  <VContainer v-if="user" class="fill-height" fluid>
     <VRow no-gutters align="center" justify="center">
       <VCol lg="4" md="6" sm="8" cols="12" class="px-3">
         <VForm @submit.prevent="submitSettings">
@@ -19,12 +19,12 @@
         </VForm>
       </VCol>
       <VCol lg="4" md="6" sm="8" cols="12" class="px-3">
-        <UserForm :user="user" redirectFallback="home" />
+        <UserForm :user="user" redirect-fallback="home" />
       </VCol>
     </VRow>
     <VRow>
       <VCol>
-        <AuthTokensTable :authTokens="authTokens" />
+        <AuthTokensTable :auth-tokens="authTokens" />
       </VCol>
     </VRow>
   </VContainer>
@@ -55,16 +55,6 @@ export default {
       newCodecConversion: null,
     };
   },
-  created() {
-    this.$nextTick(() => {
-      this.fillValues();
-    });
-  },
-  watch: {
-    locale() {
-      this.fillValues();
-    },
-  },
   computed: {
     ...mapState(useAuthStore, { user: "currentUser" }),
     ...mapState(useAuthTokensStore, ["authTokens"]),
@@ -84,6 +74,16 @@ export default {
         [{ text: this.$t("settings.codec-conversion.original"), value: null }],
       );
     },
+  },
+  watch: {
+    locale() {
+      this.fillValues();
+    },
+  },
+  created() {
+    this.$nextTick(() => {
+      this.fillValues();
+    });
   },
   methods: {
     ...mapActions(useUserSettingsStore, ["setSettings"]),

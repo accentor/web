@@ -4,12 +4,12 @@
       {{ $tc("common.images", 1) }}
     </label>
     <input
-      @change="handleSelect"
-      class="d-none"
       ref="picker"
+      class="d-none"
       type="file"
       accept="image/*"
       name="image"
+      @change="handleSelect"
     />
     <VRow>
       <VCol
@@ -18,43 +18,42 @@
         @drop.prevent="handleDrop"
       >
         <VImg
+          v-if="value && value.data"
           :src="previewSrc"
           height="200"
           width="200"
-          contain
-          v-if="value && value.data"
+          cover
         />
         <VImg
+          v-else-if="value === null && currentImg"
           :src="currentImg"
           height="200"
           width="200"
-          contain
-          v-else-if="value === null && currentImg"
+          cover
         />
         <VImg
+          v-else
           :src="placeholder"
           :aspect-ratio="1"
-          class="grey lighten-3"
+          class="bg-grey-lighten-3"
           height="200"
           width="200"
-          contain
-          v-else
+          cover
         />
       </VCol>
       <VCol class="flex-column d-flex flex-grow-0 justify-center">
         <VBtn
+          color="primary"
+          class="ma-2"
           @click="passthrough"
           @dragover.prevent="() => {}"
           @drop.prevent="handleDrop"
-          color="primary"
-          class="ma-2"
-          dark
         >
-          <VIcon left>mdi-upload</VIcon>
+          <VIcon start>mdi-upload</VIcon>
           {{ hasImage ? $t("common.replace") : $t("common.choose-image") }}
         </VBtn>
-        <VBtn @click.stop="clear" class="ma-2" elevation="0" v-if="hasImage">
-          <VIcon left>mdi-close</VIcon>
+        <VBtn v-if="hasImage" class="ma-2" elevation="0" @click.stop="clear">
+          <VIcon start>mdi-close</VIcon>
           clear
         </VBtn>
       </VCol>
@@ -83,6 +82,7 @@ export default {
       required: true,
     },
   },
+  emits: ["input"],
   computed: {
     previewSrc() {
       return (

@@ -1,4 +1,4 @@
-import {createRouter, createWebHistory} from "vue-router";
+import { createRouter, createWebHistory } from "vue-router";
 import Album from "./views/albums/Album.vue";
 import Albums from "./views/albums/Albums.vue";
 import EditAlbum from "./views/albums/EditAlbum.vue";
@@ -160,7 +160,7 @@ const router = createRouter({
           path: "stats",
           name: "stats",
           component: Stats,
-          props: (route) => ({ artist_id: +route.query.artist_id || null }),
+          props: (route) => ({ artistId: +route.query.artist_id || null }),
         },
         {
           path: "tracks",
