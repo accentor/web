@@ -1,6 +1,7 @@
 <template>
   <VContainer fluid>
     <VDataIterator
+      v-model:page="pagination.page"
       :footer-props="{
         disableItemsPerPage: true,
         itemsPerPageOptions: [12],
@@ -8,9 +9,8 @@
       }"
       :items="filteredItems"
       :items-per-page="12"
-      :page.sync="pagination.page"
     >
-      <template v-slot:header>
+      <template #header>
         <VRow class="mb-2" justify="end" align="baseline">
           <VCol cols="12" sm="8" md="6" lg="4" xl="2">
             <VTextField
@@ -22,17 +22,17 @@
             />
           </VCol>
           <VBtn
+            v-if="isModerator"
             :to="{ name: 'new-album' }"
             color="success"
             class="ma-2"
-            v-if="isModerator"
           >
-            <VIcon left>mdi-plus</VIcon>
+            <VIcon start>mdi-plus</VIcon>
             {{ $t("music.album.new") }}
           </VBtn>
         </VRow>
       </template>
-      <template v-slot:default="props">
+      <template #default="props">
         <VRow>
           <VCol
             v-for="item in props.items"
@@ -66,14 +66,6 @@ export default {
     return { title: this.$tc("music.albums", 2) };
   },
   mixins: [Paginated, Searchable],
-  methods: {
-    ...mapActions(useAlbumsStore, ["destroy"]),
-    deleteAlbum: function (id) {
-      if (confirm(this.$t("common.are-you-sure"))) {
-        this.destroy(id);
-      }
-    },
-  },
   computed: {
     ...mapState(useAuthStore, ["isModerator"]),
     ...mapState(useAlbumsStore, { albums: "albumsByTitle" }),
@@ -86,6 +78,14 @@ export default {
             .indexOf(this.search.toLocaleLowerCase()) >= 0 ||
           item.normalized_title.indexOf(this.search.toLocaleLowerCase()) >= 0,
       );
+    },
+  },
+  methods: {
+    ...mapActions(useAlbumsStore, ["destroy"]),
+    deleteAlbum: function (id) {
+      if (confirm(this.$t("common.are-you-sure"))) {
+        this.destroy(id);
+      }
     },
   },
 };

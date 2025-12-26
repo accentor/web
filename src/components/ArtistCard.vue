@@ -1,18 +1,23 @@
 <template>
   <VCard :to="{ name: 'artist', params: { id: artist.id } }">
     <VImg
+      v-if="artist.image500 && !imageUnavailable"
       :aspect-ratio="1"
       :src="artist.image500"
-      v-if="artist.image500 && !imageUnavailable"
       @error="setImageUnavailable"
     />
     <VImg
+      v-else-if="artist.image"
       :aspect-ratio="1"
       :src="artist.image"
-      v-else-if="artist.image"
       @error="setImageUnavailable"
     />
-    <VImg :aspect-ratio="1" :src="artistSvgUrl" v-else class="grey lighten-3" />
+    <VImg
+      v-else
+      :aspect-ratio="1"
+      :src="artistSvgUrl"
+      class="bg-grey-lighten-3"
+    />
     <VCardTitle class="d-block text-truncate" :title="artist.name">
       {{ artist.name }}
     </VCardTitle>

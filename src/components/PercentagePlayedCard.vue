@@ -11,7 +11,7 @@
           stroke="currentColor"
           stroke-width="30"
           :stroke-dasharray="circumference"
-          class="grey--text text--lighten-2"
+          class="text-grey-lighten-2"
         ></circle>
         <circle
           cx="125"
@@ -19,7 +19,7 @@
           r="100"
           fill="transparent"
           stroke="currentColor"
-          class="primary--text"
+          class="text-primary"
           stroke-width="30"
           :stroke-dasharray="circumference"
           :stroke-dashoffset="strokeDashOffset"

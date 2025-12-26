@@ -1,5 +1,5 @@
 <template>
-  <VContainer class="fill-height" fluid v-if="isModerator">
+  <VContainer v-if="isModerator" class="fill-height" fluid>
     <VRow no-gutters>
       <VCol>
         <TracksTable
