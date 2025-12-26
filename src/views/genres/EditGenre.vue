@@ -19,7 +19,8 @@
 </template>
 
 <script>
-import { mapActions, mapState } from "vuex";
+import { mapActions, mapState } from "pinia";
+import { useGenresStore } from "../../store/genres";
 
 export default {
   name: "EditGenre",
@@ -49,21 +50,18 @@ export default {
     },
   },
   computed: {
-    ...mapState("genres", ["genres"]),
+    ...mapState(useGenresStore, ["genres"]),
     genre: function () {
       return this.genres[this.$route.params.id];
     },
   },
   methods: {
-    ...mapActions("genres", ["read", "update"]),
+    ...mapActions(useGenresStore, ["read", "update"]),
     fillValues() {
       this.newGenre.name = this.genre.name;
     },
     async submit() {
-      const succeeded = await this.update({
-        id: this.genre.id,
-        newGenre: this.newGenre,
-      });
+      const succeeded = await this.update(this.genre.id, this.newGenre);
       if (succeeded) {
         this.$router.push(this.$route.query.redirect || { name: "genres" });
       }

@@ -69,13 +69,15 @@
 </template>
 
 <script>
-import { mapActions, mapGetters, mapState } from "vuex";
+import { mapActions, mapState } from "pinia";
 import Paginated from "../../mixins/Paginated";
 import Searchable from "../../mixins/Searchable";
 import PlaylistActions from "../../components/PlaylistActions.vue";
+import { usePlaylistsStore } from "../../store/playlists";
+import { useUsersStore } from "../../store/users";
 
 export default {
-  name: "playlists",
+  name: "Playlists",
   metaInfo() {
     return { title: this.$tc("music.playlists", 2) };
   },
@@ -85,10 +87,8 @@ export default {
   },
   mixins: [Paginated, Searchable],
   computed: {
-    ...mapState("users", ["users"]),
-    ...mapGetters("playlists", {
-      playlists: "playlistsByName",
-    }),
+    ...mapState(usePlaylistsStore, { playlists: "playlistsByName" }),
+    ...mapState(useUsersStore, ["users"]),
     filteredItems() {
       return this.playlists.filter(
         (item) =>
@@ -112,7 +112,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions("playlists", ["index"]),
+    ...mapActions(usePlaylistsStore, ["index"]),
     async fetchContent() {
       await this.index();
     },

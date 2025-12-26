@@ -89,8 +89,12 @@
 </template>
 
 <script>
-import { mapActions, mapGetters, mapState } from "vuex";
+import { mapState, mapActions } from "pinia";
 import TrackFormArtists from "@/components/TrackFormArtists.vue";
+import { useGenresStore } from "../../store/genres";
+import { useArtistsStore } from "../../store/artists";
+import { useAlbumsStore } from "../../store/albums";
+import { useTracksStore } from "../../store/tracks";
 
 export default {
   components: { TrackFormArtists },
@@ -130,23 +134,20 @@ export default {
     },
   },
   computed: {
-    ...mapState("albums", ["albums"]),
-    ...mapState("artists", ["artists"]),
-    ...mapState("genres", ["genres"]),
-    ...mapGetters("albums", {
-      sortedAlbums: "albumsByTitle",
-    }),
-    ...mapGetters("artists", {
+    ...mapState(useArtistsStore, {
+      artists: "artists",
       sortedArtists: "artistsByName",
     }),
-    ...mapGetters("genres", {
+    ...mapState(useGenresStore, {
+      genres: "genres",
       sortedGenres: "genresByName",
     }),
+    ...mapState(useAlbumsStore, {
+      albums: "albums",
+      sortedAlbums: "albumsByTitle",
+    }),
     track: function () {
-      return (
-        this.$store.state.tracks &&
-        this.$store.state.tracks.tracks[this.$route.params.id]
-      );
+      return useTracksStore().tracks[this.$route.params.id];
     },
     rules: function () {
       const rules = {
@@ -181,11 +182,9 @@ export default {
     },
   },
   methods: {
-    ...mapActions("tracks", ["read", "update"]),
-    ...mapActions({
-      createArtist: "artists/create",
-      createGenre: "genres/create",
-    }),
+    ...mapActions(useTracksStore, ["read", "update"]),
+    ...mapActions(useArtistsStore, { createArtist: "create" }),
+    ...mapActions(useGenresStore, { createGenre: "create" }),
     filterName(item, queryText) {
       const search = queryText.toLowerCase();
       return (
@@ -284,10 +283,7 @@ export default {
       );
 
       await Promise.all([...mappedGenres, ...mappedArtists]);
-      const succeeded = await this.update({
-        id: this.track.id,
-        newTrack: transformed,
-      });
+      const succeeded = await this.update(this.track.id, transformed);
       if (succeeded) {
         this.$router.push(this.$route.query.redirect || { name: "tracks" });
       }

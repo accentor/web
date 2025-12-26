@@ -62,7 +62,9 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
+import { mapActions, mapState } from "pinia";
+import { useAuthStore } from "../store/auth";
+import { useLabelsStore } from "../store/labels";
 
 export default {
   name: "LabelMergeDialog",
@@ -83,16 +85,16 @@ export default {
     };
   },
   computed: {
-    ...mapGetters("auth", ["isModerator"]),
+    ...mapState(useAuthStore, ["isModerator"]),
+    ...mapState(useLabelsStore, ["labelsByName"]),
     sortedLabels() {
-      const getter = this.$store.getters["labels/labelsByName"];
-      return getter.filter((l) => {
+      return this.labelsByName.filter((l) => {
         return l.id !== this.label.id;
       });
     },
   },
   methods: {
-    ...mapActions("labels", ["merge"]),
+    ...mapActions(useLabelsStore, ["merge"]),
     filterName(item, queryText) {
       const search = queryText.toLowerCase();
       return (
@@ -101,11 +103,9 @@ export default {
       );
     },
     mergeLabels() {
-      this.merge({ newID: this.mergeLabel.id, oldID: this.label.id }).finally(
-        () => {
-          this.mergeModal = false;
-        },
-      );
+      this.merge(this.mergeLabel.id, this.label.id).finally(() => {
+        this.mergeModal = false;
+      });
     },
   },
 };

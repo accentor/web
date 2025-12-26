@@ -1,6 +1,4 @@
-import Vue from "vue";
 import Router from "vue-router";
-import store from "./store/store";
 import Album from "./views/albums/Album.vue";
 import Albums from "./views/albums/Albums.vue";
 import EditAlbum from "./views/albums/EditAlbum.vue";
@@ -34,8 +32,7 @@ import Playlists from "./views/playlists/Playlists.vue";
 import Playlist from "./views/playlists/Playlist.vue";
 import NewPlaylist from "./views/playlists/NewPlaylist.vue";
 import EditPlaylist from "./views/playlists/EditPlaylist.vue";
-
-Vue.use(Router);
+import { useAuthStore } from "./store/auth";
 
 const router = new Router({
   mode: "history",
@@ -227,21 +224,13 @@ const router = new Router({
   },
 });
 
-store.watch(
-  () => store.getters["auth/loggedIn"],
-  () => {
-    if (!store.getters["auth/loggedIn"]) {
-      router.push({ name: "login" });
-    }
-  },
-);
-
 router.beforeEach((to, from, next) => {
+  const authStore = useAuthStore();
   const onLogin = to.matched.some((record) => record.meta.authOptional);
 
-  if (onLogin && store.getters["auth/loggedIn"]) {
+  if (onLogin && authStore.loggedIn) {
     next({ name: "home" });
-  } else if (onLogin || store.getters["auth/loggedIn"]) {
+  } else if (onLogin || authStore.loggedIn) {
     next();
   } else {
     next({

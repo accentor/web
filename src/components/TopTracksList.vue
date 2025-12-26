@@ -6,8 +6,9 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState } from "pinia";
 import TopList from "@/components/TopList.vue";
+import { useTracksStore } from "../store/tracks";
 
 export default {
   name: "TopTracksList",
@@ -29,7 +30,7 @@ export default {
     TopList,
   },
   computed: {
-    ...mapState("tracks", ["tracks"]),
+    ...mapState(useTracksStore, ["tracks"]),
     useProp() {
       return this.useTrackLength ? "total_length" : "count";
     },
@@ -41,9 +42,8 @@ export default {
     listData() {
       return [...this.topTracks].map((tt) => {
         const track = this.tracks[tt.track_id];
-        const trackArtists = track?.track_artists
+        const trackArtists = (track?.track_artists || [])
           .filter((a) => !a.hidden)
-          .map((ta) => ta)
           .sort((a1, a2) => a1.order - a2.order)
           .map((a) => a.name)
           .join(" / ");

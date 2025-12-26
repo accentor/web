@@ -16,15 +16,16 @@
   </VAlert>
 </template>
 <script>
-import { mapMutations, mapState } from "vuex";
+import { useErrorsStore } from "../store/errors";
+import { mapState, mapActions } from "pinia";
 
 export default {
   name: "Errors",
   computed: {
-    ...mapState(["errors"]),
+    ...mapState(useErrorsStore, ["errors"]),
   },
   methods: {
-    ...mapMutations(["clearErrors"]),
+    ...mapActions(useErrorsStore, ["clearErrors"]),
   },
 };
 </script>

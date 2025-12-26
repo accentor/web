@@ -60,7 +60,7 @@
 </template>
 
 <script>
-import { mapGetters, mapState } from "vuex";
+import { mapActions, mapState } from "pinia";
 import DateRangeSelect from "@/components/DateRangeSelect.vue";
 import PercentagePlayedCard from "@/components/PercentagePlayedCard.vue";
 import PlayCountCard from "@/components/PlayCountCard.vue";
@@ -71,6 +71,10 @@ import TopAlbumsList from "@/components/TopAlbumsList.vue";
 import { filterPlaysByPeriod, filterPlaysByTracks } from "@/filters";
 import $api from "../api";
 import { PlaysScope } from "@accentor/api-client-js";
+import { useArtistsStore } from "../store/artists";
+import { useTracksStore } from "../store/tracks";
+import { usePlaysStore } from "../store/plays";
+import { useAuthStore } from "../store/auth";
 
 export default {
   name: "Stats",
@@ -103,11 +107,8 @@ export default {
     },
   },
   computed: {
-    ...mapGetters({
-      plays: "plays/plays",
-    }),
-
-    ...mapState("artists", ["artists"]),
+    ...mapState(usePlaysStore, { plays: "allPlays" }),
+    ...mapState(useArtistsStore, ["artists"]),
     artistName() {
       return this.artist_id && this.artists[this.artist_id]?.name;
     },
@@ -132,12 +133,11 @@ export default {
       return plays;
     },
     filteredTracks() {
+      const tracksStore = useTracksStore();
       if (this.artist_id) {
-        return this.$store.getters["tracks/tracksFilterByArtist"](
-          this.artist_id,
-        );
+        return tracksStore.tracksFilterByArtist(this.artist_id);
       }
-      return this.$store.getters["tracks/tracks"];
+      return tracksStore.allTracks;
     },
     playStatsScope() {
       const scope = new PlaysScope();
@@ -152,12 +152,10 @@ export default {
     },
   },
   methods: {
-    async reloadPlays() {
-      await this.$store.dispatch("plays/index");
-    },
+    ...mapActions(usePlaysStore, { reloadPlays: "index" }),
     async loadPlayStats() {
       const gen = $api.plays.stats(
-        this.$store.state.auth.apiToken,
+        useAuthStore().apiToken,
         this.playStatsScope,
       );
       let done = false;

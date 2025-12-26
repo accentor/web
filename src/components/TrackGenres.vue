@@ -1,19 +1,18 @@
 <template>
   <div v-if="genres">
-    <span v-for="tg of track_genres" :key="tg.id">
+    <span v-for="tg of trackGenres" :key="tg.id">
       <RouterLink :to="{ name: 'genre', params: { id: tg.id } }">
         {{ tg.name }}
       </RouterLink>
-      <span v-if="track_genres.indexOf(tg) !== track_genres.length - 1">
-        /
-      </span>
+      <span v-if="trackGenres.indexOf(tg) !== trackGenres.length - 1"> / </span>
     </span>
   </div>
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState } from "pinia";
 import { compareStrings } from "../comparators";
+import { useGenresStore } from "../store/genres";
 
 export default {
   name: "TrackGenres",
@@ -24,8 +23,8 @@ export default {
     },
   },
   computed: {
-    ...mapState("genres", ["genres"]),
-    track_genres() {
+    ...mapState(useGenresStore, ["genres"]),
+    trackGenres() {
       return this.track.genre_ids
         .filter((tg) => `${tg}` in this.genres)
         .map((tg) => this.genres[tg])

@@ -62,7 +62,9 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
+import { mapActions, mapState } from "pinia";
+import { useAuthStore } from "../store/auth";
+import { useGenresStore } from "../store/genres";
 
 export default {
   name: "GenreMergeDialog",
@@ -83,16 +85,14 @@ export default {
     };
   },
   computed: {
-    ...mapGetters("auth", ["isModerator"]),
+    ...mapState(useAuthStore, ["isModerator"]),
+    ...mapState(useGenresStore, ["genresByName"]),
     sortedGenres() {
-      const getter = this.$store.getters["genres/genresByName"];
-      return getter.filter((g) => {
-        return g.id !== this.genre.id;
-      });
+      return this.genresByName.filter((g) => g.id !== this.genre.id);
     },
   },
   methods: {
-    ...mapActions("genres", ["merge"]),
+    ...mapActions(useGenresStore, ["merge"]),
     filterName(item, queryText) {
       const search = queryText.toLowerCase();
       return (
@@ -101,10 +101,8 @@ export default {
       );
     },
     mergeGenres() {
-      this.merge({ newID: this.mergeGenre.id, oldID: this.genre.id }).finally(
-        () => {
-          this.mergeModal = false;
-        },
+      this.merge(this.mergeGenre.id, this.genre.id).finally(
+        () => (this.mergeModal = false),
       );
     },
   },

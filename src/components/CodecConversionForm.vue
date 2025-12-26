@@ -57,7 +57,9 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
+import { mapActions, mapState } from "pinia";
+import { useCodecConversionsStore } from "@/store/codec_conversions";
+import { useCodecsStore } from "../store/codecs";
 
 export default {
   name: "CodecConversionForm",
@@ -87,8 +89,10 @@ export default {
     },
   },
   computed: {
-    ...mapGetters("codecs", ["codecs"]),
-    ...mapGetters("codecConversions", ["codecConversions"]),
+    ...mapState(useCodecsStore, { codecs: "allCodecs" }),
+    ...mapState(useCodecConversionsStore, {
+      codecConversions: "allCodecConversions",
+    }),
     rules() {
       const rules = {
         name: [(v) => !!v || this.$t("errors.codecconv.name-blank")],
@@ -112,7 +116,7 @@ export default {
       this.newCodecConversion.resulting_codec_id =
         this.codecConversion.resulting_codec_id;
     },
-    ...mapActions("codecConversions", ["destroy", "update", "create"]),
+    ...mapActions(useCodecConversionsStore, ["destroy", "update", "create"]),
     async saveCodecConversion() {
       if (this.$refs.form.validate()) {
         if (this.codecConversion === null) {
@@ -123,10 +127,7 @@ export default {
             this.newCodecConversion.resulting_codec_id = null;
           }
         } else {
-          await this.update({
-            id: this.codecConversion.id,
-            newCodecConversion: this.newCodecConversion,
-          });
+          await this.update(this.codecConversion.id, this.newCodecConversion);
         }
       }
     },

@@ -82,7 +82,12 @@
 </template>
 
 <script>
-import { mapActions, mapState } from "vuex";
+import { mapActions, mapState } from "pinia";
+import { useAuthStore } from "../store/auth";
+import { usePlaylistsStore } from "../store/playlists";
+import { useTracksStore } from "../store/tracks";
+import { useErrorsStore } from "../store/errors";
+import { usePlayerStore } from "../store/player";
 
 export default {
   name: "PlaylistActions",
@@ -94,31 +99,28 @@ export default {
     },
   },
   computed: {
-    ...mapState("auth", { currentUser: "user_id" }),
-    ...mapState("playlists", ["startLoading"]),
-    ...mapState("tracks", ["tracks"]),
+    ...mapState(useAuthStore, ["currentUser"]),
+    ...mapState(usePlaylistsStore, ["startLoading"]),
+    ...mapState(useTracksStore, ["tracks"]),
     waitingForReload() {
       return this.startLoading > this.playlist.loaded;
     },
     isAllowedToEdit() {
       return (
         this.playlist.access === "shared" ||
-        this.playlist.user_id === this.currentUser
+        this.playlist.user_id === this.currentUser.id
       );
     },
     playlistTracks() {
+      const tracksStore = useTracksStore();
       switch (this.playlist.playlist_type) {
         case "album":
           return this.playlist.item_ids
-            .map((album_id) =>
-              this.$store.getters["tracks/tracksFilterByAlbum"](album_id),
-            )
+            .map((album_id) => tracksStore.tracksFilterByAlbum(album_id))
             .flat();
         case "artist":
           return this.playlist.item_ids
-            .map((artist_id) =>
-              this.$store.getters["tracks/tracksFilterByArtist"](artist_id),
-            )
+            .map((artist_id) => tracksStore.tracksFilterByArtist(artist_id))
             .flat();
         case "track":
           return this.playlist.item_ids.map((id) => this.tracks[id]);
@@ -133,7 +135,9 @@ export default {
     },
   },
   methods: {
-    ...mapActions("playlists", ["destroy", "update"]),
+    ...mapActions(useErrorsStore, ["addError"]),
+    ...mapActions(usePlayerStore, ["playTracks", "addTracks"]),
+    ...mapActions(usePlaylistsStore, ["destroy", "update"]),
     deletePlaylist: function () {
       if (confirm(this.$t("common.are-you-sure"))) {
         this.destroy(this.playlist.id);
@@ -141,30 +145,22 @@ export default {
     },
     startTracks: function () {
       if (this.playableTracks.length > 0) {
-        this.$store.commit("player/playTracks", this.playableTracks);
+        this.playTracks(this.playableTracks);
         if (this.playableTracks.length !== this.playlistTracks.length) {
-          this.$store.commit("addError", {
-            playlist: ["player.not-all-tracks-added"],
-          });
+          this.addError({ playlist: ["player.not-all-tracks-added"] });
         }
       } else {
-        this.$store.commit("addError", {
-          playlist: ["player.no-tracks-added"],
-        });
+        this.addError({ playlist: ["player.no-tracks-added"] });
       }
     },
     addTracks: function () {
       if (this.playableTracks.length > 0) {
-        this.$store.commit("player/addTracks", this.playableTracks);
+        this.addTracks(this.playableTracks);
         if (this.playableTracks.length !== this.playlistTracks.length) {
-          this.$store.commit("addError", {
-            playlist: ["player.not-all-tracks-added"],
-          });
+          this.addError({ playlist: ["player.not-all-tracks-added"] });
         }
       } else {
-        this.$store.commit("addError", {
-          playlist: ["player.no-tracks-added"],
-        });
+        this.addError({ playlist: ["player.no-tracks-added"] });
       }
     },
   },

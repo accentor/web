@@ -44,22 +44,21 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
 import Paginated from "../../mixins/Paginated";
 import GenreCard from "../../components/GenreCard.vue";
 import Searchable from "../../mixins/Searchable";
+import { mapState } from "pinia";
+import { useGenresStore } from "../../store/genres";
 
 export default {
-  name: "genres",
+  name: "Genres",
   metaInfo() {
     return { title: this.$tc("music.genres", 2) };
   },
   components: { GenreCard },
   mixins: [Paginated, Searchable],
   computed: {
-    ...mapGetters("genres", {
-      genres: "genresByName",
-    }),
+    ...mapState(useGenresStore, { genres: "genresByName" }),
     filteredItems() {
       return this.genres.filter(
         (item) =>

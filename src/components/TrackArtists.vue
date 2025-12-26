@@ -35,7 +35,8 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState } from "pinia";
+import { useArtistsStore } from "../store/artists";
 
 export default {
   name: "TrackArtists",
@@ -46,11 +47,11 @@ export default {
     },
   },
   computed: {
-    ...mapState("artists", ["artists"]),
+    ...mapState(useArtistsStore, ["artists"]),
     track_artists() {
-      return this.track.track_artists
-        .map((ta) => ta)
-        .sort((a1, a2) => a1.order - a2.order);
+      return [...this.track.track_artists].sort(
+        (a1, a2) => a1.order - a2.order,
+      );
     },
   },
   methods: {

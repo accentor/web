@@ -132,13 +132,20 @@
 </template>
 
 <script>
-import { mapActions, mapGetters, mapState } from "vuex";
+import { mapState, mapActions } from "pinia";
 import EditCodecs from "../components/EditCodecs.vue";
 import EditCodecConversions from "../components/EditCodecConversions.vue";
 import EditCoverFilenames from "../components/EditCoverFilenames.vue";
 import EditImageTypes from "../components/EditImageTypes.vue";
 import EditLocations from "../components/EditLocations.vue";
 import MaintenanceActions from "../components/MaintenanceActions.vue";
+import { useAuthStore } from "../store/auth";
+import { useCodecConversionsStore } from "../store/codec_conversions";
+import { useCodecsStore } from "../store/codecs";
+import { useCoverFilenamesStore } from "../store/cover_filenames";
+import { useImageTypesStore } from "../store/image_types";
+import { useLocationsStore } from "../store/locations";
+import { useRescansStore } from "../store/rescan";
 
 export default {
   name: "Library",
@@ -157,11 +164,13 @@ export default {
     this.loadData();
   },
   computed: {
-    ...mapGetters("auth", ["isModerator"]),
-    ...mapGetters("rescan", ["rescans"]),
-    ...mapGetters("rescan", ["combinedRescans"]),
-    ...mapState("locations", ["locations"]),
-    ...mapState("rescan", ["lastClick"]),
+    ...mapState(useAuthStore, ["isModerator"]),
+    ...mapState(useRescansStore, {
+      rescans: "allRescans",
+      combinedRescans: "combinedRescans",
+      lastClick: "lastClick",
+    }),
+    ...mapState(useLocationsStore, ["locations"]),
     rescanRunning() {
       return this.combinedRescans.running ||
         this.lastClick > new Date(this.combinedRescans.finished_at)
@@ -170,16 +179,29 @@ export default {
     },
   },
   methods: {
-    ...mapActions("rescan", ["start", "startAll"]),
+    ...mapActions(useCodecConversionsStore, {
+      codecConversionsIndex: "index",
+    }),
+    ...mapActions(useCodecsStore, { codecsIndex: "index" }),
+    ...mapActions(useCoverFilenamesStore, {
+      coverFilenamesIndex: "index",
+    }),
+    ...mapActions(useImageTypesStore, { imageTypesIndex: "index" }),
+    ...mapActions(useLocationsStore, { locationsIndex: "index" }),
+    ...mapActions(useRescansStore, {
+      rescansIndex: "index",
+      start: "start",
+      startAll: "startAll",
+    }),
     async loadData() {
       let pendingResults = [];
       if (this.isModerator) {
-        pendingResults.push(this.$store.dispatch("rescan/index"));
-        pendingResults.push(this.$store.dispatch("codecs/index"));
-        pendingResults.push(this.$store.dispatch("codecConversions/index"));
-        pendingResults.push(this.$store.dispatch("coverFilenames/index"));
-        pendingResults.push(this.$store.dispatch("imageTypes/index"));
-        pendingResults.push(this.$store.dispatch("locations/index"));
+        pendingResults.push(this.rescansIndex());
+        pendingResults.push(this.codecsIndex());
+        pendingResults.push(this.codecConversionsIndex());
+        pendingResults.push(this.coverFilenamesIndex());
+        pendingResults.push(this.imageTypesIndex());
+        pendingResults.push(this.locationsIndex());
       }
       await Promise.all(pendingResults);
     },

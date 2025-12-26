@@ -66,11 +66,16 @@
 </template>
 
 <script>
-import { mapActions, mapGetters, mapState } from "vuex";
+import { mapState, mapActions } from "pinia";
 import AlbumCard from "../../components/AlbumCard.vue";
 import ArtistActions from "../../components/ArtistActions.vue";
 import TracksTable from "../../components/TracksTable.vue";
 import { AlbumsScope, TracksScope } from "@accentor/api-client-js";
+import { useAuthStore } from "../../store/auth";
+import { usePlaylistsStore } from "../../store/playlists";
+import { useArtistsStore } from "../../store/artists";
+import { useAlbumsStore } from "../../store/albums";
+import { useTracksStore } from "../../store/tracks";
 
 export default {
   name: "Artist",
@@ -100,31 +105,28 @@ export default {
     },
   },
   computed: {
-    ...mapGetters("auth", ["isModerator"]),
-    ...mapState("artists", ["artists"]),
+    ...mapState(useAuthStore, ["isModerator"]),
+    ...mapState(usePlaylistsStore, { storePlaylists: "artistPlaylists" }),
+    ...mapState(useArtistsStore, ["artists"]),
     albums: function () {
-      return this.$store.getters["albums/albumsFilterByArtist"](
-        this.$route.params.id,
-      );
+      return useAlbumsStore().albumsFilterByArtist(this.$route.params.id);
     },
     tracks: function () {
-      return this.$store.getters["tracks/tracksFilterByArtist"](
-        this.$route.params.id,
-      );
+      return useTracksStore().tracksFilterByArtist(this.$route.params.id);
     },
     artist: function () {
       return this.artists[this.$route.params.id];
     },
     playlists: function () {
-      return this.$store.getters["playlists/artistPlaylists"].filter((p) =>
+      return this.storePlaylists.filter((p) =>
         p.item_ids.includes(this.artist.id),
       );
     },
   },
   methods: {
-    ...mapActions("albums", { indexAlbums: "index" }),
-    ...mapActions("artists", ["read"]),
-    ...mapActions("tracks", { indexTracks: "index" }),
+    ...mapActions(useAlbumsStore, { indexAlbums: "index" }),
+    ...mapActions(useArtistsStore, ["read"]),
+    ...mapActions(useTracksStore, { indexTracks: "index" }),
     async fetchContent(newValue, oldValue) {
       // After loading the content, the router will change the id from a string to a number
       // but we don't actually want to load the content twice

@@ -104,9 +104,9 @@
 </template>
 
 <script>
+import { mapState } from "pinia";
 import TrackActions from "./TrackActions.vue";
 import Paginated from "../mixins/Paginated";
-import { mapGetters, mapState } from "vuex";
 import Searchable from "../mixins/Searchable";
 import Sortable from "../mixins/Sortable";
 import TrackArtists from "./TrackArtists.vue";
@@ -118,6 +118,12 @@ import {
   compareTracksByArtist,
   compareTracksByGenre,
 } from "@/comparators";
+import { useAuthStore } from "../store/auth";
+import { useGenresStore } from "../store/genres";
+import { useAlbumsStore } from "../store/albums";
+import { useTracksStore } from "../store/tracks";
+import { usePlaysStore } from "../store/plays";
+import { usePlayerStore } from "../store/player";
 
 export default {
   name: "TracksTable",
@@ -198,12 +204,12 @@ export default {
     };
   },
   computed: {
-    ...mapGetters("auth", ["isModerator"]),
-    ...mapGetters("player", ["currentTrack"]),
-    ...mapGetters("plays", ["playStatsByTrack"]),
-    ...mapState("albums", ["albums"]),
-    ...mapState("genres", ["genres"]),
-    ...mapState("tracks", { tracksObj: "tracks" }),
+    ...mapState(useAuthStore, ["isModerator"]),
+    ...mapState(usePlayerStore, ["currentTrack"]),
+    ...mapState(useAlbumsStore, ["albums"]),
+    ...mapState(useGenresStore, ["genres"]),
+    ...mapState(usePlaysStore, ["playStatsByTrack"]),
+    ...mapState(useTracksStore, { tracksObj: "tracks" }),
     filteredItems() {
       return this.tracks.filter(
         (item) =>

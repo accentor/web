@@ -1,248 +1,176 @@
-import Vue from "vue";
+import { computed } from "vue";
 import api from "@/api";
-import { fetchAll } from "./actions";
 import { compareTracks } from "../comparators";
 import { TracksScope } from "@accentor/api-client-js";
+import { useAlbumsStore } from "./albums";
+import { defineStore } from "pinia";
+import { useBaseModelStore } from "./base";
 
-export default {
-  namespaced: true,
-  state: {
-    tracks: {},
-    startLoading: new Date(0),
-  },
-  mutations: {
-    setTracks(state, payload) {
-      const oldTracks = state.tracks;
-      state.tracks = {};
-      for (let id in oldTracks) {
-        state.tracks[id] = oldTracks[id];
+export const useTracksStore = defineStore("tracks", () => {
+  const albumsStore = useAlbumsStore();
+
+  const {
+    items: tracks,
+    setItems,
+    index,
+    create,
+    read,
+    update,
+    destroy,
+    merge,
+    startLoading,
+  } = useBaseModelStore(api.tracks, "tracks.tracks", "track", {
+    baseScope: new TracksScope(),
+  });
+  const allTracks = computed(() => Object.values(tracks.value));
+  const tracksByAlbumAndNumber = computed(() =>
+    [...allTracks.value].sort(compareTracks(albumsStore.albums)),
+  );
+  const tracksEmpty = computed(() =>
+    tracksByAlbumAndNumber.value.filter((t) => t.length === null),
+  );
+  const tracksFlagged = computed(() =>
+    tracksByAlbumAndNumber.value.filter((t) => t.review_comment !== null),
+  );
+  const tracksBinnedByAlbum = computed(() => {
+    const result = {};
+    for (let track of allTracks.value) {
+      if (!(track.album_id in result)) {
+        result[track.album_id] = [];
       }
-      const loaded = new Date();
-      for (let track of payload) {
-        track.loaded = loaded;
-        state.tracks[track.id] = track;
+      result[track.album_id].push(track);
+    }
+    return result;
+  });
+  const tracksBinnedByGenre = computed(() => {
+    const result = {};
+    for (let track of allTracks.value) {
+      for (let genreId of track.genre_ids) {
+        if (!(genreId in result)) {
+          result[genreId] = [];
+        }
+        result[genreId].push(track);
       }
-    },
-    setTrack(state, { id, track }) {
-      const oldTracks = state.tracks;
-      state.tracks = {};
-      for (let id in oldTracks) {
-        state.tracks[id] = oldTracks[id];
-      }
-      track.loaded = new Date();
-      state.tracks[id] = track;
-    },
-    setStartLoading(state) {
-      state.startLoading = new Date();
-    },
-    removeTrack(state, id) {
-      Vue.delete(state.tracks, id);
-    },
-    removeOld(state) {
-      const oldTracks = state.tracks;
-      state.tracks = {};
-      for (let id in oldTracks) {
-        if (oldTracks[id].loaded > state.startLoading) {
-          state.tracks[id] = oldTracks[id];
+    }
+    return result;
+  });
+  const tracksBinnedByArtist = computed(() => {
+    const result = {};
+    for (let track of allTracks.value) {
+      for (let ta of track.track_artists) {
+        if (!(ta.artist_id in result)) {
+          result[ta.artist_id] = [];
+        }
+        if (!result[ta.artist_id].includes(track)) {
+          result[ta.artist_id].push(track);
         }
       }
-    },
-    updateAlbumOccurence(state, { newID, oldID }) {
-      const oldTracks = state.tracks;
-      state.tracks = {};
-      for (const track of Object.values(oldTracks)) {
-        if (track.album_id == oldID) {
-          track.album_id = newID;
-        }
-        state.tracks[track.id] = track;
+    }
+    return result;
+  });
+
+  function tracksFilterByAlbum(id) {
+    return [...(tracksBinnedByAlbum.value[id] || [])].sort(
+      (t1, t2) => t1.number - t2.number,
+    );
+  }
+
+  function tracksFilterByGenre(id) {
+    return (tracksBinnedByGenre.value[id] || []).sort(
+      compareTracks(albumsStore.albums),
+    );
+  }
+
+  function tracksFilterByArtist(id) {
+    return (tracksBinnedByArtist.value[id] || []).sort(
+      compareTracks(albumsStore.albums),
+    );
+  }
+
+  function updateAlbumOccurence(newID, oldID) {
+    const newTracks = {};
+    for (const track of allTracks.value) {
+      if (`${track.album_id}` === `${oldID}`) {
+        track.album_id = newID;
       }
-    },
-    removeArtistOccurence(state, oldID) {
-      const oldTracks = state.tracks;
-      state.tracks = {};
-      for (let track of Object.values(oldTracks)) {
-        if (track.track_artists.some((ta) => ta.artist_id === oldID)) {
-          track.track_artists = track.track_artists.filter(
-            (ta) => ta.artist_id !== oldID,
-          );
-        }
-        state.tracks[track.id] = track;
+      newTracks[track.id] = track;
+    }
+    setItems(newTracks);
+  }
+
+  function removeArtistOccurence(oldID) {
+    const newTracks = {};
+    for (let track of allTracks.value) {
+      if (track.track_artists.some((ta) => `${ta.artist_id}` === `${oldID}`)) {
+        track.track_artists = track.track_artists.filter(
+          (ta) => `${ta.artist_id}` !== `${oldID}`,
+        );
       }
-    },
-    updateArtistOccurence(state, { newID, oldID }) {
-      const oldTracks = state.tracks;
-      state.tracks = {};
-      for (let track of Object.values(oldTracks)) {
-        if (track.track_artists.some((ta) => ta.artist_id === oldID)) {
-          track.track_artists.forEach((ta) => {
-            if (ta.artist_id === oldID) {
-              ta.artist_id = newID;
-            }
-          });
-        }
-        state.tracks[track.id] = track;
-      }
-    },
-    removeGenreOccurence(state, oldID) {
-      const oldTracks = state.tracks;
-      state.tracks = {};
-      for (const track of Object.values(oldTracks)) {
-        const i = track.genre_ids.findIndex((gId) => `${gId}` === `${oldID}`);
-        if (i >= 0) {
-          track.genre_ids.splice(i, 1);
-        }
-        state.tracks[track.id] = track;
-      }
-    },
-    updateGenreOccurence(state, { newID, oldID }) {
-      const oldTracks = state.tracks;
-      state.tracks = {};
-      for (const track of Object.values(oldTracks)) {
-        const i = track.genre_ids.findIndex((gId) => `${gId}` === `${oldID}`);
-        if (i >= 0) {
-          track.genre_ids.splice(i, 1);
-          if (!track.genre_ids.includes(newID)) {
-            track.genre_ids.push(newID);
+      newTracks[track.id] = track;
+    }
+    setItems(newTracks);
+  }
+
+  function updateArtistOccurence(newID, oldID) {
+    const newTracks = {};
+    for (let track of allTracks.value) {
+      if (track.track_artists.some((ta) => `${ta.artist_id}` === `${oldID}`)) {
+        track.track_artists.forEach((ta) => {
+          if (`${ta.artist_id}` === `${oldID}`) {
+            ta.artist_id = newID;
           }
-        }
-        state.tracks[track.id] = track;
-      }
-    },
-  },
-  actions: {
-    async index({ commit, rootState }, scope = new TracksScope()) {
-      const generator = api.tracks.index(rootState.auth.apiToken, scope);
-      try {
-        await this.tracksRestored;
-        await fetchAll(commit, generator, "setTracks", scope);
-        return true;
-      } catch (error) {
-        commit("addError", error, { root: true });
-        return false;
-      }
-    },
-    async create({ commit, rootState }, newTrack) {
-      try {
-        const result = await api.tracks.create(rootState.auth.apiToken, {
-          track: newTrack,
         });
-        commit("setTrack", { id: result.id, track: result });
-        return result.id;
-      } catch (error) {
-        commit("addError", error, { root: true });
-        return false;
       }
-    },
-    async read({ commit, rootState }, id) {
-      try {
-        const track = await api.tracks.read(rootState.auth.apiToken, id);
-        await this.tracksRestored;
-        commit("setTrack", { id, track });
-        return true;
-      } catch (error) {
-        commit("addError", error, { root: true });
-        return false;
+    }
+    setItems(newTracks);
+  }
+
+  function removeGenreOccurence(oldID) {
+    const newTracks = {};
+    for (let track of allTracks.value) {
+      const i = track.genre_ids.findIndex((gId) => `${gId}` === `${oldID}`);
+      if (i >= 0) {
+        track.genre_ids.splice(i, 1);
       }
-    },
-    async update({ commit, rootState }, { id, newTrack }) {
-      try {
-        const result = await api.tracks.update(rootState.auth.apiToken, id, {
-          track: newTrack,
-        });
-        commit("setTrack", { id, track: result });
-        return true;
-      } catch (error) {
-        commit("addError", error, { root: true });
-        return false;
-      }
-    },
-    async destroy({ commit, rootState }, id) {
-      try {
-        await api.tracks.destroy(rootState.auth.apiToken, id);
-        commit("removeTrack", id);
-        return true;
-      } catch (error) {
-        commit("addError", error, { root: true });
-        return false;
-      }
-    },
-    async merge({ commit, dispatch, rootState }, { newID, oldID }) {
-      try {
-        await api.tracks.merge(rootState.auth.apiToken, newID, oldID);
-        await dispatch("read", newID);
-        commit("removeTrack", oldID);
-        return true;
-      } catch (error) {
-        commit("addError", error, { root: true });
-        return false;
-      }
-    },
-  },
-  getters: {
-    tracks: (state) => Object.values(state.tracks),
-    tracksByAlbumAndNumber: (state, getters, rootState) => {
-      return getters.tracks.sort(compareTracks(rootState.albums.albums));
-    },
-    tracksBinnedByAlbum: (state, getters) => {
-      const result = {};
-      for (let track of getters.tracks) {
-        if (!(track.album_id in result)) {
-          result[track.album_id] = [];
-        }
-        result[track.album_id].push(track);
-      }
-      return result;
-    },
-    tracksBinnedByGenre: (state, getters) => {
-      const result = {};
-      for (let track of getters.tracks) {
-        for (let genreId of track.genre_ids) {
-          if (!(genreId in result)) {
-            result[genreId] = [];
-          }
-          result[genreId].push(track);
+      newTracks[track.id] = track;
+    }
+    setItems(newTracks);
+  }
+
+  function updateGenreOccurence(newID, oldID) {
+    const newTracks = {};
+    for (let track of allTracks.value) {
+      const i = track.genre_ids.findIndex((gId) => `${gId}` === `${oldID}`);
+      if (i >= 0) {
+        track.genre_ids.splice(i, 1);
+        if (!track.genre_ids.includes(newID)) {
+          track.genre_ids.push(newID);
         }
       }
-      return result;
-    },
-    tracksBinnedByArtist: (state, getters) => {
-      const result = {};
-      for (let track of getters.tracks) {
-        for (let ta of track.track_artists) {
-          if (!(ta.artist_id in result)) {
-            result[ta.artist_id] = [];
-          }
-          if (!result[ta.artist_id].includes(track)) {
-            result[ta.artist_id].push(track);
-          }
-        }
-      }
-      return result;
-    },
-    tracksFilterByAlbum: (state, getters) => (id) => {
-      return (getters.tracksBinnedByAlbum[id] || []).sort(
-        (t1, t2) => t1.number - t2.number,
-      );
-    },
-    tracksFilterByGenre: (state, getters, rootState) => (id) => {
-      return (getters.tracksBinnedByGenre[id] || []).sort(
-        compareTracks(rootState.albums.albums),
-      );
-    },
-    tracksFilterByArtist: (state, getters, rootState) => (id) => {
-      return (getters.tracksBinnedByArtist[id] || []).sort(
-        compareTracks(rootState.albums.albums),
-      );
-    },
-    tracksEmpty: (state, getters, rootState) => {
-      return getters.tracks
-        .filter((t) => t.length === null)
-        .sort(compareTracks(rootState.albums.albums));
-    },
-    tracksFlagged: (state, getters, rootState) => {
-      return getters.tracks
-        .filter((t) => t.review_comment !== null)
-        .sort(compareTracks(rootState.albums.albums));
-    },
-  },
-};
+      newTracks[track.id] = track;
+    }
+  }
+
+  return {
+    tracks,
+    index,
+    create,
+    read,
+    update,
+    destroy,
+    merge,
+    startLoading,
+    allTracks,
+    tracksByAlbumAndNumber,
+    tracksEmpty,
+    tracksFlagged,
+    tracksFilterByAlbum,
+    tracksFilterByGenre,
+    tracksFilterByArtist,
+    updateAlbumOccurence,
+    removeArtistOccurence,
+    updateArtistOccurence,
+    removeGenreOccurence,
+    updateGenreOccurence,
+  };
+});

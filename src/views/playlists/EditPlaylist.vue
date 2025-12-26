@@ -5,8 +5,9 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState } from "pinia";
 import PlaylistForm from "../../components/PlaylistForm.vue";
+import { usePlaylistsStore } from "../../store/playlists";
 
 export default {
   name: "EditPlaylist",
@@ -15,7 +16,7 @@ export default {
   },
   components: { PlaylistForm },
   computed: {
-    ...mapState("playlists", ["playlists"]),
+    ...mapState(usePlaylistsStore, ["playlists"]),
     playlist: function () {
       return this.playlists[this.$route.params.id];
     },

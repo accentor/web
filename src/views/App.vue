@@ -180,9 +180,23 @@
 </template>
 
 <script>
-import { mapGetters, mapState } from "vuex";
+import { mapActions, mapState } from "pinia";
+import { useAuthStore } from "@/store/auth";
+import { useUsersStore } from "@/store/users";
+import { useAuthTokensStore } from "@/store/auth_tokens";
+import { useCodecConversionsStore } from "@/store/codec_conversions";
 import Errors from "../components/Errors.vue";
 import Player from "../components/Player.vue";
+import { useUserSettingsStore } from "../store/user_settings";
+import { useRescansStore } from "../store/rescan";
+import { usePlaylistsStore } from "../store/playlists";
+import { useLabelsStore } from "../store/labels";
+import { useGenresStore } from "../store/genres";
+import { useArtistsStore } from "../store/artists";
+import { useAlbumsStore } from "../store/albums";
+import { useUtilityStore } from "../store/utility";
+import { useTracksStore } from "../store/tracks";
+import { usePlaysStore } from "../store/plays";
 
 export default {
   name: "app",
@@ -197,7 +211,7 @@ export default {
   created() {
     this.loadData();
     this.$options.interval = setInterval(() => {
-      this.$store.commit("updateCurrentDay");
+      useUtilityStore().updateCurrentDay();
     }, 60000);
   },
   beforeDestroy() {
@@ -218,34 +232,41 @@ export default {
     },
   },
   computed: {
-    ...mapGetters("auth", ["isModerator"]),
-    ...mapGetters(["numberOfFlaggedItems"]),
-    ...mapGetters("rescan", ["finishedAt"]),
-    ...mapState("userSettings", ["locale"]),
+    ...mapState(useAuthStore, ["isModerator"]),
+    ...mapState(useUtilityStore, ["numberOfFlaggedItems"]),
+    ...mapState(useRescansStore, ["finishedAt"]),
+    ...mapState(useUserSettingsStore, ["locale"]),
   },
   methods: {
+    ...mapActions(useAlbumsStore, { albumsIndex: "index" }),
+    ...mapActions(useArtistsStore, { artistsIndex: "index" }),
+    ...mapActions(useAuthStore, ["logout"]),
+    ...mapActions(useAuthTokensStore, { authTokensIndex: "index" }),
+    ...mapActions(useCodecConversionsStore, { codecConversionsIndex: "index" }),
+    ...mapActions(useGenresStore, { genresIndex: "index" }),
+    ...mapActions(useLabelsStore, { labelsIndex: "index" }),
+    ...mapActions(usePlaylistsStore, { playlistsIndex: "index" }),
+    ...mapActions(usePlaysStore, { playsIndex: "index" }),
+    ...mapActions(useTracksStore, { tracksIndex: "index" }),
+    ...mapActions(useUsersStore, { usersIndex: "index" }),
     async loadData() {
       this.loading = true;
       let pendingResults = [];
-      pendingResults.push(this.$store.dispatch("auth/index"));
-      pendingResults.push(this.$store.dispatch("albums/index"));
-      pendingResults.push(this.$store.dispatch("artists/index"));
-      pendingResults.push(this.$store.dispatch("codecConversions/index"));
-      pendingResults.push(this.$store.dispatch("genres/index"));
-      pendingResults.push(this.$store.dispatch("labels/index"));
-      pendingResults.push(this.$store.dispatch("playlists/index"));
-      pendingResults.push(this.$store.dispatch("plays/index"));
-      pendingResults.push(this.$store.dispatch("tracks/index"));
-      pendingResults.push(this.$store.dispatch("users/index"));
+      pendingResults.push(this.authTokensIndex());
+      pendingResults.push(this.albumsIndex());
+      pendingResults.push(this.artistsIndex());
+      pendingResults.push(this.codecConversionsIndex());
+      pendingResults.push(this.genresIndex());
+      pendingResults.push(this.labelsIndex());
+      pendingResults.push(this.playlistsIndex());
+      pendingResults.push(this.playsIndex());
+      pendingResults.push(this.tracksIndex());
+      pendingResults.push(this.usersIndex());
       try {
         await Promise.all(pendingResults);
       } finally {
         this.loading = false;
       }
-    },
-    async logout() {
-      await this.$store.dispatch("auth/logout");
-      this.$router.push({ name: "login" });
     },
   },
 };

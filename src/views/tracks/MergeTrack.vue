@@ -198,10 +198,12 @@
 </template>
 
 <script>
-import { mapGetters, mapState, mapActions } from "vuex";
 import TrackGenres from "@/components/TrackGenres.vue";
 import TrackArtists from "@/components/TrackArtists.vue";
 import TracksTable from "@/components/TracksTable.vue";
+import { mapState, mapActions } from "pinia";
+import { useAlbumsStore } from "../../store/albums";
+import { useTracksStore } from "../../store/tracks";
 
 export default {
   name: "MergeTrack",
@@ -217,19 +219,24 @@ export default {
     };
   },
   computed: {
-    ...mapState("albums", ["albums"]),
-    ...mapGetters({ tracks: "tracks/tracksByAlbumAndNumber" }),
+    ...mapState(useAlbumsStore, ["albums"]),
+    ...mapState(useTracksStore, { tracks: "tracksByAlbumAndNumber" }),
     mergeOptions: function () {
+      const tracksStore = useTracksStore();
       if (this.limitTracksToAlbum) {
-        return this.$store.getters["tracks/tracksFilterByAlbum"](
-          this.track.album_id,
-        ).filter((t) => t.id != this.$route.params.id);
+        return tracksStore
+          .tracksFilterByAlbum(this.track.album_id)
+          .filter((t) => `${t.id}` !== `${this.$route.params.id}`);
       } else {
-        return this.tracks.filter((t) => t.id != this.$route.params.id);
+        return this.tracks.filter(
+          (t) => `${t.id}` !== `${this.$route.params.id}`,
+        );
       }
     },
     track: function () {
-      return this.tracks.find(({ id }) => id == this.$route.params.id);
+      return this.tracks.find(
+        ({ id }) => `${id}` === `${this.$route.params.id}`,
+      );
     },
     result: function () {
       if (this.reversed) {
@@ -265,16 +272,16 @@ export default {
     },
   },
   methods: {
-    ...mapActions("tracks", ["merge"]),
+    ...mapActions(useTracksStore, ["merge"]),
     setNewID(id) {
       this.newID = id;
     },
     submit() {
       const newID = this.reversed ? this.newID : this.track.id;
       const oldID = this.reversed ? this.track.id : this.newID;
-      this.merge({ newID, oldID }).finally(() => {
-        this.$router.push(this.$route.query.redirect || { name: "tracks" });
-      });
+      this.merge(newID, oldID).finally(() =>
+        this.$router.push(this.$route.query.redirect || { name: "tracks" }),
+      );
     },
   },
 };

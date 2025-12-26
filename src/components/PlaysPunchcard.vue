@@ -59,8 +59,9 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState } from "pinia";
 import { calcPlayCountForHours, calcPlayTimeForHours } from "@/reducers";
+import { useTracksStore } from "../store/tracks";
 
 export default {
   name: "PlaysPunchcard",
@@ -94,7 +95,7 @@ export default {
     };
   },
   computed: {
-    ...mapState("tracks", ["tracks"]),
+    ...mapState(useTracksStore, ["tracks"]),
     binnedPlays() {
       const bin = this.useTrackLength
         ? calcPlayTimeForHours(this.plays, this.tracks)

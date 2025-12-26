@@ -59,7 +59,9 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
+import { mapActions, mapState } from "pinia";
+import { useAuthStore } from "../../store/auth";
+import { useUsersStore } from "../../store/users";
 
 export default {
   name: "Users",
@@ -67,7 +69,7 @@ export default {
     return { title: this.$tc("users.users", 2) };
   },
   methods: {
-    ...mapActions("users", ["destroy"]),
+    ...mapActions(useUsersStore, ["destroy"]),
     deleteUser: function (id) {
       if (confirm(this.$t("common.are-you-sure"))) {
         this.destroy(id);
@@ -75,10 +77,8 @@ export default {
     },
   },
   computed: {
-    ...mapGetters("auth", ["isAdmin"]),
-    ...mapGetters("users", {
-      users: "usersByName",
-    }),
+    ...mapState(useAuthStore, ["isAdmin"]),
+    ...mapState(useUsersStore, { users: "usersByName" }),
   },
 };
 </script>

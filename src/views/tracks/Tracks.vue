@@ -13,8 +13,9 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapState } from "pinia";
 import TracksTable from "../../components/TracksTable.vue";
+import { useTracksStore } from "../../store/tracks";
 
 export default {
   name: "Tracks",
@@ -23,9 +24,7 @@ export default {
     return { title: this.$tc("music.tracks", 2) };
   },
   computed: {
-    ...mapGetters("tracks", {
-      tracks: "tracksByAlbumAndNumber",
-    }),
+    ...mapState(useTracksStore, { tracks: "tracksByAlbumAndNumber" }),
   },
 };
 </script>

@@ -12,7 +12,8 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState } from "pinia";
+import { useUsersStore } from "../../store/users";
 
 export default {
   name: "User",
@@ -27,7 +28,7 @@ export default {
     },
   },
   computed: {
-    ...mapState("users", ["users"]),
+    ...mapState(useUsersStore, ["users"]),
     user: function () {
       return this.users[this.$route.params.id];
     },

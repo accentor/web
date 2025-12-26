@@ -46,7 +46,8 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
+import { mapActions, mapState } from "pinia";
+import { useCodecsStore } from "../store/codecs";
 
 export default {
   name: "CodecForm",
@@ -75,7 +76,7 @@ export default {
     },
   },
   computed: {
-    ...mapGetters("codecs", ["codecs"]),
+    ...mapState(useCodecsStore, { codecs: "allCodecs" }),
     rules() {
       const rules = {
         ext: [(v) => !!v || this.$t("errors.codec.ext-blank")],
@@ -92,11 +93,11 @@ export default {
     },
   },
   methods: {
+    ...mapActions(useCodecsStore, ["destroy", "update", "create"]),
     fillValues() {
       this.newCodec.extension = this.codec.extension;
       this.newCodec.mimetype = this.codec.mimetype;
     },
-    ...mapActions("codecs", ["destroy", "update", "create"]),
     async saveCodec() {
       if (this.$refs.form.validate()) {
         if (this.codec === null) {
@@ -106,7 +107,7 @@ export default {
             this.newCodec.mimetype = "";
           }
         } else {
-          this.update({ id: this.codec.id, newCodec: this.newCodec });
+          this.update(this.codec.id, this.newCodec);
         }
       }
     },

@@ -53,8 +53,10 @@
 </template>
 
 <script>
-import { mapActions, mapGetters, mapState } from "vuex";
+import { mapActions, mapState } from "pinia";
 import GenreMergeDialog from "./GenreMergeDialog.vue";
+import { useAuthStore } from "../store/auth";
+import { useGenresStore } from "../store/genres";
 
 export default {
   name: "GenreActions",
@@ -68,14 +70,14 @@ export default {
     },
   },
   computed: {
-    ...mapGetters("auth", ["isModerator"]),
-    ...mapState("genres", ["startLoading"]),
+    ...mapState(useAuthStore, ["isModerator"]),
+    ...mapState(useGenresStore, ["startLoading"]),
     waitingForReload() {
       return this.startLoading > this.genre.loaded;
     },
   },
   methods: {
-    ...mapActions("genres", ["destroy", "merge"]),
+    ...mapActions(useGenresStore, ["destroy", "merge"]),
     deleteGenre: function () {
       if (confirm(this.$t("common.are-you-sure"))) {
         this.destroy(this.genre.id);

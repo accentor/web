@@ -44,7 +44,9 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
+import { useAuthStore } from "../store/auth";
+import { mapActions, mapState } from "pinia";
+import { useUsersStore } from "../store/users";
 
 export default {
   name: "UserForm",
@@ -86,7 +88,7 @@ export default {
     },
   },
   computed: {
-    ...mapGetters("auth", ["currentUser"]),
+    ...mapState(useAuthStore, ["currentUser"]),
     rules() {
       const rules = {
         confirmation: [],
@@ -117,7 +119,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions("users", ["create", "update"]),
+    ...mapActions(useUsersStore, ["create", "update"]),
     fillValues() {
       this.newUser.name = this.user.name;
       this.newUser.permission = this.user.permission;
@@ -127,10 +129,7 @@ export default {
       if (this.isValid) {
         let pendingResult = null;
         if (this.user) {
-          pendingResult = this.update({
-            id: this.user.id,
-            newUser: this.newUser,
-          });
+          pendingResult = this.update(this.user.id, this.newUser);
         } else {
           pendingResult = this.create(this.newUser);
         }

@@ -38,7 +38,8 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { useCoverFilenamesStore } from "../store/cover_filenames";
+import { mapActions } from "pinia";
 
 export default {
   name: "CoverFilenameForm",
@@ -69,7 +70,7 @@ export default {
     fillValues() {
       this.newCoverFilename.filename = this.coverFilename.filename;
     },
-    ...mapActions("coverFilenames", ["destroy", "update", "create"]),
+    ...mapActions(useCoverFilenamesStore, ["destroy", "create"]),
     async saveCoverFilename() {
       if (this.$refs.form.validate()) {
         const id = await this.create(this.newCoverFilename);

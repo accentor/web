@@ -14,8 +14,10 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapState } from "pinia";
 import TracksTable from "../../components/TracksTable.vue";
+import { useAuthStore } from "../../store/auth";
+import { useTracksStore } from "../../store/tracks";
 
 export default {
   name: "EmptyTracks",
@@ -24,10 +26,8 @@ export default {
     return { title: this.$t("music.tracks-without-audio") };
   },
   computed: {
-    ...mapGetters("auth", ["isModerator"]),
-    ...mapGetters("tracks", {
-      tracks: "tracksEmpty",
-    }),
+    ...mapState(useAuthStore, ["isModerator"]),
+    ...mapState(useTracksStore, { tracks: "tracksEmpty" }),
   },
 };
 </script>

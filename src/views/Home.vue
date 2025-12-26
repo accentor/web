@@ -260,7 +260,6 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
 import AlbumCard from "../components/AlbumCard.vue";
 import ArtistCard from "../components/ArtistCard.vue";
 import {
@@ -268,6 +267,10 @@ import {
   compareByRecentlyPlayed,
   compareStrings,
 } from "../comparators";
+import { mapState } from "pinia";
+import { useArtistsStore } from "../store/artists";
+import { useAlbumsStore } from "../store/albums";
+import { usePlaysStore } from "../store/plays";
 
 const RANDOM_SEED_MAX = 10000;
 
@@ -279,19 +282,18 @@ export default {
   },
   methods: {
     releaseSort(items) {
-      return items.sort(compareAlbumsByReleaseFirst(true));
+      return [...items].sort(compareAlbumsByReleaseFirst(true));
     },
     createdSort(items) {
-      items.sort((a1, a2) => {
+      return [...items].sort((a1, a2) => {
         return compareStrings(a2.created_at, a1.created_at);
       });
-      return items;
     },
     recentlyPlayedAlbumsSort(albums) {
-      return albums.sort(compareByRecentlyPlayed(this.playStatsByAlbum));
+      return [...albums].sort(compareByRecentlyPlayed(this.playStatsByAlbum));
     },
     recentlyPlayedArtistsSort(artists) {
-      return artists.sort(compareByRecentlyPlayed(this.playStatsByArtist));
+      return [...artists].sort(compareByRecentlyPlayed(this.playStatsByArtist));
     },
     randomSort(items) {
       return [...items].sort(
@@ -301,13 +303,12 @@ export default {
     },
   },
   computed: {
-    ...mapGetters({
-      albums: "albums/albums",
-      albumsOnThisDay: "albums/albumsOnThisDay",
-      artists: "artists/artists",
-      playStatsByAlbum: "plays/playStatsByAlbum",
-      playStatsByArtist: "plays/playStatsByArtist",
+    ...mapState(useAlbumsStore, {
+      albums: "allAlbums",
+      albumsOnThisDay: "albumsOnThisDay",
     }),
+    ...mapState(useArtistsStore, { artists: "allArtists" }),
+    ...mapState(usePlaysStore, ["playStatsByAlbum", "playStatsByArtist"]),
     randomSeed() {
       return Math.round(Math.random() * RANDOM_SEED_MAX);
     },

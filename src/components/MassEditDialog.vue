@@ -275,10 +275,14 @@
 </template>
 
 <script>
-import { mapActions, mapGetters, mapState } from "vuex";
+import { mapState, mapActions } from "pinia";
 import { compareTracks } from "../comparators";
 import Errors from "./Errors.vue";
 import TrackFormArtists from "./TrackFormArtists.vue";
+import { useGenresStore } from "../store/genres";
+import { useArtistsStore } from "../store/artists";
+import { useAlbumsStore } from "../store/albums";
+import { useTracksStore } from "../store/tracks";
 
 export default {
   name: "MassEditDialog",
@@ -326,13 +330,13 @@ export default {
     };
   },
   computed: {
-    ...mapState("albums", ["albums"]),
-    ...mapState("artists", ["artists"]),
-    ...mapState("genres", ["genres"]),
-    ...mapGetters("albums", {
+    ...mapState(useAlbumsStore, {
+      albums: "albums",
       sortedAlbums: "albumsByTitle",
     }),
-    ...mapGetters("genres", {
+    ...mapState(useArtistsStore, ["artists"]),
+    ...mapState(useGenresStore, {
+      genres: "genres",
       sortedGenres: "genresByName",
     }),
     sortedTracks() {
@@ -380,11 +384,9 @@ export default {
     },
   },
   methods: {
-    ...mapActions("tracks", ["update"]),
-    ...mapActions({
-      createArtist: "artists/create",
-      createGenre: "genres/create",
-    }),
+    ...mapActions(useTracksStore, ["update"]),
+    ...mapActions(useArtistsStore, { createArtist: "create" }),
+    ...mapActions(useGenresStore, { createGenre: "create" }),
     filterName(item, queryText) {
       const search = queryText.toLowerCase();
       return (
@@ -525,7 +527,7 @@ export default {
           transformed.album_id = this.album.album;
         }
 
-        await this.update({ id: t.id, newTrack: transformed });
+        await this.update(t.id, transformed);
       });
       await Promise.all(mappedTracks);
       this.dialog = false;
