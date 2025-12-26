@@ -23,12 +23,11 @@ export function useBaseModelStore(
   const errorsStore = useErrorsStore();
   const authStore = useAuthStore();
 
-  let readyResolve;
-  const ready = new Promise((r) => readyResolve = r);
+  const { promise: ready, resolve: resolveReady } = Promise.withResolvers();
 
   const _items = useStorageAsync(localStorageKey, {}, localForage, {
     serializer: RawObjectSerializer,
-      onReady: () => readyResolve()
+    onReady: resolveReady,
   });
   const items = computed(() => _items.value);
   const startLoading = ref(new Date(0));
