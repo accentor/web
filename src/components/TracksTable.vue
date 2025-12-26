@@ -65,7 +65,7 @@
       </template>
       <template v-slot:item.length="props">
         <span v-if="props.value !== null">
-          {{ props.value | length }}
+          {{ $filters.length(props.value) }}
         </span>
         <VTooltip v-else bottom>
           <template v-slot:activator="{ on }">
