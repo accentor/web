@@ -37,14 +37,14 @@
         <VRow>
           <VCol
             v-for="item in props.items"
-            :key="item.id"
+            :key="item.raw.id"
             cols="6"
             sm="6"
             md="4"
             lg="3"
             xl="2"
           >
-            <ArtistCard :artist="item" />
+            <ArtistCard :artist="item.raw" />
           </VCol>
         </VRow>
       </template>
