@@ -193,6 +193,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@use "sass:map";
+@use "vuetify/settings";
+
 .stats {
   display: grid;
   grid-auto-columns: 1fr;
@@ -205,7 +208,7 @@ export default {
     "topArtists"
     "punchcard";
 
-  @media (min-width: map-get($grid-breakpoints, "sm")) {
+  @media (min-width: map.get(settings.$display-breakpoints, "sm")) {
     grid-template-areas:
       "topTracks topTracks"
       "playCount percentagePlayed"
@@ -214,7 +217,7 @@ export default {
       "punchcard punchcard";
   }
 
-  @media (min-width: map-get($grid-breakpoints, "md")) {
+  @media (min-width: map.get(settings.$display-breakpoints, "md")) {
     grid-template-areas:
       "topTracks topTracks topTracks topTracks playCount playCount"
       "topTracks topTracks topTracks topTracks percentagePlayed percentagePlayed"

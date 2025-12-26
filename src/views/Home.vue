@@ -297,9 +297,9 @@ export default {
       return this.randomSort(this.artists);
     },
     numberOfItems() {
-      if (this.$vuetify.breakpoint.name === "xl") {
+      if (this.$vuetify.display.xl) {
         return 6;
-      } else if (this.$vuetify.breakpoint.name === "md") {
+      } else if (this.$vuetify.display.md) {
         return 3;
       } else {
         return 4;
