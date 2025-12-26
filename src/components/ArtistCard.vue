@@ -12,12 +12,7 @@
       v-else-if="artist.image"
       @error="setImageUnavailable"
     />
-    <VImg
-      :aspect-ratio="1"
-      :src="artistSvgUrl"
-      v-else
-      class="grey lighten-3"
-    />
+    <VImg :aspect-ratio="1" :src="artistSvgUrl" v-else class="grey lighten-3" />
     <VCardTitle class="d-block text-truncate" :title="artist.name">
       {{ artist.name }}
     </VCardTitle>
