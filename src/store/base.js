@@ -23,8 +23,12 @@ export function useBaseModelStore(
   const errorsStore = useErrorsStore();
   const authStore = useAuthStore();
 
+  let readyResolve;
+  const ready = new Promise((r) => readyResolve = r);
+
   const _items = useStorageAsync(localStorageKey, {}, localForage, {
     serializer: RawObjectSerializer,
+      onReady: () => readyResolve()
   });
   const items = computed(() => _items.value);
   const startLoading = ref(new Date(0));
@@ -83,6 +87,7 @@ export function useBaseModelStore(
   async function index(scope = baseScope) {
     const generator = apiModule.index(authStore.apiToken, scope);
     try {
+      await ready;
       await fetchAllPinia(
         generator,
         addItems,
@@ -113,6 +118,7 @@ export function useBaseModelStore(
   async function read(id) {
     try {
       const result = await apiModule.read(authStore.apiToken, id);
+      await ready;
       setItem(id, result);
       return result.id;
     } catch (error) {

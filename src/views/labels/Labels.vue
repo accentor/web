@@ -71,11 +71,11 @@ export default {
       );
     },
     numberOfItems() {
-      if (this.$vuetify.breakpoint.name === "xl") {
+      if (this.$vuetify.display.xl) {
         return 30;
-      } else if (this.$vuetify.breakpoint.name === "lg") {
+      } else if (this.$vuetify.display.lg) {
         return 20;
-      } else if (this.$vuetify.breakpoint.name === "md") {
+      } else if (this.$vuetify.display.md) {
         return 15;
       } else {
         return 12;
