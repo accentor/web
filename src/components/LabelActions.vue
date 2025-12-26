@@ -1,8 +1,8 @@
 <template>
   <span v-if="isModerator" class="actions">
     <VTooltip location="bottom" :disabled="!waitingForReload">
-      <template #activator="{ on }">
-        <span v-on="on">
+      <template #activator="{ props }">
+        <span v-bind="props">
           <VBtn
             :to="{
               name: 'edit-label',
@@ -23,16 +23,16 @@
       <span>{{ $t("common.disabled-while-loading") }}</span>
     </VTooltip>
     <VTooltip location="bottom" :disabled="!waitingForReload">
-      <template #activator="{ on }">
-        <span v-on="on">
+      <template #activator="{ props }">
+        <span v-bind="props">
           <LabelMergeDialog :label="label" :disabled="waitingForReload" />
         </span>
       </template>
       <span>{{ $t("common.disabled-while-loading") }}</span>
     </VTooltip>
     <VTooltip location="bottom" :disabled="!waitingForReload">
-      <template #activator="{ on }">
-        <span v-on="on">
+      <template #activator="{ props }">
+        <span v-bind="props">
           <VBtn
             :disabled="waitingForReload"
             color="danger"
