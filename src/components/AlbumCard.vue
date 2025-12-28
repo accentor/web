@@ -12,12 +12,7 @@
       v-else-if="album.image && !imageUnavailable"
       @error="setImageUnavailable"
     />
-    <VImg
-      :aspect-ratio="1"
-      :src="albumSvgUrl"
-      v-else
-      class="grey lighten-3"
-    />
+    <VImg :aspect-ratio="1" :src="albumSvgUrl" v-else class="grey lighten-3" />
     <VCardTitle class="pb-0 d-block text-truncate" :title="full_title">
       {{ album.title }}&nbsp;
       <span v-if="album.edition_description !== null" class="grey--text">
