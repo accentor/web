@@ -3,7 +3,7 @@ import { useStorageAsync } from "@vueuse/core";
 import localForage from "localforage";
 import { useErrorsStore } from "./errors";
 import { useAuthStore } from "./auth";
-import { fetchAllPinia } from "./actions";
+import { fetchAll } from "./actions";
 
 const RawObjectSerializer = {
   write: async (value) => value,
@@ -83,13 +83,7 @@ export function useBaseModelStore(
   async function index(scope = baseScope) {
     const generator = apiModule.index(authStore.apiToken, scope);
     try {
-      await fetchAllPinia(
-        generator,
-        addItems,
-        setStartLoading,
-        removeOld,
-        scope,
-      );
+      await fetchAll(generator, addItems, setStartLoading, removeOld, scope);
       return true;
     } catch (error) {
       errorsStore.addError(error);

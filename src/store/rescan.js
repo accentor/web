@@ -1,7 +1,7 @@
 import { computed, markRaw, ref } from "vue";
 import { delay } from "@/util";
 import api from "@/api";
-import { fetchAllPinia } from "./actions";
+import { fetchAll } from "./actions";
 import { useErrorsStore } from "./errors";
 import { useAuthStore } from "./auth";
 import { defineStore } from "pinia";
@@ -92,7 +92,7 @@ export const useRescansStore = defineStore("rescans", () => {
       loading.value = true;
       do {
         const generator = api.rescans.index(authStore.apiToken);
-        await fetchAllPinia(generator, setRescans, setStartLoading, removeOld);
+        await fetchAll(generator, setRescans, setStartLoading, removeOld);
         await delay(1000);
       } while (_lastClick.value > new Date(finishedAt.value) || running.value);
       return true;
