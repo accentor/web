@@ -24,9 +24,6 @@ import { mapActions, mapState } from "pinia";
 
 export default {
   name: "EditLabel",
-  metaInfo() {
-    return { title: this.$t("page-titles.edit", { obj: this.label.name }) };
-  },
   data() {
     return {
       newLabel: {
@@ -35,6 +32,9 @@ export default {
       isDirty: false,
       isValid: true,
     };
+  },
+  head() {
+    return { title: this.$t("page-titles.edit", { obj: this.label.name }) };
   },
   computed: {
     ...mapState(useLabelsStore, ["labels"]),

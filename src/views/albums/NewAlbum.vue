@@ -9,9 +9,9 @@ import AlbumForm from "../../components/AlbumForm.vue";
 
 export default {
   name: "NewAlbum",
-  metaInfo() {
+  components: { AlbumForm },
+  head() {
     return { title: this.$t("music.album.new") };
   },
-  components: { AlbumForm },
 };
 </script>

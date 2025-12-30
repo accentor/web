@@ -62,10 +62,10 @@ import { useAlbumsStore } from "../../store/albums";
 export default {
   name: "Albums",
   components: { AlbumCard },
-  metaInfo() {
+  mixins: [Paginated, Searchable],
+  head() {
     return { title: this.$tc("music.albums", 2) };
   },
-  mixins: [Paginated, Searchable],
   computed: {
     ...mapState(useAuthStore, ["isModerator"]),
     ...mapState(useAlbumsStore, { albums: "albumsByTitle" }),

@@ -10,7 +10,7 @@ import ArtistForm from "../../components/ArtistForm.vue";
 export default {
   name: "NewArtist",
   components: { ArtistForm },
-  metaInfo() {
+  head() {
     return { title: this.$t("music.artist.new") };
   },
 };

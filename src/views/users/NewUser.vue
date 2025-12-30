@@ -14,7 +14,7 @@ import UserForm from "@/components/UserForm.vue";
 export default {
   name: "NewUser",
   components: { UserForm },
-  metaInfo() {
+  head() {
     return { title: this.$t("users.new") };
   },
 };

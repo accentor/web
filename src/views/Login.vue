@@ -48,15 +48,15 @@ import { useAuthStore } from "../store/auth";
 export default {
   name: "Login",
   components: { Errors },
-  metaInfo() {
-    return { title: this.$t("common.login") };
-  },
   data: function () {
     return {
       name: "",
       password: "",
       error: {},
     };
+  },
+  head() {
+    return { title: this.$t("common.login") };
   },
   methods: {
     ...mapActions(useAuthStore, ["login"]),

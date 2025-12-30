@@ -160,7 +160,7 @@ export default {
     EditLocations,
     MaintenanceActions,
   },
-  metaInfo() {
+  head() {
     return { title: this.$t("librarySettings") };
   },
   computed: {
