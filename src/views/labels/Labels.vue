@@ -53,11 +53,11 @@ import { useLabelsStore } from "../../store/labels";
 
 export default {
   name: "Labels",
-  metaInfo() {
-    return { title: this.$tc("music.labels", 2) };
-  },
   components: { LabelCard },
   mixins: [Paginated, Searchable],
+  head() {
+    return { title: this.$tc("music.labels", 2) };
+  },
   computed: {
     ...mapState(useLabelsStore, { labels: "labelsByName" }),
     filteredItems() {

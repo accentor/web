@@ -83,15 +83,15 @@ import { useTracksStore } from "../../store/tracks";
 export default {
   name: "Playlist",
   components: { AlbumCard, ArtistCard, TracksTable, PlaylistActions },
-  metaInfo() {
-    return { title: this.playlist?.title };
-  },
   mixins: [Paginated],
   props: {
     id: {
       type: [String, Number],
       required: true,
     },
+  },
+  head() {
+    return { title: this.playlist?.title };
   },
   computed: {
     ...mapState(usePlaylistsStore, ["playlists"]),

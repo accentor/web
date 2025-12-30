@@ -30,14 +30,14 @@ import { useTracksStore } from "../../store/tracks";
 export default {
   name: "Genre",
   components: { GenreActions, TracksTable },
-  metaInfo() {
-    return { title: this.genre?.name };
-  },
   props: {
     id: {
       type: [String, Number],
       required: true,
     },
+  },
+  head() {
+    return { title: this.genre?.name };
   },
   computed: {
     ...mapState(useAuthStore, ["isModerator"]),

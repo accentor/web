@@ -10,12 +10,23 @@ import router from "./router";
 import i18n from "./i18n";
 import { createPinia } from "pinia";
 import { useI18n } from "vue-i18n";
+import { createHead, VueHeadMixin } from "@unhead/vue/client";
 
 const pinia = createPinia();
+const head = createHead({
+  init: [
+    {
+      titleTemplate: "%s | Accentor",
+    },
+  ],
+});
+
 const app = createApp(Root);
 app.use(pinia);
 app.use(router);
 app.use(i18n);
+app.use(head);
+app.mixin(VueHeadMixin);
 app.use(
   createVuetify({
     locale: {

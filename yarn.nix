@@ -730,6 +730,14 @@
       };
     }
     {
+      name = "_unhead_vue___vue_2.1.1.tgz";
+      path = fetchurl {
+        name = "_unhead_vue___vue_2.1.1.tgz";
+        url  = "https://registry.yarnpkg.com/@unhead/vue/-/vue-2.1.1.tgz";
+        sha512 = "WYa8ORhfv7lWDSoNpkMKhbW1Dbsux/3HqMcVkZS3xZ2/c/VrcChLj+IMadpCd1WNR0srITfRJhBYZ1i9hON5Qw==";
+      };
+    }
+    {
       name = "_vitejs_plugin_vue___plugin_vue_6.0.3.tgz";
       path = fetchurl {
         name = "_vitejs_plugin_vue___plugin_vue_6.0.3.tgz";
@@ -1983,6 +1991,14 @@
         name = "ufo___ufo_1.6.1.tgz";
         url  = "https://registry.yarnpkg.com/ufo/-/ufo-1.6.1.tgz";
         sha512 = "9a4/uxlTWJ4+a5i0ooc1rU7C7YOw3wT+UGqdeNNHWnOF9qcMBgLRS+4IYUqbczewFx4mLEig6gawh7X6mFlEkA==";
+      };
+    }
+    {
+      name = "unhead___unhead_2.1.1.tgz";
+      path = fetchurl {
+        name = "unhead___unhead_2.1.1.tgz";
+        url  = "https://registry.yarnpkg.com/unhead/-/unhead-2.1.1.tgz";
+        sha512 = "NOt8n2KybAOxSLfNXegAVai4SGU8bPKqWnqCzNAvnRH2i8mW+0bbFjN/L75LBgCSTiOjJSpANe5w2V34Grr7Cw==";
       };
     }
     {

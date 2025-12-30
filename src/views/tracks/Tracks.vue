@@ -20,7 +20,7 @@ import { useTracksStore } from "../../store/tracks";
 export default {
   name: "Tracks",
   components: { TracksTable },
-  metaInfo() {
+  head() {
     return { title: this.$tc("music.tracks", 2) };
   },
   computed: {

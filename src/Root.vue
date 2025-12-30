@@ -7,9 +7,8 @@
 <script>
 export default {
   name: "Root",
-  metaInfo: {
-    title: "Main",
-    titleTemplate: "%s | Accentor",
+  head() {
+    return { title: "Main" };
   },
 };
 </script>

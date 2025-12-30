@@ -11,10 +11,10 @@ import { usePlaylistsStore } from "../../store/playlists";
 
 export default {
   name: "EditPlaylist",
-  metaInfo() {
+  components: { PlaylistForm },
+  head() {
     return { title: this.$t("page-titles.edit", { obj: this.playlist.name }) };
   },
-  components: { PlaylistForm },
   computed: {
     ...mapState(usePlaylistsStore, ["playlists"]),
     playlist: function () {

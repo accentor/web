@@ -63,10 +63,10 @@ import { useArtistsStore } from "../../store/artists";
 export default {
   name: "Artists",
   components: { ArtistCard },
-  metaInfo() {
+  mixins: [Paginated, Searchable],
+  head() {
     return { title: this.$tc("music.artists", 2) };
   },
-  mixins: [Paginated, Searchable],
   computed: {
     ...mapState(useAuthStore, ["isModerator"]),
     ...mapState(useArtistsStore, { artists: "artistsByName" }),

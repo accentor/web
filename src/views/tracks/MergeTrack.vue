@@ -208,15 +208,15 @@ import { useTracksStore } from "../../store/tracks";
 export default {
   name: "MergeTrack",
   components: { TrackArtists, TrackGenres, TracksTable },
-  metaInfo() {
-    return { title: this.$t("page-titles.merge", { obj: this.track.title }) };
-  },
   data() {
     return {
       reversed: false,
       newID: null,
       limitTracksToAlbum: true,
     };
+  },
+  head() {
+    return { title: this.$t("page-titles.merge", { obj: this.track.title }) };
   },
   computed: {
     ...mapState(useAlbumsStore, ["albums"]),
