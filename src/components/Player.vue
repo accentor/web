@@ -8,55 +8,54 @@
     <div v-if="open" class="play-queue">
       <table class="play-queue__table">
         <Draggable
+          :model-value="playlistTracks"
           tag="tbody"
-          handle="[data-draggable=handle]"
+          handle=".handle"
+          item-key="id"
           @end="({ newIndex, oldIndex }) => updatePlaylist(newIndex, oldIndex)"
         >
-          <tr v-for="(track, index) of playlistTracks" :key="track.id">
-            <td class="play-queue__cell play-queue__cell--icon">
-              <VBtn
-                size="small"
-                icon
-                variant="text"
-                class="ma-2"
-                data-draggable="handle"
-              >
-                <VIcon>mdi-drag-horizontal-variant</VIcon>
-              </VBtn>
-            </td>
-            <td class="play-queue__cell play-queue__cell--icon-small">
-              <VIcon v-if="index === current">mdi-volume-high</VIcon>
-            </td>
-            <td class="pl-3 play-queue__cell">
-              <a @click.stop.prevent="setCurrent(index)">{{ track.title }}</a>
-            </td>
-            <td class="play-queue__cell">
-              <RouterLink
-                :to="{ name: 'album', params: { id: track.album_id } }"
-                >{{ albums[track.album_id].title }}</RouterLink
-              >
-            </td>
-            <td class="play-queue__cell text-right">
-              {{ $filters.length(track.length) }}
-            </td>
-            <td class="play-queue__cell">
-              <TrackArtists :track="track" />
-            </td>
-            <td class="play-queue__cell">
-              {{ albums[track.album_id].release }}
-            </td>
-            <td class="play-queue__cell play-queue__cell--icon">
-              <VBtn
-                size="small"
-                icon
-                variant="text"
-                class="ma-2"
-                @click.stop.prevent="removeIndex(index)"
-              >
-                <VIcon>mdi-close</VIcon>
-              </VBtn>
-            </td>
-          </tr>
+          <template #item="{ element: track, index }">
+            <tr>
+              <td class="play-queue__cell play-queue__cell--icon">
+                <VBtn size="small" icon variant="text" class="ma-2 handle">
+                  <VIcon>mdi-drag-horizontal-variant</VIcon>
+                </VBtn>
+              </td>
+              <td class="play-queue__cell play-queue__cell--icon-small">
+                <VIcon v-if="index === current">mdi-volume-high</VIcon>
+              </td>
+              <td class="pl-3 play-queue__cell">
+                <a @click.stop.prevent="setCurrent(index)">{{ track.title }}</a>
+              </td>
+              <td class="play-queue__cell">
+                <RouterLink
+                  :to="{ name: 'album', params: { id: track.album_id } }"
+                >
+                  {{ albums[track.album_id].title }}
+                </RouterLink>
+              </td>
+              <td class="play-queue__cell text-right">
+                {{ $filters.length(track.length) }}
+              </td>
+              <td class="play-queue__cell">
+                <TrackArtists :track="track" />
+              </td>
+              <td class="play-queue__cell">
+                {{ albums[track.album_id].release }}
+              </td>
+              <td class="play-queue__cell play-queue__cell--icon">
+                <VBtn
+                  size="small"
+                  icon
+                  variant="text"
+                  class="ma-2"
+                  @click.stop.prevent="removeIndex(index)"
+                >
+                  <VIcon>mdi-close</VIcon>
+                </VBtn>
+              </td>
+            </tr>
+          </template>
         </Draggable>
       </table>
     </div>
