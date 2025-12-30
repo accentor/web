@@ -68,44 +68,38 @@
               </thead>
               <Draggable
                 v-model="newPlaylist.item_ids"
+                :item-key="(id) => id"
                 tag="tbody"
-                handle="[data-draggable=handle]"
+                handle=".handle"
               >
-                <tr
-                  v-for="(item_id, index) of newPlaylist.item_ids"
-                  :key="item_id"
-                >
-                  <td class="text-no-wrap">
-                    <VBtn
-                      size="small"
-                      icon
-                      variant="text"
-                      class=""
-                      data-draggable="handle"
-                    >
-                      <VIcon>mdi-drag-horizontal-variant</VIcon>
-                    </VBtn>
-                    {{ index + 1 }}
-                  </td>
-                  <td class="play-queue__cell">
-                    {{
-                      newPlaylist.playlist_type === "artist"
-                        ? items[item_id].name
-                        : items[item_id].title
-                    }}
-                  </td>
-                  <td class="text-right">
-                    <VBtn
-                      size="small"
-                      icon
-                      variant="text"
-                      class="ma-2 text-red"
-                      @click="() => removeItem(index)"
-                    >
-                      <VIcon>mdi-close</VIcon>
-                    </VBtn>
-                  </td>
-                </tr>
+                <template #item="{ element: item_id, index }">
+                  <tr>
+                    <td class="text-no-wrap">
+                      <VBtn size="small" icon variant="text" class="handle">
+                        <VIcon>mdi-drag-horizontal-variant</VIcon>
+                      </VBtn>
+                      {{ index + 1 }}
+                    </td>
+                    <td class="play-queue__cell">
+                      {{
+                        newPlaylist.playlist_type === "artist"
+                          ? items[item_id].name
+                          : items[item_id].title
+                      }}
+                    </td>
+                    <td class="text-right">
+                      <VBtn
+                        size="small"
+                        icon
+                        variant="text"
+                        class="ma-2 text-red"
+                        @click="() => removeItem(index)"
+                      >
+                        <VIcon>mdi-close</VIcon>
+                      </VBtn>
+                    </td>
+                  </tr>
+                </template>
               </Draggable>
             </v-table>
           </VCol>
