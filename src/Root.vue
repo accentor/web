@@ -20,6 +20,7 @@ export default {
 // Additional resets
 a {
   text-decoration: none;
+  color: rgb(var(--v-theme-primary));
 }
 
 // Component styles with global scope
