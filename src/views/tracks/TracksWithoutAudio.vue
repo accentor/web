@@ -22,7 +22,7 @@ import { useTracksStore } from "../../store/tracks";
 export default {
   name: "EmptyTracks",
   components: { TracksTable },
-  metaInfo() {
+  head() {
     return { title: this.$t("music.tracks-without-audio") };
   },
   computed: {

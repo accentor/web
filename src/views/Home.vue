@@ -283,7 +283,7 @@ export default {
       releasePage: 1,
     };
   },
-  metaInfo() {
+  head() {
     return { title: this.$t("common.home") };
   },
   computed: {
@@ -310,10 +310,14 @@ export default {
       return this.randomSort(this.albums);
     },
     recentAlbums() {
-      return [...this.albums].sort(compareByRecentlyPlayed(this.playStatsByAlbum));
+      return [...this.albums].sort(
+        compareByRecentlyPlayed(this.playStatsByAlbum),
+      );
     },
     recentArtists() {
-      return [...this.artists].sort(compareByRecentlyPlayed(this.playStatsByArtist));
+      return [...this.artists].sort(
+        compareByRecentlyPlayed(this.playStatsByArtist),
+      );
     },
     releaseAlbums() {
       return [...this.albums].sort(compareAlbumsByReleaseFirst(true));

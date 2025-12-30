@@ -98,9 +98,6 @@ import { useTracksStore } from "../../store/tracks";
 export default {
   name: "EditTrack",
   components: { TrackFormArtists },
-  metaInfo() {
-    return { title: this.$t("page-titles.edit", { obj: this.track.title }) };
-  },
   data() {
     return {
       newTrack: {
@@ -116,6 +113,9 @@ export default {
       isValid: true,
       loaded: false,
     };
+  },
+  head() {
+    return { title: this.$t("page-titles.edit", { obj: this.track.title }) };
   },
   computed: {
     ...mapState(useArtistsStore, {

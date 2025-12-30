@@ -79,9 +79,6 @@ import { useTracksStore } from "../../store/tracks";
 
 export default {
   name: "Artist",
-  metaInfo() {
-    return { title: this.artist?.name };
-  },
   components: {
     TracksTable,
     AlbumCard,
@@ -97,6 +94,9 @@ export default {
     return {
       imageUnavailable: false,
     };
+  },
+  head() {
+    return { title: this.artist?.name };
   },
   computed: {
     ...mapState(useAuthStore, ["isModerator"]),

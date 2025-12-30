@@ -61,7 +61,7 @@ import { useUsersStore } from "../../store/users";
 
 export default {
   name: "Users",
-  metaInfo() {
+  head() {
     return { title: this.$tc("users.users", 2) };
   },
   computed: {

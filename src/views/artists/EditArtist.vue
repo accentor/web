@@ -12,7 +12,7 @@ import { useArtistsStore } from "../../store/artists";
 export default {
   name: "EditArtist",
   components: { ArtistForm },
-  metaInfo() {
+  head() {
     return { title: this.$t("page-titles.edit", { obj: this.artist?.name }) };
   },
   computed: {
