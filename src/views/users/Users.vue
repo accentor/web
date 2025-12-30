@@ -25,7 +25,7 @@
           </VCardText>
           <VCardActions v-if="isAdmin">
             <VBtn
-              color="danger"
+              color="error"
               class="ma-2"
               href="#"
               variant="outlined"
