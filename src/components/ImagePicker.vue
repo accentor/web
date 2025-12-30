@@ -18,14 +18,14 @@
         @drop.prevent="handleDrop"
       >
         <VImg
-          v-if="value && value.data"
+          v-if="modelValue && modelValue.data"
           :src="previewSrc"
           height="200"
           width="200"
           cover
         />
         <VImg
-          v-else-if="value === null && currentImg"
+          v-else-if="modelValue === null && currentImg"
           :src="currentImg"
           height="200"
           width="200"
@@ -65,12 +65,9 @@
 export default {
   name: "ImagePicker",
   props: {
-    value: {
+    modelValue: {
       type: Object,
-      required: false,
-      default: () => {
-        return { filename: null, mimetype: null, data: null };
-      },
+      required: true,
     },
     currentImg: {
       type: String,
@@ -82,17 +79,18 @@ export default {
       required: true,
     },
   },
-  emits: ["input"],
+  emits: ["update:modelValue"],
   computed: {
     previewSrc() {
       return (
-        this.value && `data:${this.value.mimetype};base64, ${this.value.data}`
+        this.modelValue &&
+        `data:${this.modelValue.mimetype};base64, ${this.modelValue.data}`
       );
     },
     hasImage() {
       return (
-        (this.value === null && this.currentImg) ||
-        (this.value && this.value.data !== null)
+        (this.modelValue === null && this.currentImg) ||
+        (this.modelValue && this.modelValue.data !== null)
       );
     },
   },
@@ -114,7 +112,7 @@ export default {
     interpret(file) {
       const fileReader = new FileReader();
       fileReader.onload = (ev) => {
-        this.$emit("input", {
+        this.$emit("update:modelValue", {
           filename: file.name,
           mimetype: file.type,
           data: ev.target.result.replace(
@@ -126,7 +124,7 @@ export default {
       fileReader.readAsDataURL(file);
     },
     clear() {
-      this.$emit("input", {
+      this.$emit("update:modelValue", {
         filename: null,
         mimetype: null,
         data: null,
