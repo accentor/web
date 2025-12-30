@@ -73,11 +73,16 @@
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex";
+import { mapState, mapActions } from "pinia";
 import AlbumActions from "../../components/AlbumActions.vue";
 import TracksTable from "../../components/TracksTable.vue";
 import AlbumArtists from "../../components/AlbumArtists.vue";
 import { PlaysScope, TracksScope } from "@accentor/api-client-js";
+import { usePlaylistsStore } from "../../store/playlists";
+import { useLabelsStore } from "../../store/labels";
+import { useAlbumsStore } from "../../store/albums";
+import { useTracksStore } from "../../store/tracks";
+import { usePlaysStore } from "../../store/plays";
 
 export default {
   name: "Album",
@@ -103,12 +108,11 @@ export default {
     },
   },
   computed: {
-    ...mapState("albums", ["albums"]),
-    ...mapState("labels", ["labels"]),
+    ...mapState(useAlbumsStore, ["albums"]),
+    ...mapState(useLabelsStore, ["labels"]),
+    ...mapState(usePlaylistsStore, { storePlaylists: "albumPlaylists" }),
     tracks: function () {
-      return this.$store.getters["tracks/tracksFilterByAlbum"](
-        this.$route.params.id,
-      );
+      return useTracksStore().tracksFilterByAlbum(this.$route.params.id);
     },
     album: function () {
       return this.albums[this.$route.params.id];
@@ -119,15 +123,15 @@ export default {
       );
     },
     playlists: function () {
-      return this.$store.getters["playlists/albumPlaylists"].filter((p) =>
+      return this.storePlaylists.filter((p) =>
         p.item_ids.includes(this.album.id),
       );
     },
   },
   methods: {
-    ...mapActions("albums", ["read"]),
-    ...mapActions("plays", { indexPlays: "index" }),
-    ...mapActions("tracks", { indexTracks: "index" }),
+    ...mapActions(useAlbumsStore, ["read"]),
+    ...mapActions(usePlaysStore, { indexPlays: "index" }),
+    ...mapActions(useTracksStore, { indexTracks: "index" }),
     async fetchContent(newValue, oldValue) {
       // After loading the content, the router will change the id from a string to a number
       // but we don't actually want to load the content twice

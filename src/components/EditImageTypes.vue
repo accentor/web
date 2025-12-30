@@ -6,8 +6,10 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapState } from "pinia";
 import ImageTypeForm from "./ImageTypeForm.vue";
+import { useAuthStore } from "../store/auth";
+import { useImageTypesStore } from "../store/image_types";
 
 export default {
   name: "EditImageTypes",
@@ -16,8 +18,8 @@ export default {
     return {};
   },
   computed: {
-    ...mapGetters("imageTypes", ["imageTypes"]),
-    ...mapGetters("auth", ["isModerator"]),
+    ...mapState(useAuthStore, ["isModerator"]),
+    ...mapState(useImageTypesStore, { imageTypes: "allImageTypes" }),
   },
 };
 </script>

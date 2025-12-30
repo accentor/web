@@ -235,8 +235,12 @@
 </template>
 
 <script>
-import { mapGetters, mapActions, mapState } from "vuex";
+import { mapState, mapActions } from "pinia";
 import ImagePicker from "./ImagePicker.vue";
+import { useUserSettingsStore } from "../store/user_settings";
+import { useLabelsStore } from "../store/labels";
+import { useArtistsStore } from "../store/artists";
+import { useAlbumsStore } from "../store/albums";
 import albumSvgUrl from "@mdi/svg/svg/album.svg";
 
 export default {
@@ -289,22 +293,20 @@ export default {
     },
   },
   computed: {
-    ...mapState("artists", ["artists"]),
-    ...mapState("labels", ["labels"]),
-    ...mapState("userSettings", ["locale"]),
-    ...mapGetters("artists", {
+    ...mapState(useArtistsStore, {
+      artists: "artists",
       sortedArtists: "artistsByName",
     }),
-    ...mapGetters("labels", {
+    ...mapState(useLabelsStore, {
+      labels: "labels",
       sortedLabels: "labelsByName",
     }),
+    ...mapState(useUserSettingsStore, ["locale"]),
   },
   methods: {
-    ...mapActions("albums", ["create", "read", "update"]),
-    ...mapActions({
-      createArtist: "artists/create",
-      createLabel: "labels/create",
-    }),
+    ...mapActions(useAlbumsStore, ["create", "read", "update"]),
+    ...mapActions(useArtistsStore, { createArtist: "create" }),
+    ...mapActions(useLabelsStore, { createLabel: "create" }),
     filterName(item, queryText) {
       const search = queryText.toLowerCase();
       return (
@@ -436,10 +438,7 @@ export default {
       await Promise.all([...mappedArtists, ...mappedLabels]);
       let pendingResult = null;
       if (this.album) {
-        pendingResult = this.update({
-          id: this.album.id,
-          newAlbum: transformed,
-        });
+        pendingResult = this.update(this.album.id, transformed);
       } else {
         pendingResult = this.create(transformed);
       }

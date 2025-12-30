@@ -20,9 +20,11 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState } from "pinia";
 import { calcPlayCountForAlbums, calcPlayTimeForAlbums } from "@/reducers";
 import TopList from "@/components/TopList.vue";
+import { useAlbumsStore } from "../store/albums";
+import { useTracksStore } from "../store/tracks";
 import albumSvgUrl from "@mdi/svg/svg/album.svg";
 
 export default {
@@ -50,8 +52,8 @@ export default {
     TopList,
   },
   computed: {
-    ...mapState("albums", ["albums"]),
-    ...mapState("tracks", ["tracks"]),
+    ...mapState(useAlbumsStore, ["albums"]),
+    ...mapState(useTracksStore, ["tracks"]),
     topAlbums() {
       return Object.entries(
         this.useTrackLength
@@ -68,8 +70,7 @@ export default {
     listData() {
       return [...this.topAlbums].map((tt) => {
         const album = this.albums[tt[0]];
-        const albumArtists = album?.album_artists
-          .map((aa) => aa)
+        const albumArtists = [...(album?.album_artists || [])]
           .sort((a1, a2) => a1.order - a2.order)
           .map((a) => a.name)
           .join(" / ");

@@ -53,8 +53,10 @@
 </template>
 
 <script>
-import { mapActions, mapGetters, mapState } from "vuex";
+import { mapActions, mapState } from "pinia";
 import LabelMergeDialog from "./LabelMergeDialog.vue";
+import { useAuthStore } from "../store/auth";
+import { useLabelsStore } from "../store/labels";
 
 export default {
   name: "LabelActions",
@@ -68,14 +70,14 @@ export default {
     },
   },
   computed: {
-    ...mapGetters("auth", ["isModerator"]),
-    ...mapState("labels", ["startLoading"]),
+    ...mapState(useAuthStore, ["isModerator"]),
+    ...mapState(useLabelsStore, ["startLoading"]),
     waitingForReload() {
       return this.startLoading > this.label.loaded;
     },
   },
   methods: {
-    ...mapActions("labels", ["destroy"]),
+    ...mapActions(useLabelsStore, ["destroy"]),
     deleteLabel: function () {
       if (confirm(this.$t("common.are-you-sure"))) {
         this.destroy(this.label.id);

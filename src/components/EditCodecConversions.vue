@@ -10,8 +10,10 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapState } from "pinia";
 import CodecConversionForm from "./CodecConversionForm.vue";
+import { useAuthStore } from "../store/auth";
+import { useCodecConversionsStore } from "../store/codec_conversions";
 
 export default {
   name: "EditCodecConversions",
@@ -20,8 +22,10 @@ export default {
     return {};
   },
   computed: {
-    ...mapGetters("codecConversions", ["codecConversions"]),
-    ...mapGetters("auth", ["isModerator"]),
+    ...mapState(useCodecConversionsStore, {
+      codecConversions: "allCodecConversions",
+    }),
+    ...mapState(useAuthStore, ["isModerator"]),
   },
 };
 </script>

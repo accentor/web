@@ -110,8 +110,12 @@
 </template>
 
 <script>
-import { mapActions, mapState } from "vuex";
+import { mapActions, mapState } from "pinia";
 import Draggable from "vuedraggable";
+import { usePlaylistsStore } from "../store/playlists";
+import { useArtistsStore } from "../store/artists";
+import { useAlbumsStore } from "../store/albums";
+import { useTracksStore } from "../store/tracks";
 
 export default {
   name: "PlaylistForm",
@@ -187,9 +191,9 @@ export default {
     },
   },
   computed: {
-    ...mapState("albums", ["albums"]),
-    ...mapState("artists", ["artists"]),
-    ...mapState("tracks", ["tracks"]),
+    ...mapState(useAlbumsStore, ["albums"]),
+    ...mapState(useArtistsStore, ["artists"]),
+    ...mapState(useTracksStore, ["tracks"]),
     hasItems() {
       return this.newPlaylist.item_ids.length > 0;
     },
@@ -205,7 +209,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions("playlists", ["create", "read", "update"]),
+    ...mapActions(usePlaylistsStore, ["create", "read", "update"]),
     fillValues() {
       this.newPlaylist.name = this.playlist.name;
       this.newPlaylist.description = this.playlist.description;
@@ -227,10 +231,7 @@ export default {
           delete newPlaylist.item_ids;
         }
 
-        pendingResult = this.update({
-          id: this.playlist.id,
-          newPlaylist,
-        });
+        pendingResult = this.update(this.playlist.id, newPlaylist);
       } else {
         pendingResult = this.create(this.newPlaylist);
       }

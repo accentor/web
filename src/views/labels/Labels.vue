@@ -45,22 +45,21 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapState } from "pinia";
 import LabelCard from "../../components/LabelCard.vue";
 import Paginated from "../../mixins/Paginated";
 import Searchable from "../../mixins/Searchable";
+import { useLabelsStore } from "../../store/labels";
 
 export default {
-  name: "labels",
+  name: "Labels",
   metaInfo() {
     return { title: this.$tc("music.labels", 2) };
   },
   components: { LabelCard },
   mixins: [Paginated, Searchable],
   computed: {
-    ...mapGetters("labels", {
-      labels: "labelsByName",
-    }),
+    ...mapState(useLabelsStore, { labels: "labelsByName" }),
     filteredItems() {
       return this.labels.filter(
         (item) =>

@@ -5,8 +5,9 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState } from "pinia";
 import ArtistForm from "../../components/ArtistForm.vue";
+import { useArtistsStore } from "../../store/artists";
 
 export default {
   name: "EditArtist",
@@ -15,7 +16,7 @@ export default {
     return { title: this.$t("page-titles.edit", { obj: this.artist?.name }) };
   },
   computed: {
-    ...mapState("artists", ["artists"]),
+    ...mapState(useArtistsStore, ["artists"]),
     artist: function () {
       return this.artists[this.$route.params.id];
     },

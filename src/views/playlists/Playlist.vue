@@ -68,12 +68,17 @@
 </template>
 
 <script>
-import { mapActions, mapState } from "vuex";
+import { mapActions, mapState } from "pinia";
 import AlbumCard from "../../components/AlbumCard.vue";
 import ArtistCard from "../../components/ArtistCard.vue";
 import TracksTable from "../../components/TracksTable.vue";
 import PlaylistActions from "../../components/PlaylistActions.vue";
 import Paginated from "../../mixins/Paginated";
+import { usePlaylistsStore } from "../../store/playlists";
+import { useUsersStore } from "../../store/users";
+import { useArtistsStore } from "../../store/artists";
+import { useAlbumsStore } from "../../store/albums";
+import { useTracksStore } from "../../store/tracks";
 
 export default {
   name: "Playlist",
@@ -95,11 +100,11 @@ export default {
   },
   mixins: [Paginated],
   computed: {
-    ...mapState("playlists", ["playlists"]),
-    ...mapState("albums", ["albums"]),
-    ...mapState("artists", ["artists"]),
-    ...mapState("tracks", ["tracks"]),
-    ...mapState("users", ["users"]),
+    ...mapState(usePlaylistsStore, ["playlists"]),
+    ...mapState(useAlbumsStore, ["albums"]),
+    ...mapState(useArtistsStore, ["artists"]),
+    ...mapState(useTracksStore, ["tracks"]),
+    ...mapState(useUsersStore, ["users"]),
     playlist() {
       return this.playlists[this.$route.params.id];
     },
@@ -109,7 +114,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions("playlists", ["read"]),
+    ...mapActions(usePlaylistsStore, ["read"]),
     async fetchContent(newValue, oldValue) {
       // After loading the content, the router will change the id from a string to a number
       // but we don't actually want to load the content twice
