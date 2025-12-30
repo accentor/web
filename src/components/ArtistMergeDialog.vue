@@ -9,7 +9,7 @@
       <VBtn
         :disabled="disabled"
         class="actions__button"
-        color="edit"
+        color="warning"
         variant="text"
         icon
         size="small"

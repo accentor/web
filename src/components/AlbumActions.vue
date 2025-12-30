@@ -63,7 +63,7 @@
               v-bind="props"
             >
               <template #prepend>
-                <VIcon color="edit">mdi-pencil</VIcon>
+                <VIcon color="warning">mdi-pencil</VIcon>
               </template>
 
               <VListItemTitle>{{ $t("music.album.edit") }}</VListItemTitle>
@@ -91,7 +91,7 @@
               @click.stop.prevent="deleteAlbum"
             >
               <template #prepend>
-                <VIcon color="danger">mdi-delete</VIcon>
+                <VIcon color="error">mdi-delete</VIcon>
               </template>
 
               <VListItemTitle>{{ $t("music.album.delete") }}</VListItemTitle>

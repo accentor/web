@@ -130,7 +130,7 @@
               v-bind="props"
             >
               <template #prepend>
-                <VIcon color="edit">mdi-pencil</VIcon>
+                <VIcon color="warning">mdi-pencil</VIcon>
               </template>
 
               <VListItemTitle>{{ $t("music.track.edit") }}</VListItemTitle>
@@ -154,7 +154,7 @@
               v-bind="props"
             >
               <template #prepend>
-                <VIcon color="edit">mdi-merge</VIcon>
+                <VIcon color="warning">mdi-merge</VIcon>
               </template>
 
               <VListItemTitle>
@@ -176,7 +176,7 @@
               @click.stop.prevent="deleteTrack"
             >
               <template #prepend>
-                <VIcon color="danger">mdi-delete</VIcon>
+                <VIcon color="error">mdi-delete</VIcon>
               </template>
 
               <VListItemTitle>{{ $t("music.track.delete") }}</VListItemTitle>

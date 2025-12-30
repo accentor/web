@@ -13,7 +13,7 @@
     >
       <template #header.actions>
         <VBtn
-          color="danger"
+          color="error"
           class="ma-2"
           :disabled="selected.length === 0"
           @click.stop.prevent="deleteAuthTokens"
@@ -23,7 +23,7 @@
       </template>
       <template #item.actions="props">
         <VBtn
-          color="danger"
+          color="error"
           class="ma-1"
           href="#"
           variant="text"
