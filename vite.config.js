@@ -13,7 +13,11 @@ const { version } = pkg;
 export default defineConfig({
   plugins: [
     vue(),
-      vuetify(),
+    vuetify({
+        styles: {
+            configFile: 'scss/settings.scss',
+        },
+    }),
   ],
   define: {
       __APPLICATION_VERSION__: JSON.stringify(`Accentor Web v${version}`),
