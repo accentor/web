@@ -1898,11 +1898,11 @@
       };
     }
     {
-      name = "sortablejs___sortablejs_1.10.2.tgz";
+      name = "sortablejs___sortablejs_1.14.0.tgz";
       path = fetchurl {
-        name = "sortablejs___sortablejs_1.10.2.tgz";
-        url  = "https://registry.yarnpkg.com/sortablejs/-/sortablejs-1.10.2.tgz";
-        sha512 = "YkPGufevysvfwn5rfdlGyrGjt7/CRHwvRPogD/lC+TnvcN29jDpCifKP+rBqf+LRldfXSTh+0CGLcSg0VIxq3A==";
+        name = "sortablejs___sortablejs_1.14.0.tgz";
+        url  = "https://registry.yarnpkg.com/sortablejs/-/sortablejs-1.14.0.tgz";
+        sha512 = "pBXvQCs5/33fdN1/39pPL0NZF20LeRbLQ5jtnheIPN9JQAaufGjKdWduZn4U7wCtVuzKhmRkI0DFYHYRbB2H1w==";
       };
     }
     {
@@ -2074,11 +2074,11 @@
       };
     }
     {
-      name = "vuedraggable___vuedraggable_2.24.3.tgz";
+      name = "vuedraggable___vuedraggable_4.1.0.tgz";
       path = fetchurl {
-        name = "vuedraggable___vuedraggable_2.24.3.tgz";
-        url  = "https://registry.yarnpkg.com/vuedraggable/-/vuedraggable-2.24.3.tgz";
-        sha512 = "6/HDXi92GzB+Hcs9fC6PAAozK1RLt1ewPTLjK0anTYguXLAeySDmcnqE8IC0xa7shvSzRjQXq3/+dsZ7ETGF3g==";
+        name = "vuedraggable___vuedraggable_4.1.0.tgz";
+        url  = "https://registry.yarnpkg.com/vuedraggable/-/vuedraggable-4.1.0.tgz";
+        sha512 = "FU5HCWBmsf20GpP3eudURW3WdWTKIbEIQxh9/8GE806hydR9qZqRRxRE3RjqX7PkuLuMQG/A7n3cfj9rCEchww==";
       };
     }
     {
