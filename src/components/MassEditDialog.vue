@@ -2,7 +2,7 @@
   <VDialog v-model="dialog" fullscreen scrollable>
     <template #activator="{ props }">
       <VBtn
-        color="edit"
+        color="warning"
         class="ma-2"
         :disabled="tracks.length === 0"
         v-bind="props"

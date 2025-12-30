@@ -45,11 +45,11 @@
           v-if="codecConversion"
           icon
           variant="outlined"
-          color="danger"
+          color="error"
           class="ma-2"
           @click="deleteCodecConversion"
         >
-          <VIcon color="danger">mdi-delete</VIcon>
+          <VIcon color="error">mdi-delete</VIcon>
         </VBtn>
       </VCol>
     </VRow>

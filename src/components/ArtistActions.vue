@@ -30,7 +30,7 @@
               query: { redirect: $route.fullPath },
             }"
             :disabled="waitingForReload"
-            color="edit"
+            color="warning"
             class="actions__button"
             variant="text"
             icon
@@ -63,7 +63,7 @@
         <span v-bind="props">
           <VBtn
             :disabled="waitingForReload"
-            color="danger"
+            color="error"
             class="actions__button mr-0"
             href="#"
             variant="text"
