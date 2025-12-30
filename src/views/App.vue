@@ -14,129 +14,99 @@
 
     <VNavigationDrawer v-model="drawer" :mobile-breakpoint="1500" left>
       <VList>
-        <VListItem :to="{ name: 'home' }" exact>
-          <VListItemAction>
-            <VIcon>mdi-home</VIcon>
-          </VListItemAction>
-
+        <VListItem prepend-icon="mdi-home" :to="{ name: 'home' }" exact>
           <VListItemTitle>
             {{ $t("common.home") }}
           </VListItemTitle>
         </VListItem>
         <VDivider />
-        <VListItem :to="{ name: 'artists' }">
-          <VListItemAction>
-            <VIcon>mdi-account-music</VIcon>
-          </VListItemAction>
-
+        <VListItem prepend-icon="mdi-account-music" :to="{ name: 'artists' }">
           <VListItemTitle>
             {{ $tc("music.artists", 2) }}
           </VListItemTitle>
         </VListItem>
-        <VListItem :to="{ name: 'albums' }">
-          <VListItemAction>
-            <VIcon>mdi-album</VIcon>
-          </VListItemAction>
-
+        <VListItem prepend-icon="mdi-album" :to="{ name: 'albums' }">
           <VListItemTitle>
             {{ $tc("music.albums", 2) }}
           </VListItemTitle>
         </VListItem>
-        <VListItem :to="{ name: 'tracks' }">
-          <VListItemAction>
-            <VIcon>mdi-music</VIcon>
-          </VListItemAction>
-
+        <VListItem prepend-icon="mdi-music" :to="{ name: 'tracks' }">
           <VListItemTitle>
             {{ $tc("music.tracks", 2) }}
           </VListItemTitle>
         </VListItem>
-        <VListItem :to="{ name: 'genres' }">
-          <VListItemAction>
-            <VIcon>mdi-guitar-acoustic</VIcon>
-          </VListItemAction>
-
+        <VListItem prepend-icon="mdi-guitar-acoustic" :to="{ name: 'genres' }">
           <VListItemTitle>
             {{ $tc("music.genres", 2) }}
           </VListItemTitle>
         </VListItem>
-        <VListItem :to="{ name: 'labels' }">
-          <VListItemAction>
-            <VIcon>mdi-label</VIcon>
-          </VListItemAction>
-
+        <VListItem prepend-icon="mdi-label" :to="{ name: 'labels' }">
           <VListItemTitle>
             {{ $tc("music.labels", 2) }}
           </VListItemTitle>
         </VListItem>
-        <VListItem :to="{ name: 'playlists' }">
-          <VListItemAction>
-            <VIcon>mdi-playlist-music</VIcon>
-          </VListItemAction>
-
+        <VListItem
+          prepend-icon="mdi-playlist-music"
+          :to="{ name: 'playlists' }"
+        >
           <VListItemTitle>
             {{ $tc("music.playlists", 2) }}
           </VListItemTitle>
         </VListItem>
-        <VListItem :to="{ name: 'stats' }">
-          <VListItemAction>
-            <VIcon>mdi-chart-bar</VIcon>
-          </VListItemAction>
-
+        <VListItem prepend-icon="mdi-chart-bar" :to="{ name: 'stats' }">
           <VListItemTitle>
             {{ $tc("common.stats", 2) }}
           </VListItemTitle>
         </VListItem>
-        <VListItem v-if="isModerator" :to="{ name: 'library' }">
-          <VListItemAction>
-            <VIcon>mdi-tune</VIcon>
-          </VListItemAction>
-
+        <VListItem
+          v-if="isModerator"
+          prepend-icon="mdi-tune"
+          :to="{ name: 'library' }"
+        >
           <VListItemTitle>
             {{ $t("librarySettings") }}
           </VListItemTitle>
         </VListItem>
         <VDivider />
-        <VListItem v-if="isModerator" :to="{ name: 'flags' }">
-          <VListItemAction>
-            <VIcon>mdi-flag</VIcon>
-          </VListItemAction>
-
+        <VListItem
+          v-if="isModerator"
+          prepend-icon="mdi-flag"
+          :to="{ name: 'flags' }"
+        >
           <VListItemTitle>
             {{ $tc("music.flags", 2) }}
           </VListItemTitle>
 
-          <VListItemAction v-if="numberOfFlaggedItems > 0">
-            <VBtn
-              rounded
-              size="x-small"
-              color="primary"
-              variant="outlined"
-              class="text-caption font-weight-medium"
-            >
-              {{ numberOfFlaggedItems }}
-            </VBtn>
-          </VListItemAction>
+          <template v-if="numberOfFlaggedItems > 0" #append>
+            <VListItemAction>
+              <VBtn
+                rounded
+                size="x-small"
+                color="primary"
+                variant="outlined"
+                class="text-caption font-weight-medium"
+              >
+                {{ numberOfFlaggedItems }}
+              </VBtn>
+            </VListItemAction>
+          </template>
         </VListItem>
-        <VListItem :to="{ name: 'users' }" exact>
-          <VListItemAction>
-            <VIcon>mdi-account-multiple</VIcon>
-          </VListItemAction>
-
+        <VListItem
+          prepend-icon="mdi-account-multiple"
+          :to="{ name: 'users' }"
+          exact
+        >
           <VListItemTitle>
             {{ $tc("users.users", 2) }}
           </VListItemTitle>
         </VListItem>
         <VListItem
+          prepend-icon="mdi-cog"
           :to="{
             name: 'settings',
             query: { redirect: $route.fullPath },
           }"
         >
-          <VListItemAction>
-            <VIcon>mdi-cog</VIcon>
-          </VListItemAction>
-
           <VListItemTitle>
             {{ $t("common.settings") }}
           </VListItemTitle>
