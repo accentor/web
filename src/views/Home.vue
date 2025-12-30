@@ -101,9 +101,9 @@
           <h2 class="text-h4">{{ $t("home.on-this-day") }}</h2>
         </template>
         <template #no-data>
-          <v-alert :value="true" color="info" icon="mdi-information">
+          <VAlert :value="true" color="info" icon="mdi-information">
             {{ $t("home.on-this-day-empty") }}
-          </v-alert>
+          </VAlert>
         </template>
         <template #default="props">
           <VRow class="my-0">

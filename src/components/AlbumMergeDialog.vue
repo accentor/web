@@ -8,7 +8,7 @@
     <template #activator="{ props }">
       <VListItem :disabled="disabled" v-bind="props">
         <template #prepend>
-          <VIcon color="edit">mdi-merge</VIcon>
+          <VIcon color="warning">mdi-merge</VIcon>
         </template>
 
         <VListItemTitle>{{ $t("music.album.merge") }}</VListItemTitle>

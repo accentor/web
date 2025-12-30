@@ -17,7 +17,7 @@
       <span>{{ $t("library.no-tracks-without-audio") }}</span>
     </VTooltip>
     <VBtn
-      color="danger"
+      color="error"
       class="ma-2 text-white"
       :disabled="artistsDisabled"
       @click="destroyEmptyArtists"
@@ -28,7 +28,7 @@
       {{ $t("library.delete-empty-artists") }}
     </VBtn>
     <VBtn
-      color="danger"
+      color="error"
       class="ma-2 text-white"
       :disabled="albumsDisabled"
       @click="destroyEmptyAlbums"
@@ -39,7 +39,7 @@
       {{ $t("library.delete-empty-albums") }}
     </VBtn>
     <VBtn
-      color="danger"
+      color="error"
       class="ma-2 text-white"
       :disabled="genresDisabled"
       @click="destroyEmptyGenres"
@@ -50,7 +50,7 @@
       {{ $t("library.delete-empty-genres") }}
     </VBtn>
     <VBtn
-      color="danger"
+      color="error"
       class="ma-2 text-white"
       :disabled="labelsDisabled"
       @click="destroyEmptyLabels"

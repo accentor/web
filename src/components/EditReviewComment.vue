@@ -1,6 +1,6 @@
 <template>
   <VBtn
-    color="flag"
+    color="error"
     class="actions__button"
     variant="text"
     icon

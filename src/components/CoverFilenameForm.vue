@@ -26,11 +26,11 @@
           v-if="coverFilename"
           icon
           variant="outlined"
-          color="danger"
+          color="error"
           class="ma-2"
           @click="deleteCoverFilename"
         >
-          <VIcon color="danger">mdi-delete</VIcon>
+          <VIcon color="error">mdi-delete</VIcon>
         </VBtn>
       </VCol>
     </VRow>
