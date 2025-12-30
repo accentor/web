@@ -2,13 +2,9 @@
   <div>
     <VContainer fluid>
       <VDataIterator
-        :footer-props="{
-          disableItemsPerPage: true,
-          itemsPerPageOptions: [numberOfItems],
-        }"
-        :items="albums"
-        :custom-sort="releaseSort"
+        :items="releaseAlbums"
         :items-per-page="numberOfItems"
+        :page="releasePage"
       >
         <template #header>
           <h2 class="text-h4">{{ $t("home.recently-released") }}</h2>
@@ -28,16 +24,15 @@
             </VCol>
           </VRow>
         </template>
+        <template #footer="{ pageCount }">
+          <VPagination v-model="releasePage" :length="pageCount" />
+        </template>
       </VDataIterator>
     </VContainer>
     <VContainer fluid>
       <VDataIterator
-        :footer-props="{
-          disableItemsPerPage: true,
-          itemsPerPageOptions: [numberOfItems],
-        }"
-        :items="albums"
-        :custom-sort="createdSort"
+        :items="addedAlbums"
+        :page="addedAlbumsPage"
         :items-per-page="numberOfItems"
       >
         <template #header>
@@ -60,17 +55,16 @@
             </VCol>
           </VRow>
         </template>
+        <template #footer="{ pageCount }">
+          <VPagination v-model="addedAlbumsPage" :length="pageCount" />
+        </template>
       </VDataIterator>
     </VContainer>
     <VContainer fluid>
       <VDataIterator
-        :footer-props="{
-          disableItemsPerPage: true,
-          itemsPerPageOptions: [numberOfItems],
-        }"
-        :items="artists"
-        :custom-sort="createdSort"
+        :items="addedArtists"
         :items-per-page="numberOfItems"
+        :page="addedArtistsPage"
       >
         <template #header>
           <h2 class="text-h4">
@@ -92,17 +86,16 @@
             </VCol>
           </VRow>
         </template>
+        <template #footer="{ pageCount }">
+          <VPagination v-model="addedArtistsPage" :length="pageCount" />
+        </template>
       </VDataIterator>
     </VContainer>
     <VContainer fluid>
       <VDataIterator
-        :footer-props="{
-          disableItemsPerPage: true,
-          itemsPerPageOptions: [numberOfItems],
-        }"
         :items="albumsOnThisDay"
-        :custom-sort="releaseSort"
         :items-per-page="numberOfItems"
+        :page="onThisDayPage"
       >
         <template #header>
           <h2 class="text-h4">{{ $t("home.on-this-day") }}</h2>
@@ -127,17 +120,17 @@
             </VCol>
           </VRow>
         </template>
+        <template #footer="{ pageCount }">
+          <VPagination v-model="onThisDayPage" :length="pageCount" />
+        </template>
       </VDataIterator>
     </VContainer>
 
     <VContainer fluid>
       <VDataIterator
-        :footer-props="{
-          disableItemsPerPage: true,
-          itemsPerPageOptions: [numberOfItems],
-        }"
         :items="randomAlbums"
         :items-per-page="numberOfItems"
+        :page="randomAlbumsPage"
       >
         <template #header>
           <h2 class="text-h4">
@@ -159,16 +152,16 @@
             </VCol>
           </VRow>
         </template>
+        <template #footer="{ pageCount }">
+          <VPagination v-model="randomAlbumsPage" :length="pageCount" />
+        </template>
       </VDataIterator>
     </VContainer>
     <VContainer fluid>
       <VDataIterator
-        :footer-props="{
-          disableItemsPerPage: true,
-          itemsPerPageOptions: [numberOfItems],
-        }"
         :items="randomArtists"
         :items-per-page="numberOfItems"
+        :page="randomArtistsPage"
       >
         <template #header>
           <h2 class="text-h4">
@@ -190,17 +183,16 @@
             </VCol>
           </VRow>
         </template>
+        <template #footer="{ pageCount }">
+          <VPagination v-model="randomArtistsPage" :length="pageCount" />
+        </template>
       </VDataIterator>
     </VContainer>
     <VContainer fluid>
       <VDataIterator
-        :footer-props="{
-          disableItemsPerPage: true,
-          itemsPerPageOptions: [numberOfItems],
-        }"
-        :items="albums"
-        :custom-sort="recentlyPlayedAlbumsSort"
+        :items="recentAlbums"
         :items-per-page="numberOfItems"
+        :page="recentAlbumsPage"
       >
         <template #header>
           <h2 class="text-h4">
@@ -222,17 +214,16 @@
             </VCol>
           </VRow>
         </template>
+        <template #footer="{ pageCount }">
+          <VPagination v-model="recentAlbumsPage" :length="pageCount" />
+        </template>
       </VDataIterator>
     </VContainer>
     <VContainer fluid>
       <VDataIterator
-        :footer-props="{
-          disableItemsPerPage: true,
-          itemsPerPageOptions: [numberOfItems],
-        }"
-        :items="artists"
-        :custom-sort="recentlyPlayedArtistsSort"
+        :items="recentArtists"
         :items-per-page="numberOfItems"
+        :page="recentArtistsPage"
       >
         <template #header>
           <h2 class="text-h4">
@@ -253,6 +244,9 @@
               <ArtistCard :artist="item.raw" />
             </VCol>
           </VRow>
+        </template>
+        <template #footer="{ pageCount }">
+          <VPagination v-model="recentArtistsPage" :length="pageCount" />
         </template>
       </VDataIterator>
     </VContainer>
@@ -277,6 +271,18 @@ const RANDOM_SEED_MAX = 10000;
 export default {
   name: "Home",
   components: { AlbumCard, ArtistCard },
+  data() {
+    return {
+      addedAlbumsPage: 1,
+      addedArtistsPage: 1,
+      onThisDayPage: 1,
+      randomAlbumsPage: 1,
+      randomArtistsPage: 1,
+      recentAlbumsPage: 1,
+      recentArtistsPage: 1,
+      releasePage: 1,
+    };
+  },
   metaInfo() {
     return { title: this.$t("common.home") };
   },
@@ -287,11 +293,30 @@ export default {
     }),
     ...mapState(useArtistsStore, { artists: "allArtists" }),
     ...mapState(usePlaysStore, ["playStatsByAlbum", "playStatsByArtist"]),
+    addedAlbums() {
+      return [...this.albums].sort((a1, a2) => {
+        return compareStrings(a2.created_at, a1.created_at);
+      });
+    },
+    addedArtists() {
+      return [...this.artists].sort((a1, a2) => {
+        return compareStrings(a2.created_at, a1.created_at);
+      });
+    },
     randomSeed() {
       return Math.round(Math.random() * RANDOM_SEED_MAX);
     },
     randomAlbums() {
       return this.randomSort(this.albums);
+    },
+    recentAlbums() {
+      return [...this.albums].sort(compareByRecentlyPlayed(this.playStatsByAlbum));
+    },
+    recentArtists() {
+      return [...this.artists].sort(compareByRecentlyPlayed(this.playStatsByArtist));
+    },
+    releaseAlbums() {
+      return [...this.albums].sort(compareAlbumsByReleaseFirst(true));
     },
     randomArtists() {
       return this.randomSort(this.artists);
@@ -307,20 +332,6 @@ export default {
     },
   },
   methods: {
-    releaseSort(items) {
-      return [...items].sort(compareAlbumsByReleaseFirst(true));
-    },
-    createdSort(items) {
-      return [...items].sort((a1, a2) => {
-        return compareStrings(a2.created_at, a1.created_at);
-      });
-    },
-    recentlyPlayedAlbumsSort(albums) {
-      return [...albums].sort(compareByRecentlyPlayed(this.playStatsByAlbum));
-    },
-    recentlyPlayedArtistsSort(artists) {
-      return [...artists].sort(compareByRecentlyPlayed(this.playStatsByArtist));
-    },
     randomSort(items) {
       return [...items].sort(
         (i1, i2) =>
