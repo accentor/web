@@ -32,7 +32,7 @@
         :use-track-length="useTrackLength"
         :tracks="filteredTracks"
         :title="
-          artist_id
+          artistId
             ? $t('stats.percentageArtistPlayed', { artist: artistName })
             : $t('stats.percentageLibraryPlayed')
         "
@@ -78,9 +78,6 @@ import { useAuthStore } from "../store/auth";
 
 export default {
   name: "Stats",
-  metaInfo() {
-    return { title: this.pageTitle };
-  },
   components: {
     DateRangeSelect,
     PercentagePlayedCard,
@@ -106,11 +103,14 @@ export default {
       playStats: [],
     };
   },
+  head() {
+    return { title: this.pageTitle };
+  },
   computed: {
     ...mapState(usePlaysStore, { plays: "allPlays" }),
     ...mapState(useArtistsStore, ["artists"]),
     artistName() {
-      return this.artist_id && this.artists[this.artist_id]?.name;
+      return this.artistId && this.artists[this.artistId]?.name;
     },
     pageTitle() {
       return this.artistName
@@ -127,15 +127,15 @@ export default {
       let plays = this.plays.filter(
         filterPlaysByPeriod(this.period.start, this.period.end),
       );
-      if (this.artist_id) {
+      if (this.artistId) {
         plays = plays.filter(filterPlaysByTracks(this.filteredTracks));
       }
       return plays;
     },
     filteredTracks() {
       const tracksStore = useTracksStore();
-      if (this.artist_id) {
-        return tracksStore.tracksFilterByArtist(this.artist_id);
+      if (this.artistId) {
+        return tracksStore.tracksFilterByArtist(this.artistId);
       }
       return tracksStore.allTracks;
     },
@@ -145,8 +145,8 @@ export default {
         scope.playedAfter(this.period.start);
         scope.playedBefore(this.period.end);
       }
-      if (this.artist_id) {
-        scope.artist(this.artist_id);
+      if (this.artistId) {
+        scope.artist(this.artistId);
       }
       return scope;
     },

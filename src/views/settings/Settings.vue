@@ -42,9 +42,6 @@ import { useUserSettingsStore } from "../../store/user_settings";
 export default {
   name: "Settings",
   components: { AuthTokensTable, UserForm },
-  metaInfo() {
-    return { title: this.$t("common.settings") };
-  },
   data() {
     return {
       newLocale: "",
@@ -54,6 +51,9 @@ export default {
       ],
       newCodecConversion: null,
     };
+  },
+  head() {
+    return { title: this.$t("common.settings") };
   },
   computed: {
     ...mapState(useAuthStore, { user: "currentUser" }),

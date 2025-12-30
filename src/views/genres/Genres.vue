@@ -52,11 +52,11 @@ import { useGenresStore } from "../../store/genres";
 
 export default {
   name: "Genres",
-  metaInfo() {
-    return { title: this.$tc("music.genres", 2) };
-  },
   components: { GenreCard },
   mixins: [Paginated, Searchable],
+  head() {
+    return { title: this.$tc("music.genres", 2) };
+  },
   computed: {
     ...mapState(useGenresStore, { genres: "genresByName" }),
     filteredItems() {

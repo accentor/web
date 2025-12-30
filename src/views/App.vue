@@ -183,12 +183,14 @@ import { usePlaysStore } from "../store/plays";
 export default {
   name: "App",
   components: { Errors, Player },
-  metaInfo: { title: "Accentor" },
   data() {
     return {
       drawer: null,
       loading: false,
     };
+  },
+  head() {
+    return { title: "Accentor" };
   },
   computed: {
     ...mapState(useAuthStore, ["isModerator"]),

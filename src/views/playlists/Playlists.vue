@@ -78,11 +78,11 @@ import { useUsersStore } from "../../store/users";
 
 export default {
   name: "Playlists",
-  metaInfo() {
-    return { title: this.$tc("music.playlists", 2) };
-  },
   components: { PlaylistActions },
   mixins: [Paginated, Searchable],
+  head() {
+    return { title: this.$tc("music.playlists", 2) };
+  },
   computed: {
     ...mapState(usePlaylistsStore, { playlists: "playlistsByName" }),
     ...mapState(useUsersStore, ["users"]),

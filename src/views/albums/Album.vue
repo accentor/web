@@ -87,9 +87,6 @@ import { usePlaysStore } from "../../store/plays";
 export default {
   name: "Album",
   components: { AlbumArtists, TracksTable, AlbumActions },
-  metaInfo() {
-    return { title: this.album?.title };
-  },
   props: {
     id: {
       type: [String, Number],
@@ -100,6 +97,9 @@ export default {
     return {
       imageUnavailable: false,
     };
+  },
+  head() {
+    return { title: this.album?.title };
   },
   computed: {
     ...mapState(useAlbumsStore, ["albums"]),

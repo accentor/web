@@ -17,7 +17,7 @@ import { useUsersStore } from "../../store/users";
 
 export default {
   name: "User",
-  metaInfo() {
+  head() {
     return { title: this.user.name };
   },
   computed: {

@@ -89,10 +89,10 @@ import { useTracksStore } from "../../store/tracks";
 
 export default {
   name: "Flags",
-  metaInfo() {
+  components: { AlbumCard, ArtistCard, TracksTable },
+  head() {
     return { title: this.$tc("music.flags", 2) };
   },
-  components: { AlbumCard, ArtistCard, TracksTable },
   computed: {
     ...mapState(useTracksStore, { tracks: "tracksFlagged" }),
     ...mapState(useAlbumsStore, { albums: "albumsFlagged" }),

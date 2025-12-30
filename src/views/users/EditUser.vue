@@ -15,10 +15,10 @@ import { mapState } from "pinia";
 
 export default {
   name: "EditUser",
-  metaInfo() {
+  components: { UserForm },
+  head() {
     return { title: this.$t("page-titles.edit", { obj: this.user.name }) };
   },
-  components: { UserForm },
   computed: {
     ...mapState(useUsersStore, ["users"]),
     user: function () {

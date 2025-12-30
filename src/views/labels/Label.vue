@@ -67,14 +67,14 @@ export default {
   name: "LabelView",
   components: { AlbumCard, LabelActions },
   mixins: [Paginated, Searchable],
-  metaInfo() {
-    return { title: this.label.name };
-  },
   props: {
     id: {
       type: [String, Number],
       required: true,
     },
+  },
+  head() {
+    return { title: this.label.name };
   },
   computed: {
     ...mapState(useAuthStore, ["isModerator"]),

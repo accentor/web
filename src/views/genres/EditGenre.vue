@@ -24,9 +24,6 @@ import { useGenresStore } from "../../store/genres";
 
 export default {
   name: "EditGenre",
-  metaInfo() {
-    return { title: this.$t("page-titles.edit", { obj: this.genre?.name }) };
-  },
   data() {
     return {
       newGenre: {
@@ -35,6 +32,9 @@ export default {
       isDirty: false,
       isValid: true,
     };
+  },
+  head() {
+    return { title: this.$t("page-titles.edit", { obj: this.genre?.name }) };
   },
   computed: {
     ...mapState(useGenresStore, ["genres"]),
