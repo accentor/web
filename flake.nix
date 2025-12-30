@@ -31,8 +31,6 @@
             yarnLock = ./yarn.lock;
             yarnNix = ./yarn.nix;
 
-            # Otherwise this tries to write to read-only paths, and caching is unnecessary anyway.
-            SKIP_CACHE = "true";
             buildPhase = ''
               cp deps/accentor/postcss.config.js .
               yarn run build
