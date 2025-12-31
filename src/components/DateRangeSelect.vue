@@ -5,28 +5,30 @@
       :items="periodPresets"
       :label="$t('components.dateRangeSelect.label')"
     />
-    <VDialog v-model="showCustomRangeModal" persistent max-width="500">
+    <VDialog v-model="showCustomRangeModal" persistent max-width="380">
       <VCard>
-      <VDatePicker control-variant="modal" v-model="customRange" multiple="range" scrollable :first-day-of-week="1" />
-      <VRow>
-        <VSpacer></VSpacer>
-        <VBtn
-            variant="text"
-            color="primary"
-            class="ma-2"
-            @click="showCustomRangeModal = false"
-        >
-          {{ $t("common.cancel") }}
-        </VBtn>
-        <VBtn
-            variant="text"
-            color="primary"
-            class="ma-2"
-            @click="emitSelection"
-        >
-          {{ $t("common.ok") }}
-        </VBtn>
-      </VRow>
+        <VCardText>
+          <VDatePicker control-variant="modal" v-model="customRange" multiple="range" scrollable :first-day-of-week="1" />
+        </VCardText>
+        <VCardActions>
+          <VSpacer />
+          <VBtn
+              variant="text"
+              color="primary"
+              class="ma-2"
+              @click="showCustomRangeModal = false"
+          >
+            {{ $t("common.cancel") }}
+          </VBtn>
+          <VBtn
+              variant="text"
+              color="primary"
+              class="ma-2"
+              @click="emitSelection"
+          >
+            {{ $t("common.ok") }}
+          </VBtn>
+        </VCardActions>
       </VCard>
     </VDialog>
   </div>
