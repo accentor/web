@@ -133,29 +133,29 @@ export default {
       playlistTypes: [
         {
           value: "track",
-          text: this.$t("music.playlist.playlist_types.track"),
+          title: this.$t("music.playlist.playlist_types.track"),
         },
         {
           value: "album",
-          text: this.$t("music.playlist.playlist_types.album"),
+          title: this.$t("music.playlist.playlist_types.album"),
         },
         {
           value: "artist",
-          text: this.$t("music.playlist.playlist_types.artist"),
+          title: this.$t("music.playlist.playlist_types.artist"),
         },
       ],
       accessOptions: [
         {
           value: "shared",
-          text: this.$t("music.playlist.access_options.shared"),
+          title: this.$t("music.playlist.access_options.shared"),
         },
         {
           value: "personal",
-          text: this.$t("music.playlist.access_options.personal"),
+          title: this.$t("music.playlist.access_options.personal"),
         },
         {
           value: "secret",
-          text: this.$t("music.playlist.access_options.secret"),
+          title: this.$t("music.playlist.access_options.secret"),
         },
       ],
       headers: [
