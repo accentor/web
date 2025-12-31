@@ -49,7 +49,7 @@ export const useAlbumsStore = defineStore("albums", () => {
             `${today.getMonth() + 1}`.padStart(2, "0") &&
           `${r.release.slice(-2)}` === `${today.getDate()}`.padStart(2, "0"),
       )
-      .sort(compareAlbumsByReleaseFirst());
+      .sort(compareAlbumsByReleaseFirst(true));
   });
 
   function albumsFilterByArtist(id) {
