@@ -4,42 +4,30 @@
       v-model="selectedPreset"
       :items="periodPresets"
       :label="$t('components.dateRangeSelect.label')"
-    >
-      <template #item="{ item, props }">
-        <VListItem
-          v-bind="props"
-          @click="showCustomRangeModal = item.value === 'customRange'"
-        >
-          {{ item.text }}
-        </VListItem>
-      </template>
-      <template #selection="{ item }">
-        <span>
-          {{ item.value === "customRange" ? customRangeText : item.text }}
-        </span>
-      </template>
-    </VSelect>
-    <VDialog v-model="showCustomRangeModal" persistent width="290px">
-      <!-- TODO(chvp): Figure out what to do with the range here -->
-      <VDatePicker v-model="customRange" scrollable :first-day-of-week="1">
+    />
+    <VDialog v-model="showCustomRangeModal" persistent max-width="500">
+      <VCard>
+      <VDatePicker control-variant="modal" v-model="customRange" multiple="range" scrollable :first-day-of-week="1" />
+      <VRow>
         <VSpacer></VSpacer>
         <VBtn
-          variant="text"
-          color="primary"
-          class="ma-2"
-          @click="showCustomRangeModal = false"
+            variant="text"
+            color="primary"
+            class="ma-2"
+            @click="showCustomRangeModal = false"
         >
           {{ $t("common.cancel") }}
         </VBtn>
         <VBtn
-          variant="text"
-          color="primary"
-          class="ma-2"
-          @click="emitSelection"
+            variant="text"
+            color="primary"
+            class="ma-2"
+            @click="emitSelection"
         >
           {{ $t("common.ok") }}
         </VBtn>
-      </VDatePicker>
+      </VRow>
+      </VCard>
     </VDialog>
   </div>
 </template>
@@ -47,6 +35,7 @@
 <script>
 import { mapState } from "pinia";
 import { useUserSettingsStore } from "../store/user_settings";
+import { useDate } from "vuetify";
 
 export default {
   name: "DateRangeSelect",
@@ -56,35 +45,33 @@ export default {
       periodPresets: [
         {
           value: "last7Days",
-          text: this.$t("components.dateRangeSelect.options.last7Days"),
+          title: this.$t("components.dateRangeSelect.options.last7Days"),
         },
         {
           value: "lastMonth",
-          text: this.$t("components.dateRangeSelect.options.lastMonth"),
+          title: this.$t("components.dateRangeSelect.options.lastMonth"),
         },
         {
           value: "thisYear",
-          text: this.$t("components.dateRangeSelect.options.thisYear"),
+          title: this.$t("components.dateRangeSelect.options.thisYear"),
         },
         {
           value: "allTime",
-          text: this.$t("components.dateRangeSelect.options.allTime"),
+          title: this.$t("components.dateRangeSelect.options.allTime"),
         },
         {
           value: "customRange",
-          text: this.$t("components.dateRangeSelect.options.customRange"),
+          title: this.$t("components.dateRangeSelect.options.customRange"),
         },
       ],
       selectedPreset: "last7Days",
       showCustomRangeModal: false,
       customRange: [],
+      dateAdapter: useDate(),
     };
   },
   computed: {
     ...mapState(useUserSettingsStore, ["locale"]),
-    customRangeText() {
-      return this.customRange.join(" - ");
-    },
     period() {
       let end = new Date();
       let start = new Date();
@@ -107,7 +94,7 @@ export default {
             .sort((d1, d2) => d1 > d2);
           if (range.length) {
             start = range[0];
-            end = range[1] || new Date(range[0]);
+            end = range[range.length - 1];
           }
           break;
         }
@@ -125,10 +112,18 @@ export default {
         if (this.$route.query.period !== undefined) {
           if (this.periodPresets.find((p) => p.value === newSelectedPreset)) {
             this.selectedPreset = this.$route.query.period;
-          } else if (this.customRange !== newSelectedPreset) {
-            this.selectedPreset = "customRange";
-            this.customRange = newSelectedPreset;
-            this.emitSelection();
+          } else {
+            const start = this.dateAdapter.parseISO(newSelectedPreset[0]);
+            const end = this.dateAdapter.parseISO(newSelectedPreset[1]);
+            if (this.customRange[0] !== start || this.customRange[1] !== end) {
+              this.selectedPreset = "customRange";
+              const newRange = [start]
+              do {
+                newRange.push(this.dateAdapter.addDays(newRange[newRange.length - 1], 1));
+              } while (this.dateAdapter.isBefore(newRange[newRange.length - 1], end));
+              this.customRange = newRange;
+              this.emitSelection();
+            }
           }
         }
       },
@@ -138,6 +133,8 @@ export default {
       handler(newValue) {
         if (newValue !== "customRange") {
           this.emitSelection();
+        } else {
+          this.showCustomRangeModal = true;
         }
       },
       immediate: true,
@@ -150,7 +147,7 @@ export default {
       // We only want to set a new query when the selection bubbles up
       const newPeriod =
         this.selectedPreset === "customRange"
-          ? this.customRange
+          ? [this.dateAdapter.toISO(this.customRange[0]), this.dateAdapter.toISO(this.customRange[this.customRange.length - 1])]
           : this.selectedPreset;
       if (newPeriod !== this.$route.query.period) {
         this.$router.push({
