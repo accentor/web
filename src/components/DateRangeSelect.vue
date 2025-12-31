@@ -1,6 +1,7 @@
 <template>
   <div>
     <VSelect
+      min-width="180"
       v-model="selectedPreset"
       :items="periodPresets"
       :label="$t('components.dateRangeSelect.label')"
