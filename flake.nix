@@ -18,30 +18,39 @@
     flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = import nixpkgs { inherit system; overlays = [ devshell.overlays.default ]; };
+        pname = "accentor-web";
+        version = "0.34.0";
+        deps = pkgs.mkYarnModules {
+          inherit version;
+          pname = "${pname}-modules";
+          packageJSON = ./package.json;
+          yarnLock = ./yarn.lock;
+          yarnNix = ./yarn.nix;
+        };
       in
       {
         packages = rec {
           default = accentor-web;
-          accentor-web = pkgs.mkYarnPackage rec {
-            pname = "accentor-web";
-            version = "0.34.0";
+          accentor-web = pkgs.stdenv.mkDerivation (finalAttrs: {
+            inherit pname version;
+            src = pkgs.lib.cleanSourceWith { filter = name: type: !(builtins.elem name [ ".github" "flake.lock" "flake.nix" ]); src = ./.; name = "${pname}-${version}-source"; };
 
-            src = pkgs.lib.cleanSourceWith { filter = name: type: !(builtins.elem name [ ".github" "flake.lock" "flake.nix" ]); src = ./.; name = "source"; };
-            packageJSON = ./package.json;
-            yarnLock = ./yarn.lock;
-            yarnNix = ./yarn.nix;
+            nativeBuildInputs = [ (pkgs.yarn.override { nodejs = pkgs.nodejs_20; }) ];
+
+            configurePhase = ''
+              cp -r ${deps}/node_modules/ .
+            '';
 
             buildPhase = ''
-              cp deps/accentor/postcss.config.js .
               yarn run build
             '';
 
             installPhase = ''
-              cp -r deps/accentor/dist $out
+              cp -r dist $out
             '';
 
             distPhase = "true";
-          };
+          });
         };
 
         devShells = rec {

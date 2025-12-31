@@ -698,11 +698,11 @@
       };
     }
     {
-      name = "_types_web_bluetooth___web_bluetooth_0.0.16.tgz";
+      name = "_types_web_bluetooth___web_bluetooth_0.0.20.tgz";
       path = fetchurl {
-        name = "_types_web_bluetooth___web_bluetooth_0.0.16.tgz";
-        url  = "https://registry.yarnpkg.com/@types/web-bluetooth/-/web-bluetooth-0.0.16.tgz";
-        sha512 = "oh8q2Zc32S6gd/j50GowEjKLoOVOwHP/bWVjKJInBwQqdOYMdPrf1oVlelTlyfFK3CKxL1uahMDAr+vy8T7yMQ==";
+        name = "_types_web_bluetooth___web_bluetooth_0.0.20.tgz";
+        url  = "https://registry.yarnpkg.com/@types/web-bluetooth/-/web-bluetooth-0.0.20.tgz";
+        sha512 = "g9gZnnXVq7gM7v3tJCWV/qw7w+KeOlSHAhgF9RytFyifW6AF61hdT2ucrYhPq9hLs5JIryeupHV3qGk95dH9ow==";
       };
     }
     {
@@ -746,27 +746,27 @@
       };
     }
     {
-      name = "_vueuse_core___core_9.13.0.tgz";
+      name = "_vueuse_core___core_11.3.0.tgz";
       path = fetchurl {
-        name = "_vueuse_core___core_9.13.0.tgz";
-        url  = "https://registry.yarnpkg.com/@vueuse/core/-/core-9.13.0.tgz";
-        sha512 = "pujnclbeHWxxPRqXWmdkKV5OX4Wk4YeK7wusHqRwU0Q7EFusHoqNA/aPhB6KCh9hEqJkLAJo7bb0Lh9b+OIVzw==";
+        name = "_vueuse_core___core_11.3.0.tgz";
+        url  = "https://registry.yarnpkg.com/@vueuse/core/-/core-11.3.0.tgz";
+        sha512 = "7OC4Rl1f9G8IT6rUfi9JrKiXy4bfmHhZ5x2Ceojy0jnd3mHNEvV4JaRygH362ror6/NZ+Nl+n13LPzGiPN8cKA==";
       };
     }
     {
-      name = "_vueuse_metadata___metadata_9.13.0.tgz";
+      name = "_vueuse_metadata___metadata_11.3.0.tgz";
       path = fetchurl {
-        name = "_vueuse_metadata___metadata_9.13.0.tgz";
-        url  = "https://registry.yarnpkg.com/@vueuse/metadata/-/metadata-9.13.0.tgz";
-        sha512 = "gdU7TKNAUVlXXLbaF+ZCfte8BjRJQWPCa2J55+7/h+yDtzw3vOoGQDRXzI6pyKyo6bXFT5/QoPE4hAknExjRLQ==";
+        name = "_vueuse_metadata___metadata_11.3.0.tgz";
+        url  = "https://registry.yarnpkg.com/@vueuse/metadata/-/metadata-11.3.0.tgz";
+        sha512 = "pwDnDspTqtTo2HwfLw4Rp6yywuuBdYnPYDq+mO38ZYKGebCUQC/nVj/PXSiK9HX5otxLz8Fn7ECPbjiRz2CC3g==";
       };
     }
     {
-      name = "_vueuse_shared___shared_9.13.0.tgz";
+      name = "_vueuse_shared___shared_11.3.0.tgz";
       path = fetchurl {
-        name = "_vueuse_shared___shared_9.13.0.tgz";
-        url  = "https://registry.yarnpkg.com/@vueuse/shared/-/shared-9.13.0.tgz";
-        sha512 = "UrnhU+Cnufu4S6JLCPZnkWh0WwZGUp72ktOF2DFptMlOs3TOdVv8xJN53zhHGARmVOsz5KqOls09+J1NR6sBKw==";
+        name = "_vueuse_shared___shared_11.3.0.tgz";
+        url  = "https://registry.yarnpkg.com/@vueuse/shared/-/shared-11.3.0.tgz";
+        sha512 = "P8gSSWQeucH5821ek2mn/ciCk+MS/zoRKqdQIM3bHq6p7GXDAJLmnRRKmF5F65sAVJIfzQlwR3aDzwCn10s8hA==";
       };
     }
     {
@@ -1794,11 +1794,11 @@
       };
     }
     {
-      name = "pinia___pinia_2.0.36.tgz";
+      name = "pinia___pinia_2.3.1.tgz";
       path = fetchurl {
-        name = "pinia___pinia_2.0.36.tgz";
-        url  = "https://registry.yarnpkg.com/pinia/-/pinia-2.0.36.tgz";
-        sha512 = "4UKApwjlmJH+VuHKgA+zQMddcCb3ezYnyewQ9NVrsDqZ/j9dMv5+rh+1r48whKNdpFkZAWVxhBp5ewYaYX9JcQ==";
+        name = "pinia___pinia_2.3.1.tgz";
+        url  = "https://registry.yarnpkg.com/pinia/-/pinia-2.3.1.tgz";
+        sha512 = "khUlZSwt9xXCaTbbxFYBKDc/bWAGWJjOgvxETwkTN7KRm66EeT1ZdZj6i2ceh9sP2Pzqsbc704r2yngBrxBVug==";
       };
     }
     {
