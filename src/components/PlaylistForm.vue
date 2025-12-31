@@ -58,7 +58,7 @@
             <h4 class="text-h6 mt-6 ml-4">
               {{ $tc("music.playlist.items", 2) }}
             </h4>
-            <v-table>
+            <VTable>
               <thead>
                 <tr>
                   <th style="width: 1px" class="text-center">Sort</th>
@@ -101,7 +101,7 @@
                   </tr>
                 </template>
               </Draggable>
-            </v-table>
+            </VTable>
           </VCol>
         </VRow>
       </VForm>
