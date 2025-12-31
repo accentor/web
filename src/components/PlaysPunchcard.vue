@@ -122,10 +122,8 @@ export default {
     },
   },
   methods: {
-    onIntersect(entries) {
-      // We only have one entry (the `VCard`)
-      // and simply check whether that is intersecting with the viewport
-      this.isIntersecting = entries[0].isIntersecting;
+    onIntersect(isIntersecting) {
+      this.isIntersecting = isIntersecting;
     },
   },
 };
