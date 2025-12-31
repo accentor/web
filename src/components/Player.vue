@@ -100,6 +100,7 @@
           :max="currentTrack ? currentTrack.length : 1"
           :disabled="!currentTrack || currentTrack.length === null"
           :model-value="seekTime"
+          :step="1"
           hide-details
           @update:model-value="seek"
         />
@@ -414,14 +415,10 @@ export default {
   }
 
   &__time-slider {
-    display: none;
-    flex-grow: 1;
-    flex-shrink: 1;
-    flex-basis: 0%;
     padding-right: 10px;
 
-    @media #{map.get(settings.$display-breakpoints, "sm-and-up")} {
-      display: inline-flex;
+    @media #{map.get(settings.$display-breakpoints, "xs")} {
+      display: none;
     }
 
     @media #{map.get(settings.$display-breakpoints, "md-and-up")} {
@@ -453,12 +450,12 @@ export default {
   }
 
   &__volume-slider {
-    display: none;
     margin: 4px;
     min-width: 50px;
     max-width: 250px;
-    @media #{map.get(settings.$display-breakpoints, "sm-and-up")} {
-      display: flex;
+
+    @media #{map.get(settings.$display-breakpoints, "xs")} {
+      display: none;
     }
 
     @media #{map.get(settings.$display-breakpoints, "md-and-up")} {
