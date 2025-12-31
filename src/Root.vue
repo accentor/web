@@ -35,7 +35,7 @@ a {
   }
 }
 
-@media (min-width: map.get(settings.$display-breakpoints, "sm")) {
+@media #{map.get(settings.$display-breakpoints, "sm-and-up")} {
   .actions--sm-wide {
     .actions__button {
       margin: 8px 16px 8px 0;
