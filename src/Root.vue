@@ -65,9 +65,4 @@ a {
 .white-space-nowrap {
   white-space: nowrap;
 }
-
-// Temporary fix until https://github.com/vuetifyjs/vuetify/issues/13678 is resolved
-.v-data-footer {
-  justify-content: flex-end;
-}
 </style>
