@@ -208,7 +208,7 @@ export default {
     "topArtists"
     "punchcard";
 
-  @media (min-width: map.get(settings.$display-breakpoints, "sm")) {
+  @media #{map.get(settings.$display-breakpoints, "sm-and-up")} {
     grid-template-areas:
       "topTracks topTracks"
       "playCount percentagePlayed"
@@ -217,7 +217,7 @@ export default {
       "punchcard punchcard";
   }
 
-  @media (min-width: map.get(settings.$display-breakpoints, "md")) {
+  @media #{map.get(settings.$display-breakpoints, "md-and-up")} {
     grid-template-areas:
       "topTracks topTracks topTracks topTracks playCount playCount"
       "topTracks topTracks topTracks topTracks percentagePlayed percentagePlayed"
