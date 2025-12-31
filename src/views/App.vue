@@ -125,7 +125,7 @@
       </VContainer>
     </VMain>
 
-    <VFooter app color="white" inset height="auto" class="pa-0">
+    <VFooter app inset height="auto" class="pa-0">
       <Player />
     </VFooter>
   </div>
