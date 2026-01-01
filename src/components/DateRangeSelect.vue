@@ -1,31 +1,37 @@
 <template>
   <div>
     <VSelect
-      min-width="180"
       v-model="selectedPreset"
+      min-width="180"
       :items="periodPresets"
       :label="$t('components.dateRangeSelect.label')"
     />
     <VDialog v-model="showCustomRangeModal" persistent max-width="380">
       <VCard>
         <VCardText>
-          <VDatePicker control-variant="modal" v-model="customRange" multiple="range" scrollable :first-day-of-week="1" />
+          <VDatePicker
+            v-model="customRange"
+            control-variant="modal"
+            multiple="range"
+            scrollable
+            :first-day-of-week="1"
+          />
         </VCardText>
         <VCardActions>
           <VSpacer />
           <VBtn
-              variant="text"
-              color="primary"
-              class="ma-2"
-              @click="showCustomRangeModal = false"
+            variant="text"
+            color="primary"
+            class="ma-2"
+            @click="showCustomRangeModal = false"
           >
             {{ $t("common.cancel") }}
           </VBtn>
           <VBtn
-              variant="text"
-              color="primary"
-              class="ma-2"
-              @click="emitSelection"
+            variant="text"
+            color="primary"
+            class="ma-2"
+            @click="emitSelection"
           >
             {{ $t("common.ok") }}
           </VBtn>
@@ -120,10 +126,14 @@ export default {
             const end = this.dateAdapter.parseISO(newSelectedPreset[1]);
             if (this.customRange[0] !== start || this.customRange[1] !== end) {
               this.selectedPreset = "customRange";
-              const newRange = [start]
+              const newRange = [start];
               do {
-                newRange.push(this.dateAdapter.addDays(newRange[newRange.length - 1], 1));
-              } while (this.dateAdapter.isBefore(newRange[newRange.length - 1], end));
+                newRange.push(
+                  this.dateAdapter.addDays(newRange[newRange.length - 1], 1),
+                );
+              } while (
+                this.dateAdapter.isBefore(newRange[newRange.length - 1], end)
+              );
               this.customRange = newRange;
               this.emitSelection();
             }
@@ -150,7 +160,12 @@ export default {
       // We only want to set a new query when the selection bubbles up
       const newPeriod =
         this.selectedPreset === "customRange"
-          ? [this.dateAdapter.toISO(this.customRange[0]), this.dateAdapter.toISO(this.customRange[this.customRange.length - 1])]
+          ? [
+              this.dateAdapter.toISO(this.customRange[0]),
+              this.dateAdapter.toISO(
+                this.customRange[this.customRange.length - 1],
+              ),
+            ]
           : this.selectedPreset;
       if (newPeriod !== this.$route.query.period) {
         this.$router.push({
