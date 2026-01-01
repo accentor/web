@@ -40,7 +40,7 @@
     <EditReviewComment :item="track" :update="flag" />
     <VMenu>
       <template #activator="{ props }">
-        <VBtn class="actions__button mr-0" size="small" icon v-bind="props">
+        <VBtn class="actions__button mr-0" size="small" icon variant="text" v-bind="props">
           <VIcon>mdi-dots-vertical</VIcon>
         </VBtn>
       </template>

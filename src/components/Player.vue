@@ -67,6 +67,7 @@
           class="controls__button controls__button--sm-and-up"
           icon
           size="small"
+          variant="text"
           @click="prevTrack"
         >
           <VIcon>mdi-skip-previous</VIcon>
@@ -74,8 +75,9 @@
         <VBtn
           :disabled="!playlistTracks.length"
           icon
+          variant="text"
           class="controls__button"
-          @click="togglePlaying()"
+          @click="togglePlaying"
         >
           <VIcon size="large">{{ playing ? "mdi-pause" : "mdi-play" }}</VIcon>
         </VBtn>
@@ -88,6 +90,7 @@
           class="controls__button controls__button--sm-and-up"
           icon
           size="small"
+          variant="text"
           @click="nextTrack"
         >
           <VIcon>mdi-skip-next</VIcon>
@@ -119,7 +122,7 @@
         >
           <VIcon>{{ repeatModeIcon }}</VIcon>
         </VBtn>
-        <VBtn icon class="controls__button" @click="shuffle">
+        <VBtn icon variant="text" class="controls__button" @click="shuffle">
           <VIcon>mdi-shuffle</VIcon>
         </VBtn>
         <VSlider
@@ -132,6 +135,7 @@
         />
         <VBtn
           icon
+          variant="text"
           :disabled="playlistTracks.length === 0"
           class="controls__button"
           @click="open = !open"
