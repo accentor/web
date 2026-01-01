@@ -31,11 +31,17 @@
             item-value="id"
             :label="$tc('music.albums', 1)"
           >
-            <template #item="{ item }">
-              {{ item.title }}
-              <span class="text-grey pl-2 ml-auto text-body-2">
-                {{ item.id }}
-              </span>
+            <template #item="{ item, props }">
+              <VListItem v-bind="props" :title="null">
+                <VListItemTitle>
+                  {{ item.title }}
+                </VListItemTitle>
+                <template #append>
+                  <span class="text-grey pl-2 text-body-2">
+                    {{ item.raw.id }}
+                  </span>
+                </template>
+              </VListItem>
             </template>
           </VAutocomplete>
           <VCombobox
