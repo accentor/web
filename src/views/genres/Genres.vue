@@ -3,16 +3,11 @@
     <VDataIterator
       v-if="genres.length > 0"
       v-model:page="pagination.page"
-      :footer-props="{
-        disableItemsPerPage: true,
-        itemsPerPageOptions: [12],
-        showFirstLastPage: true,
-      }"
       :items="filteredItems"
       :items-per-page="12"
     >
       <template #header>
-        <VRow class="mb-2" justify="end" align="baseline">
+        <VRow class="mb-2" justify="end" align="center">
           <VCol cols="12" sm="8" md="6" lg="4" xl="2">
             <VTextField
               v-model="search"
@@ -37,6 +32,15 @@
           >
             <GenreCard :genre="item.raw" />
           </VCol>
+        </VRow>
+      </template>
+      <template #footer="{ pageCount }">
+        <VRow class="mt-2" justify="center">
+          <VPagination
+              v-model="pagination.page"
+              :length="pageCount"
+              total-visible="5"
+          />
         </VRow>
       </template>
     </VDataIterator>
