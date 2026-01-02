@@ -80,10 +80,7 @@
               />
             </VCol>
             <VCol class="flex-shrink-1">
-              <VCheckbox
-                v-model="item.hidden"
-                color="red"
-              >
+              <VCheckbox v-model="item.hidden" color="red">
                 <template #label>
                   <span class="no-break-word white-space-nowrap">
                     {{ $t("music.artist.hide.label") }}
