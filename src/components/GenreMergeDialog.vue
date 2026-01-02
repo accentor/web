@@ -16,7 +16,7 @@
         v-bind="props"
         @click.stop.prevent
       >
-        <VIcon>mdi-merge</VIcon>
+        <VIcon size="x-large">mdi-merge</VIcon>
       </VBtn>
     </template>
     <VCard>

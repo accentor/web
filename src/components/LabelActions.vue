@@ -16,7 +16,7 @@
             icon
             size="small"
           >
-            <VIcon>mdi-pencil</VIcon>
+            <VIcon size="x-large">mdi-pencil</VIcon>
           </VBtn>
         </span>
       </template>
@@ -43,7 +43,7 @@
             size="small"
             @click.stop.prevent="deleteLabel"
           >
-            <VIcon>mdi-delete</VIcon>
+            <VIcon size="x-large">mdi-delete</VIcon>
           </VBtn>
         </span>
       </template>
