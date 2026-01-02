@@ -3,9 +3,10 @@
     <VCol lg="6" sm="8" cols="12" @change.once="isDirty = true">
       <VAlert
         v-if="artist"
-        :value="artist.review_comment !== null"
+        :model-value="artist.review_comment !== null"
         type="warning"
         icon="mdi-flag"
+        class="mb-4"
       >
         {{ artist.review_comment }}
       </VAlert>
