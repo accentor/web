@@ -18,7 +18,7 @@
               <h2 class="text-h4">{{ label.name }}</h2>
             </div>
             <div>
-              <LabelActions :label="label" class="actions--wide" />
+              <LabelActions :label="label" />
             </div>
           </VCol>
           <VCol cols="12" sm="8" md="6" lg="4" xl="2">

@@ -44,6 +44,7 @@
           class="actions__button mr-0"
           size="small"
           icon
+          variant="text"
           v-bind="props"
           @click.stop.prevent
         >
