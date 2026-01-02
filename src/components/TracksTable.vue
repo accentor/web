@@ -26,7 +26,6 @@
       :select-strategy="singleSelect ? 'single' : 'all'"
       return-object
       class="elevation-3"
-      @item-selected="emitSelected"
     >
       <template v-if="isModerator && showMassEdit" #header.actions>
         <MassEditDialog :tracks="selected" @close="reloadSelected" />
@@ -41,15 +40,6 @@
             total-visible="5"
           />
         </div>
-      </template>
-      <template v-if="singleSelect" #item.data-table-select="item">
-        <VRadioGroup v-model="selectedIds" :mandatory="false">
-          <VRadio
-            :value="item.item.id"
-            :model-value="item.isSelected"
-            @click="(val) => item.select(val)"
-          />
-        </VRadioGroup>
       </template>
       <template #item.number="props">
         <span v-if="currentTrack !== null && props.item.id === currentTrack.id">
@@ -233,6 +223,12 @@ export default {
     },
     showSelect() {
       return this.showMassEdit || this.singleSelect;
+    },
+  },
+  watch: {
+    selected(newValue, oldValue) {
+      const newItem = newValue.filter((el) => !oldValue.includes(el))[0];
+      this.$emit("selected", newItem?.id || null);
     },
   },
   methods: {
