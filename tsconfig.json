@@ -9,6 +9,8 @@
     "paths": {
       "@/*": ["./src/*"]
     },
-    "types": ["vite/client"]
+    "types": ["vite/client"],
+    "allowJs": true,
+    "checkJs": true,
   }
 }

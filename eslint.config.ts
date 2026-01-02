@@ -37,4 +37,10 @@ export default defineConfigWithVueTs(
       },
     },
   },
+  {
+    files: ["**/*.ts"],
+    rules: {
+      "@typescript-eslint/explicit-module-boundary-types": "error",
+    },
+  },
 );

@@ -6,7 +6,7 @@ export async function fetchAll<T>(
   setStartLoading: () => void,
   removeOld: () => void,
   scope?: Scope,
-) {
+): Promise<void> {
   if (!scope || scope.scopes.length === 0) {
     setStartLoading();
   }
