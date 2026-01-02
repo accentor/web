@@ -25,7 +25,7 @@
           </VRow>
         </template>
         <template #footer="{ pageCount }">
-          <VPagination v-model="releasePage" :length="pageCount" />
+          <VPagination v-model="releasePage" :length="pageCount" total-visible="5" />
         </template>
       </VDataIterator>
     </VContainer>
@@ -56,7 +56,7 @@
           </VRow>
         </template>
         <template #footer="{ pageCount }">
-          <VPagination v-model="addedAlbumsPage" :length="pageCount" />
+          <VPagination v-model="addedAlbumsPage" :length="pageCount" total-visible="5" />
         </template>
       </VDataIterator>
     </VContainer>
@@ -87,7 +87,7 @@
           </VRow>
         </template>
         <template #footer="{ pageCount }">
-          <VPagination v-model="addedArtistsPage" :length="pageCount" />
+          <VPagination v-model="addedArtistsPage" :length="pageCount" total-visible="5" />
         </template>
       </VDataIterator>
     </VContainer>
@@ -121,7 +121,7 @@
           </VRow>
         </template>
         <template #footer="{ pageCount }">
-          <VPagination v-model="onThisDayPage" :length="pageCount" />
+          <VPagination v-model="onThisDayPage" :length="pageCount" total-visible="5" />
         </template>
       </VDataIterator>
     </VContainer>
@@ -153,7 +153,7 @@
           </VRow>
         </template>
         <template #footer="{ pageCount }">
-          <VPagination v-model="randomAlbumsPage" :length="pageCount" />
+          <VPagination v-model="randomAlbumsPage" :length="pageCount"  total-visible="5"/>
         </template>
       </VDataIterator>
     </VContainer>
@@ -184,7 +184,7 @@
           </VRow>
         </template>
         <template #footer="{ pageCount }">
-          <VPagination v-model="randomArtistsPage" :length="pageCount" />
+          <VPagination v-model="randomArtistsPage" :length="pageCount" total-visible="5" />
         </template>
       </VDataIterator>
     </VContainer>
@@ -215,7 +215,7 @@
           </VRow>
         </template>
         <template #footer="{ pageCount }">
-          <VPagination v-model="recentAlbumsPage" :length="pageCount" />
+          <VPagination v-model="recentAlbumsPage" :length="pageCount" total-visible="5" />
         </template>
       </VDataIterator>
     </VContainer>
@@ -246,7 +246,7 @@
           </VRow>
         </template>
         <template #footer="{ pageCount }">
-          <VPagination v-model="recentArtistsPage" :length="pageCount" />
+          <VPagination v-model="recentArtistsPage" :length="pageCount" total-visible="5" />
         </template>
       </VDataIterator>
     </VContainer>
