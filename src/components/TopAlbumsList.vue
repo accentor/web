@@ -7,6 +7,8 @@
       <VCol class="d-flex justify-end">
         <VSwitch
           v-model="useAverage"
+          density="compact"
+          hide-details
           :label="$t('stats.useAverage')"
           class="mr-4"
         />
