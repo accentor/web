@@ -101,8 +101,8 @@ export default {
     deleteAuthTokens: function () {
       if (confirm(this.$t("common.are-you-sure"))) {
         this.destroyAllDisabled = true;
-        this.selected.forEach((authToken) => {
-          this.destroy(authToken.id);
+        this.selected.forEach((authTokenId) => {
+          this.destroy(authTokenId);
         });
         this.destroyAllDisabled = false;
       }
