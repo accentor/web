@@ -4,6 +4,7 @@
       ref="table"
       v-model="selected"
       v-model:page="pagination.page"
+      item-selectable="isSelectable"
       :items-per-page-options="[30]"
       :headers="headers"
       :items="authTokens"
