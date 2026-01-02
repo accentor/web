@@ -25,9 +25,10 @@
         <VDivider />
         <div class="text-center py-2">
           <VPagination
-              v-model="pagination.page"
-              :length="pageCount"
-              total-visible="5"
+            v-model="pagination.page"
+            density="compact"
+            :length="pageCount"
+            total-visible="5"
           />
         </div>
       </template>
@@ -102,7 +103,7 @@ export default {
     },
     pageCount() {
       return Math.ceil(this.authTokens.length / 30);
-    }
+    },
   },
   methods: {
     ...mapActions(useAuthTokensStore, ["destroy"]),
