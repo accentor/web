@@ -17,11 +17,7 @@
           :rules="[(v) => !!v || $t('errors.albums.title-blank')]"
           required
         />
-        <VDialog
-          v-model="originalModal"
-          persistent
-          max-width="380"
-        >
+        <VDialog v-model="originalModal" persistent max-width="380">
           <template #activator="{ props }">
             <VTextField
               v-model="newAlbum.release"
@@ -33,27 +29,27 @@
           <VCard>
             <VCardText>
               <VDatePicker
-                  v-model="originalModalModel"
-                  scrollable
-                  :first-day-of-week="1"
+                v-model="originalModalModel"
+                scrollable
+                :first-day-of-week="1"
               >
               </VDatePicker>
             </VCardText>
             <VCardActions>
               <VSpacer></VSpacer>
               <VBtn
-                  variant="text"
-                  color="primary"
-                  class="ma-2"
-                  @click="originalModal = false"
+                variant="text"
+                color="primary"
+                class="ma-2"
+                @click="originalModal = false"
               >
                 {{ $t("common.cancel") }}
               </VBtn>
               <VBtn
-                  variant="text"
-                  color="primary"
-                  class="ma-2"
-                  @click="saveOriginalRelease"
+                variant="text"
+                color="primary"
+                class="ma-2"
+                @click="saveOriginalRelease"
               >
                 {{ $t("common.ok") }}
               </VBtn>
@@ -80,33 +76,33 @@
             ></VTextField>
           </template>
           <VCard>
-          <VCardText>
-          <VDatePicker
-            v-model="editionModalModel"
-            scrollable
-            :first-day-of-week="1"
-          >
-          </VDatePicker>
-        </VCardText>
-          <VCardActions>
-            <VSpacer></VSpacer>
-            <VBtn
+            <VCardText>
+              <VDatePicker
+                v-model="editionModalModel"
+                scrollable
+                :first-day-of-week="1"
+              >
+              </VDatePicker>
+            </VCardText>
+            <VCardActions>
+              <VSpacer></VSpacer>
+              <VBtn
                 variant="text"
                 color="primary"
                 class="ma-2"
                 @click="editionModal = false"
-            >
-              {{ $t("common.cancel") }}
-            </VBtn>
-            <VBtn
+              >
+                {{ $t("common.cancel") }}
+              </VBtn>
+              <VBtn
                 variant="text"
                 color="primary"
                 class="ma-2"
                 @click="saveEditionRelease"
-            >
-              {{ $t("common.ok") }}
-            </VBtn>
-          </VCardActions>
+              >
+                {{ $t("common.ok") }}
+              </VBtn>
+            </VCardActions>
           </VCard>
         </VDialog>
         <VTextField
@@ -247,7 +243,7 @@ import { useLabelsStore } from "../store/labels";
 import { useArtistsStore } from "../store/artists";
 import { useAlbumsStore } from "../store/albums";
 import albumSvgUrl from "@mdi/svg/svg/album.svg";
-import {useDate} from "vuetify";
+import { useDate } from "vuetify";
 
 export default {
   name: "AlbumForm",

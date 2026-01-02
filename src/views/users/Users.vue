@@ -25,15 +25,15 @@
           </VCardText>
           <VCardActions v-if="isAdmin">
             <VBtn
-                :to="{
+              :to="{
                 name: 'edit-user',
                 params: { id: user.id },
                 query: { redirect: $route.fullPath },
               }"
-                color="warning"
-                class="ma-2"
-                icon
-                size="small"
+              color="warning"
+              class="ma-2"
+              icon
+              size="small"
             >
               <VIcon size="x-large">mdi-pencil</VIcon>
             </VBtn>
