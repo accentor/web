@@ -1,11 +1,17 @@
 import { createI18n } from "vue-i18n";
+import { en, nl } from 'vuetify/locale'
+
+const vuetifyMessages = { en, nl };
 
 function loadLocaleMessages() {
   const modules = import.meta.glob("@/locales/**/*.json", { eager: true });
   const messages = {};
   Object.keys(modules).forEach((path) => {
     const locale = path.match(/\/([A-Za-z0-9-_]+)\.json$/i)[1];
-    messages[locale] = modules[path];
+    messages[locale] = {
+        $vuetify: vuetifyMessages[locale],
+        ...modules[path]
+    };
   });
   return messages;
 }
