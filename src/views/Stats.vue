@@ -180,7 +180,7 @@ export default {
         this.playStatsScope,
       );
       let done = false;
-      let results = [];
+      const results = [];
       while (!done) {
         let value = [];
         ({ value, done } = await gen.next());

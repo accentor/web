@@ -196,7 +196,7 @@ export default {
       startAll: "startAll",
     }),
     async loadData() {
-      let pendingResults = [];
+      const pendingResults = [];
       if (this.isModerator) {
         pendingResults.push(this.rescansIndex());
         pendingResults.push(this.codecsIndex());

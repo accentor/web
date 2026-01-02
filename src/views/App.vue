@@ -205,7 +205,7 @@ export default {
     ...mapActions(useUsersStore, { usersIndex: "index" }),
     async loadData() {
       this.loading = true;
-      let pendingResults = [];
+      const pendingResults = [];
       pendingResults.push(this.authTokensIndex());
       pendingResults.push(this.albumsIndex());
       pendingResults.push(this.artistsIndex());

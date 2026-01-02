@@ -108,12 +108,12 @@ export default {
   },
   methods: {
     ...mapActions(useAuthTokensStore, ["destroy"]),
-    deleteAuthToken: function (item) {
+    deleteAuthToken(item) {
       if (confirm(this.$t("common.are-you-sure"))) {
         this.destroy(item.id);
       }
     },
-    deleteAuthTokens: function () {
+    deleteAuthTokens() {
       if (confirm(this.$t("common.are-you-sure"))) {
         this.destroyAllDisabled = true;
         this.selected.forEach((authTokenId) => {

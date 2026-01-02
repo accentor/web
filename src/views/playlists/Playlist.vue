@@ -106,7 +106,7 @@ export default {
       return this.playlists[this.$route.params.id];
     },
     items() {
-      let key = `${this.playlist?.playlist_type}s`;
+      const key = `${this.playlist?.playlist_type}s`;
       return this.playlist?.item_ids.map((id) => this[key][id]) || [];
     },
   },
