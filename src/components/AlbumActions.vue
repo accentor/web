@@ -12,7 +12,7 @@
             size="small"
             @click.stop.prevent="startTracks"
           >
-            <VIcon>mdi-play</VIcon>
+            <VIcon size="x-large">mdi-play</VIcon>
           </VBtn>
         </span>
       </template>
@@ -30,7 +30,7 @@
             size="small"
             @click.stop.prevent="addTracks"
           >
-            <VIcon>mdi-plus</VIcon>
+            <VIcon size="x-large">mdi-plus</VIcon>
           </VBtn>
         </span>
       </template>
@@ -48,7 +48,7 @@
           v-bind="props"
           @click.stop.prevent
         >
-          <VIcon>mdi-dots-vertical</VIcon>
+          <VIcon size="x-large">mdi-dots-vertical</VIcon>
         </VBtn>
       </template>
       <VList density="compact">

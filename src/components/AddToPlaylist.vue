@@ -10,7 +10,7 @@
         v-bind="props"
         @click.stop.prevent
       >
-        <VIcon>mdi-playlist-plus</VIcon>
+        <VIcon size="x-large">mdi-playlist-plus</VIcon>
       </VBtn>
     </template>
     <VCard>
