@@ -62,7 +62,7 @@
               <VRow v-if="showReviewComments">
                 <VCol cols="12">
                   <VAlert
-                    :value="showReviewComments"
+                    :model-value="true"
                     type="warning"
                     icon="mdi-flag"
                   >

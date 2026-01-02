@@ -116,7 +116,7 @@
           <h2 class="text-h4">{{ $t("home.on-this-day") }}</h2>
         </template>
         <template #no-data>
-          <VAlert :value="true" color="info" icon="mdi-information">
+          <VAlert :model-value="true" color="info" icon="mdi-information">
             {{ $t("home.on-this-day-empty") }}
           </VAlert>
         </template>
