@@ -15,31 +15,31 @@
       </VCol>
     </VRow>
     <VDataTable
-      ref="table"
       v-model="selected"
       v-model:page="pagination.page"
+      item-value="id"
       :headers="headers"
       :items="filteredItems"
       :items-per-page="30"
       :items-per-page-options="[30]"
-      :show-select="isModerator"
-      :single-select="singleSelect"
+      :show-select="isModerator && showSelect"
+      :select-strategy="singleSelect ? 'single' : 'all'"
+      return-object
       class="elevation-3"
       @item-selected="emitSelected"
     >
       <template v-if="isModerator && showMassEdit" #header.actions>
         <MassEditDialog :tracks="selected" @close="reloadSelected" />
       </template>
-      <template v-if="!singleSelect" #header.data-table-select="props">
-        <VCheckbox
-          :model-value="props.value"
-          :value="props.value"
-          :indeterminate="props.indeterminate"
-          hide-details
-          primary
-          class="pb-4"
-          @click.stop="toggleAll"
-        />
+      <template #bottom>
+        <VDivider />
+        <div class="text-center py-2">
+          <VPagination
+            v-model="pagination.page"
+            :length="pageCount"
+            total-visible="5"
+          />
+        </div>
       </template>
       <template v-if="singleSelect" #item.data-table-select="item">
         <VRadioGroup v-model="selectedIds" :mandatory="false">
@@ -227,6 +227,12 @@ export default {
     selectedIds() {
       return this.selected.map((t) => t.id);
     },
+    pageCount() {
+      return Math.ceil(this.filteredItems.length / 30);
+    },
+    showSelect() {
+      return this.showMassEdit || this.singleSelect
+    }
   },
   methods: {
     emitSelected(o) {
