@@ -21,6 +21,16 @@
           {{ $t("users.auth.destroy-selected") }}
         </VBtn>
       </template>
+      <template #bottom>
+        <VDivider />
+        <div class="text-center py-2">
+          <VPagination
+              v-model="pagination.page"
+              :length="pageCount"
+              total-visible="5"
+          />
+        </div>
+      </template>
       <template #item.actions="props">
         <VBtn
           color="error"
@@ -90,6 +100,9 @@ export default {
       }
       return result;
     },
+    pageCount() {
+      return Math.ceil(this.authTokens.length / 30);
+    }
   },
   methods: {
     ...mapActions(useAuthTokensStore, ["destroy"]),
