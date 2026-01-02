@@ -1,47 +1,4 @@
 {
-	"$vuetify": {
-		"close": "Close",
-		"dataIterator": {
-			"pageText": "{0}-{1} of {2}",
-			"noResultsText": "No matching records found",
-			"loadingText": "Loading items..."
-		},
-		"dataTable": {
-			"itemsPerPageText": "Rows per page:",
-			"ariaLabel": {
-				"sortDescending": "Sorted descending.",
-				"sortAscending": "Sorted ascending.",
-				"sortNone": "Not sorted.",
-				"activateNone": "Activate to remove sorting.",
-				"activateDescending": "Activate to sort descending.",
-				"activateAscending": "Activate to sort ascending."
-			},
-			"sortBy": "Sort by"
-		},
-		"dataFooter": {
-			"itemsPerPageText": "Items per page:",
-			"itemsPerPageAll": "All",
-			"nextPage": "Next page",
-			"prevPage": "Previous page",
-			"firstPage": "First page",
-			"lastPage": "Last page",
-			"pageText": "{0}-{1} of {2}"
-		},
-		"datePicker": {
-			"itemsSelected": "{0} selected"
-		},
-        "input": {
-            "prependAction": "Prepend"
-        },
-		"noDataText": "No data available",
-		"carousel": {
-			"prev": "Previous visual",
-			"next": "Next visual"
-		},
-		"calendar": {
-			"moreEvents": "{0} more"
-		}
-	},
 	"common": {
 		"actions": "Actions",
 		"added-on": "Added on",
