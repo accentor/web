@@ -2,9 +2,16 @@ import { computed } from "vue";
 import { defineStore } from "pinia";
 import api from "@/api";
 import { compareStrings } from "../comparators";
-import { useErrorsStore } from "./errors";
-import { useAuthStore } from "./auth";
-import { useBaseModelStore } from "./base";
+import {
+  create as baseCreate,
+  destroy as baseDestroy,
+  index as baseIndex,
+  read as baseRead,
+  update as baseUpdate,
+  useBaseModelStore,
+} from "./base";
+import { useErrorsStore } from "@/store/errors";
+import { useAuthStore } from "@/store/auth";
 
 export const usePlaylistsStore = defineStore("playlists", () => {
   const authStore = useAuthStore();
@@ -12,13 +19,14 @@ export const usePlaylistsStore = defineStore("playlists", () => {
 
   const {
     items: playlists,
-    index,
-    create,
-    read,
-    update,
-    destroy,
+    addItems,
+    removeItem,
+    removeOld,
+    restored,
+    setItem,
     startLoading,
-  } = useBaseModelStore(api.playlists, "playlists.playlists", "playlist");
+    setStartLoading,
+  } = useBaseModelStore("playlists.playlists");
 
   const allPlaylists = computed(() => Object.values(playlists.value));
   const playlistsByName = computed(() =>
@@ -36,6 +44,43 @@ export const usePlaylistsStore = defineStore("playlists", () => {
   );
   const artistPlaylists = computed(() =>
     playlistsByName.value.filter((p) => p.playlist_type === "artist"),
+  );
+
+  const index = baseIndex(
+    api.playlists,
+    authStore,
+    errorsStore,
+    restored,
+    addItems,
+    setStartLoading,
+    removeOld,
+  );
+  const create = baseCreate(
+    api.playlists,
+    authStore,
+    errorsStore,
+    "playlist",
+    setItem,
+  );
+  const read = baseRead(
+    api.playlists,
+    authStore,
+    errorsStore,
+    restored,
+    setItem,
+  );
+  const update = baseUpdate(
+    api.playlists,
+    authStore,
+    errorsStore,
+    "playlist",
+    setItem,
+  );
+  const destroy = baseDestroy(
+    api.playlists,
+    authStore,
+    errorsStore,
+    removeItem,
   );
 
   async function addItem(id, newItem) {

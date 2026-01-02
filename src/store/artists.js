@@ -1,37 +1,39 @@
 import { computed } from "vue";
 import { defineStore } from "pinia";
-import api from "@/api";
-import { compareStrings } from "../comparators";
 import { ArtistsScope } from "@accentor/api-client-js";
-import { useBaseModelStore } from "./base";
-import { useAlbumsStore } from "./albums";
-import { useTracksStore } from "./tracks";
+import api from "@/api";
+import { compareStrings } from "@/comparators";
+import {
+  useBaseModelStore,
+  index as baseIndex,
+  create as baseCreate,
+  read as baseRead,
+  update as baseUpdate,
+  destroy as baseDestroy,
+  destroyEmpty as baseDestroyEmpty,
+  merge as baseMerge,
+} from "@/store/base";
+import { useAlbumsStore } from "@/store/albums";
+import { useTracksStore } from "@/store/tracks";
+import { useAuthStore } from "@/store/auth";
+import { useErrorsStore } from "@/store/errors";
 
 export const useArtistsStore = defineStore("artists", () => {
   const albumsStore = useAlbumsStore();
+  const authStore = useAuthStore();
+  const errorsStore = useErrorsStore();
   const tracksStore = useTracksStore();
 
   const {
     items: artists,
-    index,
-    create,
-    read,
-    update,
-    destroy,
-    destroyEmpty,
-    merge,
+    addItems,
+    removeItem,
+    removeOld,
+    restored,
+    setItem,
     startLoading,
-  } = useBaseModelStore(api.artists, "artists.artists", "artist", {
-    baseScope: new ArtistsScope(),
-    extraDestroyOperations: (id) => {
-      albumsStore.removeArtistOccurence(id);
-      tracksStore.removeArtistOccurence(id);
-    },
-    extraMergeOperations: (newId, oldId) => {
-      albumsStore.updateArtistOccurence(newId, oldId);
-      tracksStore.updateArtistOccurence(newId, oldId);
-    },
-  });
+    setStartLoading,
+  } = useBaseModelStore("artists.artists");
   const allArtists = computed(() => Object.values(artists.value));
   const artistsByName = computed(() =>
     [...allArtists.value].sort((a1, a2) =>
@@ -43,6 +45,58 @@ export const useArtistsStore = defineStore("artists", () => {
       .filter((t) => t.review_comment !== null)
       .sort((a1, a2) => compareStrings(a1.normalized_name, a2.normalized_name));
   });
+
+  const index = baseIndex(
+    api.artists,
+    authStore,
+    errorsStore,
+    restored,
+    addItems,
+    setStartLoading,
+    removeOld,
+    new ArtistsScope(),
+  );
+  const create = baseCreate(
+    api.artists,
+    authStore,
+    errorsStore,
+    "artist",
+    setItem,
+  );
+  const read = baseRead(api.artists, authStore, errorsStore, restored, setItem);
+  const update = baseUpdate(
+    api.artists,
+    authStore,
+    errorsStore,
+    "artist",
+    setItem,
+  );
+  const destroy = baseDestroy(
+    api.artists,
+    authStore,
+    errorsStore,
+    removeItem,
+    (id) => {
+      albumsStore.removeArtistOccurence(id);
+      tracksStore.removeArtistOccurence(id);
+    },
+  );
+  const destroyEmpty = baseDestroyEmpty(
+    api.artists,
+    authStore,
+    errorsStore,
+    index,
+  );
+  const merge = baseMerge(
+    api.artists,
+    authStore,
+    errorsStore,
+    removeItem,
+    (newId, oldId) => {
+      albumsStore.updateArtistOccurence(newId, oldId);
+      tracksStore.updateArtistOccurence(newId, oldId);
+    },
+  );
 
   return {
     artists,

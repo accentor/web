@@ -1,24 +1,62 @@
 import { computed } from "vue";
-import api from "@/api";
 import { defineStore } from "pinia";
-import { useBaseModelStore } from "./base";
+import api from "@/api";
+import {
+  create as baseCreate,
+  destroy as baseDestroy,
+  index as baseIndex,
+  update as baseUpdate,
+  useBaseModelStore,
+} from "./base";
+import { useAuthStore } from "@/store/auth";
+import { useErrorsStore } from "@/store/errors";
 
 export const useCodecConversionsStore = defineStore("codec-conversions", () => {
+  const authStore = useAuthStore();
+  const errorsStore = useErrorsStore();
+
   const {
     items: codecConversions,
+    addItems,
+    removeItem,
+    removeOld,
+    restored,
+    setItem,
     startLoading,
-    index,
-    create,
-    update,
-    destroy,
-  } = useBaseModelStore(
-    api.codec_conversions,
-    "codecConversions.codecConversions",
-    "codec_conversion",
-  );
+    setStartLoading,
+  } = useBaseModelStore("codecConversions.codecConversions");
 
   const allCodecConversions = computed(() =>
     Object.values(codecConversions.value).sort((cc1, cc2) => cc1.id - cc2.id),
+  );
+  const index = baseIndex(
+    api.codec_conversions,
+    authStore,
+    errorsStore,
+    restored,
+    addItems,
+    setStartLoading,
+    removeOld,
+  );
+  const create = baseCreate(
+    api.codec_conversions,
+    authStore,
+    errorsStore,
+    "codec_conversion",
+    setItem,
+  );
+  const update = baseUpdate(
+    api.codec_conversions,
+    authStore,
+    errorsStore,
+    "codec_conversion",
+    setItem,
+  );
+  const destroy = baseDestroy(
+    api.codec_conversions,
+    authStore,
+    errorsStore,
+    removeItem,
   );
 
   return {

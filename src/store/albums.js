@@ -1,35 +1,43 @@
 import { computed } from "vue";
 import { defineStore } from "pinia";
+import { AlbumsScope } from "@accentor/api-client-js";
 import api from "@/api";
 import {
   compareAlbumsByReleaseFirst,
   compareAlbumsByTitleFirst,
-} from "../comparators";
-import { AlbumsScope } from "@accentor/api-client-js";
-import { useBaseModelStore } from "./base";
-import { useUtilityStore } from "./utility";
-import { useTracksStore } from "./tracks";
+} from "@/comparators";
+import {
+  useBaseModelStore,
+  index as baseIndex,
+  create as baseCreate,
+  read as baseRead,
+  update as baseUpdate,
+  destroy as baseDestroy,
+  destroyEmpty as baseDestroyEmpty,
+  merge as baseMerge,
+} from "@/store/base";
+import { useUtilityStore } from "@/store/utility";
+import { useTracksStore } from "@/store/tracks";
+import { useErrorsStore } from "@/store/errors";
+import { useAuthStore } from "@/store/auth";
 
 export const useAlbumsStore = defineStore("albums", () => {
+  const authStore = useAuthStore();
+  const errorsStore = useErrorsStore();
   const tracksStore = useTracksStore();
   const utilityStore = useUtilityStore();
 
   const {
     items: albums,
-    index,
+    addItems,
+    removeItem,
+    removeOld,
+    restored,
+    setItem,
     setItems,
-    create,
-    read,
-    update,
-    destroy,
-    destroyEmpty,
-    merge,
     startLoading,
-  } = useBaseModelStore(api.albums, "albums.albums", "album", {
-    baseScope: new AlbumsScope(),
-    extraMergeOperations: (newId, oldId) =>
-      tracksStore.updateAlbumOccurence(newId, oldId),
-  });
+    setStartLoading,
+  } = useBaseModelStore("albums.albums");
 
   const allAlbums = computed(() => Object.values(albums.value));
   const albumsByTitle = computed(() =>
@@ -115,6 +123,46 @@ export const useAlbumsStore = defineStore("albums", () => {
     }
     setItems(newAlbums);
   }
+
+  const index = baseIndex(
+    api.albums,
+    authStore,
+    errorsStore,
+    restored,
+    addItems,
+    setStartLoading,
+    removeOld,
+    new AlbumsScope(),
+  );
+  const create = baseCreate(
+    api.albums,
+    authStore,
+    errorsStore,
+    "album",
+    setItem,
+  );
+  const read = baseRead(api.albums, authStore, errorsStore, restored, setItem);
+  const update = baseUpdate(
+    api.albums,
+    authStore,
+    errorsStore,
+    "album",
+    setItem,
+  );
+  const destroy = baseDestroy(api.albums, authStore, errorsStore, removeItem);
+  const destroyEmpty = baseDestroyEmpty(
+    api.albums,
+    authStore,
+    errorsStore,
+    index,
+  );
+  const merge = baseMerge(
+    api.albums,
+    authStore,
+    errorsStore,
+    removeItem,
+    (newId, oldId) => tracksStore.updateAlbumOccurence(newId, oldId),
+  );
 
   return {
     albums,

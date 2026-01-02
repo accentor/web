@@ -2,32 +2,85 @@ import { computed } from "vue";
 import api from "@/api";
 import { compareStrings } from "../comparators";
 import { defineStore } from "pinia";
-import { useBaseModelStore } from "./base";
+import {
+  create as baseCreate,
+  destroy as baseDestroy,
+  destroyEmpty as baseDestroyEmpty,
+  index as baseIndex,
+  merge as baseMerge,
+  read as baseRead,
+  update as baseUpdate,
+  useBaseModelStore,
+} from "./base";
 import { useTracksStore } from "./tracks";
+import { useAuthStore } from "@/store/auth";
+import { useErrorsStore } from "@/store/errors";
 
 export const useGenresStore = defineStore("genres", () => {
+  const authStore = useAuthStore();
+  const errorsStore = useErrorsStore();
   const tracksStore = useTracksStore();
 
   const {
     items: genres,
-    index,
-    create,
-    read,
-    update,
-    destroy,
-    destroyEmpty,
-    merge,
+    addItems,
+    removeItem,
+    removeOld,
+    restored,
+    setItem,
     startLoading,
-  } = useBaseModelStore(api.genres, "genres.genres", "genre", {
-    extraDestroyOperations: (id) => tracksStore.removeGenreOccurence(id),
-    extraMergeOperations: (newId, oldId) =>
-      tracksStore.updateGenreOccurence(newId, oldId),
-  });
+    setStartLoading,
+  } = useBaseModelStore("genres.genres");
   const allGenres = computed(() => Object.values(genres.value));
   const genresByName = computed(() =>
     [...allGenres.value].sort((g1, g2) =>
       compareStrings(g1.normalized_name, g2.normalized_name),
     ),
+  );
+
+  const index = baseIndex(
+    api.genres,
+    authStore,
+    errorsStore,
+    restored,
+    addItems,
+    setStartLoading,
+    removeOld,
+  );
+  const create = baseCreate(
+    api.genres,
+    authStore,
+    errorsStore,
+    "genre",
+    setItem,
+  );
+  const read = baseRead(api.genres, authStore, errorsStore, restored, setItem);
+  const update = baseUpdate(
+    api.genres,
+    authStore,
+    errorsStore,
+    "genre",
+    setItem,
+  );
+  const destroy = baseDestroy(
+    api.genres,
+    authStore,
+    errorsStore,
+    removeItem,
+    (id) => tracksStore.removeGenreOccurence(id),
+  );
+  const destroyEmpty = baseDestroyEmpty(
+    api.genres,
+    authStore,
+    errorsStore,
+    index,
+  );
+  const merge = baseMerge(
+    api.genres,
+    authStore,
+    errorsStore,
+    removeItem,
+    (newId, oldId) => tracksStore.updateGenreOccurence(newId, oldId),
   );
 
   return {

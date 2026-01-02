@@ -4,24 +4,34 @@ import { compareTracks } from "../comparators";
 import { TracksScope } from "@accentor/api-client-js";
 import { useAlbumsStore } from "./albums";
 import { defineStore } from "pinia";
-import { useBaseModelStore } from "./base";
+import {
+  create as baseCreate,
+  destroy as baseDestroy,
+  index as baseIndex,
+  merge as baseMerge,
+  read as baseRead,
+  update as baseUpdate,
+  useBaseModelStore,
+} from "./base";
+import { useAuthStore } from "@/store/auth";
+import { useErrorsStore } from "@/store/errors";
 
 export const useTracksStore = defineStore("tracks", () => {
   const albumsStore = useAlbumsStore();
+  const authStore = useAuthStore();
+  const errorsStore = useErrorsStore();
 
   const {
     items: tracks,
+    addItems,
+    removeItem,
+    removeOld,
+    restored,
+    setItem,
     setItems,
-    index,
-    create,
-    read,
-    update,
-    destroy,
-    merge,
     startLoading,
-  } = useBaseModelStore(api.tracks, "tracks.tracks", "track", {
-    baseScope: new TracksScope(),
-  });
+    setStartLoading,
+  } = useBaseModelStore("tracks.tracks");
   const allTracks = computed(() => Object.values(tracks.value));
   const tracksByAlbumAndNumber = computed(() =>
     [...allTracks.value].sort(compareTracks(albumsStore.albums)),
@@ -150,6 +160,34 @@ export const useTracksStore = defineStore("tracks", () => {
       newTracks[track.id] = track;
     }
   }
+
+  const index = baseIndex(
+    api.tracks,
+    authStore,
+    errorsStore,
+    restored,
+    addItems,
+    setStartLoading,
+    removeOld,
+    new TracksScope(),
+  );
+  const create = baseCreate(
+    api.tracks,
+    authStore,
+    errorsStore,
+    "track",
+    setItem,
+  );
+  const read = baseRead(api.tracks, authStore, errorsStore, restored, setItem);
+  const update = baseUpdate(
+    api.tracks,
+    authStore,
+    errorsStore,
+    "track",
+    setItem,
+  );
+  const destroy = baseDestroy(api.tracks, authStore, errorsStore, removeItem);
+  const merge = baseMerge(api.tracks, authStore, errorsStore, removeItem);
 
   return {
     tracks,

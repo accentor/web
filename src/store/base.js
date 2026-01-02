@@ -1,8 +1,6 @@
 import { ref, markRaw, computed } from "vue";
 import { useStorageAsync } from "@vueuse/core";
 import localForage from "localforage";
-import { useErrorsStore } from "./errors";
-import { useAuthStore } from "./auth";
 import { fetchAll } from "./actions";
 
 const RawObjectSerializer = {
@@ -10,24 +8,13 @@ const RawObjectSerializer = {
   read: async (value) => markRaw(value),
 };
 
-export function useBaseModelStore(
-  apiModule,
-  localStorageKey,
-  crudKey,
-  {
-    extraMergeOperations = null,
-    extraDestroyOperations = null,
-    baseScope = null,
-  } = {},
-) {
-  const errorsStore = useErrorsStore();
-  const authStore = useAuthStore();
-
-  const { promise: ready, resolve: resolveReady } = Promise.withResolvers();
+export function useBaseModelStore(localStorageKey) {
+  const { promise: restored, resolve: resolveRestored } =
+    Promise.withResolvers();
 
   const _items = useStorageAsync(localStorageKey, {}, localForage, {
     serializer: RawObjectSerializer,
-    onReady: resolveReady,
+    onReady: resolveRestored,
   });
   const items = computed(() => _items.value);
   const startLoading = ref(new Date(0));
@@ -83,44 +70,73 @@ export function useBaseModelStore(
     _items.value = markRaw(newItems);
   }
 
-  async function index(scope = baseScope) {
+  return {
+    items,
+    addItems,
+    removeItem,
+    removeOld,
+    restored,
+    setItem,
+    setItems,
+    startLoading,
+    setStartLoading,
+  };
+}
+
+export function index(
+  apiModule,
+  authStore,
+  errorsStore,
+  restored,
+  addItems,
+  setStartLoading,
+  removeOld,
+  baseScope,
+) {
+  return async function (scope = baseScope) {
     const generator = apiModule.index(authStore.apiToken, scope);
     try {
-      await ready;
+      await restored;
       await fetchAll(generator, addItems, setStartLoading, removeOld, scope);
       return true;
     } catch (error) {
       errorsStore.addError(error);
       return false;
     }
-  }
+  };
+}
 
-  async function create(newItem) {
+export function create(apiModule, authStore, errorsStore, crudKey, setItem) {
+  return async function (newItem) {
     try {
       const result = await apiModule.create(authStore.apiToken, {
         [crudKey]: newItem,
       });
       setItem(result.id, result);
-      return result.id;
+      return true;
     } catch (error) {
       errorsStore.addError(error);
       return false;
     }
-  }
+  };
+}
 
-  async function read(id) {
+export function read(apiModule, authStore, errorsStore, restored, setItem) {
+  return async function (id) {
     try {
       const result = await apiModule.read(authStore.apiToken, id);
-      await ready;
+      await restored;
       setItem(id, result);
       return result.id;
     } catch (error) {
       errorsStore.addError(error);
       return false;
     }
-  }
+  };
+}
 
-  async function update(id, updatedItem) {
+export function update(apiModule, authStore, errorsStore, crudKey, setItem) {
+  return async function (id, updatedItem) {
     try {
       const result = await apiModule.update(authStore.apiToken, id, {
         [crudKey]: updatedItem,
@@ -131,9 +147,17 @@ export function useBaseModelStore(
       errorsStore.addError(error);
       return false;
     }
-  }
+  };
+}
 
-  async function destroy(id) {
+export function destroy(
+  apiModule,
+  authStore,
+  errorsStore,
+  removeItem,
+  extraDestroyOperations = undefined,
+) {
+  return async function (id) {
     try {
       await apiModule.destroy(authStore.apiToken, id);
       extraDestroyOperations?.(id);
@@ -143,9 +167,11 @@ export function useBaseModelStore(
       errorsStore.addError(error);
       return false;
     }
-  }
+  };
+}
 
-  async function destroyEmpty() {
+export function destroyEmpty(apiModule, authStore, errorsStore, index) {
+  return async function () {
     try {
       await apiModule.destroyEmpty(authStore.apiToken);
       await index();
@@ -154,9 +180,17 @@ export function useBaseModelStore(
       errorsStore.addError(error);
       return false;
     }
-  }
+  };
+}
 
-  async function merge(newId, oldId) {
+export function merge(
+  apiModule,
+  authStore,
+  errorsStore,
+  removeItem,
+  extraMergeOperations = undefined,
+) {
+  return async function (newId, oldId) {
     try {
       await apiModule.merge(authStore.apiToken, newId, oldId);
       extraMergeOperations?.(newId, oldId);
@@ -166,19 +200,5 @@ export function useBaseModelStore(
       errorsStore.addError(error);
       return false;
     }
-  }
-
-  return {
-    items,
-    startLoading,
-    setItem,
-    setItems,
-    index,
-    create,
-    read,
-    update,
-    destroy,
-    destroyEmpty,
-    merge,
   };
 }

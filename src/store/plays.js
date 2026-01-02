@@ -1,20 +1,29 @@
 import api from "@/api";
 import { PlaysScope } from "@accentor/api-client-js";
 import { defineStore } from "pinia";
-import { useBaseModelStore } from "./base";
+import {
+  create as baseCreate,
+  index as baseIndex,
+  useBaseModelStore,
+} from "./base";
 import { computed } from "vue";
 import { useTracksStore } from "./tracks";
+import { useAuthStore } from "@/store/auth";
+import { useErrorsStore } from "@/store/errors";
 
 export const usePlaysStore = defineStore("plays", () => {
+  const authStore = useAuthStore();
+  const errorsStore = useErrorsStore();
   const tracksStore = useTracksStore();
 
   const {
     items: plays,
-    index,
-    create: baseCreate,
-  } = useBaseModelStore(api.plays, "plays.plays", "play", {
-    baseScope: new PlaysScope(),
-  });
+    addItems,
+    removeOld,
+    restored,
+    setItem,
+    setStartLoading,
+  } = useBaseModelStore("plays.plays");
   const allPlays = computed(() => Object.values(plays.value));
   const playStatsByTrack = computed(() => {
     const result = {};
@@ -88,8 +97,27 @@ export const usePlaysStore = defineStore("plays", () => {
     return result;
   });
 
+  const index = baseIndex(
+    api.plays,
+    authStore,
+    errorsStore,
+    restored,
+    addItems,
+    setStartLoading,
+    removeOld,
+    new PlaysScope(),
+  );
+
+  const underlyingCreate = baseCreate(
+    api.plays,
+    authStore,
+    errorsStore,
+    "play",
+    setItem,
+  );
+
   async function create(trackId) {
-    return await baseCreate({ track_id: trackId, played_at: new Date() });
+    return await underlyingCreate({ track_id: trackId, played_at: new Date() });
   }
 
   return {
