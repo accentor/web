@@ -1,5 +1,4 @@
 <template>
-  <span class="actions">
     <VTooltip location="bottom" :disabled="playableTracks.length !== 0">
       <template #activator="{ props }">
         <span v-bind="props">
@@ -82,7 +81,6 @@
       </template>
       <span>{{ $t("common.disabled-while-loading") }}</span>
     </VTooltip>
-  </span>
 </template>
 
 <script>

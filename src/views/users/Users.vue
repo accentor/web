@@ -34,6 +34,7 @@
               class="ma-2"
               icon
               size="small"
+              variant="text"
             >
               <VIcon size="x-large">mdi-pencil</VIcon>
             </VBtn>
@@ -43,6 +44,7 @@
               href="#"
               icon
               size="small"
+              variant="text"
               @click.stop.prevent="deleteUser(user.id)"
             >
               <VIcon size="x-large">mdi-delete</VIcon>
