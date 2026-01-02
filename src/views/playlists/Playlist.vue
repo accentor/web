@@ -36,11 +36,6 @@
     <VDataIterator
       v-else
       v-model:page="pagination.page"
-      :footer-props="{
-        disableItemsPerPage: true,
-        itemsPerPageOptions: [12],
-        showFirstLastPage: true,
-      }"
       :items="items"
       :items-per-page="12"
     >
@@ -61,6 +56,16 @@
             />
             <ArtistCard v-else :artist="item.raw" />
           </VCol>
+        </VRow>
+      </template>
+      <template #footer="{ pageCount }">
+        <VRow class="mt-2" justify="center">
+          <VPagination
+              v-model="pagination.page"
+              density="compact"
+              :length="pageCount"
+              total-visible="5"
+          />
         </VRow>
       </template>
     </VDataIterator>
