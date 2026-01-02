@@ -36,7 +36,7 @@
           </ul>
         </div>
         <div>
-          <ArtistActions :artist="artist" class="actions" :extended="true" />
+          <ArtistActions :artist="artist" :extended="true" />
         </div>
       </VCol>
     </VRow>

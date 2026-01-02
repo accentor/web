@@ -18,9 +18,7 @@
           </p>
           <p class="text-grey mb-1">{{ playlist.description }}</p>
         </div>
-        <div class="actions">
-          <PlaylistActions :playlist="playlist" />
-        </div>
+        <PlaylistActions :playlist="playlist" />
       </VCol>
       <VCol cols="12" sm="8" md="6" lg="4" xl="2"> </VCol>
     </VRow>

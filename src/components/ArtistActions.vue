@@ -1,5 +1,4 @@
 <template>
-  <span class="actions">
     <VBtn
       v-if="extended"
       :to="{
@@ -75,7 +74,6 @@
       </template>
       <span>{{ $t("common.disabled-while-loading") }}</span>
     </VTooltip>
-  </span>
 </template>
 
 <script>
