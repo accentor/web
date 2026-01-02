@@ -3,16 +3,11 @@
     <VDataIterator
       v-if="artists.length > 0"
       v-model:page="pagination.page"
-      :footer-props="{
-        disableItemsPerPage: true,
-        itemsPerPageOptions: [12],
-        showFirstLastPage: true,
-      }"
       :items="filteredItems"
       :items-per-page="12"
     >
       <template #header>
-        <VRow class="mb-2" align="baseline" justify="end">
+        <VRow class="mb-2" align="center" justify="end">
           <VCol lg="4" md="6" sm="8" xl="2" cols="12">
             <VTextField
               v-model="search"
@@ -46,6 +41,11 @@
           >
             <ArtistCard :artist="item.raw" />
           </VCol>
+        </VRow>
+      </template>
+      <template #footer="{ pageCount }">
+        <VRow class="mt-2" justify="center">
+          <VPagination v-model="pagination.page" :length="pageCount" total-visible="5" />
         </VRow>
       </template>
     </VDataIterator>
