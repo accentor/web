@@ -25,7 +25,7 @@
           :stroke-dashoffset="strokeDashOffset"
           transform="rotate(-90, 125, 125)"
         ></circle>
-        <text x="130" y="125" text-anchor="middle" class="text-h6">
+        <text x="130" y="125" text-anchor="middle" class="text-h6 percentage">
           {{ Math.round(animatedPercentage * 1000) / 10.0 }}%
         </text>
       </svg>
@@ -105,4 +105,8 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.percentage {
+  fill: rgba(var(--v-theme-on-surface), var(--v-high-emphasis-opacity));
+}
+</style>
