@@ -2,16 +2,11 @@
   <VContainer fluid>
     <VDataIterator
       v-model:page="pagination.page"
-      :footer-props="{
-        disableItemsPerPage: true,
-        itemsPerPageOptions: [numberOfItems],
-        showFirstLastPage: true,
-      }"
       :items="filteredItems"
       :items-per-page="numberOfItems"
     >
       <template #header>
-        <VRow class="mb-2" justify="end">
+        <VRow class="mb-2" justify="end" align="center">
           <VCol lg="4" md="6" sm="8" xl="2" cols="12">
             <VTextField
               v-if="playlists.length > numberOfItems"
@@ -64,6 +59,15 @@
           </VCol>
         </VRow>
       </template>
+      <template #footer="{ pageCount }">
+        <VRow class="mt-2" justify="center">
+          <VPagination
+              v-model="pagination.page"
+              :length="pageCount"
+              total-visible="5"
+          />
+        </VRow>
+      </template>
     </VDataIterator>
   </VContainer>
 </template>
@@ -97,7 +101,7 @@ export default {
       );
     },
     numberOfItems() {
-      if (this.$vuetify.display.xl) {
+      if (this.$vuetify.display.xlAndUp) {
         return 30;
       } else if (this.$vuetify.display.lg) {
         return 20;
