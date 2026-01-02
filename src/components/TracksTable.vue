@@ -36,6 +36,7 @@
         <div class="text-center py-2">
           <VPagination
             v-model="pagination.page"
+            density="compact"
             :length="pageCount"
             total-visible="5"
           />
@@ -231,8 +232,8 @@ export default {
       return Math.ceil(this.filteredItems.length / 30);
     },
     showSelect() {
-      return this.showMassEdit || this.singleSelect
-    }
+      return this.showMassEdit || this.singleSelect;
+    },
   },
   methods: {
     emitSelected(o) {

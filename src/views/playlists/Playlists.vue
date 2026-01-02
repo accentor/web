@@ -63,6 +63,7 @@
         <VRow class="mt-2" justify="center">
           <VPagination
             v-model="pagination.page"
+            density="compact"
             :length="pageCount"
             total-visible="5"
           />
