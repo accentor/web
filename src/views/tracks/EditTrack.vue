@@ -4,9 +4,10 @@
       <VRow no-gutters align="center" justify="center">
         <VCol md="6" sm="8" cols="12" @change.once="isDirty = true">
           <VAlert
-            :value="track.review_comment !== null"
+            :model-value="track.review_comment !== null"
             type="warning"
             icon="mdi-flag"
+            class="mb-4"
           >
             {{ track.review_comment }}
           </VAlert>

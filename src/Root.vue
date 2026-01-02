@@ -49,6 +49,10 @@ a {
   word-break: break-word;
 }
 
+.no-break-word {
+  word-break: keep-all;
+}
+
 .white-space-nowrap {
   white-space: nowrap;
 }
