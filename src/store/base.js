@@ -66,7 +66,7 @@ export function useBaseModelStore(
   function removeItem(id) {
     const newItems = {};
     for (let itemId in _items.value) {
-      if (itemId !== id) {
+      if (`${itemId}` !== `${id}`) {
         newItems[itemId] = _items.value[itemId];
       }
     }
