@@ -27,6 +27,7 @@
         <template #footer="{ pageCount }">
           <VPagination
             v-model="releasePage"
+            density="compact"
             :length="pageCount"
             total-visible="5"
           />
@@ -62,6 +63,7 @@
         <template #footer="{ pageCount }">
           <VPagination
             v-model="addedAlbumsPage"
+            density="compact"
             :length="pageCount"
             total-visible="5"
           />
@@ -97,6 +99,7 @@
         <template #footer="{ pageCount }">
           <VPagination
             v-model="addedArtistsPage"
+            density="compact"
             :length="pageCount"
             total-visible="5"
           />
@@ -135,6 +138,7 @@
         <template #footer="{ pageCount }">
           <VPagination
             v-model="onThisDayPage"
+            density="compact"
             :length="pageCount"
             total-visible="5"
           />
@@ -171,6 +175,7 @@
         <template #footer="{ pageCount }">
           <VPagination
             v-model="randomAlbumsPage"
+            density="compact"
             :length="pageCount"
             total-visible="5"
           />
@@ -206,6 +211,7 @@
         <template #footer="{ pageCount }">
           <VPagination
             v-model="randomArtistsPage"
+            density="compact"
             :length="pageCount"
             total-visible="5"
           />
@@ -241,6 +247,7 @@
         <template #footer="{ pageCount }">
           <VPagination
             v-model="recentAlbumsPage"
+            density="compact"
             :length="pageCount"
             total-visible="5"
           />
@@ -276,6 +283,7 @@
         <template #footer="{ pageCount }">
           <VPagination
             v-model="recentArtistsPage"
+            density="compact"
             :length="pageCount"
             total-visible="5"
           />
