@@ -13,7 +13,7 @@
       </VBtn>
     </template>
     <VCard>
-      <VToolbar dark color="primary" class="flex-grow-0">
+      <VToolbar color="primary" class="flex-grow-0">
         <VBtn icon @click="dialog = false">
           <VIcon>mdi-close</VIcon>
         </VBtn>
@@ -46,7 +46,7 @@
                 <VCol cols="12">
                   <VCheckbox v-model="showReviewComments">
                     <template #label>
-                      <span class="text-black">
+                      <span>
                         {{
                           $tc(
                             "music.flag.show",
@@ -89,7 +89,7 @@
                 <VCol cols="12" sm="6">
                   <VCheckbox v-model="number.enabled">
                     <template #label>
-                      <span class="text-black">
+                      <span>
                         {{ $t("music.mass.increase-track") }}
                       </span>
                     </template>
@@ -113,7 +113,7 @@
                 <VCol cols="12" sm="6">
                   <VCheckbox v-model="titleReplacement.enabled">
                     <template #label>
-                      <span class="text-black">
+                      <span>
                         {{ $t("music.mass.title-search") }}
                       </span>
                     </template>
@@ -148,7 +148,7 @@
                 <VCol cols="12" sm="6">
                   <VCheckbox v-model="album.enabled">
                     <template #label>
-                      <span class="text-black">
+                      <span>
                         {{ $t("music.mass.set-album") }}
                       </span>
                     </template>
@@ -182,7 +182,7 @@
                 <VCol cols="12" sm="6">
                   <VCheckbox v-model="changeGenres.enabled">
                     <template #label>
-                      <span class="text-black">
+                      <span>
                         {{ $t("music.mass.change-genres") }}
                       </span>
                     </template>
@@ -221,7 +221,7 @@
                 <VCol cols="12" sm="6">
                   <VCheckbox v-model="changeArtists.enabled">
                     <template #label>
-                      <span class="text-black">
+                      <span>
                         {{ $t("music.mass.change-artists") }}
                       </span>
                     </template>
@@ -258,7 +258,7 @@
                 <VCol cols="12" sm="6">
                   <VCheckbox v-model="clearReviewComments">
                     <template #label>
-                      <span class="text-black">
+                      <span>
                         {{
                           $tc(
                             "music.flag.clear",
