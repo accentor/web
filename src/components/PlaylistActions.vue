@@ -6,7 +6,6 @@
           <VBtn
             :disabled="playableTracks.length === 0"
             color="primary"
-            class="actions__button"
             variant="text"
             icon
             size="small"
@@ -24,7 +23,6 @@
           <VBtn
             :disabled="playableTracks.length === 0"
             color="success"
-            class="actions__button"
             variant="text"
             icon
             size="small"
@@ -51,7 +49,6 @@
             }"
             :disabled="waitingForReload"
             color="warning"
-            class="actions__button"
             variant="text"
             icon
             size="small"
@@ -72,7 +69,7 @@
           <VBtn
             :disabled="waitingForReload"
             color="error"
-            class="actions__button mr-0"
+            class="mr-0"
             href="#"
             variant="text"
             icon

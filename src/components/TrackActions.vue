@@ -6,7 +6,6 @@
           <VBtn
             :disabled="track.length === null"
             color="primary"
-            class="actions__button"
             variant="text"
             icon
             size="small"
@@ -24,7 +23,6 @@
           <VBtn
             :disabled="track.length === null"
             color="success"
-            class="actions__button"
             variant="text"
             icon
             size="small"
@@ -40,13 +38,7 @@
     <EditReviewComment :item="track" :update="flag" />
     <VMenu>
       <template #activator="{ props }">
-        <VBtn
-          class="actions__button mr-0"
-          size="small"
-          icon
-          variant="text"
-          v-bind="props"
-        >
+        <VBtn class="mr-0" size="small" icon variant="text" v-bind="props">
           <VIcon size="x-large">mdi-dots-vertical</VIcon>
         </VBtn>
       </template>
