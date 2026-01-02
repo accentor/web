@@ -4,7 +4,7 @@
       {{ genre.name }}
     </VCardTitle>
     <VCardActions>
-      <GenreActions :genre="genre" class="actions--sm-wide" />
+      <GenreActions :genre="genre" />
     </VCardActions>
   </VCard>
 </template>
