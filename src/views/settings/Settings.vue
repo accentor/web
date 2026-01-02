@@ -3,11 +3,7 @@
     <VRow no-gutters align="center" justify="center">
       <VCol lg="4" md="6" sm="8" cols="12" class="px-3">
         <VForm @submit.prevent="submitSettings">
-          <VSelect
-            v-model="newLocale"
-            :items="langs"
-            label="Language"
-          />
+          <VSelect v-model="newLocale" :items="langs" label="Language" />
           <VSelect
             v-model="newCodecConversion"
             :items="codecConversions"

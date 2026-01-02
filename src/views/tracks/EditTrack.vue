@@ -32,10 +32,7 @@
             :label="$tc('music.albums', 1)"
           >
             <template #item="{ item, props }">
-              <VListItem v-bind="props" :title="null">
-                <VListItemTitle>
-                  {{ item.title }}
-                </VListItemTitle>
+              <VListItem v-bind="props">
                 <template #append>
                   <span class="text-grey pl-2 text-body-2">
                     {{ item.raw.id }}
