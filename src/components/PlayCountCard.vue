@@ -1,12 +1,12 @@
 <template>
   <VCard class="px-2 py-4">
     <div
-      class="text-center mb-4 text-h6 font-weight-regular text-grey-darken-3"
+      class="text-center mb-4 text-h6 font-weight-regular"
     >
       {{ $t("stats.count.playCount.before") }}
       <span
         class="text-h4 d-block"
-        :class="animatedCount ? 'primary--text' : 'grey--text text--darken-1'"
+        :class="animatedCount ? 'text-primary' : 'text-grey text--darken-1'"
       >
         {{ Math.floor(animatedCount) }}
       </span>
@@ -19,8 +19,8 @@
           class="text-h4 d-block text-right"
           :class="
             animatedTime.days
-              ? 'primary--text text--darken-1'
-              : 'grey--text text--darken-1'
+              ? 'text-primary text--darken-1'
+              : 'text-grey text--darken-1'
           "
         >
           {{ Math.floor(animatedTime.days) }}
@@ -32,8 +32,8 @@
           class="text-h4 d-block text-right"
           :class="
             animatedTime.days + animatedTime.hours
-              ? 'primary--text text--darken-1'
-              : 'grey--text text--darken-1'
+              ? 'text-primary text--darken-1'
+              : 'text-grey text--darken-1'
           "
         >
           {{ Math.floor(animatedTime.hours) }}
@@ -47,8 +47,8 @@
           class="text-h4 d-block text-right"
           :class="
             animatedTime.days + animatedTime.hours + animatedTime.minutes
-              ? 'primary--text text--darken-1'
-              : 'grey--text text--darken-1'
+              ? 'text-primary text--darken-1'
+              : 'text-grey text--darken-1'
           "
         >
           {{ Math.floor(animatedTime.minutes) }}
