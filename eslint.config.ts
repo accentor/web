@@ -21,6 +21,7 @@ export default defineConfigWithVueTs(
   globalIgnores(["**/dist/**"]),
   eslint.configs.recommended,
   tseslint.configs.strict,
+  tseslint.configs.stylistic,
   ...vue.configs["flat/recommended"],
   ...vuetify.configs["flat/recommended"],
   vueTsConfigs.recommended,

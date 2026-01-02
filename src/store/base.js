@@ -15,8 +15,8 @@ export function useBaseModelStore(
   localStorageKey,
   crudKey,
   {
-    extraMergeOperations = () => {},
-    extraDestroyOperations = () => {},
+    extraMergeOperations = null,
+    extraDestroyOperations = null,
     baseScope = null,
   } = {},
 ) {
@@ -136,7 +136,7 @@ export function useBaseModelStore(
   async function destroy(id) {
     try {
       await apiModule.destroy(authStore.apiToken, id);
-      extraDestroyOperations(id);
+      extraDestroyOperations?.(id);
       removeItem(id);
       return true;
     } catch (error) {
@@ -159,7 +159,7 @@ export function useBaseModelStore(
   async function merge(newId, oldId) {
     try {
       await apiModule.merge(authStore.apiToken, newId, oldId);
-      extraMergeOperations(newId, oldId);
+      extraMergeOperations?.(newId, oldId);
       removeItem(oldId);
       return true;
     } catch (error) {
