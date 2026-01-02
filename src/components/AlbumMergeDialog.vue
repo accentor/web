@@ -1,10 +1,5 @@
 <template>
-  <VDialog
-    v-if="isModerator"
-    ref="dialogMerge"
-    v-model="mergeModal"
-    width="600px"
-  >
+  <VDialog v-if="isModerator" v-model="mergeModal" width="600px">
     <template #activator="{ props }">
       <VListItem :disabled="disabled" v-bind="props">
         <template #prepend>
@@ -16,9 +11,9 @@
     </template>
     <VCard>
       <VCardTitle>
-        <span class="text-h5">{{
-          $t("music.album.merge-into", { obj: album.name })
-        }}</span>
+        <span class="text-h5">
+          {{ $t("music.album.merge-into", { obj: album.name }) }}
+        </span>
       </VCardTitle>
       <VCardText>
         <VContainer>
@@ -31,13 +26,15 @@
                 item-title="title"
                 item-value="id"
                 :label="$tc('music.albums', 1)"
-                return-object
               >
-                <template #item="{ item }">
-                  {{ item.title }}
-                  <span class="text-grey pl-2 ml-auto text-body-2">
-                    {{ item.id }}
-                  </span>
+                <template #item="{ item, props }">
+                  <VListItem v-bind="props">
+                    <template #append>
+                      <span class="text-grey pl-2 text-body-2">
+                        {{ item.value }}
+                      </span>
+                    </template>
+                  </VListItem>
                 </template>
               </VCombobox>
             </VCol>
