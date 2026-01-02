@@ -18,7 +18,7 @@
             <tr>
               <td class="play-queue__cell play-queue__cell--icon">
                 <VBtn size="small" icon variant="text" class="ma-2 handle">
-                  <VIcon>mdi-drag-horizontal-variant</VIcon>
+                  <VIcon size="x-large">mdi-drag-horizontal-variant</VIcon>
                 </VBtn>
               </td>
               <td class="play-queue__cell play-queue__cell--icon-small">
@@ -51,7 +51,7 @@
                   class="ma-2"
                   @click.stop.prevent="removeIndex(index)"
                 >
-                  <VIcon>mdi-close</VIcon>
+                  <VIcon size="x-large">mdi-close</VIcon>
                 </VBtn>
               </td>
             </tr>
