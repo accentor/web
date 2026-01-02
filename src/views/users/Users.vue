@@ -25,27 +25,27 @@
           </VCardText>
           <VCardActions v-if="isAdmin">
             <VBtn
-              color="error"
-              class="ma-2"
-              href="#"
-              variant="outlined"
-              size="small"
-              @click.stop.prevent="deleteUser(user.id)"
-            >
-              <VIcon>mdi-delete</VIcon>
-            </VBtn>
-            <VBtn
-              :to="{
+                :to="{
                 name: 'edit-user',
                 params: { id: user.id },
                 query: { redirect: $route.fullPath },
               }"
-              color="edit"
-              class="ma-2"
-              variant="outlined"
-              size="small"
+                color="warning"
+                class="ma-2"
+                icon
+                size="small"
             >
-              <VIcon>mdi-pencil</VIcon>
+              <VIcon size="x-large">mdi-pencil</VIcon>
+            </VBtn>
+            <VBtn
+              color="error"
+              class="ma-2"
+              href="#"
+              icon
+              size="small"
+              @click.stop.prevent="deleteUser(user.id)"
+            >
+              <VIcon size="x-large">mdi-delete</VIcon>
             </VBtn>
           </VCardActions>
         </VCard>
