@@ -38,7 +38,7 @@
     </VTooltip>
     <AddToPlaylist :item="album" type="album" />
     <EditReviewComment :item="album" :update="flag" />
-    <VMenu v-if="isModerator">
+    <VMenu v-if="isModerator" eager>
       <template #activator="{ props }">
         <VBtn
           class="actions__button mr-0"

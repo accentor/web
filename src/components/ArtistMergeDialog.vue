@@ -16,14 +16,14 @@
         v-bind="props"
         @click.stop.prevent
       >
-        <VIcon>mdi-merge</VIcon>
+        <VIcon size="x-large">mdi-merge</VIcon>
       </VBtn>
     </template>
     <VCard>
       <VCardTitle>
-        <span class="text-h5">{{
-          $t("music.artist.merge-into", { obj: artist.name })
-        }}</span>
+        <span class="text-h5">
+          {{ $t("music.artist.merge-into", { obj: artist.name }) }}
+        </span>
       </VCardTitle>
       <VCardText>
         <VContainer>
@@ -38,11 +38,14 @@
                 :label="$tc('music.artists', 1)"
                 return-object
               >
-                <template #item="{ item }">
-                  {{ item.name }}
-                  <span class="text-grey pl-2 ml-auto text-body-2">
-                    {{ item.id }}
-                  </span>
+                <template #item="{ item, props }">
+                  <VListItem v-bind="props">
+                    <template #append>
+                      <span class="text-grey pl-2 text-body-2">
+                        {{ item.value }}
+                      </span>
+                    </template>
+                  </VListItem>
                 </template>
               </VCombobox>
             </VCol>
