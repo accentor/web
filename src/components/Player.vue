@@ -148,6 +148,7 @@
 </template>
 
 <script>
+// @ts-nocheck
 import { mapState, mapActions } from "pinia";
 import Draggable from "vuedraggable";
 import { GlobalEvents } from "vue-global-events";

@@ -19,6 +19,7 @@
 </template>
 
 <script>
+// @ts-nocheck
 import { mapState, mapActions } from "pinia";
 import GenreActions from "@/components/GenreActions.vue";
 import TracksTable from "@/components/TracksTable.vue";

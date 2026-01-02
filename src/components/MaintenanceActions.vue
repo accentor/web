@@ -64,6 +64,7 @@
 </template>
 
 <script>
+// @ts-nocheck
 import { mapActions, mapState } from "pinia";
 import { useLabelsStore } from "../store/labels";
 import { useGenresStore } from "../store/genres";

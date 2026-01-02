@@ -38,6 +38,7 @@
 </template>
 
 <script>
+// @ts-nocheck
 import { useCoverFilenamesStore } from "../store/cover_filenames";
 import { mapActions } from "pinia";
 

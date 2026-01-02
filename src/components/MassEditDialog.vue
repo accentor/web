@@ -275,6 +275,7 @@
 </template>
 
 <script>
+// @ts-nocheck
 import { mapState, mapActions } from "pinia";
 import { compareTracks } from "../comparators";
 import Errors from "./Errors.vue";

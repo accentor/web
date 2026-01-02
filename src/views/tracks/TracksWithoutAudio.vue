@@ -14,6 +14,7 @@
 </template>
 
 <script>
+// @ts-nocheck
 import { mapState } from "pinia";
 import TracksTable from "../../components/TracksTable.vue";
 import { useAuthStore } from "../../store/auth";

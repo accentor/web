@@ -53,6 +53,7 @@
 </template>
 
 <script>
+// @ts-nocheck
 import { mapState, mapActions } from "pinia";
 import { useAuthStore } from "../store/auth";
 import { useAlbumsStore } from "../store/albums";

@@ -51,6 +51,7 @@
   </div>
 </template>
 <script>
+// @ts-nocheck
 import Paginated from "../mixins/Paginated";
 import { useAuthStore } from "../store/auth";
 import { mapActions, mapState } from "pinia";

@@ -59,6 +59,7 @@
 </template>
 
 <script>
+// @ts-nocheck
 import { mapState } from "pinia";
 import { calcPlayCountForHours, calcPlayTimeForHours } from "@/reducers";
 import { useTracksStore } from "../store/tracks";

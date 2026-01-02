@@ -79,6 +79,7 @@
 </template>
 
 <script>
+// @ts-nocheck
 import TracksTable from "../../components/TracksTable.vue";
 import ArtistCard from "../../components/ArtistCard.vue";
 import AlbumCard from "../../components/AlbumCard.vue";

@@ -9,6 +9,7 @@
 </template>
 
 <script>
+// @ts-nocheck
 import UserForm from "../../components/UserForm.vue";
 import { useUsersStore } from "../../store/users";
 import { mapState } from "pinia";

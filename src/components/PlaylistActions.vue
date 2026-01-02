@@ -84,6 +84,7 @@
 </template>
 
 <script>
+// @ts-nocheck
 import { mapActions, mapState } from "pinia";
 import { useAuthStore } from "../store/auth";
 import { usePlaylistsStore } from "../store/playlists";

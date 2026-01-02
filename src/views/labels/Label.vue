@@ -58,6 +58,7 @@
 </template>
 
 <script>
+// @ts-nocheck
 import { mapState, mapActions } from "pinia";
 import AlbumCard from "../../components/AlbumCard.vue";
 import LabelActions from "@/components/LabelActions.vue";

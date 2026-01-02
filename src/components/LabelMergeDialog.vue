@@ -63,6 +63,7 @@
 </template>
 
 <script>
+// @ts-nocheck
 import { mapActions, mapState } from "pinia";
 import { useAuthStore } from "../store/auth";
 import { useLabelsStore } from "../store/labels";

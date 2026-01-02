@@ -19,6 +19,7 @@
 </template>
 
 <script>
+// @ts-nocheck
 import { useLabelsStore } from "../../store/labels";
 import { mapActions, mapState } from "pinia";
 

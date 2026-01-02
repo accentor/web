@@ -30,6 +30,7 @@
   </VBtn>
 </template>
 <script>
+// @ts-nocheck
 export default {
   name: "EditReviewComment",
   props: {

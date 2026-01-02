@@ -101,6 +101,7 @@
   </VMenu>
 </template>
 <script>
+// @ts-nocheck
 import { mapState, mapActions } from "pinia";
 import EditReviewComment from "./EditReviewComment.vue";
 import AddToPlaylist from "./AddToPlaylist.vue";

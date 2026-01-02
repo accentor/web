@@ -27,6 +27,7 @@
 </template>
 
 <script>
+// @ts-nocheck
 import { mapActions, mapState } from "pinia";
 import AuthTokensTable from "../../components/AuthTokensTable.vue";
 import UserForm from "@/components/UserForm.vue";

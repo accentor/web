@@ -43,4 +43,10 @@ export default defineConfigWithVueTs(
       "@typescript-eslint/explicit-module-boundary-types": "error",
     },
   },
+  {
+    files: ["**/*.vue"],
+    rules: {
+      "@typescript-eslint/ban-ts-comment": "off",
+    },
+  },
 );

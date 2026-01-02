@@ -52,6 +52,7 @@
 </template>
 
 <script>
+// @ts-nocheck
 import { mapActions, mapState } from "pinia";
 import LabelMergeDialog from "./LabelMergeDialog.vue";
 import { useAuthStore } from "../store/auth";

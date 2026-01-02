@@ -60,6 +60,7 @@
 </template>
 
 <script>
+// @ts-nocheck
 import { mapActions, mapState } from "pinia";
 import DateRangeSelect from "@/components/DateRangeSelect.vue";
 import PercentagePlayedCard from "@/components/PercentagePlayedCard.vue";

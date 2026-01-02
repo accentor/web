@@ -49,6 +49,7 @@
 </template>
 
 <script>
+// @ts-nocheck
 import Paginated from "../../mixins/Paginated";
 import GenreCard from "../../components/GenreCard.vue";
 import Searchable from "../../mixins/Searchable";

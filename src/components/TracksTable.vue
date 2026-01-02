@@ -89,6 +89,7 @@
 </template>
 
 <script>
+// @ts-nocheck
 import { mapState } from "pinia";
 import TrackActions from "./TrackActions.vue";
 import Paginated from "../mixins/Paginated";

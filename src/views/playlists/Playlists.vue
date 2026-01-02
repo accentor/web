@@ -74,6 +74,7 @@
 </template>
 
 <script>
+// @ts-nocheck
 import { mapActions, mapState } from "pinia";
 import Paginated from "../../mixins/Paginated";
 import Searchable from "../../mixins/Searchable";

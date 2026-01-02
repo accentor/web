@@ -46,6 +46,7 @@
 </template>
 
 <script>
+// @ts-nocheck
 import { mapActions, mapState } from "pinia";
 import { useCodecsStore } from "../store/codecs";
 

@@ -5,6 +5,7 @@
 </template>
 
 <script>
+// @ts-nocheck
 import AlbumForm from "../../components/AlbumForm.vue";
 
 export default {

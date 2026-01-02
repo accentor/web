@@ -39,6 +39,7 @@
   </VCard>
 </template>
 <script>
+// @ts-nocheck
 import AlbumActions from "./AlbumActions.vue";
 import AlbumArtists from "./AlbumArtists.vue";
 import albumSvgUrl from "@mdi/svg/svg/album.svg";

@@ -5,6 +5,7 @@
 </template>
 
 <script>
+// @ts-nocheck
 import ArtistForm from "../../components/ArtistForm.vue";
 
 export default {

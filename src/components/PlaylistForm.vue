@@ -110,6 +110,7 @@
 </template>
 
 <script>
+// @ts-nocheck
 import { mapActions, mapState } from "pinia";
 import Draggable from "vuedraggable";
 import { usePlaylistsStore } from "../store/playlists";

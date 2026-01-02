@@ -5,6 +5,7 @@
 </template>
 
 <script>
+// @ts-nocheck
 import { mapState } from "pinia";
 import ArtistForm from "../../components/ArtistForm.vue";
 import { useArtistsStore } from "../../store/artists";

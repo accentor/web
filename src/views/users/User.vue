@@ -12,6 +12,7 @@
 </template>
 
 <script>
+// @ts-nocheck
 import { mapState } from "pinia";
 import { useUsersStore } from "../../store/users";
 

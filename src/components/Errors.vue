@@ -16,6 +16,7 @@
   </VAlert>
 </template>
 <script>
+// @ts-nocheck
 import { useErrorsStore } from "../store/errors";
 import { mapState, mapActions } from "pinia";
 

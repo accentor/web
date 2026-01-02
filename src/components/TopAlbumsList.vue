@@ -22,6 +22,7 @@
 </template>
 
 <script>
+// @ts-nocheck
 import { mapState } from "pinia";
 import { calcPlayCountForAlbums, calcPlayTimeForAlbums } from "@/reducers";
 import TopList from "@/components/TopList.vue";

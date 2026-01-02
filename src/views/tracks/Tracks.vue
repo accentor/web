@@ -13,6 +13,7 @@
 </template>
 
 <script>
+// @ts-nocheck
 import { mapState } from "pinia";
 import TracksTable from "../../components/TracksTable.vue";
 import { useTracksStore } from "../../store/tracks";

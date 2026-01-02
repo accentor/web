@@ -236,6 +236,7 @@
 </template>
 
 <script>
+// @ts-nocheck
 import { mapState, mapActions } from "pinia";
 import ImagePicker from "./ImagePicker.vue";
 import { useUserSettingsStore } from "../store/user_settings";

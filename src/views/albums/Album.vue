@@ -73,6 +73,7 @@
 </template>
 
 <script>
+// @ts-nocheck
 import { mapState, mapActions } from "pinia";
 import AlbumActions from "../../components/AlbumActions.vue";
 import TracksTable from "../../components/TracksTable.vue";

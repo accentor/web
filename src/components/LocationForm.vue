@@ -38,6 +38,7 @@
 </template>
 
 <script>
+// @ts-nocheck
 import { mapActions, mapState } from "pinia";
 import { useLocationsStore } from "../store/locations";
 

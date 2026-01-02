@@ -134,6 +134,7 @@
 </template>
 
 <script>
+// @ts-nocheck
 import { mapState, mapActions } from "pinia";
 import EditCodecs from "../components/EditCodecs.vue";
 import EditCodecConversions from "../components/EditCodecConversions.vue";

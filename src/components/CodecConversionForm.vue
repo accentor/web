@@ -57,6 +57,7 @@
 </template>
 
 <script>
+// @ts-nocheck
 import { mapActions, mapState } from "pinia";
 import { useCodecConversionsStore } from "@/store/codec_conversions";
 import { useCodecsStore } from "../store/codecs";

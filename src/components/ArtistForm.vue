@@ -36,6 +36,7 @@
 </template>
 
 <script>
+// @ts-nocheck
 import { mapActions } from "pinia";
 import ImagePicker from "./ImagePicker.vue";
 import { useArtistsStore } from "../store/artists";

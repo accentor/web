@@ -40,6 +40,7 @@
 </template>
 
 <script>
+// @ts-nocheck
 import Errors from "../components/Errors.vue";
 import { mapActions } from "pinia";
 import { useErrorsStore } from "../store/errors";

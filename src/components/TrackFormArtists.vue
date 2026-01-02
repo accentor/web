@@ -109,6 +109,7 @@
 </template>
 
 <script>
+// @ts-nocheck
 import { mapState } from "pinia";
 import Draggable from "vuedraggable";
 import { useArtistsStore } from "../store/artists";

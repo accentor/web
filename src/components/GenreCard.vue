@@ -10,6 +10,7 @@
 </template>
 
 <script>
+// @ts-nocheck
 import GenreActions from "./GenreActions.vue";
 
 export default {

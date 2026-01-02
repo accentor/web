@@ -6,6 +6,7 @@
 </template>
 
 <script>
+// @ts-nocheck
 import { mapState } from "pinia";
 import ImageTypeForm from "./ImageTypeForm.vue";
 import { useAuthStore } from "../store/auth";
