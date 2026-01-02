@@ -18,12 +18,13 @@
             <VBtn
               icon
               size="small"
+              variant="text"
               class="ma-2"
               :disabled="index === 0"
               tabindex="-1"
               @click="moveArtist(index, -1)"
             >
-              <VIcon>mdi-menu-up</VIcon>
+              <VIcon size="x-large">mdi-menu-up</VIcon>
             </VBtn>
             <VBtn
               size="small"
@@ -33,26 +34,28 @@
               tabindex="-1"
               :disabled="trackArtists.length === 1"
             >
-              <VIcon>mdi-drag-horizontal-variant</VIcon>
+              <VIcon size="x-large">mdi-drag-horizontal-variant</VIcon>
             </VBtn>
             <VBtn
               icon
               size="small"
+              variant="text"
               class="ma-2"
               :disabled="index === trackArtists.length - 1"
               tabindex="-1"
               @click="moveArtist(index, 1)"
             >
-              <VIcon>mdi-menu-down</VIcon>
+              <VIcon size="x-large">mdi-menu-down</VIcon>
             </VBtn>
             <VBtn
               icon
               size="small"
+              variant="text"
               class="ma-2"
               tabindex="-1"
               @click="removeArtist(index)"
             >
-              <VIcon>mdi-close</VIcon>
+              <VIcon size="x-large">mdi-close</VIcon>
             </VBtn>
           </div>
         </VCol>
@@ -74,17 +77,17 @@
                 v-model="item.role"
                 :items="roles"
                 :label="$t('music.artist.role')"
-                class="flex-grow-2"
               />
             </VCol>
-            <VCol class="flex-grow-0 flex-shrink-0">
+            <VCol class="flex-shrink-1">
               <VCheckbox
                 v-model="item.hidden"
                 color="red"
-                class="white-space-nowrap"
               >
                 <template #label>
-                  {{ $t("music.artist.hide.label") }}
+                  <span class="no-break-word white-space-nowrap">
+                    {{ $t("music.artist.hide.label") }}
+                  </span>
                   <VTooltip location="bottom">
                     <template #activator="{ props }">
                       <VIcon
@@ -130,31 +133,31 @@ export default {
       roles: [
         {
           value: "main",
-          text: this.$t("music.artist.roles.main"),
+          title: this.$t("music.artist.roles.main"),
         },
         {
           value: "performer",
-          text: this.$t("music.artist.roles.performer"),
+          title: this.$t("music.artist.roles.performer"),
         },
         {
           value: "composer",
-          text: this.$t("music.artist.roles.composer"),
+          title: this.$t("music.artist.roles.composer"),
         },
         {
           value: "conductor",
-          text: this.$t("music.artist.roles.conductor"),
+          title: this.$t("music.artist.roles.conductor"),
         },
         {
           value: "remixer",
-          text: this.$t("music.artist.roles.remixer"),
+          title: this.$t("music.artist.roles.remixer"),
         },
         {
           value: "producer",
-          text: this.$t("music.artist.roles.producer"),
+          title: this.$t("music.artist.roles.producer"),
         },
         {
           value: "arranger",
-          text: this.$t("music.artist.roles.arranger"),
+          title: this.$t("music.artist.roles.arranger"),
         },
       ],
       trackArtists: [],
