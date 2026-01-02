@@ -7,7 +7,7 @@
     size="small"
     @click.stop.prevent="show = true"
   >
-    <VIcon>mdi-flag</VIcon>
+    <VIcon size="x-large">mdi-flag</VIcon>
     <VDialog v-model="show" max-width="600px">
       <VCard>
         <VCardTitle class="text-h5">
