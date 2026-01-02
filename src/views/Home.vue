@@ -326,7 +326,7 @@ export default {
       return this.randomSort(this.artists);
     },
     numberOfItems() {
-      if (this.$vuetify.display.xl) {
+      if (this.$vuetify.display.xlAndUp) {
         return 6;
       } else if (this.$vuetify.display.md) {
         return 3;
