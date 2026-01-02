@@ -1,8 +1,6 @@
 <template>
   <VCard class="px-2 py-4">
-    <div
-      class="text-center mb-4 text-h6 font-weight-regular"
-    >
+    <div class="text-center mb-4 text-h6 font-weight-regular">
       {{ $t("stats.count.playCount.before") }}
       <span
         class="text-h4 d-block"
