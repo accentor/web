@@ -12,7 +12,7 @@
       icon
       size="small"
     >
-      <VIcon>mdi-chart-bar</VIcon>
+      <VIcon size="x-large">mdi-chart-bar</VIcon>
     </VBtn>
     <AddToPlaylist :item="artist" type="artist" />
     <EditReviewComment :item="artist" :update="flag" />
@@ -36,7 +36,7 @@
             icon
             size="small"
           >
-            <VIcon>mdi-pencil</VIcon>
+            <VIcon size="x-large">mdi-pencil</VIcon>
           </VBtn>
         </span>
       </template>
@@ -71,7 +71,7 @@
             size="small"
             @click.stop.prevent="deleteArtist"
           >
-            <VIcon>mdi-delete</VIcon>
+            <VIcon size="x-large">mdi-delete</VIcon>
           </VBtn>
         </span>
       </template>
