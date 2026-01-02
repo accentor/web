@@ -2,7 +2,6 @@
   <VDialog v-if="playlistOptions.length" v-model="dialog" width="600px">
     <template #activator="{ props }">
       <VBtn
-        class="actions__button"
         color="primary"
         variant="text"
         icon

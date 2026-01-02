@@ -6,7 +6,6 @@
           <VBtn
             :disabled="playableTracks.length === 0"
             color="primary"
-            class="actions__button"
             variant="text"
             icon
             size="small"
@@ -24,7 +23,6 @@
           <VBtn
             :disabled="playableTracks.length === 0"
             color="success"
-            class="actions__button"
             variant="text"
             icon
             size="small"
@@ -41,7 +39,7 @@
     <VMenu v-if="isModerator" eager>
       <template #activator="{ props }">
         <VBtn
-          class="actions__button mr-0"
+          class="mr-0"
           size="small"
           icon
           variant="text"

@@ -8,7 +8,6 @@
     <template #activator="{ props }">
       <VBtn
         :disabled="disabled"
-        class="actions__button"
         color="warning"
         variant="text"
         icon
