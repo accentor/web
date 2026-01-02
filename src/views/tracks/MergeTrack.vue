@@ -11,7 +11,7 @@
       </VCol>
     </VRow>
     <VRow>
-      <v-table class="text-left merge-table">
+      <VTable class="text-left merge-table">
         <template #default>
           <thead>
             <tr>
@@ -24,7 +24,10 @@
           </thead>
           <tbody>
             <tr>
-              <td :class="{ 'd-flex justify-space-between': !reversed }">
+              <td
+                class="align-center"
+                :class="{ 'd-flex justify-space-between': !reversed }"
+              >
                 <span class="my-auto"
                   >{{ track.number }}. {{ track.title }}</span
                 >
@@ -35,7 +38,7 @@
                 >{{ result.title }}
               </td>
               <td
-                class="text-right"
+                class="text-right align-center"
                 :class="{ 'd-flex justify-space-between': reversed }"
               >
                 <VIcon v-if="reversed && newID">mdi-arrow-left</VIcon>
@@ -47,7 +50,10 @@
               </td>
             </tr>
             <tr>
-              <td :class="{ 'd-flex justify-space-between': !reversed }">
+              <td
+                class="align-center"
+                :class="{ 'd-flex justify-space-between': !reversed }"
+              >
                 <span class="my-auto">{{ albums[track.album_id].title }}</span>
                 <VIcon v-if="!reversed && newID">mdi-arrow-right</VIcon>
               </td>
@@ -55,7 +61,7 @@
                 {{ result.album_id ? albums[result.album_id].title : "-" }}
               </td>
               <td
-                class="text-right"
+                class="text-right align-center"
                 :class="{ 'd-flex justify-space-between': reversed }"
               >
                 <VIcon v-if="reversed && newID">mdi-arrow-left</VIcon>
@@ -69,7 +75,10 @@
               </td>
             </tr>
             <tr>
-              <td :class="{ 'd-flex justify-space-between': !reversed }">
+              <td
+                class="align-center"
+                :class="{ 'd-flex justify-space-between': !reversed }"
+              >
                 <TrackArtists class="my-auto" :track="track" />
                 <VIcon v-if="!reversed && newID">mdi-arrow-right</VIcon>
               </td>
@@ -77,7 +86,10 @@
                 <TrackArtists v-if="result.track_artists" :track="result" />
                 <span v-else>-</span>
               </td>
-              <td :class="{ 'd-flex justify-space-between': reversed }">
+              <td
+                class="align-center"
+                :class="{ 'd-flex justify-space-between': reversed }"
+              >
                 <VIcon v-if="reversed && newID">mdi-arrow-left</VIcon>
                 <TrackArtists
                   v-if="selectedTrack.track_artists"
@@ -88,7 +100,10 @@
               </td>
             </tr>
             <tr>
-              <td :class="{ 'd-flex justify-space-between': !reversed }">
+              <td
+                class="align-center"
+                :class="{ 'd-flex justify-space-between': !reversed }"
+              >
                 <TrackGenres class="my-auto" :track="track" />
                 <VIcon v-if="!reversed && newID">mdi-arrow-right</VIcon>
               </td>
@@ -96,7 +111,10 @@
                 <TrackGenres v-if="result.genre_ids" :track="result" />
                 <span v-else>-</span>
               </td>
-              <td :class="{ 'd-flex justify-space-between': reversed }">
+              <td
+                class="align-center"
+                :class="{ 'd-flex justify-space-between': reversed }"
+              >
                 <VIcon v-if="reversed && newID">mdi-arrow-left</VIcon>
                 <TrackGenres
                   v-if="selectedTrack.genre_ids"
@@ -108,6 +126,7 @@
             </tr>
             <tr>
               <td
+                class="align-center"
                 :class="{
                   'd-flex justify-space-between': !result.file.selected,
                 }"
@@ -129,6 +148,7 @@
                 }}
               </td>
               <td
+                class="align-center text-right"
                 :class="{
                   'd-flex justify-space-between': result.file.selected,
                 }"
@@ -149,7 +169,7 @@
             </tr>
           </tbody>
         </template>
-      </v-table>
+      </VTable>
     </VRow>
     <VRow>
       <VCol class="d-flex justify-center">
@@ -216,7 +236,7 @@ export default {
     };
   },
   head() {
-    return { title: this.$t("page-titles.merge", { obj: this.track.title }) };
+    return { title: this.$t("page-titles.merge", { obj: this.track?.title }) };
   },
   computed: {
     ...mapState(useAlbumsStore, ["albums"]),
