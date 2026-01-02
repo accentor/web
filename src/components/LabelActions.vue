@@ -1,5 +1,5 @@
 <template>
-  <span v-if="isModerator" class="actions">
+  <template v-if="isModerator">
     <VTooltip location="bottom" :disabled="!waitingForReload">
       <template #activator="{ props }">
         <span v-bind="props">
@@ -48,7 +48,7 @@
       </template>
       <span>{{ $t("common.disabled-while-loading") }}</span>
     </VTooltip>
-  </span>
+  </template>
 </template>
 
 <script>
