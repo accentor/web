@@ -3,11 +3,6 @@
     <VDataIterator
       v-if="albums.length > 0"
       v-model:page="pagination.page"
-      :footer-props="{
-        disableItemsPerPage: true,
-        itemsPerPageOptions: [12],
-        showFirstLastPage: true,
-      }"
       :items="filteredItems"
       :items-per-page="12"
     >
@@ -46,6 +41,16 @@
           >
             <AlbumCard :album="item.raw" :label-for-cat-nr="label" />
           </VCol>
+        </VRow>
+      </template>
+      <template #footer="{ pageCount }">
+        <VRow class="mt-2" justify="center">
+          <VPagination
+              v-model="pagination.page"
+              density="compact"
+              :length="pageCount"
+              total-visible="5"
+          />
         </VRow>
       </template>
     </VDataIterator>
@@ -108,7 +113,7 @@ export default {
     async fetchContent(newValue, oldValue) {
       // After loading the content, the router will change the id from a string to a number
       // but we don't actually want to load the content twice
-      if (newValue == oldValue) {
+      if (`${newValue}` === `${oldValue}`) {
         return;
       }
 
