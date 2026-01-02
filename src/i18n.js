@@ -1,5 +1,5 @@
 import { createI18n } from "vue-i18n";
-import { en, nl } from 'vuetify/locale'
+import { en, nl } from "vuetify/locale";
 
 const vuetifyMessages = { en, nl };
 
@@ -9,8 +9,8 @@ function loadLocaleMessages() {
   Object.keys(modules).forEach((path) => {
     const locale = path.match(/\/([A-Za-z0-9-_]+)\.json$/i)[1];
     messages[locale] = {
-        $vuetify: vuetifyMessages[locale],
-        ...modules[path]
+      $vuetify: vuetifyMessages[locale],
+      ...modules[path],
     };
   });
   return messages;
