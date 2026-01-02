@@ -1,93 +1,95 @@
 <template>
-  <VContainer v-if="track" class="fill-height" fluid>
-    <VRow no-gutters align="center" justify="center">
-      <VCol md="6" sm="8" cols="12" @change.once="isDirty = true">
-        <VAlert
-          :value="track.review_comment !== null"
-          type="warning"
-          icon="mdi-flag"
-        >
-          {{ track.review_comment }}
-        </VAlert>
-        <VForm v-if="loaded" v-model="isValid" @submit.prevent="submit">
-          <VTextField
-            v-model="newTrack.number"
-            type="number"
-            :label="$t('music.track.number')"
-            :rules="rules.number"
-            min="0"
-            step="1"
-          />
-          <VTextField
-            v-model="newTrack.title"
-            :label="$t('music.title')"
-            :rules="[(v) => !!v || $t('errors.tracks.title-blank')]"
-          />
-          <VAutocomplete
-            v-model="newTrack.album_id"
-            :items="sortedAlbums"
-            :custom-filter="filterTitle"
-            item-title="title"
-            item-value="id"
-            :label="$tc('music.albums', 1)"
+  <div>
+    <VContainer v-if="track" class="fill-height" fluid>
+      <VRow no-gutters align="center" justify="center">
+        <VCol md="6" sm="8" cols="12" @change.once="isDirty = true">
+          <VAlert
+            :value="track.review_comment !== null"
+            type="warning"
+            icon="mdi-flag"
           >
-            <template #item="{ item, props }">
-              <VListItem v-bind="props">
-                <template #append>
-                  <span class="text-grey pl-2 text-body-2">
-                    {{ item.raw.id }}
-                  </span>
-                </template>
-              </VListItem>
-            </template>
-          </VAutocomplete>
-          <VCombobox
-            v-model="newTrack.genre_ids"
-            :items="sortedGenres"
-            :custom-filter="filterName"
-            chips
-            closable-chips
-            item-title="name"
-            item-value="id"
-            :label="$t('music.genre-s')"
-            multiple
-            return-object
-            :rules="rules.genre"
-            validate-on="blur"
-          />
-          <h4 class="text-subtitle-1">{{ $tc("music.artists", 2) }}</h4>
-          <TrackFormArtists
-            v-model="newTrack.track_artists"
-            @update:value.once="isDirty = true"
-          />
-          <VCheckbox
-            v-if="track.review_comment !== null"
-            v-model="clear_review_comment"
-            :label="$tc('music.flag.clear', 1)"
-          />
-          <VRow>
-            <VBtn
-              :disabled="!isValid"
-              color="primary"
-              class="ma-2"
-              type="submit"
+            {{ track.review_comment }}
+          </VAlert>
+          <VForm v-if="loaded" v-model="isValid" @submit.prevent="submit">
+            <VTextField
+              v-model="newTrack.number"
+              type="number"
+              :label="$t('music.track.number')"
+              :rules="rules.number"
+              min="0"
+              step="1"
+            />
+            <VTextField
+              v-model="newTrack.title"
+              :label="$t('music.title')"
+              :rules="[(v) => !!v || $t('errors.tracks.title-blank')]"
+            />
+            <VAutocomplete
+              v-model="newTrack.album_id"
+              :items="sortedAlbums"
+              :custom-filter="filterTitle"
+              item-title="title"
+              item-value="id"
+              :label="$tc('music.albums', 1)"
             >
-              {{ $t("music.track.update") }}
-            </VBtn>
-            <VSpacer />
-            <VBtn
-              color="success"
-              class="ma-2"
-              @click="addArtist"
-              @click.once="isDirty = true"
-            >
-              {{ $t("music.artist.add") }}
-            </VBtn>
-          </VRow>
-        </VForm>
-      </VCol>
-    </VRow>
-  </VContainer>
+              <template #item="{ item, props }">
+                <VListItem v-bind="props">
+                  <template #append>
+                    <span class="text-grey pl-2 text-body-2">
+                      {{ item.raw.id }}
+                    </span>
+                  </template>
+                </VListItem>
+              </template>
+            </VAutocomplete>
+            <VCombobox
+              v-model="newTrack.genre_ids"
+              :items="sortedGenres"
+              :custom-filter="filterName"
+              chips
+              closable-chips
+              item-title="name"
+              item-value="id"
+              :label="$t('music.genre-s')"
+              multiple
+              return-object
+              :rules="rules.genre"
+              validate-on="blur"
+            />
+            <h4 class="text-subtitle-1">{{ $tc("music.artists", 2) }}</h4>
+            <TrackFormArtists
+              v-model="newTrack.track_artists"
+              @update:value.once="isDirty = true"
+            />
+            <VCheckbox
+              v-if="track.review_comment !== null"
+              v-model="clear_review_comment"
+              :label="$tc('music.flag.clear', 1)"
+            />
+            <VRow>
+              <VBtn
+                :disabled="!isValid"
+                color="primary"
+                class="ma-2"
+                type="submit"
+              >
+                {{ $t("music.track.update") }}
+              </VBtn>
+              <VSpacer />
+              <VBtn
+                color="success"
+                class="ma-2"
+                @click="addArtist"
+                @click.once="isDirty = true"
+              >
+                {{ $t("music.artist.add") }}
+              </VBtn>
+            </VRow>
+          </VForm>
+        </VCol>
+      </VRow>
+    </VContainer>
+  </div>
 </template>
 
 <script>
@@ -118,7 +120,7 @@ export default {
     };
   },
   head() {
-    return { title: this.$t("page-titles.edit", { obj: this.track.title }) };
+    return { title: this.$t("page-titles.edit", { obj: this.track?.title }) };
   },
   computed: {
     ...mapState(useArtistsStore, {
