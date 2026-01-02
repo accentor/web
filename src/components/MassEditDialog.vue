@@ -61,11 +61,7 @@
               </VRow>
               <VRow v-if="showReviewComments">
                 <VCol cols="12">
-                  <VAlert
-                    :model-value="true"
-                    type="warning"
-                    icon="mdi-flag"
-                  >
+                  <VAlert :model-value="true" type="warning" icon="mdi-flag">
                     <table class="review-comments">
                       <tr v-for="t of tracksWithReviewComments" :key="t.id">
                         <td class="review-comments__cell text-right">

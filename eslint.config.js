@@ -1,13 +1,20 @@
-import globals from 'globals'
 import eslint from "@eslint/js";
-import vue from 'eslint-plugin-vue'
-import vuetify from 'eslint-plugin-vuetify'
+import globals from 'globals'
 import prettier from "@vue/eslint-config-prettier";
+import vue from 'eslint-plugin-vue'
+import vueParser from "vue-eslint-parser"
+import vuetify from 'eslint-plugin-vuetify'
 
 export default [
     ...vue.configs['flat/recommended'],
     ...vuetify.configs['flat/recommended'],
     eslint.configs.recommended,
+    {
+        files: ["*.vue", "**/*.vue"],
+        languageOptions: {
+            parser: vueParser
+        }
+    },
     prettier,
     {
         rules: {
