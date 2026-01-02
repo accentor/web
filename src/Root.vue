@@ -29,19 +29,6 @@ a {
     margin: 4px 8px 4px 0;
   }
 }
-.actions--wide {
-  .actions__button {
-    margin: 8px 16px 8px 0;
-  }
-}
-
-@media #{map.get(settings.$display-breakpoints, "sm-and-up")} {
-  .actions--sm-wide {
-    .actions__button {
-      margin: 8px 16px 8px 0;
-    }
-  }
-}
 
 .button-group {
   border-radius: 4px;

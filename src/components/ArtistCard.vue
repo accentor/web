@@ -24,7 +24,7 @@
       {{ artist.name }}
     </VCardTitle>
     <VCardActions>
-      <ArtistActions :artist="artist" class="actions--sm-wide" />
+      <ArtistActions :artist="artist" />
     </VCardActions>
   </VCard>
 </template>

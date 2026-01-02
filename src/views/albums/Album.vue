@@ -59,7 +59,7 @@
             </ul>
           </div>
           <div>
-            <AlbumActions :album="album" class="actions--wide" />
+            <AlbumActions :album="album" />
           </div>
         </div>
       </VCol>
