@@ -42,15 +42,15 @@ export const useCodecConversionsStore = defineStore("codec-conversions", () => {
     api.codec_conversions,
     authStore,
     errorsStore,
-    "codec_conversion",
     setItem,
+    (val) => ({ codec_conversion: val }),
   );
   const update = baseUpdate(
     api.codec_conversions,
     authStore,
     errorsStore,
-    "codec_conversion",
     setItem,
+    (val) => ({ codec_conversion: val }),
   );
   const destroy = baseDestroy(
     api.codec_conversions,

@@ -112,8 +112,8 @@ export const usePlaysStore = defineStore("plays", () => {
     api.plays,
     authStore,
     errorsStore,
-    "play",
     setItem,
+    (val) => ({ play: val }),
   );
 
   async function create(trackId) {

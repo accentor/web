@@ -42,15 +42,15 @@ export const useCodecsStore = defineStore("codecs", () => {
     api.codecs,
     authStore,
     errorsStore,
-    "codec",
     setItem,
+    (val) => ({ codec: val }),
   );
   const update = baseUpdate(
     api.codecs,
     authStore,
     errorsStore,
-    "codec",
     setItem,
+    (val) => ({ codec: val }),
   );
   const destroy = baseDestroy(api.codecs, authStore, errorsStore, removeItem);
 

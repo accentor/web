@@ -41,8 +41,8 @@ export const useLocationsStore = defineStore("locations", () => {
     api.locations,
     authStore,
     errorsStore,
-    "location",
     setItem,
+    (val) => ({ location: val }),
   );
   const destroy = baseDestroy(
     api.locations,

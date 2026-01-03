@@ -5,7 +5,6 @@ import { TracksScope } from "@accentor/api-client-js";
 import { useAlbumsStore } from "./albums";
 import { defineStore } from "pinia";
 import {
-  create as baseCreate,
   destroy as baseDestroy,
   index as baseIndex,
   merge as baseMerge,
@@ -171,20 +170,13 @@ export const useTracksStore = defineStore("tracks", () => {
     removeOld,
     new TracksScope(),
   );
-  const create = baseCreate(
-    api.tracks,
-    authStore,
-    errorsStore,
-    "track",
-    setItem,
-  );
   const read = baseRead(api.tracks, authStore, errorsStore, restored, setItem);
   const update = baseUpdate(
     api.tracks,
     authStore,
     errorsStore,
-    "track",
     setItem,
+    (val) => ({ track: val }),
   );
   const destroy = baseDestroy(api.tracks, authStore, errorsStore, removeItem);
   const merge = baseMerge(api.tracks, authStore, errorsStore, removeItem);
@@ -192,7 +184,6 @@ export const useTracksStore = defineStore("tracks", () => {
   return {
     tracks,
     index,
-    create,
     read,
     update,
     destroy,

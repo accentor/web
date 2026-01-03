@@ -41,8 +41,8 @@ export const useCoverFilenamesStore = defineStore("cover-filenames", () => {
     api.cover_filenames,
     authStore,
     errorsStore,
-    "cover_filename",
     setItem,
+    (val) => ({ cover_filename: val }),
   );
   const destroy = baseDestroy(
     api.cover_filenames,

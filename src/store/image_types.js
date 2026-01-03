@@ -42,15 +42,15 @@ export const useImageTypesStore = defineStore("image-types", () => {
     api.image_types,
     authStore,
     errorsStore,
-    "image_type",
     setItem,
+    (val) => ({ image_type: val }),
   );
   const update = baseUpdate(
     api.image_types,
     authStore,
     errorsStore,
-    "image_type",
     setItem,
+    (val) => ({ image_type: val }),
   );
   const destroy = baseDestroy(
     api.image_types,

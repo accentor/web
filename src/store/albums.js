@@ -138,16 +138,16 @@ export const useAlbumsStore = defineStore("albums", () => {
     api.albums,
     authStore,
     errorsStore,
-    "album",
     setItem,
+    (val) => ({ album: val }),
   );
   const read = baseRead(api.albums, authStore, errorsStore, restored, setItem);
   const update = baseUpdate(
     api.albums,
     authStore,
     errorsStore,
-    "album",
     setItem,
+    (val) => ({ album: val }),
   );
   const destroy = baseDestroy(api.albums, authStore, errorsStore, removeItem);
   const destroyEmpty = baseDestroyEmpty(

@@ -52,16 +52,16 @@ export const useLabelsStore = defineStore("labels", () => {
     api.labels,
     authStore,
     errorsStore,
-    "label",
     setItem,
+    (val) => ({ label: val }),
   );
   const read = baseRead(api.labels, authStore, errorsStore, restored, setItem);
   const update = baseUpdate(
     api.labels,
     authStore,
     errorsStore,
-    "label",
     setItem,
+    (val) => ({ label: val }),
   );
   const destroy = baseDestroy(
     api.labels,

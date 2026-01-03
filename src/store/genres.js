@@ -51,16 +51,16 @@ export const useGenresStore = defineStore("genres", () => {
     api.genres,
     authStore,
     errorsStore,
-    "genre",
     setItem,
+    (val) => ({ genre: val }),
   );
   const read = baseRead(api.genres, authStore, errorsStore, restored, setItem);
   const update = baseUpdate(
     api.genres,
     authStore,
     errorsStore,
-    "genre",
     setItem,
+    (val) => ({ genre: val }),
   );
   const destroy = baseDestroy(
     api.genres,

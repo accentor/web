@@ -59,8 +59,8 @@ export const usePlaylistsStore = defineStore("playlists", () => {
     api.playlists,
     authStore,
     errorsStore,
-    "playlist",
     setItem,
+    (val) => ({ playlist: val }),
   );
   const read = baseRead(
     api.playlists,
@@ -73,8 +73,8 @@ export const usePlaylistsStore = defineStore("playlists", () => {
     api.playlists,
     authStore,
     errorsStore,
-    "playlist",
     setItem,
+    (val) => ({ playlist: val }),
   );
   const destroy = baseDestroy(
     api.playlists,

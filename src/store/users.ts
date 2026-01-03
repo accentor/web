@@ -1,6 +1,6 @@
 import { computed } from "vue";
 import api from "@/api";
-import { compareStrings } from "../comparators";
+import { compareStrings } from "@/comparators";
 import { defineStore } from "pinia";
 import {
   create as baseCreate,
@@ -11,6 +11,7 @@ import {
 } from "./base";
 import { useAuthStore } from "@/store/auth";
 import { useErrorsStore } from "@/store/errors";
+import type { User, UserParams } from "@accentor/api-client-js";
 
 export const useUsersStore = defineStore("users", () => {
   const authStore = useAuthStore();
@@ -24,7 +25,7 @@ export const useUsersStore = defineStore("users", () => {
     restored,
     setItem,
     setStartLoading,
-  } = useBaseModelStore("users.users");
+  } = useBaseModelStore<User>("users.users");
 
   const allUsers = computed(() => Object.values(users.value));
   const usersByName = computed(() =>
@@ -40,8 +41,20 @@ export const useUsersStore = defineStore("users", () => {
     setStartLoading,
     removeOld,
   );
-  const create = baseCreate(api.users, authStore, errorsStore, "user", setItem);
-  const update = baseUpdate(api.users, authStore, errorsStore, "user", setItem);
+  const create = baseCreate<User, UserParams["user"], UserParams>(
+    api.users,
+    authStore,
+    errorsStore,
+    setItem,
+    (val) => ({ user: val }),
+  );
+  const update = baseUpdate<User, UserParams["user"], UserParams>(
+    api.users,
+    authStore,
+    errorsStore,
+    setItem,
+    (val) => ({ user: val }),
+  );
   const destroy = baseDestroy(api.users, authStore, errorsStore, removeItem);
 
   return {

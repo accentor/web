@@ -60,16 +60,16 @@ export const useArtistsStore = defineStore("artists", () => {
     api.artists,
     authStore,
     errorsStore,
-    "artist",
     setItem,
+    (val) => ({ artist: val }),
   );
   const read = baseRead(api.artists, authStore, errorsStore, restored, setItem);
   const update = baseUpdate(
     api.artists,
     authStore,
     errorsStore,
-    "artist",
     setItem,
+    (val) => ({ artist: val }),
   );
   const destroy = baseDestroy(
     api.artists,
