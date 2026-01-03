@@ -1,6 +1,10 @@
 import { computed } from "vue";
 import { defineStore } from "pinia";
-import { AlbumsScope } from "@accentor/api-client-js";
+import {
+  type Album,
+  type AlbumParams,
+  AlbumsScope,
+} from "@accentor/api-client-js";
 import api from "@/api";
 import {
   compareAlbumsByReleaseFirst,
@@ -15,6 +19,7 @@ import {
   destroy as baseDestroy,
   destroyEmpty as baseDestroyEmpty,
   merge as baseMerge,
+  type ModelItemsType,
 } from "@/store/base";
 import { useUtilityStore } from "@/store/utility";
 import { useTracksStore } from "@/store/tracks";
@@ -37,7 +42,7 @@ export const useAlbumsStore = defineStore("albums", () => {
     setItems,
     startLoading,
     setStartLoading,
-  } = useBaseModelStore("albums.albums");
+  } = useBaseModelStore<Album>("albums.albums");
 
   const allAlbums = computed(() => Object.values(albums.value));
   const albumsByTitle = computed(() =>
@@ -60,21 +65,21 @@ export const useAlbumsStore = defineStore("albums", () => {
       .sort(compareAlbumsByReleaseFirst(true));
   });
 
-  function albumsFilterByArtist(id) {
-    const aaFilter = (a) =>
+  function albumsFilterByArtist(id: number): Album[] {
+    const aaFilter = (a: Album): boolean =>
       a.album_artists.filter((aa) => `${aa.artist_id}` === `${id}`).length > 0;
     return allAlbums.value.filter(aaFilter).sort(compareAlbumsByReleaseFirst());
   }
 
-  function albumsFilterByLabel(id) {
-    const alFilter = (a) =>
+  function albumsFilterByLabel(id: number): Album[] {
+    const alFilter = (a: Album): boolean =>
       a.album_labels.filter((l) => `${l.label_id}` === `${id}`).length > 0;
     return allAlbums.value.filter(alFilter).sort(compareAlbumsByReleaseFirst());
   }
 
-  function removeArtistOccurence(oldID) {
-    const newAlbums = {};
-    for (let album of allAlbums.value) {
+  function removeArtistOccurence(oldID: number): void {
+    const newAlbums: ModelItemsType<Album> = {};
+    for (const album of allAlbums.value) {
       const i = album.album_artists.findIndex((aa) => aa.artist_id === oldID);
       if (i >= 0) {
         album.album_artists.splice(i, 1);
@@ -84,21 +89,21 @@ export const useAlbumsStore = defineStore("albums", () => {
     setItems(newAlbums);
   }
 
-  function updateArtistOccurence(newID, oldID) {
-    const newAlbums = {};
-    for (let album of allAlbums.value) {
+  function updateArtistOccurence(newID: number, oldID: number): void {
+    const newAlbums: ModelItemsType<Album> = {};
+    for (const album of allAlbums.value) {
       const i = album.album_artists.findIndex((aa) => aa.artist_id === oldID);
       if (i >= 0) {
-        album.album_artists[i].artist_id = newID;
+        album.album_artists[i]!.artist_id = newID;
       }
       newAlbums[album.id] = album;
     }
     setItems(newAlbums);
   }
 
-  function removeLabelOccurence(oldID) {
-    const newAlbums = {};
-    for (let album of allAlbums.value) {
+  function removeLabelOccurence(oldID: number): void {
+    const newAlbums: ModelItemsType<Album> = {};
+    for (const album of allAlbums.value) {
       const i = album.album_labels.findIndex((l) => l.label_id === oldID);
       if (i >= 0) {
         album.album_labels.splice(i, 1);
@@ -108,15 +113,15 @@ export const useAlbumsStore = defineStore("albums", () => {
     setItems(newAlbums);
   }
 
-  function updateLabelOccurence(newID, oldID) {
-    const newAlbums = {};
-    for (let album of allAlbums.value) {
+  function updateLabelOccurence(newID: number, oldID: number): void {
+    const newAlbums: ModelItemsType<Album> = {};
+    for (const album of allAlbums.value) {
       const i = album.album_labels.findIndex((l) => l.label_id === oldID);
       if (i >= 0) {
         if (album.album_labels.some((l) => l.label_id === newID)) {
           album.album_labels.splice(i, 1);
         } else {
-          album.album_labels[i].label_id = newID;
+          album.album_labels[i]!.label_id = newID;
         }
       }
       newAlbums[album.id] = album;
@@ -134,7 +139,7 @@ export const useAlbumsStore = defineStore("albums", () => {
     removeOld,
     new AlbumsScope(),
   );
-  const create = baseCreate(
+  const create = baseCreate<Album, AlbumParams["album"], AlbumParams>(
     api.albums,
     authStore,
     errorsStore,
@@ -142,7 +147,7 @@ export const useAlbumsStore = defineStore("albums", () => {
     (val) => ({ album: val }),
   );
   const read = baseRead(api.albums, authStore, errorsStore, restored, setItem);
-  const update = baseUpdate(
+  const update = baseUpdate<Album, AlbumParams["album"], AlbumParams>(
     api.albums,
     authStore,
     errorsStore,

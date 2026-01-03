@@ -9,6 +9,10 @@ import {
 } from "@/store/base";
 import { useAuthStore } from "@/store/auth";
 import { useErrorsStore } from "@/store/errors";
+import type {
+  CoverFilename,
+  CoverFilenameParams,
+} from "@accentor/api-client-js";
 
 export const useCoverFilenamesStore = defineStore("cover-filenames", () => {
   const authStore = useAuthStore();
@@ -22,7 +26,7 @@ export const useCoverFilenamesStore = defineStore("cover-filenames", () => {
     restored,
     setItem,
     setStartLoading,
-  } = useBaseModelStore("coverFilenames.coverFilenames");
+  } = useBaseModelStore<CoverFilename>("coverFilenames.coverFilenames");
 
   const allCoverFilenames = computed(() =>
     Object.values(coverFilenames.value).sort((cf1, cf2) => cf1.id - cf2.id),
@@ -37,13 +41,13 @@ export const useCoverFilenamesStore = defineStore("cover-filenames", () => {
     setStartLoading,
     removeOld,
   );
-  const create = baseCreate(
-    api.cover_filenames,
-    authStore,
-    errorsStore,
-    setItem,
-    (val) => ({ cover_filename: val }),
-  );
+  const create = baseCreate<
+    CoverFilename,
+    CoverFilenameParams["cover_filename"],
+    CoverFilenameParams
+  >(api.cover_filenames, authStore, errorsStore, setItem, (val) => ({
+    cover_filename: val,
+  }));
   const destroy = baseDestroy(
     api.cover_filenames,
     authStore,

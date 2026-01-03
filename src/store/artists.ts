@@ -1,6 +1,10 @@
 import { computed } from "vue";
 import { defineStore } from "pinia";
-import { ArtistsScope } from "@accentor/api-client-js";
+import {
+  type Artist,
+  type ArtistParams,
+  ArtistsScope,
+} from "@accentor/api-client-js";
 import api from "@/api";
 import { compareStrings } from "@/comparators";
 import {
@@ -33,7 +37,7 @@ export const useArtistsStore = defineStore("artists", () => {
     setItem,
     startLoading,
     setStartLoading,
-  } = useBaseModelStore("artists.artists");
+  } = useBaseModelStore<Artist>("artists.artists");
   const allArtists = computed(() => Object.values(artists.value));
   const artistsByName = computed(() =>
     [...allArtists.value].sort((a1, a2) =>
@@ -56,7 +60,7 @@ export const useArtistsStore = defineStore("artists", () => {
     removeOld,
     new ArtistsScope(),
   );
-  const create = baseCreate(
+  const create = baseCreate<Artist, ArtistParams["artist"], ArtistParams>(
     api.artists,
     authStore,
     errorsStore,
@@ -64,7 +68,7 @@ export const useArtistsStore = defineStore("artists", () => {
     (val) => ({ artist: val }),
   );
   const read = baseRead(api.artists, authStore, errorsStore, restored, setItem);
-  const update = baseUpdate(
+  const update = baseUpdate<Artist, ArtistParams["artist"], ArtistParams>(
     api.artists,
     authStore,
     errorsStore,

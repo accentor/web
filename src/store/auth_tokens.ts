@@ -8,6 +8,7 @@ import {
 import api from "@/api";
 import { useAuthStore } from "@/store/auth";
 import { useErrorsStore } from "@/store/errors";
+import type { AuthToken } from "@accentor/api-client-js";
 
 export const useAuthTokensStore = defineStore("auth-tokens", () => {
   const authStore = useAuthStore();
@@ -20,7 +21,7 @@ export const useAuthTokensStore = defineStore("auth-tokens", () => {
     removeOld,
     restored,
     setStartLoading,
-  } = useBaseModelStore("authTokens.authTokens");
+  } = useBaseModelStore<AuthToken>("authTokens.authTokens");
 
   const allAuthTokens = computed(() =>
     Object.values(authTokens.value).sort((a1, a2) => a1.id - a2.id),

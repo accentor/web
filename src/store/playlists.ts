@@ -10,8 +10,13 @@ import {
   update as baseUpdate,
   useBaseModelStore,
 } from "./base";
-import { useErrorsStore } from "@/store/errors";
+import { type ApiError, useErrorsStore } from "@/store/errors";
 import { useAuthStore } from "@/store/auth";
+import type {
+  Playlist,
+  PlaylistItemParams,
+  PlaylistParams,
+} from "@accentor/api-client-js";
 
 export const usePlaylistsStore = defineStore("playlists", () => {
   const authStore = useAuthStore();
@@ -26,7 +31,7 @@ export const usePlaylistsStore = defineStore("playlists", () => {
     setItem,
     startLoading,
     setStartLoading,
-  } = useBaseModelStore("playlists.playlists");
+  } = useBaseModelStore<Playlist>("playlists.playlists");
 
   const allPlaylists = computed(() => Object.values(playlists.value));
   const playlistsByName = computed(() =>
@@ -36,7 +41,7 @@ export const usePlaylistsStore = defineStore("playlists", () => {
   );
   const editablePlaylists = computed(() =>
     playlistsByName.value.filter(
-      (p) => p.access === "shared" || p.user_id === authStore.currentUser.id,
+      (p) => p.access === "shared" || p.user_id === authStore.currentUser?.id,
     ),
   );
   const albumPlaylists = computed(() =>
@@ -55,13 +60,13 @@ export const usePlaylistsStore = defineStore("playlists", () => {
     setStartLoading,
     removeOld,
   );
-  const create = baseCreate(
-    api.playlists,
-    authStore,
-    errorsStore,
-    setItem,
-    (val) => ({ playlist: val }),
-  );
+  const create = baseCreate<
+    Playlist,
+    PlaylistParams["playlist"],
+    PlaylistParams
+  >(api.playlists, authStore, errorsStore, setItem, (val) => ({
+    playlist: val,
+  }));
   const read = baseRead(
     api.playlists,
     authStore,
@@ -69,13 +74,13 @@ export const usePlaylistsStore = defineStore("playlists", () => {
     restored,
     setItem,
   );
-  const update = baseUpdate(
-    api.playlists,
-    authStore,
-    errorsStore,
-    setItem,
-    (val) => ({ playlist: val }),
-  );
+  const update = baseUpdate<
+    Playlist,
+    PlaylistParams["playlist"],
+    PlaylistParams
+  >(api.playlists, authStore, errorsStore, setItem, (val) => ({
+    playlist: val,
+  }));
   const destroy = baseDestroy(
     api.playlists,
     authStore,
@@ -83,14 +88,17 @@ export const usePlaylistsStore = defineStore("playlists", () => {
     removeItem,
   );
 
-  async function addItem(id, newItem) {
+  async function addItem(
+    id: number,
+    newItem: PlaylistItemParams["playlist"],
+  ): Promise<boolean> {
     try {
-      await api.playlists.addItem(authStore.apiToken, id, {
+      await api.playlists.addItem(authStore.apiToken!, id, {
         playlist: newItem,
       });
       return await read(id);
     } catch (error) {
-      errorsStore.addError(error);
+      errorsStore.addError(error as ApiError);
       return false;
     }
   }

@@ -10,6 +10,7 @@ import {
 } from "./base";
 import { useAuthStore } from "@/store/auth";
 import { useErrorsStore } from "@/store/errors";
+import type { ImageType, ImageTypeParams } from "@accentor/api-client-js";
 
 export const useImageTypesStore = defineStore("image-types", () => {
   const authStore = useAuthStore();
@@ -23,7 +24,7 @@ export const useImageTypesStore = defineStore("image-types", () => {
     restored,
     setItem,
     setStartLoading,
-  } = useBaseModelStore("imageTypes.imageTypes");
+  } = useBaseModelStore<ImageType>("imageTypes.imageTypes");
 
   const allImageTypes = computed(() =>
     Object.values(imageTypes.value).sort((i1, i2) => i1.id - i2.id),
@@ -38,20 +39,20 @@ export const useImageTypesStore = defineStore("image-types", () => {
     setStartLoading,
     removeOld,
   );
-  const create = baseCreate(
-    api.image_types,
-    authStore,
-    errorsStore,
-    setItem,
-    (val) => ({ image_type: val }),
-  );
-  const update = baseUpdate(
-    api.image_types,
-    authStore,
-    errorsStore,
-    setItem,
-    (val) => ({ image_type: val }),
-  );
+  const create = baseCreate<
+    ImageType,
+    ImageTypeParams["image_type"],
+    ImageTypeParams
+  >(api.image_types, authStore, errorsStore, setItem, (val) => ({
+    image_type: val,
+  }));
+  const update = baseUpdate<
+    ImageType,
+    ImageTypeParams["image_type"],
+    ImageTypeParams
+  >(api.image_types, authStore, errorsStore, setItem, (val) => ({
+    image_type: val,
+  }));
   const destroy = baseDestroy(
     api.image_types,
     authStore,

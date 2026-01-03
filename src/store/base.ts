@@ -4,7 +4,7 @@ import localForage from "localforage";
 import { fetchAll } from "./actions";
 import type { AuthStore } from "@/store/auth";
 import type { ApiToken, Scope } from "@accentor/api-client-js";
-import type { ApiError, ErrorsStore } from "@/store/errors.ts";
+import type { ApiError, ErrorsStore } from "@/store/errors";
 
 // The types here are not correct, but useStorageAsync wants us to convert to a string,
 // which we don't actually want to do, since indexeddb can just store the objects.
@@ -14,7 +14,7 @@ const RawObjectSerializer = {
     markRaw(value as unknown as T),
 };
 
-type ModelItemsType<T> = Record<string, T & { loaded: Date }>;
+export type ModelItemsType<T> = Record<string, T & { loaded: Date }>;
 
 export function useBaseModelStore<T extends { id: number }>(
   localStorageKey: string,
@@ -229,10 +229,10 @@ export function destroy(
 }
 
 export function destroyEmpty(
-  apiModule: { destroyEmpty: (apiToken: ApiToken) => Promise<void> },
+  apiModule: { destroyEmpty: (apiToken: ApiToken) => Promise<boolean> },
   authStore: AuthStore,
   errorsStore: ErrorsStore,
-  index: () => Promise<void>,
+  index: () => Promise<boolean>,
 ) {
   return async function (): Promise<boolean> {
     try {
@@ -246,9 +246,9 @@ export function destroyEmpty(
   };
 }
 
-export function merge(
+export function merge<T>(
   apiModule: {
-    merge: (apiToken: ApiToken, newId: number, oldId: number) => Promise<void>;
+    merge: (apiToken: ApiToken, newId: number, oldId: number) => Promise<T>;
   },
   authStore: AuthStore,
   errorsStore: ErrorsStore,

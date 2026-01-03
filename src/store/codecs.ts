@@ -10,6 +10,7 @@ import {
 } from "@/store/base";
 import { useAuthStore } from "@/store/auth";
 import { useErrorsStore } from "@/store/errors";
+import type { Codec, CodecParams } from "@accentor/api-client-js";
 
 export const useCodecsStore = defineStore("codecs", () => {
   const authStore = useAuthStore();
@@ -23,7 +24,7 @@ export const useCodecsStore = defineStore("codecs", () => {
     restored,
     setItem,
     setStartLoading,
-  } = useBaseModelStore("codecs.codecs");
+  } = useBaseModelStore<Codec>("codecs.codecs");
 
   const allCodecs = computed(() =>
     Object.values(codecs.value).sort((c1, c2) => c1.id - c2.id),
@@ -38,14 +39,14 @@ export const useCodecsStore = defineStore("codecs", () => {
     setStartLoading,
     removeOld,
   );
-  const create = baseCreate(
+  const create = baseCreate<Codec, CodecParams["codec"], CodecParams>(
     api.codecs,
     authStore,
     errorsStore,
     setItem,
     (val) => ({ codec: val }),
   );
-  const update = baseUpdate(
+  const update = baseUpdate<Codec, CodecParams["codec"], CodecParams>(
     api.codecs,
     authStore,
     errorsStore,

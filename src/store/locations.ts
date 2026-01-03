@@ -9,6 +9,7 @@ import {
 } from "./base";
 import { useAuthStore } from "@/store/auth";
 import { useErrorsStore } from "@/store/errors";
+import { type Location, type LocationParams } from "@accentor/api-client-js";
 
 export const useLocationsStore = defineStore("locations", () => {
   const authStore = useAuthStore();
@@ -22,7 +23,7 @@ export const useLocationsStore = defineStore("locations", () => {
     restored,
     setItem,
     setStartLoading,
-  } = useBaseModelStore("locations.locations");
+  } = useBaseModelStore<Location>("locations.locations");
 
   const allLocations = computed(() =>
     Object.values(locations.value).sort((l1, l2) => l1.id - l2.id),
@@ -37,13 +38,13 @@ export const useLocationsStore = defineStore("locations", () => {
     setStartLoading,
     removeOld,
   );
-  const create = baseCreate(
-    api.locations,
-    authStore,
-    errorsStore,
-    setItem,
-    (val) => ({ location: val }),
-  );
+  const create = baseCreate<
+    Location,
+    LocationParams["location"],
+    LocationParams
+  >(api.locations, authStore, errorsStore, setItem, (val) => ({
+    location: val,
+  }));
   const destroy = baseDestroy(
     api.locations,
     authStore,

@@ -1,7 +1,7 @@
 import { computed } from "vue";
+import { defineStore } from "pinia";
 import api from "@/api";
 import { compareStrings } from "../comparators";
-import { defineStore } from "pinia";
 import {
   create as baseCreate,
   destroy as baseDestroy,
@@ -12,17 +12,18 @@ import {
   update as baseUpdate,
   useBaseModelStore,
 } from "./base";
-import { useTracksStore } from "./tracks";
+import { useAlbumsStore } from "./albums";
 import { useAuthStore } from "@/store/auth";
 import { useErrorsStore } from "@/store/errors";
+import type { Label, LabelParams } from "@accentor/api-client-js";
 
-export const useGenresStore = defineStore("genres", () => {
+export const useLabelsStore = defineStore("labels", () => {
   const authStore = useAuthStore();
   const errorsStore = useErrorsStore();
-  const tracksStore = useTracksStore();
+  const albumsStore = useAlbumsStore();
 
   const {
-    items: genres,
+    items: labels,
     addItems,
     removeItem,
     removeOld,
@@ -30,16 +31,17 @@ export const useGenresStore = defineStore("genres", () => {
     setItem,
     startLoading,
     setStartLoading,
-  } = useBaseModelStore("genres.genres");
-  const allGenres = computed(() => Object.values(genres.value));
-  const genresByName = computed(() =>
-    [...allGenres.value].sort((g1, g2) =>
+  } = useBaseModelStore<Label>("labels.labels");
+
+  const allLabels = computed(() => Object.values(labels.value));
+  const labelsByName = computed(() =>
+    [...allLabels.value].sort((g1, g2) =>
       compareStrings(g1.normalized_name, g2.normalized_name),
     ),
   );
 
   const index = baseIndex(
-    api.genres,
+    api.labels,
     authStore,
     errorsStore,
     restored,
@@ -47,46 +49,46 @@ export const useGenresStore = defineStore("genres", () => {
     setStartLoading,
     removeOld,
   );
-  const create = baseCreate(
-    api.genres,
+  const create = baseCreate<Label, LabelParams["label"], LabelParams>(
+    api.labels,
     authStore,
     errorsStore,
     setItem,
-    (val) => ({ genre: val }),
+    (val) => ({ label: val }),
   );
-  const read = baseRead(api.genres, authStore, errorsStore, restored, setItem);
-  const update = baseUpdate(
-    api.genres,
+  const read = baseRead(api.labels, authStore, errorsStore, restored, setItem);
+  const update = baseUpdate<Label, LabelParams["label"], LabelParams>(
+    api.labels,
     authStore,
     errorsStore,
     setItem,
-    (val) => ({ genre: val }),
+    (val) => ({ label: val }),
   );
   const destroy = baseDestroy(
-    api.genres,
+    api.labels,
     authStore,
     errorsStore,
     removeItem,
-    (id) => tracksStore.removeGenreOccurence(id),
+    (id) => albumsStore.removeLabelOccurence(id),
   );
   const destroyEmpty = baseDestroyEmpty(
-    api.genres,
+    api.labels,
     authStore,
     errorsStore,
     index,
   );
   const merge = baseMerge(
-    api.genres,
+    api.labels,
     authStore,
     errorsStore,
     removeItem,
-    (newId, oldId) => tracksStore.updateGenreOccurence(newId, oldId),
+    (newId, oldId) => albumsStore.updateLabelOccurence(newId, oldId),
   );
 
   return {
-    genres,
-    allGenres,
-    genresByName,
+    labels,
+    allLabels,
+    labelsByName,
     startLoading,
     index,
     create,

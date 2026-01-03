@@ -10,6 +10,10 @@ import {
 } from "./base";
 import { useAuthStore } from "@/store/auth";
 import { useErrorsStore } from "@/store/errors";
+import type {
+  CodecConversion,
+  CodecConversionParams,
+} from "@accentor/api-client-js";
 
 export const useCodecConversionsStore = defineStore("codec-conversions", () => {
   const authStore = useAuthStore();
@@ -24,7 +28,7 @@ export const useCodecConversionsStore = defineStore("codec-conversions", () => {
     setItem,
     startLoading,
     setStartLoading,
-  } = useBaseModelStore("codecConversions.codecConversions");
+  } = useBaseModelStore<CodecConversion>("codecConversions.codecConversions");
 
   const allCodecConversions = computed(() =>
     Object.values(codecConversions.value).sort((cc1, cc2) => cc1.id - cc2.id),
@@ -38,20 +42,20 @@ export const useCodecConversionsStore = defineStore("codec-conversions", () => {
     setStartLoading,
     removeOld,
   );
-  const create = baseCreate(
-    api.codec_conversions,
-    authStore,
-    errorsStore,
-    setItem,
-    (val) => ({ codec_conversion: val }),
-  );
-  const update = baseUpdate(
-    api.codec_conversions,
-    authStore,
-    errorsStore,
-    setItem,
-    (val) => ({ codec_conversion: val }),
-  );
+  const create = baseCreate<
+    CodecConversion,
+    CodecConversionParams["codec_conversion"],
+    CodecConversionParams
+  >(api.codec_conversions, authStore, errorsStore, setItem, (val) => ({
+    codec_conversion: val,
+  }));
+  const update = baseUpdate<
+    CodecConversion,
+    CodecConversionParams["codec_conversion"],
+    CodecConversionParams
+  >(api.codec_conversions, authStore, errorsStore, setItem, (val) => ({
+    codec_conversion: val,
+  }));
   const destroy = baseDestroy(
     api.codec_conversions,
     authStore,

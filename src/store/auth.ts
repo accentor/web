@@ -2,7 +2,7 @@ import { computed, type ComputedRef, type Ref, watch } from "vue";
 import { defineStore } from "pinia";
 import api from "@/api";
 import { type ApiError, useErrorsStore } from "@/store/errors";
-import { useUsersStore } from "@/store/users.ts";
+import { useUsersStore } from "@/store/users";
 import router from "@/router";
 import { StorageSerializers, useLocalStorage } from "@vueuse/core";
 import type { AuthTokenParams, User } from "@accentor/api-client-js";

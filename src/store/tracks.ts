@@ -1,13 +1,18 @@
-import { computed } from "vue";
+import { computed, type ComputedRef } from "vue";
 import api from "@/api";
-import { compareTracks } from "../comparators";
-import { TracksScope } from "@accentor/api-client-js";
+import { compareTracks } from "@/comparators";
+import {
+  type Track,
+  type TrackParams,
+  TracksScope,
+} from "@accentor/api-client-js";
 import { useAlbumsStore } from "./albums";
 import { defineStore } from "pinia";
 import {
   destroy as baseDestroy,
   index as baseIndex,
   merge as baseMerge,
+  type ModelItemsType,
   read as baseRead,
   update as baseUpdate,
   useBaseModelStore,
@@ -30,74 +35,76 @@ export const useTracksStore = defineStore("tracks", () => {
     setItems,
     startLoading,
     setStartLoading,
-  } = useBaseModelStore("tracks.tracks");
+  } = useBaseModelStore<Track>("tracks.tracks");
   const allTracks = computed(() => Object.values(tracks.value));
-  const tracksByAlbumAndNumber = computed(() =>
+  const tracksByAlbumAndNumber: ComputedRef<Track[]> = computed(() =>
     [...allTracks.value].sort(compareTracks(albumsStore.albums)),
   );
   const tracksEmpty = computed(() =>
-    tracksByAlbumAndNumber.value.filter((t) => t.length === null),
+    tracksByAlbumAndNumber.value.filter((t: Track) => t.length === null),
   );
   const tracksFlagged = computed(() =>
-    tracksByAlbumAndNumber.value.filter((t) => t.review_comment !== null),
+    tracksByAlbumAndNumber.value.filter(
+      (t: Track) => t.review_comment !== null,
+    ),
   );
   const tracksBinnedByAlbum = computed(() => {
-    const result = {};
-    for (let track of allTracks.value) {
-      if (!(track.album_id in result)) {
-        result[track.album_id] = [];
+    const result: Record<string, Track[]> = {};
+    for (const track of allTracks.value) {
+      if (!(`${track.album_id}` in result)) {
+        result[`${track.album_id}`] = [];
       }
-      result[track.album_id].push(track);
+      result[`${track.album_id}`]!.push(track);
     }
     return result;
   });
   const tracksBinnedByGenre = computed(() => {
-    const result = {};
-    for (let track of allTracks.value) {
-      for (let genreId of track.genre_ids) {
-        if (!(genreId in result)) {
-          result[genreId] = [];
+    const result: Record<string, Track[]> = {};
+    for (const track of allTracks.value) {
+      for (const genreId of track.genre_ids) {
+        if (!(`${genreId}` in result)) {
+          result[`${genreId}`] = [];
         }
-        result[genreId].push(track);
+        result[`${genreId}`]!.push(track);
       }
     }
     return result;
   });
   const tracksBinnedByArtist = computed(() => {
-    const result = {};
-    for (let track of allTracks.value) {
-      for (let ta of track.track_artists) {
-        if (!(ta.artist_id in result)) {
-          result[ta.artist_id] = [];
+    const result: Record<string, Track[]> = {};
+    for (const track of allTracks.value) {
+      for (const ta of track.track_artists) {
+        if (!(`${ta.artist_id}` in result)) {
+          result[`${ta.artist_id}`] = [];
         }
-        if (!result[ta.artist_id].includes(track)) {
-          result[ta.artist_id].push(track);
+        if (!result[`${ta.artist_id}`]!.includes(track)) {
+          result[`${ta.artist_id}`]!.push(track);
         }
       }
     }
     return result;
   });
 
-  function tracksFilterByAlbum(id) {
-    return [...(tracksBinnedByAlbum.value[id] || [])].sort(
+  function tracksFilterByAlbum(id: number): Track[] {
+    return [...(tracksBinnedByAlbum.value[`${id}`] || [])].sort(
       (t1, t2) => t1.number - t2.number,
     );
   }
 
-  function tracksFilterByGenre(id) {
-    return (tracksBinnedByGenre.value[id] || []).sort(
+  function tracksFilterByGenre(id: number): Track[] {
+    return (tracksBinnedByGenre.value[`${id}`] || []).sort(
       compareTracks(albumsStore.albums),
     );
   }
 
-  function tracksFilterByArtist(id) {
-    return (tracksBinnedByArtist.value[id] || []).sort(
+  function tracksFilterByArtist(id: number): Track[] {
+    return (tracksBinnedByArtist.value[`${id}`] || []).sort(
       compareTracks(albumsStore.albums),
     );
   }
 
-  function updateAlbumOccurence(newID, oldID) {
-    const newTracks = {};
+  function updateAlbumOccurence(newID: number, oldID: number): void {
+    const newTracks: ModelItemsType<Track> = {};
     for (const track of allTracks.value) {
       if (`${track.album_id}` === `${oldID}`) {
         track.album_id = newID;
@@ -107,9 +114,9 @@ export const useTracksStore = defineStore("tracks", () => {
     setItems(newTracks);
   }
 
-  function removeArtistOccurence(oldID) {
-    const newTracks = {};
-    for (let track of allTracks.value) {
+  function removeArtistOccurence(oldID: number): void {
+    const newTracks: ModelItemsType<Track> = {};
+    for (const track of allTracks.value) {
       if (track.track_artists.some((ta) => `${ta.artist_id}` === `${oldID}`)) {
         track.track_artists = track.track_artists.filter(
           (ta) => `${ta.artist_id}` !== `${oldID}`,
@@ -120,9 +127,9 @@ export const useTracksStore = defineStore("tracks", () => {
     setItems(newTracks);
   }
 
-  function updateArtistOccurence(newID, oldID) {
-    const newTracks = {};
-    for (let track of allTracks.value) {
+  function updateArtistOccurence(newID: number, oldID: number): void {
+    const newTracks: ModelItemsType<Track> = {};
+    for (const track of allTracks.value) {
       if (track.track_artists.some((ta) => `${ta.artist_id}` === `${oldID}`)) {
         track.track_artists.forEach((ta) => {
           if (`${ta.artist_id}` === `${oldID}`) {
@@ -134,9 +141,9 @@ export const useTracksStore = defineStore("tracks", () => {
     setItems(newTracks);
   }
 
-  function removeGenreOccurence(oldID) {
-    const newTracks = {};
-    for (let track of allTracks.value) {
+  function removeGenreOccurence(oldID: number): void {
+    const newTracks: ModelItemsType<Track> = {};
+    for (const track of allTracks.value) {
       const i = track.genre_ids.findIndex((gId) => `${gId}` === `${oldID}`);
       if (i >= 0) {
         track.genre_ids.splice(i, 1);
@@ -146,9 +153,9 @@ export const useTracksStore = defineStore("tracks", () => {
     setItems(newTracks);
   }
 
-  function updateGenreOccurence(newID, oldID) {
-    const newTracks = {};
-    for (let track of allTracks.value) {
+  function updateGenreOccurence(newID: number, oldID: number): void {
+    const newTracks: ModelItemsType<Track> = {};
+    for (const track of allTracks.value) {
       const i = track.genre_ids.findIndex((gId) => `${gId}` === `${oldID}`);
       if (i >= 0) {
         track.genre_ids.splice(i, 1);
@@ -171,7 +178,7 @@ export const useTracksStore = defineStore("tracks", () => {
     new TracksScope(),
   );
   const read = baseRead(api.tracks, authStore, errorsStore, restored, setItem);
-  const update = baseUpdate(
+  const update = baseUpdate<Track, TrackParams["track"], TrackParams>(
     api.tracks,
     authStore,
     errorsStore,
