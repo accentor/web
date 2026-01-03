@@ -41,7 +41,7 @@ export default defineConfigWithVueTs(
   {
     files: [
       "**/*.ts",
-      "**/components/{AddToPlaylist,AlbumActions,AlbumArtists,AlbumCard,AlbumMergeDialog,EditReviewComment,Errors}.vue",
+      "**/components/{AddToPlaylist,AlbumActions,AlbumArtists,AlbumCard,AlbumMergeDialog,EditReviewComment,Errors,ImagePicker}.vue",
     ],
     rules: {
       "@typescript-eslint/explicit-function-return-type": "error",
