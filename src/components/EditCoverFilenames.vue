@@ -10,6 +10,7 @@
 </template>
 
 <script>
+// @ts-nocheck
 import { mapState } from "pinia";
 import CoverFilenameForm from "./CoverFilenameForm.vue";
 import { useAuthStore } from "../store/auth";

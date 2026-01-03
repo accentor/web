@@ -65,6 +65,7 @@
 </template>
 
 <script>
+// @ts-nocheck
 import { mapActions, mapState } from "pinia";
 import EditReviewComment from "./EditReviewComment.vue";
 import ArtistMergeDialog from "./ArtistMergeDialog.vue";

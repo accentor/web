@@ -134,6 +134,7 @@
 </template>
 
 <script>
+// @ts-nocheck
 import { mapState, mapActions } from "pinia";
 import EditCodecs from "../components/EditCodecs.vue";
 import EditCodecConversions from "../components/EditCodecConversions.vue";
@@ -196,7 +197,7 @@ export default {
       startAll: "startAll",
     }),
     async loadData() {
-      let pendingResults = [];
+      const pendingResults = [];
       if (this.isModerator) {
         pendingResults.push(this.rescansIndex());
         pendingResults.push(this.codecsIndex());

@@ -94,6 +94,7 @@
 </template>
 
 <script>
+// @ts-nocheck
 import { mapState, mapActions } from "pinia";
 import TrackFormArtists from "@/components/TrackFormArtists.vue";
 import { useGenresStore } from "../../store/genres";

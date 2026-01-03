@@ -10,6 +10,7 @@
 </template>
 
 <script>
+// @ts-nocheck
 import { mapState } from "pinia";
 import CodecConversionForm from "./CodecConversionForm.vue";
 import { useAuthStore } from "../store/auth";

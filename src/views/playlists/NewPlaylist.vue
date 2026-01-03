@@ -5,6 +5,7 @@
 </template>
 
 <script>
+// @ts-nocheck
 import PlaylistForm from "../../components/PlaylistForm.vue";
 
 export default {

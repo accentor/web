@@ -10,6 +10,7 @@
 </template>
 
 <script>
+// @ts-nocheck
 import { mapState } from "pinia";
 import { compareStrings } from "../comparators";
 import { useGenresStore } from "../store/genres";

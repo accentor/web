@@ -30,6 +30,7 @@
 </template>
 
 <script>
+// @ts-nocheck
 import ArtistActions from "./ArtistActions.vue";
 import artistSvgUrl from "@mdi/svg/svg/account-music.svg";
 

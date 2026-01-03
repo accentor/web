@@ -71,6 +71,7 @@
 </template>
 
 <script>
+// @ts-nocheck
 import { mapActions, mapState } from "pinia";
 import AlbumCard from "../../components/AlbumCard.vue";
 import ArtistCard from "../../components/ArtistCard.vue";
@@ -106,7 +107,7 @@ export default {
       return this.playlists[this.$route.params.id];
     },
     items() {
-      let key = `${this.playlist?.playlist_type}s`;
+      const key = `${this.playlist?.playlist_type}s`;
       return this.playlist?.item_ids.map((id) => this[key][id]) || [];
     },
   },

@@ -60,6 +60,7 @@
 </template>
 
 <script>
+// @ts-nocheck
 import { mapActions, mapState } from "pinia";
 import DateRangeSelect from "@/components/DateRangeSelect.vue";
 import PercentagePlayedCard from "@/components/PercentagePlayedCard.vue";
@@ -180,7 +181,7 @@ export default {
         this.playStatsScope,
       );
       let done = false;
-      let results = [];
+      const results = [];
       while (!done) {
         let value = [];
         ({ value, done } = await gen.next());

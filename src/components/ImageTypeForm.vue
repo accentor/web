@@ -47,6 +47,7 @@
 </template>
 
 <script>
+// @ts-nocheck
 import { mapActions, mapState } from "pinia";
 import { useImageTypesStore } from "../store/image_types";
 

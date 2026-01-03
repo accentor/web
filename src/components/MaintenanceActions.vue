@@ -64,6 +64,7 @@
 </template>
 
 <script>
+// @ts-nocheck
 import { mapActions, mapState } from "pinia";
 import { useLabelsStore } from "../store/labels";
 import { useGenresStore } from "../store/genres";
@@ -89,7 +90,7 @@ export default {
     ...mapActions(useArtistsStore, { destroyArtists: "destroyEmpty" }),
     ...mapActions(useLabelsStore, { destroyLabels: "destroyEmpty" }),
     ...mapActions(useGenresStore, { destroyGenres: "destroyEmpty" }),
-    destroyEmptyArtists: function () {
+    destroyEmptyArtists() {
       if (confirm(this.$t("common.are-you-sure"))) {
         this.artistsDisabled = true;
         this.destroyArtists().finally(() => {
@@ -97,7 +98,7 @@ export default {
         });
       }
     },
-    destroyEmptyAlbums: function () {
+    destroyEmptyAlbums() {
       if (confirm(this.$t("common.are-you-sure"))) {
         this.albumsDisabled = true;
         this.destroyAlbums().finally(() => {
@@ -105,7 +106,7 @@ export default {
         });
       }
     },
-    destroyEmptyGenres: function () {
+    destroyEmptyGenres() {
       if (confirm(this.$t("common.are-you-sure"))) {
         this.genresDisabled = true;
         this.destroyGenres().finally(() => {
@@ -113,7 +114,7 @@ export default {
         });
       }
     },
-    destroyEmptyLabels: function () {
+    destroyEmptyLabels() {
       if (confirm(this.$t("common.are-you-sure"))) {
         this.labelsDisabled = true;
         this.destroyLabels().finally(() => {

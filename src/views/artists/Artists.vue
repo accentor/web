@@ -58,6 +58,7 @@
 </template>
 
 <script>
+// @ts-nocheck
 import ArtistCard from "../../components/ArtistCard.vue";
 import Paginated from "../../mixins/Paginated";
 import Searchable from "../../mixins/Searchable";

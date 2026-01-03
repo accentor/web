@@ -50,6 +50,7 @@
 </template>
 
 <script>
+// @ts-nocheck
 import { mapState } from "pinia";
 import LabelCard from "../../components/LabelCard.vue";
 import Paginated from "../../mixins/Paginated";

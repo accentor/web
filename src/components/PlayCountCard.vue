@@ -66,6 +66,7 @@
 </template>
 
 <script>
+// @ts-nocheck
 import { mapState } from "pinia";
 import { gsap } from "gsap";
 import { useTracksStore } from "../store/tracks";

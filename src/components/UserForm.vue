@@ -44,6 +44,7 @@
 </template>
 
 <script>
+// @ts-nocheck
 import { useAuthStore } from "../store/auth";
 import { mapActions, mapState } from "pinia";
 import { useUsersStore } from "../store/users";

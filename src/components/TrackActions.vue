@@ -188,6 +188,7 @@
 </template>
 
 <script>
+// @ts-nocheck
 import { mapActions, mapState } from "pinia";
 import { baseURL } from "../api";
 import EditReviewComment from "./EditReviewComment.vue";

@@ -9,6 +9,7 @@
 </template>
 
 <script>
+// @ts-nocheck
 import UserForm from "@/components/UserForm.vue";
 
 export default {

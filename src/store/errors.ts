@@ -1,13 +1,16 @@
 import { defineStore } from "pinia";
-import { ref } from "vue";
+import { ref, type Ref } from "vue";
 import { useAuthStore } from "./auth";
+
+export type ApiError = Record<string, string[]>;
+export type ErrorsStore = ReturnType<typeof useErrorsStore>;
 
 export const useErrorsStore = defineStore("errors", () => {
   const authStore = useAuthStore();
 
-  const errors = ref([]);
+  const errors: Ref<ApiError[]> = ref([]);
 
-  function addError(error) {
+  function addError(error: ApiError): void {
     if (error.unauthorized) {
       authStore.clearAuthData();
     }
@@ -18,7 +21,7 @@ export const useErrorsStore = defineStore("errors", () => {
     console.error(error);
   }
 
-  function clearErrors() {
+  function clearErrors(): void {
     errors.value = [];
   }
 

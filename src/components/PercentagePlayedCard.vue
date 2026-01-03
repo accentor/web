@@ -34,6 +34,7 @@
 </template>
 
 <script>
+// @ts-nocheck
 import { gsap } from "gsap";
 
 export default {

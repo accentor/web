@@ -33,6 +33,7 @@
 </template>
 
 <script>
+// @ts-nocheck
 import { mapState } from "pinia";
 import { useArtistsStore } from "../store/artists";
 

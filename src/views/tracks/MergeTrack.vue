@@ -226,6 +226,7 @@
 </template>
 
 <script>
+// @ts-nocheck
 import TrackGenres from "@/components/TrackGenres.vue";
 import TrackArtists from "@/components/TrackArtists.vue";
 import TracksTable from "@/components/TracksTable.vue";

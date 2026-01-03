@@ -10,6 +10,7 @@
 </template>
 
 <script>
+// @ts-nocheck
 import LabelActions from "./LabelActions.vue";
 
 export default {

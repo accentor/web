@@ -6,6 +6,7 @@
 </template>
 
 <script>
+// @ts-nocheck
 import { mapState } from "pinia";
 import TopList from "@/components/TopList.vue";
 import { useTracksStore } from "../store/tracks";

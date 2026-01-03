@@ -19,6 +19,7 @@
 </template>
 
 <script>
+// @ts-nocheck
 import { mapActions, mapState } from "pinia";
 import { useGenresStore } from "../../store/genres";
 

@@ -6,6 +6,7 @@
 </template>
 
 <script>
+// @ts-nocheck
 import { mapState } from "pinia";
 import LocationForm from "./LocationForm.vue";
 import { useAuthStore } from "../store/auth";

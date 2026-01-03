@@ -42,6 +42,7 @@
 </template>
 
 <script>
+// @ts-nocheck
 import { mapState } from "pinia";
 import { useUserSettingsStore } from "../store/user_settings";
 import { useDate } from "vuetify";
