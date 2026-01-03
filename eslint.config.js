@@ -24,6 +24,9 @@ export default [
   prettier,
   {
     rules: {
+      curly: "error",
+      "no-console": "error",
+      "no-debugger": "error",
       "vue/multi-word-component-names": "off",
     },
     languageOptions: {

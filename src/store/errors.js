@@ -14,7 +14,7 @@ export const useErrorsStore = defineStore("errors", () => {
     errors.value.push(error);
 
     // We want to log our errors here, to help with debugging
-
+    // eslint-disable-next-line no-console
     console.error(error);
   }
 
