@@ -12,16 +12,13 @@
     >
   </div>
   <div v-else>
-    <span>{{ I18n.t("music.artist.various") }}</span>
+    <span>{{ $t("music.artist.various") }}</span>
   </div>
 </template>
 
 <script setup lang="ts">
 import type { Album } from "@accentor/api-client-js";
 import { computed } from "vue";
-import { useI18n } from "vue-i18n";
-
-const I18n = useI18n();
 
 interface Props {
   album: Album;

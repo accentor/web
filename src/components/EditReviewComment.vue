@@ -10,18 +10,18 @@
     <VDialog v-model="show" max-width="600px">
       <VCard>
         <VCardTitle class="text-h5">
-          {{ I18n.t("music.flag.for-review") }}
+          {{ $t("music.flag.for-review") }}
         </VCardTitle>
         <VCardText>
           <VTextField
             v-model="newReviewComment"
-            :label="I18n.t('music.flag.comment')"
+            :label="$t('music.flag.comment')"
           />
         </VCardText>
         <VCardActions>
           <VRow justify="end" class="my-0">
             <VBtn color="primary" class="ma-2" type="submit" @click="flag">
-              {{ I18n.t("music.flag.for-review") }}
+              {{ $t("music.flag.for-review") }}
             </VBtn>
           </VRow>
         </VCardActions>
@@ -32,9 +32,6 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
-import { useI18n } from "vue-i18n";
-
-const I18n = useI18n();
 
 interface Props {
   item: { id: number; review_comment: string | null };

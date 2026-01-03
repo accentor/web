@@ -14,7 +14,7 @@
         </VBtn>
       </span>
     </template>
-    <span>{{ I18n.t("music.album.no-tracks-to-play") }}</span>
+    <span>{{ $t("music.album.no-tracks-to-play") }}</span>
   </VTooltip>
   <VTooltip location="bottom" :disabled="playableTracks.length !== 0">
     <template #activator="{ props: tooltipProps }">
@@ -31,7 +31,7 @@
         </VBtn>
       </span>
     </template>
-    <span>{{ I18n.t("music.album.no-tracks-to-add") }}</span>
+    <span>{{ $t("music.album.no-tracks-to-add") }}</span>
   </VTooltip>
   <AddToPlaylist :item="album" type="album" />
   <EditReviewComment :item="album" :update="flag" />
@@ -64,10 +64,10 @@
               <VIcon color="warning">mdi-pencil</VIcon>
             </template>
 
-            <VListItemTitle>{{ I18n.t("music.album.edit") }}</VListItemTitle>
+            <VListItemTitle>{{ $t("music.album.edit") }}</VListItemTitle>
           </VListItem>
         </template>
-        <span>{{ I18n.t("common.disabled-while-loading") }}</span>
+        <span>{{ $t("common.disabled-while-loading") }}</span>
       </VTooltip>
       <VTooltip location="bottom" :disabled="!waitingForReload">
         <template #activator="{ props: tooltipProps }">
@@ -75,7 +75,7 @@
             <AlbumMergeDialog :album="album" :disabled="waitingForReload" />
           </span>
         </template>
-        <span>{{ I18n.t("common.disabled-while-loading") }}</span>
+        <span>{{ $t("common.disabled-while-loading") }}</span>
       </VTooltip>
       <VTooltip
         v-if="isModerator"
@@ -92,20 +92,20 @@
               <VIcon color="error">mdi-delete</VIcon>
             </template>
 
-            <VListItemTitle>{{ I18n.t("music.album.delete") }}</VListItemTitle>
+            <VListItemTitle>{{ $t("music.album.delete") }}</VListItemTitle>
           </VListItem>
         </template>
-        <span>{{ I18n.t("common.disabled-while-loading") }}</span>
+        <span>{{ $t("common.disabled-while-loading") }}</span>
       </VTooltip>
     </VList>
   </VMenu>
 </template>
 <script setup lang="ts">
 import { storeToRefs } from "pinia";
-import { useI18n } from "vue-i18n";
 import { useRoute } from "vue-router";
 import { computed } from "vue";
 import type { Album } from "@accentor/api-client-js";
+import i18n from "@/i18n.ts";
 import EditReviewComment from "./EditReviewComment.vue";
 import AddToPlaylist from "./AddToPlaylist.vue";
 import AlbumMergeDialog from "./AlbumMergeDialog.vue";
@@ -115,7 +115,6 @@ import { useTracksStore } from "../store/tracks";
 import { usePlayerStore } from "../store/player";
 import { useErrorsStore } from "../store/errors";
 
-const I18n = useI18n();
 const route = useRoute();
 
 const authStore = useAuthStore();
@@ -140,7 +139,7 @@ const waitingForReload = computed(
 );
 
 function deleteAlbum(): void {
-  if (confirm(I18n.t("common.are-you-sure"))) {
+  if (confirm(i18n.global.t("common.are-you-sure"))) {
     albumsStore.destroy(props.album.id);
   }
 }

@@ -6,13 +6,13 @@
           <VIcon color="warning">mdi-merge</VIcon>
         </template>
 
-        <VListItemTitle>{{ I18n.t("music.album.merge") }}</VListItemTitle>
+        <VListItemTitle>{{ $t("music.album.merge") }}</VListItemTitle>
       </VListItem>
     </template>
     <VCard>
       <VCardTitle>
         <span class="text-h5">
-          {{ I18n.t("music.album.merge-into", { obj: album.title }) }}
+          {{ $t("music.album.merge-into", { obj: album.title }) }}
         </span>
       </VCardTitle>
       <VCardText>
@@ -25,7 +25,7 @@
                 :custom-filter="filterTitle"
                 item-title="title"
                 item-value="id"
-                :label="I18n.t('music.albums', 1)"
+                :label="$tc('music.albums', 1)"
               >
                 <template #item="{ item, props: listItemProps }">
                   <VListItem v-bind="listItemProps">
@@ -45,7 +45,7 @@
       <VCardActions>
         <VSpacer></VSpacer>
         <VBtn color="primary" class="ma-2" type="submit" @click="mergeAlbums">
-          {{ I18n.t("music.album.merge") }}
+          {{ $t("music.album.merge") }}
         </VBtn>
       </VCardActions>
     </VCard>
@@ -59,9 +59,6 @@ import { useAlbumsStore } from "../store/albums";
 import type { Album } from "@accentor/api-client-js";
 import { computed, ref } from "vue";
 import type { InternalItem } from "vuetify/framework";
-import { useI18n } from "vue-i18n";
-
-const I18n = useI18n();
 
 const authStore = useAuthStore();
 const albumsStore = useAlbumsStore();
