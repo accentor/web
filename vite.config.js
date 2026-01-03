@@ -1,8 +1,8 @@
-import { defineConfig } from 'vite';
-import vue from '@vitejs/plugin-vue';
-import path from 'path';
-import { fileURLToPath } from 'url';
-import pkg from './package.json' with { type: 'json' };
+import { defineConfig } from "vite";
+import vue from "@vitejs/plugin-vue";
+import path from "path";
+import { fileURLToPath } from "url";
+import pkg from "./package.json" with { type: "json" };
 import vuetify from "vite-plugin-vuetify";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -14,17 +14,17 @@ export default defineConfig({
   plugins: [
     vue(),
     vuetify({
-        styles: {
-            configFile: 'scss/settings.scss',
-        },
+      styles: {
+        configFile: "scss/settings.scss",
+      },
     }),
   ],
   define: {
-      __APPLICATION_VERSION__: JSON.stringify(`Accentor Web v${version}`),
+    __APPLICATION_VERSION__: JSON.stringify(`Accentor Web v${version}`),
   },
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, './src'),
-    }
-  }
+      "@": path.resolve(__dirname, "./src"),
+    },
+  },
 });
