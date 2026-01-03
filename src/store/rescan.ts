@@ -1,11 +1,10 @@
 import { computed, type ComputedRef, type Ref, markRaw, ref } from "vue";
 import { delay } from "@/util";
 import api from "@/api";
-import { fetchAll } from "./actions";
 import { type ApiError, useErrorsStore } from "./errors";
 import { useAuthStore } from "./auth";
 import { defineStore } from "pinia";
-import type { ModelItemsType } from "@/store/base";
+import { fetchAll, type ModelItemsType } from "@/store/base";
 import type { Rescan } from "@accentor/api-client-js";
 
 export const useRescansStore = defineStore("rescans", () => {

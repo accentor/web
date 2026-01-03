@@ -1,7 +1,6 @@
-import { ref, markRaw, computed, type Ref, type ComputedRef } from "vue";
+import { computed, type ComputedRef, markRaw, type Ref, ref } from "vue";
 import { useStorageAsync } from "@vueuse/core";
 import localForage from "localforage";
-import { fetchAll } from "./actions";
 import type { AuthStore } from "@/store/auth";
 import type { ApiToken, Scope } from "@accentor/api-client-js";
 import type { ApiError, ErrorsStore } from "@/store/errors";
@@ -112,6 +111,34 @@ export function useBaseModelStore<T extends { id: number }>(
     startLoading,
     setStartLoading,
   };
+}
+
+export async function fetchAll<T>(
+  generator: AsyncGenerator<T[], T[], void>,
+  add: (items: T[]) => void,
+  setStartLoading: () => void,
+  removeOld: () => void,
+  scope?: Scope,
+): Promise<void> {
+  if (!scope || scope.scopes.length === 0) {
+    setStartLoading();
+  }
+  let done: boolean | undefined = false;
+  let results = [];
+  let counter = 0;
+  while (!done) {
+    let value = [];
+    ({ value, done } = await generator.next());
+    results.push(...value);
+    if (++counter % 5 === 0) {
+      add(results);
+      results = [];
+    }
+  }
+  add(results);
+  if (!scope || scope.scopes.length === 0) {
+    removeOld();
+  }
 }
 
 export function index<T, TScope extends Scope | never>(
