@@ -1,46 +1,42 @@
 <template>
   <div>
     <VSelect
+      v-model="selectedPreset"
+      min-width="180"
       :items="periodPresets"
       :label="$t('components.dateRangeSelect.label')"
-      v-model="selectedPreset"
-    >
-      <template v-slot:item="{ item, on, attrs }">
-        <VListItem
-          v-on="on"
-          v-bind="attrs"
-          @click="showCustomRangeModal = item.value === 'customRange'"
-        >
-          {{ item.text }}
-        </VListItem>
-      </template>
-      <template v-slot:selection="{ item }">
-        <span>
-          {{ item.value === "customRange" ? customRangeText : item.text }}
-        </span>
-      </template>
-    </VSelect>
-    <VDialog persistent width="290px" v-model="showCustomRangeModal">
-      <VDatePicker
-        v-model="customRange"
-        scrollable
-        range
-        :first-day-of-week="1"
-        :locale="locale"
-      >
-        <VSpacer></VSpacer>
-        <VBtn
-          text
-          color="primary"
-          class="ma-2"
-          @click="showCustomRangeModal = false"
-        >
-          {{ $t("common.cancel") }}
-        </VBtn>
-        <VBtn text color="primary" class="ma-2" @click="emitSelection">
-          {{ $t("common.ok") }}
-        </VBtn>
-      </VDatePicker>
+    />
+    <VDialog v-model="showCustomRangeModal" persistent max-width="380">
+      <VCard>
+        <VCardText>
+          <VDatePicker
+            v-model="customRange"
+            control-variant="modal"
+            multiple="range"
+            scrollable
+            :first-day-of-week="1"
+          />
+        </VCardText>
+        <VCardActions>
+          <VSpacer />
+          <VBtn
+            variant="text"
+            color="primary"
+            class="ma-2"
+            @click="showCustomRangeModal = false"
+          >
+            {{ $t("common.cancel") }}
+          </VBtn>
+          <VBtn
+            variant="text"
+            color="primary"
+            class="ma-2"
+            @click="emitSelection"
+          >
+            {{ $t("common.ok") }}
+          </VBtn>
+        </VCardActions>
+      </VCard>
     </VDialog>
   </div>
 </template>
@@ -48,43 +44,43 @@
 <script>
 import { mapState } from "pinia";
 import { useUserSettingsStore } from "../store/user_settings";
+import { useDate } from "vuetify";
 
 export default {
   name: "DateRangeSelect",
+  emits: ["input"],
   data() {
     return {
       periodPresets: [
         {
           value: "last7Days",
-          text: this.$t("components.dateRangeSelect.options.last7Days"),
+          title: this.$t("components.dateRangeSelect.options.last7Days"),
         },
         {
           value: "lastMonth",
-          text: this.$t("components.dateRangeSelect.options.lastMonth"),
+          title: this.$t("components.dateRangeSelect.options.lastMonth"),
         },
         {
           value: "thisYear",
-          text: this.$t("components.dateRangeSelect.options.thisYear"),
+          title: this.$t("components.dateRangeSelect.options.thisYear"),
         },
         {
           value: "allTime",
-          text: this.$t("components.dateRangeSelect.options.allTime"),
+          title: this.$t("components.dateRangeSelect.options.allTime"),
         },
         {
           value: "customRange",
-          text: this.$t("components.dateRangeSelect.options.customRange"),
+          title: this.$t("components.dateRangeSelect.options.customRange"),
         },
       ],
       selectedPreset: "last7Days",
       showCustomRangeModal: false,
       customRange: [],
+      dateAdapter: useDate(),
     };
   },
   computed: {
     ...mapState(useUserSettingsStore, ["locale"]),
-    customRangeText() {
-      return this.customRange.join(" - ");
-    },
     period() {
       let end = new Date();
       let start = new Date();
@@ -107,7 +103,7 @@ export default {
             .sort((d1, d2) => d1 > d2);
           if (range.length) {
             start = range[0];
-            end = range[1] || new Date(range[0]);
+            end = range[range.length - 1];
           }
           break;
         }
@@ -125,10 +121,22 @@ export default {
         if (this.$route.query.period !== undefined) {
           if (this.periodPresets.find((p) => p.value === newSelectedPreset)) {
             this.selectedPreset = this.$route.query.period;
-          } else if (this.customRange !== newSelectedPreset) {
-            this.selectedPreset = "customRange";
-            this.customRange = newSelectedPreset;
-            this.emitSelection();
+          } else {
+            const start = this.dateAdapter.parseISO(newSelectedPreset[0]);
+            const end = this.dateAdapter.parseISO(newSelectedPreset[1]);
+            if (this.customRange[0] !== start || this.customRange[1] !== end) {
+              this.selectedPreset = "customRange";
+              const newRange = [start];
+              do {
+                newRange.push(
+                  this.dateAdapter.addDays(newRange[newRange.length - 1], 1),
+                );
+              } while (
+                this.dateAdapter.isBefore(newRange[newRange.length - 1], end)
+              );
+              this.customRange = newRange;
+              this.emitSelection();
+            }
           }
         }
       },
@@ -138,6 +146,8 @@ export default {
       handler(newValue) {
         if (newValue !== "customRange") {
           this.emitSelection();
+        } else {
+          this.showCustomRangeModal = true;
         }
       },
       immediate: true,
@@ -150,7 +160,12 @@ export default {
       // We only want to set a new query when the selection bubbles up
       const newPeriod =
         this.selectedPreset === "customRange"
-          ? this.customRange
+          ? [
+              this.dateAdapter.toISO(this.customRange[0]),
+              this.dateAdapter.toISO(
+                this.customRange[this.customRange.length - 1],
+              ),
+            ]
           : this.selectedPreset;
       if (newPeriod !== this.$route.query.period) {
         this.$router.push({

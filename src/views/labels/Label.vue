@@ -1,24 +1,19 @@
 <template>
-  <VContainer fluid v-if="label">
+  <VContainer v-if="label" fluid>
     <VDataIterator
-      :footer-props="{
-        disableItemsPerPage: true,
-        itemsPerPageOptions: [12],
-        showFirstLastPage: true,
-      }"
-      :items="filteredItems"
-      :page.sync="pagination.page"
-      :items-per-page="12"
       v-if="albums.length > 0"
+      v-model:page="pagination.page"
+      :items="filteredItems"
+      :items-per-page="12"
     >
-      <template v-slot:header>
+      <template #header>
         <VRow class="mb-2" justify="space-between" align="baseline">
           <VCol cols="12" sm="4" md="6" lg="8" xl="10">
             <div>
               <h2 class="text-h4">{{ label.name }}</h2>
             </div>
             <div>
-              <LabelActions :label="label" class="actions--wide" />
+              <LabelActions :label="label" />
             </div>
           </VCol>
           <VCol cols="12" sm="8" md="6" lg="4" xl="2">
@@ -33,19 +28,29 @@
           </VCol>
         </VRow>
       </template>
-      <template v-slot:default="props">
+      <template #default="props">
         <VRow>
           <VCol
             v-for="item in props.items"
-            :key="item.id"
+            :key="item.raw.id"
             lg="3"
             md="4"
             sm="6"
             xl="2"
             cols="6"
           >
-            <AlbumCard :album="item" :labelForCatNr="label" />
+            <AlbumCard :album="item.raw" :label-for-cat-nr="label" />
           </VCol>
+        </VRow>
+      </template>
+      <template #footer="{ pageCount }">
+        <VRow class="mt-2" justify="center">
+          <VPagination
+            v-model="pagination.page"
+            density="compact"
+            :length="pageCount"
+            total-visible="5"
+          />
         </VRow>
       </template>
     </VDataIterator>
@@ -67,20 +72,14 @@ export default {
   name: "LabelView",
   components: { AlbumCard, LabelActions },
   mixins: [Paginated, Searchable],
-  metaInfo() {
-    return { title: this.label.name };
-  },
   props: {
     id: {
       type: [String, Number],
       required: true,
     },
   },
-  watch: {
-    id: {
-      handler: "fetchContent",
-      immediate: true,
-    },
+  head() {
+    return { title: this.label.name };
   },
   computed: {
     ...mapState(useAuthStore, ["isModerator"]),
@@ -102,13 +101,19 @@ export default {
       );
     },
   },
+  watch: {
+    id: {
+      handler: "fetchContent",
+      immediate: true,
+    },
+  },
   methods: {
     ...mapActions(useLabelsStore, ["read"]),
     ...mapActions(useAlbumsStore, { indexAlbums: "index" }),
     async fetchContent(newValue, oldValue) {
       // After loading the content, the router will change the id from a string to a number
       // but we don't actually want to load the content twice
-      if (newValue == oldValue) {
+      if (`${newValue}` === `${oldValue}`) {
         return;
       }
 

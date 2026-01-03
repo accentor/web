@@ -1,12 +1,12 @@
 <template>
-  <VContainer fluid v-if="genre">
+  <VContainer v-if="genre" fluid>
     <VRow>
       <VCol cols="12">
         <div>
           <h2 class="text-h4">{{ genre.name }}</h2>
         </div>
         <div>
-          <GenreActions :genre="genre" class="actions--wide" />
+          <GenreActions :genre="genre" />
         </div>
       </VCol>
     </VRow>
@@ -30,20 +30,14 @@ import { useTracksStore } from "../../store/tracks";
 export default {
   name: "Genre",
   components: { GenreActions, TracksTable },
-  metaInfo() {
-    return { title: this.genre?.name };
-  },
   props: {
     id: {
       type: [String, Number],
       required: true,
     },
   },
-  watch: {
-    id: {
-      handler: "fetchContent",
-      immediate: true,
-    },
+  head() {
+    return { title: this.genre?.name };
   },
   computed: {
     ...mapState(useAuthStore, ["isModerator"]),
@@ -53,6 +47,12 @@ export default {
     },
     genre: function () {
       return this.genres[this.$route.params.id];
+    },
+  },
+  watch: {
+    id: {
+      handler: "fetchContent",
+      immediate: true,
     },
   },
   methods: {

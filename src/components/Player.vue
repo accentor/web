@@ -1,56 +1,61 @@
 <template>
-  <div class="player" v-click-outside="clickOutside">
+  <div v-click-outside="clickOutside" class="player">
     <GlobalEvents
       :filter="(event) => !['INPUT', 'TEXTAREA'].includes(event.target.tagName)"
       @keydown.space.prevent="togglePlaying"
     />
     <audio ref="audio" @error="onAudioError" />
-    <div class="play-queue" v-if="open">
+    <div v-if="open" class="play-queue">
       <table class="play-queue__table">
         <Draggable
+          :model-value="playlistTracks"
           tag="tbody"
+          handle=".handle"
+          item-key="id"
           @end="({ newIndex, oldIndex }) => updatePlaylist(newIndex, oldIndex)"
-          handle="[data-draggable=handle]"
         >
-          <tr v-for="(track, index) of playlistTracks" :key="track.id">
-            <td class="play-queue__cell play-queue__cell--icon">
-              <VBtn small icon text class="ma-2" data-draggable="handle">
-                <VIcon>mdi-drag-horizontal-variant</VIcon>
-              </VBtn>
-            </td>
-            <td class="play-queue__cell play-queue__cell--icon-small">
-              <VIcon v-if="index === current">mdi-volume-high</VIcon>
-            </td>
-            <td class="pl-3 play-queue__cell">
-              <a @click.stop.prevent="setCurrent(index)">{{ track.title }}</a>
-            </td>
-            <td class="play-queue__cell">
-              <RouterLink
-                :to="{ name: 'album', params: { id: track.album_id } }"
-                >{{ albums[track.album_id].title }}</RouterLink
-              >
-            </td>
-            <td class="play-queue__cell text-right">
-              {{ track.length | length }}
-            </td>
-            <td class="play-queue__cell">
-              <TrackArtists :track="track" />
-            </td>
-            <td class="play-queue__cell">
-              {{ albums[track.album_id].release }}
-            </td>
-            <td class="play-queue__cell play-queue__cell--icon">
-              <VBtn
-                small
-                icon
-                text
-                class="ma-2"
-                @click.stop.prevent="removeIndex(index)"
-              >
-                <VIcon>mdi-close</VIcon>
-              </VBtn>
-            </td>
-          </tr>
+          <template #item="{ element: track, index }">
+            <tr>
+              <td class="play-queue__cell play-queue__cell--icon">
+                <VBtn size="small" icon variant="text" class="ma-2 handle">
+                  <VIcon size="x-large">mdi-drag-horizontal-variant</VIcon>
+                </VBtn>
+              </td>
+              <td class="play-queue__cell play-queue__cell--icon-small">
+                <VIcon v-if="index === current">mdi-volume-high</VIcon>
+              </td>
+              <td class="pl-3 play-queue__cell">
+                <a @click.stop.prevent="setCurrent(index)">{{ track.title }}</a>
+              </td>
+              <td class="play-queue__cell">
+                <RouterLink
+                  :to="{ name: 'album', params: { id: track.album_id } }"
+                >
+                  {{ albums[track.album_id].title }}
+                </RouterLink>
+              </td>
+              <td class="play-queue__cell text-right">
+                {{ $filters.length(track.length) }}
+              </td>
+              <td class="play-queue__cell">
+                <TrackArtists :track="track" />
+              </td>
+              <td class="play-queue__cell">
+                {{ albums[track.album_id].release }}
+              </td>
+              <td class="play-queue__cell play-queue__cell--icon">
+                <VBtn
+                  size="small"
+                  icon
+                  variant="text"
+                  class="ma-2"
+                  @click.stop.prevent="removeIndex(index)"
+                >
+                  <VIcon size="x-large">mdi-close</VIcon>
+                </VBtn>
+              </td>
+            </tr>
+          </template>
         </Draggable>
       </table>
     </div>
@@ -58,24 +63,25 @@
     <VRow class="controls" align="center">
       <div class="controls__left">
         <VBtn
-          @click="prevTrack"
           :disabled="!playlistTracks.length || current === -1"
           class="controls__button controls__button--sm-and-up"
           icon
-          small
+          size="small"
+          variant="text"
+          @click="prevTrack"
         >
           <VIcon>mdi-skip-previous</VIcon>
         </VBtn>
         <VBtn
-          @click="togglePlaying()"
           :disabled="!playlistTracks.length"
           icon
+          variant="text"
           class="controls__button"
+          @click="togglePlaying"
         >
-          <VIcon large>{{ playing ? "mdi-pause" : "mdi-play" }}</VIcon>
+          <VIcon size="large">{{ playing ? "mdi-pause" : "mdi-play" }}</VIcon>
         </VBtn>
         <VBtn
-          @click="nextTrack"
           :disabled="
             !playlistTracks.length ||
             current === playlistTracks.length - 1 ||
@@ -83,7 +89,9 @@
           "
           class="controls__button controls__button--sm-and-up"
           icon
-          small
+          size="small"
+          variant="text"
+          @click="nextTrack"
         >
           <VIcon>mdi-skip-next</VIcon>
         </VBtn>
@@ -94,41 +102,43 @@
           :always-dirty="!!currentTrack"
           :max="currentTrack ? currentTrack.length : 1"
           :disabled="!currentTrack || currentTrack.length === null"
-          :value="seekTime"
-          v-on:input="seek"
+          :model-value="seekTime"
+          :step="1"
           hide-details
+          @update:model-value="seek"
         />
         <span class="controls__time-display">
-          {{ seekTime | length }} /
-          {{ currentTrack ? currentTrack.length : 0 | length }}
+          {{ $filters.length(seekTime) }} /
+          {{ $filters.length(currentTrack ? currentTrack.length : 0) }}
         </span>
       </div>
       <div class="controls__right">
         <VBtn
           :color="repeatModeColor"
-          @click="nextRepeatMode"
-          text
+          variant="text"
           icon
           class="controls__button"
+          @click="nextRepeatMode"
         >
           <VIcon>{{ repeatModeIcon }}</VIcon>
         </VBtn>
-        <VBtn @click="shuffle" icon class="controls__button">
+        <VBtn icon variant="text" class="controls__button" @click="shuffle">
           <VIcon>mdi-shuffle</VIcon>
         </VBtn>
         <VSlider
+          v-model="volume"
           :readonly="muted"
           :prepend-icon="audioIcon"
           hide-details
-          v-model="volume"
           class="controls__volume-slider"
-          v-on:click:prepend="muted = !muted"
+          @click:prepend="muted = !muted"
         />
         <VBtn
-          @click="open = !open"
           icon
-          :disabled="this.playlistTracks.length === 0"
+          variant="text"
+          :disabled="playlistTracks.length === 0"
           class="controls__button"
+          @click="open = !open"
         >
           <VIcon>{{ open ? "mdi-chevron-down" : "mdi-chevron-up" }}</VIcon>
         </VBtn>
@@ -140,7 +150,7 @@
 <script>
 import { mapState, mapActions } from "pinia";
 import Draggable from "vuedraggable";
-import GlobalEvents from "vue-global-events";
+import { GlobalEvents } from "vue-global-events";
 import TrackArtists from "./TrackArtists.vue";
 import { useArtistsStore } from "../store/artists";
 import { useAlbumsStore } from "../store/albums";
@@ -160,32 +170,51 @@ export default {
       tries: 0,
     };
   },
-  created() {
-    this.intervalId = setInterval(this.checkTime, 100);
-    this.$nextTick(() =>
-      this.$refs.audio.addEventListener("ended", () => {
-        this.createPlay(this.currentTrack.id);
-        this.trackEnded();
-      }),
-    );
-    if ("mediaSession" in navigator) {
-      navigator.mediaSession.setActionHandler("previoustrack", () => {
-        this.prevTrack();
-      });
-      navigator.mediaSession.setActionHandler("nexttrack", () => {
-        this.nextTrack();
-      });
-      navigator.mediaSession.setActionHandler("play", () => {
-        this.setPlaying(true);
-      });
-      navigator.mediaSession.setActionHandler("pause", () => {
-        this.setPlaying(false);
-      });
-    }
-  },
-  beforeDestroy() {
-    clearInterval(this.intervalId);
-    this.setPlaying(false);
+  computed: {
+    ...mapState(useAlbumsStore, ["albums"]),
+    ...mapState(useArtistsStore, ["artists"]),
+    ...mapState(usePlayerStore, [
+      "playing",
+      "seekTime",
+      "doSeek",
+      "current",
+      "repeatMode",
+      "playlistTracks",
+      "currentTrack",
+      "currentTrackURL",
+    ]),
+    repeatModeIcon() {
+      switch (this.repeatMode) {
+        case "off":
+        case "all":
+          return "mdi-repeat";
+        case "single":
+          return "mdi-repeat-once";
+        default:
+          return "mdi-repeat";
+      }
+    },
+    repeatModeColor() {
+      switch (this.repeatMode) {
+        case "off":
+          return undefined;
+        case "all":
+        case "single":
+          return "info";
+        default:
+          return undefined;
+      }
+    },
+    audioIcon() {
+      if (this.muted) {
+        return "mdi-volume-off";
+      } else if (this.volume < 33) {
+        return "mdi-volume-low";
+      } else if (this.volume < 66) {
+        return "mdi-volume-medium";
+      }
+      return "mdi-volume-high";
+    },
   },
   watch: {
     async currentTrackURL() {
@@ -270,51 +299,32 @@ export default {
       }
     },
   },
-  computed: {
-    ...mapState(useAlbumsStore, ["albums"]),
-    ...mapState(useArtistsStore, ["artists"]),
-    ...mapState(usePlayerStore, [
-      "playing",
-      "seekTime",
-      "doSeek",
-      "current",
-      "repeatMode",
-      "playlistTracks",
-      "currentTrack",
-      "currentTrackURL",
-    ]),
-    repeatModeIcon() {
-      switch (this.repeatMode) {
-        case "off":
-        case "all":
-          return "mdi-repeat";
-        case "single":
-          return "mdi-repeat-once";
-        default:
-          return "mdi-repeat";
-      }
-    },
-    repeatModeColor() {
-      switch (this.repeatMode) {
-        case "off":
-          return undefined;
-        case "all":
-        case "single":
-          return "info";
-        default:
-          return undefined;
-      }
-    },
-    audioIcon() {
-      if (this.muted) {
-        return "mdi-volume-off";
-      } else if (this.volume < 33) {
-        return "mdi-volume-low";
-      } else if (this.volume < 66) {
-        return "mdi-volume-medium";
-      }
-      return "mdi-volume-high";
-    },
+  created() {
+    this.intervalId = setInterval(this.checkTime, 100);
+    this.$nextTick(() =>
+      this.$refs.audio.addEventListener("ended", () => {
+        this.createPlay(this.currentTrack.id);
+        this.trackEnded();
+      }),
+    );
+    if ("mediaSession" in navigator) {
+      navigator.mediaSession.setActionHandler("previoustrack", () => {
+        this.prevTrack();
+      });
+      navigator.mediaSession.setActionHandler("nexttrack", () => {
+        this.nextTrack();
+      });
+      navigator.mediaSession.setActionHandler("play", () => {
+        this.setPlaying(true);
+      });
+      navigator.mediaSession.setActionHandler("pause", () => {
+        this.setPlaying(false);
+      });
+    }
+  },
+  beforeUnmount() {
+    clearInterval(this.intervalId);
+    this.setPlaying(false);
   },
   methods: {
     ...mapActions(useErrorsStore, ["addError"]),
@@ -360,7 +370,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "vuetify/src/styles/styles.sass";
+@use "sass:map";
+@use "vuetify/settings";
 
 .player {
   width: 100%;
@@ -380,7 +391,7 @@ export default {
     padding-left: 10px;
     padding-right: 10px;
     margin-right: auto;
-    @media (min-width: map-get($grid-breakpoints, "md")) {
+    @media #{map.get(settings.$display-breakpoints, "md-and-up")} {
       padding-right: 20px;
     }
   }
@@ -388,13 +399,13 @@ export default {
   &__button {
     margin: 4px;
 
-    @media (min-width: map-get($grid-breakpoints, "md")) {
+    @media #{map.get(settings.$display-breakpoints, "md-and-up")} {
       margin: 8px;
     }
 
     &--sm-and-up {
       display: none;
-      @media (min-width: map-get($grid-breakpoints, "sm")) {
+      @media #{map.get(settings.$display-breakpoints, "sm-and-up")} {
         display: unset;
       }
     }
@@ -408,17 +419,13 @@ export default {
   }
 
   &__time-slider {
-    display: none;
-    flex-grow: 1;
-    flex-shrink: 1;
-    flex-basis: 0%;
     padding-right: 10px;
 
-    @media (min-width: map-get($grid-breakpoints, "sm")) {
-      display: inline-flex;
+    @media #{map.get(settings.$display-breakpoints, "xs")} {
+      display: none;
     }
 
-    @media (min-width: map-get($grid-breakpoints, "md")) {
+    @media #{map.get(settings.$display-breakpoints, "md-and-up")} {
       padding-right: 20px;
     }
   }
@@ -427,7 +434,7 @@ export default {
     min-width: 6rem;
     flex-grow: 0;
 
-    @media (min-width: map-get($grid-breakpoints, "md")) {
+    @media #{map.get(settings.$display-breakpoints, "md-and-up")} {
       width: 9rem;
     }
   }
@@ -441,21 +448,21 @@ export default {
     margin-left: auto;
     padding-left: 10px;
     padding-right: 10px;
-    @media (min-width: map-get($grid-breakpoints, "md")) {
+    @media #{map.get(settings.$display-breakpoints, "md-and-up")} {
       padding-left: 20px;
     }
   }
 
   &__volume-slider {
-    display: none;
     margin: 4px;
     min-width: 50px;
     max-width: 250px;
-    @media (min-width: map-get($grid-breakpoints, "sm")) {
-      display: flex;
+
+    @media #{map.get(settings.$display-breakpoints, "xs")} {
+      display: none;
     }
 
-    @media (min-width: map-get($grid-breakpoints, "md")) {
+    @media #{map.get(settings.$display-breakpoints, "md-and-up")} {
       margin: 8px;
       min-width: 100px;
     }

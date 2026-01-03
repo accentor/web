@@ -1,36 +1,34 @@
 <template>
   <span class="text-no-wrap actions">
-    <VTooltip bottom :disabled="track.length !== null">
-      <template v-slot:activator="{ on }">
-        <span v-on="on">
+    <VTooltip location="bottom" :disabled="track.length !== null">
+      <template #activator="{ props }">
+        <span v-bind="props">
           <VBtn
-            @click="startTrack"
             :disabled="track.length === null"
             color="primary"
-            class="actions__button"
-            text
+            variant="text"
             icon
-            small
+            size="small"
+            @click="startTrack"
           >
-            <VIcon>mdi-play</VIcon>
+            <VIcon size="x-large">mdi-play</VIcon>
           </VBtn>
         </span>
       </template>
       <span>{{ $t("music.track.empty") }}</span>
     </VTooltip>
-    <VTooltip bottom :disabled="track.length !== null">
-      <template v-slot:activator="{ on }">
-        <span v-on="on">
+    <VTooltip location="bottom" :disabled="track.length !== null">
+      <template #activator="{ props }">
+        <span v-bind="props">
           <VBtn
-            @click="addTrack"
             :disabled="track.length === null"
             color="success"
-            class="actions__button"
-            text
+            variant="text"
             icon
-            small
+            size="small"
+            @click="addTrack"
           >
-            <VIcon>mdi-plus</VIcon>
+            <VIcon size="x-large">mdi-plus</VIcon>
           </VBtn>
         </span>
       </template>
@@ -39,79 +37,66 @@
     <AddToPlaylist :item="track" type="track" />
     <EditReviewComment :item="track" :update="flag" />
     <VMenu>
-      <template v-slot:activator="{ on, attrs }">
-        <VBtn class="actions__button mr-0" small icon v-bind="attrs" v-on="on">
-          <VIcon>mdi-dots-vertical</VIcon>
+      <template #activator="{ props }">
+        <VBtn class="mr-0" size="small" icon variant="text" v-bind="props">
+          <VIcon size="x-large">mdi-dots-vertical</VIcon>
         </VBtn>
       </template>
-      <VList dense>
-        <VMenu open-on-hover offset-x left v-if="track.length && isModerator">
-          <template v-slot:activator="{ on }">
-            <VListItem v-on="on">
-              <VListItemIcon v-on="on">
+      <VList density="compact">
+        <VMenu v-if="track.length && isModerator" open-on-hover location="left">
+          <template #activator="{ props }">
+            <VListItem v-bind="props">
+              <template #prepend>
                 <VIcon color="info">mdi-file-music</VIcon>
-              </VListItemIcon>
-              <VListItemContent>
-                <VListItemTitle>
-                  {{ $t("music.track.file") }}
-                </VListItemTitle>
-              </VListItemContent>
+              </template>
+
+              <VListItemTitle>
+                {{ $t("music.track.file") }}
+              </VListItemTitle>
             </VListItem>
           </template>
-          <VList dense>
+          <VList density="compact">
             <VListItem v-if="Object.keys(locations).length > 1">
-              <VListItemContent>
-                <VListItemTitle> {{ $t("library.location") }}: </VListItemTitle>
-                <VListItemSubtitle>
-                  {{ locations[track.location_id].path }}
-                </VListItemSubtitle>
-              </VListItemContent>
+              <VListItemTitle> {{ $t("library.location") }}: </VListItemTitle>
+              <VListItemSubtitle>
+                {{ locations[track.location_id].path }}
+              </VListItemSubtitle>
             </VListItem>
             <VListItem>
-              <VListItemContent>
-                <VListItemTitle> {{ $t("library.filename") }}: </VListItemTitle>
-                <VListItemSubtitle>
-                  {{ track.filename }}
-                </VListItemSubtitle>
-              </VListItemContent>
+              <VListItemTitle> {{ $t("library.filename") }}: </VListItemTitle>
+              <VListItemSubtitle>
+                {{ track.filename }}
+              </VListItemSubtitle>
             </VListItem>
             <VListItem>
-              <VListItemContent>
-                <VListItemTitle>
-                  {{ $t("music.track.bitrate") }}:
-                </VListItemTitle>
-                <VListItemSubtitle>
-                  {{ track.bitrate }}
-                </VListItemSubtitle>
-              </VListItemContent>
+              <VListItemTitle>
+                {{ $t("music.track.bitrate") }}:
+              </VListItemTitle>
+              <VListItemSubtitle>
+                {{ track.bitrate }}
+              </VListItemSubtitle>
             </VListItem>
             <VListItem v-if="track.hasOwnProperty('sample_rate')">
-              <VListItemContent>
-                <VListItemTitle>
-                  {{ $t("music.track.sample_rate") }}:
-                </VListItemTitle>
-                <VListItemSubtitle>
-                  {{ track.sample_rate }}
-                </VListItemSubtitle>
-              </VListItemContent>
+              <VListItemTitle>
+                {{ $t("music.track.sample_rate") }}:
+              </VListItemTitle>
+              <VListItemSubtitle>
+                {{ track.sample_rate }}
+              </VListItemSubtitle>
             </VListItem>
             <VListItem v-if="track.hasOwnProperty('bit_depth')">
-              <VListItemContent>
-                <VListItemTitle>
-                  {{ $t("music.track.bit_depth") }}:
-                </VListItemTitle>
-                <VListItemSubtitle>
-                  {{ track.bit_depth }}
-                </VListItemSubtitle>
-              </VListItemContent>
+              <VListItemTitle>
+                {{ $t("music.track.bit_depth") }}:
+              </VListItemTitle>
+              <VListItemSubtitle>
+                {{ track.bit_depth }}
+              </VListItemSubtitle>
             </VListItem>
             <VListItem>
-              <VListItemContent>
-                <VListItemTitle> {{ $t("common.added-on") }}: </VListItemTitle>
-                <VListItemSubtitle>
-                  {{ $d(new Date(track.created_at), "long") }}
-                </VListItemSubtitle>
-              </VListItemContent>
+              <VListItemTitle> {{ $t("common.added-on") }}: </VListItemTitle>
+              <VListItemSubtitle>
+                {{ $d(new Date(track.created_at), "long") }}
+              </VListItemSubtitle>
             </VListItem>
           </VList>
         </VMenu>
@@ -121,15 +106,18 @@
           download
           target="_blank"
         >
-          <VListItemIcon>
+          <template #prepend>
             <VIcon color="info">mdi-download</VIcon>
-          </VListItemIcon>
-          <VListItemContent>
-            <VListItemTitle>{{ $t("music.track.download") }}</VListItemTitle>
-          </VListItemContent>
+          </template>
+
+          <VListItemTitle>{{ $t("music.track.download") }}</VListItemTitle>
         </VListItem>
-        <VTooltip bottom :disabled="!waitingForReload" v-if="isModerator">
-          <template v-slot:activator="{ on }">
+        <VTooltip
+          v-if="isModerator"
+          location="bottom"
+          :disabled="!waitingForReload"
+        >
+          <template #activator="{ props }">
             <VListItem
               :to="{
                 name: 'edit-track',
@@ -137,20 +125,23 @@
                 query: { redirect: $route.fullPath },
               }"
               :disabled="waitingForReload"
-              v-on="on"
+              v-bind="props"
             >
-              <VListItemIcon>
-                <VIcon color="edit">mdi-pencil</VIcon>
-              </VListItemIcon>
-              <VListItemContent>
-                <VListItemTitle>{{ $t("music.track.edit") }}</VListItemTitle>
-              </VListItemContent>
+              <template #prepend>
+                <VIcon color="warning">mdi-pencil</VIcon>
+              </template>
+
+              <VListItemTitle>{{ $t("music.track.edit") }}</VListItemTitle>
             </VListItem>
           </template>
           <span>{{ $t("common.disabled-while-loading") }}</span>
         </VTooltip>
-        <VTooltip bottom :disabled="!waitingForReload" v-if="isModerator">
-          <template v-slot:activator="{ on }">
+        <VTooltip
+          v-if="isModerator"
+          location="bottom"
+          :disabled="!waitingForReload"
+        >
+          <template #activator="{ props }">
             <VListItem
               :to="{
                 name: 'merge-track',
@@ -158,33 +149,35 @@
                 query: { redirect: $route.fullPath },
               }"
               :disabled="waitingForReload"
-              v-on="on"
+              v-bind="props"
             >
-              <VListItemIcon>
-                <VIcon color="edit">mdi-merge</VIcon>
-              </VListItemIcon>
-              <VListItemContent>
-                <VListItemTitle>
-                  {{ $t("music.track.merge.merge") }}
-                </VListItemTitle>
-              </VListItemContent>
+              <template #prepend>
+                <VIcon color="warning">mdi-merge</VIcon>
+              </template>
+
+              <VListItemTitle>
+                {{ $t("music.track.merge.merge") }}
+              </VListItemTitle>
             </VListItem>
           </template>
           <span>{{ $t("common.disabled-while-loading") }}</span>
         </VTooltip>
-        <VTooltip bottom :disabled="!waitingForReload" v-if="isModerator">
-          <template v-slot:activator="{ on }">
+        <VTooltip
+          v-if="isModerator"
+          location="bottom"
+          :disabled="!waitingForReload"
+        >
+          <template #activator="{ props }">
             <VListItem
-              @click.stop.prevent="deleteTrack"
               :disabled="waitingForReload"
-              v-on="on"
+              v-bind="props"
+              @click.stop.prevent="deleteTrack"
             >
-              <VListItemIcon>
-                <VIcon color="danger">mdi-delete</VIcon>
-              </VListItemIcon>
-              <VListItemContent>
-                <VListItemTitle>{{ $t("music.track.delete") }}</VListItemTitle>
-              </VListItemContent>
+              <template #prepend>
+                <VIcon color="error">mdi-delete</VIcon>
+              </template>
+
+              <VListItemTitle>{{ $t("music.track.delete") }}</VListItemTitle>
             </VListItem>
           </template>
           <span>{{ $t("common.disabled-while-loading") }}</span>

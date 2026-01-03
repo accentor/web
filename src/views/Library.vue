@@ -1,5 +1,5 @@
 <template>
-  <VContainer fluid v-if="isModerator">
+  <VContainer v-if="isModerator" fluid>
     <VRow class="mb-2">
       <h2 class="text-h5">{{ $t("library.maintenance") }}</h2>
     </VRow>
@@ -10,31 +10,33 @@
       <h2 class="text-h5">{{ $t("library.rescan") }}</h2>
     </VRow>
     <VRow v-if="combinedRescans" class="mb-2">
-      <div class="button-group ma-2">
+      <VBtnGroup density="compact">
         <VBtn
-          @click="startAll"
           :disabled="rescans.length === 0 || rescanRunning"
           color="success"
-          class="button-group__button"
-          depressed
+          variant="flat"
+          @click="startAll"
         >
-          <VIcon left class="white--text">
+          <VIcon start class="text-white">
             mdi-refresh
             {{ rescanRunning ? "mdi-spin" : "" }}
           </VIcon>
           {{ $t("library.start-scan") }}
         </VBtn>
-        <VMenu offset-y bottom left close-on-click v-if="rescans.length > 1">
-          <template v-slot:activator="{ on, attrs }">
+        <VMenu
+          v-if="rescans.length > 1"
+          location="bottom left"
+          :persistent="false"
+        >
+          <template #activator="{ props }">
             <VBtn
               color="success"
-              depressed
-              v-bind="attrs"
-              v-on="on"
+              variant="flat"
+              v-bind="props"
               min-width="0"
-              class="button-group__button px-2"
+              class="px-2"
             >
-              <VIcon class="white--text">mdi-menu-down</VIcon>
+              <VIcon class="text-white">mdi-menu-down</VIcon>
             </VBtn>
           </template>
           <VList>
@@ -49,9 +51,9 @@
             </VListItem>
           </VList>
         </VMenu>
-      </div>
+      </VBtnGroup>
     </VRow>
-    <VRow class="flex-column mb-4" v-if="combinedRescans">
+    <VRow v-if="combinedRescans" class="flex-column mb-4">
       <div>
         <strong>{{ $t("library.finished-at") }}: </strong>
         {{
@@ -157,11 +159,8 @@ export default {
     EditLocations,
     MaintenanceActions,
   },
-  metaInfo() {
+  head() {
     return { title: this.$t("librarySettings") };
-  },
-  created() {
-    this.loadData();
   },
   computed: {
     ...mapState(useAuthStore, ["isModerator"]),
@@ -177,6 +176,9 @@ export default {
         ? true
         : false;
     },
+  },
+  created() {
+    this.loadData();
   },
   methods: {
     ...mapActions(useCodecConversionsStore, {

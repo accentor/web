@@ -5,26 +5,26 @@
         <VRow no-gutters align="center" justify="center">
           <VCol md="6" sm="8" cols="12" @change.once="isDirty = true">
             <VTextField
-              :label="$t('common.name')"
               v-model="newPlaylist.name"
+              :label="$t('common.name')"
               :rules="[(v) => !!v || $t('errors.playlists.name-blank')]"
               required
             />
             <VTextarea
+              v-model="newPlaylist.description"
               :label="$t('common.description')"
               rows="3"
-              v-model="newPlaylist.description"
             />
             <VAutocomplete
+              v-model="newPlaylist.playlist_type"
               :items="playlistTypes"
               :label="$t('music.playlist.playlist_type')"
-              v-model="newPlaylist.playlist_type"
               :disabled="hasItems"
             />
             <VAutocomplete
+              v-model="newPlaylist.access"
               :items="accessOptions"
               :label="$t('music.playlist.access')"
-              v-model="newPlaylist.access"
             />
             <VBtn
               :disabled="!isValid"
@@ -33,7 +33,7 @@
               type="submit"
             >
               {{
-                this.playlist
+                playlist
                   ? $t("music.playlist.update")
                   : $t("music.playlist.create")
               }}
@@ -41,10 +41,10 @@
           </VCol>
         </VRow>
         <VRow
+          v-if="newPlaylist.item_ids.length"
           no-gutters
           align="center"
           justify="center"
-          v-if="newPlaylist.item_ids.length"
         >
           <VCol
             md="9"
@@ -58,7 +58,7 @@
             <h4 class="text-h6 mt-6 ml-4">
               {{ $tc("music.playlist.items", 2) }}
             </h4>
-            <VSimpleTable>
+            <VTable>
               <thead>
                 <tr>
                   <th style="width: 1px" class="text-center">Sort</th>
@@ -67,41 +67,41 @@
                 </tr>
               </thead>
               <Draggable
-                tag="tbody"
                 v-model="newPlaylist.item_ids"
-                handle="[data-draggable=handle]"
+                :item-key="(id) => id"
+                tag="tbody"
+                handle=".handle"
               >
-                <tr
-                  v-for="(item_id, index) of newPlaylist.item_ids"
-                  :key="item_id"
-                >
-                  <td class="text-no-wrap">
-                    <VBtn small icon text class="" data-draggable="handle">
-                      <VIcon>mdi-drag-horizontal-variant</VIcon>
-                    </VBtn>
-                    {{ index + 1 }}
-                  </td>
-                  <td class="play-queue__cell">
-                    {{
-                      newPlaylist.playlist_type === "artist"
-                        ? items[item_id].name
-                        : items[item_id].title
-                    }}
-                  </td>
-                  <td class="text-right">
-                    <VBtn
-                      small
-                      icon
-                      text
-                      class="ma-2 red--text"
-                      @click="() => removeItem(index)"
-                    >
-                      <VIcon>mdi-close</VIcon>
-                    </VBtn>
-                  </td>
-                </tr>
+                <template #item="{ element: item_id, index }">
+                  <tr>
+                    <td class="text-no-wrap">
+                      <VBtn size="small" icon variant="text" class="handle">
+                        <VIcon>mdi-drag-horizontal-variant</VIcon>
+                      </VBtn>
+                      {{ index + 1 }}
+                    </td>
+                    <td class="play-queue__cell">
+                      {{
+                        newPlaylist.playlist_type === "artist"
+                          ? items[item_id].name
+                          : items[item_id].title
+                      }}
+                    </td>
+                    <td class="text-right">
+                      <VBtn
+                        size="small"
+                        icon
+                        variant="text"
+                        class="ma-2 text-red"
+                        @click="() => removeItem(index)"
+                      >
+                        <VIcon>mdi-close</VIcon>
+                      </VBtn>
+                    </td>
+                  </tr>
+                </template>
               </Draggable>
-            </VSimpleTable>
+            </VTable>
           </VCol>
         </VRow>
       </VForm>
@@ -133,29 +133,29 @@ export default {
       playlistTypes: [
         {
           value: "track",
-          text: this.$t("music.playlist.playlist_types.track"),
+          title: this.$t("music.playlist.playlist_types.track"),
         },
         {
           value: "album",
-          text: this.$t("music.playlist.playlist_types.album"),
+          title: this.$t("music.playlist.playlist_types.album"),
         },
         {
           value: "artist",
-          text: this.$t("music.playlist.playlist_types.artist"),
+          title: this.$t("music.playlist.playlist_types.artist"),
         },
       ],
       accessOptions: [
         {
           value: "shared",
-          text: this.$t("music.playlist.access_options.shared"),
+          title: this.$t("music.playlist.access_options.shared"),
         },
         {
           value: "personal",
-          text: this.$t("music.playlist.access_options.personal"),
+          title: this.$t("music.playlist.access_options.personal"),
         },
         {
           value: "secret",
-          text: this.$t("music.playlist.access_options.secret"),
+          title: this.$t("music.playlist.access_options.secret"),
         },
       ],
       headers: [
@@ -177,19 +177,6 @@ export default {
       isValid: true,
     };
   },
-  async created() {
-    if (this.playlist) {
-      await this.read(this.$route.params.id);
-      this.fillValues();
-    }
-  },
-  watch: {
-    playlist: function () {
-      if (this.playlist && !this.isDirty) {
-        this.fillValues();
-      }
-    },
-  },
   computed: {
     ...mapState(useAlbumsStore, ["albums"]),
     ...mapState(useArtistsStore, ["artists"]),
@@ -207,6 +194,19 @@ export default {
         track: this.$t("music.title"),
       }[this.newPlaylist.playlist_type];
     },
+  },
+  watch: {
+    playlist: function () {
+      if (this.playlist && !this.isDirty) {
+        this.fillValues();
+      }
+    },
+  },
+  async created() {
+    if (this.playlist) {
+      await this.read(this.$route.params.id);
+      this.fillValues();
+    }
   },
   methods: {
     ...mapActions(usePlaylistsStore, ["create", "read", "update"]),

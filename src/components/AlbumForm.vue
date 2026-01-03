@@ -3,199 +3,202 @@
     <VCol lg="6" sm="8" cols="12" @change.once="isDirty = true">
       <VAlert
         v-if="album"
-        :value="album.review_comment !== null"
+        :model-value="album.review_comment !== null"
         type="warning"
         icon="mdi-flag"
+        class="mb-4"
       >
         {{ album.review_comment }}
       </VAlert>
       <VForm v-model="isValid" @submit.prevent="submit">
         <VTextField
-          :label="$t('music.title')"
           v-model="newAlbum.title"
+          :label="$t('music.title')"
           :rules="[(v) => !!v || $t('errors.albums.title-blank')]"
           required
         />
-        <VDialog
-          ref="dialogOriginal"
-          v-model="originalModal"
-          :return-value.sync="newAlbum.release"
-          persistent
-          width="290px"
-        >
-          <template v-slot:activator="{ on }">
+        <VDialog v-model="originalModal" persistent max-width="380">
+          <template #activator="{ props }">
             <VTextField
               v-model="newAlbum.release"
               :label="$t('music.album.release')"
               readonly
-              v-on="on"
+              v-bind="props"
             ></VTextField>
           </template>
-          <VDatePicker
-            v-model="newAlbum.release"
-            scrollable
-            :first-day-of-week="1"
-            :locale="locale"
-          >
-            <VSpacer></VSpacer>
-            <VBtn
-              text
-              color="primary"
-              class="ma-2"
-              @click="originalModal = false"
-            >
-              {{ $t("common.cancel") }}
-            </VBtn>
-            <VBtn
-              text
-              color="primary"
-              class="ma-2"
-              @click="$refs.dialogOriginal.save(newAlbum.release)"
-            >
-              {{ $t("common.ok") }}
-            </VBtn>
-          </VDatePicker>
+          <VCard>
+            <VCardText>
+              <VDatePicker
+                v-model="originalModalModel"
+                scrollable
+                :first-day-of-week="1"
+              >
+              </VDatePicker>
+            </VCardText>
+            <VCardActions>
+              <VSpacer></VSpacer>
+              <VBtn
+                variant="text"
+                color="primary"
+                class="ma-2"
+                @click="originalModal = false"
+              >
+                {{ $t("common.cancel") }}
+              </VBtn>
+              <VBtn
+                variant="text"
+                color="primary"
+                class="ma-2"
+                @click="saveOriginalRelease"
+              >
+                {{ $t("common.ok") }}
+              </VBtn>
+            </VCardActions>
+          </VCard>
         </VDialog>
         <VCheckbox
           v-model="editionInformation"
           :label="$t('music.album.edition-information')"
         />
         <VDialog
-          ref="dialogEdition"
-          v-model="editionModal"
           v-if="editionInformation"
-          :return-value.sync="newAlbum.edition"
+          v-model="editionModal"
           persistent
-          width="290px"
+          max-width="380"
         >
-          <template v-slot:activator="{ on }">
+          <template #activator="{ props }">
             <VTextField
               v-model="newAlbum.edition"
               :label="$t('music.album.edition')"
               readonly
-              v-on="on"
               clearable
+              v-bind="props"
             ></VTextField>
           </template>
-          <VDatePicker
-            v-model="newAlbum.edition"
-            scrollable
-            :first-day-of-week="1"
-            :locale="locale"
-          >
-            <VSpacer></VSpacer>
-            <VBtn
-              text
-              color="primary"
-              class="ma-2"
-              @click="editionModal = false"
-            >
-              {{ $t("common.cancel") }}
-            </VBtn>
-            <VBtn
-              text
-              color="primary"
-              class="ma-2"
-              @click="$refs.dialogEdition.save(newAlbum.edition)"
-            >
-              {{ $t("common.ok") }}
-            </VBtn>
-          </VDatePicker>
+          <VCard>
+            <VCardText>
+              <VDatePicker
+                v-model="editionModalModel"
+                scrollable
+                :first-day-of-week="1"
+              >
+              </VDatePicker>
+            </VCardText>
+            <VCardActions>
+              <VSpacer></VSpacer>
+              <VBtn
+                variant="text"
+                color="primary"
+                class="ma-2"
+                @click="editionModal = false"
+              >
+                {{ $t("common.cancel") }}
+              </VBtn>
+              <VBtn
+                variant="text"
+                color="primary"
+                class="ma-2"
+                @click="saveEditionRelease"
+              >
+                {{ $t("common.ok") }}
+              </VBtn>
+            </VCardActions>
+          </VCard>
         </VDialog>
         <VTextField
-          :label="$t('music.album.edition-description')"
-          v-model="newAlbum.edition_description"
           v-if="editionInformation"
+          v-model="newAlbum.edition_description"
+          :label="$t('music.album.edition-description')"
           clearable
         />
         <ImagePicker
           v-model="newAlbum.image"
-          :currentImg="album && album.image250"
+          :current-img="album && album.image250"
           :placeholder="albumSvgUrl"
         />
         <h4 class="text-subtitle-1">{{ $tc("music.artists", 2) }}</h4>
         <VRow
-          :key="`artist-${index}`"
           v-for="(item, index) of newAlbum.album_artists"
+          :key="`artist-${index}`"
           no-gutters
         >
           <VCol class="flex-column flex-grow-0">
             <VBtn
+              icon
+              size="small"
+              variant="text"
+              :disabled="index === 0"
               @click="moveArtist(index, -1)"
               @click.once="isDirty = true"
-              icon
-              small
-              class="ma-2"
-              :disabled="index === 0"
             >
-              <VIcon>mdi-menu-up</VIcon>
+              <VIcon size="x-large">mdi-menu-up</VIcon>
             </VBtn>
             <VBtn
+              icon
+              size="small"
+              variant="text"
+              :disabled="index === newAlbum.album_artists.length - 1"
               @click="moveArtist(index, 1)"
               @click.once="isDirty = true"
-              icon
-              small
-              class="ma-2"
-              :disabled="index === newAlbum.album_artists.length - 1"
             >
-              <VIcon>mdi-menu-down</VIcon>
+              <VIcon size="x-large">mdi-menu-down</VIcon>
             </VBtn>
             <VBtn
+              icon
+              size="small"
+              variant="text"
               @click="removeArtist(index)"
               @click.once="isDirty = true"
-              icon
-              small
-              class="ma-2"
             >
-              <VIcon>mdi-close</VIcon>
+              <VIcon size="x-large">mdi-close</VIcon>
             </VBtn>
           </VCol>
           <VCol class="flex-column">
             <VCombobox
+              v-model="item.artist_id"
               :items="sortedArtists"
-              :filter="filterName"
-              item-text="name"
+              :custom-filter="filterName"
+              item-title="name"
               item-value="id"
               :label="$tc('music.artists', 1)"
               return-object
-              v-model="item.artist_id"
             />
-            <VTextField :label="$t('common.name')" v-model="item.name" />
+            <VTextField v-model="item.name" :label="$t('common.name')" />
             <VTextField
-              :label="$t('music.artist.separator')"
-              v-model="item.separator"
               v-if="index !== newAlbum.album_artists.length - 1"
+              v-model="item.separator"
+              :label="$t('music.artist.separator')"
             />
           </VCol>
         </VRow>
         <h4 class="text-subtitle-1">{{ $tc("music.labels", 2) }}</h4>
         <VRow
-          :key="`label-${index}`"
           v-for="(item, index) of newAlbum.album_labels"
+          :key="`label-${index}`"
           no-gutters
         >
           <VBtn
+            icon
+            size="small"
+            variant="text"
             @click="removeLabel(index)"
             @click.once="isDirty = true"
-            icon
-            small
-            class="ma-2"
           >
-            <VIcon>mdi-close</VIcon>
+            <VIcon size="x-large">mdi-close</VIcon>
           </VBtn>
           <VCol class="flex-column">
             <VCombobox
+              v-model="item.label_id"
               :items="sortedLabels"
-              :filter="filterName"
-              item-text="name"
+              :custom-filter="filterName"
+              item-title="name"
               item-value="id"
               :label="$tc('music.labels', 1)"
               return-object
-              v-model="item.label_id"
             />
             <VTextField
-              :label="$t('music.label.catnr')"
               v-model="item.catalogue_number"
+              :label="$t('music.label.catnr')"
             />
             <VDivider v-if="index !== newAlbum.album_labels.length - 1" />
           </VCol>
@@ -207,24 +210,22 @@
         />
         <VRow justify="center" class="my-0">
           <VBtn :disabled="!isValid" color="primary" class="ma-2" type="submit">
-            {{
-              this.album ? $t("music.album.update") : $t("music.album.create")
-            }}
+            {{ album ? $t("music.album.update") : $t("music.album.create") }}
           </VBtn>
           <VSpacer />
           <VBtn
-            @click="addArtist"
-            @click.once="isDirty = true"
             color="success"
             class="ma-2"
+            @click="addArtist"
+            @click.once="isDirty = true"
           >
             {{ $t("music.artist.add") }}
           </VBtn>
           <VBtn
-            @click="addLabel"
-            @click.once="isDirty = true"
             color="success"
             class="ma-2"
+            @click="addLabel"
+            @click.once="isDirty = true"
           >
             {{ $t("music.label.add") }}
           </VBtn>
@@ -242,6 +243,7 @@ import { useLabelsStore } from "../store/labels";
 import { useArtistsStore } from "../store/artists";
 import { useAlbumsStore } from "../store/albums";
 import albumSvgUrl from "@mdi/svg/svg/album.svg";
+import { useDate } from "vuetify";
 
 export default {
   name: "AlbumForm",
@@ -249,10 +251,13 @@ export default {
   props: { album: { type: Object, default: null } },
   data() {
     return {
+      dateAdapter: useDate(),
       isDirty: false,
       isValid: true,
       originalModal: false,
+      originalModalModel: new Date().toISOString().substr(0, 10),
       editionModal: false,
+      editionModalModel: new Date().toISOString().substr(0, 10),
       newAlbum: {
         title: "",
         release: new Date().toISOString().substr(0, 10),
@@ -279,19 +284,6 @@ export default {
       albumSvgUrl,
     };
   },
-  async created() {
-    if (this.album) {
-      await this.read(this.album.id);
-      this.fillValues();
-    }
-  },
-  watch: {
-    album: function () {
-      if (this.album && !this.isDirty) {
-        this.fillValues();
-      }
-    },
-  },
   computed: {
     ...mapState(useArtistsStore, {
       artists: "artists",
@@ -302,6 +294,19 @@ export default {
       sortedLabels: "labelsByName",
     }),
     ...mapState(useUserSettingsStore, ["locale"]),
+  },
+  watch: {
+    album: function () {
+      if (this.album && !this.isDirty) {
+        this.fillValues();
+      }
+    },
+  },
+  async created() {
+    if (this.album) {
+      await this.read(this.album.id);
+      this.fillValues();
+    }
   },
   methods: {
     ...mapActions(useAlbumsStore, ["create", "read", "update"]),
@@ -317,7 +322,9 @@ export default {
     fillValues() {
       this.newAlbum.title = this.album.title;
       this.newAlbum.release = this.album.release;
+      this.originalModalModel = this.album.release;
       this.newAlbum.edition = this.album.edition;
+      this.editionModalModel = this.album.edition;
       this.newAlbum.edition_description = this.album.edition_description;
       this.newAlbum.review_comment = this.album.review_comment;
       this.newAlbum.album_labels = this.album.album_labels.map((l) => {
@@ -365,6 +372,14 @@ export default {
         0,
         this.newAlbum.album_artists.splice(index, 1)[0],
       );
+    },
+    saveEditionRelease() {
+      this.newAlbum.edition = this.dateAdapter.toISO(this.editionModalModel);
+      this.editionModal = false;
+    },
+    saveOriginalRelease() {
+      this.newAlbum.release = this.dateAdapter.toISO(this.originalModalModel);
+      this.originalModal = false;
     },
     async submit() {
       const transformed = {

@@ -1,5 +1,5 @@
 <template>
-  <VContainer class="fill-height" fluid v-if="isModerator">
+  <VContainer v-if="isModerator" class="fill-height" fluid>
     <VRow no-gutters>
       <VCol>
         <TracksTable
@@ -22,7 +22,7 @@ import { useTracksStore } from "../../store/tracks";
 export default {
   name: "EmptyTracks",
   components: { TracksTable },
-  metaInfo() {
+  head() {
     return { title: this.$t("music.tracks-without-audio") };
   },
   computed: {

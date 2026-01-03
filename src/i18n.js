@@ -1,19 +1,22 @@
-import Vue from "vue";
-import VueI18n from "vue-i18n";
+import { createI18n } from "vue-i18n";
+import { en, nl } from "vuetify/locale";
 
-Vue.use(VueI18n);
+const vuetifyMessages = { en, nl };
 
 function loadLocaleMessages() {
   const modules = import.meta.glob("@/locales/**/*.json", { eager: true });
   const messages = {};
   Object.keys(modules).forEach((path) => {
     const locale = path.match(/\/([A-Za-z0-9-_]+)\.json$/i)[1];
-    messages[locale] = modules[path];
+    messages[locale] = {
+      $vuetify: vuetifyMessages[locale],
+      ...modules[path],
+    };
   });
   return messages;
 }
 
-const dateTimeFormats = {
+const datetimeFormats = {
   en: {
     short: {
       year: "numeric",
@@ -46,9 +49,9 @@ const dateTimeFormats = {
   },
 };
 
-export default new VueI18n({
+export default createI18n({
   locale: import.meta.env.VITE_I18N_LOCALE || "en",
   fallbackLocale: import.meta.env.VITE_I18N_FALLBACK_LOCALE || "en",
   messages: loadLocaleMessages(),
-  dateTimeFormats,
+  datetimeFormats,
 });

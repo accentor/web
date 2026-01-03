@@ -1,84 +1,86 @@
 <template>
-  <span class="actions">
-    <VTooltip bottom :disabled="playableTracks.length !== 0">
-      <template v-slot:activator="{ on }">
-        <span v-on="on">
-          <VBtn
-            @click.stop.prevent="startTracks"
-            :disabled="playableTracks.length === 0"
-            color="primary"
-            class="actions__button"
-            text
-            icon
-            small
-          >
-            <VIcon>mdi-play</VIcon>
-          </VBtn>
-        </span>
-      </template>
-      <span>{{ $t("music.playlist.no-tracks-to-play") }}</span>
-    </VTooltip>
-    <VTooltip bottom :disabled="playableTracks.length !== 0">
-      <template v-slot:activator="{ on }">
-        <span v-on="on">
-          <VBtn
-            @click.stop.prevent="addTracks"
-            :disabled="playableTracks.length === 0"
-            color="success"
-            class="actions__button"
-            text
-            icon
-            small
-            v-on="on"
-          >
-            <VIcon>mdi-plus</VIcon>
-          </VBtn>
-        </span>
-      </template>
-      <span>{{ $t("music.playlist.no-tracks-to-add") }}</span>
-    </VTooltip>
-    <VTooltip bottom :disabled="!waitingForReload" v-if="isAllowedToEdit">
-      <template v-slot:activator="{ on }">
-        <span v-on="on">
-          <VBtn
-            :to="{
-              name: 'edit-playlist',
-              params: { id: playlist.id },
-              query: { redirect: $route.fullPath },
-            }"
-            :disabled="waitingForReload"
-            color="edit"
-            class="actions__button"
-            text
-            icon
-            small
-          >
-            <VIcon>mdi-pencil</VIcon>
-          </VBtn>
-        </span>
-      </template>
-      <span>{{ $t("common.disabled-while-loading") }}</span>
-    </VTooltip>
-    <VTooltip bottom :disabled="!waitingForReload" v-if="isAllowedToEdit">
-      <template v-slot:activator="{ on }">
-        <span v-on="on">
-          <VBtn
-            @click.stop.prevent="deletePlaylist"
-            :disabled="waitingForReload"
-            color="danger"
-            class="actions__button mr-0"
-            href="#"
-            text
-            icon
-            small
-          >
-            <VIcon>mdi-delete</VIcon>
-          </VBtn>
-        </span>
-      </template>
-      <span>{{ $t("common.disabled-while-loading") }}</span>
-    </VTooltip>
-  </span>
+  <VTooltip location="bottom" :disabled="playableTracks.length !== 0">
+    <template #activator="{ props }">
+      <span v-bind="props">
+        <VBtn
+          :disabled="playableTracks.length === 0"
+          color="primary"
+          variant="text"
+          icon
+          size="small"
+          @click.stop.prevent="startTracks"
+        >
+          <VIcon size="x-large">mdi-play</VIcon>
+        </VBtn>
+      </span>
+    </template>
+    <span>{{ $t("music.playlist.no-tracks-to-play") }}</span>
+  </VTooltip>
+  <VTooltip location="bottom" :disabled="playableTracks.length !== 0">
+    <template #activator="{ props }">
+      <span v-bind="props">
+        <VBtn
+          :disabled="playableTracks.length === 0"
+          color="success"
+          variant="text"
+          icon
+          size="small"
+          @click.stop.prevent="addTracks"
+        >
+          <VIcon size="x-large">mdi-plus</VIcon>
+        </VBtn>
+      </span>
+    </template>
+    <span>{{ $t("music.playlist.no-tracks-to-add") }}</span>
+  </VTooltip>
+  <VTooltip
+    v-if="isAllowedToEdit"
+    location="bottom"
+    :disabled="!waitingForReload"
+  >
+    <template #activator="{ props }">
+      <span v-bind="props">
+        <VBtn
+          :to="{
+            name: 'edit-playlist',
+            params: { id: playlist.id },
+            query: { redirect: $route.fullPath },
+          }"
+          :disabled="waitingForReload"
+          color="warning"
+          variant="text"
+          icon
+          size="small"
+        >
+          <VIcon size="x-large">mdi-pencil</VIcon>
+        </VBtn>
+      </span>
+    </template>
+    <span>{{ $t("common.disabled-while-loading") }}</span>
+  </VTooltip>
+  <VTooltip
+    v-if="isAllowedToEdit"
+    location="bottom"
+    :disabled="!waitingForReload"
+  >
+    <template #activator="{ props }">
+      <span v-bind="props">
+        <VBtn
+          :disabled="waitingForReload"
+          color="error"
+          class="mr-0"
+          href="#"
+          variant="text"
+          icon
+          size="small"
+          @click.stop.prevent="deletePlaylist"
+        >
+          <VIcon size="x-large">mdi-delete</VIcon>
+        </VBtn>
+      </span>
+    </template>
+    <span>{{ $t("common.disabled-while-loading") }}</span>
+  </VTooltip>
 </template>
 
 <script>

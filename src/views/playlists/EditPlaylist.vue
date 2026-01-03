@@ -1,5 +1,5 @@
 <template>
-  <VContainer class="fill-height" fluid v-if="playlist">
+  <VContainer v-if="playlist" class="fill-height" fluid>
     <PlaylistForm :playlist="playlist" />
   </VContainer>
 </template>
@@ -11,10 +11,10 @@ import { usePlaylistsStore } from "../../store/playlists";
 
 export default {
   name: "EditPlaylist",
-  metaInfo() {
+  components: { PlaylistForm },
+  head() {
     return { title: this.$t("page-titles.edit", { obj: this.playlist.name }) };
   },
-  components: { PlaylistForm },
   computed: {
     ...mapState(usePlaylistsStore, ["playlists"]),
     playlist: function () {

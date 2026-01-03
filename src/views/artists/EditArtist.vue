@@ -1,5 +1,5 @@
 <template>
-  <VContainer class="fill-height" fluid v-if="artist">
+  <VContainer v-if="artist" class="fill-height" fluid>
     <ArtistForm :artist="artist" />
   </VContainer>
 </template>
@@ -12,7 +12,7 @@ import { useArtistsStore } from "../../store/artists";
 export default {
   name: "EditArtist",
   components: { ArtistForm },
-  metaInfo() {
+  head() {
     return { title: this.$t("page-titles.edit", { obj: this.artist?.name }) };
   },
   computed: {

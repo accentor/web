@@ -1,12 +1,10 @@
 <template>
   <VCard class="px-2 py-4">
-    <div
-      class="text-center mb-4 text-h6 font-weight-regular grey--text text--darken-3"
-    >
+    <div class="text-center mb-4 text-h6 font-weight-regular">
       {{ $t("stats.count.playCount.before") }}
       <span
         class="text-h4 d-block"
-        :class="animatedCount ? 'primary--text' : 'grey--text text--darken-1'"
+        :class="animatedCount ? 'text-primary' : 'text-grey text--darken-1'"
       >
         {{ Math.floor(animatedCount) }}
       </span>
@@ -14,10 +12,14 @@
     </div>
     <div class="text-center text-h6 font-weight-regular">
       {{ $t("stats.count.playTime.before") }}
-      <div class="play-time grey--text text--darken-3">
+      <div class="play-time text-grey-darken-3">
         <span
-          class="text-h4 d-block text-right text--darken-1"
-          :class="animatedTime.days ? 'primary--text' : 'grey--text'"
+          class="text-h4 d-block text-right"
+          :class="
+            animatedTime.days
+              ? 'text-primary text--darken-1'
+              : 'text-grey text--darken-1'
+          "
         >
           {{ Math.floor(animatedTime.days) }}
         </span>
@@ -25,11 +27,11 @@
           {{ $tc("stats.count.playTime.days", Math.floor(animatedTime.days)) }}
         </span>
         <span
-          class="text-h4 d-block text-right text--darken-1"
+          class="text-h4 d-block text-right"
           :class="
             animatedTime.days + animatedTime.hours
-              ? 'primary--text'
-              : 'grey--text'
+              ? 'text-primary text--darken-1'
+              : 'text-grey text--darken-1'
           "
         >
           {{ Math.floor(animatedTime.hours) }}
@@ -40,11 +42,11 @@
           }}
         </span>
         <span
-          class="text-h4 d-block text-right text--darken-1"
+          class="text-h4 d-block text-right"
           :class="
             animatedTime.days + animatedTime.hours + animatedTime.minutes
-              ? 'primary--text'
-              : 'grey--text'
+              ? 'text-primary text--darken-1'
+              : 'text-grey text--darken-1'
           "
         >
           {{ Math.floor(animatedTime.minutes) }}

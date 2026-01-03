@@ -1,33 +1,29 @@
 <template>
-  <VContainer class="fill-height" fluid v-if="user">
+  <template v-if="user">
     <VRow no-gutters align="center" justify="center">
       <VCol lg="4" md="6" sm="8" cols="12" class="px-3">
         <VForm @submit.prevent="submitSettings">
-          <VSelect
-            v-model="newLocale"
-            :items="langs"
-            label="Language"
-          ></VSelect>
+          <VSelect v-model="newLocale" :items="langs" label="Language" />
           <VSelect
             v-model="newCodecConversion"
             :items="codecConversions"
             :label="$t('settings.codec-conversion.label')"
-          ></VSelect>
+          />
           <VBtn color="primary" class="ma-2" type="submit">
             {{ $t("common.change-settings") }}
           </VBtn>
         </VForm>
       </VCol>
       <VCol lg="4" md="6" sm="8" cols="12" class="px-3">
-        <UserForm :user="user" redirectFallback="home" />
+        <UserForm :user="user" redirect-fallback="home" />
       </VCol>
     </VRow>
     <VRow>
       <VCol>
-        <AuthTokensTable :authTokens="authTokens" />
+        <AuthTokensTable :auth-tokens="authTokens" />
       </VCol>
     </VRow>
-  </VContainer>
+  </template>
 </template>
 
 <script>
@@ -42,28 +38,18 @@ import { useUserSettingsStore } from "../../store/user_settings";
 export default {
   name: "Settings",
   components: { AuthTokensTable, UserForm },
-  metaInfo() {
-    return { title: this.$t("common.settings") };
-  },
   data() {
     return {
       newLocale: "",
       langs: [
-        { value: "en", text: "English" },
-        { value: "nl", text: "Nederlands" },
+        { value: "en", title: "English" },
+        { value: "nl", title: "Nederlands" },
       ],
       newCodecConversion: null,
     };
   },
-  created() {
-    this.$nextTick(() => {
-      this.fillValues();
-    });
-  },
-  watch: {
-    locale() {
-      this.fillValues();
-    },
+  head() {
+    return { title: this.$t("common.settings") };
   },
   computed: {
     ...mapState(useAuthStore, { user: "currentUser" }),
@@ -76,14 +62,24 @@ export default {
       return this.storeCodecConversions.reduce(
         (acc, cc) => {
           acc.push({
-            text: cc.name,
+            title: cc.name,
             value: cc.id,
           });
           return acc;
         },
-        [{ text: this.$t("settings.codec-conversion.original"), value: null }],
+        [{ title: this.$t("settings.codec-conversion.original"), value: null }],
       );
     },
+  },
+  watch: {
+    locale() {
+      this.fillValues();
+    },
+  },
+  created() {
+    this.$nextTick(() => {
+      this.fillValues();
+    });
   },
   methods: {
     ...mapActions(useUserSettingsStore, ["setSettings"]),

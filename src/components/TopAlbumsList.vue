@@ -7,6 +7,8 @@
       <VCol class="d-flex justify-end">
         <VSwitch
           v-model="useAverage"
+          density="compact"
+          hide-details
           :label="$t('stats.useAverage')"
           class="mr-4"
         />
@@ -29,6 +31,9 @@ import albumSvgUrl from "@mdi/svg/svg/album.svg";
 
 export default {
   name: "TopAlbumsList",
+  components: {
+    TopList,
+  },
   props: {
     playStats: {
       type: Array,
@@ -47,9 +52,6 @@ export default {
     return {
       useAverage: true,
     };
-  },
-  components: {
-    TopList,
   },
   computed: {
     ...mapState(useAlbumsStore, ["albums"]),

@@ -1,49 +1,50 @@
 <template>
   <VDialog
+    v-if="isModerator"
     ref="dialogMerge"
     v-model="mergeModal"
-    v-if="isModerator"
     width="600px"
   >
-    <template v-slot:activator="{ on }">
+    <template #activator="{ props }">
       <VBtn
-        v-on="on"
         :disabled="disabled"
-        @click.stop.prevent
-        class="actions__button"
-        color="edit"
-        text
+        color="warning"
+        variant="text"
         icon
-        small
+        size="small"
+        v-bind="props"
+        @click.stop.prevent
       >
-        <VIcon>mdi-merge</VIcon>
+        <VIcon size="x-large">mdi-merge</VIcon>
       </VBtn>
     </template>
     <VCard>
       <VCardTitle>
-        <span class="text-h5">{{
-          $t("music.genre.merge-into", { obj: genre.name })
-        }}</span>
+        <span class="text-h5">
+          {{ $t("music.genre.merge-into", { obj: genre.name }) }}
+        </span>
       </VCardTitle>
       <VCardText>
         <VContainer>
           <VRow>
             <VCol cols="12">
               <VCombobox
+                v-model="mergeGenre"
                 :items="sortedGenres"
-                :filter="filterName"
-                cache-items
-                item-text="name"
+                :custom-filter="filterName"
+                item-title="name"
                 item-value="id"
                 :label="$tc('music.genres', 1)"
                 return-object
-                v-model="mergeGenre"
               >
-                <template v-slot:item="{ item }">
-                  {{ item.name }}
-                  <span class="grey--text pl-2 ml-auto text-body-2">
-                    {{ item.id }}
-                  </span>
+                <template #item="{ item, props }">
+                  <VListItem v-bind="props">
+                    <template #append>
+                      <span class="text-grey pl-2 text-body-2">
+                        {{ item.value }}
+                      </span>
+                    </template>
+                  </VListItem>
                 </template>
               </VCombobox>
             </VCol>

@@ -23,8 +23,11 @@ export function useBaseModelStore(
   const errorsStore = useErrorsStore();
   const authStore = useAuthStore();
 
+  const { promise: ready, resolve: resolveReady } = Promise.withResolvers();
+
   const _items = useStorageAsync(localStorageKey, {}, localForage, {
     serializer: RawObjectSerializer,
+    onReady: resolveReady,
   });
   const items = computed(() => _items.value);
   const startLoading = ref(new Date(0));
@@ -63,7 +66,7 @@ export function useBaseModelStore(
   function removeItem(id) {
     const newItems = {};
     for (let itemId in _items.value) {
-      if (itemId !== id) {
+      if (`${itemId}` !== `${id}`) {
         newItems[itemId] = _items.value[itemId];
       }
     }
@@ -83,6 +86,7 @@ export function useBaseModelStore(
   async function index(scope = baseScope) {
     const generator = apiModule.index(authStore.apiToken, scope);
     try {
+      await ready;
       await fetchAll(generator, addItems, setStartLoading, removeOld, scope);
       return true;
     } catch (error) {
@@ -107,6 +111,7 @@ export function useBaseModelStore(
   async function read(id) {
     try {
       const result = await apiModule.read(authStore.apiToken, id);
+      await ready;
       setItem(id, result);
       return result.id;
     } catch (error) {

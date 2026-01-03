@@ -1,22 +1,17 @@
 <template>
   <VContainer fluid>
     <VDataIterator
-      :footer-props="{
-        disableItemsPerPage: true,
-        itemsPerPageOptions: [12],
-        showFirstLastPage: true,
-      }"
+      v-if="artists.length > 0"
+      v-model:page="pagination.page"
       :items="filteredItems"
       :items-per-page="12"
-      :page.sync="pagination.page"
-      v-if="artists.length > 0"
     >
-      <template v-slot:header>
-        <VRow class="mb-2" align="baseline" justify="end">
+      <template #header>
+        <VRow class="mb-2" align="center" justify="end">
           <VCol lg="4" md="6" sm="8" xl="2" cols="12">
             <VTextField
-              :label="$t('common.search')"
               v-model="search"
+              :label="$t('common.search')"
               hide-details
               prepend-inner-icon="mdi-magnify"
               single-line
@@ -28,24 +23,34 @@
             class="ma-2"
             color="success"
           >
-            <VIcon left>mdi-plus</VIcon>
+            <VIcon start>mdi-plus</VIcon>
             {{ $t("music.artist.new") }}
           </VBtn>
         </VRow>
       </template>
-      <template v-slot:default="props">
+      <template #default="props">
         <VRow>
           <VCol
             v-for="item in props.items"
-            :key="item.id"
+            :key="item.raw.id"
             cols="6"
             sm="6"
             md="4"
             lg="3"
             xl="2"
           >
-            <ArtistCard :artist="item" />
+            <ArtistCard :artist="item.raw" />
           </VCol>
+        </VRow>
+      </template>
+      <template #footer="{ pageCount }">
+        <VRow class="mt-2" justify="center">
+          <VPagination
+            v-model="pagination.page"
+            density="compact"
+            :length="pageCount"
+            total-visible="5"
+          />
         </VRow>
       </template>
     </VDataIterator>
@@ -63,10 +68,10 @@ import { useArtistsStore } from "../../store/artists";
 export default {
   name: "Artists",
   components: { ArtistCard },
-  metaInfo() {
+  mixins: [Paginated, Searchable],
+  head() {
     return { title: this.$tc("music.artists", 2) };
   },
-  mixins: [Paginated, Searchable],
   computed: {
     ...mapState(useAuthStore, ["isModerator"]),
     ...mapState(useArtistsStore, { artists: "artistsByName" }),

@@ -1,71 +1,67 @@
 <template>
-  <span class="actions">
-    <VBtn
-      :to="{
-        name: 'stats',
-        query: { artist_id: artist.id },
-      }"
-      color="primary"
-      class="actions__button"
-      text
-      icon
-      small
-      v-if="extended"
-    >
-      <VIcon>mdi-chart-bar</VIcon>
-    </VBtn>
-    <AddToPlaylist :item="artist" type="artist" />
-    <EditReviewComment :item="artist" :update="flag" />
-    <VTooltip bottom :disabled="!waitingForReload" v-if="isModerator">
-      <template v-slot:activator="{ on }">
-        <span v-on="on">
-          <VBtn
-            :to="{
-              name: 'edit-artist',
-              params: { id: artist.id },
-              query: { redirect: $route.fullPath },
-            }"
-            :disabled="waitingForReload"
-            color="edit"
-            class="actions__button"
-            text
-            icon
-            small
-          >
-            <VIcon>mdi-pencil</VIcon>
-          </VBtn>
-        </span>
-      </template>
-      <span>{{ $t("common.disabled-while-loading") }}</span>
-    </VTooltip>
-    <VTooltip bottom :disabled="!waitingForReload" v-if="isModerator">
-      <template v-slot:activator="{ on }">
-        <span v-on="on">
-          <ArtistMergeDialog :artist="artist" :disabled="waitingForReload" />
-        </span>
-      </template>
-      <span>{{ $t("common.disabled-while-loading") }}</span>
-    </VTooltip>
-    <VTooltip bottom :disabled="!waitingForReload" v-if="isModerator">
-      <template v-slot:activator="{ on }">
-        <span v-on="on">
-          <VBtn
-            @click.stop.prevent="deleteArtist"
-            :disabled="waitingForReload"
-            color="danger"
-            class="actions__button mr-0"
-            href="#"
-            text
-            icon
-            small
-          >
-            <VIcon>mdi-delete</VIcon>
-          </VBtn>
-        </span>
-      </template>
-      <span>{{ $t("common.disabled-while-loading") }}</span>
-    </VTooltip>
-  </span>
+  <VBtn
+    v-if="extended"
+    :to="{
+      name: 'stats',
+      query: { artist_id: artist.id },
+    }"
+    color="primary"
+    variant="text"
+    icon
+    size="small"
+  >
+    <VIcon size="x-large">mdi-chart-bar</VIcon>
+  </VBtn>
+  <AddToPlaylist :item="artist" type="artist" />
+  <EditReviewComment :item="artist" :update="flag" />
+  <VTooltip v-if="isModerator" location="bottom" :disabled="!waitingForReload">
+    <template #activator="{ props }">
+      <span v-bind="props">
+        <VBtn
+          :to="{
+            name: 'edit-artist',
+            params: { id: artist.id },
+            query: { redirect: $route.fullPath },
+          }"
+          :disabled="waitingForReload"
+          color="warning"
+          variant="text"
+          icon
+          size="small"
+        >
+          <VIcon size="x-large">mdi-pencil</VIcon>
+        </VBtn>
+      </span>
+    </template>
+    <span>{{ $t("common.disabled-while-loading") }}</span>
+  </VTooltip>
+  <VTooltip v-if="isModerator" location="bottom" :disabled="!waitingForReload">
+    <template #activator="{ props }">
+      <span v-bind="props">
+        <ArtistMergeDialog :artist="artist" :disabled="waitingForReload" />
+      </span>
+    </template>
+    <span>{{ $t("common.disabled-while-loading") }}</span>
+  </VTooltip>
+  <VTooltip v-if="isModerator" location="bottom" :disabled="!waitingForReload">
+    <template #activator="{ props }">
+      <span v-bind="props">
+        <VBtn
+          :disabled="waitingForReload"
+          color="error"
+          class="mr-0"
+          href="#"
+          variant="text"
+          icon
+          size="small"
+          @click.stop.prevent="deleteArtist"
+        >
+          <VIcon size="x-large">mdi-delete</VIcon>
+        </VBtn>
+      </span>
+    </template>
+    <span>{{ $t("common.disabled-while-loading") }}</span>
+  </VTooltip>
 </template>
 
 <script>

@@ -9,9 +9,9 @@ import PlaylistForm from "../../components/PlaylistForm.vue";
 
 export default {
   name: "NewPlaylist",
-  metaInfo() {
+  components: { PlaylistForm },
+  head() {
     return { title: this.$t("music.playlist.new") };
   },
-  components: { PlaylistForm },
 };
 </script>

@@ -1,18 +1,13 @@
 <template>
   <VContainer fluid>
     <VDataIterator
-      :footer-props="{
-        disableItemsPerPage: true,
-        itemsPerPageOptions: [12],
-        showFirstLastPage: true,
-      }"
+      v-if="genres.length > 0"
+      v-model:page="pagination.page"
       :items="filteredItems"
       :items-per-page="12"
-      :page.sync="pagination.page"
-      v-if="genres.length > 0"
     >
-      <template v-slot:header>
-        <VRow class="mb-2" justify="end" align="baseline">
+      <template #header>
+        <VRow class="mb-2" justify="end" align="center">
           <VCol cols="12" sm="8" md="6" lg="4" xl="2">
             <VTextField
               v-model="search"
@@ -24,19 +19,29 @@
           </VCol>
         </VRow>
       </template>
-      <template v-slot:default="props">
+      <template #default="props">
         <VRow>
           <VCol
             v-for="item in props.items"
-            :key="item.name"
+            :key="item.raw.name"
             lg="3"
             md="4"
             sm="6"
             xl="2"
             cols="6"
           >
-            <GenreCard :genre="item" />
+            <GenreCard :genre="item.raw" />
           </VCol>
+        </VRow>
+      </template>
+      <template #footer="{ pageCount }">
+        <VRow class="mt-2" justify="center">
+          <VPagination
+            v-model="pagination.page"
+            density="compact"
+            :length="pageCount"
+            total-visible="5"
+          />
         </VRow>
       </template>
     </VDataIterator>
@@ -52,11 +57,11 @@ import { useGenresStore } from "../../store/genres";
 
 export default {
   name: "Genres",
-  metaInfo() {
-    return { title: this.$tc("music.genres", 2) };
-  },
   components: { GenreCard },
   mixins: [Paginated, Searchable],
+  head() {
+    return { title: this.$tc("music.genres", 2) };
+  },
   computed: {
     ...mapState(useGenresStore, { genres: "genresByName" }),
     filteredItems() {

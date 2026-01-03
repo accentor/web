@@ -2,7 +2,7 @@
   <VContainer class="fill-height" fluid>
     <VRow no-gutters align="center" justify="center">
       <VCol md="4" sm="8" cols="12">
-        <UserForm :showPermissions="true" />
+        <UserForm :show-permissions="true" />
       </VCol>
     </VRow>
   </VContainer>
@@ -14,7 +14,7 @@ import UserForm from "@/components/UserForm.vue";
 export default {
   name: "NewUser",
   components: { UserForm },
-  metaInfo() {
+  head() {
     return { title: this.$t("users.new") };
   },
 };

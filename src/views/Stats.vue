@@ -16,36 +16,36 @@
     </VRow>
     <div class="stats">
       <PlayCountCard
-        :playStats="playStats"
+        :play-stats="playStats"
         title=""
         class="stats__play-count"
       />
       <TopTracksList
         class="stats__top-tracks"
-        :playStats="playStats"
+        :play-stats="playStats"
         :use-track-length="useTrackLength"
         :title="$t('stats.topTracks')"
       />
       <PercentagePlayedCard
         class="stats__percentage-played"
-        :playStats="playStats"
+        :play-stats="playStats"
         :use-track-length="useTrackLength"
         :tracks="filteredTracks"
         :title="
-          artist_id
+          artistId
             ? $t('stats.percentageArtistPlayed', { artist: artistName })
             : $t('stats.percentageLibraryPlayed')
         "
       />
       <TopAlbumsList
         class="stats__top-albums"
-        :playStats="playStats"
+        :play-stats="playStats"
         :use-track-length="useTrackLength"
         :title="$t('stats.topAlbums')"
       />
       <TopArtistsList
         class="stats__top-artists"
-        :playStats="playStats"
+        :play-stats="playStats"
         :use-track-length="useTrackLength"
         :title="$t('stats.topArtists')"
       />
@@ -78,9 +78,6 @@ import { useAuthStore } from "../store/auth";
 
 export default {
   name: "Stats",
-  metaInfo() {
-    return { title: this.pageTitle };
-  },
   components: {
     DateRangeSelect,
     PercentagePlayedCard,
@@ -89,6 +86,12 @@ export default {
     TopAlbumsList,
     TopArtistsList,
     TopTracksList,
+  },
+  props: {
+    artistId: {
+      type: Number,
+      default: null,
+    },
   },
   data() {
     return {
@@ -100,17 +103,14 @@ export default {
       playStats: [],
     };
   },
-  props: {
-    artist_id: {
-      type: Number,
-      default: null,
-    },
+  head() {
+    return { title: this.pageTitle };
   },
   computed: {
     ...mapState(usePlaysStore, { plays: "allPlays" }),
     ...mapState(useArtistsStore, ["artists"]),
     artistName() {
-      return this.artist_id && this.artists[this.artist_id]?.name;
+      return this.artistId && this.artists[this.artistId]?.name;
     },
     pageTitle() {
       return this.artistName
@@ -127,15 +127,15 @@ export default {
       let plays = this.plays.filter(
         filterPlaysByPeriod(this.period.start, this.period.end),
       );
-      if (this.artist_id) {
+      if (this.artistId) {
         plays = plays.filter(filterPlaysByTracks(this.filteredTracks));
       }
       return plays;
     },
     filteredTracks() {
       const tracksStore = useTracksStore();
-      if (this.artist_id) {
-        return tracksStore.tracksFilterByArtist(this.artist_id);
+      if (this.artistId) {
+        return tracksStore.tracksFilterByArtist(this.artistId);
       }
       return tracksStore.allTracks;
     },
@@ -145,27 +145,10 @@ export default {
         scope.playedAfter(this.period.start);
         scope.playedBefore(this.period.end);
       }
-      if (this.artist_id) {
-        scope.artist(this.artist_id);
+      if (this.artistId) {
+        scope.artist(this.artistId);
       }
       return scope;
-    },
-  },
-  methods: {
-    ...mapActions(usePlaysStore, { reloadPlays: "index" }),
-    async loadPlayStats() {
-      const gen = $api.plays.stats(
-        useAuthStore().apiToken,
-        this.playStatsScope,
-      );
-      let done = false;
-      let results = [];
-      while (!done) {
-        let value = [];
-        ({ value, done } = await gen.next());
-        results.push(...value);
-      }
-      this.playStats = results;
     },
   },
   watch: {
@@ -189,10 +172,30 @@ export default {
       immediate: true,
     },
   },
+  methods: {
+    ...mapActions(usePlaysStore, { reloadPlays: "index" }),
+    async loadPlayStats() {
+      const gen = $api.plays.stats(
+        useAuthStore().apiToken,
+        this.playStatsScope,
+      );
+      let done = false;
+      let results = [];
+      while (!done) {
+        let value = [];
+        ({ value, done } = await gen.next());
+        results.push(...value);
+      }
+      this.playStats = results;
+    },
+  },
 };
 </script>
 
 <style lang="scss" scoped>
+@use "sass:map";
+@use "vuetify/settings";
+
 .stats {
   display: grid;
   grid-auto-columns: 1fr;
@@ -205,7 +208,7 @@ export default {
     "topArtists"
     "punchcard";
 
-  @media (min-width: map-get($grid-breakpoints, "sm")) {
+  @media #{map.get(settings.$display-breakpoints, "sm-and-up")} {
     grid-template-areas:
       "topTracks topTracks"
       "playCount percentagePlayed"
@@ -214,7 +217,7 @@ export default {
       "punchcard punchcard";
   }
 
-  @media (min-width: map-get($grid-breakpoints, "md")) {
+  @media #{map.get(settings.$display-breakpoints, "md-and-up")} {
     grid-template-areas:
       "topTracks topTracks topTracks topTracks playCount playCount"
       "topTracks topTracks topTracks topTracks percentagePlayed percentagePlayed"

@@ -1,11 +1,11 @@
 <template>
-  <VContainer class="fill-height" fluid v-if="genre">
+  <VContainer v-if="genre" class="fill-height" fluid>
     <VRow no-gutters align="center" justify="center">
       <VCol md="4" sm="8" cols="12" @change.once="isDirty = true">
         <VForm v-model="isValid" @submit.prevent="submit">
           <VTextField
-            :label="$t('common.name')"
             v-model="newGenre.name"
+            :label="$t('common.name')"
             :rules="[(v) => !!v || $t('errors.genre.name-blank')]"
             required
           />
@@ -24,9 +24,6 @@ import { useGenresStore } from "../../store/genres";
 
 export default {
   name: "EditGenre",
-  metaInfo() {
-    return { title: this.$t("page-titles.edit", { obj: this.genre?.name }) };
-  },
   data() {
     return {
       newGenre: {
@@ -36,11 +33,14 @@ export default {
       isValid: true,
     };
   },
-  async created() {
-    if (this.genre) {
-      await this.read(this.genre.id);
-      this.fillValues();
-    }
+  head() {
+    return { title: this.$t("page-titles.edit", { obj: this.genre?.name }) };
+  },
+  computed: {
+    ...mapState(useGenresStore, ["genres"]),
+    genre: function () {
+      return this.genres[this.$route.params.id];
+    },
   },
   watch: {
     genre: function () {
@@ -49,11 +49,11 @@ export default {
       }
     },
   },
-  computed: {
-    ...mapState(useGenresStore, ["genres"]),
-    genre: function () {
-      return this.genres[this.$route.params.id];
-    },
+  async created() {
+    if (this.genre) {
+      await this.read(this.genre.id);
+      this.fillValues();
+    }
   },
   methods: {
     ...mapActions(useGenresStore, ["read", "update"]),

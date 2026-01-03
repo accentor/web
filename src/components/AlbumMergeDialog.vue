@@ -1,45 +1,40 @@
 <template>
-  <VDialog
-    ref="dialogMerge"
-    v-model="mergeModal"
-    v-if="isModerator"
-    width="600px"
-  >
-    <template v-slot:activator="{ on }">
-      <VListItem :disabled="disabled" v-on="on">
-        <VListItemIcon>
-          <VIcon color="edit">mdi-merge</VIcon>
-        </VListItemIcon>
-        <VListItemContent>
-          <VListItemTitle>{{ $t("music.album.merge") }}</VListItemTitle>
-        </VListItemContent>
+  <VDialog v-if="isModerator" v-model="mergeModal" width="600px">
+    <template #activator="{ props }">
+      <VListItem :disabled="disabled" v-bind="props">
+        <template #prepend>
+          <VIcon color="warning">mdi-merge</VIcon>
+        </template>
+
+        <VListItemTitle>{{ $t("music.album.merge") }}</VListItemTitle>
       </VListItem>
     </template>
     <VCard>
       <VCardTitle>
-        <span class="text-h5">{{
-          $t("music.album.merge-into", { obj: album.name })
-        }}</span>
+        <span class="text-h5">
+          {{ $t("music.album.merge-into", { obj: album.name }) }}
+        </span>
       </VCardTitle>
       <VCardText>
         <VContainer>
           <VRow>
             <VCol cols="12">
               <VCombobox
+                v-model="mergeAlbum"
                 :items="sortedAlbums"
-                :filter="filterTitle"
-                cache-items
-                item-text="title"
+                :custom-filter="filterTitle"
+                item-title="title"
                 item-value="id"
                 :label="$tc('music.albums', 1)"
-                return-object
-                v-model="mergeAlbum"
               >
-                <template v-slot:item="{ item }">
-                  {{ item.title }}
-                  <span class="grey--text pl-2 ml-auto text-body-2">
-                    {{ item.id }}
-                  </span>
+                <template #item="{ item, props }">
+                  <VListItem v-bind="props">
+                    <template #append>
+                      <span class="text-grey pl-2 text-body-2">
+                        {{ item.value }}
+                      </span>
+                    </template>
+                  </VListItem>
                 </template>
               </VCombobox>
             </VCol>

@@ -1,43 +1,48 @@
 <template>
   <VContainer fluid>
     <VDataIterator
-      :footer-props="{
-        disableItemsPerPage: true,
-        itemsPerPageOptions: [numberOfItems],
-        showFirstLastPage: true,
-      }"
+      v-if="labels.length > 0"
+      v-model:page="pagination.page"
       :items="filteredItems"
       :items-per-page="numberOfItems"
-      :page.sync="pagination.page"
-      v-if="labels.length > 0"
     >
-      <template v-slot:header>
-        <VRow class="mb-2" justify="end">
+      <template #header>
+        <VRow class="mb-2" justify="end" align="center">
           <VCol lg="4" md="6" sm="8" xl="2" cols="12">
             <VTextField
+              v-if="labels.length > numberOfItems"
+              v-model="search"
               :label="$t('common.search')"
               hide-details
               prepend-inner-icon="mdi-magnify"
               single-line
-              v-if="labels.length > numberOfItems"
-              v-model="search"
             />
           </VCol>
         </VRow>
       </template>
-      <template v-slot:default="props">
+      <template #default="props">
         <VRow>
           <VCol
-            :key="item.id"
+            v-for="item in props.items"
+            :key="item.raw.id"
             lg="3"
             md="4"
             sm="6"
-            v-for="item in props.items"
             xl="2"
             cols="6"
           >
-            <LabelCard :label="item" />
+            <LabelCard :label="item.raw" />
           </VCol>
+        </VRow>
+      </template>
+      <template #footer="{ pageCount }">
+        <VRow class="mt-2" justify="center">
+          <VPagination
+            v-model="pagination.page"
+            density="compact"
+            :length="pageCount"
+            total-visible="5"
+          />
         </VRow>
       </template>
     </VDataIterator>
@@ -53,11 +58,11 @@ import { useLabelsStore } from "../../store/labels";
 
 export default {
   name: "Labels",
-  metaInfo() {
-    return { title: this.$tc("music.labels", 2) };
-  },
   components: { LabelCard },
   mixins: [Paginated, Searchable],
+  head() {
+    return { title: this.$tc("music.labels", 2) };
+  },
   computed: {
     ...mapState(useLabelsStore, { labels: "labelsByName" }),
     filteredItems() {
@@ -71,11 +76,11 @@ export default {
       );
     },
     numberOfItems() {
-      if (this.$vuetify.breakpoint.name === "xl") {
+      if (this.$vuetify.display.xlAndUp) {
         return 30;
-      } else if (this.$vuetify.breakpoint.name === "lg") {
+      } else if (this.$vuetify.display.lg) {
         return 20;
-      } else if (this.$vuetify.breakpoint.name === "md") {
+      } else if (this.$vuetify.display.md) {
         return 15;
       } else {
         return 12;

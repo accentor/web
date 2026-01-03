@@ -4,57 +4,56 @@
       {{ $tc("common.images", 1) }}
     </label>
     <input
-      @change="handleSelect"
-      class="d-none"
       ref="picker"
+      class="d-none"
       type="file"
       accept="image/*"
       name="image"
+      @change="handleSelect"
     />
     <VRow>
       <VCol
         class="flex-column flex-grow-0"
-        @dragover.prevent="/* just here to prevent file from opening */"
+        @dragover.prevent="() => {}"
         @drop.prevent="handleDrop"
       >
         <VImg
+          v-if="modelValue && modelValue.data"
           :src="previewSrc"
           height="200"
           width="200"
-          contain
-          v-if="value && value.data"
+          cover
         />
         <VImg
+          v-else-if="modelValue === null && currentImg"
           :src="currentImg"
           height="200"
           width="200"
-          contain
-          v-else-if="value === null && currentImg"
+          cover
         />
         <VImg
+          v-else
           :src="placeholder"
           :aspect-ratio="1"
-          class="grey lighten-3"
+          class="bg-grey-lighten-3"
           height="200"
           width="200"
-          contain
-          v-else
+          cover
         />
       </VCol>
       <VCol class="flex-column d-flex flex-grow-0 justify-center">
         <VBtn
-          @click="passthrough"
-          @dragover.prevent="/* just here to prevent file from opening */"
-          @drop.prevent="handleDrop"
           color="primary"
           class="ma-2"
-          dark
+          @click="passthrough"
+          @dragover.prevent="() => {}"
+          @drop.prevent="handleDrop"
         >
-          <VIcon left>mdi-upload</VIcon>
+          <VIcon start>mdi-upload</VIcon>
           {{ hasImage ? $t("common.replace") : $t("common.choose-image") }}
         </VBtn>
-        <VBtn @click.stop="clear" class="ma-2" elevation="0" v-if="hasImage">
-          <VIcon left>mdi-close</VIcon>
+        <VBtn v-if="hasImage" class="ma-2" elevation="0" @click.stop="clear">
+          <VIcon start>mdi-close</VIcon>
           clear
         </VBtn>
       </VCol>
@@ -66,12 +65,9 @@
 export default {
   name: "ImagePicker",
   props: {
-    value: {
+    modelValue: {
       type: Object,
-      required: false,
-      default: () => {
-        return { filename: null, mimetype: null, data: null };
-      },
+      required: true,
     },
     currentImg: {
       type: String,
@@ -83,16 +79,18 @@ export default {
       required: true,
     },
   },
+  emits: ["update:modelValue"],
   computed: {
     previewSrc() {
       return (
-        this.value && `data:${this.value.mimetype};base64, ${this.value.data}`
+        this.modelValue &&
+        `data:${this.modelValue.mimetype};base64, ${this.modelValue.data}`
       );
     },
     hasImage() {
       return (
-        (this.value === null && this.currentImg) ||
-        (this.value && this.value.data !== null)
+        (this.modelValue === null && this.currentImg) ||
+        (this.modelValue && this.modelValue.data !== null)
       );
     },
   },
@@ -114,7 +112,7 @@ export default {
     interpret(file) {
       const fileReader = new FileReader();
       fileReader.onload = (ev) => {
-        this.$emit("input", {
+        this.$emit("update:modelValue", {
           filename: file.name,
           mimetype: file.type,
           data: ev.target.result.replace(
@@ -126,7 +124,7 @@ export default {
       fileReader.readAsDataURL(file);
     },
     clear() {
-      this.$emit("input", {
+      this.$emit("update:modelValue", {
         filename: null,
         mimetype: null,
         data: null,

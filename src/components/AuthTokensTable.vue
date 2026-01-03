@@ -1,40 +1,48 @@
 <template>
   <div>
     <VDataTable
-      :footer-props="{
-        disableItemsPerPage: true,
-        itemsPerPageOptions: [30],
-        showFirstLastPage: true,
-      }"
+      ref="table"
       v-model="selected"
+      v-model:page="pagination.page"
+      item-selectable="isSelectable"
+      :items-per-page-options="[30]"
       :headers="headers"
       :items="authTokens"
       :items-per-page="30"
-      :page.sync="pagination.page"
       show-select
       class="elevation-3"
-      ref="table"
     >
-      <template v-slot:header.actions>
+      <template #header.actions>
         <VBtn
-          @click.stop.prevent="deleteAuthTokens"
-          color="danger"
+          color="error"
           class="ma-2"
           :disabled="selected.length === 0"
+          @click.stop.prevent="deleteAuthTokens"
         >
           {{ $t("users.auth.destroy-selected") }}
         </VBtn>
       </template>
-      <template v-slot:item.actions="props">
+      <template #bottom>
+        <VDivider />
+        <div class="text-center py-2">
+          <VPagination
+            v-model="pagination.page"
+            density="compact"
+            :length="pageCount"
+            total-visible="5"
+          />
+        </div>
+      </template>
+      <template #item.actions="props">
         <VBtn
-          @click.stop.prevent="deleteAuthToken(props.item)"
-          color="danger"
+          color="error"
           class="ma-1"
           href="#"
-          text
+          variant="text"
           icon
-          small
+          size="small"
           :disabled="props.item.isSelectable === false"
+          @click.stop.prevent="deleteAuthToken(props.item)"
         >
           <VIcon>mdi-delete</VIcon>
         </VBtn>
@@ -94,6 +102,9 @@ export default {
       }
       return result;
     },
+    pageCount() {
+      return Math.ceil(this.authTokens.length / 30);
+    },
   },
   methods: {
     ...mapActions(useAuthTokensStore, ["destroy"]),
@@ -105,8 +116,8 @@ export default {
     deleteAuthTokens: function () {
       if (confirm(this.$t("common.are-you-sure"))) {
         this.destroyAllDisabled = true;
-        this.selected.forEach((authToken) => {
-          this.destroy(authToken.id);
+        this.selected.forEach((authTokenId) => {
+          this.destroy(authTokenId);
         });
         this.destroyAllDisabled = false;
       }

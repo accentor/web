@@ -1,5 +1,5 @@
 <template>
-  <VContainer class="fill-height" fluid v-if="album">
+  <VContainer v-if="album" class="fill-height" fluid>
     <AlbumForm :album="album" />
   </VContainer>
 </template>
@@ -11,10 +11,10 @@ import { useAlbumsStore } from "../../store/albums";
 
 export default {
   name: "EditAlbum",
-  metaInfo() {
+  components: { AlbumForm },
+  head() {
     return { title: this.$t("page-titles.edit", { obj: this.album?.title }) };
   },
-  components: { AlbumForm },
   computed: {
     ...mapState(useAlbumsStore, ["albums"]),
     album: function () {

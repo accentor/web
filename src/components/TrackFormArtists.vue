@@ -1,100 +1,110 @@
 <template>
-  <Draggable :list="this.trackArtists" handle=".drag-handle">
-    <VRow :key="index" v-for="(item, index) of trackArtists" no-gutters>
-      <VCol class="flex-column flex-grow-0">
-        <div
-          tabindex="0"
-          :data-index="index"
-          @keyup.delete="removeArtist(index)"
-          @keyup="handleKeyUp($event.key, index)"
-          :ref="index"
-          class="d-flex justify-space-between fill-height flex-column py-2"
-        >
-          <VBtn
-            @click="moveArtist(index, -1)"
-            icon
-            small
-            class="ma-2"
-            :disabled="index === 0"
-            tabindex="-1"
+  <Draggable
+    v-model="trackArtists"
+    :item-key="getItemKey"
+    handle=".drag-handle"
+  >
+    <template #item="{ element: item, index }">
+      <VRow no-gutters>
+        <VCol class="flex-column flex-grow-0">
+          <div
+            :ref="index"
+            tabindex="0"
+            :data-index="index"
+            class="d-flex justify-space-between fill-height flex-column py-2"
+            @keyup.delete="removeArtist(index)"
+            @keyup="handleKeyUp($event.key, index)"
           >
-            <VIcon>mdi-menu-up</VIcon>
-          </VBtn>
-          <VBtn
-            small
-            icon
-            text
-            class="ma-2 drag-handle"
-            tabindex="-1"
-            :disabled="trackArtists.length === 1"
-          >
-            <VIcon>mdi-drag-horizontal-variant</VIcon>
-          </VBtn>
-          <VBtn
-            @click="moveArtist(index, 1)"
-            icon
-            small
-            class="ma-2"
-            :disabled="index === trackArtists.length - 1"
-            tabindex="-1"
-          >
-            <VIcon>mdi-menu-down</VIcon>
-          </VBtn>
-          <VBtn
-            @click="removeArtist(index)"
-            icon
-            small
-            class="ma-2"
-            tabindex="-1"
-          >
-            <VIcon>mdi-close</VIcon>
-          </VBtn>
-        </div>
-      </VCol>
-      <VCol>
-        <VCombobox
-          :items="sortedArtists"
-          :filter="filterName"
-          item-text="name"
-          item-value="id"
-          :label="$tc('music.artists', 2)"
-          :rules="rules"
-          return-object
-          v-model="item.artist_id"
-        />
-        <VTextField :label="$t('common.name')" v-model="item.name" />
-        <VRow>
-          <VCol>
-            <VAutocomplete
-              :items="roles"
-              :label="$t('music.artist.role')"
-              v-model="item.role"
-              class="flex-grow-2"
-            />
-          </VCol>
-          <VCol class="flex-grow-0 flex-shrink-0">
-            <VCheckbox
-              v-model="item.hidden"
-              color="red"
-              class="white-space-nowrap"
+            <VBtn
+              icon
+              size="small"
+              variant="text"
+              class="ma-2"
+              :disabled="index === 0"
+              tabindex="-1"
+              @click="moveArtist(index, -1)"
             >
-              <template v-slot:label>
-                {{ $t("music.artist.hide.label") }}
-                <VTooltip bottom>
-                  <template v-slot:activator="{ on, attrs }">
-                    <VIcon class="ml-2" :small="true" v-bind="attrs" v-on="on">
-                      mdi-information
-                    </VIcon>
-                  </template>
-                  <span>{{ $t("music.artist.hide.explanation") }}</span>
-                </VTooltip>
-              </template>
-            </VCheckbox>
-          </VCol>
-        </VRow>
-        <VDivider light v-if="index !== trackArtists.length - 1" />
-      </VCol>
-    </VRow>
+              <VIcon size="x-large">mdi-menu-up</VIcon>
+            </VBtn>
+            <VBtn
+              size="small"
+              icon
+              variant="text"
+              class="ma-2 drag-handle"
+              tabindex="-1"
+              :disabled="trackArtists.length === 1"
+            >
+              <VIcon size="x-large">mdi-drag-horizontal-variant</VIcon>
+            </VBtn>
+            <VBtn
+              icon
+              size="small"
+              variant="text"
+              class="ma-2"
+              :disabled="index === trackArtists.length - 1"
+              tabindex="-1"
+              @click="moveArtist(index, 1)"
+            >
+              <VIcon size="x-large">mdi-menu-down</VIcon>
+            </VBtn>
+            <VBtn
+              icon
+              size="small"
+              variant="text"
+              class="ma-2"
+              tabindex="-1"
+              @click="removeArtist(index)"
+            >
+              <VIcon size="x-large">mdi-close</VIcon>
+            </VBtn>
+          </div>
+        </VCol>
+        <VCol>
+          <VCombobox
+            v-model="item.artist_id"
+            :items="sortedArtists"
+            :custom-filter="filterName"
+            item-title="name"
+            item-value="id"
+            :label="$tc('music.artists', 2)"
+            :rules="rules"
+            return-object
+          />
+          <VTextField v-model="item.name" :label="$t('common.name')" />
+          <VRow>
+            <VCol>
+              <VAutocomplete
+                v-model="item.role"
+                :items="roles"
+                :label="$t('music.artist.role')"
+              />
+            </VCol>
+            <VCol class="flex-shrink-1">
+              <VCheckbox v-model="item.hidden" color="red">
+                <template #label>
+                  <span class="no-break-word white-space-nowrap">
+                    {{ $t("music.artist.hide.label") }}
+                  </span>
+                  <VTooltip location="bottom">
+                    <template #activator="{ props }">
+                      <VIcon
+                        class="ml-2"
+                        :size="true ? 'small' : undefined"
+                        v-bind="props"
+                      >
+                        mdi-information
+                      </VIcon>
+                    </template>
+                    <span>{{ $t("music.artist.hide.explanation") }}</span>
+                  </VTooltip>
+                </template>
+              </VCheckbox>
+            </VCol>
+          </VRow>
+          <VDivider v-if="index !== trackArtists.length - 1" light />
+        </VCol>
+      </VRow>
+    </template>
   </Draggable>
 </template>
 
@@ -108,57 +118,47 @@ export default {
   components: {
     Draggable,
   },
+  props: {
+    modelValue: {
+      type: Array,
+      required: true,
+    },
+  },
+  emits: ["update:modelValue"],
   data() {
     return {
       roles: [
         {
           value: "main",
-          text: this.$t("music.artist.roles.main"),
+          title: this.$t("music.artist.roles.main"),
         },
         {
           value: "performer",
-          text: this.$t("music.artist.roles.performer"),
+          title: this.$t("music.artist.roles.performer"),
         },
         {
           value: "composer",
-          text: this.$t("music.artist.roles.composer"),
+          title: this.$t("music.artist.roles.composer"),
         },
         {
           value: "conductor",
-          text: this.$t("music.artist.roles.conductor"),
+          title: this.$t("music.artist.roles.conductor"),
         },
         {
           value: "remixer",
-          text: this.$t("music.artist.roles.remixer"),
+          title: this.$t("music.artist.roles.remixer"),
         },
         {
           value: "producer",
-          text: this.$t("music.artist.roles.producer"),
+          title: this.$t("music.artist.roles.producer"),
         },
         {
           value: "arranger",
-          text: this.$t("music.artist.roles.arranger"),
+          title: this.$t("music.artist.roles.arranger"),
         },
       ],
       trackArtists: [],
     };
-  },
-  props: {
-    value: {
-      type: Array,
-      required: true,
-    },
-  },
-  watch: {
-    trackArtists(newValue) {
-      this.$emit("update:value", newValue);
-    },
-    value: {
-      handler() {
-        this.trackArtists = this.value;
-      },
-      immediate: true,
-    },
   },
   computed: {
     ...mapState(useArtistsStore, { sortedArtists: "artistsByName" }),
@@ -168,6 +168,17 @@ export default {
       return [artistValidation];
     },
   },
+  watch: {
+    trackArtists(newValue) {
+      this.$emit("update:modelValue", newValue);
+    },
+    modelValue: {
+      handler() {
+        this.trackArtists = this.modelValue;
+      },
+      immediate: true,
+    },
+  },
   methods: {
     filterName(item, queryText) {
       const search = queryText.toLowerCase();
@@ -175,6 +186,9 @@ export default {
         item.name.toLowerCase().indexOf(search) > -1 ||
         item.normalized_name.indexOf(search) > -1
       );
+    },
+    getItemKey(item) {
+      return this.trackArtists.indexOf(item);
     },
     removeArtist(index) {
       this.trackArtists.splice(index, 1);
