@@ -18,7 +18,7 @@
       :src="albumSvgUrl"
       class="bg-grey-lighten-3"
     />
-    <VCardTitle class="pb-0 d-block text-truncate" :title="full_title">
+    <VCardTitle class="pb-0 d-block text-truncate" :title="fullTitle">
       {{ album.title }}&nbsp;
       <span v-if="album.edition_description !== null" class="text-grey">
         ({{ album.edition_description }})
@@ -30,7 +30,7 @@
     <VCardText>
       <div class="text-grey">{{ album.release }}</div>
       <div v-if="labelForCatNr" class="text-grey">
-        {{ catalogueNumber || $t("music.label.catalogue-number-none") }}
+        {{ catalogueNumber || I18n.t("music.label.catalogue-number-none") }}
       </div>
     </VCardText>
     <VCardActions>
@@ -38,54 +38,43 @@
     </VCardActions>
   </VCard>
 </template>
-<script>
-// @ts-nocheck
+
+<script setup lang="ts">
+import type { Album, Label } from "@accentor/api-client-js";
+import { computed, ref } from "vue";
+import { useI18n } from "vue-i18n";
 import AlbumActions from "./AlbumActions.vue";
 import AlbumArtists from "./AlbumArtists.vue";
-import albumSvgUrl from "@mdi/svg/svg/album.svg";
+import albumSvgUrl from "@mdi/svg/svg/album.svg" with { type: "url" };
 
-export default {
-  name: "AlbumCard",
-  components: { AlbumArtists, AlbumActions },
-  props: {
-    album: {
-      type: Object,
-      required: true,
-    },
-    labelForCatNr: {
-      type: Object,
-      required: false,
-      default: null,
-    },
-  },
-  data() {
-    return {
-      imageUnavailable: false,
-      albumSvgUrl,
-    };
-  },
-  computed: {
-    catalogueNumber() {
-      if (this.labelForCatNr) {
-        return this.album.album_labels.find(
-          (al) => al.label_id === this.labelForCatNr.id,
-        ).catalogue_number;
-      } else {
-        return undefined;
-      }
-    },
-    full_title() {
-      let full_title = this.album.title;
-      if (this.album.edition_description) {
-        full_title += ` ${this.album.edition_description}`;
-      }
-      return full_title;
-    },
-  },
-  methods: {
-    setImageUnavailable() {
-      this.imageUnavailable = true;
-    },
-  },
-};
+const I18n = useI18n();
+
+interface Props {
+  album: Album & { loaded: Date };
+  labelForCatNr?: Label;
+}
+const props = defineProps<Props>();
+
+const imageUnavailable = ref<boolean>(false);
+const catalogueNumber = computed<string | undefined>(() => {
+  if (props.labelForCatNr) {
+    const albumLabel = props.album.album_labels.find(
+      (al) => al.label_id === props.labelForCatNr!.id,
+    );
+    return albumLabel?.catalogue_number ?? undefined;
+  }
+  return undefined;
+});
+
+const fullTitle = computed<string>(() => {
+  let result = props.album.title;
+  if (props.album.edition_description) {
+    result += ` ${props.album.edition_description}`;
+  }
+  return result;
+});
+
+function setImageUnavailable(): void {
+  imageUnavailable.value = true;
+}
 </script>

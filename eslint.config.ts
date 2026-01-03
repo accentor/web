@@ -39,7 +39,10 @@ export default defineConfigWithVueTs(
     },
   },
   {
-    files: ["**/*.ts"],
+    files: [
+      "**/*.ts",
+      "**/components/{AddToPlaylist,AlbumActions,AlbumArtists,AlbumCard,AlbumMergeDialog,EditReviewComment,Errors}.vue",
+    ],
     rules: {
       "@typescript-eslint/explicit-function-return-type": "error",
       "@typescript-eslint/explicit-module-boundary-types": "error",
