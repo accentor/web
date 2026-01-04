@@ -56,28 +56,23 @@
   </VContainer>
 </template>
 
-<script>
-// @ts-nocheck
-import { mapActions, mapState } from "pinia";
-import { useAuthStore } from "../../store/auth";
-import { useUsersStore } from "../../store/users";
+<script setup lang="ts">
+import { storeToRefs } from "pinia";
+import { useAuthStore } from "@/store/auth";
+import { useUsersStore } from "@/store/users";
+import { useHead } from "@unhead/vue";
+import i18n from "@/i18n";
 
-export default {
-  name: "Users",
-  head() {
-    return { title: this.$tc("users.users", 2) };
-  },
-  computed: {
-    ...mapState(useAuthStore, ["isAdmin"]),
-    ...mapState(useUsersStore, { users: "usersByName" }),
-  },
-  methods: {
-    ...mapActions(useUsersStore, ["destroy"]),
-    deleteUser: function (id) {
-      if (confirm(this.$t("common.are-you-sure"))) {
-        this.destroy(id);
-      }
-    },
-  },
-};
+const usersStore = useUsersStore();
+
+useHead({ title: i18n.global.tc("users.users", 2) });
+
+const { isAdmin } = storeToRefs(useAuthStore());
+const { usersByName: users } = storeToRefs(usersStore);
+
+async function deleteUser(id: number): Promise<void> {
+  if (confirm(i18n.global.t("common.are-you-sure"))) {
+    await usersStore.destroy(id);
+  }
+}
 </script>

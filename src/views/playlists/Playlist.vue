@@ -71,18 +71,17 @@
 </template>
 
 <script>
-// @ts-nocheck
 import { mapActions, mapState } from "pinia";
 import AlbumCard from "../../components/AlbumCard.vue";
 import ArtistCard from "../../components/ArtistCard.vue";
 import TracksTable from "../../components/TracksTable.vue";
 import PlaylistActions from "../../components/PlaylistActions.vue";
 import Paginated from "../../mixins/Paginated";
-import { usePlaylistsStore } from "../../store/playlists";
-import { useUsersStore } from "../../store/users";
-import { useArtistsStore } from "../../store/artists";
-import { useAlbumsStore } from "../../store/albums";
-import { useTracksStore } from "../../store/tracks";
+import { usePlaylistsStore } from "@/store/playlists";
+import { useUsersStore } from "@/store/users";
+import { useArtistsStore } from "@/store/artists";
+import { useAlbumsStore } from "@/store/albums";
+import { useTracksStore } from "@/store/tracks";
 
 export default {
   name: "Playlist",

@@ -4,6 +4,7 @@ import tseslint from "typescript-eslint";
 import globals from "globals";
 import prettier from "@vue/eslint-config-prettier";
 import vue from "eslint-plugin-vue";
+import vueParser from "vue-eslint-parser";
 import vuetify from "eslint-plugin-vuetify";
 import {
   defineConfigWithVueTs,
@@ -20,6 +21,12 @@ export default defineConfigWithVueTs(
   },
   globalIgnores(["**/dist/**"]),
   eslint.configs.recommended,
+  {
+    files: ["**/*.vue"],
+    languageOptions: {
+      parser: vueParser,
+    },
+  },
   tseslint.configs.strict,
   tseslint.configs.stylistic,
   ...vue.configs["flat/recommended"],

@@ -59,6 +59,7 @@ export const useUsersStore = defineStore("users", () => {
 
   return {
     users,
+    restored,
     allUsers,
     usersByName,
     index,

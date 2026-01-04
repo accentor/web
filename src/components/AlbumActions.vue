@@ -105,7 +105,7 @@ import { storeToRefs } from "pinia";
 import { useRoute } from "vue-router";
 import { computed } from "vue";
 import type { Album } from "@accentor/api-client-js";
-import i18n from "@/i18n.ts";
+import i18n from "@/i18n";
 import EditReviewComment from "./EditReviewComment.vue";
 import AddToPlaylist from "./AddToPlaylist.vue";
 import AlbumMergeDialog from "./AlbumMergeDialog.vue";

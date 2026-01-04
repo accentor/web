@@ -8,15 +8,10 @@
   </VContainer>
 </template>
 
-<script>
-// @ts-nocheck
+<script setup lang="ts">
+import { useHead } from "@unhead/vue";
 import UserForm from "@/components/UserForm.vue";
+import i18n from "@/i18n";
 
-export default {
-  name: "NewUser",
-  components: { UserForm },
-  head() {
-    return { title: this.$t("users.new") };
-  },
-};
+useHead({ title: i18n.global.t("users.new") });
 </script>

@@ -13,22 +13,16 @@
   </VContainer>
 </template>
 
-<script>
-// @ts-nocheck
-import { mapState } from "pinia";
-import TracksTable from "../../components/TracksTable.vue";
-import { useAuthStore } from "../../store/auth";
-import { useTracksStore } from "../../store/tracks";
+<script setup lang="ts">
+import { storeToRefs } from "pinia";
+import TracksTable from "@/components/TracksTable.vue";
+import { useAuthStore } from "@/store/auth";
+import { useTracksStore } from "@/store/tracks";
+import { useHead } from "@unhead/vue";
+import i18n from "@/i18n";
 
-export default {
-  name: "EmptyTracks",
-  components: { TracksTable },
-  head() {
-    return { title: this.$t("music.tracks-without-audio") };
-  },
-  computed: {
-    ...mapState(useAuthStore, ["isModerator"]),
-    ...mapState(useTracksStore, { tracks: "tracksEmpty" }),
-  },
-};
+const { isModerator } = storeToRefs(useAuthStore());
+const { tracksEmpty: tracks } = storeToRefs(useTracksStore());
+
+useHead({ title: i18n.global.t("music.tracks-without-audio") });
 </script>

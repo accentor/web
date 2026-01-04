@@ -29,27 +29,21 @@
   </VCard>
 </template>
 
-<script>
-// @ts-nocheck
+<script setup lang="ts">
+import { ref } from "vue";
+import type { Artist } from "@accentor/api-client-js";
 import ArtistActions from "./ArtistActions.vue";
-import artistSvgUrl from "@mdi/svg/svg/account-music.svg";
+import artistSvgUrl from "@mdi/svg/svg/account-music.svg" with { type: "url" };
 
-export default {
-  name: "ArtistCard",
-  components: { ArtistActions },
-  props: {
-    artist: { type: Object, required: true },
-  },
-  data() {
-    return {
-      imageUnavailable: false,
-      artistSvgUrl,
-    };
-  },
-  methods: {
-    setImageUnavailable() {
-      this.imageUnavailable = true;
-    },
-  },
-};
+interface Props {
+  artist: Artist & { loaded: Date };
+}
+
+defineProps<Props>();
+
+const imageUnavailable = ref<boolean>(false);
+
+function setImageUnavailable(): void {
+  imageUnavailable.value = false;
+}
 </script>

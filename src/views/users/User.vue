@@ -11,28 +11,25 @@
   </VContainer>
 </template>
 
-<script>
-// @ts-nocheck
-import { mapState } from "pinia";
-import { useUsersStore } from "../../store/users";
+<script setup lang="ts">
+import { computed, watch } from "vue";
+import { useRoute, useRouter } from "vue-router";
+import { useHead } from "@unhead/vue";
+import { useUsersStore } from "@/store/users";
 
-export default {
-  name: "User",
-  head() {
-    return { title: this.user.name };
-  },
-  computed: {
-    ...mapState(useUsersStore, ["users"]),
-    user: function () {
-      return this.users[this.$route.params.id];
-    },
-  },
-  watch: {
-    user: function () {
-      if (this.user === undefined) {
-        this.$router.go(-1);
-      }
-    },
-  },
-};
+const usersStore = useUsersStore();
+const route = useRoute();
+const router = useRouter();
+
+const user = computed(() => usersStore.users[route.params.id as string]);
+const userName = computed(() => user.value?.name);
+
+useHead({ title: userName });
+
+watch(user, async () => {
+  await usersStore.restored;
+  if (!user.value) {
+    router.go(-1);
+  }
+});
 </script>

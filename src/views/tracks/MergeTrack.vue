@@ -73,7 +73,7 @@
                   <span class="my-auto">
                     {{
                       selectedTrack.album_id
-                        ? albums[selectedTrack.album_id].title
+                        ? albums[selectedTrack.album_id]?.title
                         : "-"
                     }}
                   </span>
@@ -225,95 +225,125 @@
   </div>
 </template>
 
-<script>
-// @ts-nocheck
+<script setup lang="ts">
+import { storeToRefs } from "pinia";
 import TrackGenres from "@/components/TrackGenres.vue";
 import TrackArtists from "@/components/TrackArtists.vue";
 import TracksTable from "@/components/TracksTable.vue";
-import { mapState, mapActions } from "pinia";
-import { useAlbumsStore } from "../../store/albums";
-import { useTracksStore } from "../../store/tracks";
+import { useAlbumsStore } from "@/store/albums";
+import { useTracksStore } from "@/store/tracks";
+import { computed, ref } from "vue";
+import { useRoute, useRouter } from "vue-router";
+import i18n from "@/i18n";
+import { useHead } from "@unhead/vue";
+import type { TrackArtist } from "@accentor/api-client-js";
 
-export default {
-  name: "MergeTrack",
-  components: { TrackArtists, TrackGenres, TracksTable },
-  data() {
+const albumsStore = useAlbumsStore();
+const tracksStore = useTracksStore();
+
+const router = useRouter();
+const route = useRoute();
+
+const reversed = ref<boolean>(false);
+const newID = ref<number | null>(null);
+const limitTracksToAlbum = ref<boolean>(true);
+
+const { albums } = storeToRefs(albumsStore);
+
+const track = computed(() => tracksStore.tracks[route.params.id as string]);
+const title = computed(() =>
+  i18n.global.t("page-titles.merge", { obj: track.value?.title }),
+);
+useHead({ title });
+
+const mergeOptions = computed(() => {
+  if (!track.value) {
+    return [];
+  }
+
+  let tracks;
+  if (limitTracksToAlbum.value) {
+    tracks = tracksStore.tracksFilterByAlbum(track.value.album_id);
+  } else {
+    tracks = tracksStore.tracksByAlbumAndNumber;
+  }
+  return tracks.filter((id) => `${id}` !== route.params.id);
+});
+
+interface TableValues {
+  number: number | undefined;
+  title: string;
+  album_id: number | null;
+  track_artists: TrackArtist[] | null;
+  genre_ids: number[] | null;
+  filename: string | null;
+}
+
+const selectedTrack = computed<TableValues>(() => {
+  if (newID.value) {
+    const track = tracksStore.tracks[`${newID.value}`];
+    if (track) {
+      return track;
+    }
+  }
+  return {
+    number: undefined,
+    title: "-",
+    album_id: null,
+    track_artists: null,
+    genre_ids: null,
+    filename: "-",
+  };
+});
+
+const result = computed<
+  TableValues & { file: { name: string | null; selected: boolean } }
+>(() => {
+  if (!track.value) {
     return {
-      reversed: false,
-      newID: null,
-      limitTracksToAlbum: true,
+      ...selectedTrack.value,
+      file: { name: "-", selected: false },
     };
-  },
-  head() {
-    return { title: this.$t("page-titles.merge", { obj: this.track?.title }) };
-  },
-  computed: {
-    ...mapState(useAlbumsStore, ["albums"]),
-    ...mapState(useTracksStore, { tracks: "tracksByAlbumAndNumber" }),
-    mergeOptions: function () {
-      const tracksStore = useTracksStore();
-      if (this.limitTracksToAlbum) {
-        return tracksStore
-          .tracksFilterByAlbum(this.track.album_id)
-          .filter((t) => `${t.id}` !== `${this.$route.params.id}`);
-      } else {
-        return this.tracks.filter(
-          (t) => `${t.id}` !== `${this.$route.params.id}`,
-        );
-      }
-    },
-    track: function () {
-      return this.tracks.find(
-        ({ id }) => `${id}` === `${this.$route.params.id}`,
-      );
-    },
-    result: function () {
-      if (this.reversed) {
-        const file = this.track.filename
-          ? { name: this.track.filename, selected: false }
-          : { name: this.selectedTrack.filename, selected: true };
-        return {
-          ...this.selectedTrack,
-          file,
-        };
-      } else {
-        const file = this.selectedTrack.filename
-          ? { name: this.selectedTrack.filename, selected: true }
-          : { name: this.track.filename, selected: false };
-        return {
-          ...this.track,
-          file,
-        };
-      }
-    },
-    selectedTrack: function () {
-      if (this.newID) {
-        return this.tracks.find(({ id }) => id === this.newID);
-      } else {
-        return {
-          title: "-",
-          album_id: null,
-          track_artists: null,
-          genre_ids: null,
-          filename: "-",
-        };
-      }
-    },
-  },
-  methods: {
-    ...mapActions(useTracksStore, ["merge"]),
-    setNewID(id) {
-      this.newID = id;
-    },
-    submit() {
-      const newID = this.reversed ? this.newID : this.track.id;
-      const oldID = this.reversed ? this.track.id : this.newID;
-      this.merge(newID, oldID).finally(() =>
-        this.$router.push(this.$route.query.redirect || { name: "tracks" }),
-      );
-    },
-  },
-};
+  }
+
+  if (reversed.value) {
+    const file = track.value.filename
+      ? { name: track.value.filename, selected: false }
+      : { name: selectedTrack.value.filename, selected: true };
+    return {
+      ...selectedTrack.value,
+      file,
+    };
+  } else {
+    const file = selectedTrack.value.filename
+      ? { name: selectedTrack.value.filename, selected: true }
+      : { name: track.value.filename, selected: false };
+    return {
+      ...track.value,
+      file,
+    };
+  }
+});
+
+function setNewID(id: number): void {
+  newID.value = id;
+}
+
+async function submit(): Promise<void> {
+  if (!newID.value || !track.value) {
+    return;
+  }
+
+  try {
+    const newId = reversed.value ? newID.value : track.value.id;
+    const oldId = reversed.value ? track.value.id : newID.value;
+    await tracksStore.merge(newId, oldId);
+  } finally {
+    await router.push(
+      (route.query.redirect as string | undefined) || { name: "tracks" },
+    );
+  }
+}
 </script>
 
 <style lang="scss">
