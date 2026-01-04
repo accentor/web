@@ -104,6 +104,7 @@ export const useArtistsStore = defineStore("artists", () => {
 
   return {
     artists,
+    restored,
     allArtists,
     artistsByName,
     artistsFlagged,

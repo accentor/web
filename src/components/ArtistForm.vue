@@ -40,7 +40,7 @@
 import { mapActions } from "pinia";
 import ImagePicker from "./ImagePicker.vue";
 import { useArtistsStore } from "../store/artists";
-import artistSvgUrl from "@mdi/svg/svg/account-music.svg";
+import artistSvgUrl from "@mdi/svg/svg/account-music.svg" with { type: "url" };
 
 export default {
   name: "ArtistForm",

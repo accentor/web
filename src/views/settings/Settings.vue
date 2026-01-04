@@ -26,78 +26,68 @@
   </template>
 </template>
 
-<script>
-// @ts-nocheck
-import { mapActions, mapState } from "pinia";
-import AuthTokensTable from "../../components/AuthTokensTable.vue";
+<script setup lang="ts">
+import { storeToRefs } from "pinia";
+import AuthTokensTable from "@/components/AuthTokensTable.vue";
 import UserForm from "@/components/UserForm.vue";
-import { useAuthStore } from "../../store/auth";
-import { useAuthTokensStore } from "../../store/auth_tokens";
-import { useCodecConversionsStore } from "../../store/codec_conversions";
-import { useUserSettingsStore } from "../../store/user_settings";
+import { useAuthStore } from "@/store/auth";
+import { useAuthTokensStore } from "@/store/auth_tokens";
+import { useCodecConversionsStore } from "@/store/codec_conversions";
+import { useUserSettingsStore } from "@/store/user_settings";
+import { computed, onMounted, ref, watch } from "vue";
+import { useHead } from "@unhead/vue";
+import i18n from "@/i18n";
 
-export default {
-  name: "Settings",
-  components: { AuthTokensTable, UserForm },
-  data() {
-    return {
-      newLocale: "",
-      langs: [
-        { value: "en", title: "English" },
-        { value: "nl", title: "Nederlands" },
-      ],
-      newCodecConversion: null,
-    };
-  },
-  head() {
-    return { title: this.$t("common.settings") };
-  },
-  computed: {
-    ...mapState(useAuthStore, { user: "currentUser" }),
-    ...mapState(useAuthTokensStore, ["authTokens"]),
-    ...mapState(useCodecConversionsStore, {
-      storeCodecConversions: "allCodecConversions",
-    }),
-    ...mapState(useUserSettingsStore, ["locale", "codecConversion"]),
-    codecConversions() {
-      return this.storeCodecConversions.reduce(
-        (acc, cc) => {
-          acc.push({
-            title: cc.name,
-            value: cc.id,
-          });
-          return acc;
-        },
-        [{ title: this.$t("settings.codec-conversion.original"), value: null }],
-      );
+const codecConversionsStore = useCodecConversionsStore();
+const userSettingsStore = useUserSettingsStore();
+
+useHead({ title: i18n.global.t("common.settings") });
+
+const newLocale = ref<"en" | "nl" | "">("");
+
+const langs = [
+  { value: "en", title: "English" },
+  { value: "nl", title: "Nederlands" },
+];
+
+const newCodecConversion = ref<number | null>(null);
+
+const { currentUser: user } = storeToRefs(useAuthStore());
+const { authTokens } = storeToRefs(useAuthTokensStore());
+const { locale, codecConversion } = storeToRefs(userSettingsStore);
+
+const codecConversions = computed(() => {
+  return [
+    {
+      title: i18n.global.t("settings.codec-conversion.original"),
+      value: null as number | null,
     },
-  },
-  watch: {
-    locale() {
-      this.fillValues();
-    },
-  },
-  created() {
-    this.$nextTick(() => {
-      this.fillValues();
+  ].concat(
+    ...codecConversionsStore.allCodecConversions.map((cc) => ({
+      title: cc.name,
+      value: cc.id,
+    })),
+  );
+});
+
+watch(locale, fillValues);
+onMounted(fillValues);
+
+function fillValues(): void {
+  if (locale.value) {
+    newLocale.value = locale.value;
+  }
+  if (codecConversion.value) {
+    newCodecConversion.value = codecConversion.value.id;
+  }
+}
+
+function submitSettings(): void {
+  if (newLocale.value) {
+    userSettingsStore.setSettings({
+      locale: newLocale.value,
+      codecConversionID: newCodecConversion.value,
     });
-  },
-  methods: {
-    ...mapActions(useUserSettingsStore, ["setSettings"]),
-    fillValues() {
-      if (this.locale) {
-        this.newLocale = this.locale;
-      }
-      if (this.codecConversion) {
-        this.newCodecConversion = this.codecConversion.id;
-      }
-    },
-    submitSettings: function () {
-      this.setSettings({
-        locale: this.newLocale,
-        codecConversionID: this.newCodecConversion,
-      });
-    },
-  },
-};
+  }
+}
 </script>

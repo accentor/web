@@ -12,7 +12,7 @@ import { calcPlayStatsForArtists } from "@/reducers";
 import TopList from "@/components/TopList.vue";
 import { useArtistsStore } from "../store/artists";
 import { useTracksStore } from "../store/tracks";
-import artistSvgUrl from "@mdi/svg/svg/account-music.svg";
+import artistSvgUrl from "@mdi/svg/svg/account-music.svg" with { type: "url" };
 
 export default {
   name: "TopArtistsList",

@@ -86,6 +86,7 @@ export const useGenresStore = defineStore("genres", () => {
 
   return {
     genres,
+    restored,
     allGenres,
     genresByName,
     startLoading,
