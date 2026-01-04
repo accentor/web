@@ -6,16 +6,16 @@
 
 <script setup lang="ts">
 import { computed } from "vue";
-import { useRoute } from "vue-router";
 import { useHead } from "@unhead/vue";
 import ArtistForm from "@/components/ArtistForm.vue";
 import { useArtistsStore } from "@/store/artists";
 import i18n from "@/i18n";
 
+const props = defineProps<{ id: string }>();
+
 const artistsStore = useArtistsStore();
-const route = useRoute();
 const artist = computed(() => {
-  return artistsStore.artists[route.params.id as string];
+  return artistsStore.artists[props.id];
 });
 const title = computed(() => {
   return i18n.global.t("page-titles.edit", { obj: artist.value?.name ?? "" });

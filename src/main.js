@@ -1,15 +1,17 @@
 import "@mdi/font/css/materialdesignicons.css";
 import "roboto-fontface/css/roboto/roboto-fontface.css";
+
+import { createPinia } from "pinia";
+import { useI18n } from "vue-i18n";
+import { createHead, VueHeadMixin } from "@unhead/vue/client";
 import { createApp } from "vue";
 import "vuetify/styles";
 import { createVuetify } from "vuetify";
 import { createVueI18nAdapter } from "vuetify/locale/adapters/vue-i18n";
+
 import Root from "./Root.vue";
-import router from "./router";
-import i18n from "./i18n";
-import { createPinia } from "pinia";
-import { useI18n } from "vue-i18n";
-import { createHead, VueHeadMixin } from "@unhead/vue/client";
+import router from "@/router";
+import i18n from "@/i18n";
 
 const pinia = createPinia();
 const head = createHead({

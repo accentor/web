@@ -244,13 +244,15 @@ const tracksStore = useTracksStore();
 const router = useRouter();
 const route = useRoute();
 
+const props = defineProps<{ id: string }>();
+
 const reversed = ref<boolean>(false);
 const newID = ref<number | null>(null);
 const limitTracksToAlbum = ref<boolean>(true);
 
 const { albums } = storeToRefs(albumsStore);
 
-const track = computed(() => tracksStore.tracks[route.params.id as string]);
+const track = computed(() => tracksStore.tracks[props.id]);
 const title = computed(() =>
   i18n.global.t("page-titles.merge", { obj: track.value?.title }),
 );
@@ -267,7 +269,7 @@ const mergeOptions = computed(() => {
   } else {
     tracks = tracksStore.tracksByAlbumAndNumber;
   }
-  return tracks.filter((id) => `${id}` !== route.params.id);
+  return tracks.filter((id) => `${id}` !== props.id);
 });
 
 interface TableValues {

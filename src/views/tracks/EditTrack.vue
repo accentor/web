@@ -33,8 +33,8 @@
               item-value="id"
               :label="$tc('music.albums', 1)"
             >
-              <template #item="{ item, props }">
-                <VListItem v-bind="props">
+              <template #item="{ item, props: listItemProps }">
+                <VListItem v-bind="listItemProps">
                   <template #append>
                     <span class="text-grey pl-2 text-body-2">
                       {{ item.raw.id }}
@@ -120,6 +120,8 @@ const genresStore = useGenresStore();
 const tracksStore = useTracksStore();
 const route = useRoute();
 
+const props = defineProps<{ id: string }>();
+
 const newTrack = ref({
   number: 0,
   title: "",
@@ -136,7 +138,7 @@ const isDirty = ref(false);
 const isValid = ref(true);
 const loaded = ref(false);
 
-const track = computed(() => tracksStore.tracks[route.params.id as string]);
+const track = computed(() => tracksStore.tracks[props.id]);
 const title = computed(() => {
   return i18n.global.t("page-titles.edit", { obj: track.value?.title ?? "" });
 });

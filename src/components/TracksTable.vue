@@ -21,7 +21,6 @@
       :headers="headers"
       :items="filteredItems"
       :items-per-page="30"
-      :items-per-page-options="[30]"
       :show-select="isModerator && showSelect"
       :select-strategy="singleSelect ? 'single' : 'all'"
       return-object

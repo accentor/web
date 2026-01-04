@@ -9,15 +9,9 @@
   </VCard>
 </template>
 
-<script>
-// @ts-nocheck
+<script setup lang="ts">
+import type { Label } from "@accentor/api-client-js";
 import LabelActions from "./LabelActions.vue";
 
-export default {
-  name: "LabelCard",
-  components: { LabelActions },
-  props: {
-    label: { type: Object, required: true },
-  },
-};
+defineProps<{ label: Label }>();
 </script>

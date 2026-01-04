@@ -13,15 +13,16 @@
 
 <script setup lang="ts">
 import { computed, watch } from "vue";
-import { useRoute, useRouter } from "vue-router";
+import { useRouter } from "vue-router";
 import { useHead } from "@unhead/vue";
 import { useUsersStore } from "@/store/users";
 
+const props = defineProps<{ id: string }>();
+
 const usersStore = useUsersStore();
-const route = useRoute();
 const router = useRouter();
 
-const user = computed(() => usersStore.users[route.params.id as string]);
+const user = computed(() => usersStore.users[props.id]);
 const userName = computed(() => user.value?.name);
 
 useHead({ title: userName });

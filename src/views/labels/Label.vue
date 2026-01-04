@@ -65,9 +65,9 @@ import LabelActions from "@/components/LabelActions.vue";
 import Paginated from "../../mixins/Paginated";
 import Searchable from "../../mixins/Searchable";
 import { AlbumsScope } from "@accentor/api-client-js";
-import { useAuthStore } from "../../store/auth";
-import { useLabelsStore } from "../../store/labels";
-import { useAlbumsStore } from "../../store/albums";
+import { useAuthStore } from "@/store/auth";
+import { useLabelsStore } from "@/store/labels";
+import { useAlbumsStore } from "@/store/albums";
 
 export default {
   name: "LabelView",

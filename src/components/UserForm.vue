@@ -43,105 +43,124 @@
   </div>
 </template>
 
-<script>
-// @ts-nocheck
-import { useAuthStore } from "../store/auth";
-import { mapActions, mapState } from "pinia";
-import { useUsersStore } from "../store/users";
+<script setup lang="ts">
+import { computed, onMounted, ref, useTemplateRef, watch } from "vue";
+import { storeToRefs } from "pinia";
+import type { VForm } from "vuetify/components";
+import type { User } from "@accentor/api-client-js";
+import { UserPermission } from "@accentor/api-client-js";
+import { useAuthStore } from "@/store/auth";
+import { useUsersStore } from "@/store/users";
+import i18n from "@/i18n";
+import { useRoute, useRouter } from "vue-router";
 
-export default {
-  name: "UserForm",
-  props: {
-    user: { type: Object, default: null },
-    redirectFallback: { type: String, default: "users" },
-    showPermissions: { type: Boolean, default: false },
-  },
-  data() {
-    return {
-      newUser: {
-        current_password: "",
-        name: "",
-        password: "",
-        password_confirmation: "",
-        permission: "",
-      },
-      permissionOptions: [
-        { text: this.$t("users.permission.admin"), value: "admin" },
-        { text: this.$t("users.permission.moderator"), value: "moderator" },
-        { text: this.$t("users.permission.user"), value: "user" },
-      ],
-      isDirty: false,
-      isValid: true,
-    };
-  },
-  computed: {
-    ...mapState(useAuthStore, ["currentUser"]),
-    rules() {
-      const rules = {
-        confirmation: [],
-        current: [],
-        password: [],
-      };
-      if (this.newUser.password) {
-        const confirmationBlank = (v) =>
-          !!v || this.$t("errors.user.password-confirmation-blank");
-        rules.confirmation.push(confirmationBlank);
+const router = useRouter();
+const route = useRoute();
 
-        const confirmationMatch = (v) =>
-          (!!v && v) === this.newUser.password ||
-          this.$t("errors.user.password-confirmation");
-        rules.confirmation.push(confirmationMatch);
+interface Props {
+  user?: User | undefined;
+  redirectFallback?: string;
+  showPermissions?: boolean;
+}
 
-        const currentBlank = (v) =>
-          !!v || this.$t("errors.user.current-password-blank");
-        rules.current.push(currentBlank);
-      }
+const props = withDefaults(defineProps<Props>(), {
+  user: undefined,
+  redirectFallback: "users",
+  showPermissions: false,
+});
 
-      if (this.newUser.current_password || this.newUser.password_confirmation) {
-        const passwordBlank = (v) =>
-          !!v || this.$t("errors.user.password-blank");
-        rules.password.push(passwordBlank);
-      }
-      return rules;
-    },
+const usersStore = useUsersStore();
+const { currentUser } = storeToRefs(useAuthStore());
+
+const permissionOptions = computed(() => [
+  { title: i18n.global.t("users.permission.admin"), value: "admin" },
+  { title: i18n.global.t("users.permission.moderator"), value: "moderator" },
+  { title: i18n.global.t("users.permission.user"), value: "user" },
+]);
+
+const isDirty = ref(false);
+const isValid = ref(true);
+
+const newUser = ref({
+  current_password: "",
+  name: "",
+  password: "",
+  password_confirmation: "",
+  permission: "" as UserPermission,
+});
+
+watch(
+  () => props.user,
+  () => {
+    if (props.user && !isDirty.value) {
+      fillValues();
+    }
   },
-  watch: {
-    user: function () {
-      if (this.user && !this.isDirty) {
-        this.fillValues();
-      }
-    },
-  },
-  created() {
-    this.$nextTick(() => {
-      if (this.user) {
-        this.fillValues();
-      }
-    });
-  },
-  methods: {
-    ...mapActions(useUsersStore, ["create", "update"]),
-    fillValues() {
-      this.newUser.name = this.user.name;
-      this.newUser.permission = this.user.permission;
-    },
-    async submit() {
-      this.$refs.userForm.validate();
-      if (this.isValid) {
-        let pendingResult = null;
-        if (this.user) {
-          pendingResult = this.update(this.user.id, this.newUser);
-        } else {
-          pendingResult = this.create(this.newUser);
-        }
-        const succeeded = await pendingResult;
-        if (succeeded) {
-          this.$router.push(
-            this.$route.query.redirect || { name: this.redirectFallback },
-          );
-        }
-      }
-    },
-  },
-};
+);
+
+onMounted(() => {
+  if (props.user) {
+    fillValues();
+  }
+});
+
+function fillValues(): void {
+  if (!props.user) {
+    return;
+  }
+
+  newUser.value.name = props.user.name;
+  newUser.value.permission = props.user.permission;
+}
+
+const userForm = useTemplateRef("userForm");
+
+async function submit(): Promise<void> {
+  userForm.value?.validate();
+  if (isValid.value) {
+    let pendingResult;
+    if (props.user) {
+      pendingResult = usersStore.update(props.user.id, newUser.value);
+    } else {
+      pendingResult = usersStore.create(newUser.value);
+    }
+    const succeeded = await pendingResult;
+    if (succeeded) {
+      await router.push(
+        (route.query.redirect as string | undefined) || {
+          name: props.redirectFallback,
+        },
+      );
+    }
+  }
+}
+
+const rules = computed(() => {
+  const rules = {
+    confirmation: [] as ((v: string) => true | string)[],
+    current: [] as ((v: string) => true | string)[],
+    password: [] as ((v: string) => true | string)[],
+  };
+
+  if (newUser.value.password) {
+    const confirmationBlank = (v: string): true | string =>
+      !!v || i18n.global.t("errors.user.password-confirmation-blank");
+    const confirmationMatch = (v: string): true | string =>
+      (!!v && v) === newUser.value.password ||
+      i18n.global.t("errors.user.password-confirmation");
+    rules.confirmation.push(confirmationBlank, confirmationMatch);
+
+    const currentBlank = (v: string): true | string =>
+      !!v || i18n.global.t("errors.user.current-password-blank");
+    rules.current.push(currentBlank);
+  }
+
+  if (newUser.value.current_password || newUser.value.password_confirmation) {
+    const passwordBlank = (v: string): true | string =>
+      !!v || i18n.global.t("errors.user.password-blank");
+    rules.password.push(passwordBlank);
+  }
+
+  return rules;
+});
 </script>

@@ -9,15 +9,9 @@
   </VCard>
 </template>
 
-<script>
-// @ts-nocheck
+<script setup lang="ts">
+import type { Genre } from "@accentor/api-client-js";
 import GenreActions from "./GenreActions.vue";
 
-export default {
-  name: "GenreCard",
-  components: { GenreActions },
-  props: {
-    genre: { type: Object, required: true },
-  },
-};
+defineProps<{ genre: Genre }>();
 </script>
