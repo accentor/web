@@ -16,7 +16,7 @@ export const useRescansStore = defineStore("rescans", () => {
   const allRescans = computed(() => Object.values(_rescans.value));
   const running = computed(() => allRescans.value.some((r) => r.running));
   const combinedRescans: ComputedRef<
-    Omit<Rescan, "finished_at" | "location_id"> & { finished_at: Date }
+    Omit<Rescan, "finished_at" | "location_id" | "id"> & { finished_at: Date }
   > = computed(() =>
     allRescans.value.reduce(
       (acc, rescan) => {

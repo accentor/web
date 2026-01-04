@@ -11,7 +11,7 @@
     "type-check": "vue-tsc --build --force"
   },
   "dependencies": {
-    "@accentor/api-client-js": "^0.23.3",
+    "@accentor/api-client-js": "^0.23.4",
     "@mdi/font": "^7.4.47",
     "@mdi/svg": "^7.4.47",
     "@unhead/vue": "^2.1.1",

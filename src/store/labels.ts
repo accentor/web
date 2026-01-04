@@ -87,6 +87,7 @@ export const useLabelsStore = defineStore("labels", () => {
 
   return {
     labels,
+    restored,
     allLabels,
     labelsByName,
     startLoading,

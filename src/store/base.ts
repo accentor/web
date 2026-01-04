@@ -2,7 +2,7 @@ import { computed, type ComputedRef, markRaw, type Ref, ref } from "vue";
 import { useStorageAsync } from "@vueuse/core";
 import localForage from "localforage";
 import type { AuthStore } from "@/store/auth";
-import type { ApiToken, Scope } from "@accentor/api-client-js";
+import type { ApiToken, Scope, UpdateParams } from "@accentor/api-client-js";
 import type { ApiError, ErrorsStore } from "@/store/errors";
 
 // The types here are not correct, but useStorageAsync wants us to convert to a string,
@@ -178,11 +178,11 @@ export function create<T extends { id: number }, TParams, TFullParams>(
   setItem: (id: number, item: T) => void,
   wrap: (newItem: TParams) => TFullParams,
 ) {
-  return async function (newItem: TParams): Promise<boolean> {
+  return async function (newItem: TParams): Promise<number | false> {
     try {
       const result = await apiModule.create(authStore.apiToken!, wrap(newItem));
       setItem(result.id, result);
-      return true;
+      return result.id;
     } catch (error) {
       errorsStore.addError(error as ApiError);
       return false;
@@ -212,14 +212,21 @@ export function read<T>(
 
 export function update<T, TParams, TFullParams>(
   apiModule: {
-    update: (apiToken: ApiToken, id: number, params: TFullParams) => Promise<T>;
+    update: (
+      apiToken: ApiToken,
+      id: number,
+      params: UpdateParams<TFullParams>,
+    ) => Promise<T>;
   },
   authStore: AuthStore,
   errorsStore: ErrorsStore,
   setItem: (id: number, item: T) => void,
-  wrap: (newItem: TParams) => TFullParams,
+  wrap: (newItem: Partial<TParams>) => UpdateParams<TFullParams>,
 ) {
-  return async function (id: number, updatedItem: TParams): Promise<boolean> {
+  return async function (
+    id: number,
+    updatedItem: Partial<TParams>,
+  ): Promise<boolean> {
     try {
       const result = await apiModule.update(
         authStore.apiToken!,

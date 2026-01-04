@@ -42,19 +42,10 @@ export default defineConfigWithVueTs(
     },
   },
   {
-    files: [
-      "**/*.ts",
-      "**/components/{AddToPlaylist,AlbumActions,AlbumArtists,AlbumCard,AlbumMergeDialog,EditReviewComment,Errors,ImagePicker}.vue",
-    ],
+    files: ["**/*.ts", "**/*.vue"],
     rules: {
       "@typescript-eslint/explicit-function-return-type": "error",
       "@typescript-eslint/explicit-module-boundary-types": "error",
-    },
-  },
-  {
-    files: ["**/*.vue"],
-    rules: {
-      "@typescript-eslint/ban-ts-comment": "off",
     },
   },
 );

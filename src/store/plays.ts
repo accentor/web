@@ -1,16 +1,17 @@
+import { computed } from "vue";
+import { defineStore } from "pinia";
+import { useDate } from "vuetify";
 import api from "@/api";
 import {
   type Play,
   type PlayParams,
   PlaysScope,
 } from "@accentor/api-client-js";
-import { defineStore } from "pinia";
 import {
   create as baseCreate,
   index as baseIndex,
   useBaseModelStore,
 } from "./base";
-import { computed } from "vue";
 import { useTracksStore } from "./tracks";
 import { useAuthStore } from "@/store/auth";
 import { useErrorsStore } from "@/store/errors";
@@ -19,6 +20,8 @@ export const usePlaysStore = defineStore("plays", () => {
   const authStore = useAuthStore();
   const errorsStore = useErrorsStore();
   const tracksStore = useTracksStore();
+
+  const dateAdapter = useDate();
 
   const {
     items: plays,
@@ -120,7 +123,9 @@ export const usePlaysStore = defineStore("plays", () => {
     authStore,
     errorsStore,
     setItem,
-    (val) => ({ play: { track_id: val, played_at: new Date() } }),
+    (val) => ({
+      play: { track_id: val, played_at: dateAdapter.toISO(new Date()) },
+    }),
   );
 
   return {

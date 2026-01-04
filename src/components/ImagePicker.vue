@@ -62,23 +62,18 @@
 </template>
 
 <script setup lang="ts">
-import { useVModel } from "@vueuse/core";
 import { computed, useTemplateRef } from "vue";
-
-interface Model {
-  data?: string;
-  filename?: string;
-  mimetype?: string;
-}
+import { useVModel } from "@vueuse/core";
+import type { ImageParams } from "@accentor/api-client-js";
 
 interface Props {
-  modelValue: Model;
+  modelValue: ImageParams | null;
   currentImg?: string;
   placeholder: string;
 }
 
 const props = defineProps<Props>();
-const emit = defineEmits<{ "update:modelValue": [Model] }>();
+const emit = defineEmits<{ "update:modelValue": [ImageParams | null] }>();
 
 const modelValue = useVModel(props, "modelValue", emit);
 
@@ -130,11 +125,7 @@ function handleSelect(): void {
 }
 
 function clear(): void {
-  modelValue.value = {
-    filename: undefined,
-    mimetype: undefined,
-    data: undefined,
-  };
+  modelValue.value = null;
 }
 
 function passthrough(): void {

@@ -1,23 +1,16 @@
 <template>
   <VApp>
-    <router-view />
+    <RouterView />
   </VApp>
 </template>
 
-<script>
-// @ts-nocheck
-export default {
-  name: "Root",
-  head() {
-    return { title: "Main" };
-  },
-};
+<script setup lang="ts">
+import { useHead } from "@unhead/vue";
+
+useHead({ title: "Main" });
 </script>
 
 <style lang="scss">
-@use "sass:map";
-@use "vuetify/settings";
-
 // Additional resets
 a {
   text-decoration: none;

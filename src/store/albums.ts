@@ -171,6 +171,7 @@ export const useAlbumsStore = defineStore("albums", () => {
 
   return {
     albums,
+    restored,
     allAlbums,
     albumsByTitle,
     albumsFlagged,
