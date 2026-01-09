@@ -155,6 +155,7 @@ const router = createRouter({
           path: "playlists/:id/edit",
           name: "edit-playlist",
           component: EditPlaylist,
+          props: true,
         },
         {
           path: "settings",

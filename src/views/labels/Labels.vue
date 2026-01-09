@@ -2,8 +2,8 @@
   <VContainer fluid>
     <VDataIterator
       v-if="labels.length > 0"
-      v-model:page="pagination.page"
-      :items="filteredItems"
+      v-model:page="page"
+      :items="filteredLabels"
       :items-per-page="numberOfItems"
     >
       <template #header>
@@ -38,7 +38,7 @@
       <template #footer="{ pageCount }">
         <VRow class="mt-2" justify="center">
           <VPagination
-            v-model="pagination.page"
+            v-model="page"
             density="compact"
             :length="pageCount"
             total-visible="5"
@@ -49,44 +49,43 @@
   </VContainer>
 </template>
 
-<script>
-// @ts-nocheck
-import { mapState } from "pinia";
-import LabelCard from "../../components/LabelCard.vue";
-import Paginated from "../../mixins/Paginated";
-import Searchable from "../../mixins/Searchable";
-import { useLabelsStore } from "../../store/labels";
+<script setup lang="ts">
+import { computed } from "vue";
+import { useDisplay } from "vuetify/framework";
+import { storeToRefs } from "pinia";
+import { useHead } from "@unhead/vue";
+import LabelCard from "@/components/LabelCard.vue";
+import { useLabelsStore } from "@/store/labels";
+import { usePagination } from "@/composables/pagination";
+import { useSearch } from "@/composables/search";
+import i18n from "@/i18n";
 
-export default {
-  name: "Labels",
-  components: { LabelCard },
-  mixins: [Paginated, Searchable],
-  head() {
-    return { title: this.$tc("music.labels", 2) };
-  },
-  computed: {
-    ...mapState(useLabelsStore, { labels: "labelsByName" }),
-    filteredItems() {
-      return this.labels.filter(
-        (item) =>
-          !this.search ||
-          item.name
-            .toLocaleLowerCase()
-            .indexOf(this.search.toLocaleLowerCase()) >= 0 ||
-          item.normalized_name.indexOf(this.search.toLocaleLowerCase()) >= 0,
-      );
-    },
-    numberOfItems() {
-      if (this.$vuetify.display.xlAndUp) {
-        return 30;
-      } else if (this.$vuetify.display.lg) {
-        return 20;
-      } else if (this.$vuetify.display.md) {
-        return 15;
-      } else {
-        return 12;
-      }
-    },
-  },
-};
+const { labelsByName: labels } = storeToRefs(useLabelsStore());
+const { page } = usePagination();
+const { search } = useSearch();
+
+useHead({ title: i18n.global.tc("music.labels", 2) });
+
+const filteredLabels = computed(() => {
+  const lookup = search.value.toLowerCase();
+  return labels.value.filter(
+    (item) =>
+      !lookup ||
+      item.name.toLowerCase().indexOf(lookup) >= 0 ||
+      item.normalized_name.indexOf(lookup) >= 0,
+  );
+});
+
+const display = useDisplay();
+const numberOfItems = computed(() => {
+  if (display.xlAndUp) {
+    return 30;
+  } else if (display.lg) {
+    return 20;
+  } else if (display.md) {
+    return 15;
+  } else {
+    return 12;
+  }
+});
 </script>

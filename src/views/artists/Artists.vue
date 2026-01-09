@@ -35,11 +35,11 @@
 import { useHead } from "@unhead/vue";
 import { computed } from "vue";
 import { storeToRefs } from "pinia";
-import { useAuthStore } from "@/store/auth.ts";
-import { useArtistsStore } from "@/store/artists.ts";
-import i18n from "@/i18n.ts";
+import { useAuthStore } from "@/store/auth";
+import { useArtistsStore } from "@/store/artists";
+import i18n from "@/i18n";
 import ArtistsRow from "@/components/ArtistsRow.vue";
-import { useSearch } from "@/composables/search.ts";
+import { useSearch } from "@/composables/search";
 
 useHead({ title: i18n.global.tc("music.artists", 2) });
 

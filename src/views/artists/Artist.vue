@@ -81,10 +81,10 @@ import AlbumCard from "@/components/AlbumCard.vue";
 import ArtistActions from "@/components/ArtistActions.vue";
 import TracksTable from "@/components/TracksTable.vue";
 import { AlbumsScope, TracksScope } from "@accentor/api-client-js";
-import { usePlaylistsStore } from "@/store/playlists.ts";
-import { useArtistsStore } from "@/store/artists.ts";
-import { useAlbumsStore } from "@/store/albums.ts";
-import { useTracksStore } from "@/store/tracks.ts";
+import { usePlaylistsStore } from "@/store/playlists";
+import { useArtistsStore } from "@/store/artists";
+import { useAlbumsStore } from "@/store/albums";
+import { useTracksStore } from "@/store/tracks";
 
 const albumsStore = useAlbumsStore();
 const artistsStore = useArtistsStore();

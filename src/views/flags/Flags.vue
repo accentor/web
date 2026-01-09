@@ -48,7 +48,7 @@ import TracksTable from "@/components/TracksTable.vue";
 import { useAlbumsStore } from "@/store/albums";
 import { useArtistsStore } from "@/store/artists";
 import { useTracksStore } from "@/store/tracks";
-import i18n from "@/i18n.ts";
+import i18n from "@/i18n";
 import { storeToRefs } from "pinia";
 
 useHead({ title: i18n.global.tc("music.flags", 2) });
