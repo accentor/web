@@ -1,11 +1,6 @@
 <template>
   <VContainer v-if="label" fluid>
-    <VDataIterator
-      v-if="albums.length > 0"
-      v-model:page="pagination.page"
-      :items="filteredItems"
-      :items-per-page="12"
-    >
+    <AlbumsRow v-if="albums.length > 0" :albums="filteredAlbums">
       <template #header>
         <VRow class="mb-2" justify="space-between" align="baseline">
           <VCol cols="12" sm="4" md="6" lg="8" xl="10">
@@ -28,104 +23,59 @@
           </VCol>
         </VRow>
       </template>
-      <template #default="props">
-        <VRow>
-          <VCol
-            v-for="item in props.items"
-            :key="item.raw.id"
-            lg="3"
-            md="4"
-            sm="6"
-            xl="2"
-            cols="6"
-          >
-            <AlbumCard :album="item.raw" :label-for-cat-nr="label" />
-          </VCol>
-        </VRow>
+      <template #album-card="{ album }">
+        <AlbumCard :album="album" :label-for-cat-nr="label" />
       </template>
-      <template #footer="{ pageCount }">
-        <VRow class="mt-2" justify="center">
-          <VPagination
-            v-model="pagination.page"
-            density="compact"
-            :length="pageCount"
-            total-visible="5"
-          />
-        </VRow>
-      </template>
-    </VDataIterator>
+    </AlbumsRow>
   </VContainer>
 </template>
 
-<script>
-// @ts-nocheck
-import { mapState, mapActions } from "pinia";
-import AlbumCard from "../../components/AlbumCard.vue";
+<script setup lang="ts">
+import { computed, watch } from "vue";
+import { useHead } from "@unhead/vue";
+import { useRouter } from "vue-router";
+import { type Album, AlbumsScope } from "@accentor/api-client-js";
+import AlbumCard from "@/components/AlbumCard.vue";
 import LabelActions from "@/components/LabelActions.vue";
-import Paginated from "../../mixins/Paginated";
-import Searchable from "../../mixins/Searchable";
-import { AlbumsScope } from "@accentor/api-client-js";
-import { useAuthStore } from "@/store/auth";
 import { useLabelsStore } from "@/store/labels";
 import { useAlbumsStore } from "@/store/albums";
+import AlbumsRow from "@/components/AlbumsRow.vue";
+import { useSearch } from "@/composables/search";
 
-export default {
-  name: "LabelView",
-  components: { AlbumCard, LabelActions },
-  mixins: [Paginated, Searchable],
-  props: {
-    id: {
-      type: [String, Number],
-      required: true,
-    },
-  },
-  head() {
-    return { title: this.label.name };
-  },
-  computed: {
-    ...mapState(useAuthStore, ["isModerator"]),
-    ...mapState(useLabelsStore, ["labels"]),
-    albums: function () {
-      return useAlbumsStore().albumsFilterByLabel(this.$route.params.id);
-    },
-    label: function () {
-      return this.labels[this.$route.params.id];
-    },
-    filteredItems() {
-      return this.albums.filter(
-        (item) =>
-          !this.search ||
-          item.title
-            .toLocaleLowerCase()
-            .indexOf(this.search.toLocaleLowerCase()) >= 0 ||
-          item.normalized_title.indexOf(this.search.toLocaleLowerCase()) >= 0,
-      );
-    },
-  },
-  watch: {
-    id: {
-      handler: "fetchContent",
-      immediate: true,
-    },
-  },
-  methods: {
-    ...mapActions(useLabelsStore, ["read"]),
-    ...mapActions(useAlbumsStore, { indexAlbums: "index" }),
-    async fetchContent(newValue, oldValue) {
-      // After loading the content, the router will change the id from a string to a number
-      // but we don't actually want to load the content twice
-      if (`${newValue}` === `${oldValue}`) {
-        return;
-      }
+const router = useRouter();
+const labelsStore = useLabelsStore();
+const albumsStore = useAlbumsStore();
 
-      const label = this.read(this.id);
-      const albums = this.indexAlbums(new AlbumsScope().label(this.id));
-      await Promise.all([label, albums]);
-      // If the label is undefined after loading, we assume that it doesn't exist.
-      if (this.label === undefined) {
-        this.$router.go(-1);
-      }
-    },
-  },
-};
+const props = defineProps<{ id: string }>();
+
+const { search } = useSearch();
+
+const label = computed(() => labelsStore.labels[props.id]);
+const labelName = computed(() => label.value?.name);
+const albums = computed(() =>
+  label.value ? albumsStore.albumsFilterByLabel(label.value?.id) : [],
+);
+const filteredAlbums = computed(() => {
+  const lookup = search.value.toLowerCase();
+  return albums.value.filter(
+    (item: Album) =>
+      !lookup ||
+      item.title.toLowerCase().indexOf(lookup) >= 0 ||
+      item.normalized_title.toLowerCase().indexOf(lookup) >= 0,
+  );
+});
+useHead({ title: labelName });
+
+watch(() => props.id, fetchContent, { immediate: true });
+
+async function fetchContent(): Promise<void> {
+  const labelPromise = labelsStore.read(parseInt(props.id));
+  const albumsPromise = albumsStore.index(new AlbumsScope().label(props.id));
+  await Promise.all([labelPromise, albumsPromise]);
+
+  // If the label is undefined after loading, we assume that it doesn't exist.
+  if (!label.value) {
+    router.go(-1);
+  }
+}
 </script>

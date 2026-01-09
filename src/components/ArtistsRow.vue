@@ -39,7 +39,7 @@
 <script setup lang="ts">
 import type { Artist } from "@accentor/api-client-js";
 import ArtistCard from "@/components/ArtistCard.vue";
-import { usePagination } from "@/composables/pagination.ts";
+import { usePagination } from "@/composables/pagination";
 import { useSlots } from "vue";
 
 interface Props {

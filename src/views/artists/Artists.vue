@@ -1,9 +1,8 @@
 <template>
   <VContainer fluid>
-    <VDataIterator
+    <ArtistsRow
       v-if="artists.length > 0"
-      v-model:page="pagination.page"
-      :items="filteredItems"
+      :artists="filteredArtists"
       :items-per-page="12"
     >
       <template #header>
@@ -28,64 +27,34 @@
           </VBtn>
         </VRow>
       </template>
-      <template #default="props">
-        <VRow>
-          <VCol
-            v-for="item in props.items"
-            :key="item.raw.id"
-            cols="6"
-            sm="6"
-            md="4"
-            lg="3"
-            xl="2"
-          >
-            <ArtistCard :artist="item.raw" />
-          </VCol>
-        </VRow>
-      </template>
-      <template #footer="{ pageCount }">
-        <VRow class="mt-2" justify="center">
-          <VPagination
-            v-model="pagination.page"
-            density="compact"
-            :length="pageCount"
-            total-visible="5"
-          />
-        </VRow>
-      </template>
-    </VDataIterator>
+    </ArtistsRow>
   </VContainer>
 </template>
 
-<script>
-// @ts-nocheck
-import ArtistCard from "../../components/ArtistCard.vue";
-import Paginated from "../../mixins/Paginated";
-import Searchable from "../../mixins/Searchable";
-import { useAuthStore } from "../../store/auth";
-import { mapState } from "pinia";
-import { useArtistsStore } from "../../store/artists";
+<script setup lang="ts">
+import { useHead } from "@unhead/vue";
+import { computed } from "vue";
+import { storeToRefs } from "pinia";
+import { useAuthStore } from "@/store/auth.ts";
+import { useArtistsStore } from "@/store/artists.ts";
+import i18n from "@/i18n.ts";
+import ArtistsRow from "@/components/ArtistsRow.vue";
+import { useSearch } from "@/composables/search.ts";
 
-export default {
-  name: "Artists",
-  components: { ArtistCard },
-  mixins: [Paginated, Searchable],
-  head() {
-    return { title: this.$tc("music.artists", 2) };
-  },
-  computed: {
-    ...mapState(useAuthStore, ["isModerator"]),
-    ...mapState(useArtistsStore, { artists: "artistsByName" }),
-    filteredItems() {
-      return this.artists.filter(
-        (item) =>
-          !this.search ||
-          item.name
-            .toLocaleLowerCase()
-            .indexOf(this.search.toLocaleLowerCase()) >= 0 ||
-          item.normalized_name.indexOf(this.search.toLocaleLowerCase()) >= 0,
-      );
-    },
-  },
-};
+useHead({ title: i18n.global.tc("music.artists", 2) });
+
+const { isModerator } = storeToRefs(useAuthStore());
+
+const { search } = useSearch();
+const { artistsByName: artists } = storeToRefs(useArtistsStore());
+const filteredArtists = computed(() => {
+  return artists.value.filter((item) => {
+    const lookup = search.value.toLowerCase();
+    return (
+      !lookup ||
+      item.name.toLowerCase().indexOf(lookup) >= 0 ||
+      item.normalized_name.indexOf(lookup) >= 0
+    );
+  });
+});
 </script>

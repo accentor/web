@@ -65,13 +65,13 @@ export const useAlbumsStore = defineStore("albums", () => {
       .sort(compareAlbumsByReleaseFirst(true));
   });
 
-  function albumsFilterByArtist(id: number): Album[] {
+  function albumsFilterByArtist(id: number): (Album & { loaded: Date })[] {
     const aaFilter = (a: Album): boolean =>
       a.album_artists.filter((aa) => `${aa.artist_id}` === `${id}`).length > 0;
     return allAlbums.value.filter(aaFilter).sort(compareAlbumsByReleaseFirst());
   }
 
-  function albumsFilterByLabel(id: number): Album[] {
+  function albumsFilterByLabel(id: number): (Album & { loaded: Date })[] {
     const alFilter = (a: Album): boolean =>
       a.album_labels.filter((l) => `${l.label_id}` === `${id}`).length > 0;
     return allAlbums.value.filter(alFilter).sort(compareAlbumsByReleaseFirst());

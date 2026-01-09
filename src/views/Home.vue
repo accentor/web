@@ -112,7 +112,7 @@ import { usePlaysStore } from "@/store/plays";
 import AlbumsRow from "@/components/AlbumsRow.vue";
 import ArtistsRow from "@/components/ArtistsRow.vue";
 import { useHead } from "@unhead/vue";
-import i18n from "@/i18n.ts";
+import i18n from "@/i18n";
 import { computed } from "vue";
 import { useDisplay } from "vuetify/framework";
 

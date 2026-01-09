@@ -21,7 +21,9 @@
           xl="2"
           cols="6"
         >
-          <AlbumCard :album="item.raw" />
+          <slot name="album-card" :album="item.raw">
+            <AlbumCard :album="item.raw" />
+          </slot>
         </VCol>
       </VRow>
     </template>
@@ -42,7 +44,7 @@
 <script setup lang="ts">
 import AlbumCard from "@/components/AlbumCard.vue";
 import type { Album } from "@accentor/api-client-js";
-import { usePagination } from "@/composables/pagination.ts";
+import { usePagination } from "@/composables/pagination";
 import { useSlots } from "vue";
 
 interface Props {

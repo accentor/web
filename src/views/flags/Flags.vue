@@ -1,60 +1,22 @@
 <template>
   <div>
     <VContainer fluid>
-      <VRow>
-        <VCol>
-          <h2 class="text-h4">{{ $tc("music.artists", 2) }}</h2>
-        </VCol>
-      </VRow>
-      <VDataIterator
-        :footer-props="{ disableItemsPerPage: true, itemsPerPageOptions: [6] }"
-        :items="artists"
+      <ArtistsRow
+        :artists="artists"
         :items-per-page="6"
+        :save-pagination="false"
       >
-        <template #default="props">
-          <VRow class="mb-0">
-            <VCol
-              v-for="item in props.items"
-              :key="`artist${item.raw.id}`"
-              lg="3"
-              md="4"
-              sm="6"
-              xl="2"
-              cols="12"
-            >
-              <ArtistCard :artist="item.raw" />
-            </VCol>
-          </VRow>
+        <template #header>
+          <h2 class="text-h4">{{ $tc("music.artists", 2) }}</h2>
         </template>
-      </VDataIterator>
+      </ArtistsRow>
     </VContainer>
     <VContainer fluid>
-      <VRow>
-        <VCol>
+      <AlbumsRow :albums="albums" :items-per-page="6" :save-pagination="false">
+        <template #header>
           <h2 class="text-h4">{{ $tc("music.albums", 2) }}</h2>
-        </VCol>
-      </VRow>
-      <VDataIterator
-        :footer-props="{ disableItemsPerPage: true, itemsPerPageOptions: [6] }"
-        :items="albums"
-        :items-per-page="6"
-      >
-        <template #default="props">
-          <VRow class="mb-0">
-            <VCol
-              v-for="item in props.items"
-              :key="`album${item.raw.id}`"
-              lg="3"
-              md="4"
-              sm="6"
-              xl="2"
-              cols="12"
-            >
-              <AlbumCard :album="item.raw" />
-            </VCol>
-          </VRow>
         </template>
-      </VDataIterator>
+      </AlbumsRow>
     </VContainer>
     <VContainer class="fill-height" fluid>
       <VRow class="flex-column">
@@ -78,26 +40,20 @@
   </div>
 </template>
 
-<script>
-// @ts-nocheck
-import TracksTable from "../../components/TracksTable.vue";
-import ArtistCard from "../../components/ArtistCard.vue";
-import AlbumCard from "../../components/AlbumCard.vue";
-import { mapState } from "pinia";
-import { useArtistsStore } from "../../store/artists";
-import { useAlbumsStore } from "../../store/albums";
-import { useTracksStore } from "../../store/tracks";
+<script setup lang="ts">
+import { useHead } from "@unhead/vue";
+import AlbumsRow from "@/components/AlbumsRow.vue";
+import ArtistsRow from "@/components/ArtistsRow.vue";
+import TracksTable from "@/components/TracksTable.vue";
+import { useAlbumsStore } from "@/store/albums";
+import { useArtistsStore } from "@/store/artists";
+import { useTracksStore } from "@/store/tracks";
+import i18n from "@/i18n.ts";
+import { storeToRefs } from "pinia";
 
-export default {
-  name: "Flags",
-  components: { AlbumCard, ArtistCard, TracksTable },
-  head() {
-    return { title: this.$tc("music.flags", 2) };
-  },
-  computed: {
-    ...mapState(useTracksStore, { tracks: "tracksFlagged" }),
-    ...mapState(useAlbumsStore, { albums: "albumsFlagged" }),
-    ...mapState(useArtistsStore, { artists: "artistsFlagged" }),
-  },
-};
+useHead({ title: i18n.global.tc("music.flags", 2) });
+
+const { tracksFlagged: tracks } = storeToRefs(useTracksStore());
+const { albumsFlagged: albums } = storeToRefs(useAlbumsStore());
+const { artistsFlagged: artists } = storeToRefs(useArtistsStore());
 </script>
