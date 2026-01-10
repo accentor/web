@@ -22,10 +22,10 @@ import { computed } from "vue";
 
 interface Props {
   album: Album;
-  truncate: boolean;
+  truncate?: boolean;
 }
 
-const props = defineProps<Props>();
+const props = withDefaults(defineProps<Props>(), { truncate: false });
 
 const albumArtists = computed(() =>
   [...props.album.album_artists].sort((a1, a2) => a1.order - a2.order),

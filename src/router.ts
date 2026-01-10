@@ -70,6 +70,7 @@ const router = createRouter({
           path: "albums/:id/edit",
           name: "edit-album",
           component: EditAlbum,
+          props: true,
         },
         {
           path: "artists",
