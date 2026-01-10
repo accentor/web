@@ -1,8 +1,8 @@
 <template>
   <span class="text-no-wrap actions">
     <VTooltip location="bottom" :disabled="track.length !== null">
-      <template #activator="{ props }">
-        <span v-bind="props">
+      <template #activator="{ props: tooltipProps }">
+        <span v-bind="tooltipProps">
           <VBtn
             :disabled="track.length === null"
             color="primary"
@@ -18,8 +18,8 @@
       <span>{{ $t("music.track.empty") }}</span>
     </VTooltip>
     <VTooltip location="bottom" :disabled="track.length !== null">
-      <template #activator="{ props }">
-        <span v-bind="props">
+      <template #activator="{ props: tooltipProps }">
+        <span v-bind="tooltipProps">
           <VBtn
             :disabled="track.length === null"
             color="success"
@@ -37,15 +37,15 @@
     <AddToPlaylist :item="track" type="track" />
     <EditReviewComment :item="track" :update="flag" />
     <VMenu>
-      <template #activator="{ props }">
-        <VBtn class="mr-0" size="small" icon variant="text" v-bind="props">
+      <template #activator="{ props: menuProps }">
+        <VBtn class="mr-0" size="small" icon variant="text" v-bind="menuProps">
           <VIcon size="x-large">mdi-dots-vertical</VIcon>
         </VBtn>
       </template>
       <VList density="compact">
         <VMenu v-if="track.length && isModerator" open-on-hover location="left">
-          <template #activator="{ props }">
-            <VListItem v-bind="props">
+          <template #activator="{ props: innerMenuProps }">
+            <VListItem v-bind="innerMenuProps">
               <template #prepend>
                 <VIcon color="info">mdi-file-music</VIcon>
               </template>
@@ -59,7 +59,7 @@
             <VListItem v-if="Object.keys(locations).length > 1">
               <VListItemTitle> {{ $t("library.location") }}: </VListItemTitle>
               <VListItemSubtitle>
-                {{ locations[track.location_id].path }}
+                {{ locations[`${track.location_id}`]?.path }}
               </VListItemSubtitle>
             </VListItem>
             <VListItem>
@@ -117,7 +117,7 @@
           location="bottom"
           :disabled="!waitingForReload"
         >
-          <template #activator="{ props }">
+          <template #activator="{ props: tooltipProps }">
             <VListItem
               :to="{
                 name: 'edit-track',
@@ -125,7 +125,7 @@
                 query: { redirect: $route.fullPath },
               }"
               :disabled="waitingForReload"
-              v-bind="props"
+              v-bind="tooltipProps"
             >
               <template #prepend>
                 <VIcon color="warning">mdi-pencil</VIcon>
@@ -141,15 +141,15 @@
           location="bottom"
           :disabled="!waitingForReload"
         >
-          <template #activator="{ props }">
+          <template #activator="{ props: tooltipProps }">
             <VListItem
               :to="{
                 name: 'merge-track',
-                params: { id: track.id },
+                params: { id: `${track.id}` },
                 query: { redirect: $route.fullPath },
               }"
               :disabled="waitingForReload"
-              v-bind="props"
+              v-bind="tooltipProps"
             >
               <template #prepend>
                 <VIcon color="warning">mdi-merge</VIcon>
@@ -167,10 +167,10 @@
           location="bottom"
           :disabled="!waitingForReload"
         >
-          <template #activator="{ props }">
+          <template #activator="{ props: tooltipProps }">
             <VListItem
               :disabled="waitingForReload"
-              v-bind="props"
+              v-bind="tooltipProps"
               @click.stop.prevent="deleteTrack"
             >
               <template #prepend>
@@ -187,70 +187,70 @@
   </span>
 </template>
 
-<script>
-// @ts-nocheck
-import { mapActions, mapState } from "pinia";
-import { baseURL } from "../api";
+<script setup lang="ts">
+import { computed } from "vue";
+import { storeToRefs } from "pinia";
+import type { Track } from "@accentor/api-client-js";
+import { baseURL } from "@/api";
 import EditReviewComment from "./EditReviewComment.vue";
 import AddToPlaylist from "./AddToPlaylist.vue";
-import { useAuthStore } from "../store/auth";
-import { useCodecsStore } from "../store/codecs";
-import { useLocationsStore } from "../store/locations";
-import { useTracksStore } from "../store/tracks";
-import { usePlayerStore } from "../store/player";
-import { useErrorsStore } from "../store/errors";
+import { useAuthStore } from "@/store/auth";
+import { useLocationsStore } from "@/store/locations";
+import { useTracksStore } from "@/store/tracks";
+import { usePlayerStore } from "@/store/player";
+import { useErrorsStore } from "@/store/errors";
+import i18n from "@/i18n";
 
-export default {
-  name: "TrackActions",
-  components: { AddToPlaylist, EditReviewComment },
-  props: {
-    track: { type: Object, required: true },
-  },
-  computed: {
-    ...mapState(useAuthStore, ["isModerator", "apiToken"]),
-    ...mapState(useTracksStore, ["startLoading"]),
-    ...mapState(useCodecsStore, ["codecs"]),
-    ...mapState(useLocationsStore, ["locations"]),
-    waitingForReload() {
-      return this.startLoading > this.track.loaded;
-    },
-    downloadURL() {
-      return `${baseURL}/tracks/${this.track.id}/download?token=${this.apiToken}`;
-    },
-  },
-  methods: {
-    ...mapActions(useErrorsStore, ["addError"]),
-    ...mapActions(usePlayerStore, {
-      playTrack: "playTrack",
-      addTrackToPlayer: "addTrack",
-    }),
-    ...mapActions(useTracksStore, ["destroy", "update"]),
-    deleteTrack: function () {
-      let message = this.$t("common.are-you-sure");
-      if (this.track.length) {
-        message += ` ${this.$t("music.track.delete-file-explanation")}`;
-      }
-      if (confirm(message)) {
-        this.destroy(this.track.id);
-      }
-    },
-    startTrack: function () {
-      if (this.track.length !== null) {
-        this.playTrack(this.track.id);
-      } else {
-        this.addError({ playlist: ["player.no-tracks-added"] });
-      }
-    },
-    addTrack: function () {
-      if (this.track.length !== null) {
-        this.addTrackToPlayer(this.track.id);
-      } else {
-        this.addError({ playlist: ["player.no-tracks-added"] });
-      }
-    },
-    flag(id, reviewComment) {
-      return this.update(id, { review_comment: reviewComment });
-    },
-  },
-};
+const authStore = useAuthStore();
+const errorsStore = useErrorsStore();
+const locationsStore = useLocationsStore();
+const playerStore = usePlayerStore();
+const tracksStore = useTracksStore();
+
+const { isModerator } = storeToRefs(authStore);
+const { locations } = storeToRefs(locationsStore);
+
+interface Props {
+  track: Track & { loaded: Date };
+}
+
+const props = defineProps<Props>();
+
+const waitingForReload = computed(
+  () => tracksStore.startLoading > props.track.loaded,
+);
+const downloadURL = computed(
+  () =>
+    `${baseURL}/tracks/${props.track.id}/download?token=${authStore.apiToken}`,
+);
+
+async function deleteTrack(): Promise<void> {
+  let message = i18n.global.t("common.are-you-sure");
+  if (props.track.length) {
+    message += ` ${i18n.global.t("music.track.delete-file-explanation")}`;
+  }
+  if (confirm(message)) {
+    await tracksStore.destroy(props.track.id);
+  }
+}
+
+function startTrack(): void {
+  if (props.track.length !== null) {
+    playerStore.playTrack(props.track.id);
+  } else {
+    errorsStore.addError({ playlist: ["player.no-tracks-added"] });
+  }
+}
+
+function addTrack(): void {
+  if (props.track.length !== null) {
+    playerStore.addTrack(props.track.id);
+  } else {
+    errorsStore.addError({ playlist: ["player.no-tracks-added"] });
+  }
+}
+
+async function flag(id: number, reviewComment: string): Promise<boolean> {
+  return await tracksStore.update(id, { review_comment: reviewComment });
+}
 </script>

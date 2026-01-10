@@ -71,5 +71,6 @@ export const useCodecConversionsStore = defineStore("codec-conversions", () => {
     create,
     update,
     destroy,
+    restored,
   };
 });

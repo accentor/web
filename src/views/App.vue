@@ -131,98 +131,90 @@
   </div>
 </template>
 
-<script>
-// @ts-nocheck
-import { mapActions, mapState } from "pinia";
+<script async setup lang="ts">
+import { onBeforeUnmount, ref, watch } from "vue";
+import { storeToRefs } from "pinia";
+import { useHead } from "@unhead/vue";
 import { useAuthStore } from "@/store/auth";
 import { useUsersStore } from "@/store/users";
 import { useAuthTokensStore } from "@/store/auth_tokens";
 import { useCodecConversionsStore } from "@/store/codec_conversions";
-import Errors from "../components/Errors.vue";
-import Player from "../components/Player.vue";
-import { useUserSettingsStore } from "../store/user_settings";
-import { useRescansStore } from "../store/rescan";
-import { usePlaylistsStore } from "../store/playlists";
-import { useLabelsStore } from "../store/labels";
-import { useGenresStore } from "../store/genres";
-import { useArtistsStore } from "../store/artists";
-import { useAlbumsStore } from "../store/albums";
-import { useUtilityStore } from "../store/utility";
-import { useTracksStore } from "../store/tracks";
-import { usePlaysStore } from "../store/plays";
+import Errors from "@/components/Errors.vue";
+import Player from "@/components/Player.vue";
+import { useUserSettingsStore } from "@/store/user_settings";
+import { useRescansStore } from "@/store/rescan";
+import { usePlaylistsStore } from "@/store/playlists";
+import { useLabelsStore } from "@/store/labels";
+import { useGenresStore } from "@/store/genres";
+import { useArtistsStore } from "@/store/artists";
+import { useAlbumsStore } from "@/store/albums";
+import { useUtilityStore } from "@/store/utility";
+import { useTracksStore } from "@/store/tracks";
+import { usePlaysStore } from "@/store/plays";
+import i18n from "@/i18n";
 
-export default {
-  name: "App",
-  components: { Errors, Player },
-  data() {
-    return {
-      drawer: null,
-      loading: false,
-    };
-  },
-  head() {
-    return { title: "Accentor" };
-  },
-  computed: {
-    ...mapState(useAuthStore, ["isModerator"]),
-    ...mapState(useUtilityStore, ["numberOfFlaggedItems"]),
-    ...mapState(useRescansStore, ["finishedAt"]),
-    ...mapState(useUserSettingsStore, ["locale"]),
-  },
-  watch: {
-    locale() {
-      this.$i18n.locale = this.locale;
-    },
-    finishedAt(newValue, oldValue) {
-      if (
-        !this.loading &&
-        oldValue !== null &&
-        oldValue.getTime() !== newValue.getTime()
-      ) {
-        this.loadData();
-      }
-    },
-  },
-  created() {
-    this.loadData();
-    this.$options.interval = setInterval(() => {
-      useUtilityStore().updateCurrentDay();
-    }, 60000);
-  },
-  beforeUnmount() {
-    clearInterval(this.$options.interval);
-  },
-  methods: {
-    ...mapActions(useAlbumsStore, { albumsIndex: "index" }),
-    ...mapActions(useArtistsStore, { artistsIndex: "index" }),
-    ...mapActions(useAuthStore, ["logout"]),
-    ...mapActions(useAuthTokensStore, { authTokensIndex: "index" }),
-    ...mapActions(useCodecConversionsStore, { codecConversionsIndex: "index" }),
-    ...mapActions(useGenresStore, { genresIndex: "index" }),
-    ...mapActions(useLabelsStore, { labelsIndex: "index" }),
-    ...mapActions(usePlaylistsStore, { playlistsIndex: "index" }),
-    ...mapActions(usePlaysStore, { playsIndex: "index" }),
-    ...mapActions(useTracksStore, { tracksIndex: "index" }),
-    ...mapActions(useUsersStore, { usersIndex: "index" }),
-    async loadData() {
-      this.loading = true;
-      const pendingResults = [];
-      pendingResults.push(this.authTokensIndex());
-      pendingResults.push(this.albumsIndex());
-      pendingResults.push(this.artistsIndex());
-      pendingResults.push(this.codecConversionsIndex());
-      pendingResults.push(this.genresIndex());
-      pendingResults.push(this.labelsIndex());
-      pendingResults.push(this.playlistsIndex());
-      pendingResults.push(this.playsIndex());
-      pendingResults.push(this.tracksIndex());
-      pendingResults.push(this.usersIndex());
-      try {
-        await Promise.all(pendingResults);
-      } finally {
-        this.loading = false;
-      }
-    },
-  },
-};
+const albumsStore = useAlbumsStore();
+const artistsStore = useArtistsStore();
+const authStore = useAuthStore();
+const authTokensStore = useAuthTokensStore();
+const codecConversionsStore = useCodecConversionsStore();
+const genresStore = useGenresStore();
+const labelsStore = useLabelsStore();
+const playlistsStore = usePlaylistsStore();
+const playsStore = usePlaysStore();
+const tracksStore = useTracksStore();
+const usersStore = useUsersStore();
+const utilityStore = useUtilityStore();
+
+const drawer = ref<boolean | null>(null);
+const loading = ref(false);
+
+useHead({ title: "Accentor" });
+
+await utilityStore.allRestored;
+
+const { isModerator } = storeToRefs(useAuthStore());
+const { numberOfFlaggedItems } = storeToRefs(utilityStore);
+const { finishedAt } = storeToRefs(useRescansStore());
+const { locale } = storeToRefs(useUserSettingsStore());
+
+watch(locale, () => (i18n.global.locale = locale.value));
+watch(finishedAt, async (newValue, oldValue) => {
+  if (
+    !loading.value &&
+    oldValue !== null &&
+    oldValue.getTime() !== newValue!.getTime()
+  ) {
+    await loadData();
+  }
+});
+
+void loadData();
+
+async function loadData(): Promise<void> {
+  loading.value = true;
+  const pendingResults = [];
+  pendingResults.push(authTokensStore.index());
+  pendingResults.push(albumsStore.index());
+  pendingResults.push(artistsStore.index());
+  pendingResults.push(codecConversionsStore.index());
+  pendingResults.push(genresStore.index());
+  pendingResults.push(labelsStore.index());
+  pendingResults.push(playlistsStore.index());
+  pendingResults.push(playsStore.index());
+  pendingResults.push(tracksStore.index());
+  pendingResults.push(usersStore.index());
+  try {
+    await Promise.all(pendingResults);
+  } finally {
+    loading.value = false;
+  }
+}
+
+async function logout(): Promise<void> {
+  await authStore.logout();
+}
+
+const interval = setInterval(() => utilityStore.updateCurrentDay(), 60_000);
+onBeforeUnmount(() => clearInterval(interval));
 </script>

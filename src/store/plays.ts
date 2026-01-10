@@ -130,6 +130,7 @@ export const usePlaysStore = defineStore("plays", () => {
 
   return {
     plays,
+    restored,
     allPlays,
     index,
     create,

@@ -1,6 +1,6 @@
 import { computed, type ComputedRef } from "vue";
 import api from "@/api";
-import { compareTracks } from "@/comparators";
+import { compareTracks } from "@/comparators.ts";
 import {
   type Track,
   type TrackParams,
@@ -37,9 +37,10 @@ export const useTracksStore = defineStore("tracks", () => {
     setStartLoading,
   } = useBaseModelStore<Track>("tracks.tracks");
   const allTracks = computed(() => Object.values(tracks.value));
-  const tracksByAlbumAndNumber: ComputedRef<Track[]> = computed(() =>
-    [...allTracks.value].sort(compareTracks(albumsStore.albums)),
-  );
+  const tracksByAlbumAndNumber: ComputedRef<(Track & { loaded: Date })[]> =
+    computed(() =>
+      [...allTracks.value].sort(compareTracks(albumsStore.albums)),
+    );
   const tracksEmpty = computed(() =>
     tracksByAlbumAndNumber.value.filter((t: Track) => t.length === null),
   );
@@ -49,7 +50,7 @@ export const useTracksStore = defineStore("tracks", () => {
     ),
   );
   const tracksBinnedByAlbum = computed(() => {
-    const result: Record<string, Track[]> = {};
+    const result: Record<string, (Track & { loaded: Date })[]> = {};
     for (const track of allTracks.value) {
       if (!(`${track.album_id}` in result)) {
         result[`${track.album_id}`] = [];
@@ -59,7 +60,7 @@ export const useTracksStore = defineStore("tracks", () => {
     return result;
   });
   const tracksBinnedByGenre = computed(() => {
-    const result: Record<string, Track[]> = {};
+    const result: Record<string, (Track & { loaded: Date })[]> = {};
     for (const track of allTracks.value) {
       for (const genreId of track.genre_ids) {
         if (!(`${genreId}` in result)) {
@@ -71,7 +72,7 @@ export const useTracksStore = defineStore("tracks", () => {
     return result;
   });
   const tracksBinnedByArtist = computed(() => {
-    const result: Record<string, Track[]> = {};
+    const result: Record<string, (Track & { loaded: Date })[]> = {};
     for (const track of allTracks.value) {
       for (const ta of track.track_artists) {
         if (!(`${ta.artist_id}` in result)) {
@@ -85,19 +86,19 @@ export const useTracksStore = defineStore("tracks", () => {
     return result;
   });
 
-  function tracksFilterByAlbum(id: number): Track[] {
+  function tracksFilterByAlbum(id: number): (Track & { loaded: Date })[] {
     return [...(tracksBinnedByAlbum.value[`${id}`] || [])].sort(
       (t1, t2) => t1.number - t2.number,
     );
   }
 
-  function tracksFilterByGenre(id: number): Track[] {
+  function tracksFilterByGenre(id: number): (Track & { loaded: Date })[] {
     return (tracksBinnedByGenre.value[`${id}`] || []).sort(
       compareTracks(albumsStore.albums),
     );
   }
 
-  function tracksFilterByArtist(id: number): Track[] {
+  function tracksFilterByArtist(id: number): (Track & { loaded: Date })[] {
     return (tracksBinnedByArtist.value[`${id}`] || []).sort(
       compareTracks(albumsStore.albums),
     );
@@ -186,10 +187,11 @@ export const useTracksStore = defineStore("tracks", () => {
     (val) => ({ track: val }),
   );
   const destroy = baseDestroy(api.tracks, authStore, errorsStore, removeItem);
-  const merge = baseMerge(api.tracks, authStore, errorsStore, removeItem);
+  const merge = baseMerge(api.tracks, read, authStore, errorsStore, removeItem);
 
   return {
     tracks,
+    restored,
     index,
     read,
     update,

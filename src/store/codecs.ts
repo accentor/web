@@ -62,5 +62,6 @@ export const useCodecsStore = defineStore("codecs", () => {
     create,
     update,
     destroy,
+    restored,
   };
 });

@@ -169,7 +169,9 @@ const router = createRouter({
           path: "stats",
           name: "stats",
           component: Stats,
-          props: (route) => ({ artistId: route.query.artist_id }),
+          props: (route): { artistId: string } => ({
+            artistId: route.query.artist_id as string,
+          }),
         },
         {
           path: "tracks",
@@ -191,6 +193,7 @@ const router = createRouter({
           path: "tracks/:id/merge",
           name: "merge-track",
           component: MergeTrack,
+          props: true,
         },
         {
           path: "users",

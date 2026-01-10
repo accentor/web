@@ -59,9 +59,12 @@
   </VContainer>
 </template>
 
-<script>
-// @ts-nocheck
-import { mapActions, mapState } from "pinia";
+<script setup lang="ts">
+import { computed, ref, watch } from "vue";
+import { storeToRefs } from "pinia";
+import { useRoute, useRouter } from "vue-router";
+import { useHead } from "@unhead/vue";
+import { PlaysScope, type PlayStat } from "@accentor/api-client-js";
 import DateRangeSelect from "@/components/DateRangeSelect.vue";
 import PercentagePlayedCard from "@/components/PercentagePlayedCard.vue";
 import PlayCountCard from "@/components/PlayCountCard.vue";
@@ -69,128 +72,114 @@ import PlaysPunchcard from "@/components/PlaysPunchcard.vue";
 import TopArtistsList from "@/components/TopArtistsList.vue";
 import TopTracksList from "@/components/TopTracksList.vue";
 import TopAlbumsList from "@/components/TopAlbumsList.vue";
-import { filterPlaysByPeriod, filterPlaysByTracks } from "@/filters";
-import $api from "../api";
-import { PlaysScope } from "@accentor/api-client-js";
+import { filterPlaysByPeriod, filterPlaysByTracks } from "@/filters.ts";
 import { useArtistsStore } from "../store/artists";
 import { useTracksStore } from "../store/tracks";
 import { usePlaysStore } from "../store/plays";
 import { useAuthStore } from "../store/auth";
+import i18n from "@/i18n";
+import api from "@/api";
 
-export default {
-  name: "Stats",
-  components: {
-    DateRangeSelect,
-    PercentagePlayedCard,
-    PlayCountCard,
-    PlaysPunchcard,
-    TopAlbumsList,
-    TopArtistsList,
-    TopTracksList,
-  },
-  props: {
-    artistId: {
-      type: Number,
-      default: null,
-    },
-  },
-  data() {
-    return {
-      period: {
-        start: null,
-        end: null,
+const route = useRoute();
+const router = useRouter();
+const authStore = useAuthStore();
+const playsStore = usePlaysStore();
+const tracksStore = useTracksStore();
+
+const props = defineProps<{ artistId?: string }>();
+
+const period = ref({
+  start: null as Date | null,
+  end: null as Date | null,
+});
+const useTrackLength = ref(false);
+const playStats = ref<PlayStat[]>([]);
+
+const { artists } = storeToRefs(useArtistsStore());
+const artistName = computed(() => {
+  if (props.artistId) {
+    return artists.value[props.artistId]?.name;
+  }
+  return undefined;
+});
+const pageTitle = computed(() => {
+  if (artistName.value) {
+    return i18n.global.t("common.stats-for-artist", {
+      artist: artistName.value,
+    });
+  } else {
+    return i18n.global.t("common.stats");
+  }
+});
+useHead({ title: pageTitle });
+
+const pageSubtitle = computed(() => {
+  if (period.value.start && period.value.end) {
+    return `${period.value.start.toLocaleDateString()} - ${period.value.end.toLocaleDateString()}`;
+  }
+  return "";
+});
+
+const filteredTracks = computed(() => {
+  if (props.artistId) {
+    return tracksStore.tracksFilterByArtist(parseInt(props.artistId));
+  }
+  return tracksStore.allTracks;
+});
+
+const filteredPlays = computed(() => {
+  let plays = playsStore.allPlays.filter(
+    filterPlaysByPeriod(
+      period.value.start || new Date(0),
+      period.value.end || new Date(),
+    ),
+  );
+  if (props.artistId) {
+    plays = plays.filter(filterPlaysByTracks(filteredTracks.value));
+  }
+  return plays;
+});
+
+const playStatsScope = computed(() => {
+  const scope = new PlaysScope();
+  if (period.value.start && period.value.end) {
+    scope.playedAfter(period.value.start);
+    scope.playedBefore(period.value.end);
+  }
+  if (props.artistId) {
+    scope.artist(props.artistId);
+  }
+  return scope;
+});
+
+watch(playStatsScope, loadPlayStats);
+watch(useTrackLength, () => {
+  if (useTrackLength.value.toString() !== route.query.useTrackLength) {
+    router.replace({
+      query: {
+        ...route.query,
+        useTrackLength: useTrackLength.value.toString(),
       },
-      useTrackLength: false,
-      playStats: [],
-    };
-  },
-  head() {
-    return { title: this.pageTitle };
-  },
-  computed: {
-    ...mapState(usePlaysStore, { plays: "allPlays" }),
-    ...mapState(useArtistsStore, ["artists"]),
-    artistName() {
-      return this.artistId && this.artists[this.artistId]?.name;
-    },
-    pageTitle() {
-      return this.artistName
-        ? this.$t("common.stats-for-artist", { artist: this.artistName })
-        : this.$t("common.stats");
-    },
-    pageSubtitle() {
-      if (this.period.start && this.period.end) {
-        return `${this.period.start.toLocaleDateString()} - ${this.period.end.toLocaleDateString()}`;
-      }
-      return "";
-    },
-    filteredPlays() {
-      let plays = this.plays.filter(
-        filterPlaysByPeriod(this.period.start, this.period.end),
-      );
-      if (this.artistId) {
-        plays = plays.filter(filterPlaysByTracks(this.filteredTracks));
-      }
-      return plays;
-    },
-    filteredTracks() {
-      const tracksStore = useTracksStore();
-      if (this.artistId) {
-        return tracksStore.tracksFilterByArtist(this.artistId);
-      }
-      return tracksStore.allTracks;
-    },
-    playStatsScope() {
-      const scope = new PlaysScope();
-      if (this.period.start && this.period.end) {
-        scope.playedAfter(this.period.start);
-        scope.playedBefore(this.period.end);
-      }
-      if (this.artistId) {
-        scope.artist(this.artistId);
-      }
-      return scope;
-    },
-  },
-  watch: {
-    playStatsScope() {
-      this.loadPlayStats();
-    },
-    useTrackLength() {
-      if (this.useTrackLength.toString() !== this.$route.query.useTrackLength) {
-        this.$router.replace({
-          query: {
-            ...this.$route.query,
-            useTrackLength: this.useTrackLength,
-          },
-        });
-      }
-    },
-    "$route.query.useTrackLength": {
-      handler() {
-        this.useTrackLength = this.$route.query.useTrackLength === "true";
-      },
-      immediate: true,
-    },
-  },
-  methods: {
-    ...mapActions(usePlaysStore, { reloadPlays: "index" }),
-    async loadPlayStats() {
-      const gen = $api.plays.stats(
-        useAuthStore().apiToken,
-        this.playStatsScope,
-      );
-      let done = false;
-      const results = [];
-      while (!done) {
-        let value = [];
-        ({ value, done } = await gen.next());
-        results.push(...value);
-      }
-      this.playStats = results;
-    },
-  },
-};
+    });
+  }
+});
+watch(
+  () => route.query.useTrackLength,
+  () => (useTrackLength.value = route.query.useTrackLength === "true"),
+  { immediate: true },
+);
+
+async function loadPlayStats(): Promise<void> {
+  const gen = api.plays.stats(authStore.apiToken!, playStatsScope.value);
+  let done: boolean | undefined = false;
+  const results = [];
+  while (!done) {
+    let value = [];
+    ({ value, done } = await gen.next());
+    results.push(...value);
+  }
+  playStats.value = results;
+}
 </script>
 
 <style lang="scss" scoped>

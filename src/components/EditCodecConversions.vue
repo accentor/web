@@ -9,24 +9,14 @@
   </div>
 </template>
 
-<script>
-// @ts-nocheck
-import { mapState } from "pinia";
+<script setup lang="ts">
+import { storeToRefs } from "pinia";
 import CodecConversionForm from "./CodecConversionForm.vue";
 import { useAuthStore } from "../store/auth";
 import { useCodecConversionsStore } from "../store/codec_conversions";
 
-export default {
-  name: "EditCodecConversions",
-  components: { CodecConversionForm },
-  data() {
-    return {};
-  },
-  computed: {
-    ...mapState(useCodecConversionsStore, {
-      codecConversions: "allCodecConversions",
-    }),
-    ...mapState(useAuthStore, ["isModerator"]),
-  },
-};
+const { isModerator } = storeToRefs(useAuthStore());
+const { allCodecConversions: codecConversions } = storeToRefs(
+  useCodecConversionsStore(),
+);
 </script>

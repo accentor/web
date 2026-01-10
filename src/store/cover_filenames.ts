@@ -61,5 +61,6 @@ export const useCoverFilenamesStore = defineStore("cover-filenames", () => {
     index,
     create,
     destroy,
+    restored,
   };
 });

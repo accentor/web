@@ -9,7 +9,7 @@ import api from "@/api";
 import {
   compareAlbumsByReleaseFirst,
   compareAlbumsByTitleFirst,
-} from "@/comparators";
+} from "@/comparators.ts";
 import {
   useBaseModelStore,
   index as baseIndex,
@@ -163,6 +163,7 @@ export const useAlbumsStore = defineStore("albums", () => {
   );
   const merge = baseMerge(
     api.albums,
+    read,
     authStore,
     errorsStore,
     removeItem,

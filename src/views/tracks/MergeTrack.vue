@@ -236,7 +236,7 @@ import { computed, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import i18n from "@/i18n";
 import { useHead } from "@unhead/vue";
-import type { TrackArtist } from "@accentor/api-client-js";
+import type { Track, TrackArtist } from "@accentor/api-client-js";
 
 const albumsStore = useAlbumsStore();
 const tracksStore = useTracksStore();
@@ -269,15 +269,15 @@ const mergeOptions = computed(() => {
   } else {
     tracks = tracksStore.tracksByAlbumAndNumber;
   }
-  return tracks.filter((id) => `${id}` !== props.id);
+  return tracks.filter((t: Track): boolean => `${t.id}` !== props.id);
 });
 
 interface TableValues {
   number: number | undefined;
   title: string;
   album_id: number | null;
-  track_artists: TrackArtist[] | null;
-  genre_ids: number[] | null;
+  track_artists: TrackArtist[];
+  genre_ids: number[];
   filename: string | null;
 }
 
@@ -292,8 +292,8 @@ const selectedTrack = computed<TableValues>(() => {
     number: undefined,
     title: "-",
     album_id: null,
-    track_artists: null,
-    genre_ids: null,
+    track_artists: [],
+    genre_ids: [],
     filename: "-",
   };
 });

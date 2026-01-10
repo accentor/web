@@ -19,7 +19,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, watch } from "vue";
+import { computed, onMounted } from "vue";
 import { useHead } from "@unhead/vue";
 import { useRouter } from "vue-router";
 import { type Genre, type Track, TracksScope } from "@accentor/api-client-js";
@@ -33,9 +33,11 @@ const props = defineProps<{ id: string }>();
 const tracksStore = useTracksStore();
 const genresStore = useGenresStore();
 
-const genre = computed<Genre | undefined>(() => genresStore.genres[props.id]);
+const genre = computed<(Genre & { loaded: Date }) | undefined>(
+  () => genresStore.genres[props.id],
+);
 const genreName = computed(() => genre.value?.name || "");
-const tracks = computed<Track[]>(() =>
+const tracks = computed<(Track & { loaded: Date })[]>(() =>
   genre.value ? tracksStore.tracksFilterByGenre(genre.value.id) : [],
 );
 useHead({ title: genreName });
@@ -50,5 +52,5 @@ async function fetchContent(): Promise<void> {
   }
 }
 
-watch(() => props.id, fetchContent, { immediate: true });
+onMounted(fetchContent);
 </script>

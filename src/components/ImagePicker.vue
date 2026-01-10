@@ -125,7 +125,7 @@ function handleSelect(): void {
 }
 
 function clear(): void {
-  modelValue.value = null;
+  modelValue.value = { data: null };
 }
 
 function passthrough(): void {

@@ -58,76 +58,61 @@
   </VCard>
 </template>
 
-<script>
-// @ts-nocheck
-import { mapState } from "pinia";
-import { calcPlayCountForHours, calcPlayTimeForHours } from "@/reducers";
-import { useTracksStore } from "../store/tracks";
+<script setup lang="ts">
+import { computed, ref } from "vue";
+import type { Play } from "@accentor/api-client-js";
+import { calcPlayCountForHours, calcPlayTimeForHours } from "@/reducers.ts";
+import { useTracksStore } from "@/store/tracks";
+import i18n from "@/i18n";
 
-export default {
-  name: "PlaysPunchcard",
-  props: {
-    plays: {
-      type: Array,
-      required: true,
-    },
-    title: {
-      type: String,
-      required: true,
-    },
-    useTrackLength: {
-      type: Boolean,
-      default: false,
-    },
-  },
-  data() {
-    return {
-      yLabels: [
-        this.$t("common.shortWeekdays.monday"),
-        this.$t("common.shortWeekdays.tuesday"),
-        this.$t("common.shortWeekdays.wednesday"),
-        this.$t("common.shortWeekdays.thursday"),
-        this.$t("common.shortWeekdays.friday"),
-        this.$t("common.shortWeekdays.saturday"),
-        this.$t("common.shortWeekdays.sunday"),
-      ],
-      xLabels: [0, 6, 12, 18, 24],
-      isIntersecting: false,
-    };
-  },
-  computed: {
-    ...mapState(useTracksStore, ["tracks"]),
-    binnedPlays() {
-      const bin = this.useTrackLength
-        ? calcPlayTimeForHours(this.plays, this.tracks)
-        : calcPlayCountForHours(this.plays);
-      return bin;
-    },
-    svgData() {
-      const max = Math.max(...this.binnedPlays);
-      const dots = [];
-      this.binnedPlays.forEach((count, index) => {
-        // We only want to keep/render all the hours where there is at least one play
-        if (count) {
-          // The radius of each dot ranges between 1 and 11
-          const radius =
-            Math.ceil((Math.sqrt(count) / Math.sqrt(max)) * 10000) / 1000 + 1;
-          dots.push({
-            cx: 22 * (index % 24),
-            cy: 22 * Math.floor(index / 24),
-            r: radius,
-          });
-        }
+const tracksStore = useTracksStore();
+
+interface Props {
+  plays: Play[];
+  title: string;
+  useTrackLength?: boolean;
+}
+
+const props = withDefaults(defineProps<Props>(), { useTrackLength: false });
+
+const binnedPlays = computed(() =>
+  props.useTrackLength
+    ? calcPlayTimeForHours(props.plays, tracksStore.tracks)
+    : calcPlayCountForHours(props.plays),
+);
+
+const svgData = computed(() => {
+  const max = Math.max(...binnedPlays.value);
+  const dots: { cx: number; cy: number; r: number }[] = [];
+  binnedPlays.value.forEach((count, index) => {
+    // We only want to keep/render all the hours where there is at least one play
+    if (count) {
+      // The radius of each dot ranges between 1 and 11
+      const radius =
+        Math.ceil((Math.sqrt(count) / Math.sqrt(max)) * 10000) / 1000 + 1;
+      dots.push({
+        cx: 22 * (index % 24),
+        cy: 22 * Math.floor(index / 20),
+        r: radius,
       });
-      return dots;
-    },
-  },
-  methods: {
-    onIntersect(isIntersecting) {
-      this.isIntersecting = isIntersecting;
-    },
-  },
-};
-</script>
+    }
+  });
+  return dots;
+});
 
-<style lang="scss" scoped></style>
+const yLabels = [
+  i18n.global.t("common.shortWeekdays.monday"),
+  i18n.global.t("common.shortWeekdays.tuesday"),
+  i18n.global.t("common.shortWeekdays.wednesday"),
+  i18n.global.t("common.shortWeekdays.thursday"),
+  i18n.global.t("common.shortWeekdays.friday"),
+  i18n.global.t("common.shortWeekdays.saturday"),
+  i18n.global.t("common.shortWeekdays.sunday"),
+];
+
+const xLabels = [0, 6, 12, 18, 24];
+const isIntersecting = ref(false);
+function onIntersect(newIsIntersecting: boolean): void {
+  isIntersecting.value = newIsIntersecting;
+}
+</script>

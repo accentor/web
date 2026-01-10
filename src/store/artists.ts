@@ -6,7 +6,7 @@ import {
   ArtistsScope,
 } from "@accentor/api-client-js";
 import api from "@/api";
-import { compareStrings } from "@/comparators";
+import { compareStrings } from "@/comparators.ts";
 import {
   useBaseModelStore,
   index as baseIndex,
@@ -93,6 +93,7 @@ export const useArtistsStore = defineStore("artists", () => {
   );
   const merge = baseMerge(
     api.artists,
+    read,
     authStore,
     errorsStore,
     removeItem,

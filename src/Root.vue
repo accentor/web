@@ -1,6 +1,11 @@
 <template>
   <VApp>
-    <RouterView />
+    <Suspense>
+      <RouterView />
+      <template #fallback>
+        <VIcon>mdi-refresh mdi-spin</VIcon>
+      </template>
+    </Suspense>
   </VApp>
 </template>
 

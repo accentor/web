@@ -47,5 +47,6 @@ export const useAuthTokensStore = defineStore("auth-tokens", () => {
     authTokens: allAuthTokens,
     index,
     destroy,
+    restored,
   };
 });

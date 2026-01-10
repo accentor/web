@@ -54,6 +54,7 @@ export const useLocationsStore = defineStore("locations", () => {
 
   return {
     locations,
+    restored,
     allLocations,
     index,
     create,

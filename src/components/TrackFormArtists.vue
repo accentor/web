@@ -86,12 +86,8 @@
                     {{ $t("music.artist.hide.label") }}
                   </span>
                   <VTooltip location="bottom">
-                    <template #activator="{ props }">
-                      <VIcon
-                        class="ml-2"
-                        :size="true ? 'small' : undefined"
-                        v-bind="props"
-                      >
+                    <template #activator="{ props: tooltipProps }">
+                      <VIcon class="ml-2" size="small" v-bind="tooltipProps">
                         mdi-information
                       </VIcon>
                     </template>
@@ -108,116 +104,113 @@
   </Draggable>
 </template>
 
-<script>
-// @ts-nocheck
-import { mapState } from "pinia";
+<script setup lang="ts">
+import { storeToRefs } from "pinia";
 import Draggable from "vuedraggable";
 import { useArtistsStore } from "../store/artists";
+import { useVModel } from "@vueuse/core";
+import i18n from "@/i18n";
+import { computed } from "vue";
+import type { Artist, TrackArtistRole } from "@accentor/api-client-js";
+import type { InternalItem } from "vuetify/framework";
 
-export default {
-  name: "TrackFormArtists",
-  components: {
-    Draggable,
+interface ModelType {
+  artist_id: Artist | string | null;
+  name: string;
+  role: TrackArtistRole;
+}
+
+interface Props {
+  modelValue: ModelType[];
+}
+
+const props = defineProps<Props>();
+const emit = defineEmits<{ "update:modelValue": [ModelType[]] }>();
+const trackArtists = useVModel(props, "modelValue", emit);
+const { artistsByName: sortedArtists } = storeToRefs(useArtistsStore());
+
+const roles = [
+  {
+    value: "main",
+    title: i18n.global.t("music.artist.roles.main"),
   },
-  props: {
-    modelValue: {
-      type: Array,
-      required: true,
-    },
+  {
+    value: "performer",
+    title: i18n.global.t("music.artist.roles.performer"),
   },
-  emits: ["update:modelValue"],
-  data() {
-    return {
-      roles: [
-        {
-          value: "main",
-          title: this.$t("music.artist.roles.main"),
-        },
-        {
-          value: "performer",
-          title: this.$t("music.artist.roles.performer"),
-        },
-        {
-          value: "composer",
-          title: this.$t("music.artist.roles.composer"),
-        },
-        {
-          value: "conductor",
-          title: this.$t("music.artist.roles.conductor"),
-        },
-        {
-          value: "remixer",
-          title: this.$t("music.artist.roles.remixer"),
-        },
-        {
-          value: "producer",
-          title: this.$t("music.artist.roles.producer"),
-        },
-        {
-          value: "arranger",
-          title: this.$t("music.artist.roles.arranger"),
-        },
-      ],
-      trackArtists: [],
-    };
+  {
+    value: "composer",
+    title: i18n.global.t("music.artist.roles.composer"),
   },
-  computed: {
-    ...mapState(useArtistsStore, { sortedArtists: "artistsByName" }),
-    rules() {
-      const artistValidation = (v) =>
-        !!v || this.$t("errors.artists.artist-blank");
-      return [artistValidation];
-    },
+  {
+    value: "conductor",
+    title: i18n.global.t("music.artist.roles.conductor"),
   },
-  watch: {
-    trackArtists(newValue) {
-      this.$emit("update:modelValue", newValue);
-    },
-    modelValue: {
-      handler() {
-        this.trackArtists = this.modelValue;
-      },
-      immediate: true,
-    },
+  {
+    value: "remixer",
+    title: i18n.global.t("music.artist.roles.remixer"),
   },
-  methods: {
-    filterName(item, queryText) {
-      const search = queryText.toLowerCase();
-      return (
-        item.name.toLowerCase().indexOf(search) > -1 ||
-        item.normalized_name.indexOf(search) > -1
-      );
-    },
-    getItemKey(item) {
-      return this.trackArtists.indexOf(item);
-    },
-    removeArtist(index) {
-      this.trackArtists.splice(index, 1);
-    },
-    moveArtist(index, direction) {
-      this.trackArtists.splice(
-        index + direction,
-        0,
-        this.trackArtists.splice(index, 1)[0],
-      );
-    },
-    handleKeyUp(key, index) {
-      let direction;
-      if (key === "ArrowDown" || key === "d") {
-        direction = 1;
-      } else if (key === "ArrowUp" || key === "u") {
-        direction = -1;
-      }
-      if (
-        typeof direction !== "undefined" &&
-        index + direction >= 0 &&
-        index + direction < this.trackArtists.length
-      ) {
-        this.moveArtist(index, direction);
-        // Due to the way Vue updates the DOM, we have to manually focus on the current trackArtist in its new place
-        this.$refs[index + direction][0].focus();
-      }
-    },
+  {
+    value: "producer",
+    title: i18n.global.t("music.artist.roles.producer"),
   },
-};
+  {
+    value: "arranger",
+    title: i18n.global.t("music.artist.roles.arranger"),
+  },
+];
+
+const rules = computed(() => {
+  const artistValidation = (v: string): true | string =>
+    !!v || i18n.global.t("errors.artists.artist-blank");
+  return [artistValidation];
+});
+
+function filterName(
+  _value: string,
+  queryText: string,
+  item?: InternalItem<Artist>,
+): boolean {
+  if (!item) {
+    return false;
+  }
+
+  const search = queryText.toLowerCase();
+  return (
+    item.raw.name.toLowerCase().indexOf(search) >= 0 ||
+    item.raw.normalized_name.indexOf(search) >= 0
+  );
+}
+
+function getItemKey(item: ModelType): number {
+  return trackArtists.value.indexOf(item);
+}
+
+function removeArtist(index: number): void {
+  trackArtists.value.splice(index, 1);
+}
+
+function moveArtist(index: number, direction: 1 | -1): void {
+  trackArtists.value.splice(
+    index + direction,
+    0,
+    trackArtists.value.splice(index, 1)[0]!,
+  );
+}
+
+function handleKeyUp(key: string, index: number): void {
+  let direction: 1 | -1 | undefined;
+  if (key === "ArrowDown" || key === "d") {
+    direction = 1;
+  } else if (key === "ArrowUp" || key === "u") {
+    direction = -1;
+  }
+  if (
+    direction &&
+    index + direction >= 0 &&
+    index + direction < trackArtists.value.length
+  ) {
+    moveArtist(index, direction);
+  }
+}
 </script>

@@ -63,65 +63,69 @@
   </span>
 </template>
 
-<script>
-// @ts-nocheck
-import { mapActions, mapState } from "pinia";
-import { useLabelsStore } from "../store/labels";
-import { useGenresStore } from "../store/genres";
-import { useArtistsStore } from "../store/artists";
-import { useAlbumsStore } from "../store/albums";
-import { useTracksStore } from "../store/tracks";
+<script setup lang="ts">
+import { ref } from "vue";
+import { storeToRefs } from "pinia";
+import { useLabelsStore } from "@/store/labels";
+import { useGenresStore } from "@/store/genres";
+import { useArtistsStore } from "@/store/artists";
+import { useAlbumsStore } from "@/store/albums";
+import { useTracksStore } from "@/store/tracks";
+import i18n from "@/i18n";
 
-export default {
-  name: "MaintenanceActions",
-  data() {
-    return {
-      albumsDisabled: false,
-      artistsDisabled: false,
-      labelsDisabled: false,
-      genresDisabled: false,
-    };
-  },
-  computed: {
-    ...mapState(useTracksStore, ["tracksEmpty"]),
-  },
-  methods: {
-    ...mapActions(useAlbumsStore, { destroyAlbums: "destroyEmpty" }),
-    ...mapActions(useArtistsStore, { destroyArtists: "destroyEmpty" }),
-    ...mapActions(useLabelsStore, { destroyLabels: "destroyEmpty" }),
-    ...mapActions(useGenresStore, { destroyGenres: "destroyEmpty" }),
-    destroyEmptyArtists() {
-      if (confirm(this.$t("common.are-you-sure"))) {
-        this.artistsDisabled = true;
-        this.destroyArtists().finally(() => {
-          this.artistsDisabled = false;
-        });
-      }
-    },
-    destroyEmptyAlbums() {
-      if (confirm(this.$t("common.are-you-sure"))) {
-        this.albumsDisabled = true;
-        this.destroyAlbums().finally(() => {
-          this.albumsDisabled = false;
-        });
-      }
-    },
-    destroyEmptyGenres() {
-      if (confirm(this.$t("common.are-you-sure"))) {
-        this.genresDisabled = true;
-        this.destroyGenres().finally(() => {
-          this.genresDisabled = false;
-        });
-      }
-    },
-    destroyEmptyLabels() {
-      if (confirm(this.$t("common.are-you-sure"))) {
-        this.labelsDisabled = true;
-        this.destroyLabels().finally(() => {
-          this.labelsDisabled = false;
-        });
-      }
-    },
-  },
-};
+const albumsStore = useAlbumsStore();
+const artistsStore = useArtistsStore();
+const labelsStore = useLabelsStore();
+const genresStore = useGenresStore();
+
+const albumsDisabled = ref(false);
+const artistsDisabled = ref(false);
+const labelsDisabled = ref(false);
+const genresDisabled = ref(false);
+
+const { tracksEmpty } = storeToRefs(useTracksStore());
+
+async function destroyEmptyAlbums(): Promise<void> {
+  if (confirm(i18n.global.t("common.are-you-sure"))) {
+    albumsDisabled.value = true;
+    try {
+      await albumsStore.destroyEmpty();
+    } finally {
+      albumsDisabled.value = false;
+    }
+  }
+}
+
+async function destroyEmptyArtists(): Promise<void> {
+  if (confirm(i18n.global.t("common.are-you-sure"))) {
+    artistsDisabled.value = true;
+    try {
+      await artistsStore.destroyEmpty();
+    } finally {
+      artistsDisabled.value = false;
+    }
+  }
+}
+
+async function destroyEmptyGenres(): Promise<void> {
+  if (confirm(i18n.global.t("common.are-you-sure"))) {
+    genresDisabled.value = true;
+    try {
+      await genresStore.destroyEmpty();
+    } finally {
+      genresDisabled.value = false;
+    }
+  }
+}
+
+async function destroyEmptyLabels(): Promise<void> {
+  if (confirm(i18n.global.t("common.are-you-sure"))) {
+    labelsDisabled.value = true;
+    try {
+      await labelsStore.destroyEmpty();
+    } finally {
+      labelsDisabled.value = false;
+    }
+  }
+}
 </script>

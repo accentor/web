@@ -31,7 +31,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, watch } from "vue";
+import { computed, onMounted } from "vue";
 import { useHead } from "@unhead/vue";
 import { useRouter } from "vue-router";
 import { type Album, AlbumsScope } from "@accentor/api-client-js";
@@ -66,7 +66,7 @@ const filteredAlbums = computed(() => {
 });
 useHead({ title: labelName });
 
-watch(() => props.id, fetchContent, { immediate: true });
+onMounted(fetchContent);
 
 async function fetchContent(): Promise<void> {
   const labelPromise = labelsStore.read(parseInt(props.id));

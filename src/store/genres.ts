@@ -1,6 +1,6 @@
 import { computed } from "vue";
 import api from "@/api";
-import { compareStrings } from "@/comparators";
+import { compareStrings } from "@/comparators.ts";
 import { defineStore } from "pinia";
 import {
   create as baseCreate,
@@ -78,6 +78,7 @@ export const useGenresStore = defineStore("genres", () => {
   );
   const merge = baseMerge(
     api.genres,
+    read,
     authStore,
     errorsStore,
     removeItem,

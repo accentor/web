@@ -284,6 +284,7 @@ export function merge<T>(
   apiModule: {
     merge: (apiToken: ApiToken, newId: number, oldId: number) => Promise<T>;
   },
+  read: (id: number) => Promise<boolean>,
   authStore: AuthStore,
   errorsStore: ErrorsStore,
   removeItem: (id: number) => void,
@@ -292,6 +293,7 @@ export function merge<T>(
   return async function (newId: number, oldId: number): Promise<boolean> {
     try {
       await apiModule.merge(authStore.apiToken!, newId, oldId);
+      await read(newId);
       extraMergeOperations?.(newId, oldId);
       removeItem(oldId);
       return true;

@@ -2,12 +2,14 @@
   <VCard :to="{ name: 'album', params: { id: album.id } }">
     <VImg
       v-if="album.image500 && !imageUnavailable"
+      cover
       :aspect-ratio="1"
       :src="album.image500"
       @error="setImageUnavailable"
     />
     <VImg
       v-else-if="album.image && !imageUnavailable"
+      cover
       :aspect-ratio="1"
       :src="album.image"
       @error="setImageUnavailable"

@@ -1,8 +1,8 @@
 <template>
   <template v-if="isModerator">
     <VTooltip location="bottom" :disabled="!waitingForReload">
-      <template #activator="{ props }">
-        <span v-bind="props">
+      <template #activator="{ props: tooltipProps }">
+        <span v-bind="tooltipProps">
           <VBtn
             :to="{
               name: 'edit-label',
@@ -22,16 +22,16 @@
       <span>{{ $t("common.disabled-while-loading") }}</span>
     </VTooltip>
     <VTooltip location="bottom" :disabled="!waitingForReload">
-      <template #activator="{ props }">
-        <span v-bind="props">
+      <template #activator="{ props: tooltipProps }">
+        <span v-bind="tooltipProps">
           <LabelMergeDialog :label="label" :disabled="waitingForReload" />
         </span>
       </template>
       <span>{{ $t("common.disabled-while-loading") }}</span>
     </VTooltip>
     <VTooltip location="bottom" :disabled="!waitingForReload">
-      <template #activator="{ props }">
-        <span v-bind="props">
+      <template #activator="{ props: tooltipProps }">
+        <span v-bind="tooltipProps">
           <VBtn
             :disabled="waitingForReload"
             color="error"
@@ -51,38 +51,26 @@
   </template>
 </template>
 
-<script>
-// @ts-nocheck
-import { mapActions, mapState } from "pinia";
+<script setup lang="ts">
+import { storeToRefs } from "pinia";
 import LabelMergeDialog from "./LabelMergeDialog.vue";
 import { useAuthStore } from "../store/auth";
 import { useLabelsStore } from "../store/labels";
+import type { Label } from "@accentor/api-client-js";
+import { computed } from "vue";
+import i18n from "@/i18n";
 
-export default {
-  name: "LabelActions",
-  components: {
-    LabelMergeDialog,
-  },
-  props: {
-    label: {
-      type: Object,
-      required: true,
-    },
-  },
-  computed: {
-    ...mapState(useAuthStore, ["isModerator"]),
-    ...mapState(useLabelsStore, ["startLoading"]),
-    waitingForReload() {
-      return this.startLoading > this.label.loaded;
-    },
-  },
-  methods: {
-    ...mapActions(useLabelsStore, ["destroy"]),
-    deleteLabel: function () {
-      if (confirm(this.$t("common.are-you-sure"))) {
-        this.destroy(this.label.id);
-      }
-    },
-  },
-};
+const labelsStore = useLabelsStore();
+const props = defineProps<{ label: Label & { loaded: Date } }>();
+const { isModerator } = storeToRefs(useAuthStore());
+
+const waitingForReload = computed(
+  () => labelsStore.startLoading > props.label.loaded,
+);
+
+async function deleteLabel(): Promise<void> {
+  if (confirm(i18n.global.t("common.are-you-sure"))) {
+    await labelsStore.destroy(props.label.id);
+  }
+}
 </script>

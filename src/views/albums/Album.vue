@@ -81,7 +81,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, watch } from "vue";
+import { computed, onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 import { storeToRefs } from "pinia";
 import { useHead } from "@unhead/vue";
@@ -89,11 +89,11 @@ import AlbumActions from "@/components/AlbumActions.vue";
 import TracksTable from "@/components/TracksTable.vue";
 import AlbumArtists from "@/components/AlbumArtists.vue";
 import { PlaysScope, TracksScope } from "@accentor/api-client-js";
-import { usePlaylistsStore } from "@/store/playlists.ts";
-import { useLabelsStore } from "@/store/labels.ts";
-import { useAlbumsStore } from "@/store/albums.ts";
-import { useTracksStore } from "@/store/tracks.ts";
-import { usePlaysStore } from "@/store/plays.ts";
+import { usePlaylistsStore } from "@/store/playlists";
+import { useLabelsStore } from "@/store/labels";
+import { useAlbumsStore } from "@/store/albums";
+import { useTracksStore } from "@/store/tracks";
+import { usePlaysStore } from "@/store/plays";
 
 const albumsStore = useAlbumsStore();
 const labelsStore = useLabelsStore();
@@ -131,7 +131,7 @@ const playlists = computed(() =>
     : [],
 );
 
-watch(() => props.id, fetchContent, { immediate: true });
+onMounted(fetchContent);
 
 async function fetchContent(): Promise<void> {
   const albumPromise = albumsStore.read(parseInt(props.id));

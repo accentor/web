@@ -1,8 +1,8 @@
 <template>
   <span v-if="isModerator">
     <VTooltip location="bottom" :disabled="!waitingForReload">
-      <template #activator="{ props }">
-        <span v-bind="props">
+      <template #activator="{ props: tooltipProps }">
+        <span v-bind="tooltipProps">
           <VBtn
             :to="{
               name: 'edit-genre',
@@ -22,16 +22,16 @@
       <span>{{ $t("common.disabled-while-loading") }}</span>
     </VTooltip>
     <VTooltip location="bottom" :disabled="!waitingForReload">
-      <template #activator="{ props }">
-        <span v-bind="props">
+      <template #activator="{ props: tooltipProps }">
+        <span v-bind="tooltipProps">
           <GenreMergeDialog :genre="genre" :disabled="waitingForReload" />
         </span>
       </template>
       <span>{{ $t("common.disabled-while-loading") }}</span>
     </VTooltip>
     <VTooltip location="bottom" :disabled="!waitingForReload">
-      <template #activator="{ props }">
-        <span v-bind="props">
+      <template #activator="{ props: tooltipProps }">
+        <span v-bind="tooltipProps">
           <VBtn
             :disabled="waitingForReload"
             color="error"
@@ -51,38 +51,24 @@
   </span>
 </template>
 
-<script>
-// @ts-nocheck
-import { mapActions, mapState } from "pinia";
+<script setup lang="ts">
+import { storeToRefs } from "pinia";
 import GenreMergeDialog from "./GenreMergeDialog.vue";
 import { useAuthStore } from "../store/auth";
 import { useGenresStore } from "../store/genres";
+import type { Genre } from "@accentor/api-client-js";
+import { computed } from "vue";
+import i18n from "@/i18n";
 
-export default {
-  name: "GenreActions",
-  components: {
-    GenreMergeDialog,
-  },
-  props: {
-    genre: {
-      type: Object,
-      required: true,
-    },
-  },
-  computed: {
-    ...mapState(useAuthStore, ["isModerator"]),
-    ...mapState(useGenresStore, ["startLoading"]),
-    waitingForReload() {
-      return this.startLoading > this.genre.loaded;
-    },
-  },
-  methods: {
-    ...mapActions(useGenresStore, ["destroy", "merge"]),
-    deleteGenre: function () {
-      if (confirm(this.$t("common.are-you-sure"))) {
-        this.destroy(this.genre.id);
-      }
-    },
-  },
-};
+const genresStore = useGenresStore();
+const props = defineProps<{ genre: Genre & { loaded: Date } }>();
+const { isModerator } = storeToRefs(useAuthStore());
+const waitingForReload = computed(
+  () => genresStore.startLoading > props.genre.loaded,
+);
+async function deleteGenre(): Promise<void> {
+  if (confirm(i18n.global.t("common.are-you-sure"))) {
+    await genresStore.destroy(props.genre.id);
+  }
+}
 </script>

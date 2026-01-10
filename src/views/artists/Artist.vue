@@ -74,7 +74,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, watch } from "vue";
+import { computed, onMounted, ref } from "vue";
 import { useHead } from "@unhead/vue";
 import { useRouter } from "vue-router";
 import AlbumCard from "@/components/AlbumCard.vue";
@@ -120,7 +120,7 @@ function setImageUnavailable(): void {
   imageUnavailable.value = true;
 }
 
-watch(() => props.id, fetchContent, { immediate: true });
+onMounted(fetchContent);
 
 async function fetchContent(): Promise<void> {
   const artistPromise = artistsStore.read(parseInt(props.id));

@@ -1,7 +1,7 @@
 import { computed } from "vue";
 import { defineStore } from "pinia";
 import api from "@/api";
-import { compareStrings } from "../comparators";
+import { compareStrings } from "../comparators.ts";
 import {
   create as baseCreate,
   destroy as baseDestroy,
@@ -105,6 +105,7 @@ export const usePlaylistsStore = defineStore("playlists", () => {
 
   return {
     playlists,
+    restored,
     allPlaylists,
     playlistsByName,
     editablePlaylists,

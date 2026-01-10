@@ -7,7 +7,10 @@ import { createHead, VueHeadMixin } from "@unhead/vue/client";
 import { createApp } from "vue";
 import "vuetify/styles";
 import { createVuetify } from "vuetify";
-import { createVueI18nAdapter } from "vuetify/locale/adapters/vue-i18n";
+import {
+  createVueI18nAdapter,
+  type VueI18nAdapterParams,
+} from "vuetify/locale/adapters/vue-i18n";
 
 import Root from "./Root.vue";
 import router from "@/router";
@@ -31,23 +34,14 @@ app.mixin(VueHeadMixin);
 app.use(
   createVuetify({
     locale: {
-      adapter: createVueI18nAdapter({ i18n, useI18n }),
+      adapter: createVueI18nAdapter({
+        i18n,
+        useI18n,
+      } as unknown as VueI18nAdapterParams),
     },
     theme: {
       defaultTheme: "system",
     },
   }),
 );
-
-app.config.globalProperties.$filters = {
-  length: (l) => {
-    const hours = Math.floor(l / 3600);
-    const minutes = Math.floor((l % 3600) / 60);
-    const seconds = `${l % 60}`.padStart(2, "0");
-    return hours
-      ? `${hours}:${minutes.toString().padStart(2, "0")}:${seconds}`
-      : `${minutes}:${seconds}`;
-  },
-};
-
 app.mount("#main");

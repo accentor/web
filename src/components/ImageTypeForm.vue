@@ -46,78 +46,65 @@
   </VForm>
 </template>
 
-<script>
-// @ts-nocheck
-import { mapActions, mapState } from "pinia";
-import { useImageTypesStore } from "../store/image_types";
+<script setup lang="ts">
+import { computed, onMounted, ref, useTemplateRef } from "vue";
+import type { ImageType } from "@accentor/api-client-js";
+import { useImageTypesStore } from "@/store/image_types";
+import i18n from "@/i18n";
 
-export default {
-  name: "ImageTypeForm",
-  props: { imageType: { default: null, type: Object } },
-  data() {
-    return {
-      newImageType: {
-        mimetype: "",
-        extension: "",
-      },
-      isValid: true,
-    };
-  },
-  computed: {
-    ...mapState(useImageTypesStore, { imageTypes: "allImageTypes" }),
-    rules() {
-      const rules = {
-        ext: [(v) => !!v || this.$t("errors.image.ext-blank")],
-      };
-      if (this.imageType === null) {
-        const extTaken = (v) => {
-          const double = this.imageTypes.some((it) => it.extension === v);
-          return !double || this.$t("errors.image.ext-taken");
-        };
-        rules.ext.push(extTaken);
-      }
-
-      return rules;
-    },
-  },
-  watch: {
-    album: function () {
-      if (this.imageType) {
-        this.fillValues();
-      }
-    },
-  },
-  created() {
-    this.$nextTick(() => {
-      if (this.imageType) {
-        this.fillValues();
-      }
+const imageTypesStore = useImageTypesStore();
+const props = defineProps<{ imageType?: ImageType }>();
+const newImageType = ref({
+  mimetype: "",
+  extension: "",
+});
+const isValid = ref(true);
+const rules = computed(() => {
+  const result = {
+    ext: [
+      (v: string): true | string =>
+        !!v || i18n.global.t("errors.image.ext-blank"),
+    ],
+  };
+  if (!props.imageType) {
+    result.ext.push((v: string): true | string => {
+      const double = imageTypesStore.allImageTypes.some(
+        (it) => it.extension === v,
+      );
+      return !double || i18n.global.t("errors.image.ext-taken");
     });
-  },
-  methods: {
-    fillValues() {
-      this.newImageType.extension = this.imageType.extension;
-      this.newImageType.mimetype = this.imageType.mimetype;
-    },
-    ...mapActions(useImageTypesStore, ["destroy", "update", "create"]),
-    async saveImageType() {
-      if (this.$refs.form.validate()) {
-        if (this.imageType === null) {
-          const id = await this.create(this.newImageType);
-          if (id) {
-            this.newImageType.extension = "";
-            this.newImageType.mimetype = "";
-          }
-        } else {
-          this.update(this.imageType.id, this.newImageType);
-        }
+  }
+
+  return result;
+});
+
+onMounted(fillValues);
+
+function fillValues(): void {
+  if (props.imageType) {
+    newImageType.value.extension = props.imageType.extension;
+    newImageType.value.mimetype = props.imageType.mimetype;
+  }
+}
+
+async function deleteImageType(): Promise<void> {
+  if (confirm(i18n.global.t("common.are-you-sure"))) {
+    await imageTypesStore.destroy(props.imageType!.id);
+  }
+}
+
+const form = useTemplateRef("form");
+async function saveImageType(): Promise<void> {
+  if ((await form.value!.validate()).valid) {
+    if (!props.imageType) {
+      const id = await imageTypesStore.create(newImageType.value);
+      if (id) {
+        newImageType.value.extension = "";
+        newImageType.value.mimetype = "";
       }
-    },
-    deleteImageType() {
-      if (confirm(this.$t("common.are-you-sure"))) {
-        this.destroy(this.imageType.id);
-      }
-    },
-  },
-};
+    } else {
+      await imageTypesStore.update(props.imageType.id, newImageType.value);
+    }
+  }
+}
 </script>

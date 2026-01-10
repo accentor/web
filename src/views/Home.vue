@@ -104,7 +104,7 @@ import {
   compareAlbumsByReleaseFirst,
   compareByRecentlyPlayed,
   compareStrings,
-} from "@/comparators";
+} from "@/comparators.ts";
 import { storeToRefs } from "pinia";
 import { useArtistsStore } from "@/store/artists";
 import { useAlbumsStore } from "@/store/albums";
@@ -153,7 +153,7 @@ const addedArtists = computed(() =>
   ),
 );
 const recentArtists = computed(() =>
-  [...artists.value].sort(compareByRecentlyPlayed(playStatsByArtist)),
+  [...artists.value].sort(compareByRecentlyPlayed(playStatsByArtist.value)),
 );
 const randomArtists = computed(() => randomSort(artists.value));
 

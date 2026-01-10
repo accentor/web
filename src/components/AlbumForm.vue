@@ -236,7 +236,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref, watch } from "vue";
+import { onMounted, ref } from "vue";
 import { storeToRefs } from "pinia";
 import { useRoute, useRouter } from "vue-router";
 import { useDate } from "vuetify";
@@ -300,19 +300,10 @@ const editionInformation = ref<boolean>(false);
 const { artists, artistsByName: sortedArtists } = storeToRefs(artistsStore);
 const { labels, labelsByName: sortedLabels } = storeToRefs(labelsStore);
 
-watch(
-  () => props.album,
-  () => {
-    if (props.album && !isDirty.value) {
-      void fillValues();
-    }
-  },
-);
-
 onMounted(async () => {
   if (props.album) {
     await albumsStore.read(props.album.id);
-    await fillValues();
+    fillValues();
   }
 });
 
@@ -332,13 +323,10 @@ function filterName(
   );
 }
 
-async function fillValues(): Promise<void> {
+function fillValues(): void {
   if (!props.album) {
     return;
   }
-
-  await albumsStore.restored;
-  await labelsStore.restored;
 
   newAlbum.value.title = props.album.title;
   newAlbum.value.release = props.album.release;

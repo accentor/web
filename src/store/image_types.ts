@@ -67,5 +67,6 @@ export const useImageTypesStore = defineStore("image-types", () => {
     create,
     update,
     destroy,
+    restored,
   };
 });

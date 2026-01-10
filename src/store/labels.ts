@@ -1,7 +1,7 @@
 import { computed } from "vue";
 import { defineStore } from "pinia";
 import api from "@/api";
-import { compareStrings } from "../comparators";
+import { compareStrings } from "../comparators.ts";
 import {
   create as baseCreate,
   destroy as baseDestroy,
@@ -79,6 +79,7 @@ export const useLabelsStore = defineStore("labels", () => {
   );
   const merge = baseMerge(
     api.labels,
+    read,
     authStore,
     errorsStore,
     removeItem,
