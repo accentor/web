@@ -18,55 +18,49 @@
   </VContainer>
 </template>
 
-<script>
-// @ts-nocheck
-import { mapActions, mapState } from "pinia";
-import { useGenresStore } from "../../store/genres";
+<script setup lang="ts">
+import { computed, onMounted, ref } from "vue";
+import { useRoute, useRouter } from "vue-router";
+import { useHead } from "@unhead/vue";
+import { useGenresStore } from "@/store/genres";
+import i18n from "@/i18n";
 
-export default {
-  name: "EditGenre",
-  data() {
-    return {
-      newGenre: {
-        name: "",
-      },
-      isDirty: false,
-      isValid: true,
-    };
-  },
-  head() {
-    return { title: this.$t("page-titles.edit", { obj: this.genre?.name }) };
-  },
-  computed: {
-    ...mapState(useGenresStore, ["genres"]),
-    genre: function () {
-      return this.genres[this.$route.params.id];
-    },
-  },
-  watch: {
-    genre: function () {
-      if (this.genre && !this.isDirty) {
-        this.fillValues();
-      }
-    },
-  },
-  async created() {
-    if (this.genre) {
-      await this.read(this.genre.id);
-      this.fillValues();
-    }
-  },
-  methods: {
-    ...mapActions(useGenresStore, ["read", "update"]),
-    fillValues() {
-      this.newGenre.name = this.genre.name;
-    },
-    async submit() {
-      const succeeded = await this.update(this.genre.id, this.newGenre);
-      if (succeeded) {
-        this.$router.push(this.$route.query.redirect || { name: "genres" });
-      }
-    },
-  },
-};
+const route = useRoute();
+const router = useRouter();
+const genresStore = useGenresStore();
+
+const newGenre = ref({ name: "" });
+const isDirty = ref(false);
+const isValid = ref(true);
+
+const props = defineProps<{ id: string }>();
+
+const genre = computed(() => genresStore.genres[props.id]);
+const title = computed(() =>
+  i18n.global.t("page-titles.edit", { obj: genre.value?.name ?? "" }),
+);
+useHead({ title });
+
+onMounted(async () => {
+  await genresStore.read(parseInt(props.id));
+  fillValues();
+});
+
+function fillValues(): void {
+  if (genre.value) {
+    newGenre.value.name = genre.value.name;
+  }
+}
+
+async function submit(): Promise<void> {
+  if (!genre.value) {
+    return;
+  }
+  const succeeded = await genresStore.update(genre.value.id, newGenre.value);
+  if (succeeded) {
+    await router.push(
+      (route.query.redirect as string | undefined) || { name: "genres" },
+    );
+  }
+}
 </script>

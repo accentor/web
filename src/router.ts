@@ -113,6 +113,7 @@ const router = createRouter({
           path: "genres/:id/edit",
           name: "edit-genre",
           component: EditGenre,
+          props: true,
         },
         {
           path: "labels",
@@ -129,6 +130,7 @@ const router = createRouter({
           path: "labels/:id/edit",
           name: "edit-label",
           component: EditLabel,
+          props: true,
         },
         {
           path: "library",
