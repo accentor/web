@@ -9,15 +9,12 @@ import vuetify from "eslint-plugin-vuetify";
 import {
   defineConfigWithVueTs,
   vueTsConfigs,
-  configureVueProject,
 } from "@vue/eslint-config-typescript";
-
-configureVueProject({ scriptLangs: ["ts", "js"] });
 
 export default defineConfigWithVueTs(
   {
     name: "app/files-to-lint",
-    files: ["**/*.{vue,ts,js}"],
+    files: ["**/*.{vue,ts}"],
   },
   globalIgnores(["**/dist/**"]),
   eslint.configs.recommended,
