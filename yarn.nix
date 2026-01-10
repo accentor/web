@@ -914,14 +914,6 @@
       };
     }
     {
-      name = "chokidar___chokidar_4.0.0.tgz";
-      path = fetchurl {
-        name = "chokidar___chokidar_4.0.0.tgz";
-        url  = "https://registry.yarnpkg.com/chokidar/-/chokidar-4.0.0.tgz";
-        sha512 = "mxIojEAQcuEvT/lyXq+jf/3cO/KoA6z4CeNDGGevTybECPOMFCnQy3OPahluUkbqgPNGw5Bi78UC7Po6Lhy+NA==";
-      };
-    }
-    {
       name = "chokidar___chokidar_4.0.3.tgz";
       path = fetchurl {
         name = "chokidar___chokidar_4.0.3.tgz";
@@ -1962,11 +1954,11 @@
       };
     }
     {
-      name = "sass___sass_1.97.1.tgz";
+      name = "sass___sass_1.97.2.tgz";
       path = fetchurl {
-        name = "sass___sass_1.97.1.tgz";
-        url  = "https://registry.yarnpkg.com/sass/-/sass-1.97.1.tgz";
-        sha512 = "uf6HoO8fy6ClsrShvMgaKUn14f2EHQLQRtpsZZLeU/Mv0Q1K5P0+x2uvH6Cub39TVVbWNSrraUhDAoFph6vh0A==";
+        name = "sass___sass_1.97.2.tgz";
+        url  = "https://registry.yarnpkg.com/sass/-/sass-1.97.2.tgz";
+        sha512 = "y5LWb0IlbO4e97Zr7c3mlpabcbBtS+ieiZ9iwDooShpFKWXf62zz5pEPdwrLYm+Bxn1fnbwFGzHuCLSA9tBmrw==";
       };
     }
     {
@@ -2007,14 +1999,6 @@
         name = "sortablejs___sortablejs_1.10.2.tgz";
         url  = "https://registry.yarnpkg.com/sortablejs/-/sortablejs-1.10.2.tgz";
         sha512 = "YkPGufevysvfwn5rfdlGyrGjt7/CRHwvRPogD/lC+TnvcN29jDpCifKP+rBqf+LRldfXSTh+0CGLcSg0VIxq3A==";
-      };
-    }
-    {
-      name = "source_map_js___source_map_js_1.0.2.tgz";
-      path = fetchurl {
-        name = "source_map_js___source_map_js_1.0.2.tgz";
-        url  = "https://registry.yarnpkg.com/source-map-js/-/source-map-js-1.0.2.tgz";
-        sha512 = "R0XvVJ9WusLiqTCEiGCmICCMplcCkIwwR11mOSD9CR5u+IXYdiseeEuXCVAjS54zqwkLcPNnmU4OeJ6tUrWhDw==";
       };
     }
     {
