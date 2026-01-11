@@ -4,7 +4,7 @@
       <VCol>
         <TracksTable
           :tracks="tracks"
-          :title="$t('music.tracks-without-audio')"
+          :title="I18n.t('music.tracks-without-audio')"
           :show-search="true"
           :show-mass-edit="true"
         />
@@ -19,10 +19,11 @@ import TracksTable from "@/components/TracksTable.vue";
 import { useAuthStore } from "@/store/auth";
 import { useTracksStore } from "@/store/tracks";
 import { useHead } from "@unhead/vue";
-import i18n from "@/i18n";
+import { useI18n } from "vue-i18n";
 
+const I18n = useI18n();
 const { isModerator } = storeToRefs(useAuthStore());
 const { tracksEmpty: tracks } = storeToRefs(useTracksStore());
 
-useHead({ title: i18n.global.t("music.tracks-without-audio") });
+useHead({ title: I18n.t("music.tracks-without-audio") });
 </script>

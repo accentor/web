@@ -20,9 +20,9 @@
             <RouterLink :to="{ name: 'artist', params: { id: ta.artist_id } }">
               {{ ta.artist_name }}
             </RouterLink>
-            ({{ $t(`music.artist.roles.${ta.role}`) }})
+            ({{ I18n.t(`music.artist.roles.${ta.role}`) }})
             <span v-if="ta.name !== ta.artist_name">
-              {{ $t("common.as") }} {{ ta.name }}
+              {{ I18n.t("common.as") }} {{ ta.name }}
             </span>
           </span>
         </VListItem>
@@ -36,6 +36,9 @@ import { computed } from "vue";
 import { storeToRefs } from "pinia";
 import type { TrackArtist } from "@accentor/api-client-js";
 import { useArtistsStore } from "@/store/artists";
+import { useI18n } from "vue-i18n";
+
+const I18n = useI18n();
 
 interface Props {
   track: {

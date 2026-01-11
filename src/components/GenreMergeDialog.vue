@@ -21,7 +21,7 @@
     <VCard>
       <VCardTitle>
         <span class="text-h5">
-          {{ $t("music.genre.merge-into", { obj: genre.name }) }}
+          {{ I18n.t("music.genre.merge-into", { obj: genre.name }) }}
         </span>
       </VCardTitle>
       <VCardText>
@@ -34,7 +34,7 @@
                 :custom-filter="filterName"
                 item-title="name"
                 item-value="id"
-                :label="$tc('music.genres', 1)"
+                :label="I18n.t('music.genres', 1)"
                 return-object
               >
                 <template #item="{ item, props: listItemProps }">
@@ -55,7 +55,7 @@
       <VCardActions>
         <VSpacer></VSpacer>
         <VBtn color="primary" class="ma-2" type="submit" @click="mergeGenres">
-          {{ $t("music.genre.merge") }}
+          {{ I18n.t("music.genre.merge") }}
         </VBtn>
       </VCardActions>
     </VCard>
@@ -69,7 +69,9 @@ import { storeToRefs } from "pinia";
 import type { Genre } from "@accentor/api-client-js";
 import { useAuthStore } from "@/store/auth";
 import { useGenresStore } from "@/store/genres";
+import { useI18n } from "vue-i18n";
 
+const I18n = useI18n();
 const genresStore = useGenresStore();
 const props = defineProps<{ disabled: boolean; genre: Genre }>();
 const mergeGenre = ref<Genre | null>(null);

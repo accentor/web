@@ -7,14 +7,14 @@
         :save-pagination="false"
       >
         <template #header>
-          <h2 class="text-h4">{{ $tc("music.artists", 2) }}</h2>
+          <h2 class="text-h4">{{ I18n.t("music.artists", 2) }}</h2>
         </template>
       </ArtistsRow>
     </VContainer>
     <VContainer fluid>
       <AlbumsRow :albums="albums" :items-per-page="6" :save-pagination="false">
         <template #header>
-          <h2 class="text-h4">{{ $tc("music.albums", 2) }}</h2>
+          <h2 class="text-h4">{{ I18n.t("music.albums", 2) }}</h2>
         </template>
       </AlbumsRow>
     </VContainer>
@@ -22,7 +22,7 @@
       <VRow class="flex-column">
         <VRow>
           <VCol>
-            <h2 class="text-h4">{{ $tc("music.tracks", 2) }}</h2>
+            <h2 class="text-h4">{{ I18n.t("music.tracks", 2) }}</h2>
           </VCol>
         </VRow>
         <VRow>
@@ -48,10 +48,11 @@ import TracksTable from "@/components/TracksTable.vue";
 import { useAlbumsStore } from "@/store/albums";
 import { useArtistsStore } from "@/store/artists";
 import { useTracksStore } from "@/store/tracks";
-import i18n from "@/i18n";
 import { storeToRefs } from "pinia";
+import { useI18n } from "vue-i18n";
 
-useHead({ title: i18n.global.tc("music.flags", 2) });
+const I18n = useI18n();
+useHead({ title: I18n.t("music.flags", 2) });
 
 const { tracksFlagged: tracks } = storeToRefs(useTracksStore());
 const { albumsFlagged: albums } = storeToRefs(useAlbumsStore());

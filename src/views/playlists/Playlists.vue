@@ -11,7 +11,7 @@
             <VTextField
               v-if="playlists.length > numberOfItems"
               v-model="search"
-              :label="$t('common.search')"
+              :label="I18n.t('common.search')"
               hide-details
               prepend-inner-icon="mdi-magnify"
               single-line
@@ -19,7 +19,7 @@
           </VCol>
           <VBtn :to="{ name: 'new-playlist' }" color="success" class="ma-2">
             <VIcon start>mdi-plus</VIcon>
-            {{ $t("music.playlist.new") }}
+            {{ I18n.t("music.playlist.new") }}
           </VBtn>
         </VRow>
       </template>
@@ -41,11 +41,13 @@
               <VCardText>
                 <span class="d-block">
                   {{ users[`${item.raw.user_id}`]?.name }} &bull;
-                  {{ $t(`music.playlist.access_options.${item.raw.access}`) }}
+                  {{
+                    I18n.t(`music.playlist.access_options.${item.raw.access}`)
+                  }}
                 </span>
                 <span>
                   {{
-                    $tc(
+                    I18n.t(
                       `music.playlist.item_counts.${item.raw.playlist_type}`,
                       item.raw.item_ids.length,
                     )
@@ -81,11 +83,12 @@ import { useDisplay } from "vuetify/framework";
 import PlaylistActions from "@/components/PlaylistActions.vue";
 import { usePlaylistsStore } from "@/store/playlists";
 import { useUsersStore } from "@/store/users";
-import i18n from "@/i18n";
 import { useSearch } from "@/composables/search";
 import { usePagination } from "@/composables/pagination";
+import { useI18n } from "vue-i18n";
 
-useHead({ title: i18n.global.tc("music.playlists", 2) });
+const I18n = useI18n();
+useHead({ title: I18n.t("music.playlists", 2) });
 
 const playlistsStore = usePlaylistsStore();
 const { playlistsByName: playlists } = storeToRefs(playlistsStore);

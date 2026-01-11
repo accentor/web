@@ -5,12 +5,12 @@
         <VForm v-model="isValid" @submit.prevent="submit">
           <VTextField
             v-model="newLabel.name"
-            :label="$t('common.name')"
-            :rules="[(v) => !!v || $t('errors.label.name-blank')]"
+            :label="I18n.t('common.name')"
+            :rules="[(v) => !!v || I18n.t('errors.label.name-blank')]"
             required
           />
           <VBtn :disabled="!isValid" color="primary" class="ma-2" type="submit">
-            {{ $t("music.label.update") }}
+            {{ I18n.t("music.label.update") }}
           </VBtn>
         </VForm>
       </VCol>
@@ -23,8 +23,9 @@ import { computed, onMounted, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useHead } from "@unhead/vue";
 import { useLabelsStore } from "@/store/labels";
-import i18n from "@/i18n";
+import { useI18n } from "vue-i18n";
 
+const I18n = useI18n();
 const route = useRoute();
 const router = useRouter();
 const labelsStore = useLabelsStore();
@@ -37,7 +38,7 @@ const props = defineProps<{ id: string }>();
 
 const label = computed(() => labelsStore.labels[props.id]);
 const title = computed(() =>
-  i18n.global.t("page-titles.edit", { obj: label.value?.name ?? "" }),
+  I18n.t("page-titles.edit", { obj: label.value?.name ?? "" }),
 );
 useHead({ title });
 

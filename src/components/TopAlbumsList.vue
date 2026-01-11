@@ -9,7 +9,7 @@
           v-model="useAverage"
           density="compact"
           hide-details
-          :label="$t('stats.useAverage')"
+          :label="I18n.t('stats.useAverage')"
           class="mr-4"
         />
       </VCol>
@@ -28,7 +28,9 @@ import albumSvgUrl from "@mdi/svg/svg/album.svg" with { type: "url" };
 import TopList from "@/components/TopList.vue";
 import { useAlbumsStore } from "@/store/albums";
 import { useTracksStore } from "@/store/tracks";
+import { useI18n } from "vue-i18n";
 
+const I18n = useI18n();
 const albumsStore = useAlbumsStore();
 const tracksStore = useTracksStore();
 

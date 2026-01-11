@@ -8,7 +8,11 @@
         v-bind="dialogProps"
       >
         {{
-          $tc("music.mass.edit-tracks", tracks.length, { count: tracks.length })
+          I18n.t(
+            "music.mass.edit-tracks",
+            { count: tracks.length },
+            tracks.length,
+          )
         }}
       </VBtn>
     </template>
@@ -19,9 +23,11 @@
         </VBtn>
         <VToolbarTitle>
           {{
-            $tc("music.mass.edit-tracks", tracks.length, {
-              count: tracks.length,
-            })
+            I18n.t(
+              "music.mass.edit-tracks",
+              { count: tracks.length },
+              tracks.length,
+            )
           }}
         </VToolbarTitle>
         <VSpacer></VSpacer>
@@ -48,10 +54,10 @@
                     <template #label>
                       <span>
                         {{
-                          $tc(
+                          I18n.t(
                             "music.flag.show",
-                            tracksWithReviewComments.length,
                             { count: tracksWithReviewComments.length },
+                            tracksWithReviewComments.length,
                           )
                         }}
                       </span>
@@ -86,7 +92,7 @@
                   <VCheckbox v-model="number.enabled">
                     <template #label>
                       <span>
-                        {{ $t("music.mass.increase-track") }}
+                        {{ I18n.t("music.mass.increase-track") }}
                       </span>
                     </template>
                   </VCheckbox>
@@ -95,7 +101,7 @@
                   <VTextField
                     v-if="number.enabled"
                     v-model="number.amount"
-                    :label="$t('common.amount')"
+                    :label="I18n.t('common.amount')"
                     type="number"
                     step="1"
                     :hide-details="true"
@@ -110,7 +116,7 @@
                   <VCheckbox v-model="titleReplacement.enabled">
                     <template #label>
                       <span>
-                        {{ $t("music.mass.title-search") }}
+                        {{ I18n.t("music.mass.title-search") }}
                       </span>
                     </template>
                   </VCheckbox>
@@ -119,7 +125,7 @@
                   <VCheckbox
                     v-if="titleReplacement.enabled"
                     v-model="titleReplacement.regex"
-                    :label="$t('music.mass.regex')"
+                    :label="I18n.t('music.mass.regex')"
                   />
                 </VCol>
               </VRow>
@@ -127,13 +133,13 @@
                 <VCol cols="12" sm="6">
                   <VTextField
                     v-model="titleReplacement.search"
-                    :label="$t('common.search')"
+                    :label="I18n.t('common.search')"
                   />
                 </VCol>
                 <VCol cols="12" sm="6">
                   <VTextField
                     v-model="titleReplacement.replace"
-                    :label="$t('common.replace')"
+                    :label="I18n.t('common.replace')"
                   />
                 </VCol>
               </VRow>
@@ -145,7 +151,7 @@
                   <VCheckbox v-model="album.enabled">
                     <template #label>
                       <span>
-                        {{ $t("music.mass.set-album") }}
+                        {{ I18n.t("music.mass.set-album") }}
                       </span>
                     </template>
                   </VCheckbox>
@@ -180,7 +186,7 @@
                   <VCheckbox v-model="changeGenres.enabled">
                     <template #label>
                       <span>
-                        {{ $t("music.mass.change-genres") }}
+                        {{ I18n.t("music.mass.change-genres") }}
                       </span>
                     </template>
                   </VCheckbox>
@@ -189,7 +195,7 @@
                   <VCheckbox
                     v-if="changeGenres.enabled"
                     v-model="changeGenres.replace"
-                    :label="$t('music.mass.replace-instead-genres')"
+                    :label="I18n.t('music.mass.replace-instead-genres')"
                   />
                 </VCol>
               </VRow>
@@ -203,7 +209,7 @@
                     closable-chips
                     item-title="name"
                     item-value="id"
-                    :label="$t('music.genre-s')"
+                    :label="I18n.t('music.genre-s')"
                     multiple
                     return-object
                     :rules="rules.genre"
@@ -219,7 +225,7 @@
                   <VCheckbox v-model="changeArtists.enabled">
                     <template #label>
                       <span>
-                        {{ $t("music.mass.change-artists") }}
+                        {{ I18n.t("music.mass.change-artists") }}
                       </span>
                     </template>
                   </VCheckbox>
@@ -228,7 +234,7 @@
                   <VCheckbox
                     v-if="changeArtists.enabled"
                     v-model="changeArtists.replace"
-                    :label="$t('music.mass.replace-instead-artists')"
+                    :label="I18n.t('music.mass.replace-instead-artists')"
                   />
                 </VCol>
               </VRow>
@@ -242,7 +248,7 @@
                 class="ma-2"
                 @click="addArtist"
               >
-                {{ $t("music.artist.add") }}
+                {{ I18n.t("music.artist.add") }}
               </VBtn>
             </VContainer>
             <VDivider v-if="tracksWithReviewComments.length > 0" />
@@ -257,7 +263,7 @@
                     <template #label>
                       <span>
                         {{
-                          $tc(
+                          I18n.t(
                             "music.flag.clear",
                             tracksWithReviewComments.length,
                           )
@@ -292,10 +298,11 @@ import type {
   TrackArtistRole,
 } from "@accentor/api-client-js";
 import { computed, ref, useTemplateRef } from "vue";
-import i18n from "@/i18n";
 import type { InternalItem } from "vuetify/framework";
 import { compareTracks } from "@/util";
+import { useI18n } from "vue-i18n";
 
+const I18n = useI18n();
 const albumsStore = useAlbumsStore();
 const artistsStore = useArtistsStore();
 const genresStore = useGenresStore();
@@ -362,11 +369,11 @@ const rules = computed(() => {
             g.name === newGenre || g.normalized_name === newGenre.toLowerCase(),
         );
         if (double) {
-          valid = i18n.global.t("errors.genre.name-taken-obj", {
+          valid = I18n.t("errors.genre.name-taken-obj", {
             obj: newGenre,
           });
         } else if (!newGenre.trim().length) {
-          valid = i18n.global.t("errors.genre.name-blank");
+          valid = I18n.t("errors.genre.name-blank");
         }
       }
     });
@@ -379,7 +386,7 @@ const rules = computed(() => {
   if (album.value.enabled) {
     result.album.push(
       (v: Album | undefined): true | string =>
-        !!v || i18n.global.t("errors.albums.album-blank"),
+        !!v || I18n.t("errors.albums.album-blank"),
     );
   }
 

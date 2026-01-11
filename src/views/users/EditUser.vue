@@ -13,14 +13,16 @@ import { computed } from "vue";
 import { useHead } from "@unhead/vue";
 import UserForm from "@/components/UserForm.vue";
 import { useUsersStore } from "@/store/users";
-import i18n from "@/i18n";
+import { useI18n } from "vue-i18n";
+
+const I18n = useI18n();
 
 const props = defineProps<{ id: string }>();
 
 const usersStore = useUsersStore();
 const user = computed(() => usersStore.users[props.id]);
 const title = computed(() =>
-  i18n.global.t("page-titles.edit", { obj: user.value?.name }),
+  I18n.t("page-titles.edit", { obj: user.value?.name }),
 );
 
 useHead({ title });

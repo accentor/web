@@ -21,7 +21,7 @@
           :to="{
             name: 'edit-artist',
             params: { id: artist.id },
-            query: { redirect: $route.fullPath },
+            query: { redirect: route.fullPath },
           }"
           :disabled="waitingForReload"
           color="warning"
@@ -33,7 +33,7 @@
         </VBtn>
       </span>
     </template>
-    <span>{{ $t("common.disabled-while-loading") }}</span>
+    <span>{{ I18n.t("common.disabled-while-loading") }}</span>
   </VTooltip>
   <VTooltip v-if="isModerator" location="bottom" :disabled="!waitingForReload">
     <template #activator="{ props: tooltipProps }">
@@ -41,7 +41,7 @@
         <ArtistMergeDialog :artist="artist" :disabled="waitingForReload" />
       </span>
     </template>
-    <span>{{ $t("common.disabled-while-loading") }}</span>
+    <span>{{ I18n.t("common.disabled-while-loading") }}</span>
   </VTooltip>
   <VTooltip v-if="isModerator" location="bottom" :disabled="!waitingForReload">
     <template #activator="{ props: tooltipProps }">
@@ -60,7 +60,7 @@
         </VBtn>
       </span>
     </template>
-    <span>{{ $t("common.disabled-while-loading") }}</span>
+    <span>{{ I18n.t("common.disabled-while-loading") }}</span>
   </VTooltip>
 </template>
 
@@ -73,8 +73,11 @@ import ArtistMergeDialog from "./ArtistMergeDialog.vue";
 import AddToPlaylist from "./AddToPlaylist.vue";
 import { useAuthStore } from "@/store/auth";
 import { useArtistsStore } from "@/store/artists";
-import i18n from "@/i18n";
+import { useI18n } from "vue-i18n";
+import { useRoute } from "vue-router";
 
+const I18n = useI18n();
+const route = useRoute();
 const authStore = useAuthStore();
 const artistsStore = useArtistsStore();
 
@@ -91,7 +94,7 @@ const waitingForReload = computed(
 );
 
 async function deleteArtist(): Promise<void> {
-  if (confirm(i18n.global.t("common.are-you-sure"))) {
+  if (confirm(I18n.t("common.are-you-sure"))) {
     await artistsStore.destroy(props.artist.id);
   }
 }

@@ -12,7 +12,7 @@
             <VTextField
               v-model="search"
               prepend-inner-icon="mdi-magnify"
-              :label="$t('common.search')"
+              :label="I18n.t('common.search')"
               single-line
               hide-details
             />
@@ -55,13 +55,14 @@ import { useGenresStore } from "@/store/genres";
 import { usePagination } from "@/composables/pagination";
 import { useSearch } from "@/composables/search";
 import { useHead } from "@unhead/vue";
-import i18n from "@/i18n";
 import { computed } from "vue";
+import { useI18n } from "vue-i18n";
 
 const { page } = usePagination();
 const { search } = useSearch();
 
-useHead({ title: i18n.global.tc("music.genres", 2) });
+const I18n = useI18n();
+useHead({ title: I18n.t("music.genres", 2) });
 
 const { genresByName: genres } = storeToRefs(useGenresStore());
 const filteredGenres = computed(() => {

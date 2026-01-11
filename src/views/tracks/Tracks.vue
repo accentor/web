@@ -13,9 +13,10 @@ import { storeToRefs } from "pinia";
 import { useHead } from "@unhead/vue";
 import TracksTable from "@/components/TracksTable.vue";
 import { useTracksStore } from "@/store/tracks";
-import i18n from "@/i18n";
+import { useI18n } from "vue-i18n";
 
-useHead({ title: i18n.global.tc("music.tracks", 2) });
+const I18n = useI18n();
+useHead({ title: I18n.t("music.tracks", 2) });
 
 const { tracksByAlbumAndNumber: tracks } = storeToRefs(useTracksStore());
 </script>

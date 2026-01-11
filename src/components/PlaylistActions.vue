@@ -14,7 +14,7 @@
         </VBtn>
       </span>
     </template>
-    <span>{{ $t("music.playlist.no-tracks-to-play") }}</span>
+    <span>{{ I18n.t("music.playlist.no-tracks-to-play") }}</span>
   </VTooltip>
   <VTooltip location="bottom" :disabled="playableTracks.length !== 0">
     <template #activator="{ props: tooltipProps }">
@@ -31,7 +31,7 @@
         </VBtn>
       </span>
     </template>
-    <span>{{ $t("music.playlist.no-tracks-to-add") }}</span>
+    <span>{{ I18n.t("music.playlist.no-tracks-to-add") }}</span>
   </VTooltip>
   <VTooltip
     v-if="isAllowedToEdit"
@@ -44,7 +44,7 @@
           :to="{
             name: 'edit-playlist',
             params: { id: playlist.id },
-            query: { redirect: $route.fullPath },
+            query: { redirect: route.fullPath },
           }"
           :disabled="waitingForReload"
           color="warning"
@@ -56,7 +56,7 @@
         </VBtn>
       </span>
     </template>
-    <span>{{ $t("common.disabled-while-loading") }}</span>
+    <span>{{ I18n.t("common.disabled-while-loading") }}</span>
   </VTooltip>
   <VTooltip
     v-if="isAllowedToEdit"
@@ -79,7 +79,7 @@
         </VBtn>
       </span>
     </template>
-    <span>{{ $t("common.disabled-while-loading") }}</span>
+    <span>{{ I18n.t("common.disabled-while-loading") }}</span>
   </VTooltip>
 </template>
 
@@ -91,8 +91,11 @@ import { useErrorsStore } from "@/store/errors";
 import { usePlayerStore } from "@/store/player";
 import type { Playlist } from "@accentor/api-client-js";
 import { computed } from "vue";
-import i18n from "@/i18n";
+import { useI18n } from "vue-i18n";
+import { useRoute } from "vue-router";
 
+const I18n = useI18n();
+const route = useRoute();
 const authStore = useAuthStore();
 const errorStore = useErrorsStore();
 const playerStore = usePlayerStore();
@@ -131,7 +134,7 @@ const playableTracks = computed(() =>
 );
 
 async function deletePlaylist(): Promise<void> {
-  if (confirm(i18n.global.t("common.are-you-sure"))) {
+  if (confirm(I18n.t("common.are-you-sure"))) {
     await playlistsStore.destroy(props.playlist.id);
   }
 }

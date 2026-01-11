@@ -40,8 +40,10 @@
             {{ album.release }}
           </div>
           <div v-else class="text-grey">
-            <div>{{ album.release }} ({{ $t("music.album.original") }})</div>
-            <div>{{ album.edition }} ({{ $t("music.album.edition") }})</div>
+            <div>
+              {{ album.release }} ({{ I18n.t("music.album.original") }})
+            </div>
+            <div>{{ album.edition }} ({{ I18n.t("music.album.edition") }})</div>
           </div>
           <div
             v-for="al of album_labels"
@@ -52,10 +54,12 @@
               {{ labels[al.label_id]?.name }}
             </RouterLink>
             -
-            {{ al.catalogue_number || $t("music.label.catalogue-number-none") }}
+            {{
+              al.catalogue_number || I18n.t("music.label.catalogue-number-none")
+            }}
           </div>
           <div v-if="playlists.length" class="text-grey mt-4 mb-4">
-            {{ $tc("music.album.in-playlists", playlists.length) }}
+            {{ I18n.t("music.album.in-playlists", playlists.length) }}
             <ul>
               <li v-for="playlist in playlists" :key="playlist.id">
                 <RouterLink
@@ -94,7 +98,9 @@ import { useLabelsStore } from "@/store/labels";
 import { useAlbumsStore } from "@/store/albums";
 import { useTracksStore } from "@/store/tracks";
 import { usePlaysStore } from "@/store/plays";
+import { useI18n } from "vue-i18n";
 
+const I18n = useI18n();
 const albumsStore = useAlbumsStore();
 const labelsStore = useLabelsStore();
 const playlistsStore = usePlaylistsStore();

@@ -13,8 +13,8 @@
       <VForm v-model="isValid" @submit.prevent="submit">
         <VTextField
           v-model="newArtist.name"
-          :label="$t('common.name')"
-          :rules="[(v) => !!v || $t('errors.artists.name-blank')]"
+          :label="I18n.t('common.name')"
+          :rules="[(v) => !!v || I18n.t('errors.artists.name-blank')]"
           required
         />
         <ImagePicker
@@ -25,10 +25,12 @@
         <VCheckbox
           v-if="artist && artist.review_comment !== null"
           v-model="clearReviewComment"
-          :label="$tc('music.flag.clear', 1)"
+          :label="I18n.t('music.flag.clear', 1)"
         />
         <VBtn :disabled="!isValid" color="primary" class="ma-2" type="submit">
-          {{ artist ? $t("music.artist.update") : $t("music.artist.add") }}
+          {{
+            artist ? I18n.t("music.artist.update") : I18n.t("music.artist.add")
+          }}
         </VBtn>
       </VForm>
     </VCol>
@@ -46,7 +48,9 @@ import type {
 import artistSvgUrl from "@mdi/svg/svg/account-music.svg" with { type: "url" };
 import ImagePicker from "./ImagePicker.vue";
 import { useArtistsStore } from "@/store/artists";
+import { useI18n } from "vue-i18n";
 
+const I18n = useI18n();
 const route = useRoute();
 const router = useRouter();
 const artistsStore = useArtistsStore();

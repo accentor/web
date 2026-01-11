@@ -3,29 +3,29 @@
     <VForm ref="userForm" v-model="isValid" @submit.prevent="submit">
       <VTextField
         v-model="newUser.name"
-        :label="$t('common.name')"
+        :label="I18n.t('common.name')"
         autocomplete="username"
         required
-        :rules="[(v) => !!v || $t('errors.user.name-blank')]"
+        :rules="[(v) => !!v || I18n.t('errors.user.name-blank')]"
       />
       <VTextField
         v-if="user === currentUser"
         v-model="newUser.current_password"
-        :label="$t('users.current-password')"
+        :label="I18n.t('users.current-password')"
         type="password"
         autocomplete="current-password"
         :rules="rules.current"
       />
       <VTextField
         v-model="newUser.password"
-        :label="$t('users.password')"
+        :label="I18n.t('users.password')"
         type="password"
         autocomplete="new-password"
         :rules="rules.password"
       />
       <VTextField
         v-model="newUser.password_confirmation"
-        :label="$t('users.confirm-password')"
+        :label="I18n.t('users.confirm-password')"
         type="password"
         autocomplete="new-password"
         :rules="rules.confirmation"
@@ -34,10 +34,10 @@
         v-if="showPermissions"
         v-model="newUser.permission"
         :items="permissionOptions"
-        :label="$t('users.permissions')"
+        :label="I18n.t('users.permissions')"
       />
       <VBtn color="primary" class="ma-2" type="submit">
-        {{ user ? $t("users.update") : $t("users.create") }}
+        {{ user ? I18n.t("users.update") : I18n.t("users.create") }}
       </VBtn>
     </VForm>
   </div>
@@ -51,9 +51,10 @@ import type { User } from "@accentor/api-client-js";
 import { UserPermission } from "@accentor/api-client-js";
 import { useAuthStore } from "@/store/auth";
 import { useUsersStore } from "@/store/users";
-import i18n from "@/i18n";
 import { useRoute, useRouter } from "vue-router";
+import { useI18n } from "vue-i18n";
 
+const I18n = useI18n();
 const router = useRouter();
 const route = useRoute();
 
@@ -73,9 +74,9 @@ const usersStore = useUsersStore();
 const { currentUser } = storeToRefs(useAuthStore());
 
 const permissionOptions = computed(() => [
-  { title: i18n.global.t("users.permission.admin"), value: "admin" },
-  { title: i18n.global.t("users.permission.moderator"), value: "moderator" },
-  { title: i18n.global.t("users.permission.user"), value: "user" },
+  { title: I18n.t("users.permission.admin"), value: "admin" },
+  { title: I18n.t("users.permission.moderator"), value: "moderator" },
+  { title: I18n.t("users.permission.user"), value: "user" },
 ]);
 
 const isDirty = ref(false);
@@ -127,20 +128,20 @@ const rules = computed(() => {
 
   if (newUser.value.password) {
     const confirmationBlank = (v: string): true | string =>
-      !!v || i18n.global.t("errors.user.password-confirmation-blank");
+      !!v || I18n.t("errors.user.password-confirmation-blank");
     const confirmationMatch = (v: string): true | string =>
       (!!v && v) === newUser.value.password ||
-      i18n.global.t("errors.user.password-confirmation");
+      I18n.t("errors.user.password-confirmation");
     rules.confirmation.push(confirmationBlank, confirmationMatch);
 
     const currentBlank = (v: string): true | string =>
-      !!v || i18n.global.t("errors.user.current-password-blank");
+      !!v || I18n.t("errors.user.current-password-blank");
     rules.current.push(currentBlank);
   }
 
   if (newUser.value.current_password || newUser.value.password_confirmation) {
     const passwordBlank = (v: string): true | string =>
-      !!v || i18n.global.t("errors.user.password-blank");
+      !!v || I18n.t("errors.user.password-blank");
     rules.password.push(passwordBlank);
   }
 

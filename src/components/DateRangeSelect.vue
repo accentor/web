@@ -4,7 +4,7 @@
       v-model="selectedPreset"
       min-width="180"
       :items="periodPresets"
-      :label="$t('components.dateRangeSelect.label')"
+      :label="I18n.t('components.dateRangeSelect.label')"
     />
     <VDialog v-model="showCustomRangeModal" persistent max-width="380">
       <VCard>
@@ -25,7 +25,7 @@
             class="ma-2"
             @click="showCustomRangeModal = false"
           >
-            {{ $t("common.cancel") }}
+            {{ I18n.t("common.cancel") }}
           </VBtn>
           <VBtn
             variant="text"
@@ -33,7 +33,7 @@
             class="ma-2"
             @click="emitSelection"
           >
-            {{ $t("common.ok") }}
+            {{ I18n.t("common.ok") }}
           </VBtn>
         </VCardActions>
       </VCard>
@@ -45,8 +45,9 @@
 import { computed, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useDate } from "vuetify";
-import i18n from "@/i18n";
+import { useI18n } from "vue-i18n";
 
+const I18n = useI18n();
 const route = useRoute();
 const router = useRouter();
 
@@ -54,23 +55,23 @@ const emit = defineEmits<{ input: [{ start: Date; end: Date }] }>();
 const periodPresets = [
   {
     value: "last7Days" as const,
-    title: i18n.global.t("components.dateRangeSelect.options.last7Days"),
+    title: I18n.t("components.dateRangeSelect.options.last7Days"),
   },
   {
     value: "lastMonth" as const,
-    title: i18n.global.t("components.dateRangeSelect.options.lastMonth"),
+    title: I18n.t("components.dateRangeSelect.options.lastMonth"),
   },
   {
     value: "thisYear" as const,
-    title: i18n.global.t("components.dateRangeSelect.options.thisYear"),
+    title: I18n.t("components.dateRangeSelect.options.thisYear"),
   },
   {
     value: "allTime" as const,
-    title: i18n.global.t("components.dateRangeSelect.options.allTime"),
+    title: I18n.t("components.dateRangeSelect.options.allTime"),
   },
   {
     value: "customRange" as const,
-    title: i18n.global.t("components.dateRangeSelect.options.customRange"),
+    title: I18n.t("components.dateRangeSelect.options.customRange"),
   },
 ];
 

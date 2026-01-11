@@ -12,7 +12,7 @@
             <VTextField
               v-if="labels.length > numberOfItems"
               v-model="search"
-              :label="$t('common.search')"
+              :label="I18n.t('common.search')"
               hide-details
               prepend-inner-icon="mdi-magnify"
               single-line
@@ -58,13 +58,14 @@ import LabelCard from "@/components/LabelCard.vue";
 import { useLabelsStore } from "@/store/labels";
 import { usePagination } from "@/composables/pagination";
 import { useSearch } from "@/composables/search";
-import i18n from "@/i18n";
+import { useI18n } from "vue-i18n";
 
 const { labelsByName: labels } = storeToRefs(useLabelsStore());
 const { page } = usePagination();
 const { search } = useSearch();
 
-useHead({ title: i18n.global.tc("music.labels", 2) });
+const I18n = useI18n();
+useHead({ title: I18n.t("music.labels", 2) });
 
 const filteredLabels = computed(() => {
   const lookup = search.value.toLowerCase();

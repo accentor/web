@@ -8,7 +8,7 @@
       <VCol class="d-flex justify-end">
         <VSwitch
           v-model="useTrackLength"
-          :label="$t('stats.useTrackLength')"
+          :label="I18n.t('stats.useTrackLength')"
           class="mr-4"
         />
         <DateRangeSelect @input="(e) => (period = e)" />
@@ -24,7 +24,7 @@
         class="stats__top-tracks"
         :play-stats="playStats"
         :use-track-length="useTrackLength"
-        :title="$t('stats.topTracks')"
+        :title="I18n.t('stats.topTracks')"
       />
       <PercentagePlayedCard
         class="stats__percentage-played"
@@ -33,27 +33,27 @@
         :tracks="filteredTracks"
         :title="
           artistId
-            ? $t('stats.percentageArtistPlayed', { artist: artistName })
-            : $t('stats.percentageLibraryPlayed')
+            ? I18n.t('stats.percentageArtistPlayed', { artist: artistName })
+            : I18n.t('stats.percentageLibraryPlayed')
         "
       />
       <TopAlbumsList
         class="stats__top-albums"
         :play-stats="playStats"
         :use-track-length="useTrackLength"
-        :title="$t('stats.topAlbums')"
+        :title="I18n.t('stats.topAlbums')"
       />
       <TopArtistsList
         class="stats__top-artists"
         :play-stats="playStats"
         :use-track-length="useTrackLength"
-        :title="$t('stats.topArtists')"
+        :title="I18n.t('stats.topArtists')"
       />
       <PlaysPunchcard
         class="stats__punchcard"
         :plays="filteredPlays"
         :use-track-length="useTrackLength"
-        :title="$t('stats.punchcard')"
+        :title="I18n.t('stats.punchcard')"
       />
     </div>
   </VContainer>
@@ -81,9 +81,10 @@ import { useArtistsStore } from "@/store/artists";
 import { useTracksStore } from "@/store/tracks";
 import { usePlaysStore } from "@/store/plays";
 import { useAuthStore } from "@/store/auth";
-import i18n from "@/i18n";
 import api from "@/api";
+import { useI18n } from "vue-i18n";
 
+const I18n = useI18n();
 const route = useRoute();
 const router = useRouter();
 const authStore = useAuthStore();
@@ -108,11 +109,11 @@ const artistName = computed(() => {
 });
 const pageTitle = computed(() => {
   if (artistName.value) {
-    return i18n.global.t("common.stats-for-artist", {
+    return I18n.t("common.stats-for-artist", {
       artist: artistName.value,
     });
   } else {
-    return i18n.global.t("common.stats");
+    return I18n.t("common.stats");
   }
 });
 useHead({ title: pageTitle });

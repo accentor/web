@@ -21,7 +21,7 @@
     <VCard>
       <VCardTitle>
         <span class="text-h5">
-          {{ $t("music.artist.merge-into", { obj: artist.name }) }}
+          {{ I18n.t("music.artist.merge-into", { obj: artist.name }) }}
         </span>
       </VCardTitle>
       <VCardText>
@@ -34,7 +34,7 @@
                 :custom-filter="filterName"
                 item-title="name"
                 item-value="id"
-                :label="$tc('music.artists', 1)"
+                :label="I18n.t('music.artists', 1)"
                 return-object
               >
                 <template #item="{ item, props: listItemProps }">
@@ -55,7 +55,7 @@
       <VCardActions>
         <VSpacer></VSpacer>
         <VBtn color="primary" class="ma-2" type="submit" @click="mergeArtists">
-          {{ $t("music.artist.merge") }}
+          {{ I18n.t("music.artist.merge") }}
         </VBtn>
       </VCardActions>
     </VCard>
@@ -69,7 +69,9 @@ import { useAuthStore } from "@/store/auth";
 import { useArtistsStore } from "@/store/artists";
 import type { Artist } from "@accentor/api-client-js";
 import { storeToRefs } from "pinia";
+import { useI18n } from "vue-i18n";
 
+const I18n = useI18n();
 const authStore = useAuthStore();
 const artistsStore = useArtistsStore();
 

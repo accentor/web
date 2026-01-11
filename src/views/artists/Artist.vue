@@ -32,7 +32,7 @@
           <h2 class="text-h4">{{ artist.name }}</h2>
         </div>
         <div v-if="playlists.length" class="text-grey mt-4 mb-4">
-          {{ $tc("music.artist.in-playlists", playlists.length) }}
+          {{ I18n.t("music.artist.in-playlists", playlists.length) }}
           <ul>
             <li v-for="playlist in playlists" :key="playlist.id">
               <RouterLink
@@ -85,7 +85,9 @@ import { usePlaylistsStore } from "@/store/playlists";
 import { useArtistsStore } from "@/store/artists";
 import { useAlbumsStore } from "@/store/albums";
 import { useTracksStore } from "@/store/tracks";
+import { useI18n } from "vue-i18n";
 
+const I18n = useI18n();
 const albumsStore = useAlbumsStore();
 const artistsStore = useArtistsStore();
 const playlistsStore = usePlaylistsStore();

@@ -7,7 +7,7 @@
             <VTextField
               v-model="search"
               prepend-inner-icon="mdi-magnify"
-              :label="$t('common.search')"
+              :label="I18n.t('common.search')"
               single-line
               hide-details
             />
@@ -19,7 +19,7 @@
             class="ma-2"
           >
             <VIcon start>mdi-plus</VIcon>
-            {{ $t("music.album.new") }}
+            {{ I18n.t("music.album.new") }}
           </VBtn>
         </VRow>
       </template>
@@ -33,14 +33,15 @@ import { storeToRefs } from "pinia";
 import { useHead } from "@unhead/vue";
 import { useAuthStore } from "@/store/auth";
 import { useAlbumsStore } from "@/store/albums";
-import i18n from "@/i18n";
 import { useSearch } from "@/composables/search";
 import AlbumsRow from "@/components/AlbumsRow.vue";
+import { useI18n } from "vue-i18n";
 
 const { albumsByTitle: albums } = storeToRefs(useAlbumsStore());
 const { isModerator } = storeToRefs(useAuthStore());
 
-useHead({ title: i18n.global.tc("music.albums", 2) });
+const I18n = useI18n();
+useHead({ title: I18n.t("music.albums", 2) });
 
 const { search } = useSearch();
 const filteredAlbums = computed(() => {

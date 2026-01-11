@@ -7,10 +7,10 @@
           <VSelect
             v-model="newCodecConversion"
             :items="codecConversions"
-            :label="$t('settings.codec-conversion.label')"
+            :label="I18n.t('settings.codec-conversion.label')"
           />
           <VBtn color="primary" class="ma-2" type="submit">
-            {{ $t("common.change-settings") }}
+            {{ I18n.t("common.change-settings") }}
           </VBtn>
         </VForm>
       </VCol>
@@ -36,12 +36,13 @@ import { useCodecConversionsStore } from "@/store/codec_conversions";
 import { useUserSettingsStore } from "@/store/user_settings";
 import { computed, onMounted, ref, watch } from "vue";
 import { useHead } from "@unhead/vue";
-import i18n from "@/i18n";
+import { useI18n } from "vue-i18n";
 
+const I18n = useI18n();
 const codecConversionsStore = useCodecConversionsStore();
 const userSettingsStore = useUserSettingsStore();
 
-useHead({ title: i18n.global.t("common.settings") });
+useHead({ title: I18n.t("common.settings") });
 
 const newLocale = ref<"en" | "nl" | "">("");
 
@@ -59,7 +60,7 @@ const { locale, codecConversion } = storeToRefs(userSettingsStore);
 const codecConversions = computed(() => {
   return [
     {
-      title: i18n.global.t("settings.codec-conversion.original"),
+      title: I18n.t("settings.codec-conversion.original"),
       value: null as number | null,
     },
   ].concat(

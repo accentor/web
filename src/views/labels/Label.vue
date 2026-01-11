@@ -16,7 +16,7 @@
               v-if="albums.length > 12"
               v-model="search"
               prepend-inner-icon="mdi-magnify"
-              :label="$t('common.search')"
+              :label="I18n.t('common.search')"
               single-line
               hide-details
             />
@@ -41,7 +41,9 @@ import { useLabelsStore } from "@/store/labels";
 import { useAlbumsStore } from "@/store/albums";
 import AlbumsRow from "@/components/AlbumsRow.vue";
 import { useSearch } from "@/composables/search";
+import { useI18n } from "vue-i18n";
 
+const I18n = useI18n();
 const router = useRouter();
 const labelsStore = useLabelsStore();
 const albumsStore = useAlbumsStore();
