@@ -15,7 +15,7 @@
           </VBtn>
         </span>
       </template>
-      <span>{{ $t("music.track.empty") }}</span>
+      <span>{{ I18n.t("music.track.empty") }}</span>
     </VTooltip>
     <VTooltip location="bottom" :disabled="track.length !== null">
       <template #activator="{ props: tooltipProps }">
@@ -32,7 +32,7 @@
           </VBtn>
         </span>
       </template>
-      <span>{{ $t("music.track.empty") }}</span>
+      <span>{{ I18n.t("music.track.empty") }}</span>
     </VTooltip>
     <AddToPlaylist :item="track" type="track" />
     <EditReviewComment :item="track" :update="flag" />
@@ -51,26 +51,30 @@
               </template>
 
               <VListItemTitle>
-                {{ $t("music.track.file") }}
+                {{ I18n.t("music.track.file") }}
               </VListItemTitle>
             </VListItem>
           </template>
           <VList density="compact">
             <VListItem v-if="Object.keys(locations).length > 1">
-              <VListItemTitle> {{ $t("library.location") }}: </VListItemTitle>
+              <VListItemTitle>
+                {{ I18n.t("library.location") }}:
+              </VListItemTitle>
               <VListItemSubtitle>
                 {{ locations[`${track.location_id}`]?.path }}
               </VListItemSubtitle>
             </VListItem>
             <VListItem>
-              <VListItemTitle> {{ $t("library.filename") }}: </VListItemTitle>
+              <VListItemTitle>
+                {{ I18n.t("library.filename") }}:
+              </VListItemTitle>
               <VListItemSubtitle>
                 {{ track.filename }}
               </VListItemSubtitle>
             </VListItem>
             <VListItem>
               <VListItemTitle>
-                {{ $t("music.track.bitrate") }}:
+                {{ I18n.t("music.track.bitrate") }}:
               </VListItemTitle>
               <VListItemSubtitle>
                 {{ track.bitrate }}
@@ -78,7 +82,7 @@
             </VListItem>
             <VListItem v-if="track.hasOwnProperty('sample_rate')">
               <VListItemTitle>
-                {{ $t("music.track.sample_rate") }}:
+                {{ I18n.t("music.track.sample_rate") }}:
               </VListItemTitle>
               <VListItemSubtitle>
                 {{ track.sample_rate }}
@@ -86,16 +90,18 @@
             </VListItem>
             <VListItem v-if="track.hasOwnProperty('bit_depth')">
               <VListItemTitle>
-                {{ $t("music.track.bit_depth") }}:
+                {{ I18n.t("music.track.bit_depth") }}:
               </VListItemTitle>
               <VListItemSubtitle>
                 {{ track.bit_depth }}
               </VListItemSubtitle>
             </VListItem>
             <VListItem>
-              <VListItemTitle> {{ $t("common.added-on") }}: </VListItemTitle>
+              <VListItemTitle>
+                {{ I18n.t("common.added-on") }}:
+              </VListItemTitle>
               <VListItemSubtitle>
-                {{ $d(new Date(track.created_at), "long") }}
+                {{ I18n.d(new Date(track.created_at), "long") }}
               </VListItemSubtitle>
             </VListItem>
           </VList>
@@ -110,7 +116,7 @@
             <VIcon color="info">mdi-download</VIcon>
           </template>
 
-          <VListItemTitle>{{ $t("music.track.download") }}</VListItemTitle>
+          <VListItemTitle>{{ I18n.t("music.track.download") }}</VListItemTitle>
         </VListItem>
         <VTooltip
           v-if="isModerator"
@@ -122,7 +128,7 @@
               :to="{
                 name: 'edit-track',
                 params: { id: track.id },
-                query: { redirect: $route.fullPath },
+                query: { redirect: route.fullPath },
               }"
               :disabled="waitingForReload"
               v-bind="tooltipProps"
@@ -131,10 +137,10 @@
                 <VIcon color="warning">mdi-pencil</VIcon>
               </template>
 
-              <VListItemTitle>{{ $t("music.track.edit") }}</VListItemTitle>
+              <VListItemTitle>{{ I18n.t("music.track.edit") }}</VListItemTitle>
             </VListItem>
           </template>
-          <span>{{ $t("common.disabled-while-loading") }}</span>
+          <span>{{ I18n.t("common.disabled-while-loading") }}</span>
         </VTooltip>
         <VTooltip
           v-if="isModerator"
@@ -146,7 +152,7 @@
               :to="{
                 name: 'merge-track',
                 params: { id: `${track.id}` },
-                query: { redirect: $route.fullPath },
+                query: { redirect: route.fullPath },
               }"
               :disabled="waitingForReload"
               v-bind="tooltipProps"
@@ -156,11 +162,11 @@
               </template>
 
               <VListItemTitle>
-                {{ $t("music.track.merge.merge") }}
+                {{ I18n.t("music.track.merge.merge") }}
               </VListItemTitle>
             </VListItem>
           </template>
-          <span>{{ $t("common.disabled-while-loading") }}</span>
+          <span>{{ I18n.t("common.disabled-while-loading") }}</span>
         </VTooltip>
         <VTooltip
           v-if="isModerator"
@@ -177,10 +183,12 @@
                 <VIcon color="error">mdi-delete</VIcon>
               </template>
 
-              <VListItemTitle>{{ $t("music.track.delete") }}</VListItemTitle>
+              <VListItemTitle>{{
+                I18n.t("music.track.delete")
+              }}</VListItemTitle>
             </VListItem>
           </template>
-          <span>{{ $t("common.disabled-while-loading") }}</span>
+          <span>{{ I18n.t("common.disabled-while-loading") }}</span>
         </VTooltip>
       </VList>
     </VMenu>
@@ -199,8 +207,11 @@ import { useLocationsStore } from "@/store/locations";
 import { useTracksStore } from "@/store/tracks";
 import { usePlayerStore } from "@/store/player";
 import { useErrorsStore } from "@/store/errors";
-import i18n from "@/i18n";
+import { useI18n } from "vue-i18n";
+import { useRoute } from "vue-router";
 
+const I18n = useI18n();
+const route = useRoute();
 const authStore = useAuthStore();
 const errorsStore = useErrorsStore();
 const locationsStore = useLocationsStore();
@@ -225,9 +236,9 @@ const downloadURL = computed(
 );
 
 async function deleteTrack(): Promise<void> {
-  let message = i18n.global.t("common.are-you-sure");
+  let message = I18n.t("common.are-you-sure");
   if (props.track.length) {
-    message += ` ${i18n.global.t("music.track.delete-file-explanation")}`;
+    message += ` ${I18n.t("music.track.delete-file-explanation")}`;
   }
   if (confirm(message)) {
     await tracksStore.destroy(props.track.id);

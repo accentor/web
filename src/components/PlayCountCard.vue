@@ -1,7 +1,7 @@
 <template>
   <VCard class="px-2 py-4">
     <div class="text-center mb-4 text-h6 font-weight-regular">
-      {{ $t("stats.count.playCount.before") }}
+      {{ I18n.t("stats.count.playCount.before") }}
       <span
         class="text-h4 d-block"
         :class="
@@ -10,10 +10,10 @@
       >
         {{ Math.floor(data.animatedCount) }}
       </span>
-      {{ $t("stats.count.playCount.after") }}
+      {{ I18n.t("stats.count.playCount.after") }}
     </div>
     <div class="text-center text-h6 font-weight-regular">
-      {{ $t("stats.count.playTime.before") }}
+      {{ I18n.t("stats.count.playTime.before") }}
       <div class="play-time text-grey-darken-3">
         <span
           class="text-h4 d-block text-right"
@@ -27,7 +27,10 @@
         </span>
         <span class="text-subtitle-1 text-left">
           {{
-            $tc("stats.count.playTime.days", Math.floor(data.animatedTime.days))
+            I18n.t(
+              "stats.count.playTime.days",
+              Math.floor(data.animatedTime.days),
+            )
           }}
         </span>
         <span
@@ -42,7 +45,7 @@
         </span>
         <span class="text-subtitle-1 text-left">
           {{
-            $tc(
+            I18n.t(
               "stats.count.playTime.hours",
               Math.floor(data.animatedTime.hours),
             )
@@ -62,14 +65,14 @@
         </span>
         <span class="text-subtitle-1 text-left">
           {{
-            $tc(
+            I18n.t(
               "stats.count.playTime.minutes",
               Math.floor(data.animatedTime.minutes),
             )
           }}
         </span>
       </div>
-      {{ $t("stats.count.playTime.after") }}
+      {{ I18n.t("stats.count.playTime.after") }}
     </div>
   </VCard>
 </template>
@@ -78,6 +81,9 @@
 import { computed, ref, watch } from "vue";
 import { gsap } from "gsap";
 import type { PlayStat } from "@accentor/api-client-js";
+import { useI18n } from "vue-i18n";
+
+const I18n = useI18n();
 
 interface Props {
   playStats: PlayStat[];

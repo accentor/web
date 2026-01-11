@@ -4,7 +4,7 @@
       <VCol cols="6">
         <VTextField
           v-model="newImageType.extension"
-          :label="$t('library.extension')"
+          :label="I18n.t('library.extension')"
           :disabled="imageType !== null"
           required
           :rules="rules.ext"
@@ -13,9 +13,9 @@
       <VCol cols="5">
         <VTextField
           v-model="newImageType.mimetype"
-          :label="$t('library.mime-type')"
+          :label="I18n.t('library.mime-type')"
           required
-          :rules="[(v) => !!v || $t('errors.image.mime-blank')]"
+          :rules="[(v) => !!v || I18n.t('errors.image.mime-blank')]"
         />
       </VCol>
       <VCol cols="2" sm="1">
@@ -50,8 +50,9 @@
 import { computed, onMounted, ref, useTemplateRef } from "vue";
 import type { ImageType } from "@accentor/api-client-js";
 import { useImageTypesStore } from "@/store/image_types";
-import i18n from "@/i18n";
+import { useI18n } from "vue-i18n";
 
+const I18n = useI18n();
 const imageTypesStore = useImageTypesStore();
 const props = defineProps<{ imageType?: ImageType }>();
 const newImageType = ref({
@@ -62,8 +63,7 @@ const isValid = ref(true);
 const rules = computed(() => {
   const result = {
     ext: [
-      (v: string): true | string =>
-        !!v || i18n.global.t("errors.image.ext-blank"),
+      (v: string): true | string => !!v || I18n.t("errors.image.ext-blank"),
     ],
   };
   if (!props.imageType) {
@@ -71,7 +71,7 @@ const rules = computed(() => {
       const double = imageTypesStore.allImageTypes.some(
         (it) => it.extension === v,
       );
-      return !double || i18n.global.t("errors.image.ext-taken");
+      return !double || I18n.t("errors.image.ext-taken");
     });
   }
 
@@ -88,7 +88,7 @@ function fillValues(): void {
 }
 
 async function deleteImageType(): Promise<void> {
-  if (confirm(i18n.global.t("common.are-you-sure"))) {
+  if (confirm(I18n.t("common.are-you-sure"))) {
     await imageTypesStore.destroy(props.imageType!.id);
   }
 }

@@ -6,7 +6,7 @@
           <VCard class="elevation-12">
             <VToolbar color="primary" dark>
               <VToolbarTitle>
-                {{ $t("common.login") }}
+                {{ I18n.t("common.login") }}
               </VToolbarTitle>
             </VToolbar>
             <VCardText>
@@ -14,21 +14,21 @@
                 <Errors />
                 <VTextField
                   v-model="name"
-                  :label="$t('users.name')"
-                  :placeholder="$t('users.name')"
+                  :label="I18n.t('users.name')"
+                  :placeholder="I18n.t('users.name')"
                   prepend-icon="mdi-account"
                   autocomplete="username"
                 />
                 <VTextField
                   v-model="password"
-                  :label="$t('users.password')"
-                  :placeholder="$t('users.password')"
+                  :label="I18n.t('users.password')"
+                  :placeholder="I18n.t('users.password')"
                   prepend-icon="mdi-key"
                   type="password"
                   autocomplete="current-password"
                 />
                 <VBtn color="primary" class="ma-2" type="submit">
-                  {{ $t("common.login") }}
+                  {{ I18n.t("common.login") }}
                 </VBtn>
               </VForm>
             </VCardText>
@@ -46,8 +46,9 @@ import { useHead } from "@unhead/vue";
 import Errors from "@/components/Errors.vue";
 import { useErrorsStore } from "@/store/errors";
 import { useAuthStore } from "@/store/auth";
-import i18n from "@/i18n";
+import { useI18n } from "vue-i18n";
 
+const I18n = useI18n();
 const route = useRoute();
 const router = useRouter();
 const authStore = useAuthStore();
@@ -56,7 +57,7 @@ const errorsStore = useErrorsStore();
 const name = ref("");
 const password = ref("");
 
-useHead({ title: i18n.global.t("common.login") });
+useHead({ title: I18n.t("common.login") });
 
 function redirect(): void {
   const path = (route.query.redirect || "/app/") as string;

@@ -7,7 +7,8 @@
 <script setup lang="ts">
 import AlbumForm from "@/components/AlbumForm.vue";
 import { useHead } from "@unhead/vue";
-import i18n from "@/i18n";
+import { useI18n } from "vue-i18n";
 
-useHead({ title: i18n.global.t("music.album.new") });
+const I18n = useI18n();
+useHead({ title: I18n.t("music.album.new") });
 </script>

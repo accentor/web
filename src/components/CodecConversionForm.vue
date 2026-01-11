@@ -4,7 +4,7 @@
       <VCol cols="3">
         <VTextField
           v-model="newCodecConversion.name"
-          :label="$t('common.name')"
+          :label="I18n.t('common.name')"
           required
           :rules="rules.name"
         />
@@ -12,20 +12,20 @@
       <VCol cols="5">
         <VTextField
           v-model="newCodecConversion.ffmpeg_params"
-          :label="$t('library.ffmpeg-para')"
+          :label="I18n.t('library.ffmpeg-para')"
           required
-          :rules="[(v) => !!v || $t('errors.codecconv.ffmepg-blank')]"
+          :rules="[(v) => !!v || I18n.t('errors.codecconv.ffmepg-blank')]"
         />
       </VCol>
       <VCol cols="3">
         <VAutocomplete
           v-model="newCodecConversion.resulting_codec_id"
           :items="codecs"
-          :label="$t('library.resulting-codec')"
+          :label="I18n.t('library.resulting-codec')"
           item-value="id"
           item-title="extension"
           required
-          :rules="[(v) => !!v || $t('errors.codecconv.result-blank')]"
+          :rules="[(v) => !!v || I18n.t('errors.codecconv.result-blank')]"
         />
       </VCol>
       <VCol cols="2" sm="1">
@@ -62,8 +62,9 @@ import type { CodecConversion } from "@accentor/api-client-js";
 import { useCodecConversionsStore } from "@/store/codec_conversions";
 import { useCodecsStore } from "@/store/codecs";
 import { computed, onMounted, ref, useTemplateRef } from "vue";
-import i18n from "@/i18n";
+import { useI18n } from "vue-i18n";
 
+const I18n = useI18n();
 const codecConversionsStore = useCodecConversionsStore();
 const props = defineProps<{ codecConversion?: CodecConversion }>();
 const newCodecConversion = ref({
@@ -76,13 +77,12 @@ const isValid = ref(true);
 const { allCodecs: codecs } = storeToRefs(useCodecsStore());
 const rules = computed(() => ({
   name: [
-    (v: string): true | string =>
-      !!v || i18n.global.t("errors.codecconv.name-blank"),
+    (v: string): true | string => !!v || I18n.t("errors.codecconv.name-blank"),
     (v: string): true | string => {
       const double = codecConversionsStore.allCodecConversions.some(
         (cc) => cc.name === v && cc.id !== props.codecConversion?.id,
       );
-      return !double || i18n.global.t("errors.codecconv.name-taken");
+      return !double || I18n.t("errors.codecconv.name-taken");
     },
   ],
 }));
@@ -119,7 +119,7 @@ async function saveCodecConversion(): Promise<void> {
 }
 
 async function deleteCodecConversion(): Promise<void> {
-  if (confirm(i18n.global.t("common.are-you-sure"))) {
+  if (confirm(I18n.t("common.are-you-sure"))) {
     await codecConversionsStore.destroy(props.codecConversion!.id);
   }
 }

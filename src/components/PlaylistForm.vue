@@ -6,25 +6,25 @@
           <VCol md="6" sm="8" cols="12" @change.once="isDirty = true">
             <VTextField
               v-model="newPlaylist.name"
-              :label="$t('common.name')"
-              :rules="[(v) => !!v || $t('errors.playlists.name-blank')]"
+              :label="I18n.t('common.name')"
+              :rules="[(v) => !!v || I18n.t('errors.playlists.name-blank')]"
               required
             />
             <VTextarea
               v-model="newPlaylist.description"
-              :label="$t('common.description')"
+              :label="I18n.t('common.description')"
               rows="3"
             />
             <VAutocomplete
               v-model="newPlaylist.playlist_type"
               :items="playlistTypes"
-              :label="$t('music.playlist.playlist_type')"
+              :label="I18n.t('music.playlist.playlist_type')"
               :disabled="hasItems"
             />
             <VAutocomplete
               v-model="newPlaylist.access"
               :items="accessOptions"
-              :label="$t('music.playlist.access')"
+              :label="I18n.t('music.playlist.access')"
             />
             <VBtn
               :disabled="!isValid"
@@ -34,8 +34,8 @@
             >
               {{
                 playlist
-                  ? $t("music.playlist.update")
-                  : $t("music.playlist.create")
+                  ? I18n.t("music.playlist.update")
+                  : I18n.t("music.playlist.create")
               }}
             </VBtn>
           </VCol>
@@ -56,7 +56,7 @@
             "
           >
             <h4 class="text-h6 mt-6 ml-4">
-              {{ $tc("music.playlist.items", 2) }}
+              {{ I18n.t("music.playlist.items", 2) }}
             </h4>
             <VTable>
               <thead>
@@ -117,9 +117,10 @@ import {
   type PlaylistType,
 } from "@accentor/api-client-js";
 import { computed, onMounted, ref } from "vue";
-import i18n from "@/i18n";
 import { useRoute, useRouter } from "vue-router";
+import { useI18n } from "vue-i18n";
 
+const I18n = useI18n();
 const albumsStore = useAlbumsStore();
 const artistsStore = useArtistsStore();
 const playlistsStore = usePlaylistsStore();
@@ -159,10 +160,10 @@ function textForItemId(itemId: number): string {
 const mainPropName = computed(() => {
   switch (newPlaylist.value.playlist_type) {
     case "artist":
-      return i18n.global.t("common.name");
+      return I18n.t("common.name");
     case "album":
     case "track":
-      return i18n.global.t("music.title");
+      return I18n.t("music.title");
   }
   return "";
 });
@@ -170,29 +171,29 @@ const mainPropName = computed(() => {
 const playlistTypes = [
   {
     value: "track",
-    title: i18n.global.t("music.playlist.playlist_types.track"),
+    title: I18n.t("music.playlist.playlist_types.track"),
   },
   {
     value: "album",
-    title: i18n.global.t("music.playlist.playlist_types.album"),
+    title: I18n.t("music.playlist.playlist_types.album"),
   },
   {
     value: "artist",
-    title: i18n.global.t("music.playlist.playlist_types.artist"),
+    title: I18n.t("music.playlist.playlist_types.artist"),
   },
 ];
 const accessOptions = [
   {
     value: "shared",
-    title: i18n.global.t("music.playlist.access_options.shared"),
+    title: I18n.t("music.playlist.access_options.shared"),
   },
   {
     value: "personal",
-    title: i18n.global.t("music.playlist.access_options.personal"),
+    title: I18n.t("music.playlist.access_options.personal"),
   },
   {
     value: "secret",
-    title: i18n.global.t("music.playlist.access_options.secret"),
+    title: I18n.t("music.playlist.access_options.secret"),
   },
 ];
 

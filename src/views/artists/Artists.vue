@@ -10,7 +10,7 @@
           <VCol lg="4" md="6" sm="8" xl="2" cols="12">
             <VTextField
               v-model="search"
-              :label="$t('common.search')"
+              :label="I18n.t('common.search')"
               hide-details
               prepend-inner-icon="mdi-magnify"
               single-line
@@ -23,7 +23,7 @@
             color="success"
           >
             <VIcon start>mdi-plus</VIcon>
-            {{ $t("music.artist.new") }}
+            {{ I18n.t("music.artist.new") }}
           </VBtn>
         </VRow>
       </template>
@@ -37,11 +37,12 @@ import { computed } from "vue";
 import { storeToRefs } from "pinia";
 import { useAuthStore } from "@/store/auth";
 import { useArtistsStore } from "@/store/artists";
-import i18n from "@/i18n";
 import ArtistsRow from "@/components/ArtistsRow.vue";
 import { useSearch } from "@/composables/search";
+import { useI18n } from "vue-i18n";
 
-useHead({ title: i18n.global.tc("music.artists", 2) });
+const I18n = useI18n();
+useHead({ title: I18n.t("music.artists", 2) });
 
 const { isModerator } = storeToRefs(useAuthStore());
 

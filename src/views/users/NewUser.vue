@@ -11,7 +11,8 @@
 <script setup lang="ts">
 import { useHead } from "@unhead/vue";
 import UserForm from "@/components/UserForm.vue";
-import i18n from "@/i18n";
+import { useI18n } from "vue-i18n";
 
-useHead({ title: i18n.global.t("users.new") });
+const I18n = useI18n();
+useHead({ title: I18n.t("users.new") });
 </script>

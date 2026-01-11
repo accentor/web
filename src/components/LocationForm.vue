@@ -4,7 +4,7 @@
       <VCol cols="5">
         <VTextField
           v-model="newLocation.path"
-          :label="$t('library.path')"
+          :label="I18n.t('library.path')"
           :disabled="location !== null"
           required
           :rules="rules.path"
@@ -41,8 +41,9 @@
 import { useLocationsStore } from "@/store/locations";
 import { computed, onMounted, ref, useTemplateRef } from "vue";
 import type { Location } from "@accentor/api-client-js";
-import i18n from "@/i18n";
+import { useI18n } from "vue-i18n";
 
+const I18n = useI18n();
 const locationsStore = useLocationsStore();
 
 const props = defineProps<{ location?: Location }>();
@@ -51,14 +52,13 @@ const isValid = ref(true);
 const rules = computed(() => {
   const result = {
     path: [
-      (v: string): true | string =>
-        !!v || i18n.global.t("errors.location.path-blank"),
+      (v: string): true | string => !!v || I18n.t("errors.location.path-blank"),
     ] as ((v: string) => true | string)[],
   };
   if (!props.location) {
     result.path.push((v: string): true | string => {
       const double = locationsStore.allLocations.some((l) => l.path === v);
-      return !double || i18n.global.t("errors.location.path-taken");
+      return !double || I18n.t("errors.location.path-taken");
     });
   }
   return result;
@@ -76,7 +76,7 @@ async function deleteLocation(): Promise<void> {
     return;
   }
 
-  if (confirm(i18n.global.t("common.are-you-sure"))) {
+  if (confirm(I18n.t("common.are-you-sure"))) {
     await locationsStore.destroy(props.location.id);
   }
 }

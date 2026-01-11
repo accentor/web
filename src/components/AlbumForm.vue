@@ -13,15 +13,15 @@
       <VForm v-model="isValid" @submit.prevent="submit">
         <VTextField
           v-model="newAlbum.title"
-          :label="$t('music.title')"
-          :rules="[(v) => !!v || $t('errors.albums.title-blank')]"
+          :label="I18n.t('music.title')"
+          :rules="[(v) => !!v || I18n.t('errors.albums.title-blank')]"
           required
         />
         <VDialog v-model="originalModal" persistent max-width="380">
           <template #activator="{ props: dialogProps }">
             <VTextField
               v-model="newAlbum.release"
-              :label="$t('music.album.release')"
+              :label="I18n.t('music.album.release')"
               readonly
               v-bind="dialogProps"
             ></VTextField>
@@ -43,7 +43,7 @@
                 class="ma-2"
                 @click="originalModal = false"
               >
-                {{ $t("common.cancel") }}
+                {{ I18n.t("common.cancel") }}
               </VBtn>
               <VBtn
                 variant="text"
@@ -51,14 +51,14 @@
                 class="ma-2"
                 @click="saveOriginalRelease"
               >
-                {{ $t("common.ok") }}
+                {{ I18n.t("common.ok") }}
               </VBtn>
             </VCardActions>
           </VCard>
         </VDialog>
         <VCheckbox
           v-model="editionInformation"
-          :label="$t('music.album.edition-information')"
+          :label="I18n.t('music.album.edition-information')"
         />
         <VDialog
           v-if="editionInformation"
@@ -69,7 +69,7 @@
           <template #activator="{ props: dialogProps }">
             <VTextField
               v-model="newAlbum.edition"
-              :label="$t('music.album.edition')"
+              :label="I18n.t('music.album.edition')"
               readonly
               clearable
               v-bind="dialogProps"
@@ -92,7 +92,7 @@
                 class="ma-2"
                 @click="editionModal = false"
               >
-                {{ $t("common.cancel") }}
+                {{ I18n.t("common.cancel") }}
               </VBtn>
               <VBtn
                 variant="text"
@@ -100,7 +100,7 @@
                 class="ma-2"
                 @click="saveEditionRelease"
               >
-                {{ $t("common.ok") }}
+                {{ I18n.t("common.ok") }}
               </VBtn>
             </VCardActions>
           </VCard>
@@ -108,7 +108,7 @@
         <VTextField
           v-if="editionInformation"
           v-model="newAlbum.edition_description"
-          :label="$t('music.album.edition-description')"
+          :label="I18n.t('music.album.edition-description')"
           clearable
         />
         <ImagePicker
@@ -116,7 +116,7 @@
           :current-img="(album && album.image250) ?? undefined"
           :placeholder="albumSvgUrl"
         />
-        <h4 class="text-subtitle-1">{{ $tc("music.artists", 2) }}</h4>
+        <h4 class="text-subtitle-1">{{ I18n.t("music.artists", 2) }}</h4>
         <VRow
           v-for="(item, index) of newAlbum.album_artists"
           :key="`artist-${index}`"
@@ -160,18 +160,18 @@
               :custom-filter="filterName"
               item-title="name"
               item-value="id"
-              :label="$tc('music.artists', 1)"
+              :label="I18n.t('music.artists', 1)"
               return-object
             />
-            <VTextField v-model="item.name" :label="$t('common.name')" />
+            <VTextField v-model="item.name" :label="I18n.t('common.name')" />
             <VTextField
               v-if="index !== newAlbum.album_artists.length - 1"
               v-model="item.separator"
-              :label="$t('music.artist.separator')"
+              :label="I18n.t('music.artist.separator')"
             />
           </VCol>
         </VRow>
-        <h4 class="text-subtitle-1">{{ $tc("music.labels", 2) }}</h4>
+        <h4 class="text-subtitle-1">{{ I18n.t("music.labels", 2) }}</h4>
         <VRow
           v-for="(item, index) of newAlbum.album_labels"
           :key="`label-${index}`"
@@ -193,12 +193,12 @@
               :custom-filter="filterName"
               item-title="name"
               item-value="id"
-              :label="$tc('music.labels', 1)"
+              :label="I18n.t('music.labels', 1)"
               return-object
             />
             <VTextField
               v-model="item.catalogue_number"
-              :label="$t('music.label.catnr')"
+              :label="I18n.t('music.label.catnr')"
             />
             <VDivider v-if="index !== newAlbum.album_labels.length - 1" />
           </VCol>
@@ -206,11 +206,15 @@
         <VCheckbox
           v-if="album && album.review_comment !== null"
           v-model="clearReviewComment"
-          :label="$tc('music.flag.clear', 1)"
+          :label="I18n.t('music.flag.clear', 1)"
         />
         <VRow justify="center" class="my-0">
           <VBtn :disabled="!isValid" color="primary" class="ma-2" type="submit">
-            {{ album ? $t("music.album.update") : $t("music.album.create") }}
+            {{
+              album
+                ? I18n.t("music.album.update")
+                : I18n.t("music.album.create")
+            }}
           </VBtn>
           <VSpacer />
           <VBtn
@@ -219,7 +223,7 @@
             @click="addArtist"
             @click.once="isDirty = true"
           >
-            {{ $t("music.artist.add") }}
+            {{ I18n.t("music.artist.add") }}
           </VBtn>
           <VBtn
             color="success"
@@ -227,7 +231,7 @@
             @click="addLabel"
             @click.once="isDirty = true"
           >
-            {{ $t("music.label.add") }}
+            {{ I18n.t("music.label.add") }}
           </VBtn>
         </VRow>
       </VForm>
@@ -255,7 +259,9 @@ import { useArtistsStore } from "@/store/artists";
 import { useAlbumsStore } from "@/store/albums";
 import albumSvgUrl from "@mdi/svg/svg/album.svg" with { type: "url" };
 import type { InternalItem } from "vuetify/framework";
+import { useI18n } from "vue-i18n";
 
+const I18n = useI18n();
 const dateAdapter = useDate();
 const route = useRoute();
 const router = useRouter();

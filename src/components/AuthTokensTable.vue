@@ -19,7 +19,7 @@
           :disabled="selected.length === 0"
           @click.stop.prevent="deleteAuthTokens"
         >
-          {{ $t("users.auth.destroy-selected") }}
+          {{ I18n.t("users.auth.destroy-selected") }}
         </VBtn>
       </template>
       <template #bottom>
@@ -55,10 +55,11 @@
 import { useAuthStore } from "@/store/auth";
 import { useAuthTokensStore } from "@/store/auth_tokens";
 import { usePagination } from "@/composables/pagination";
-import i18n from "@/i18n";
 import { computed, ref } from "vue";
 import type { AuthToken } from "@accentor/api-client-js";
+import { useI18n } from "vue-i18n";
 
+const I18n = useI18n();
 const authStore = useAuthStore();
 const authTokensStore = useAuthTokensStore();
 const props = withDefaults(defineProps<{ savePagination?: boolean }>(), {
@@ -75,12 +76,12 @@ const headers = [
     width: "1px",
   },
   {
-    text: i18n.global.t("users.auth.user-agent"),
+    text: I18n.t("users.auth.user-agent"),
     value: "user_agent",
     sortable: false,
   },
   {
-    text: i18n.global.t("common.actions"),
+    text: I18n.t("common.actions"),
     value: "actions",
     sortable: false,
     align: "end" as const,
@@ -102,13 +103,13 @@ const authTokens = computed(() => {
 const pageCount = computed(() => Math.ceil(authTokens.value.length / 30));
 
 async function deleteAuthToken(item: AuthToken): Promise<void> {
-  if (confirm(i18n.global.t("common.are-you-sure"))) {
+  if (confirm(I18n.t("common.are-you-sure"))) {
     await authTokensStore.destroy(item.id);
   }
 }
 
 async function deleteAuthTokens(): Promise<void> {
-  if (confirm(i18n.global.t("common.are-you-sure"))) {
+  if (confirm(I18n.t("common.are-you-sure"))) {
     destroyAllDisabled.value = true;
     await Promise.all(
       selected.value.map((authTokenId) => authTokensStore.destroy(authTokenId)),
