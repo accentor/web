@@ -60,6 +60,6 @@ jobs:
           cache: 'yarn'
       - name: Install dependencies
         run: yarn install
-      - name: Build
+      - name: Check types
         run: yarn run type-check
 
