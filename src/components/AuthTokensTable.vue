@@ -1,40 +1,48 @@
 <template>
   <div>
     <VDataTable
-      :footer-props="{
-        disableItemsPerPage: true,
-        itemsPerPageOptions: [30],
-        showFirstLastPage: true,
-      }"
+      ref="table"
       v-model="selected"
+      v-model:page="page"
+      item-selectable="isSelectable"
+      :items-per-page-options="[30]"
       :headers="headers"
       :items="authTokens"
       :items-per-page="30"
-      :page.sync="pagination.page"
       show-select
       class="elevation-3"
-      ref="table"
     >
-      <template v-slot:header.actions>
+      <template #header.actions>
         <VBtn
-          @click.stop.prevent="deleteAuthTokens"
-          color="danger"
+          color="error"
           class="ma-2"
           :disabled="selected.length === 0"
+          @click.stop.prevent="deleteAuthTokens"
         >
-          {{ $t("users.auth.destroy-selected") }}
+          {{ I18n.t("users.auth.destroy-selected") }}
         </VBtn>
       </template>
-      <template v-slot:item.actions="props">
+      <template #bottom>
+        <VDivider />
+        <div class="text-center py-2">
+          <VPagination
+            v-model="page"
+            density="compact"
+            :length="pageCount"
+            total-visible="5"
+          />
+        </div>
+      </template>
+      <template #item.actions="{ item }">
         <VBtn
-          @click.stop.prevent="deleteAuthToken(props.item)"
-          color="danger"
+          color="error"
           class="ma-1"
           href="#"
-          text
+          variant="text"
           icon
-          small
-          :disabled="props.item.isSelectable === false"
+          size="small"
+          :disabled="!item.isSelectable"
+          @click.stop.prevent="deleteAuthToken(item)"
         >
           <VIcon>mdi-delete</VIcon>
         </VBtn>
@@ -42,75 +50,71 @@
     </VDataTable>
   </div>
 </template>
-<script>
-import Paginated from "../mixins/Paginated";
-import { useAuthStore } from "../store/auth";
-import { mapActions, mapState } from "pinia";
-import { useAuthTokensStore } from "../store/auth_tokens";
 
-export default {
-  name: "AuthTokensTable",
-  mixins: [Paginated],
-  props: {
-    savePagination: { default: true, type: Boolean },
+<script setup lang="ts">
+import { useAuthStore } from "@/store/auth";
+import { useAuthTokensStore } from "@/store/auth_tokens";
+import { usePagination } from "@/composables/pagination";
+import { computed, ref } from "vue";
+import type { AuthToken } from "@accentor/api-client-js";
+import { useI18n } from "vue-i18n";
+
+const I18n = useI18n();
+const authStore = useAuthStore();
+const authTokensStore = useAuthTokensStore();
+const props = withDefaults(defineProps<{ savePagination?: boolean }>(), {
+  savePagination: true,
+});
+const { page } = usePagination(props.savePagination);
+
+const headers = [
+  {
+    text: "#",
+    value: "id",
+    sortable: false,
+    align: "center" as const,
+    width: "1px",
   },
-  data() {
-    const headers = [
-      {
-        text: "#",
-        value: "id",
-        sortable: false,
-        align: "center",
-        width: "1px",
-      },
-      {
-        text: this.$t("users.auth.user-agent"),
-        value: "user_agent",
-        sortable: false,
-      },
-      {
-        text: this.$t("common.actions"),
-        value: "actions",
-        sortable: false,
-        align: "end",
-      },
-    ];
-    return {
-      destroyAllDisabled: false,
-      headers,
-      selected: [],
-    };
+  {
+    text: I18n.t("users.auth.user-agent"),
+    value: "user_agent",
+    sortable: false,
   },
-  computed: {
-    ...mapState(useAuthStore, ["currentSession"]),
-    ...mapState(useAuthTokensStore, { storeAuthTokens: "authTokens" }),
-    authTokens() {
-      const result = [];
-      for (const token of this.storeAuthTokens) {
-        result.push({
-          ...token,
-          isSelectable: token.id !== this.currentSession,
-        });
-      }
-      return result;
-    },
+  {
+    text: I18n.t("common.actions"),
+    value: "actions",
+    sortable: false,
+    align: "end" as const,
   },
-  methods: {
-    ...mapActions(useAuthTokensStore, ["destroy"]),
-    deleteAuthToken: function (item) {
-      if (confirm(this.$t("common.are-you-sure"))) {
-        this.destroy(item.id);
-      }
-    },
-    deleteAuthTokens: function () {
-      if (confirm(this.$t("common.are-you-sure"))) {
-        this.destroyAllDisabled = true;
-        this.selected.forEach((authToken) => {
-          this.destroy(authToken.id);
-        });
-        this.destroyAllDisabled = false;
-      }
-    },
-  },
-};
+];
+
+const destroyAllDisabled = ref(false);
+const selected = ref([]);
+const authTokens = computed(() => {
+  const result = [];
+  for (const token of authTokensStore.authTokens) {
+    result.push({
+      ...token,
+      isSelectable: token.id !== authStore.currentSession,
+    });
+  }
+  return result;
+});
+const pageCount = computed(() => Math.ceil(authTokens.value.length / 30));
+
+async function deleteAuthToken(item: AuthToken): Promise<void> {
+  if (confirm(I18n.t("common.are-you-sure"))) {
+    await authTokensStore.destroy(item.id);
+  }
+}
+
+async function deleteAuthTokens(): Promise<void> {
+  if (confirm(I18n.t("common.are-you-sure"))) {
+    destroyAllDisabled.value = true;
+    await Promise.all(
+      selected.value.map((authTokenId) => authTokensStore.destroy(authTokenId)),
+    );
+    destroyAllDisabled.value = false;
+  }
+}
 </script>

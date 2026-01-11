@@ -1,55 +1,53 @@
 <template>
   <VContainer fluid>
     <VRow justify="end">
-      <VBtn :to="{ name: 'new-user' }" color="success" v-if="isAdmin">
-        <VIcon left>mdi-plus</VIcon>
-        {{ $t("users.new") }}
+      <VBtn v-if="isAdmin" :to="{ name: 'new-user' }" color="success">
+        <VIcon start>mdi-plus</VIcon>
+        {{ I18n.t("users.new") }}
       </VBtn>
     </VRow>
     <VRow v-if="users.length > 0">
       <VCol
+        v-for="user in users"
         :key="user.id"
         xl="2"
         lg="3"
         md="4"
         sm="6"
         cols="12"
-        v-for="user in users"
       >
         <VCard :to="{ name: 'user', params: { id: user.id } }">
           <VCardTitle class="pb-0">
             {{ user.name }}
           </VCardTitle>
           <VCardText>
-            {{ $t(`users.permission.${user.permission}`) }}
+            {{ I18n.t(`users.permission.${user.permission}`) }}
           </VCardText>
           <VCardActions v-if="isAdmin">
-            <VBtn
-              @click.stop.prevent="deleteUser(user.id)"
-              color="danger"
-              class="ma-2"
-              dark
-              fab
-              href="#"
-              outlined
-              small
-            >
-              <VIcon>mdi-delete</VIcon>
-            </VBtn>
             <VBtn
               :to="{
                 name: 'edit-user',
                 params: { id: user.id },
-                query: { redirect: $route.fullPath },
+                query: { redirect: route.fullPath },
               }"
-              color="edit"
+              color="warning"
               class="ma-2"
-              dark
-              fab
-              outlined
-              small
+              icon
+              size="small"
+              variant="text"
             >
-              <VIcon>mdi-pencil</VIcon>
+              <VIcon size="x-large">mdi-pencil</VIcon>
+            </VBtn>
+            <VBtn
+              color="error"
+              class="ma-2"
+              href="#"
+              icon
+              size="small"
+              variant="text"
+              @click.stop.prevent="deleteUser(user.id)"
+            >
+              <VIcon size="x-large">mdi-delete</VIcon>
             </VBtn>
           </VCardActions>
         </VCard>
@@ -58,27 +56,26 @@
   </VContainer>
 </template>
 
-<script>
-import { mapActions, mapState } from "pinia";
-import { useAuthStore } from "../../store/auth";
-import { useUsersStore } from "../../store/users";
+<script setup lang="ts">
+import { storeToRefs } from "pinia";
+import { useAuthStore } from "@/store/auth";
+import { useUsersStore } from "@/store/users";
+import { useHead } from "@unhead/vue";
+import { useI18n } from "vue-i18n";
+import { useRoute } from "vue-router";
 
-export default {
-  name: "Users",
-  metaInfo() {
-    return { title: this.$tc("users.users", 2) };
-  },
-  methods: {
-    ...mapActions(useUsersStore, ["destroy"]),
-    deleteUser: function (id) {
-      if (confirm(this.$t("common.are-you-sure"))) {
-        this.destroy(id);
-      }
-    },
-  },
-  computed: {
-    ...mapState(useAuthStore, ["isAdmin"]),
-    ...mapState(useUsersStore, { users: "usersByName" }),
-  },
-};
+const I18n = useI18n();
+const route = useRoute();
+const usersStore = useUsersStore();
+
+useHead({ title: I18n.t("users.users", 2) });
+
+const { isAdmin } = storeToRefs(useAuthStore());
+const { usersByName: users } = storeToRefs(usersStore);
+
+async function deleteUser(id: number): Promise<void> {
+  if (confirm(I18n.t("common.are-you-sure"))) {
+    await usersStore.destroy(id);
+  }
+}
 </script>

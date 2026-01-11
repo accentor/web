@@ -5,21 +5,12 @@
   </div>
 </template>
 
-<script>
-import { mapState } from "pinia";
+<script setup lang="ts">
+import { storeToRefs } from "pinia";
 import ImageTypeForm from "./ImageTypeForm.vue";
-import { useAuthStore } from "../store/auth";
-import { useImageTypesStore } from "../store/image_types";
+import { useAuthStore } from "@/store/auth";
+import { useImageTypesStore } from "@/store/image_types";
 
-export default {
-  name: "EditImageTypes",
-  components: { ImageTypeForm },
-  data() {
-    return {};
-  },
-  computed: {
-    ...mapState(useAuthStore, ["isModerator"]),
-    ...mapState(useImageTypesStore, { imageTypes: "allImageTypes" }),
-  },
-};
+const { isModerator } = storeToRefs(useAuthStore());
+const { allImageTypes: imageTypes } = storeToRefs(useImageTypesStore());
 </script>

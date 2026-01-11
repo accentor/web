@@ -1,129 +1,128 @@
 <template>
   <VCard class="px-2 py-4">
-    <div
-      class="text-center mb-4 text-h6 font-weight-regular grey--text text--darken-3"
-    >
-      {{ $t("stats.count.playCount.before") }}
+    <div class="text-center mb-4 text-h6 font-weight-regular">
+      {{ I18n.t("stats.count.playCount.before") }}
       <span
         class="text-h4 d-block"
-        :class="animatedCount ? 'primary--text' : 'grey--text text--darken-1'"
+        :class="
+          data.animatedCount ? 'text-primary' : 'text-grey text--darken-1'
+        "
       >
-        {{ Math.floor(animatedCount) }}
+        {{ Math.floor(data.animatedCount) }}
       </span>
-      {{ $t("stats.count.playCount.after") }}
+      {{ I18n.t("stats.count.playCount.after") }}
     </div>
     <div class="text-center text-h6 font-weight-regular">
-      {{ $t("stats.count.playTime.before") }}
-      <div class="play-time grey--text text--darken-3">
+      {{ I18n.t("stats.count.playTime.before") }}
+      <div class="play-time text-grey-darken-3">
         <span
-          class="text-h4 d-block text-right text--darken-1"
-          :class="animatedTime.days ? 'primary--text' : 'grey--text'"
-        >
-          {{ Math.floor(animatedTime.days) }}
-        </span>
-        <span class="text-subtitle-1 text-left">
-          {{ $tc("stats.count.playTime.days", Math.floor(animatedTime.days)) }}
-        </span>
-        <span
-          class="text-h4 d-block text-right text--darken-1"
+          class="text-h4 d-block text-right"
           :class="
-            animatedTime.days + animatedTime.hours
-              ? 'primary--text'
-              : 'grey--text'
+            data.animatedTime.days
+              ? 'text-primary text--darken-1'
+              : 'text-grey text--darken-1'
           "
         >
-          {{ Math.floor(animatedTime.hours) }}
+          {{ Math.floor(data.animatedTime.days) }}
         </span>
         <span class="text-subtitle-1 text-left">
           {{
-            $tc("stats.count.playTime.hours", Math.floor(animatedTime.hours))
+            I18n.t(
+              "stats.count.playTime.days",
+              Math.floor(data.animatedTime.days),
+            )
           }}
         </span>
         <span
-          class="text-h4 d-block text-right text--darken-1"
+          class="text-h4 d-block text-right"
           :class="
-            animatedTime.days + animatedTime.hours + animatedTime.minutes
-              ? 'primary--text'
-              : 'grey--text'
+            data.animatedTime.days + data.animatedTime.hours
+              ? 'text-primary text--darken-1'
+              : 'text-grey text--darken-1'
           "
         >
-          {{ Math.floor(animatedTime.minutes) }}
+          {{ Math.floor(data.animatedTime.hours) }}
         </span>
         <span class="text-subtitle-1 text-left">
           {{
-            $tc(
+            I18n.t(
+              "stats.count.playTime.hours",
+              Math.floor(data.animatedTime.hours),
+            )
+          }}
+        </span>
+        <span
+          class="text-h4 d-block text-right"
+          :class="
+            data.animatedTime.days +
+            data.animatedTime.hours +
+            data.animatedTime.minutes
+              ? 'text-primary text--darken-1'
+              : 'text-grey text--darken-1'
+          "
+        >
+          {{ Math.floor(data.animatedTime.minutes) }}
+        </span>
+        <span class="text-subtitle-1 text-left">
+          {{
+            I18n.t(
               "stats.count.playTime.minutes",
-              Math.floor(animatedTime.minutes),
+              Math.floor(data.animatedTime.minutes),
             )
           }}
         </span>
       </div>
-      {{ $t("stats.count.playTime.after") }}
+      {{ I18n.t("stats.count.playTime.after") }}
     </div>
   </VCard>
 </template>
 
-<script>
-import { mapState } from "pinia";
+<script setup lang="ts">
+import { computed, ref, watch } from "vue";
 import { gsap } from "gsap";
-import { useTracksStore } from "../store/tracks";
+import type { PlayStat } from "@accentor/api-client-js";
+import { useI18n } from "vue-i18n";
 
-export default {
-  name: "PlayCountCard",
-  props: {
-    playStats: {
-      type: Array,
-      required: true,
-    },
-    title: {
-      type: String,
-      required: true,
-    },
-  },
-  data() {
-    return {
-      animatedCount: 0,
-      animatedTime: {
-        days: 0,
-        hours: 0,
-        minutes: 0,
-      },
-    };
-  },
-  computed: {
-    ...mapState(useTracksStore, ["tracks"]),
-    playCount() {
-      return this.playStats.reduce((acc, cur) => acc + cur.count, 0);
-    },
-    playTime() {
-      return this.playStats.reduce((acc, cur) => acc + cur.total_length, 0);
-    },
-  },
-  watch: {
-    playCount(newValue) {
-      gsap.to(this.$data, { duration: 1.2, animatedCount: newValue });
-    },
-    async playTime(newValue) {
-      const newDays = Math.floor(newValue / 86400);
-      const newHours = Math.floor((newValue % 86400) / 3600);
-      const newMinutes = Math.floor(((newValue % 86400) % 3600) / 60);
-      if (this.$data.animatedTime.days || newDays) {
-        await gsap.to(this.$data.animatedTime, {
-          duration: 0.4,
-          days: newDays,
-        });
-      }
-      await gsap.to(this.$data.animatedTime, {
-        duration: 0.5,
-        hours: newHours,
-      });
-      await gsap.to(this.$data.animatedTime, {
-        duration: 0.6,
-        minutes: newMinutes,
-      });
-    },
-  },
-};
+const I18n = useI18n();
+
+interface Props {
+  playStats: PlayStat[];
+  title: string;
+}
+
+const props = defineProps<Props>();
+
+const data = ref({
+  animatedCount: 0,
+  animatedTime: { days: 0, hours: 0, minutes: 0 },
+});
+
+const playCount = computed(() =>
+  props.playStats.reduce((acc, cur) => acc + cur.count, 0),
+);
+const playTime = computed(() =>
+  props.playStats.reduce((acc, cur) => acc + cur.total_length, 0),
+);
+
+watch(playCount, (newValue) =>
+  gsap.to(data.value, { duration: 1.2, animatedCount: newValue }),
+);
+watch(playTime, async (newValue) => {
+  const newDays = Math.floor(newValue / 86400);
+  const newHours = Math.floor((newValue % 86400) / 3600);
+  const newMinutes = Math.floor((newValue % 3600) / 60);
+  if (data.value.animatedTime.days || newDays) {
+    await gsap.to(data.value.animatedTime, {
+      duration: 0.4,
+      days: newDays,
+    });
+  }
+  await gsap.to(data.value.animatedTime, { duration: 0.5, hours: newHours });
+  await gsap.to(data.value.animatedTime, {
+    duration: 0.5,
+    minutes: newMinutes,
+  });
+});
 </script>
 
 <style lang="scss" scoped>

@@ -2,20 +2,17 @@
   <VContainer class="fill-height" fluid>
     <VRow no-gutters align="center" justify="center">
       <VCol md="4" sm="8" cols="12">
-        <UserForm :showPermissions="true" />
+        <UserForm :show-permissions="true" />
       </VCol>
     </VRow>
   </VContainer>
 </template>
 
-<script>
+<script setup lang="ts">
+import { useHead } from "@unhead/vue";
 import UserForm from "@/components/UserForm.vue";
+import { useI18n } from "vue-i18n";
 
-export default {
-  name: "NewUser",
-  components: { UserForm },
-  metaInfo() {
-    return { title: this.$t("users.new") };
-  },
-};
+const I18n = useI18n();
+useHead({ title: I18n.t("users.new") });
 </script>

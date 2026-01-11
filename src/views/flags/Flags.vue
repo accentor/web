@@ -1,66 +1,28 @@
 <template>
   <div>
     <VContainer fluid>
-      <VRow>
-        <VCol>
-          <h2 class="text-h4">{{ $tc("music.artists", 2) }}</h2>
-        </VCol>
-      </VRow>
-      <VDataIterator
-        :footer-props="{ disableItemsPerPage: true, itemsPerPageOptions: [6] }"
-        :items="artists"
+      <ArtistsRow
+        :artists="artists"
         :items-per-page="6"
+        :save-pagination="false"
       >
-        <template v-slot:default="props">
-          <VRow class="mb-0">
-            <VCol
-              v-for="item in props.items"
-              :key="`artist${item.id}`"
-              lg="3"
-              md="4"
-              sm="6"
-              xl="2"
-              cols="12"
-            >
-              <ArtistCard :artist="item" />
-            </VCol>
-          </VRow>
+        <template #header>
+          <h2 class="text-h4">{{ I18n.t("music.artists", 2) }}</h2>
         </template>
-      </VDataIterator>
+      </ArtistsRow>
     </VContainer>
     <VContainer fluid>
-      <VRow>
-        <VCol>
-          <h2 class="text-h4">{{ $tc("music.albums", 2) }}</h2>
-        </VCol>
-      </VRow>
-      <VDataIterator
-        :footer-props="{ disableItemsPerPage: true, itemsPerPageOptions: [6] }"
-        :items="albums"
-        :items-per-page="6"
-      >
-        <template v-slot:default="props">
-          <VRow class="mb-0">
-            <VCol
-              v-for="item in props.items"
-              :key="`album${item.id}`"
-              lg="3"
-              md="4"
-              sm="6"
-              xl="2"
-              cols="12"
-            >
-              <AlbumCard :album="item" />
-            </VCol>
-          </VRow>
+      <AlbumsRow :albums="albums" :items-per-page="6" :save-pagination="false">
+        <template #header>
+          <h2 class="text-h4">{{ I18n.t("music.albums", 2) }}</h2>
         </template>
-      </VDataIterator>
+      </AlbumsRow>
     </VContainer>
     <VContainer class="fill-height" fluid>
       <VRow class="flex-column">
         <VRow>
           <VCol>
-            <h2 class="text-h4">{{ $tc("music.tracks", 2) }}</h2>
+            <h2 class="text-h4">{{ I18n.t("music.tracks", 2) }}</h2>
           </VCol>
         </VRow>
         <VRow>
@@ -78,25 +40,21 @@
   </div>
 </template>
 
-<script>
-import TracksTable from "../../components/TracksTable.vue";
-import ArtistCard from "../../components/ArtistCard.vue";
-import AlbumCard from "../../components/AlbumCard.vue";
-import { mapState } from "pinia";
-import { useArtistsStore } from "../../store/artists";
-import { useAlbumsStore } from "../../store/albums";
-import { useTracksStore } from "../../store/tracks";
+<script setup lang="ts">
+import { useHead } from "@unhead/vue";
+import AlbumsRow from "@/components/AlbumsRow.vue";
+import ArtistsRow from "@/components/ArtistsRow.vue";
+import TracksTable from "@/components/TracksTable.vue";
+import { useAlbumsStore } from "@/store/albums";
+import { useArtistsStore } from "@/store/artists";
+import { useTracksStore } from "@/store/tracks";
+import { storeToRefs } from "pinia";
+import { useI18n } from "vue-i18n";
 
-export default {
-  name: "Flags",
-  metaInfo() {
-    return { title: this.$tc("music.flags", 2) };
-  },
-  components: { AlbumCard, ArtistCard, TracksTable },
-  computed: {
-    ...mapState(useTracksStore, { tracks: "tracksFlagged" }),
-    ...mapState(useAlbumsStore, { albums: "albumsFlagged" }),
-    ...mapState(useArtistsStore, { artists: "artistsFlagged" }),
-  },
-};
+const I18n = useI18n();
+useHead({ title: I18n.t("music.flags", 2) });
+
+const { tracksFlagged: tracks } = storeToRefs(useTracksStore());
+const { albumsFlagged: albums } = storeToRefs(useAlbumsStore());
+const { artistsFlagged: artists } = storeToRefs(useArtistsStore());
 </script>

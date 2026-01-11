@@ -1,10 +1,10 @@
 <template>
-  <VForm v-model="isValid" ref="form" lazy-validation>
+  <VForm ref="form" v-model="isValid">
     <VRow>
       <VCol cols="6">
         <VTextField
           v-model="newImageType.extension"
-          :label="$t('library.extension')"
+          :label="I18n.t('library.extension')"
           :disabled="imageType !== null"
           required
           :rules="rules.ext"
@@ -13,16 +13,16 @@
       <VCol cols="5">
         <VTextField
           v-model="newImageType.mimetype"
-          :label="$t('library.mime-type')"
+          :label="I18n.t('library.mime-type')"
           required
-          :rules="[(v) => !!v || $t('errors.image.mime-blank')]"
+          :rules="[(v) => !!v || I18n.t('errors.image.mime-blank')]"
         />
       </VCol>
       <VCol cols="2" sm="1">
         <VBtn
           :disabled="!isValid"
           icon
-          outlined
+          variant="outlined"
           :color="(imageType && 'info') || 'success'"
           class="ma-2"
           @click="saveImageType"
@@ -32,91 +32,79 @@
           </VIcon>
         </VBtn>
         <VBtn
-          icon
-          outlined
           v-if="imageType"
-          color="danger"
+          icon
+          variant="outlined"
+          color="error"
           class="ma-2"
           @click="deleteImageType"
         >
-          <VIcon color="danger">mdi-delete</VIcon>
+          <VIcon color="error">mdi-delete</VIcon>
         </VBtn>
       </VCol>
     </VRow>
   </VForm>
 </template>
 
-<script>
-import { mapActions, mapState } from "pinia";
-import { useImageTypesStore } from "../store/image_types";
+<script setup lang="ts">
+import { computed, onMounted, ref, useTemplateRef } from "vue";
+import type { ImageType } from "@accentor/api-client-js";
+import { useImageTypesStore } from "@/store/image_types";
+import { useI18n } from "vue-i18n";
 
-export default {
-  name: "ImageTypeForm",
-  props: { imageType: { default: null, type: Object } },
-  data() {
-    return {
-      newImageType: {
-        mimetype: "",
-        extension: "",
-      },
-      isValid: true,
-    };
-  },
-  created() {
-    this.$nextTick(() => {
-      if (this.imageType) {
-        this.fillValues();
-      }
+const I18n = useI18n();
+const imageTypesStore = useImageTypesStore();
+const props = defineProps<{ imageType?: ImageType }>();
+const newImageType = ref({
+  mimetype: "",
+  extension: "",
+});
+const isValid = ref(true);
+const rules = computed(() => {
+  const result = {
+    ext: [
+      (v: string): true | string => !!v || I18n.t("errors.image.ext-blank"),
+    ],
+  };
+  if (!props.imageType) {
+    result.ext.push((v: string): true | string => {
+      const double = imageTypesStore.allImageTypes.some(
+        (it) => it.extension === v,
+      );
+      return !double || I18n.t("errors.image.ext-taken");
     });
-  },
-  watch: {
-    album: function () {
-      if (this.imageType) {
-        this.fillValues();
-      }
-    },
-  },
-  computed: {
-    ...mapState(useImageTypesStore, { imageTypes: "allImageTypes" }),
-    rules() {
-      const rules = {
-        ext: [(v) => !!v || this.$t("errors.image.ext-blank")],
-      };
-      if (this.imageType === null) {
-        const extTaken = (v) => {
-          const double = this.imageTypes.some((it) => it.extension === v);
-          return !double || this.$t("errors.image.ext-taken");
-        };
-        rules.ext.push(extTaken);
-      }
+  }
 
-      return rules;
-    },
-  },
-  methods: {
-    fillValues() {
-      this.newImageType.extension = this.imageType.extension;
-      this.newImageType.mimetype = this.imageType.mimetype;
-    },
-    ...mapActions(useImageTypesStore, ["destroy", "update", "create"]),
-    async saveImageType() {
-      if (this.$refs.form.validate()) {
-        if (this.imageType === null) {
-          const id = await this.create(this.newImageType);
-          if (id) {
-            this.newImageType.extension = "";
-            this.newImageType.mimetype = "";
-          }
-        } else {
-          this.update(this.imageType.id, this.newImageType);
-        }
+  return result;
+});
+
+onMounted(fillValues);
+
+function fillValues(): void {
+  if (props.imageType) {
+    newImageType.value.extension = props.imageType.extension;
+    newImageType.value.mimetype = props.imageType.mimetype;
+  }
+}
+
+async function deleteImageType(): Promise<void> {
+  if (confirm(I18n.t("common.are-you-sure"))) {
+    await imageTypesStore.destroy(props.imageType!.id);
+  }
+}
+
+const form = useTemplateRef("form");
+async function saveImageType(): Promise<void> {
+  if ((await form.value!.validate()).valid) {
+    if (!props.imageType) {
+      const id = await imageTypesStore.create(newImageType.value);
+      if (id) {
+        newImageType.value.extension = "";
+        newImageType.value.mimetype = "";
       }
-    },
-    deleteImageType() {
-      if (confirm(this.$t("common.are-you-sure"))) {
-        this.destroy(this.imageType.id);
-      }
-    },
-  },
-};
+    } else {
+      await imageTypesStore.update(props.imageType.id, newImageType.value);
+    }
+  }
+}
 </script>

@@ -1,10 +1,10 @@
 <template>
-  <VContainer class="fill-height" fluid v-if="isModerator">
+  <VContainer v-if="isModerator" class="fill-height" fluid>
     <VRow no-gutters>
       <VCol>
         <TracksTable
           :tracks="tracks"
-          :title="$t('music.tracks-without-audio')"
+          :title="I18n.t('music.tracks-without-audio')"
           :show-search="true"
           :show-mass-edit="true"
         />
@@ -13,21 +13,17 @@
   </VContainer>
 </template>
 
-<script>
-import { mapState } from "pinia";
-import TracksTable from "../../components/TracksTable.vue";
-import { useAuthStore } from "../../store/auth";
-import { useTracksStore } from "../../store/tracks";
+<script setup lang="ts">
+import { storeToRefs } from "pinia";
+import TracksTable from "@/components/TracksTable.vue";
+import { useAuthStore } from "@/store/auth";
+import { useTracksStore } from "@/store/tracks";
+import { useHead } from "@unhead/vue";
+import { useI18n } from "vue-i18n";
 
-export default {
-  name: "EmptyTracks",
-  components: { TracksTable },
-  metaInfo() {
-    return { title: this.$t("music.tracks-without-audio") };
-  },
-  computed: {
-    ...mapState(useAuthStore, ["isModerator"]),
-    ...mapState(useTracksStore, { tracks: "tracksEmpty" }),
-  },
-};
+const I18n = useI18n();
+const { isModerator } = storeToRefs(useAuthStore());
+const { tracksEmpty: tracks } = storeToRefs(useTracksStore());
+
+useHead({ title: I18n.t("music.tracks-without-audio") });
 </script>
