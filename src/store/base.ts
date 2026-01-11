@@ -8,9 +8,9 @@ import type { ApiError, ErrorsStore } from "@/store/errors";
 // The types here are not correct, but useStorageAsync wants us to convert to a string,
 // which we don't actually want to do, since indexeddb can just store the objects.
 const RawObjectSerializer = {
-  write: async <T>(value: T): Promise<string> => value as string,
-  read: async <T extends object>(value: string): Promise<T> =>
-    markRaw(value as unknown as T),
+  write: <T>(value: T): Promise<string> => Promise.resolve(value as string),
+  read: <T extends object>(value: string): Promise<T> =>
+    Promise.resolve(markRaw(value as unknown as T)),
 };
 
 export type ModelItemsType<T> = Record<string, T & { loaded: Date }>;

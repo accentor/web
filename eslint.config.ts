@@ -35,21 +35,18 @@ export default defineConfigWithVueTs(
       curly: "error",
       "no-console": "error",
       "no-debugger": "error",
+      "no-invalid-this": "error",
+      "require-await": "error",
       "vue/multi-word-component-names": "off",
       "@typescript-eslint/no-non-null-assertion": "off",
+      "@typescript-eslint/explicit-function-return-type": "error",
+      "@typescript-eslint/explicit-module-boundary-types": "error",
     },
     languageOptions: {
       sourceType: "module",
       globals: {
         ...globals.browser,
       },
-    },
-  },
-  {
-    files: ["**/*.ts", "**/*.vue"],
-    rules: {
-      "@typescript-eslint/explicit-function-return-type": "error",
-      "@typescript-eslint/explicit-module-boundary-types": "error",
     },
   },
 );
