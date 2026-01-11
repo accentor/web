@@ -16,7 +16,7 @@ const messages = {
 
 type MessageSchema = (typeof messages)["en"];
 
-export default createI18n<[MessageSchema], "en" | "nl">({
+export default createI18n<[MessageSchema], string, false>({
   legacy: false,
   locale: import.meta.env.VITE_I18N_LOCALE || "en",
   fallbackLocale: import.meta.env.VITE_I18N_FALLBACK_LOCALE || "en",
