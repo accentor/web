@@ -27,8 +27,7 @@ const userName = computed(() => user.value?.name);
 
 useHead({ title: userName });
 
-watch(user, async () => {
-  await usersStore.restored;
+watch(user, () => {
   if (!user.value) {
     router.go(-1);
   }

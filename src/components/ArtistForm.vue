@@ -82,7 +82,7 @@ async function submit(): Promise<void> {
       (clearReviewComment.value ? null : newArtist.value.review_comment) ??
       undefined,
   };
-  let pendingResult = null;
+  let pendingResult;
   if (props.artist) {
     pendingResult = artistsStore.update(props.artist.id, transformed);
   } else {
@@ -90,7 +90,7 @@ async function submit(): Promise<void> {
   }
   const succeeded = await pendingResult;
   if (succeeded) {
-    router.push(
+    await router.push(
       (route.query.redirect as string | undefined) || { name: "artists" },
     );
   }

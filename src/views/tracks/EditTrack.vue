@@ -240,13 +240,10 @@ function addArtist(): void {
   });
 }
 
-async function fillValues(): Promise<void> {
+function fillValues(): void {
   if (!track.value) {
     return;
   }
-
-  await artistsStore.restored;
-  await genresStore.restored;
 
   newTrack.value.number = track.value.number;
   newTrack.value.title = track.value.title;
@@ -327,7 +324,7 @@ async function submit(): Promise<void> {
   await Promise.all([...mappedGenres, ...mappedArtists]);
   const succeeded = await tracksStore.update(track.value.id, transformed);
   if (succeeded) {
-    router.push((route.query.redirect as string) || { name: "tracks" });
+    await router.push((route.query.redirect as string) || { name: "tracks" });
   }
 }
 </script>

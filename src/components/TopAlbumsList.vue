@@ -66,7 +66,7 @@ const listData = computed(() =>
     const albumArtists = [...(album?.album_artists || [])]
       .sort((a1, a2) => a2.order - a1.order)
       .reduce((acc, a) => {
-        return `${acc}${a.name}${a.separator}`;
+        return `${acc}${a.name}${a.separator ?? ""}`;
       }, "");
     return {
       count: tt[1],

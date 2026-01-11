@@ -15,9 +15,9 @@ export function usePagination(savePagination = true): { page: Ref<number> } {
     page.value = startingRoutePage;
   });
 
-  watch(page, () => {
+  watch(page, async () => {
     if (savePagination && getRoutePage() !== page.value) {
-      router.replace({
+      await router.replace({
         query: {
           ...route.query,
           page: `${page.value}`,

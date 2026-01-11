@@ -77,7 +77,7 @@ export const useAlbumsStore = defineStore("albums", () => {
     return allAlbums.value.filter(alFilter).sort(compareAlbumsByReleaseFirst());
   }
 
-  function removeArtistOccurence(oldID: number): void {
+  function removeArtistOccurrence(oldID: number): void {
     const newAlbums: ModelItemsType<Album> = {};
     for (const album of allAlbums.value) {
       const i = album.album_artists.findIndex((aa) => aa.artist_id === oldID);
@@ -89,7 +89,7 @@ export const useAlbumsStore = defineStore("albums", () => {
     setItems(newAlbums);
   }
 
-  function updateArtistOccurence(newID: number, oldID: number): void {
+  function updateArtistOccurrence(newID: number, oldID: number): void {
     const newAlbums: ModelItemsType<Album> = {};
     for (const album of allAlbums.value) {
       const i = album.album_artists.findIndex((aa) => aa.artist_id === oldID);
@@ -101,7 +101,7 @@ export const useAlbumsStore = defineStore("albums", () => {
     setItems(newAlbums);
   }
 
-  function removeLabelOccurence(oldID: number): void {
+  function removeLabelOccurrence(oldID: number): void {
     const newAlbums: ModelItemsType<Album> = {};
     for (const album of allAlbums.value) {
       const i = album.album_labels.findIndex((l) => l.label_id === oldID);
@@ -113,7 +113,7 @@ export const useAlbumsStore = defineStore("albums", () => {
     setItems(newAlbums);
   }
 
-  function updateLabelOccurence(newID: number, oldID: number): void {
+  function updateLabelOccurrence(newID: number, oldID: number): void {
     const newAlbums: ModelItemsType<Album> = {};
     for (const album of allAlbums.value) {
       const i = album.album_labels.findIndex((l) => l.label_id === oldID);
@@ -167,7 +167,7 @@ export const useAlbumsStore = defineStore("albums", () => {
     authStore,
     errorsStore,
     removeItem,
-    (newId, oldId) => tracksStore.updateAlbumOccurence(newId, oldId),
+    (newId, oldId) => tracksStore.updateAlbumOccurrence(newId, oldId),
   );
 
   return {
@@ -187,9 +187,9 @@ export const useAlbumsStore = defineStore("albums", () => {
     destroy,
     destroyEmpty,
     merge,
-    removeArtistOccurence,
-    updateArtistOccurence,
-    removeLabelOccurence,
-    updateLabelOccurence,
+    removeArtistOccurrence,
+    updateArtistOccurrence,
+    removeLabelOccurrence,
+    updateLabelOccurrence,
   };
 });

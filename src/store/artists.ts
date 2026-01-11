@@ -81,8 +81,8 @@ export const useArtistsStore = defineStore("artists", () => {
     errorsStore,
     removeItem,
     (id) => {
-      albumsStore.removeArtistOccurence(id);
-      tracksStore.removeArtistOccurence(id);
+      albumsStore.removeArtistOccurrence(id);
+      tracksStore.removeArtistOccurrence(id);
     },
   );
   const destroyEmpty = baseDestroyEmpty(
@@ -98,8 +98,8 @@ export const useArtistsStore = defineStore("artists", () => {
     errorsStore,
     removeItem,
     (newId, oldId) => {
-      albumsStore.updateArtistOccurence(newId, oldId);
-      tracksStore.updateArtistOccurence(newId, oldId);
+      albumsStore.updateArtistOccurrence(newId, oldId);
+      tracksStore.updateArtistOccurrence(newId, oldId);
     },
   );
 

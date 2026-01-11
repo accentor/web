@@ -92,7 +92,7 @@ const svgData = computed(() => {
         Math.ceil((Math.sqrt(count) / Math.sqrt(max)) * 10000) / 1000 + 1;
       dots.push({
         cx: 22 * (index % 24),
-        cy: 22 * Math.floor(index / 20),
+        cy: 22 * Math.floor(index / 24),
         r: radius,
       });
     }

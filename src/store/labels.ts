@@ -69,7 +69,7 @@ export const useLabelsStore = defineStore("labels", () => {
     authStore,
     errorsStore,
     removeItem,
-    (id) => albumsStore.removeLabelOccurence(id),
+    (id) => albumsStore.removeLabelOccurrence(id),
   );
   const destroyEmpty = baseDestroyEmpty(
     api.labels,
@@ -83,7 +83,7 @@ export const useLabelsStore = defineStore("labels", () => {
     authStore,
     errorsStore,
     removeItem,
-    (newId, oldId) => albumsStore.updateLabelOccurence(newId, oldId),
+    (newId, oldId) => albumsStore.updateLabelOccurrence(newId, oldId),
   );
 
   return {

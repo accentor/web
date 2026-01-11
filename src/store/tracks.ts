@@ -104,7 +104,7 @@ export const useTracksStore = defineStore("tracks", () => {
     );
   }
 
-  function updateAlbumOccurence(newID: number, oldID: number): void {
+  function updateAlbumOccurrence(newID: number, oldID: number): void {
     const newTracks: ModelItemsType<Track> = {};
     for (const track of allTracks.value) {
       if (`${track.album_id}` === `${oldID}`) {
@@ -115,7 +115,7 @@ export const useTracksStore = defineStore("tracks", () => {
     setItems(newTracks);
   }
 
-  function removeArtistOccurence(oldID: number): void {
+  function removeArtistOccurrence(oldID: number): void {
     const newTracks: ModelItemsType<Track> = {};
     for (const track of allTracks.value) {
       if (track.track_artists.some((ta) => `${ta.artist_id}` === `${oldID}`)) {
@@ -128,7 +128,7 @@ export const useTracksStore = defineStore("tracks", () => {
     setItems(newTracks);
   }
 
-  function updateArtistOccurence(newID: number, oldID: number): void {
+  function updateArtistOccurrence(newID: number, oldID: number): void {
     const newTracks: ModelItemsType<Track> = {};
     for (const track of allTracks.value) {
       if (track.track_artists.some((ta) => `${ta.artist_id}` === `${oldID}`)) {
@@ -142,7 +142,7 @@ export const useTracksStore = defineStore("tracks", () => {
     setItems(newTracks);
   }
 
-  function removeGenreOccurence(oldID: number): void {
+  function removeGenreOccurrence(oldID: number): void {
     const newTracks: ModelItemsType<Track> = {};
     for (const track of allTracks.value) {
       const i = track.genre_ids.findIndex((gId) => `${gId}` === `${oldID}`);
@@ -154,7 +154,7 @@ export const useTracksStore = defineStore("tracks", () => {
     setItems(newTracks);
   }
 
-  function updateGenreOccurence(newID: number, oldID: number): void {
+  function updateGenreOccurrence(newID: number, oldID: number): void {
     const newTracks: ModelItemsType<Track> = {};
     for (const track of allTracks.value) {
       const i = track.genre_ids.findIndex((gId) => `${gId}` === `${oldID}`);
@@ -205,10 +205,10 @@ export const useTracksStore = defineStore("tracks", () => {
     tracksFilterByAlbum,
     tracksFilterByGenre,
     tracksFilterByArtist,
-    updateAlbumOccurence,
-    removeArtistOccurence,
-    updateArtistOccurence,
-    removeGenreOccurence,
-    updateGenreOccurence,
+    updateAlbumOccurrence,
+    removeArtistOccurrence,
+    updateArtistOccurrence,
+    removeGenreOccurrence,
+    updateGenreOccurrence,
   };
 });

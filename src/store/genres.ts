@@ -68,7 +68,7 @@ export const useGenresStore = defineStore("genres", () => {
     authStore,
     errorsStore,
     removeItem,
-    (id) => tracksStore.removeGenreOccurence(id),
+    (id) => tracksStore.removeGenreOccurrence(id),
   );
   const destroyEmpty = baseDestroyEmpty(
     api.genres,
@@ -82,7 +82,7 @@ export const useGenresStore = defineStore("genres", () => {
     authStore,
     errorsStore,
     removeItem,
-    (newId, oldId) => tracksStore.updateGenreOccurence(newId, oldId),
+    (newId, oldId) => tracksStore.updateGenreOccurrence(newId, oldId),
   );
 
   return {

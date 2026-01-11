@@ -15,9 +15,9 @@ export function useSearch(saveSearch = true): { search: Ref<string> } {
     search.value = startingRouteSearch;
   });
 
-  watch(search, () => {
+  watch(search, async () => {
     if (saveSearch && getRouteSearch() !== search.value) {
-      router.replace({
+      await router.replace({
         query: {
           ...route.query,
           search: search.value,

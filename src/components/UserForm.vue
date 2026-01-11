@@ -89,29 +89,12 @@ const newUser = ref({
   permission: "" as UserPermission,
 });
 
-watch(
-  () => props.user,
-  () => {
-    if (props.user && !isDirty.value) {
-      fillValues();
-    }
-  },
-);
-
 onMounted(() => {
   if (props.user) {
-    fillValues();
+    newUser.value.name = props.user.name;
+    newUser.value.permission = props.user.permission;
   }
 });
-
-function fillValues(): void {
-  if (!props.user) {
-    return;
-  }
-
-  newUser.value.name = props.user.name;
-  newUser.value.permission = props.user.permission;
-}
 
 const userForm = useTemplateRef("userForm");
 

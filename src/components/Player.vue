@@ -228,53 +228,50 @@ const audioIcon = computed(() => {
   return "mdi-volume-high";
 });
 
-watch(
-  () => currentTrackURL,
-  async () => {
-    tries.value = 0;
-    if (!currentTrackURL.value || !audio.value) {
-      return;
-    }
+watch(currentTrackURL, async () => {
+  tries.value = 0;
+  if (!currentTrackURL.value || !audio.value) {
+    return;
+  }
 
-    audio.value.src = currentTrackURL.value;
-    if (playing.value) {
-      try {
-        await audio.value.play();
-        if ("mediaSession" in navigator) {
-          const track = currentTrack.value!;
-          const album = albumsStore.albums[track.album_id]!;
-          navigator.mediaSession.metadata = new MediaMetadata({
-            title: track.title,
-            artist: [...track.track_artists]
-              .sort((a1, a2) => a2.order - a1.order)
-              .map((a) => a.name)
-              .join(" / "),
-            album: album.title,
-            artwork: [
-              {
-                src: album.image100 ?? "",
-                sizes: "100x100",
-                type: album.image_type ?? undefined,
-              },
-              {
-                src: album.image250 ?? "",
-                sizes: "250x250",
-                type: album.image_type ?? undefined,
-              },
-              {
-                src: album.image500 ?? "",
-                sizes: "500x500",
-                type: album.image_type ?? undefined,
-              },
-            ],
-          });
-        }
-      } catch (error) {
-        errorsStore.addError(error as ApiError);
+  audio.value.src = currentTrackURL.value;
+  if (playing.value) {
+    try {
+      await audio.value.play();
+      if ("mediaSession" in navigator) {
+        const track = currentTrack.value!;
+        const album = albumsStore.albums[track.album_id]!;
+        navigator.mediaSession.metadata = new MediaMetadata({
+          title: track.title,
+          artist: [...track.track_artists]
+            .sort((a1, a2) => a2.order - a1.order)
+            .map((a) => a.name)
+            .join(" / "),
+          album: album.title,
+          artwork: [
+            {
+              src: album.image100 ?? "",
+              sizes: "100x100",
+              type: album.image_type ?? undefined,
+            },
+            {
+              src: album.image250 ?? "",
+              sizes: "250x250",
+              type: album.image_type ?? undefined,
+            },
+            {
+              src: album.image500 ?? "",
+              sizes: "500x500",
+              type: album.image_type ?? undefined,
+            },
+          ],
+        });
       }
+    } catch (error) {
+      errorsStore.addError(error as ApiError);
     }
-  },
-);
+  }
+});
 
 watch(volume, () => (audio.value!.volume = volume.value / 100));
 watch(muted, () => (audio.value!.muted = muted.value));

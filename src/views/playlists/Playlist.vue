@@ -43,7 +43,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, watch } from "vue";
+import { computed, onMounted } from "vue";
 import { useHead } from "@unhead/vue";
 import { storeToRefs } from "pinia";
 import AlbumsRow from "@/components/AlbumsRow.vue";
@@ -91,9 +91,5 @@ const artists = computed<(Artist & { loaded: Date })[]>(() => {
 
 const { users } = storeToRefs(useUsersStore());
 
-watch(
-  () => props.id,
-  async () => await playlistsStore.read(Number(props.id)),
-  { immediate: true },
-);
+onMounted(async () => await playlistsStore.read(Number(props.id)));
 </script>

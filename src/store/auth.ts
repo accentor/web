@@ -71,9 +71,9 @@ export const useAuthStore = defineStore("auth", () => {
     () => isAdmin.value || currentUser.value?.permission === "moderator",
   );
 
-  watch(loggedIn, () => {
+  watch(loggedIn, async () => {
     if (!loggedIn.value) {
-      router.push({ name: "login" });
+      await router.push({ name: "login" });
     }
   });
 

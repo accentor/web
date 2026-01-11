@@ -221,7 +221,7 @@ function removeItem(index: number): void {
 }
 
 async function submit(): Promise<void> {
-  let pendingResult = null;
+  let pendingResult;
   if (props.playlist) {
     const toSubmit: Omit<typeof newPlaylist.value, "item_ids"> & {
       item_ids?: number[];
