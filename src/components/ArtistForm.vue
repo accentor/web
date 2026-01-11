@@ -82,9 +82,9 @@ async function submit(): Promise<void> {
   const transformed: ArtistParams["artist"] = {
     name: newArtist.value.name,
     image: newArtist.value.image ?? undefined,
-    review_comment:
-      (clearReviewComment.value ? null : newArtist.value.review_comment) ??
-      undefined,
+    review_comment: clearReviewComment.value
+      ? null
+      : newArtist.value.review_comment,
   };
   let pendingResult;
   if (props.artist) {

@@ -494,8 +494,7 @@ async function saveTracks(): Promise<void> {
       number: t.number,
       title: t.title,
       album_id: t.album_id,
-      review_comment:
-        (clearReviewComments.value ? null : t.review_comment) ?? undefined,
+      review_comment: clearReviewComments.value ? null : t.review_comment,
       genre_ids: [...t.genre_ids],
       track_artists: [...t.track_artists] as TrackArtistParams[],
     };
