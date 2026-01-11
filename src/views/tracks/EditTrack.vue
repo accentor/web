@@ -273,10 +273,9 @@ async function submit(): Promise<void> {
     number: newTrack.value.number!,
     title: newTrack.value.title!,
     album_id: newTrack.value.album_id!,
-    review_comment:
-      (clear_review_comment.value
-        ? undefined
-        : newTrack.value.review_comment) ?? undefined,
+    review_comment: clear_review_comment.value
+      ? null
+      : newTrack.value.review_comment,
     genre_ids: [],
     track_artists: [],
   };

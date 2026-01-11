@@ -407,17 +407,14 @@ async function submit(): Promise<void> {
   const transformed: AlbumParams["album"] = {
     title: newAlbum.value.title,
     release: newAlbum.value.release,
-    edition:
-      (editionInformation.value ? newAlbum.value.edition : undefined) ??
-      undefined,
-    edition_description:
-      (editionInformation.value
-        ? newAlbum.value.edition_description
-        : undefined) ?? undefined,
+    edition: editionInformation.value ? newAlbum.value.edition : null,
+    edition_description: editionInformation.value
+      ? newAlbum.value.edition_description
+      : null,
     image: newAlbum.value.image ?? undefined,
     review_comment: clearReviewComment.value
-      ? undefined
-      : (newAlbum.value.review_comment ?? undefined),
+      ? null
+      : newAlbum.value.review_comment,
     album_artists: [] as AlbumArtistParams[],
     album_labels: [] as AlbumLabel[],
   };
