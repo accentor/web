@@ -37,53 +37,36 @@
   </VForm>
 </template>
 
-<script>
-import { useCoverFilenamesStore } from "../store/cover_filenames";
-import { mapActions } from "pinia";
+<script setup lang="ts">
+import { useCoverFilenamesStore } from "@/store/cover_filenames";
+import type { CoverFilename } from "@accentor/api-client-js";
+import { onMounted, ref, useTemplateRef } from "vue";
+import i18n from "@/i18n";
 
-export default {
-  name: "CoverFilenameForm",
-  props: { coverFilename: { default: null, type: Object } },
-  data() {
-    return {
-      newCoverFilename: {
-        filename: "",
-      },
-      isValid: true,
-    };
-  },
-  watch: {
-    album: function () {
-      if (this.coverFilename) {
-        this.fillValues();
-      }
-    },
-  },
-  created() {
-    this.$nextTick(() => {
-      if (this.coverFilename) {
-        this.fillValues();
-      }
-    });
-  },
-  methods: {
-    fillValues() {
-      this.newCoverFilename.filename = this.coverFilename.filename;
-    },
-    ...mapActions(useCoverFilenamesStore, ["destroy", "create"]),
-    async saveCoverFilename() {
-      if (this.$refs.form.validate()) {
-        const id = await this.create(this.newCoverFilename);
-        if (id) {
-          this.newCoverFilename.filename = "";
-        }
-      }
-    },
-    deleteCoverFilename() {
-      if (confirm(this.$t("common.are-you-sure"))) {
-        this.destroy(this.coverFilename.id);
-      }
-    },
-  },
-};
+const coverFilenamesStore = useCoverFilenamesStore();
+const props = defineProps<{ coverFilename?: CoverFilename }>();
+const newCoverFilename = ref({ filename: "" });
+const isValid = ref(true);
+
+onMounted(() => {
+  if (props.coverFilename) {
+    newCoverFilename.value.filename = props.coverFilename.filename;
+  }
+});
+
+const form = useTemplateRef("form");
+async function saveCoverFilename(): Promise<void> {
+  if ((await form.value!.validate()).valid) {
+    const id = await coverFilenamesStore.create(newCoverFilename.value);
+    if (id) {
+      newCoverFilename.value.filename = "";
+    }
+  }
+}
+
+async function deleteCoverFilename(): Promise<void> {
+  if (confirm(i18n.global.t("common.are-you-sure"))) {
+    await coverFilenamesStore.destroy(props.coverFilename!.id);
+  }
+}
 </script>

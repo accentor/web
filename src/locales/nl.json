@@ -85,6 +85,9 @@
 			"ffmepg-blank": "Vul de FFmpeg parameters in.",
 			"result-blank": "Vul een uiteindelijke codec in."
 		},
+        "cover_filename": {
+            "filename-blank": "Vul een cover bestandsnaam in."
+        },
 		"current_password": "Huidig wachtwoord",
 		"error": "Error",
 		"exception": "Uitzondering",
@@ -152,6 +155,7 @@
 		"tracks": {
 			"not-found": "Dit nummer kon niet gevonden worden.",
 			"number-blank": "Vul een tracknummer in.",
+            "number-whole": "Vul een geheel getal in.",
 			"title-blank": "Vul een titel voor het nummer in."
 		},
 		"traces": "Sporen",

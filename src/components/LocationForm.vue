@@ -37,70 +37,57 @@
   </VForm>
 </template>
 
-<script>
-import { mapActions, mapState } from "pinia";
-import { useLocationsStore } from "../store/locations";
+<script setup lang="ts">
+import { useLocationsStore } from "@/store/locations";
+import { computed, onMounted, ref, useTemplateRef } from "vue";
+import type { Location } from "@accentor/api-client-js";
+import i18n from "@/i18n";
 
-export default {
-  name: "LocationForm",
-  props: { location: { default: null, type: Object } },
-  data() {
-    return {
-      newLocation: {
-        path: "",
-      },
-      isValid: true,
-    };
-  },
-  computed: {
-    ...mapState(useLocationsStore, { locations: "allLocations" }),
-    rules() {
-      const rules = {
-        path: [(v) => !!v || this.$t("errors.location.path-blank")],
-      };
-      if (this.location === null) {
-        const pathTaken = (v) => {
-          const double = this.locations.some((l) => l.path === v);
-          return !double || this.$t("errors.location.path-taken");
-        };
-        rules.path.push(pathTaken);
-      }
+const locationsStore = useLocationsStore();
 
-      return rules;
-    },
-  },
-  watch: {
-    album: function () {
-      if (this.location) {
-        this.fillValues();
-      }
-    },
-  },
-  created() {
-    this.$nextTick(() => {
-      if (this.location) {
-        this.fillValues();
-      }
+const props = defineProps<{ location?: Location }>();
+const newLocation = ref({ path: "" });
+const isValid = ref(true);
+const rules = computed(() => {
+  const result = {
+    path: [
+      (v: string): true | string =>
+        !!v || i18n.global.t("errors.location.path-blank"),
+    ] as ((v: string) => true | string)[],
+  };
+  if (!props.location) {
+    result.path.push((v: string): true | string => {
+      const double = locationsStore.allLocations.some((l) => l.path === v);
+      return !double || i18n.global.t("errors.location.path-taken");
     });
-  },
-  methods: {
-    fillValues() {
-      this.newLocation.path = this.location.path;
-    },
-    ...mapActions(useLocationsStore, ["destroy", "create"]),
-    async saveLocation() {
-      if (this.$refs.form.validate()) {
-        const id = await this.create(this.newLocation);
-        if (id) {
-          this.newLocation.path = "";
-        }
-      }
-    },
-    deleteLocation() {
-      if (confirm(this.$t("common.are-you-sure"))) {
-        this.destroy(this.location.id);
-      }
-    },
-  },
-};
+  }
+  return result;
+});
+
+onMounted(fillValues);
+function fillValues(): void {
+  if (props.location) {
+    newLocation.value.path = props.location.path;
+  }
+}
+
+async function deleteLocation(): Promise<void> {
+  if (!props.location) {
+    return;
+  }
+
+  if (confirm(i18n.global.t("common.are-you-sure"))) {
+    await locationsStore.destroy(props.location.id);
+  }
+}
+
+const form = useTemplateRef("form");
+async function saveLocation(): Promise<void> {
+  if ((await form.value!.validate()).valid) {
+    const id = await locationsStore.create(newLocation.value);
+    if (id) {
+      newLocation.value.path = "";
+    }
+  }
+}
 </script>

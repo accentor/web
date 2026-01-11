@@ -18,52 +18,47 @@
   </VContainer>
 </template>
 
-<script>
-import { useLabelsStore } from "../../store/labels";
-import { mapActions, mapState } from "pinia";
+<script setup lang="ts">
+import { computed, onMounted, ref } from "vue";
+import { useRoute, useRouter } from "vue-router";
+import { useHead } from "@unhead/vue";
+import { useLabelsStore } from "@/store/labels";
+import i18n from "@/i18n";
 
-export default {
-  name: "EditLabel",
-  data() {
-    return {
-      newLabel: {
-        name: "",
-      },
-      isDirty: false,
-      isValid: true,
-    };
-  },
-  head() {
-    return { title: this.$t("page-titles.edit", { obj: this.label.name }) };
-  },
-  computed: {
-    ...mapState(useLabelsStore, ["labels"]),
-    label: function () {
-      return this.labels[this.$route.params.id];
-    },
-  },
-  watch: {
-    label: function () {
-      if (this.label && !this.isDirty) {
-        this.fillValues();
-      }
-    },
-  },
-  async created() {
-    await this.read(this.$route.params.id);
-    this.fillValues();
-  },
-  methods: {
-    ...mapActions(useLabelsStore, ["read", "update"]),
-    fillValues() {
-      this.newLabel.name = this.label.name;
-    },
-    async submit() {
-      const succeeded = await this.update(this.label.id, this.newLabel);
-      if (succeeded) {
-        this.$router.push(this.$route.query.redirect || { name: "labels" });
-      }
-    },
-  },
-};
+const route = useRoute();
+const router = useRouter();
+const labelsStore = useLabelsStore();
+
+const newLabel = ref({ name: "" });
+const isDirty = ref(false);
+const isValid = ref(true);
+
+const props = defineProps<{ id: string }>();
+
+const label = computed(() => labelsStore.labels[props.id]);
+const title = computed(() =>
+  i18n.global.t("page-titles.edit", { obj: label.value?.name ?? "" }),
+);
+useHead({ title });
+
+function fillValues(): void {
+  newLabel.value.name = label.value?.name ?? "";
+}
+
+onMounted(async () => {
+  await labelsStore.read(parseInt(props.id));
+  fillValues();
+});
+
+async function submit(): Promise<void> {
+  if (!label.value) {
+    return;
+  }
+  const succeeded = await labelsStore.update(label.value.id, newLabel.value);
+  if (succeeded) {
+    await router.push(
+      (route.query.redirect as string | undefined) ?? { name: "labels" },
+    );
+  }
+}
 </script>

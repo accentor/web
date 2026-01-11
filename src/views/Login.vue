@@ -39,42 +39,38 @@
   </VMain>
 </template>
 
-<script>
-import Errors from "../components/Errors.vue";
-import { mapActions } from "pinia";
-import { useErrorsStore } from "../store/errors";
-import { useAuthStore } from "../store/auth";
+<script setup lang="ts">
+import { ref } from "vue";
+import { useRoute, useRouter } from "vue-router";
+import { useHead } from "@unhead/vue";
+import Errors from "@/components/Errors.vue";
+import { useErrorsStore } from "@/store/errors";
+import { useAuthStore } from "@/store/auth";
+import i18n from "@/i18n";
 
-export default {
-  name: "Login",
-  components: { Errors },
-  data: function () {
-    return {
-      name: "",
-      password: "",
-      error: {},
-    };
-  },
-  head() {
-    return { title: this.$t("common.login") };
-  },
-  methods: {
-    ...mapActions(useAuthStore, ["login"]),
-    ...mapActions(useErrorsStore, ["clearErrors"]),
-    async submit() {
-      this.clearErrors();
-      const succeeded = await this.login({
-        name: this.name,
-        password: this.password,
-      });
-      if (succeeded) {
-        this.redirect();
-      }
-    },
-    redirect: function () {
-      const path = this.$route.query.redirect || "/app/";
-      this.$router.push({ path });
-    },
-  },
-};
+const route = useRoute();
+const router = useRouter();
+const authStore = useAuthStore();
+const errorsStore = useErrorsStore();
+
+const name = ref("");
+const password = ref("");
+
+useHead({ title: i18n.global.t("common.login") });
+
+function redirect(): void {
+  const path = (route.query.redirect || "/app/") as string;
+  router.push({ path });
+}
+
+async function submit(): Promise<void> {
+  errorsStore.clearErrors();
+  const succeeded = await authStore.login({
+    name: name.value,
+    password: password.value,
+  });
+  if (succeeded) {
+    redirect();
+  }
+}
 </script>

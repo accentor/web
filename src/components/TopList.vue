@@ -17,31 +17,37 @@
             :style="{ width: `${animatedWidths[index]}%` }"
           >
             <span
-              v-if="widths[index] > 10 && showLength"
+              v-if="widths[index]! > 10 && showLength"
               class="top-item__count font-weight-medium text-white"
             >
-              {{ $filters.length(item.count) }}
+              {{ formatLength(item.count) }}
             </span>
             <span
-              v-else-if="widths[index] > 10"
+              v-else-if="widths[index]! > 10"
               class="top-item__count font-weight-medium text-white"
             >
-              {{ item.count }}
+              {{
+                Number.isInteger(item.count)
+                  ? item.count
+                  : item.count.toFixed(2)
+              }}
             </span>
           </div>
           <span
-            v-if="widths[index] <= 10 && showLength"
+            v-if="widths[index]! <= 10 && showLength"
             class="top-item__count top-item__count--backup font-weight-medium text-primary"
             :style="{ 'margin-left': `${animatedWidths[index]}%` }"
           >
-            {{ $filters.length(item.count) }}
+            {{ formatLength(item.count) }}
           </span>
           <span
-            v-else-if="widths[index] <= 10"
+            v-else-if="widths[index]! <= 10"
             class="top-item__count top-item__count--backup font-weight-medium text-primary"
             :style="{ 'margin-left': `${animatedWidths[index]}%` }"
           >
-            {{ item.count }}
+            {{
+              Number.isInteger(item.count) ? item.count : item.count.toFixed(2)
+            }}
           </span>
         </div>
       </div>
@@ -49,38 +55,22 @@
   </ol>
 </template>
 
-<script>
-export default {
-  name: "TopList",
-  props: {
-    listData: {
-      type: Array,
-      required: true,
-    },
-    showLength: {
-      type: Boolean,
-      default: false,
-    },
-  },
-  data() {
-    return {
-      animatedWidths: Array(10).fill(0),
-    };
-  },
-  computed: {
-    widths() {
-      const max = this.listData[0]?.count;
-      return this.listData.map((i) => (i.count * 100.0) / max);
-    },
-  },
-  watch: {
-    widths() {
-      setTimeout(() => {
-        this.animatedWidths = this.widths;
-      }, 0);
-    },
-  },
-};
+<script setup lang="ts">
+import { computed, ref, watch } from "vue";
+import { formatLength } from "@/util";
+
+interface Props {
+  listData: { label: string; count: number; image?: string }[];
+  showLength?: boolean;
+}
+
+const props = withDefaults(defineProps<Props>(), { showLength: false });
+const animatedWidths = ref(Array(10).fill(0));
+const widths = computed(() => {
+  const max = props.listData[0]?.count ?? 1;
+  return props.listData.map((i) => (i.count * 100.0) / max);
+});
+watch(widths, () => setTimeout(() => (animatedWidths.value = widths.value), 0));
 </script>
 
 <style lang="scss" scoped>

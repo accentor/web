@@ -9,29 +9,23 @@
   </div>
 </template>
 
-<script>
-import { mapState } from "pinia";
-import { compareStrings } from "../comparators";
-import { useGenresStore } from "../store/genres";
+<script setup lang="ts">
+import { computed } from "vue";
+import { storeToRefs } from "pinia";
+import { useGenresStore } from "@/store/genres";
+import { compareStrings } from "@/util";
 
-export default {
-  name: "TrackGenres",
-  props: {
-    track: {
-      type: Object,
-      required: true,
-    },
-  },
-  computed: {
-    ...mapState(useGenresStore, ["genres"]),
-    trackGenres() {
-      return this.track.genre_ids
-        .filter((tg) => `${tg}` in this.genres)
-        .map((tg) => this.genres[tg])
-        .sort((g1, g2) => {
-          return compareStrings(g1.normalized_name, g2.normalized_name);
-        });
-    },
-  },
-};
+interface Props {
+  track: { genre_ids: number[] };
+}
+
+const props = defineProps<Props>();
+const { genres } = storeToRefs(useGenresStore());
+
+const trackGenres = computed(() => {
+  return props.track.genre_ids
+    .filter((genreId) => `${genreId}` in genres.value)
+    .map((genreId) => genres.value[`${genreId}`]!)
+    .sort((g1, g2) => compareStrings(g1.normalized_name, g2.normalized_name));
+});
 </script>

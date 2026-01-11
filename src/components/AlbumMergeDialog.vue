@@ -1,7 +1,7 @@
 <template>
   <VDialog v-if="isModerator" v-model="mergeModal" width="600px">
-    <template #activator="{ props }">
-      <VListItem :disabled="disabled" v-bind="props">
+    <template #activator="{ props: dialogProps }">
+      <VListItem :disabled="disabled" v-bind="dialogProps">
         <template #prepend>
           <VIcon color="warning">mdi-merge</VIcon>
         </template>
@@ -12,7 +12,7 @@
     <VCard>
       <VCardTitle>
         <span class="text-h5">
-          {{ $t("music.album.merge-into", { obj: album.name }) }}
+          {{ $t("music.album.merge-into", { obj: album.title }) }}
         </span>
       </VCardTitle>
       <VCardText>
@@ -27,8 +27,8 @@
                 item-value="id"
                 :label="$tc('music.albums', 1)"
               >
-                <template #item="{ item, props }">
-                  <VListItem v-bind="props">
+                <template #item="{ item, props: listItemProps }">
+                  <VListItem v-bind="listItemProps">
                     <template #append>
                       <span class="text-grey pl-2 text-body-2">
                         {{ item.value }}
@@ -52,50 +52,57 @@
   </VDialog>
 </template>
 
-<script>
-import { mapState, mapActions } from "pinia";
-import { useAuthStore } from "../store/auth";
-import { useAlbumsStore } from "../store/albums";
+<script setup lang="ts">
+import { storeToRefs } from "pinia";
+import { useAuthStore } from "@/store/auth";
+import { useAlbumsStore } from "@/store/albums";
+import type { Album } from "@accentor/api-client-js";
+import { computed, ref } from "vue";
+import type { InternalItem } from "vuetify/framework";
 
-export default {
-  name: "AlbumMergeDialog",
-  props: {
-    disabled: {
-      type: Boolean,
-      required: true,
-    },
-    album: {
-      type: Object,
-      required: true,
-    },
-  },
-  data() {
-    return {
-      mergeAlbum: null,
-      mergeModal: false,
-    };
-  },
-  computed: {
-    ...mapState(useAuthStore, ["isModerator"]),
-    ...mapState(useAlbumsStore, ["albumsByTitle"]),
-    sortedAlbums() {
-      return this.albumsByTitle.filter((a) => a.id !== this.album.id);
-    },
-  },
-  methods: {
-    ...mapActions(useAlbumsStore, ["merge"]),
-    filterTitle(item, queryText) {
-      const search = queryText.toLowerCase();
-      return (
-        item.title.toLowerCase().indexOf(search) > -1 ||
-        item.normalized_title.indexOf(search) > -1
-      );
-    },
-    mergeAlbums() {
-      this.merge(this.mergeAlbum.id, this.album.id).finally(
-        () => (this.mergeModal = false),
-      );
-    },
-  },
-};
+const authStore = useAuthStore();
+const albumsStore = useAlbumsStore();
+
+interface Props {
+  disabled: boolean;
+  album: Album;
+}
+
+const props = defineProps<Props>();
+
+const mergeAlbum = ref<Album | null>(null);
+const mergeModal = ref<boolean>(false);
+
+const { isModerator } = storeToRefs(authStore);
+const sortedAlbums = computed<Album[]>(() =>
+  albumsStore.albumsByTitle.filter((a) => a.id !== props.album.id),
+);
+
+function filterTitle(
+  _value: string,
+  queryText: string,
+  item: InternalItem<Album> | undefined,
+): boolean {
+  if (item === undefined) {
+    return false;
+  }
+
+  const search = queryText.toLowerCase();
+  return (
+    item.raw.title.toLowerCase().indexOf(search) > -1 ||
+    item.raw.normalized_title.indexOf(search) > -1
+  );
+}
+
+async function mergeAlbums(): Promise<void> {
+  if (mergeAlbum.value === null) {
+    return;
+  }
+
+  try {
+    await albumsStore.merge(mergeAlbum.value.id, props.album.id);
+  } finally {
+    mergeModal.value = false;
+  }
+}
 </script>

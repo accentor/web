@@ -1,11 +1,11 @@
 <template>
   <VDialog v-model="dialog" fullscreen scrollable>
-    <template #activator="{ props }">
+    <template #activator="{ props: dialogProps }">
       <VBtn
         color="warning"
         class="ma-2"
         :disabled="tracks.length === 0"
-        v-bind="props"
+        v-bind="dialogProps"
       >
         {{
           $tc("music.mass.edit-tracks", tracks.length, { count: tracks.length })
@@ -98,7 +98,7 @@
                     :label="$t('common.amount')"
                     type="number"
                     step="1"
-                    hide-details="true"
+                    :hide-details="true"
                   />
                 </VCol>
               </VRow>
@@ -159,13 +159,14 @@
                     item-value="id"
                     item-title="title"
                     label="Album"
-                    hide-details="true"
+                    :hide-details="true"
                     :rules="rules.album"
+                    return-object
                   >
                     <template #item="{ item }">
                       {{ item.title }}
                       <span class="text-grey pl-2 ml-auto text-body-2">
-                        {{ item.id }}
+                        {{ item.value }}
                       </span>
                     </template>
                   </VAutocomplete>
@@ -233,7 +234,7 @@
               </VRow>
               <TrackFormArtists
                 v-if="changeArtists.enabled"
-                v-model="changeArtists.track_artists"
+                v-model="changeArtists.trackArtists"
               />
               <VBtn
                 v-if="changeArtists.enabled"
@@ -274,306 +275,312 @@
   </VDialog>
 </template>
 
-<script>
-import { mapState, mapActions } from "pinia";
-import { compareTracks } from "../comparators";
+<script setup lang="ts">
+import { storeToRefs } from "pinia";
 import Errors from "./Errors.vue";
 import TrackFormArtists from "./TrackFormArtists.vue";
-import { useGenresStore } from "../store/genres";
-import { useArtistsStore } from "../store/artists";
-import { useAlbumsStore } from "../store/albums";
-import { useTracksStore } from "../store/tracks";
+import { useGenresStore } from "@/store/genres";
+import { useArtistsStore } from "@/store/artists";
+import { useAlbumsStore } from "@/store/albums";
+import { useTracksStore } from "@/store/tracks";
+import type {
+  Album,
+  Artist,
+  Genre,
+  Track,
+  TrackArtistParams,
+  TrackArtistRole,
+} from "@accentor/api-client-js";
+import { computed, ref, useTemplateRef } from "vue";
+import i18n from "@/i18n";
+import type { InternalItem } from "vuetify/framework";
+import { compareTracks } from "@/util";
 
-export default {
-  name: "MassEditDialog",
-  components: { Errors, TrackFormArtists },
-  props: {
-    tracks: { default: () => [], type: Array },
-  },
-  emits: ["close"],
-  data() {
-    return {
-      dialog: false,
-      titleReplacement: {
-        enabled: false,
-        search: "",
-        replace: "",
-        regex: false,
-      },
-      changeArtists: {
-        enabled: false,
-        replace: false,
-        track_artists: [
-          {
-            artist_id: null,
-            name: "",
-            role: "main",
-          },
-        ],
-      },
-      changeGenres: {
-        enabled: false,
-        replace: false,
-        genres: [],
-      },
-      album: {
-        enabled: false,
-        album: null,
-      },
-      number: {
-        enabled: false,
-        amount: 0,
-      },
-      clearReviewComments: false,
-      showReviewComments: false,
-      saving: false,
-      isValid: true,
-    };
-  },
-  computed: {
-    ...mapState(useAlbumsStore, {
-      albums: "albums",
-      sortedAlbums: "albumsByTitle",
-    }),
-    ...mapState(useArtistsStore, ["artists"]),
-    ...mapState(useGenresStore, {
-      genres: "genres",
-      sortedGenres: "genresByName",
-    }),
-    sortedTracks() {
-      return [...this.tracks].sort(compareTracks(this.albums));
+const albumsStore = useAlbumsStore();
+const artistsStore = useArtistsStore();
+const genresStore = useGenresStore();
+const tracksStore = useTracksStore();
+
+const props = withDefaults(defineProps<{ tracks?: Track[] }>(), {
+  tracks: () => [],
+});
+const emit = defineEmits<{ close: [] }>();
+
+const dialog = ref(false);
+const titleReplacement = ref({
+  enabled: false,
+  search: "",
+  replace: "",
+  regex: false,
+});
+const changeArtists = ref({
+  enabled: false,
+  replace: false,
+  trackArtists: [
+    {
+      artist_id: null as Artist | string | null,
+      name: "",
+      role: "main" as TrackArtistRole,
+      hidden: false,
     },
-    tracksWithReviewComments() {
-      return this.sortedTracks.filter((t) => t.review_comment !== null);
-    },
-    rules: function () {
-      const rules = {
-        genre: [],
-        artist: [],
-        album: [],
-      };
+  ],
+});
+const changeGenres = ref({
+  enabled: false,
+  replace: false,
+  genres: [] as (Genre | string)[],
+});
+const album = ref({ enabled: false, album: null as Album | null });
+const number = ref({ enabled: false, amount: 0 });
+const clearReviewComments = ref(false);
+const showReviewComments = ref(false);
+const saving = ref(false);
+const isValid = ref(true);
 
-      const genreValidation = (v) => {
-        let valid = true;
-        v.forEach((newGenre) => {
-          if (typeof newGenre !== "object") {
-            const double = this.sortedGenres.some(
-              (g) =>
-                g.name === newGenre ||
-                g.normalized_name === newGenre.toLowerCase(),
-            );
-            if (double) {
-              valid = this.$t("errors.genre.name-taken-obj", { obj: newGenre });
-            } else if (!newGenre.trim().length) {
-              valid = this.$t("errors.genre.name-blank");
-            }
-          }
-        });
-        return valid; // We only return the last error, since we can only display one
-      };
-      if (this.changeGenres.enabled) {
-        rules.genre.push(genreValidation);
-      }
+const { albums, albumsByTitle: sortedAlbums } = storeToRefs(albumsStore);
+const { genresByName: sortedGenres } = storeToRefs(genresStore);
 
-      if (this.album.enabled) {
-        const albumValidation = (v) =>
-          !!v || this.$t("errors.albums.album-blank");
-        rules.album.push(albumValidation);
-      }
+const sortedTracks = computed(() =>
+  [...props.tracks].sort(compareTracks(albums.value)),
+);
+const tracksWithReviewComments = computed(() =>
+  sortedTracks.value.filter((t) => t.review_comment !== null),
+);
 
-      return rules;
-    },
-  },
-  methods: {
-    ...mapActions(useTracksStore, ["update"]),
-    ...mapActions(useArtistsStore, { createArtist: "create" }),
-    ...mapActions(useGenresStore, { createGenre: "create" }),
-    filterName(item, queryText) {
-      const search = queryText.toLowerCase();
-      return (
-        item.name.toLowerCase().indexOf(search) > -1 ||
-        item.normalized_name.indexOf(search) > -1
-      );
-    },
-    filterTitle(item, queryText) {
-      const search = queryText.toLowerCase();
-      return (
-        item.title.toLowerCase().indexOf(search) > -1 ||
-        item.normalized_title.indexOf(search) > -1
-      );
-    },
-    async saveTracks() {
-      this.$refs.form.validate();
-      if (!this.isValid) {
-        return false;
-      }
+const rules = computed(() => {
+  const result = {
+    genre: [] as ((v: (Genre | string)[]) => true | string)[],
+    album: [] as ((v: Album | undefined) => true | string)[],
+  };
 
-      this.saving = true;
-      const transformedArtists = [];
-      const transformedGenres = [];
-      const pendingResults = [];
-
-      if (this.changeArtists.enabled) {
-        const mappedArtists = this.changeArtists.track_artists.map(
-          async (ta, index) => {
-            if (typeof ta.artist_id === "string") {
-              const id = await this.createArtist({
-                name: ta.artist_id,
-                review_comment: "New artist",
-              });
-              if (id) {
-                transformedArtists.push({
-                  artist_id: id,
-                  name: ta.name || ta.artist_id,
-                  role: ta.role,
-                  hidden: ta.hidden,
-                  order: index + 1,
-                });
-              } else {
-                throw false;
-              }
-            } else {
-              transformedArtists.push({
-                artist_id: ta.artist_id.id,
-                name: ta.name || ta.artist_id.name,
-                role: ta.role,
-                hidden: ta.hidden,
-                order: index + 1,
-              });
-            }
-          },
+  const genreValidation = (v: (string | Genre)[]): true | string => {
+    let valid: true | string = true;
+    v.forEach((newGenre) => {
+      if (typeof newGenre === "string") {
+        const double = genresStore.genresByName.some(
+          (g) =>
+            g.name === newGenre || g.normalized_name === newGenre.toLowerCase(),
         );
-        pendingResults.push(...mappedArtists);
+        if (double) {
+          valid = i18n.global.t("errors.genre.name-taken-obj", {
+            obj: newGenre,
+          });
+        } else if (!newGenre.trim().length) {
+          valid = i18n.global.t("errors.genre.name-blank");
+        }
       }
+    });
+    // We only return the last error, since we can only display one
+    return valid;
+  };
+  if (changeGenres.value.enabled) {
+    result.genre.push(genreValidation);
+  }
+  if (album.value.enabled) {
+    result.album.push(
+      (v: Album | undefined): true | string =>
+        !!v || i18n.global.t("errors.albums.album-blank"),
+    );
+  }
 
-      if (this.changeGenres.enabled) {
-        const mappedGenres = this.changeGenres.genres.map(async (genre_id) => {
-          if (typeof genre_id === "string") {
-            const id = await this.createGenre({ name: genre_id });
-            if (id) {
-              transformedGenres.push(id);
-            } else {
-              throw false;
-            }
+  return result;
+});
+
+function filterName(
+  _value: string,
+  queryText: string,
+  item?: InternalItem<{ name: string; normalized_name: string }>,
+): boolean {
+  if (!item) {
+    return false;
+  }
+
+  const search = queryText.toLowerCase();
+  return (
+    item.raw.name.toLowerCase().indexOf(search) >= 0 ||
+    item.raw.normalized_name.indexOf(search) >= 0
+  );
+}
+
+function filterTitle(
+  _value: string,
+  queryText: string,
+  item?: InternalItem<{ title: string; normalized_title: string }>,
+): boolean {
+  if (!item) {
+    return false;
+  }
+
+  const search = queryText.toLowerCase();
+  return (
+    item.raw.title.toLowerCase().indexOf(search) >= 0 ||
+    item.raw.normalized_title.indexOf(search) >= 0
+  );
+}
+
+const form = useTemplateRef("form");
+
+async function saveTracks(): Promise<void> {
+  await form.value!.validate();
+  if (!isValid.value) {
+    return;
+  }
+
+  saving.value = true;
+  const transformedArtists = [] as TrackArtistParams[];
+  const transformedGenres = [] as number[];
+  const pendingResults = [];
+
+  if (changeArtists.value.enabled) {
+    pendingResults.push(
+      ...changeArtists.value.trackArtists.map(async (ta, index) => {
+        if (typeof ta.artist_id === "string") {
+          const id = await artistsStore.create({
+            name: ta.artist_id,
+            review_comment: "New artist",
+          });
+          if (id) {
+            transformedArtists.push({
+              artist_id: id,
+              name: ta.name || ta.artist_id,
+              role: ta.role,
+              hidden: ta.hidden,
+              order: index + 1,
+            });
           } else {
-            transformedGenres.push(genre_id.id);
+            throw new Error("Failed to create new artist");
+          }
+        } else if (ta.artist_id) {
+          transformedArtists.push({
+            artist_id: ta.artist_id.id,
+            name: ta.name || ta.artist_id.name,
+            role: ta.role,
+            hidden: ta.hidden,
+            order: index + 1,
+          });
+        }
+      }),
+    );
+  }
+
+  if (changeGenres.value.enabled) {
+    pendingResults.push(
+      ...changeGenres.value.genres.map(async (genreId) => {
+        if (typeof genreId === "string") {
+          const id = await genresStore.create({ name: genreId });
+          if (id) {
+            transformedGenres.push(id);
+          } else {
+            throw new Error("Failed to create new genre");
+          }
+        } else {
+          transformedGenres.push(genreId.id);
+        }
+      }),
+    );
+  }
+
+  await Promise.all(pendingResults);
+
+  const mappedTracks = props.tracks.map(async (t) => {
+    const transformed = {
+      number: t.number,
+      title: t.title,
+      album_id: t.album_id,
+      review_comment:
+        (clearReviewComments.value ? null : t.review_comment) ?? undefined,
+      genre_ids: [...t.genre_ids],
+      track_artists: [...t.track_artists] as TrackArtistParams[],
+    };
+
+    if (number.value.enabled) {
+      transformed.number += number.value.amount;
+    }
+
+    if (titleReplacement.value.enabled) {
+      if (titleReplacement.value.regex) {
+        transformed.title = transformed.title.replace(
+          new RegExp(titleReplacement.value.search),
+          titleReplacement.value.replace,
+        );
+      } else {
+        transformed.title = transformed.title.replace(
+          titleReplacement.value.search,
+          titleReplacement.value.replace,
+        );
+      }
+    }
+
+    if (changeArtists.value.enabled) {
+      if (changeArtists.value.replace) {
+        transformed.track_artists = transformedArtists;
+      } else {
+        transformedArtists.forEach((a) => {
+          const index = transformed.track_artists.findIndex(
+            (ta) =>
+              ta.name === a.name &&
+              ta.role === a.role &&
+              ta.artist_id === a.artist_id,
+          );
+          if (index === -1) {
+            a.order += t.track_artists.length;
+            transformed.track_artists.push(a);
+          } else {
+            transformed.track_artists[index]!.hidden = a.hidden;
           }
         });
-        pendingResults.push(...mappedGenres);
       }
+    }
 
-      await Promise.all(pendingResults);
-      const mappedTracks = this.tracks.map(async (t) => {
-        const transformed = {
-          number: t.number,
-          title: t.title,
-          album_id: t.album_id,
-          review_comment: this.clearReviewComments ? null : t.review_comment,
-          genre_ids: [...t.genre_ids],
-          track_artists: [...t.track_artists],
-        };
-
-        if (this.number.enabled) {
-          transformed.number += parseInt(this.number.amount);
-        }
-
-        if (this.titleReplacement.enabled) {
-          if (this.titleReplacement.regex) {
-            transformed.title = transformed.title.replace(
-              new RegExp(this.titleReplacement.search),
-              this.titleReplacement.replace,
-            );
-          } else {
-            transformed.title = transformed.title.replace(
-              this.titleReplacement.search,
-              this.titleReplacement.replace,
-            );
+    if (changeGenres.value.enabled) {
+      if (changeGenres.value.replace) {
+        transformed.genre_ids = transformedGenres;
+      } else {
+        transformedGenres.forEach((g) => {
+          if (!transformed.genre_ids.includes(g)) {
+            transformed.genre_ids.push(g);
           }
-        }
+        });
+      }
+    }
 
-        if (this.changeArtists.enabled) {
-          if (this.changeArtists.replace) {
-            transformed.track_artists = transformedArtists;
-          } else {
-            transformedArtists.forEach((a) => {
-              const index = transformed.track_artists.findIndex(
-                (ta) =>
-                  ta.name === a.name &&
-                  ta.role === a.role &&
-                  ta.artist_id === a.artist_id,
-              );
-              if (index === -1) {
-                a.order += t.track_artists.length;
-                transformed.track_artists.push(a);
-              } else {
-                transformed.track_artists[index].hidden = a.hidden;
-              }
-            });
-          }
-        }
+    if (album.value.enabled) {
+      transformed.album_id = album.value.album!.id;
+    }
 
-        if (this.changeGenres.enabled) {
-          if (this.changeGenres.replace) {
-            transformed.genre_ids = transformedGenres;
-          } else {
-            transformedGenres.forEach((g) => {
-              if (!transformed.genre_ids.includes(g)) {
-                transformed.genre_ids.push(g);
-              }
-            });
-          }
-        }
+    await tracksStore.update(t.id, transformed);
+  });
 
-        if (this.album.enabled) {
-          transformed.album_id = this.album.album;
-        }
+  await Promise.all(mappedTracks);
+  dialog.value = false;
+  resetState();
+  saving.value = false;
+  emit("close");
+}
 
-        await this.update(t.id, transformed);
-      });
-      await Promise.all(mappedTracks);
-      this.dialog = false;
-      this.resetState();
-      this.saving = false;
-      this.$emit("close");
-    },
-    addArtist() {
-      this.changeArtists.track_artists.push({
-        artist_id: null,
-        name: "",
-        role: "main",
-        hidden: false,
-      });
-    },
-    resetState() {
-      this.titleReplacement = {
-        enabled: false,
-        search: "",
-        replace: "",
-        regex: false,
-      };
-      this.changeArtists = {
-        enabled: false,
-        replace: false,
-        track_artists: [],
-      };
-      this.changeGenres = {
-        enabled: false,
-        replace: false,
-        genres: [],
-      };
-      this.album = {
-        enabled: false,
-        album: null,
-      };
-      this.number = {
-        enabled: false,
-        amount: 0,
-      };
-      this.clearReviewComments = false;
-      this.showReviewComments = false;
-    },
-  },
-};
+function addArtist(): void {
+  changeArtists.value.trackArtists.push({
+    artist_id: null,
+    name: "",
+    role: "main" as TrackArtistRole,
+    hidden: false,
+  });
+}
+
+function resetState(): void {
+  titleReplacement.value = {
+    enabled: false,
+    search: "",
+    replace: "",
+    regex: false,
+  };
+  changeArtists.value = { enabled: false, replace: false, trackArtists: [] };
+  changeGenres.value = { enabled: false, replace: false, genres: [] };
+  album.value = { enabled: false, album: null };
+  number.value = { enabled: false, amount: 0 };
+  clearReviewComments.value = false;
+  showReviewComments.value = false;
+}
 </script>
 
 <style lang="scss" scoped>
