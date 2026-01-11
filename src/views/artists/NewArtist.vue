@@ -4,14 +4,10 @@
   </VContainer>
 </template>
 
-<script>
-import ArtistForm from "../../components/ArtistForm.vue";
+<script setup lang="ts">
+import { useHead } from "@unhead/vue";
+import i18n from "@/i18n";
+import ArtistForm from "@/components/ArtistForm.vue";
 
-export default {
-  name: "NewArtist",
-  components: { ArtistForm },
-  head() {
-    return { title: this.$t("music.artist.new") };
-  },
-};
+useHead({ title: i18n.global.t("music.artist.new") });
 </script>

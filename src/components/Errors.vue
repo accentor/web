@@ -15,17 +15,14 @@
     </div>
   </VAlert>
 </template>
-<script>
-import { useErrorsStore } from "../store/errors";
-import { mapState, mapActions } from "pinia";
+<script setup lang="ts">
+import { storeToRefs } from "pinia";
+import { useErrorsStore } from "@/store/errors";
 
-export default {
-  name: "Errors",
-  computed: {
-    ...mapState(useErrorsStore, ["errors"]),
-  },
-  methods: {
-    ...mapActions(useErrorsStore, ["clearErrors"]),
-  },
-};
+const errorsStore = useErrorsStore();
+const { errors } = storeToRefs(errorsStore);
+
+function clearErrors(): void {
+  errorsStore.clearErrors();
+}
 </script>

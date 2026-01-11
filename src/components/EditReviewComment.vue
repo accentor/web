@@ -29,35 +29,23 @@
     </VDialog>
   </VBtn>
 </template>
-<script>
-export default {
-  name: "EditReviewComment",
-  props: {
-    update: {
-      type: Function,
-      required: true,
-    },
-    item: {
-      type: Object,
-      required: true,
-    },
-  },
-  data() {
-    return {
-      show: false,
-      newReviewComment: "",
-    };
-  },
-  created() {
-    this.newReviewComment = this.item.review_comment;
-  },
-  methods: {
-    async flag() {
-      const succeeded = await this.update(this.item.id, this.newReviewComment);
-      if (succeeded) {
-        this.show = false;
-      }
-    },
-  },
-};
+
+<script setup lang="ts">
+import { ref } from "vue";
+
+interface Props {
+  item: { id: number; review_comment: string | null };
+  update: (id: number, newReviewComment: string) => Promise<boolean>;
+}
+const props = defineProps<Props>();
+
+const show = ref<boolean>(false);
+const newReviewComment = ref<string>(props.item.review_comment || "");
+
+async function flag(): Promise<void> {
+  const succeeded = await props.update(props.item.id, newReviewComment.value);
+  if (succeeded) {
+    show.value = false;
+  }
+}
 </script>

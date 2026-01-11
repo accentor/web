@@ -11,27 +11,25 @@
   </VContainer>
 </template>
 
-<script>
-import { mapState } from "pinia";
-import { useUsersStore } from "../../store/users";
+<script setup lang="ts">
+import { computed, watch } from "vue";
+import { useRouter } from "vue-router";
+import { useHead } from "@unhead/vue";
+import { useUsersStore } from "@/store/users";
 
-export default {
-  name: "User",
-  head() {
-    return { title: this.user.name };
-  },
-  computed: {
-    ...mapState(useUsersStore, ["users"]),
-    user: function () {
-      return this.users[this.$route.params.id];
-    },
-  },
-  watch: {
-    user: function () {
-      if (this.user === undefined) {
-        this.$router.go(-1);
-      }
-    },
-  },
-};
+const props = defineProps<{ id: string }>();
+
+const usersStore = useUsersStore();
+const router = useRouter();
+
+const user = computed(() => usersStore.users[props.id]);
+const userName = computed(() => user.value?.name);
+
+useHead({ title: userName });
+
+watch(user, () => {
+  if (!user.value) {
+    router.go(-1);
+  }
+});
 </script>

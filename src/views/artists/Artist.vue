@@ -8,7 +8,11 @@
         sm="6"
         cols="12"
       >
-        <VImg :src="artist.image500" class="elevation-3" />
+        <VImg
+          :src="artist.image500"
+          class="elevation-3"
+          @error="setImageUnavailable"
+        />
       </VCol>
       <VCol
         v-else-if="artist.image && !imageUnavailable"
@@ -17,7 +21,11 @@
         sm="6"
         cols="12"
       >
-        <VImg :src="artist.image" class="elevation-3" />
+        <VImg
+          :src="artist.image"
+          class="elevation-3"
+          @error="setImageUnavailable"
+        />
       </VCol>
       <VCol lg="9" md="8" sm="6" cols="12">
         <div>
@@ -65,87 +73,64 @@
   </VContainer>
 </template>
 
-<script>
-import { mapState, mapActions } from "pinia";
-import AlbumCard from "../../components/AlbumCard.vue";
-import ArtistActions from "../../components/ArtistActions.vue";
-import TracksTable from "../../components/TracksTable.vue";
+<script setup lang="ts">
+import { computed, onMounted, ref } from "vue";
+import { useHead } from "@unhead/vue";
+import { useRouter } from "vue-router";
+import AlbumCard from "@/components/AlbumCard.vue";
+import ArtistActions from "@/components/ArtistActions.vue";
+import TracksTable from "@/components/TracksTable.vue";
 import { AlbumsScope, TracksScope } from "@accentor/api-client-js";
-import { useAuthStore } from "../../store/auth";
-import { usePlaylistsStore } from "../../store/playlists";
-import { useArtistsStore } from "../../store/artists";
-import { useAlbumsStore } from "../../store/albums";
-import { useTracksStore } from "../../store/tracks";
+import { usePlaylistsStore } from "@/store/playlists";
+import { useArtistsStore } from "@/store/artists";
+import { useAlbumsStore } from "@/store/albums";
+import { useTracksStore } from "@/store/tracks";
 
-export default {
-  name: "Artist",
-  components: {
-    TracksTable,
-    AlbumCard,
-    ArtistActions,
-  },
-  props: {
-    id: {
-      type: [String, Number],
-      required: true,
-    },
-  },
-  data() {
-    return {
-      imageUnavailable: false,
-    };
-  },
-  head() {
-    return { title: this.artist?.name };
-  },
-  computed: {
-    ...mapState(useAuthStore, ["isModerator"]),
-    ...mapState(usePlaylistsStore, { storePlaylists: "artistPlaylists" }),
-    ...mapState(useArtistsStore, ["artists"]),
-    albums: function () {
-      return useAlbumsStore().albumsFilterByArtist(this.$route.params.id);
-    },
-    tracks: function () {
-      return useTracksStore().tracksFilterByArtist(this.$route.params.id);
-    },
-    artist: function () {
-      return this.artists[this.$route.params.id];
-    },
-    playlists: function () {
-      return this.storePlaylists.filter((p) =>
-        p.item_ids.includes(this.artist.id),
-      );
-    },
-  },
-  watch: {
-    id: {
-      handler: "fetchContent",
-      immediate: true,
-    },
-  },
-  methods: {
-    ...mapActions(useAlbumsStore, { indexAlbums: "index" }),
-    ...mapActions(useArtistsStore, ["read"]),
-    ...mapActions(useTracksStore, { indexTracks: "index" }),
-    async fetchContent(newValue, oldValue) {
-      // After loading the content, the router will change the id from a string to a number
-      // but we don't actually want to load the content twice
-      if (newValue == oldValue) {
-        return;
-      }
+const albumsStore = useAlbumsStore();
+const artistsStore = useArtistsStore();
+const playlistsStore = usePlaylistsStore();
+const tracksStore = useTracksStore();
 
-      const artist = this.read(this.id);
-      const albums = this.indexAlbums(new AlbumsScope().artist(this.id));
-      const tracks = this.indexTracks(new TracksScope().artist(this.id));
-      await Promise.all([artist, albums, tracks]);
-      // If the artist is undefined after loading, we assume that it doesn't exist.
-      if (this.artist === undefined) {
-        this.$router.go(-1);
-      }
-    },
-    setImageUnavailable() {
-      this.imageUnavailable = true;
-    },
-  },
-};
+const router = useRouter();
+const props = defineProps<{ id: string }>();
+const imageUnavailable = ref(false);
+const artist = computed(() => artistsStore.artists[props.id]);
+const artistName = computed(() => artist.value?.name);
+useHead({ title: artistName });
+
+const albums = computed(() =>
+  artist.value ? albumsStore.albumsFilterByArtist(artist.value.id) : [],
+);
+const tracks = computed(() =>
+  artist.value ? tracksStore.tracksFilterByArtist(artist.value.id) : [],
+);
+
+const playlists = computed(() => {
+  if (artist.value) {
+    const id = artist.value.id;
+    return playlistsStore.artistPlaylists.filter((p) =>
+      p.item_ids.includes(id),
+    );
+  } else {
+    return [];
+  }
+});
+
+function setImageUnavailable(): void {
+  imageUnavailable.value = true;
+}
+
+onMounted(fetchContent);
+
+async function fetchContent(): Promise<void> {
+  const artistPromise = artistsStore.read(parseInt(props.id));
+  const albumsPromise = albumsStore.index(new AlbumsScope().artist(props.id));
+  const tracksPromise = tracksStore.index(new TracksScope().artist(props.id));
+
+  await Promise.all([artistPromise, albumsPromise, tracksPromise]);
+  // If the artist is undefined after loading, we assume that it doesn't exist.
+  if (!artist.value) {
+    router.go(-1);
+  }
+}
 </script>

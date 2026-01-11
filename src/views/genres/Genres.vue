@@ -2,8 +2,8 @@
   <VContainer fluid>
     <VDataIterator
       v-if="genres.length > 0"
-      v-model:page="pagination.page"
-      :items="filteredItems"
+      v-model:page="page"
+      :items="filteredGenres"
       :items-per-page="12"
     >
       <template #header>
@@ -37,7 +37,7 @@
       <template #footer="{ pageCount }">
         <VRow class="mt-2" justify="center">
           <VPagination
-            v-model="pagination.page"
+            v-model="page"
             density="compact"
             :length="pageCount"
             total-visible="5"
@@ -48,32 +48,29 @@
   </VContainer>
 </template>
 
-<script>
-import Paginated from "../../mixins/Paginated";
-import GenreCard from "../../components/GenreCard.vue";
-import Searchable from "../../mixins/Searchable";
-import { mapState } from "pinia";
-import { useGenresStore } from "../../store/genres";
+<script setup lang="ts">
+import GenreCard from "@/components/GenreCard.vue";
+import { storeToRefs } from "pinia";
+import { useGenresStore } from "@/store/genres";
+import { usePagination } from "@/composables/pagination";
+import { useSearch } from "@/composables/search";
+import { useHead } from "@unhead/vue";
+import i18n from "@/i18n";
+import { computed } from "vue";
 
-export default {
-  name: "Genres",
-  components: { GenreCard },
-  mixins: [Paginated, Searchable],
-  head() {
-    return { title: this.$tc("music.genres", 2) };
-  },
-  computed: {
-    ...mapState(useGenresStore, { genres: "genresByName" }),
-    filteredItems() {
-      return this.genres.filter(
-        (item) =>
-          !this.search ||
-          item.name
-            .toLocaleLowerCase()
-            .indexOf(this.search.toLocaleLowerCase()) >= 0 ||
-          item.normalized_name.indexOf(this.search.toLocaleLowerCase()) >= 0,
-      );
-    },
-  },
-};
+const { page } = usePagination();
+const { search } = useSearch();
+
+useHead({ title: i18n.global.tc("music.genres", 2) });
+
+const { genresByName: genres } = storeToRefs(useGenresStore());
+const filteredGenres = computed(() => {
+  const lookup = search.value.toLowerCase();
+  return genres.value.filter(
+    (item) =>
+      !lookup ||
+      item.name.toLowerCase().indexOf(lookup) >= 0 ||
+      item.normalized_name.indexOf(lookup) >= 0,
+  );
+});
 </script>

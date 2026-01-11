@@ -16,12 +16,11 @@
     </VRow>
     <VDataTable
       v-model="selected"
-      v-model:page="pagination.page"
+      v-model:page="page"
       item-value="id"
       :headers="headers"
       :items="filteredItems"
       :items-per-page="30"
-      :items-per-page-options="[30]"
       :show-select="isModerator && showSelect"
       :select-strategy="singleSelect ? 'single' : 'all'"
       return-object
@@ -34,22 +33,22 @@
         <VDivider />
         <div class="text-center py-2">
           <VPagination
-            v-model="pagination.page"
+            v-model="page"
             density="compact"
             :length="pageCount"
             total-visible="5"
           />
         </div>
       </template>
-      <template #item.number="props">
-        <span v-if="currentTrack !== null && props.item.id === currentTrack.id">
+      <template #item.number="{ item, value }">
+        <span v-if="currentTrack !== null && item.id === currentTrack.id">
           <VIcon>mdi-volume-high</VIcon>
         </span>
-        <span v-else>{{ props.value }}</span>
+        <span v-else>{{ value }}</span>
       </template>
-      <template #item.length="props">
-        <span v-if="props.value !== null">
-          {{ $filters.length(props.value) }}
+      <template #item.length="{ value }">
+        <span v-if="value !== null">
+          {{ formatLength(value) }}
         </span>
         <VTooltip v-else location="bottom">
           <template #activator="{ props: innerProps }">
@@ -63,188 +62,254 @@
           </span>
         </VTooltip>
       </template>
-      <template #item.album_id="props">
-        <RouterLink :to="{ name: 'album', params: { id: props.value } }">
-          {{ albums[props.value] ? albums[props.value].title : "" }}
+      <template #item.album_id="{ value }">
+        <RouterLink :to="{ name: 'album', params: { id: `${value}` } }">
+          {{ albums[`${value}`]?.title ?? "" }}
         </RouterLink>
       </template>
-      <template #item.track_artists="props">
-        <TrackArtists :track="props.item" />
+      <template #item.track_artists="{ item }">
+        <TrackArtists :track="item" />
       </template>
-      <template #item.genre_ids="props">
-        <TrackGenres :track="props.item" />
+      <template #item.genre_ids="{ item }">
+        <TrackGenres :track="item" />
       </template>
-      <template #item.play_count="props">
-        {{
-          (playStatsByTrack[props.item.id] &&
-            playStatsByTrack[props.item.id].count) ||
-          0
-        }}
+      <template #item.play_count="{ item }">
+        {{ playStatsByTrack[`${item.id}`]?.count ?? 0 }}
       </template>
-      <template #item.actions="props">
-        <TrackActions :track="props.item" />
+      <template #item.actions="{ item }">
+        <TrackActions :track="item" />
       </template>
     </VDataTable>
   </div>
 </template>
 
-<script>
-import { mapState } from "pinia";
+<script setup lang="ts">
+import { storeToRefs } from "pinia";
 import TrackActions from "./TrackActions.vue";
-import Paginated from "../mixins/Paginated";
-import Searchable from "../mixins/Searchable";
-import Sortable from "../mixins/Sortable";
 import TrackArtists from "./TrackArtists.vue";
 import TrackGenres from "./TrackGenres.vue";
 import MassEditDialog from "./MassEditDialog.vue";
-import {
-  compareStrings,
-  compareTracks,
-  compareTracksByArtist,
-  compareTracksByGenre,
-} from "@/comparators";
-import { useAuthStore } from "../store/auth";
-import { useGenresStore } from "../store/genres";
-import { useAlbumsStore } from "../store/albums";
-import { useTracksStore } from "../store/tracks";
-import { usePlaysStore } from "../store/plays";
-import { usePlayerStore } from "../store/player";
+import { useAuthStore } from "@/store/auth";
+import { useGenresStore } from "@/store/genres";
+import { useAlbumsStore } from "@/store/albums";
+import { usePlaysStore } from "@/store/plays";
+import { usePlayerStore } from "@/store/player";
+import type { Genre, Track } from "@accentor/api-client-js";
+import i18n from "@/i18n";
+import { computed, ref, watch } from "vue";
+import { useSearch } from "@/composables/search";
+import { useTracksStore } from "@/store/tracks";
+import { usePagination } from "@/composables/pagination";
+import { compareStrings, compareTracks, formatLength } from "@/util";
 
-export default {
-  name: "TracksTable",
-  components: { TrackGenres, TrackActions, TrackArtists, MassEditDialog },
-  mixins: [Paginated, Searchable, Sortable],
-  props: {
-    tracks: { default: () => [], type: Array },
-    savePagination: { default: true, type: Boolean },
-    showActions: { default: true, type: Boolean },
-    showAlbum: { default: true, type: Boolean },
-    showMassEdit: { default: true, type: Boolean },
-    showSearch: { default: false, type: Boolean },
-    singleSelect: { default: false, type: Boolean },
-    title: { required: false, type: String, default: undefined },
-  },
-  emits: ["selected"],
-  data() {
-    const headers = [
-      {
-        title: "#",
-        value: "number",
-        align: "center",
-        width: "1px",
-        class: "text-no-wrap",
-        key: "number",
-      },
-      {
-        title: this.$t("music.title"),
-        value: "title",
-        class: "text-no-wrap",
-        sortRaw: (t1, t2) =>
-          compareStrings(t1.normalized_title, t2.normalized_title),
-      },
-      {
-        title: this.$t("music.track.length"),
-        value: "length",
-        align: "end",
-        width: "1px",
-        class: "text-no-wrap",
-        key: "length",
-      },
-      {
-        title: this.$tc("music.albums", 1),
-        value: "album_id",
-        class: "text-no-wrap",
-        sortRaw: compareTracks(this.albums),
-      },
-      {
-        title: this.$t("music.artist.artist-s"),
-        value: "track_artists",
-        class: "text-no-wrap",
-        sortRaw: compareTracksByArtist,
-      },
-      {
-        title: this.$t("music.genre-s"),
-        value: "genre_ids",
-        class: "text-no-wrap",
-        sortRaw: compareTracksByGenre(this.genres),
-      },
-      {
-        title: this.$t("music.play-count"),
-        value: "play_count",
-        align: "end",
-        width: "1px",
-        class: "text-no-wrap",
-        sortRaw: (t1, t2) =>
-          (this.playStatsByTrack[t1.id]?.count || 0) -
-          (this.playStatsByTrack[t2.id]?.count || 0),
-      },
-      {
-        title: this.$t("common.actions"),
-        value: "actions",
-        sortable: false,
-        align: "end",
-        width: "1px",
-        class: "text-no-wrap",
-      },
-    ];
-    if (!this.showAlbum) {
-      headers.splice(3, 1);
+const tracksStore = useTracksStore();
+
+interface Props {
+  tracks?: (Track & { loaded: Date })[];
+  savePagination?: boolean;
+  saveSort?: boolean;
+  showActions?: boolean;
+  showAlbum?: boolean;
+  showMassEdit?: boolean;
+  showSearch?: boolean;
+  singleSelect?: boolean;
+  title?: string | undefined;
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  tracks: () => [],
+  savePagination: true,
+  saveSort: true,
+  showActions: true,
+  showAlbum: true,
+  showMassEdit: true,
+  showSearch: false,
+  singleSelect: false,
+  title: undefined,
+});
+const showSelect = computed(() => props.singleSelect || props.showMassEdit);
+
+const emit = defineEmits<{ selected: [number] }>();
+
+function compareTracksByArtist(t1: Track, t2: Track): number {
+  // tracks without artists get sorted last
+  if (t1.track_artists.length === 0 && t2.track_artists.length === 0) {
+    return 0;
+  } else if (t1.track_artists.length === 0) {
+    return 1;
+  } else if (t2.track_artists.length === 0) {
+    return -1;
+  }
+
+  let order = 0;
+  let index = 0;
+  while (order === 0) {
+    const a1 = t1.track_artists[index];
+    const a2 = t2.track_artists[index];
+
+    // If tracks share the same artists, but one track has one or more extra artist(s),
+    // we sort the track with more artists last
+    if (!a1 && !a2) {
+      return 0;
+    } else if (!a1) {
+      return -1;
+    } else if (!a2) {
+      return 1;
     }
-    if (!this.showActions) {
-      headers.splice(-1, 1);
+    order = compareStrings(a1.name, a2.name);
+    index++;
+  }
+  return order;
+}
+
+function compareTracksByGenre(genres: Record<string, Genre>) {
+  return function (t1: Track, t2: Track): number {
+    // tracks without genres get sorted last
+    if (t1.genre_ids.length === 0 && t2.genre_ids.length === 0) {
+      return 0;
+    } else if (t1.genre_ids.length === 0) {
+      return 1;
+    } else if (t2.genre_ids.length === 0) {
+      return -1;
     }
-    return {
-      headers,
-      selected: [],
-    };
-  },
-  computed: {
-    ...mapState(useAuthStore, ["isModerator"]),
-    ...mapState(usePlayerStore, ["currentTrack"]),
-    ...mapState(useAlbumsStore, ["albums"]),
-    ...mapState(useGenresStore, ["genres"]),
-    ...mapState(usePlaysStore, ["playStatsByTrack"]),
-    ...mapState(useTracksStore, { tracksObj: "tracks" }),
-    filteredItems() {
-      return this.tracks.filter(
-        (item) =>
-          !this.search ||
-          item.title
-            .toLocaleLowerCase()
-            .indexOf(this.search.toLocaleLowerCase()) >= 0 ||
-          item.normalized_title.indexOf(this.search.toLocaleLowerCase()) >= 0,
-      );
-    },
-    selectedIds() {
-      return this.selected.map((t) => t.id);
-    },
-    pageCount() {
-      return Math.ceil(this.filteredItems.length / 30);
-    },
-    showSelect() {
-      return this.showMassEdit || this.singleSelect;
-    },
-  },
-  watch: {
-    selected(newValue, oldValue) {
-      const newItem = newValue.filter((el) => !oldValue.includes(el))[0];
-      this.$emit("selected", newItem?.id || null);
-    },
-  },
-  methods: {
-    emitSelected(o) {
-      this.$emit("selected", o.value ? o.item.id : null);
-    },
-    toggleAll() {
-      if (this.selected.length > 0) {
-        this.selected = [];
-      } else {
-        this.selected = this.filteredItems;
+
+    // we map the genres for each track and sort by name
+    const t1_genres = t1.genre_ids
+      .map((g) => genres[`${g}`]?.normalized_name ?? "")
+      .sort((g1, g2) => compareStrings(g1, g2));
+    const t2_genres = t2.genre_ids
+      .map((g) => genres[`${g}`]?.normalized_name ?? "")
+      .sort((g1, g2) => compareStrings(g1, g2));
+
+    // We loop over the sorted genres until we find a difference to sort by
+    let index = 0;
+    let order = 0;
+    while (order === 0) {
+      const g1 = t1_genres[index];
+      const g2 = t2_genres[index];
+
+      // If tracks share the same genres, but one track has one or more extra genre(s),
+      // we sort the track with more genres last
+      if (!g1 && !g2) {
+        return 0;
+      } else if (!g1) {
+        return -1;
+      } else if (!g2) {
+        return 1;
       }
+      order = compareStrings(g1, g2);
+      index++;
+    }
+    return order;
+  };
+}
+
+const headers = computed(() => {
+  const result = [
+    {
+      title: "#",
+      value: "number",
+      align: "center" as const,
+      width: "1px",
+      class: "text-no-wrap",
+      key: "number",
     },
-    reloadSelected() {
-      this.selected = this.selected.map((s) => this.tracksObj[s.id]);
+    {
+      title: i18n.global.t("music.title"),
+      value: "title",
+      class: "text-no-wrap",
+      sortable: true,
+      sortRaw: (t1: Track, t2: Track): number =>
+        compareStrings(t1.normalized_title, t2.normalized_title),
     },
-  },
-};
+    {
+      title: i18n.global.t("music.track.length"),
+      value: "length",
+      align: "end" as const,
+      width: "1px",
+      class: "text-no-wrap",
+      key: "length",
+    },
+    {
+      title: i18n.global.tc("music.albums", 1),
+      value: "album_id",
+      class: "text-no-wrap",
+      sortable: true,
+      sortRaw: compareTracks(albums.value),
+    },
+    {
+      title: i18n.global.t("music.artist.artist-s"),
+      value: "track_artists",
+      class: "text-no-wrap",
+      sortable: true,
+      sortRaw: compareTracksByArtist,
+    },
+    {
+      title: i18n.global.t("music.genre-s"),
+      value: "genre_ids",
+      class: "text-no-wrap",
+      sortable: true,
+      sortRaw: compareTracksByGenre(genres.value),
+    },
+    {
+      title: i18n.global.t("music.play-count"),
+      value: "play_count",
+      align: "end" as const,
+      width: "1px",
+      class: "text-no-wrap",
+      sortable: true,
+      sortRaw: (t1: Track, t2: Track): number =>
+        (playStatsByTrack.value[`${t1.id}`]?.count || 0) -
+        (playStatsByTrack.value[`${t2.id}`]?.count || 0),
+    },
+    {
+      title: i18n.global.t("common.actions"),
+      value: "actions",
+      sortable: false,
+      align: "end" as const,
+      width: "1px",
+      class: "text-no-wrap",
+    },
+  ];
+  if (!props.showAlbum) {
+    result.splice(3, 1);
+  }
+  if (!props.showActions) {
+    result.splice(-1, 1);
+  }
+  return result;
+});
+
+const { page } = usePagination();
+
+const { search } = useSearch();
+const filteredItems = computed(() => {
+  const lookup = search.value.toLowerCase();
+  return props.tracks.filter(
+    (item) =>
+      !lookup ||
+      item.title.toLowerCase().indexOf(lookup) >= 0 ||
+      item.normalized_title.indexOf(lookup) >= 0,
+  );
+});
+
+const selected = ref<Track[]>([]);
+const pageCount = computed(() => Math.ceil(filteredItems.value.length / 30));
+
+const { isModerator } = storeToRefs(useAuthStore());
+const { currentTrack } = storeToRefs(usePlayerStore());
+const { albums } = storeToRefs(useAlbumsStore());
+const { genres } = storeToRefs(useGenresStore());
+const { playStatsByTrack } = storeToRefs(usePlaysStore());
+
+watch(selected, (newValue, oldValue) => {
+  const newItem = newValue.filter((el) => !oldValue.includes(el))[0];
+  if (newItem) {
+    emit("selected", newItem.id);
+  }
+});
+
+function reloadSelected(): void {
+  selected.value = selected.value.map((s) => tracksStore.tracks[`${s.id}`]!);
+}
 </script>

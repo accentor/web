@@ -35,7 +35,7 @@
             inherit pname version;
             src = pkgs.lib.cleanSourceWith { filter = name: type: !(builtins.elem name [ ".github" "flake.lock" "flake.nix" ]); src = ./.; name = "${pname}-${version}-source"; };
 
-            nativeBuildInputs = [ (pkgs.yarn.override { nodejs = pkgs.nodejs_20; }) ];
+            nativeBuildInputs = [ (pkgs.yarn.override { nodejs = pkgs.nodejs_22; }) ];
 
             configurePhase = ''
               cp -r ${deps}/node_modules/ .
@@ -60,7 +60,7 @@
             packages = with pkgs; [
               nixpkgs-fmt
               yarn2nix
-              (yarn.override { nodejs = nodejs_20; })
+              (yarn.override { nodejs = nodejs_22; })
             ];
           };
         };

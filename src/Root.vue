@@ -1,22 +1,21 @@
 <template>
   <VApp>
-    <router-view />
+    <Suspense>
+      <RouterView />
+      <template #fallback>
+        <VIcon>mdi-refresh mdi-spin</VIcon>
+      </template>
+    </Suspense>
   </VApp>
 </template>
 
-<script>
-export default {
-  name: "Root",
-  head() {
-    return { title: "Main" };
-  },
-};
+<script setup lang="ts">
+import { useHead } from "@unhead/vue";
+
+useHead({ title: "Main" });
 </script>
 
 <style lang="scss">
-@use "sass:map";
-@use "vuetify/settings";
-
 // Additional resets
 a {
   text-decoration: none;

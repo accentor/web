@@ -4,22 +4,20 @@
   </VContainer>
 </template>
 
-<script>
-import { mapState } from "pinia";
-import AlbumForm from "../../components/AlbumForm.vue";
-import { useAlbumsStore } from "../../store/albums";
+<script setup lang="ts">
+import { computed } from "vue";
+import { useHead } from "@unhead/vue";
+import AlbumForm from "@/components/AlbumForm.vue";
+import { useAlbumsStore } from "@/store/albums";
+import i18n from "@/i18n";
 
-export default {
-  name: "EditAlbum",
-  components: { AlbumForm },
-  head() {
-    return { title: this.$t("page-titles.edit", { obj: this.album?.title }) };
-  },
-  computed: {
-    ...mapState(useAlbumsStore, ["albums"]),
-    album: function () {
-      return this.albums[this.$route.params.id];
-    },
-  },
-};
+const albumsStore = useAlbumsStore();
+
+const props = defineProps<{ id: string }>();
+
+const album = computed(() => albumsStore.albums[props.id]);
+const title = computed(() =>
+  i18n.global.t("page-titles.edit", { obj: album.value?.title ?? "" }),
+);
+useHead({ title });
 </script>

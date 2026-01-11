@@ -9,23 +9,14 @@
   </div>
 </template>
 
-<script>
-import { mapState } from "pinia";
+<script setup lang="ts">
+import { storeToRefs } from "pinia";
 import CoverFilenameForm from "./CoverFilenameForm.vue";
-import { useAuthStore } from "../store/auth";
-import { useCoverFilenamesStore } from "../store/cover_filenames";
+import { useAuthStore } from "@/store/auth";
+import { useCoverFilenamesStore } from "@/store/cover_filenames";
 
-export default {
-  name: "EditCoverFilenames",
-  components: { CoverFilenameForm },
-  data() {
-    return {};
-  },
-  computed: {
-    ...mapState(useCoverFilenamesStore, {
-      coverFilenames: "allCoverFilenames",
-    }),
-    ...mapState(useAuthStore, ["isModerator"]),
-  },
-};
+const { isModerator } = storeToRefs(useAuthStore());
+const { allCoverFilenames: coverFilenames } = storeToRefs(
+  useCoverFilenamesStore(),
+);
 </script>

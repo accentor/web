@@ -61,78 +61,74 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: "ImagePicker",
-  props: {
-    modelValue: {
-      type: Object,
-      required: true,
-    },
-    currentImg: {
-      type: String,
-      required: false,
-      default: null,
-    },
-    placeholder: {
-      type: String,
-      required: true,
-    },
-  },
-  emits: ["update:modelValue"],
-  computed: {
-    previewSrc() {
-      return (
-        this.modelValue &&
-        `data:${this.modelValue.mimetype};base64, ${this.modelValue.data}`
-      );
-    },
-    hasImage() {
-      return (
-        (this.modelValue === null && this.currentImg) ||
-        (this.modelValue && this.modelValue.data !== null)
-      );
-    },
-  },
-  methods: {
-    handleDrop(event) {
-      if (
-        event.dataTransfer.files.length === 1 &&
-        /^image.*/.test(event.dataTransfer.files[0].type)
-      ) {
-        this.interpret(event.dataTransfer.files[0]);
-      }
-    },
-    handleSelect(event) {
-      const file = event.target.files[0];
-      if (file) {
-        this.interpret(file);
-      }
-    },
-    interpret(file) {
-      const fileReader = new FileReader();
-      fileReader.onload = (ev) => {
-        this.$emit("update:modelValue", {
-          filename: file.name,
-          mimetype: file.type,
-          data: ev.target.result.replace(
-            /^data:[a-zA-Z0-9!#$%^&\\*_\-+{}|'.`~]+\/[a-zA-Z0-9!#$%^&\\*_\-+{}|'.`~]+;base64,/,
-            "",
-          ),
-        });
-      };
-      fileReader.readAsDataURL(file);
-    },
-    clear() {
-      this.$emit("update:modelValue", {
-        filename: null,
-        mimetype: null,
-        data: null,
-      });
-    },
-    passthrough() {
-      this.$refs.picker.click();
-    },
-  },
-};
+<script setup lang="ts">
+import { computed, useTemplateRef } from "vue";
+import { useVModel } from "@vueuse/core";
+import type { ImageParams } from "@accentor/api-client-js";
+
+interface Props {
+  modelValue: ImageParams | null;
+  currentImg?: string;
+  placeholder: string;
+}
+
+const props = defineProps<Props>();
+const emit = defineEmits<{ "update:modelValue": [ImageParams | null] }>();
+
+const modelValue = useVModel(props, "modelValue", emit);
+
+const previewSrc = computed<string | undefined>(() => {
+  if (modelValue.value) {
+    return `data:${modelValue.value.mimetype};base64, ${modelValue.value.data}`;
+  }
+  return undefined;
+});
+
+const hasImage = computed<boolean>(() => {
+  if (modelValue.value) {
+    return Boolean(modelValue.value.data);
+  } else {
+    return Boolean(props.currentImg);
+  }
+});
+
+function interpret(file: File): void {
+  const fileReader = new FileReader();
+  fileReader.onload = (): void => {
+    modelValue.value = {
+      filename: file.name,
+      mimetype: file.type,
+      data: (fileReader.result! as string).replace(
+        /^data:[a-zA-Z0-9!#$%^&\\*_\-+{}|'.`~]+\/[a-zA-Z0-9!#$%^&\\*_\-+{}|'.`~]+;base64,/,
+        "",
+      ),
+    };
+  };
+  fileReader.readAsDataURL(file);
+}
+
+function handleDrop(event: DragEvent): void {
+  if (
+    event.dataTransfer?.files?.length === 1 &&
+    /^image.*/.test(event.dataTransfer.files[0]?.type || "")
+  ) {
+    interpret(event.dataTransfer.files[0]!);
+  }
+}
+
+const picker = useTemplateRef<HTMLInputElement>("picker");
+function handleSelect(): void {
+  const file = picker.value!.files![0];
+  if (file) {
+    interpret(file);
+  }
+}
+
+function clear(): void {
+  modelValue.value = { data: null };
+}
+
+function passthrough(): void {
+  picker.value!.click();
+}
 </script>

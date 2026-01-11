@@ -1,10 +1,10 @@
 <template>
   <div
-    v-if="album_artists.length !== 0"
+    v-if="albumArtists.length !== 0"
     :class="{ 'd-block text-truncate': truncate }"
     :title="title"
   >
-    <span v-for="aa of album_artists" :key="`${aa.artist_id} ${aa.name}`"
+    <span v-for="aa of albumArtists" :key="`${aa.artist_id} ${aa.name}`"
       ><RouterLink :to="{ name: 'artist', params: { id: aa.artist_id } }">{{
         aa.name
       }}</RouterLink
@@ -16,31 +16,24 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: "AlbumArtists",
-  props: {
-    album: {
-      type: Object,
-      required: true,
-    },
-    truncate: {
-      type: Boolean,
-      required: false,
-    },
-  },
-  computed: {
-    album_artists() {
-      return [...this.album.album_artists].sort(
-        (a1, a2) => a1.order - a2.order,
-      );
-    },
-    title() {
-      return this.album_artists.reduce(
-        (acc, cur) => `${acc}${cur.name}${cur.separator ?? ""}`,
-        "",
-      );
-    },
-  },
-};
+<script setup lang="ts">
+import type { Album } from "@accentor/api-client-js";
+import { computed } from "vue";
+
+interface Props {
+  album: Album;
+  truncate?: boolean;
+}
+
+const props = withDefaults(defineProps<Props>(), { truncate: false });
+
+const albumArtists = computed(() =>
+  [...props.album.album_artists].sort((a1, a2) => a1.order - a2.order),
+);
+const title = computed(() =>
+  albumArtists.value.reduce(
+    (acc, cur) => `${acc}${cur.name}${cur.separator ?? ""}`,
+    "",
+  ),
+);
 </script>
