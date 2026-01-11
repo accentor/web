@@ -15,15 +15,15 @@
             <VTextField
               v-model="newTrack.number"
               type="number"
-              :label="$t('music.track.number')"
+              :label="I18n.t('music.track.number')"
               :rules="rules.number"
               min="0"
               step="1"
             />
             <VTextField
               v-model="newTrack.title"
-              :label="$t('music.title')"
-              :rules="[(v) => !!v || $t('errors.tracks.title-blank')]"
+              :label="I18n.t('music.title')"
+              :rules="[(v) => !!v || I18n.t('errors.tracks.title-blank')]"
             />
             <VAutocomplete
               v-model="newTrack.album_id"
@@ -31,7 +31,7 @@
               :custom-filter="filterTitle"
               item-title="title"
               item-value="id"
-              :label="$tc('music.albums', 1)"
+              :label="I18n.t('music.albums', 1)"
             >
               <template #item="{ item, props: listItemProps }">
                 <VListItem v-bind="listItemProps">
@@ -51,13 +51,13 @@
               closable-chips
               item-title="name"
               item-value="id"
-              :label="$t('music.genre-s')"
+              :label="I18n.t('music.genre-s')"
               multiple
               return-object
               :rules="rules.genre"
               validate-on="blur"
             />
-            <h4 class="text-subtitle-1">{{ $tc("music.artists", 2) }}</h4>
+            <h4 class="text-subtitle-1">{{ I18n.t("music.artists", 2) }}</h4>
             <TrackFormArtists
               v-model="newTrack.track_artists"
               @update:value.once="isDirty = true"
@@ -65,7 +65,7 @@
             <VCheckbox
               v-if="track.review_comment !== null"
               v-model="clear_review_comment"
-              :label="$tc('music.flag.clear', 1)"
+              :label="I18n.t('music.flag.clear', 1)"
             />
             <VRow>
               <VBtn
@@ -74,7 +74,7 @@
                 class="ma-2"
                 type="submit"
               >
-                {{ $t("music.track.update") }}
+                {{ I18n.t("music.track.update") }}
               </VBtn>
               <VSpacer />
               <VBtn
@@ -83,7 +83,7 @@
                 @click="addArtist"
                 @click.once="isDirty = true"
               >
-                {{ $t("music.artist.add") }}
+                {{ I18n.t("music.artist.add") }}
               </VBtn>
             </VRow>
           </VForm>
@@ -108,12 +108,13 @@ import type {
   TrackParams,
 } from "@accentor/api-client-js";
 import { useRoute } from "vue-router";
-import i18n from "@/i18n";
 import { useHead } from "@unhead/vue";
 import router from "@/router";
 import type { InternalItem } from "vuetify/framework";
 import { TrackArtistRole } from "@accentor/api-client-js";
+import { useI18n } from "vue-i18n";
 
+const I18n = useI18n();
 const albumsStore = useAlbumsStore();
 const artistsStore = useArtistsStore();
 const genresStore = useGenresStore();
@@ -140,7 +141,7 @@ const loaded = ref(false);
 
 const track = computed(() => tracksStore.tracks[props.id]);
 const title = computed(() => {
-  return i18n.global.t("page-titles.edit", { obj: track.value?.title ?? "" });
+  return I18n.t("page-titles.edit", { obj: track.value?.title ?? "" });
 });
 useHead({ title });
 
@@ -152,9 +153,9 @@ const rules = computed(() => {
   const rules = {
     number: [
       (v: number | string): true | string =>
-        !!v || i18n.global.t("errors.tracks.number-blank"),
+        !!v || I18n.t("errors.tracks.number-blank"),
       (v: number | string): true | string =>
-        Number(v) % 1 === 0 || i18n.global.t("errors.tracks.number-whole"),
+        Number(v) % 1 === 0 || I18n.t("errors.tracks.number-whole"),
     ],
     genre: [] as ((v: (Genre | string)[]) => string | true)[],
   };
@@ -168,11 +169,11 @@ const rules = computed(() => {
             g.name === newGenre || g.normalized_name === newGenre.toLowerCase(),
         );
         if (double) {
-          valid = i18n.global.t("errors.genre.name-taken-obj", {
+          valid = I18n.t("errors.genre.name-taken-obj", {
             obj: newGenre,
           });
         } else if (!newGenre.trim().length) {
-          valid = i18n.global.t("errors.genre.name-blank");
+          valid = I18n.t("errors.genre.name-blank");
         }
       }
     });

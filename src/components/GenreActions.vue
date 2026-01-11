@@ -7,7 +7,7 @@
             :to="{
               name: 'edit-genre',
               params: { id: genre.id },
-              query: { redirect: $route.fullPath },
+              query: { redirect: route.fullPath },
             }"
             :disabled="waitingForReload"
             color="warning"
@@ -19,7 +19,7 @@
           </VBtn>
         </span>
       </template>
-      <span>{{ $t("common.disabled-while-loading") }}</span>
+      <span>{{ I18n.t("common.disabled-while-loading") }}</span>
     </VTooltip>
     <VTooltip location="bottom" :disabled="!waitingForReload">
       <template #activator="{ props: tooltipProps }">
@@ -27,7 +27,7 @@
           <GenreMergeDialog :genre="genre" :disabled="waitingForReload" />
         </span>
       </template>
-      <span>{{ $t("common.disabled-while-loading") }}</span>
+      <span>{{ I18n.t("common.disabled-while-loading") }}</span>
     </VTooltip>
     <VTooltip location="bottom" :disabled="!waitingForReload">
       <template #activator="{ props: tooltipProps }">
@@ -46,7 +46,7 @@
           </VBtn>
         </span>
       </template>
-      <span>{{ $t("common.disabled-while-loading") }}</span>
+      <span>{{ I18n.t("common.disabled-while-loading") }}</span>
     </VTooltip>
   </span>
 </template>
@@ -58,8 +58,11 @@ import { useAuthStore } from "@/store/auth";
 import { useGenresStore } from "@/store/genres";
 import type { Genre } from "@accentor/api-client-js";
 import { computed } from "vue";
-import i18n from "@/i18n";
+import { useI18n } from "vue-i18n";
+import { useRoute } from "vue-router";
 
+const I18n = useI18n();
+const route = useRoute();
 const genresStore = useGenresStore();
 const props = defineProps<{ genre: Genre & { loaded: Date } }>();
 const { isModerator } = storeToRefs(useAuthStore());
@@ -67,7 +70,7 @@ const waitingForReload = computed(
   () => genresStore.startLoading > props.genre.loaded,
 );
 async function deleteGenre(): Promise<void> {
-  if (confirm(i18n.global.t("common.are-you-sure"))) {
+  if (confirm(I18n.t("common.are-you-sure"))) {
     await genresStore.destroy(props.genre.id);
   }
 }

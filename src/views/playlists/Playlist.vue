@@ -6,11 +6,11 @@
           <h2 class="text-h4">{{ playlist.name }}</h2>
           <p class="text-grey mb-1">
             {{ users[playlist.user_id]?.name }} &bull;
-            {{ $t(`music.playlist.access_options.${playlist.access}`) }}
+            {{ I18n.t(`music.playlist.access_options.${playlist.access}`) }}
           </p>
           <p class="text-grey mb-1">
             {{
-              $tc(
+              I18n.t(
                 `music.playlist.item_counts.${playlist.playlist_type}`,
                 playlist.item_ids.length,
               )
@@ -56,7 +56,9 @@ import { useAlbumsStore } from "@/store/albums";
 import { useTracksStore } from "@/store/tracks";
 import type { Album, Artist, Track } from "@accentor/api-client-js";
 import ArtistsRow from "@/components/ArtistsRow.vue";
+import { useI18n } from "vue-i18n";
 
+const I18n = useI18n();
 const albumsStore = useAlbumsStore();
 const artistsStore = useArtistsStore();
 const tracksStore = useTracksStore();

@@ -4,10 +4,12 @@
       <VCol cols="5">
         <VTextField
           v-model="newCoverFilename.filename"
-          :label="$t('library.filename')"
+          :label="I18n.t('library.filename')"
           :disabled="coverFilename !== null"
           required
-          :rules="[(v) => !!v || $t('errors.cover_filename.filename-blank')]"
+          :rules="[
+            (v) => !!v || I18n.t('errors.cover_filename.filename-blank'),
+          ]"
         />
       </VCol>
       <VCol cols="2" sm="1">
@@ -41,8 +43,9 @@
 import { useCoverFilenamesStore } from "@/store/cover_filenames";
 import type { CoverFilename } from "@accentor/api-client-js";
 import { onMounted, ref, useTemplateRef } from "vue";
-import i18n from "@/i18n";
+import { useI18n } from "vue-i18n";
 
+const I18n = useI18n();
 const coverFilenamesStore = useCoverFilenamesStore();
 const props = defineProps<{ coverFilename?: CoverFilename }>();
 const newCoverFilename = ref({ filename: "" });
@@ -65,7 +68,7 @@ async function saveCoverFilename(): Promise<void> {
 }
 
 async function deleteCoverFilename(): Promise<void> {
-  if (confirm(i18n.global.t("common.are-you-sure"))) {
+  if (confirm(I18n.t("common.are-you-sure"))) {
     await coverFilenamesStore.destroy(props.coverFilename!.id);
   }
 }

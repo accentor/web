@@ -10,11 +10,11 @@
             class="ma-2 text-white"
           >
             <VIcon start>mdi-alert-octagon</VIcon>
-            {{ $t("library.overview-tracks-without-audio") }}
+            {{ I18n.t("library.overview-tracks-without-audio") }}
           </VBtn>
         </span>
       </template>
-      <span>{{ $t("library.no-tracks-without-audio") }}</span>
+      <span>{{ I18n.t("library.no-tracks-without-audio") }}</span>
     </VTooltip>
     <VBtn
       color="error"
@@ -25,7 +25,7 @@
       <VIcon start>
         {{ artistsDisabled ? "mdi-refresh mdi-spin" : "mdi-alert-octagon" }}
       </VIcon>
-      {{ $t("library.delete-empty-artists") }}
+      {{ I18n.t("library.delete-empty-artists") }}
     </VBtn>
     <VBtn
       color="error"
@@ -36,7 +36,7 @@
       <VIcon start>
         {{ albumsDisabled ? "mdi-refresh mdi-spin" : "mdi-alert-octagon" }}
       </VIcon>
-      {{ $t("library.delete-empty-albums") }}
+      {{ I18n.t("library.delete-empty-albums") }}
     </VBtn>
     <VBtn
       color="error"
@@ -47,7 +47,7 @@
       <VIcon start>
         {{ genresDisabled ? "mdi-refresh mdi-spin" : "mdi-alert-octagon" }}
       </VIcon>
-      {{ $t("library.delete-empty-genres") }}
+      {{ I18n.t("library.delete-empty-genres") }}
     </VBtn>
     <VBtn
       color="error"
@@ -58,7 +58,7 @@
       <VIcon start>
         {{ labelsDisabled ? "mdi-refresh mdi-spin" : "mdi-alert-octagon" }}
       </VIcon>
-      {{ $t("library.delete-empty-labels") }}
+      {{ I18n.t("library.delete-empty-labels") }}
     </VBtn>
   </span>
 </template>
@@ -71,8 +71,9 @@ import { useGenresStore } from "@/store/genres";
 import { useArtistsStore } from "@/store/artists";
 import { useAlbumsStore } from "@/store/albums";
 import { useTracksStore } from "@/store/tracks";
-import i18n from "@/i18n";
+import { useI18n } from "vue-i18n";
 
+const I18n = useI18n();
 const albumsStore = useAlbumsStore();
 const artistsStore = useArtistsStore();
 const labelsStore = useLabelsStore();
@@ -86,7 +87,7 @@ const genresDisabled = ref(false);
 const { tracksEmpty } = storeToRefs(useTracksStore());
 
 async function destroyEmptyAlbums(): Promise<void> {
-  if (confirm(i18n.global.t("common.are-you-sure"))) {
+  if (confirm(I18n.t("common.are-you-sure"))) {
     albumsDisabled.value = true;
     try {
       await albumsStore.destroyEmpty();
@@ -97,7 +98,7 @@ async function destroyEmptyAlbums(): Promise<void> {
 }
 
 async function destroyEmptyArtists(): Promise<void> {
-  if (confirm(i18n.global.t("common.are-you-sure"))) {
+  if (confirm(I18n.t("common.are-you-sure"))) {
     artistsDisabled.value = true;
     try {
       await artistsStore.destroyEmpty();
@@ -108,7 +109,7 @@ async function destroyEmptyArtists(): Promise<void> {
 }
 
 async function destroyEmptyGenres(): Promise<void> {
-  if (confirm(i18n.global.t("common.are-you-sure"))) {
+  if (confirm(I18n.t("common.are-you-sure"))) {
     genresDisabled.value = true;
     try {
       await genresStore.destroyEmpty();
@@ -119,7 +120,7 @@ async function destroyEmptyGenres(): Promise<void> {
 }
 
 async function destroyEmptyLabels(): Promise<void> {
-  if (confirm(i18n.global.t("common.are-you-sure"))) {
+  if (confirm(I18n.t("common.are-you-sure"))) {
     labelsDisabled.value = true;
     try {
       await labelsStore.destroyEmpty();

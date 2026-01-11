@@ -4,10 +4,10 @@
       <VRow>
         <VCol lg="9" md="8" sm="6" cols="12">
           <div class="text-h4">
-            {{ $t("music.track.merge.title", { obj: track.title }) }}
+            {{ I18n.t("music.track.merge.title", { obj: track.title }) }}
           </div>
           <div class="text-grey">
-            {{ $t("music.track.merge.explanation") }}
+            {{ I18n.t("music.track.merge.explanation") }}
           </div>
         </VCol>
       </VRow>
@@ -16,12 +16,12 @@
           <template #default>
             <thead>
               <tr>
-                <th>{{ $t("music.track.merge.original") }}</th>
+                <th>{{ I18n.t("music.track.merge.original") }}</th>
                 <th class="text-center">
-                  {{ $t("music.track.merge.result") }}
+                  {{ I18n.t("music.track.merge.result") }}
                 </th>
                 <th class="text-right">
-                  {{ $t("music.track.merge.selected") }}
+                  {{ I18n.t("music.track.merge.selected") }}
                 </th>
               </tr>
             </thead>
@@ -138,7 +138,9 @@
                 >
                   <span class="my-auto">
                     {{
-                      track.filename ? track.filename : $t("music.track.empty")
+                      track.filename
+                        ? track.filename
+                        : I18n.t("music.track.empty")
                     }}
                   </span>
                   <VIcon v-if="!result.file.selected && track.filename && newID"
@@ -149,7 +151,7 @@
                   {{
                     result.file.name
                       ? result.file.name
-                      : $t("music.track.merge.result-empty")
+                      : I18n.t("music.track.merge.result-empty")
                   }}
                 </td>
                 <td
@@ -168,7 +170,7 @@
                     {{
                       selectedTrack.filename
                         ? selectedTrack.filename
-                        : $t("music.track.empty")
+                        : I18n.t("music.track.empty")
                     }}
                   </span>
                   <span v-else class="my-auto text-right"> - </span>
@@ -181,7 +183,7 @@
       <VRow>
         <VCol class="d-flex justify-center">
           <VBtn color="primary" class="ma-2" :disabled="!newID" @click="submit">
-            {{ $t("music.track.merge.submit") }}
+            {{ I18n.t("music.track.merge.submit") }}
           </VBtn>
         </VCol>
         <VCol class="d-flex justify-center">
@@ -192,7 +194,7 @@
             @click="reversed = !reversed"
           >
             <VIcon>mdi-swap-horizontal-bold</VIcon>
-            {{ $t("music.track.merge.swap-tracks") }}
+            {{ I18n.t("music.track.merge.swap-tracks") }}
           </VBtn>
         </VCol>
         <VCol class="d-flex justify-center">
@@ -203,8 +205,8 @@
           >
             {{
               limitTracksToAlbum
-                ? $t("music.track.merge.show-all-tracks")
-                : $t("music.track.merge.show-only-album-tracks")
+                ? I18n.t("music.track.merge.show-all-tracks")
+                : I18n.t("music.track.merge.show-only-album-tracks")
             }}
           </VBtn>
         </VCol>
@@ -234,13 +236,14 @@ import { useAlbumsStore } from "@/store/albums";
 import { useTracksStore } from "@/store/tracks";
 import { computed, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import i18n from "@/i18n";
 import { useHead } from "@unhead/vue";
 import type { Track, TrackArtist } from "@accentor/api-client-js";
+import { useI18n } from "vue-i18n";
 
 const albumsStore = useAlbumsStore();
 const tracksStore = useTracksStore();
 
+const I18n = useI18n();
 const router = useRouter();
 const route = useRoute();
 
@@ -254,7 +257,7 @@ const { albums } = storeToRefs(albumsStore);
 
 const track = computed(() => tracksStore.tracks[props.id]);
 const title = computed(() =>
-  i18n.global.t("page-titles.merge", { obj: track.value?.title }),
+  I18n.t("page-titles.merge", { obj: track.value?.title }),
 );
 useHead({ title });
 

@@ -4,7 +4,7 @@
       <VCol cols="6">
         <VTextField
           v-model="newCodec.extension"
-          :label="$t('library.extension')"
+          :label="I18n.t('library.extension')"
           :disabled="codec !== null"
           required
           :rules="rules.ext"
@@ -13,8 +13,8 @@
       <VCol cols="5">
         <VTextField
           v-model="newCodec.mimetype"
-          :label="$t('library.mime-type')"
-          :rules="[(v) => !!v || $t('errors.codec.mime-blank')]"
+          :label="I18n.t('library.mime-type')"
+          :rules="[(v) => !!v || I18n.t('errors.codec.mime-blank')]"
         />
       </VCol>
       <VCol cols="2" sm="1">
@@ -49,8 +49,9 @@
 import { computed, onMounted, ref, useTemplateRef } from "vue";
 import type { Codec } from "@accentor/api-client-js";
 import { useCodecsStore } from "@/store/codecs";
-import i18n from "@/i18n";
+import { useI18n } from "vue-i18n";
 
+const I18n = useI18n();
 const codecsStore = useCodecsStore();
 
 const props = defineProps<{ codec?: Codec }>();
@@ -62,14 +63,13 @@ const isValid = ref(true);
 const rules = computed(() => {
   const result = {
     ext: [
-      (v: string): true | string =>
-        !!v || i18n.global.t("errors.codec.ext-blank"),
+      (v: string): true | string => !!v || I18n.t("errors.codec.ext-blank"),
     ],
   };
   if (!props.codec) {
     result.ext.push((v) => {
       const double = codecsStore.allCodecs.some((c) => c.extension === v);
-      return !double || i18n.global.t("errors.codec.ext-taken");
+      return !double || I18n.t("errors.codec.ext-taken");
     });
   }
   return result;
@@ -98,7 +98,7 @@ async function saveCodec(): Promise<void> {
 }
 
 async function deleteCodec(): Promise<void> {
-  if (confirm(i18n.global.t("common.are-you-sure"))) {
+  if (confirm(I18n.t("common.are-you-sure"))) {
     await codecsStore.destroy(props.codec!.id);
   }
 }

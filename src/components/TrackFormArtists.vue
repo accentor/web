@@ -13,7 +13,7 @@
             :data-index="index"
             class="d-flex justify-space-between fill-height flex-column py-2"
             @keyup.delete="removeArtist(index)"
-            @keyup="handleKeyUp($event.key, index)"
+            @keyup="(event) => handleKeyUp(event.key, index)"
           >
             <VBtn
               icon
@@ -66,24 +66,24 @@
             :custom-filter="filterName"
             item-title="name"
             item-value="id"
-            :label="$tc('music.artists', 2)"
+            :label="I18n.t('music.artists', 2)"
             :rules="rules"
             return-object
           />
-          <VTextField v-model="item.name" :label="$t('common.name')" />
+          <VTextField v-model="item.name" :label="I18n.t('common.name')" />
           <VRow>
             <VCol>
               <VAutocomplete
                 v-model="item.role"
                 :items="roles"
-                :label="$t('music.artist.role')"
+                :label="I18n.t('music.artist.role')"
               />
             </VCol>
             <VCol class="flex-shrink-1">
               <VCheckbox v-model="item.hidden" color="red">
                 <template #label>
                   <span class="no-break-word white-space-nowrap">
-                    {{ $t("music.artist.hide.label") }}
+                    {{ I18n.t("music.artist.hide.label") }}
                   </span>
                   <VTooltip location="bottom">
                     <template #activator="{ props: tooltipProps }">
@@ -91,7 +91,7 @@
                         mdi-information
                       </VIcon>
                     </template>
-                    <span>{{ $t("music.artist.hide.explanation") }}</span>
+                    <span>{{ I18n.t("music.artist.hide.explanation") }}</span>
                   </VTooltip>
                 </template>
               </VCheckbox>
@@ -109,10 +109,12 @@ import { storeToRefs } from "pinia";
 import Draggable from "vuedraggable";
 import { useArtistsStore } from "@/store/artists";
 import { useVModel } from "@vueuse/core";
-import i18n from "@/i18n";
 import { computed } from "vue";
 import type { Artist, TrackArtistRole } from "@accentor/api-client-js";
 import type { InternalItem } from "vuetify/framework";
+import { useI18n } from "vue-i18n";
+
+const I18n = useI18n();
 
 interface ModelType {
   artist_id: Artist | string | null;
@@ -132,37 +134,37 @@ const { artistsByName: sortedArtists } = storeToRefs(useArtistsStore());
 const roles = [
   {
     value: "main",
-    title: i18n.global.t("music.artist.roles.main"),
+    title: I18n.t("music.artist.roles.main"),
   },
   {
     value: "performer",
-    title: i18n.global.t("music.artist.roles.performer"),
+    title: I18n.t("music.artist.roles.performer"),
   },
   {
     value: "composer",
-    title: i18n.global.t("music.artist.roles.composer"),
+    title: I18n.t("music.artist.roles.composer"),
   },
   {
     value: "conductor",
-    title: i18n.global.t("music.artist.roles.conductor"),
+    title: I18n.t("music.artist.roles.conductor"),
   },
   {
     value: "remixer",
-    title: i18n.global.t("music.artist.roles.remixer"),
+    title: I18n.t("music.artist.roles.remixer"),
   },
   {
     value: "producer",
-    title: i18n.global.t("music.artist.roles.producer"),
+    title: I18n.t("music.artist.roles.producer"),
   },
   {
     value: "arranger",
-    title: i18n.global.t("music.artist.roles.arranger"),
+    title: I18n.t("music.artist.roles.arranger"),
   },
 ];
 
 const rules = computed(() => {
   const artistValidation = (v: string): true | string =>
-    !!v || i18n.global.t("errors.artists.artist-blank");
+    !!v || I18n.t("errors.artists.artist-blank");
   return [artistValidation];
 });
 

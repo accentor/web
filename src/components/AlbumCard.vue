@@ -32,7 +32,7 @@
     <VCardText>
       <div class="text-grey">{{ album.release }}</div>
       <div v-if="labelForCatNr" class="text-grey">
-        {{ catalogueNumber || $t("music.label.catalogue-number-none") }}
+        {{ catalogueNumber || I18n.t("music.label.catalogue-number-none") }}
       </div>
     </VCardText>
     <VCardActions>
@@ -47,6 +47,9 @@ import { computed, ref } from "vue";
 import AlbumActions from "./AlbumActions.vue";
 import AlbumArtists from "./AlbumArtists.vue";
 import albumSvgUrl from "@mdi/svg/svg/album.svg" with { type: "url" };
+import { useI18n } from "vue-i18n";
+
+const I18n = useI18n();
 
 interface Props {
   album: Album & { loaded: Date };

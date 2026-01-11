@@ -6,8 +6,9 @@
 
 <script setup lang="ts">
 import { useHead } from "@unhead/vue";
-import i18n from "@/i18n";
 import ArtistForm from "@/components/ArtistForm.vue";
+import { useI18n } from "vue-i18n";
 
-useHead({ title: i18n.global.t("music.artist.new") });
+const I18n = useI18n();
+useHead({ title: I18n.t("music.artist.new") });
 </script>

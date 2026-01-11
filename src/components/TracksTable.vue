@@ -8,7 +8,7 @@
         <VTextField
           v-model="search"
           prepend-inner-icon="mdi-magnify"
-          :label="$t('common.search')"
+          :label="I18n.t('common.search')"
           single-line
           hide-details
         ></VTextField>
@@ -58,7 +58,7 @@
             </span>
           </template>
           <span>
-            {{ $t("music.track.empty") }}
+            {{ I18n.t("music.track.empty") }}
           </span>
         </VTooltip>
       </template>
@@ -95,13 +95,14 @@ import { useAlbumsStore } from "@/store/albums";
 import { usePlaysStore } from "@/store/plays";
 import { usePlayerStore } from "@/store/player";
 import type { Genre, Track } from "@accentor/api-client-js";
-import i18n from "@/i18n";
 import { computed, ref, watch } from "vue";
 import { useSearch } from "@/composables/search";
 import { useTracksStore } from "@/store/tracks";
 import { usePagination } from "@/composables/pagination";
 import { compareStrings, compareTracks, formatLength } from "@/util";
+import { useI18n } from "vue-i18n";
 
+const I18n = useI18n();
 const tracksStore = useTracksStore();
 
 interface Props {
@@ -215,7 +216,7 @@ const headers = computed(() => {
       key: "number",
     },
     {
-      title: i18n.global.t("music.title"),
+      title: I18n.t("music.title"),
       value: "title",
       class: "text-no-wrap",
       sortable: true,
@@ -223,7 +224,7 @@ const headers = computed(() => {
         compareStrings(t1.normalized_title, t2.normalized_title),
     },
     {
-      title: i18n.global.t("music.track.length"),
+      title: I18n.t("music.track.length"),
       value: "length",
       align: "end" as const,
       width: "1px",
@@ -231,28 +232,28 @@ const headers = computed(() => {
       key: "length",
     },
     {
-      title: i18n.global.tc("music.albums", 1),
+      title: I18n.t("music.albums", 1),
       value: "album_id",
       class: "text-no-wrap",
       sortable: true,
       sortRaw: compareTracks(albums.value),
     },
     {
-      title: i18n.global.t("music.artist.artist-s"),
+      title: I18n.t("music.artist.artist-s"),
       value: "track_artists",
       class: "text-no-wrap",
       sortable: true,
       sortRaw: compareTracksByArtist,
     },
     {
-      title: i18n.global.t("music.genre-s"),
+      title: I18n.t("music.genre-s"),
       value: "genre_ids",
       class: "text-no-wrap",
       sortable: true,
       sortRaw: compareTracksByGenre(genres.value),
     },
     {
-      title: i18n.global.t("music.play-count"),
+      title: I18n.t("music.play-count"),
       value: "play_count",
       align: "end" as const,
       width: "1px",
@@ -263,7 +264,7 @@ const headers = computed(() => {
         (playStatsByTrack.value[`${t2.id}`]?.count || 0),
     },
     {
-      title: i18n.global.t("common.actions"),
+      title: I18n.t("common.actions"),
       value: "actions",
       sortable: false,
       align: "end" as const,

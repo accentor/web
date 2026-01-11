@@ -15,7 +15,7 @@
     <VCard>
       <VCardTitle>
         <span class="text-h5">
-          {{ $t("music.playlist.add-item", { obj: cardTitleName }) }}
+          {{ I18n.t("music.playlist.add-item", { obj: cardTitleName }) }}
         </span>
       </VCardTitle>
       <VCardText>
@@ -28,7 +28,7 @@
                 :custom-filter="filterName"
                 item-title="name"
                 item-value="id"
-                :label="$tc('music.playlists', 1)"
+                :label="I18n.t('music.playlists', 1)"
                 return-object
               >
                 <template #item="{ item: innerItem, props: listItemProps }">
@@ -38,7 +38,9 @@
                   >
                     {{ innerItem.raw.name }}
                     <span v-if="innerItem.raw.disabled">
-                      &nbsp;({{ $t("music.playlist.item-already-present") }})
+                      &nbsp;({{
+                        I18n.t("music.playlist.item-already-present")
+                      }})
                     </span>
                   </VListItem>
                 </template>
@@ -57,7 +59,7 @@
           :disabled="selectedPlaylist === null"
           @click="addItemToPlaylist"
         >
-          {{ $t("music.playlist.add") }}
+          {{ I18n.t("music.playlist.add") }}
         </VBtn>
       </VCardActions>
     </VCard>
@@ -68,7 +70,9 @@
 import { computed, type ComputedRef, ref, type Ref } from "vue";
 import { usePlaylistsStore } from "@/store/playlists";
 import type { Album, Artist, Playlist, Track } from "@accentor/api-client-js";
+import { useI18n } from "vue-i18n";
 
+const I18n = useI18n();
 const playlistsStore = usePlaylistsStore();
 
 interface Props {

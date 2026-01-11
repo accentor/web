@@ -1,7 +1,7 @@
 <template>
   <div class="mb-4">
     <label for="image" class="text-subtitle-1">
-      {{ $tc("common.images", 1) }}
+      {{ I18n.t("common.images", 1) }}
     </label>
     <input
       ref="picker"
@@ -50,7 +50,9 @@
           @drop.prevent="handleDrop"
         >
           <VIcon start>mdi-upload</VIcon>
-          {{ hasImage ? $t("common.replace") : $t("common.choose-image") }}
+          {{
+            hasImage ? I18n.t("common.replace") : I18n.t("common.choose-image")
+          }}
         </VBtn>
         <VBtn v-if="hasImage" class="ma-2" elevation="0" @click.stop="clear">
           <VIcon start>mdi-close</VIcon>
@@ -65,6 +67,9 @@
 import { computed, useTemplateRef } from "vue";
 import { useVModel } from "@vueuse/core";
 import type { ImageParams } from "@accentor/api-client-js";
+import { useI18n } from "vue-i18n";
+
+const I18n = useI18n();
 
 interface Props {
   modelValue: ImageParams | null;

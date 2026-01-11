@@ -7,7 +7,7 @@
         :save-pagination="false"
       >
         <template #header>
-          <h2 class="text-h4">{{ $t("home.recently-released") }}</h2>
+          <h2 class="text-h4">{{ I18n.t("home.recently-released") }}</h2>
         </template>
       </AlbumsRow>
     </VContainer>
@@ -18,7 +18,7 @@
         :save-pagination="false"
       >
         <template #header>
-          <h2 class="text-h4">{{ $t("home.recently-added-albums") }}</h2>
+          <h2 class="text-h4">{{ I18n.t("home.recently-added-albums") }}</h2>
         </template>
       </AlbumsRow>
     </VContainer>
@@ -29,7 +29,7 @@
         :save-pagination="false"
       >
         <template #header>
-          <h2 class="text-h4">{{ $t("home.recently-added-artists") }}</h2>
+          <h2 class="text-h4">{{ I18n.t("home.recently-added-artists") }}</h2>
         </template>
       </ArtistsRow>
     </VContainer>
@@ -40,11 +40,11 @@
         :save-pagination="false"
       >
         <template #header>
-          <h2 class="text-h4">{{ $t("home.on-this-day") }}</h2>
+          <h2 class="text-h4">{{ I18n.t("home.on-this-day") }}</h2>
         </template>
         <template #no-data>
           <VAlert :model-value="true" color="info" icon="mdi-information">
-            {{ $t("home.on-this-day-empty") }}
+            {{ I18n.t("home.on-this-day-empty") }}
           </VAlert>
         </template>
       </AlbumsRow>
@@ -57,7 +57,7 @@
         :save-pagination="false"
       >
         <template #header>
-          <h2 class="text-h4">{{ $t("home.random-albums") }}</h2>
+          <h2 class="text-h4">{{ I18n.t("home.random-albums") }}</h2>
         </template>
       </AlbumsRow>
     </VContainer>
@@ -69,7 +69,7 @@
       >
         <template #header>
           <h2 class="text-h4">
-            {{ $t("home.random-artists") }}
+            {{ I18n.t("home.random-artists") }}
           </h2>
         </template>
       </ArtistsRow>
@@ -81,7 +81,7 @@
         :save-pagination="false"
       >
         <template #header>
-          <h2 class="text-h4">{{ $t("home.recently-played-albums") }}</h2>
+          <h2 class="text-h4">{{ I18n.t("home.recently-played-albums") }}</h2>
         </template>
       </AlbumsRow>
     </VContainer>
@@ -92,7 +92,7 @@
         :save-pagination="false"
       >
         <template #header>
-          <h2 class="text-h4">{{ $t("home.recently-played-artists") }}</h2>
+          <h2 class="text-h4">{{ I18n.t("home.recently-played-artists") }}</h2>
         </template>
       </ArtistsRow>
     </VContainer>
@@ -107,10 +107,10 @@ import { usePlaysStore } from "@/store/plays";
 import AlbumsRow from "@/components/AlbumsRow.vue";
 import ArtistsRow from "@/components/ArtistsRow.vue";
 import { useHead } from "@unhead/vue";
-import i18n from "@/i18n";
 import { computed } from "vue";
 import { useDisplay } from "vuetify/framework";
 import { compareAlbumsByReleaseFirst, compareStrings } from "@/util";
+import { useI18n } from "vue-i18n";
 
 const albumsStore = useAlbumsStore();
 const artistsStore = useArtistsStore();
@@ -119,7 +119,8 @@ const playsStore = usePlaysStore();
 const RANDOM_SEED_MAX = 10000;
 const randomSeed = Math.round(Math.random() * RANDOM_SEED_MAX);
 
-useHead({ title: i18n.global.t("common.home") });
+const I18n = useI18n();
+useHead({ title: I18n.t("common.home") });
 
 function randomSort<T extends { id: number }>(items: T[]): T[] {
   return [...items].sort(

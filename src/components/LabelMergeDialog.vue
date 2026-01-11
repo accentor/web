@@ -21,7 +21,7 @@
     <VCard>
       <VCardTitle>
         <span class="text-h5">
-          {{ $t("music.label.merge-into", { obj: label.name }) }}
+          {{ I18n.t("music.label.merge-into", { obj: label.name }) }}
         </span>
       </VCardTitle>
       <VCardText>
@@ -34,7 +34,7 @@
                 :custom-filter="filterName"
                 item-title="name"
                 item-value="id"
-                :label="$tc('music.labels', 1)"
+                :label="I18n.t('music.labels', 1)"
                 return-object
               >
                 <template #item="{ item, props: listItemProps }">
@@ -55,7 +55,7 @@
       <VCardActions>
         <VSpacer></VSpacer>
         <VBtn color="primary" class="ma-2" type="submit" @click="mergeLabels">
-          {{ $t("music.label.merge") }}
+          {{ I18n.t("music.label.merge") }}
         </VBtn>
       </VCardActions>
     </VCard>
@@ -69,7 +69,9 @@ import { useLabelsStore } from "@/store/labels";
 import type { Label } from "@accentor/api-client-js";
 import { computed, ref } from "vue";
 import type { InternalItem } from "vuetify/framework";
+import { useI18n } from "vue-i18n";
 
+const I18n = useI18n();
 const labelsStore = useLabelsStore();
 const props = defineProps<{ disabled: boolean; label: Label }>();
 const mergeLabel = ref<Label | null>(null);

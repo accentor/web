@@ -62,8 +62,9 @@
 import { computed, ref } from "vue";
 import type { Play, Track } from "@accentor/api-client-js";
 import { useTracksStore } from "@/store/tracks";
-import i18n from "@/i18n";
+import { useI18n } from "vue-i18n";
 
+const I18n = useI18n();
 const tracksStore = useTracksStore();
 
 interface Props {
@@ -141,13 +142,13 @@ const svgData = computed(() => {
 });
 
 const yLabels = [
-  i18n.global.t("common.shortWeekdays.monday"),
-  i18n.global.t("common.shortWeekdays.tuesday"),
-  i18n.global.t("common.shortWeekdays.wednesday"),
-  i18n.global.t("common.shortWeekdays.thursday"),
-  i18n.global.t("common.shortWeekdays.friday"),
-  i18n.global.t("common.shortWeekdays.saturday"),
-  i18n.global.t("common.shortWeekdays.sunday"),
+  I18n.t("common.shortWeekdays.monday"),
+  I18n.t("common.shortWeekdays.tuesday"),
+  I18n.t("common.shortWeekdays.wednesday"),
+  I18n.t("common.shortWeekdays.thursday"),
+  I18n.t("common.shortWeekdays.friday"),
+  I18n.t("common.shortWeekdays.saturday"),
+  I18n.t("common.shortWeekdays.sunday"),
 ];
 
 const xLabels = [0, 6, 12, 18, 24];
