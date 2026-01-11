@@ -277,13 +277,12 @@
 
 <script setup lang="ts">
 import { storeToRefs } from "pinia";
-import { compareTracks } from "@/comparators.ts";
 import Errors from "./Errors.vue";
 import TrackFormArtists from "./TrackFormArtists.vue";
-import { useGenresStore } from "../store/genres";
-import { useArtistsStore } from "../store/artists";
-import { useAlbumsStore } from "../store/albums";
-import { useTracksStore } from "../store/tracks";
+import { useGenresStore } from "@/store/genres";
+import { useArtistsStore } from "@/store/artists";
+import { useAlbumsStore } from "@/store/albums";
+import { useTracksStore } from "@/store/tracks";
 import type {
   Album,
   Artist,
@@ -295,6 +294,7 @@ import type {
 import { computed, ref, useTemplateRef } from "vue";
 import i18n from "@/i18n";
 import type { InternalItem } from "vuetify/framework";
+import { compareTracks } from "@/util";
 
 const albumsStore = useAlbumsStore();
 const artistsStore = useArtistsStore();

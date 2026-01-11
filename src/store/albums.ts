@@ -7,10 +7,6 @@ import {
 } from "@accentor/api-client-js";
 import api from "@/api";
 import {
-  compareAlbumsByReleaseFirst,
-  compareAlbumsByTitleFirst,
-} from "@/comparators.ts";
-import {
   useBaseModelStore,
   index as baseIndex,
   create as baseCreate,
@@ -25,6 +21,7 @@ import { useUtilityStore } from "@/store/utility";
 import { useTracksStore } from "@/store/tracks";
 import { useErrorsStore } from "@/store/errors";
 import { useAuthStore } from "@/store/auth";
+import { compareAlbumsByReleaseFirst, compareAlbumsByTitleFirst } from "@/util";
 
 export const useAlbumsStore = defineStore("albums", () => {
   const authStore = useAuthStore();

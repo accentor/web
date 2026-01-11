@@ -109,11 +109,11 @@ import i18n from "@/i18n";
 import EditReviewComment from "./EditReviewComment.vue";
 import AddToPlaylist from "./AddToPlaylist.vue";
 import AlbumMergeDialog from "./AlbumMergeDialog.vue";
-import { useAuthStore } from "../store/auth";
-import { useAlbumsStore } from "../store/albums";
-import { useTracksStore } from "../store/tracks";
-import { usePlayerStore } from "../store/player";
-import { useErrorsStore } from "../store/errors";
+import { useAuthStore } from "@/store/auth";
+import { useAlbumsStore } from "@/store/albums";
+import { useTracksStore } from "@/store/tracks";
+import { usePlayerStore } from "@/store/player";
+import { useErrorsStore } from "@/store/errors";
 
 const route = useRoute();
 

@@ -49,7 +49,7 @@
 import { computed, onMounted, ref, useTemplateRef } from "vue";
 import type { Codec } from "@accentor/api-client-js";
 import { useCodecsStore } from "@/store/codecs";
-import i18n from "@/i18n.ts";
+import i18n from "@/i18n";
 
 const codecsStore = useCodecsStore();
 

@@ -7,9 +7,8 @@
 
 <script setup lang="ts">
 import { computed } from "vue";
-import type { PlayStat } from "@accentor/api-client-js";
+import type { PlayStat, Track } from "@accentor/api-client-js";
 import artistSvgUrl from "@mdi/svg/svg/account-music.svg" with { type: "url" };
-import { calcPlayStatsForArtists } from "@/reducers.ts";
 import TopList from "@/components/TopList.vue";
 import { useArtistsStore } from "@/store/artists";
 import { useTracksStore } from "@/store/tracks";
@@ -24,6 +23,28 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), { useTrackLength: false });
+
+function calcPlayStatsForArtists(
+  playStats: { track_id: number; total_length: number; count: number }[],
+  tracks: Record<string, Track>,
+  useTrackLength: boolean,
+): Record<string, number> {
+  const prop = useTrackLength ? "total_length" : "count";
+  const acc: Record<string, number> = {};
+  for (const stat of playStats) {
+    const uniqueIds = (tracks[`${stat.track_id}`]?.track_artists || [])
+      .map((ta) => ta.artist_id)
+      .filter((id, index, list) => list.indexOf(id) === index);
+    for (const ta of uniqueIds) {
+      if (!(`${ta}` in acc)) {
+        acc[`${ta}`] = stat[prop];
+      } else {
+        acc[`${ta}`]! += stat[prop];
+      }
+    }
+  }
+  return acc;
+}
 
 const topArtists = computed(() =>
   Object.entries(

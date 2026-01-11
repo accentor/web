@@ -12,8 +12,8 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import { storeToRefs } from "pinia";
-import { compareStrings } from "@/comparators.ts";
 import { useGenresStore } from "@/store/genres";
+import { compareStrings } from "@/util";
 
 interface Props {
   track: { genre_ids: number[] };

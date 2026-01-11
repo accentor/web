@@ -52,8 +52,8 @@
 </template>
 
 <script setup lang="ts">
-import { useAuthStore } from "../store/auth";
-import { useAuthTokensStore } from "../store/auth_tokens";
+import { useAuthStore } from "@/store/auth";
+import { useAuthTokensStore } from "@/store/auth_tokens";
 import { usePagination } from "@/composables/pagination";
 import i18n from "@/i18n";
 import { computed, ref } from "vue";

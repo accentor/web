@@ -65,8 +65,8 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
 import type { InternalItem } from "vuetify/framework";
-import { useAuthStore } from "../store/auth";
-import { useArtistsStore } from "../store/artists";
+import { useAuthStore } from "@/store/auth";
+import { useArtistsStore } from "@/store/artists";
 import type { Artist } from "@accentor/api-client-js";
 import { storeToRefs } from "pinia";
 

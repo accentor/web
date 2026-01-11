@@ -6,7 +6,6 @@ import {
   ArtistsScope,
 } from "@accentor/api-client-js";
 import api from "@/api";
-import { compareStrings } from "@/comparators.ts";
 import {
   useBaseModelStore,
   index as baseIndex,
@@ -21,6 +20,7 @@ import { useAlbumsStore } from "@/store/albums";
 import { useTracksStore } from "@/store/tracks";
 import { useAuthStore } from "@/store/auth";
 import { useErrorsStore } from "@/store/errors";
+import { compareStrings } from "@/util";
 
 export const useArtistsStore = defineStore("artists", () => {
   const albumsStore = useAlbumsStore();

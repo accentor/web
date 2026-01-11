@@ -23,9 +23,8 @@
 
 <script setup lang="ts">
 import { computed, ref } from "vue";
-import type { PlayStat } from "@accentor/api-client-js";
+import type { PlayStat, Track } from "@accentor/api-client-js";
 import albumSvgUrl from "@mdi/svg/svg/album.svg" with { type: "url" };
-import { calcPlayCountForAlbums, calcPlayTimeForAlbums } from "@/reducers.ts";
 import TopList from "@/components/TopList.vue";
 import { useAlbumsStore } from "@/store/albums";
 import { useTracksStore } from "@/store/tracks";
@@ -41,6 +40,67 @@ interface Props {
 
 const props = withDefaults(defineProps<Props>(), { useTrackLength: false });
 const useAverage = ref(true);
+
+function calcPlayTimeForAlbums(
+  playStats: { total_length: number; track_id: number }[],
+  tracks: Record<string, Track>,
+  useAverage = false,
+): Record<string, number> {
+  const acc: Record<string, number> = {};
+  for (const stat of playStats) {
+    const album_id = tracks[stat.track_id]?.album_id;
+    if (!album_id) {
+      continue;
+    }
+
+    if (!(`${album_id}` in acc)) {
+      acc[`${album_id}`] = stat.total_length;
+    } else {
+      acc[`${album_id}`]! += stat.total_length;
+    }
+  }
+
+  if (useAverage) {
+    const arr = Object.values(tracks);
+    for (const album_id in acc) {
+      const totalLength = arr
+        .filter((t) => `${t.album_id}` === album_id)
+        .reduce((a, b) => a + (b.length ?? 0), 0);
+      // Since we can't divide by zero, we set albums without any trackLengths to 0
+      acc[album_id] = totalLength === 0 ? 0 : acc[album_id]! / totalLength;
+    }
+  }
+  return acc;
+}
+
+function calcPlayCountForAlbums(
+  playStats: { count: number; track_id: number }[],
+  tracks: Record<string, Track>,
+  useAverage = false,
+): Record<string, number> {
+  const acc: Record<string, number> = {};
+  for (const stat of playStats) {
+    const album_id = tracks[stat.track_id]?.album_id;
+    if (!album_id) {
+      continue;
+    }
+
+    if (!(`${album_id}` in acc)) {
+      acc[`${album_id}`] = stat.count;
+    } else {
+      acc[`${album_id}`]! += stat.count;
+    }
+  }
+
+  if (useAverage) {
+    const arr = Object.values(tracks);
+    for (const album_id in acc) {
+      const nrOfTracks = arr.filter((t) => `${t.album_id}` === album_id).length;
+      acc[album_id] = acc[album_id]! / nrOfTracks;
+    }
+  }
+  return acc;
+}
 
 const topAlbums = computed(() =>
   Object.entries(

@@ -54,8 +54,8 @@
 
 <script setup lang="ts">
 import { storeToRefs } from "pinia";
-import { useAuthStore } from "../store/auth";
-import { useAlbumsStore } from "../store/albums";
+import { useAuthStore } from "@/store/auth";
+import { useAlbumsStore } from "@/store/albums";
 import type { Album } from "@accentor/api-client-js";
 import { computed, ref } from "vue";
 import type { InternalItem } from "vuetify/framework";

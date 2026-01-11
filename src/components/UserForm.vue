@@ -44,7 +44,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref, useTemplateRef, watch } from "vue";
+import { computed, onMounted, ref, useTemplateRef } from "vue";
 import { storeToRefs } from "pinia";
 import type { VForm } from "vuetify/components";
 import type { User } from "@accentor/api-client-js";

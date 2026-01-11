@@ -64,7 +64,12 @@ import { computed, ref, watch } from "vue";
 import { storeToRefs } from "pinia";
 import { useRoute, useRouter } from "vue-router";
 import { useHead } from "@unhead/vue";
-import { PlaysScope, type PlayStat } from "@accentor/api-client-js";
+import {
+  type Play,
+  PlaysScope,
+  type PlayStat,
+  type Track,
+} from "@accentor/api-client-js";
 import DateRangeSelect from "@/components/DateRangeSelect.vue";
 import PercentagePlayedCard from "@/components/PercentagePlayedCard.vue";
 import PlayCountCard from "@/components/PlayCountCard.vue";
@@ -72,11 +77,10 @@ import PlaysPunchcard from "@/components/PlaysPunchcard.vue";
 import TopArtistsList from "@/components/TopArtistsList.vue";
 import TopTracksList from "@/components/TopTracksList.vue";
 import TopAlbumsList from "@/components/TopAlbumsList.vue";
-import { filterPlaysByPeriod, filterPlaysByTracks } from "@/filters.ts";
-import { useArtistsStore } from "../store/artists";
-import { useTracksStore } from "../store/tracks";
-import { usePlaysStore } from "../store/plays";
-import { useAuthStore } from "../store/auth";
+import { useArtistsStore } from "@/store/artists";
+import { useTracksStore } from "@/store/tracks";
+import { usePlaysStore } from "@/store/plays";
+import { useAuthStore } from "@/store/auth";
 import i18n from "@/i18n";
 import api from "@/api";
 
@@ -126,6 +130,19 @@ const filteredTracks = computed(() => {
   }
   return tracksStore.allTracks;
 });
+
+function filterPlaysByTracks(tracks: Track[]) {
+  return function (play: Play): boolean {
+    return tracks.some((t) => t.id === play.track_id);
+  };
+}
+
+function filterPlaysByPeriod(startDate: Date, endDate: Date) {
+  return function (play: Play): boolean {
+    const playedAt = new Date(play.played_at);
+    return playedAt > startDate && playedAt < endDate;
+  };
+}
 
 const filteredPlays = computed(() => {
   let plays = playsStore.allPlays.filter(

@@ -38,10 +38,10 @@
 </template>
 
 <script setup lang="ts">
-import { useCoverFilenamesStore } from "../store/cover_filenames";
+import { useCoverFilenamesStore } from "@/store/cover_filenames";
 import type { CoverFilename } from "@accentor/api-client-js";
 import { onMounted, ref, useTemplateRef } from "vue";
-import i18n from "@/i18n.ts";
+import i18n from "@/i18n";
 
 const coverFilenamesStore = useCoverFilenamesStore();
 const props = defineProps<{ coverFilename?: CoverFilename }>();

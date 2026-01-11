@@ -1,7 +1,6 @@
 import { computed } from "vue";
 import { defineStore } from "pinia";
 import api from "@/api";
-import { compareStrings } from "../comparators.ts";
 import {
   create as baseCreate,
   destroy as baseDestroy,
@@ -17,6 +16,7 @@ import type {
   PlaylistItemParams,
   PlaylistParams,
 } from "@accentor/api-client-js";
+import { compareStrings } from "@/util";
 
 export const usePlaylistsStore = defineStore("playlists", () => {
   const authStore = useAuthStore();

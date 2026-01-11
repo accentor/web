@@ -12,8 +12,8 @@
 <script setup lang="ts">
 import { storeToRefs } from "pinia";
 import CoverFilenameForm from "./CoverFilenameForm.vue";
-import { useAuthStore } from "../store/auth";
-import { useCoverFilenamesStore } from "../store/cover_filenames";
+import { useAuthStore } from "@/store/auth";
+import { useCoverFilenamesStore } from "@/store/cover_filenames";
 
 const { isModerator } = storeToRefs(useAuthStore());
 const { allCoverFilenames: coverFilenames } = storeToRefs(

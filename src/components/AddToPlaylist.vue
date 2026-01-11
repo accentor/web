@@ -66,7 +66,7 @@
 
 <script setup lang="ts">
 import { computed, type ComputedRef, ref, type Ref } from "vue";
-import { usePlaylistsStore } from "../store/playlists";
+import { usePlaylistsStore } from "@/store/playlists";
 import type { Album, Artist, Playlist, Track } from "@accentor/api-client-js";
 
 const playlistsStore = usePlaylistsStore();

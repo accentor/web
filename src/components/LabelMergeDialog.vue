@@ -64,8 +64,8 @@
 
 <script setup lang="ts">
 import { storeToRefs } from "pinia";
-import { useAuthStore } from "../store/auth";
-import { useLabelsStore } from "../store/labels";
+import { useAuthStore } from "@/store/auth";
+import { useLabelsStore } from "@/store/labels";
 import type { Label } from "@accentor/api-client-js";
 import { computed, ref } from "vue";
 import type { InternalItem } from "vuetify/framework";

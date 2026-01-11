@@ -1,7 +1,6 @@
 import { computed } from "vue";
 import { defineStore } from "pinia";
 import api from "@/api";
-import { compareStrings } from "../comparators.ts";
 import {
   create as baseCreate,
   destroy as baseDestroy,
@@ -16,6 +15,7 @@ import { useAlbumsStore } from "./albums";
 import { useAuthStore } from "@/store/auth";
 import { useErrorsStore } from "@/store/errors";
 import type { Label, LabelParams } from "@accentor/api-client-js";
+import { compareStrings } from "@/util";
 
 export const useLabelsStore = defineStore("labels", () => {
   const authStore = useAuthStore();

@@ -38,7 +38,7 @@
 </template>
 
 <script setup lang="ts">
-import { useLocationsStore } from "../store/locations";
+import { useLocationsStore } from "@/store/locations";
 import { computed, onMounted, ref, useTemplateRef } from "vue";
 import type { Location } from "@accentor/api-client-js";
 import i18n from "@/i18n";

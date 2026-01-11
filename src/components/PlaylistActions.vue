@@ -84,11 +84,11 @@
 </template>
 
 <script setup lang="ts">
-import { useAuthStore } from "../store/auth";
-import { usePlaylistsStore } from "../store/playlists";
-import { useTracksStore } from "../store/tracks";
-import { useErrorsStore } from "../store/errors";
-import { usePlayerStore } from "../store/player";
+import { useAuthStore } from "@/store/auth";
+import { usePlaylistsStore } from "@/store/playlists";
+import { useTracksStore } from "@/store/tracks";
+import { useErrorsStore } from "@/store/errors";
+import { usePlayerStore } from "@/store/player";
 import type { Playlist } from "@accentor/api-client-js";
 import { computed } from "vue";
 import i18n from "@/i18n";

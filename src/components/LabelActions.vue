@@ -54,8 +54,8 @@
 <script setup lang="ts">
 import { storeToRefs } from "pinia";
 import LabelMergeDialog from "./LabelMergeDialog.vue";
-import { useAuthStore } from "../store/auth";
-import { useLabelsStore } from "../store/labels";
+import { useAuthStore } from "@/store/auth";
+import { useLabelsStore } from "@/store/labels";
 import type { Label } from "@accentor/api-client-js";
 import { computed } from "vue";
 import i18n from "@/i18n";

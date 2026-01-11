@@ -107,7 +107,7 @@
 <script setup lang="ts">
 import { storeToRefs } from "pinia";
 import Draggable from "vuedraggable";
-import { useArtistsStore } from "../store/artists";
+import { useArtistsStore } from "@/store/artists";
 import { useVModel } from "@vueuse/core";
 import i18n from "@/i18n";
 import { computed } from "vue";

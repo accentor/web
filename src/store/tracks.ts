@@ -1,6 +1,5 @@
 import { computed, type ComputedRef } from "vue";
 import api from "@/api";
-import { compareTracks } from "@/comparators.ts";
 import {
   type Track,
   type TrackParams,
@@ -19,6 +18,7 @@ import {
 } from "./base";
 import { useAuthStore } from "@/store/auth";
 import { useErrorsStore } from "@/store/errors";
+import { compareTracks } from "@/util";
 
 export const useTracksStore = defineStore("tracks", () => {
   const albumsStore = useAlbumsStore();

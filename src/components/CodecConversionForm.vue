@@ -62,7 +62,7 @@ import type { CodecConversion } from "@accentor/api-client-js";
 import { useCodecConversionsStore } from "@/store/codec_conversions";
 import { useCodecsStore } from "@/store/codecs";
 import { computed, onMounted, ref, useTemplateRef } from "vue";
-import i18n from "@/i18n.ts";
+import i18n from "@/i18n";
 
 const codecConversionsStore = useCodecConversionsStore();
 const props = defineProps<{ codecConversion?: CodecConversion }>();

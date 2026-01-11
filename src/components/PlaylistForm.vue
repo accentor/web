@@ -107,10 +107,10 @@
 
 <script setup lang="ts">
 import Draggable from "vuedraggable";
-import { usePlaylistsStore } from "../store/playlists";
-import { useArtistsStore } from "../store/artists";
-import { useAlbumsStore } from "../store/albums";
-import { useTracksStore } from "../store/tracks";
+import { usePlaylistsStore } from "@/store/playlists";
+import { useArtistsStore } from "@/store/artists";
+import { useAlbumsStore } from "@/store/albums";
+import { useTracksStore } from "@/store/tracks";
 import {
   type Playlist,
   type PlaylistAccess,
@@ -242,5 +242,3 @@ async function submit(): Promise<void> {
   }
 }
 </script>
-
-<style></style>

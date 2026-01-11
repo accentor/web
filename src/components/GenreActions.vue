@@ -54,8 +54,8 @@
 <script setup lang="ts">
 import { storeToRefs } from "pinia";
 import GenreMergeDialog from "./GenreMergeDialog.vue";
-import { useAuthStore } from "../store/auth";
-import { useGenresStore } from "../store/genres";
+import { useAuthStore } from "@/store/auth";
+import { useGenresStore } from "@/store/genres";
 import type { Genre } from "@accentor/api-client-js";
 import { computed } from "vue";
 import i18n from "@/i18n";

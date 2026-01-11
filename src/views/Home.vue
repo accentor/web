@@ -100,11 +100,6 @@
 </template>
 
 <script setup lang="ts">
-import {
-  compareAlbumsByReleaseFirst,
-  compareByRecentlyPlayed,
-  compareStrings,
-} from "@/comparators.ts";
 import { storeToRefs } from "pinia";
 import { useArtistsStore } from "@/store/artists";
 import { useAlbumsStore } from "@/store/albums";
@@ -115,6 +110,7 @@ import { useHead } from "@unhead/vue";
 import i18n from "@/i18n";
 import { computed } from "vue";
 import { useDisplay } from "vuetify/framework";
+import { compareAlbumsByReleaseFirst, compareStrings } from "@/util";
 
 const albumsStore = useAlbumsStore();
 const artistsStore = useArtistsStore();
@@ -129,6 +125,17 @@ function randomSort<T extends { id: number }>(items: T[]): T[] {
   return [...items].sort(
     (i1, i2) => Math.sin(i2.id + randomSeed) - Math.sin(i1.id + randomSeed),
   );
+}
+
+function compareByRecentlyPlayed(
+  stats: Record<string, { last_played_at: Date }>,
+) {
+  return function (i1: { id: number }, i2: { id: number }): number {
+    return (
+      (stats[`${i2.id}`]?.last_played_at || new Date(0)).getTime() -
+      (stats[`${i1.id}`]?.last_played_at || new Date(0)).getTime()
+    );
+  };
 }
 
 const { allAlbums: albums, albumsOnThisDay } = storeToRefs(albumsStore);

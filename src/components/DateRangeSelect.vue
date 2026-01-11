@@ -45,7 +45,7 @@
 import { computed, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useDate } from "vuetify";
-import i18n from "@/i18n.ts";
+import i18n from "@/i18n";
 
 const route = useRoute();
 const router = useRouter();

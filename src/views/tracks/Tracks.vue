@@ -11,7 +11,7 @@
 <script setup lang="ts">
 import { storeToRefs } from "pinia";
 import { useHead } from "@unhead/vue";
-import TracksTable from "../../components/TracksTable.vue";
+import TracksTable from "@/components/TracksTable.vue";
 import { useTracksStore } from "@/store/tracks";
 import i18n from "@/i18n";
 

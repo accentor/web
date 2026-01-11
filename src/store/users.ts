@@ -1,6 +1,5 @@
 import { computed } from "vue";
 import api from "@/api";
-import { compareStrings } from "@/comparators.ts";
 import { defineStore } from "pinia";
 import {
   create as baseCreate,
@@ -12,6 +11,7 @@ import {
 import { useAuthStore } from "@/store/auth";
 import { useErrorsStore } from "@/store/errors";
 import type { User, UserParams } from "@accentor/api-client-js";
+import { compareStrings } from "@/util";
 
 export const useUsersStore = defineStore("users", () => {
   const authStore = useAuthStore();

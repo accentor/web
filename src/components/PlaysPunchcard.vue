@@ -60,8 +60,7 @@
 
 <script setup lang="ts">
 import { computed, ref } from "vue";
-import type { Play } from "@accentor/api-client-js";
-import { calcPlayCountForHours, calcPlayTimeForHours } from "@/reducers.ts";
+import type { Play, Track } from "@accentor/api-client-js";
 import { useTracksStore } from "@/store/tracks";
 import i18n from "@/i18n";
 
@@ -74,6 +73,47 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), { useTrackLength: false });
+
+function calcPlayCountForHours(plays: Play[]): number[] {
+  const acc: number[] = new Array(168).fill(0);
+  for (const play of plays) {
+    const playedAt = new Date(play.played_at);
+    const day = playedAt.getDay();
+    const hour = playedAt.getHours();
+    acc[day * 24 + hour]!++;
+  }
+  // Put sunday last
+  acc.push(...acc.splice(0, 24));
+  return acc;
+}
+
+function calcPlayTimeForHours(
+  plays: Play[],
+  tracks: Record<string, Track>,
+): number[] {
+  const binnedByTrack: Record<string, Play[]> = {};
+  for (const play of plays) {
+    if (!binnedByTrack[`${play.track_id}`]) {
+      binnedByTrack[`${play.track_id}`] = [play];
+    } else {
+      binnedByTrack[`${play.track_id}`]!.push(play);
+    }
+  }
+
+  const acc = new Array(168).fill(0);
+  for (const track_id in binnedByTrack) {
+    const length = tracks[track_id]?.length ?? 0;
+    for (const play of binnedByTrack[track_id]!) {
+      const playedAt = new Date(play.played_at);
+      const day = playedAt.getDay();
+      const hour = playedAt.getHours();
+      acc[day * 24 + hour] += length;
+    }
+  }
+  // Put sunday last
+  acc.push(...acc.splice(0, 24));
+  return acc;
+}
 
 const binnedPlays = computed(() =>
   props.useTrackLength
