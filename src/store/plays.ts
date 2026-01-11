@@ -1,6 +1,5 @@
 import { computed } from "vue";
 import { defineStore } from "pinia";
-import { useDate } from "vuetify";
 import api from "@/api";
 import {
   type Play,
@@ -20,8 +19,6 @@ export const usePlaysStore = defineStore("plays", () => {
   const authStore = useAuthStore();
   const errorsStore = useErrorsStore();
   const tracksStore = useTracksStore();
-
-  const dateAdapter = useDate();
 
   const {
     items: plays,
@@ -124,7 +121,7 @@ export const usePlaysStore = defineStore("plays", () => {
     errorsStore,
     setItem,
     (val) => ({
-      play: { track_id: val, played_at: dateAdapter.toISO(new Date()) },
+      play: { track_id: val, played_at: new Date().toISOString() },
     }),
   );
 
