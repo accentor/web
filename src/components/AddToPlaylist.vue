@@ -1,12 +1,12 @@
 <template>
   <VDialog v-if="playlistOptions.length" v-model="dialog" width="600px">
-    <template #activator="{ props }">
+    <template #activator="{ props: dialogProps }">
       <VBtn
         color="primary"
         variant="text"
         icon
         size="small"
-        v-bind="props"
+        v-bind="dialogProps"
         @click.stop.prevent
       >
         <VIcon size="x-large">mdi-playlist-plus</VIcon>
@@ -14,9 +14,9 @@
     </template>
     <VCard>
       <VCardTitle>
-        <span class="text-h5">{{
-          $t("music.playlist.add-item", { obj: item.name || item.title })
-        }}</span>
+        <span class="text-h5">
+          {{ $t("music.playlist.add-item", { obj: cardTitleName }) }}
+        </span>
       </VCardTitle>
       <VCardText>
         <VContainer>
@@ -31,10 +31,13 @@
                 :label="$tc('music.playlists', 1)"
                 return-object
               >
-                <template #item="{ item: innerItem, props }">
-                  <VListItem :disabled="innerItem.disabled" v-bind="props">
-                    {{ innerItem.name }}
-                    <span v-if="innerItem.disabled">
+                <template #item="{ item: innerItem, props: listItemProps }">
+                  <VListItem
+                    :disabled="innerItem.raw.disabled"
+                    v-bind="listItemProps"
+                  >
+                    {{ innerItem.raw.name }}
+                    <span v-if="innerItem.raw.disabled">
                       &nbsp;({{ $t("music.playlist.item-already-present") }})
                     </span>
                   </VListItem>
@@ -61,66 +64,60 @@
   </VDialog>
 </template>
 
-<script>
-import { mapActions, mapState } from "pinia";
-import { useAuthStore } from "../store/auth";
-import { usePlaylistsStore } from "../store/playlists";
+<script setup lang="ts">
+import { computed, type ComputedRef, ref, type Ref } from "vue";
+import { usePlaylistsStore } from "@/store/playlists";
+import type { Album, Artist, Playlist, Track } from "@accentor/api-client-js";
 
-export default {
-  name: "AddToPlaylist",
-  props: {
-    item: {
-      type: Object,
-      required: true,
-    },
-    type: {
-      type: String,
-      required: true,
-    },
-  },
-  data() {
-    return {
-      dialog: false,
-      selectedPlaylist: null,
-    };
-  },
-  computed: {
-    ...mapState(useAuthStore, ["currentUser"]),
-    ...mapState(usePlaylistsStore, ["editablePlaylists"]),
-    playlistOptions() {
-      return structuredClone(this.editablePlaylists).reduce((options, p) => {
-        if (p.playlist_type === this.type) {
-          p.disabled = p.item_ids.includes(this.item.id);
-          options.push(p);
-        }
-        return options;
-      }, []);
-    },
-  },
-  methods: {
-    ...mapActions(usePlaylistsStore, ["addItem"]),
-    filterName(item, queryText) {
-      const search = queryText.toLowerCase();
-      return item.name.toLowerCase().indexOf(search) > -1;
-    },
-    addItemToPlaylist() {
-      if (this.selectedPlaylist === null) {
-        return;
-      }
+const playlistsStore = usePlaylistsStore();
 
-      // Item type requires a capitalized string
-      const item_type =
-        this.selectedPlaylist.playlist_type.charAt(0).toUpperCase() +
-        this.selectedPlaylist.playlist_type.slice(1);
-      this.addItem(this.selectedPlaylist.id, {
-        item_id: this.item.id,
-        item_type,
-      }).finally(() => {
-        this.dialog = false;
-      });
-    },
-  },
-};
+interface Props {
+  item: Track | Album | Artist;
+  type: "track" | "album" | "artist";
+}
+
+const props = defineProps<Props>();
+const item = computed(() => props.item);
+
+const cardTitleName = computed(() => {
+  if ("name" in item.value) {
+    return item.value.name;
+  }
+  return item.value.title;
+});
+
+const dialog: Ref<boolean> = ref(false);
+const selectedPlaylist: Ref<Playlist | null> = ref(null);
+
+const playlistOptions: ComputedRef<(Playlist & { disabled: boolean })[]> =
+  computed(() =>
+    playlistsStore.editablePlaylists
+      .filter((p) => p.playlist_type === props.type)
+      .map((p) => ({
+        ...p,
+        disabled: p.item_ids.includes(item.value.id),
+      })),
+  );
+
+function filterName(value: string, queryText: string): boolean {
+  const search = queryText.toLowerCase();
+  return value.toLowerCase().indexOf(search) > -1;
+}
+
+async function addItemToPlaylist(): Promise<void> {
+  if (selectedPlaylist.value === null) {
+    return;
+  }
+
+  const item_type = (props.type.charAt(0).toUpperCase() +
+    props.type.slice(1)) as "Album" | "Artist" | "Track";
+  try {
+    await playlistsStore.addItem(selectedPlaylist.value.id, {
+      item_id: item.value.id,
+      item_type,
+    });
+  } finally {
+    dialog.value = false;
+  }
+}
 </script>
-
-<style></style>

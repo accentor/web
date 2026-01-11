@@ -1,8 +1,8 @@
 <template>
   <VContainer fluid>
     <VDataIterator
-      v-model:page="pagination.page"
-      :items="filteredItems"
+      v-model:page="page"
+      :items="filteredPlaylists"
       :items-per-page="numberOfItems"
     >
       <template #header>
@@ -40,7 +40,7 @@
               </VCardTitle>
               <VCardText>
                 <span class="d-block">
-                  {{ users[item.raw.user_id].name }} &bull;
+                  {{ users[`${item.raw.user_id}`]?.name }} &bull;
                   {{ $t(`music.playlist.access_options.${item.raw.access}`) }}
                 </span>
                 <span>
@@ -62,7 +62,7 @@
       <template #footer="{ pageCount }">
         <VRow class="mt-2" justify="center">
           <VPagination
-            v-model="pagination.page"
+            v-model="page"
             density="compact"
             :length="pageCount"
             total-visible="5"
@@ -73,54 +73,45 @@
   </VContainer>
 </template>
 
-<script>
-import { mapActions, mapState } from "pinia";
-import Paginated from "../../mixins/Paginated";
-import Searchable from "../../mixins/Searchable";
-import PlaylistActions from "../../components/PlaylistActions.vue";
-import { usePlaylistsStore } from "../../store/playlists";
-import { useUsersStore } from "../../store/users";
+<script setup lang="ts">
+import { computed, onMounted } from "vue";
+import { storeToRefs } from "pinia";
+import { useHead } from "@unhead/vue";
+import { useDisplay } from "vuetify/framework";
+import PlaylistActions from "@/components/PlaylistActions.vue";
+import { usePlaylistsStore } from "@/store/playlists";
+import { useUsersStore } from "@/store/users";
+import i18n from "@/i18n";
+import { useSearch } from "@/composables/search";
+import { usePagination } from "@/composables/pagination";
 
-export default {
-  name: "Playlists",
-  components: { PlaylistActions },
-  mixins: [Paginated, Searchable],
-  head() {
-    return { title: this.$tc("music.playlists", 2) };
-  },
-  computed: {
-    ...mapState(usePlaylistsStore, { playlists: "playlistsByName" }),
-    ...mapState(useUsersStore, ["users"]),
-    filteredItems() {
-      return this.playlists.filter(
-        (item) =>
-          !this.search ||
-          item.name
-            .toLocaleLowerCase()
-            .indexOf(this.search.toLocaleLowerCase()) >= 0 ||
-          item.normalized_name.indexOf(this.search.toLocaleLowerCase()) >= 0,
-      );
-    },
-    numberOfItems() {
-      if (this.$vuetify.display.xlAndUp) {
-        return 30;
-      } else if (this.$vuetify.display.lg) {
-        return 20;
-      } else if (this.$vuetify.display.md) {
-        return 15;
-      } else {
-        return 12;
-      }
-    },
-  },
-  created() {
-    this.fetchContent();
-  },
-  methods: {
-    ...mapActions(usePlaylistsStore, ["index"]),
-    async fetchContent() {
-      await this.index();
-    },
-  },
-};
+useHead({ title: i18n.global.tc("music.playlists", 2) });
+
+const playlistsStore = usePlaylistsStore();
+const { playlistsByName: playlists } = storeToRefs(playlistsStore);
+const { users } = storeToRefs(useUsersStore());
+
+const { page } = usePagination();
+const { search } = useSearch();
+const filteredPlaylists = computed(() => {
+  const lookup = search.value.toLowerCase();
+  return playlists.value.filter(
+    (item) => !lookup || item.name.toLowerCase().indexOf(lookup) >= 0,
+  );
+});
+
+const display = useDisplay();
+const numberOfItems = computed(() => {
+  if (display.xlAndUp) {
+    return 30;
+  } else if (display.lg) {
+    return 20;
+  } else if (display.md) {
+    return 15;
+  } else {
+    return 12;
+  }
+});
+
+onMounted(() => playlistsStore.index());
 </script>

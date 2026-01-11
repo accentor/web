@@ -46,7 +46,7 @@
               @click="start(rescan.id)"
             >
               <VListItemTitle :disabled="rescan.running">
-                Rescan {{ locations[rescan.location_id].path }}
+                Rescan {{ locations[rescan.location_id]?.path }}
               </VListItemTitle>
             </VListItem>
           </VList>
@@ -133,82 +133,70 @@
   </VContainer>
 </template>
 
-<script>
-import { mapState, mapActions } from "pinia";
-import EditCodecs from "../components/EditCodecs.vue";
-import EditCodecConversions from "../components/EditCodecConversions.vue";
-import EditCoverFilenames from "../components/EditCoverFilenames.vue";
-import EditImageTypes from "../components/EditImageTypes.vue";
-import EditLocations from "../components/EditLocations.vue";
-import MaintenanceActions from "../components/MaintenanceActions.vue";
-import { useAuthStore } from "../store/auth";
-import { useCodecConversionsStore } from "../store/codec_conversions";
-import { useCodecsStore } from "../store/codecs";
-import { useCoverFilenamesStore } from "../store/cover_filenames";
-import { useImageTypesStore } from "../store/image_types";
-import { useLocationsStore } from "../store/locations";
-import { useRescansStore } from "../store/rescan";
+<script setup lang="ts">
+import { computed } from "vue";
+import { storeToRefs } from "pinia";
+import { useHead } from "@unhead/vue";
+import EditCodecs from "@/components/EditCodecs.vue";
+import EditCodecConversions from "@/components/EditCodecConversions.vue";
+import EditCoverFilenames from "@/components/EditCoverFilenames.vue";
+import EditImageTypes from "@/components/EditImageTypes.vue";
+import EditLocations from "@/components/EditLocations.vue";
+import MaintenanceActions from "@/components/MaintenanceActions.vue";
+import { useAuthStore } from "@/store/auth";
+import { useCodecConversionsStore } from "@/store/codec_conversions";
+import { useCodecsStore } from "@/store/codecs";
+import { useCoverFilenamesStore } from "@/store/cover_filenames";
+import { useImageTypesStore } from "@/store/image_types";
+import { useLocationsStore } from "@/store/locations";
+import { useRescansStore } from "@/store/rescan";
+import i18n from "@/i18n";
 
-export default {
-  name: "Library",
-  components: {
-    EditCodecs,
-    EditCodecConversions,
-    EditCoverFilenames,
-    EditImageTypes,
-    EditLocations,
-    MaintenanceActions,
-  },
-  head() {
-    return { title: this.$t("librarySettings") };
-  },
-  computed: {
-    ...mapState(useAuthStore, ["isModerator"]),
-    ...mapState(useRescansStore, {
-      rescans: "allRescans",
-      combinedRescans: "combinedRescans",
-      lastClick: "lastClick",
-    }),
-    ...mapState(useLocationsStore, ["locations"]),
-    rescanRunning() {
-      return this.combinedRescans.running ||
-        this.lastClick > new Date(this.combinedRescans.finished_at)
-        ? true
-        : false;
-    },
-  },
-  created() {
-    this.loadData();
-  },
-  methods: {
-    ...mapActions(useCodecConversionsStore, {
-      codecConversionsIndex: "index",
-    }),
-    ...mapActions(useCodecsStore, { codecsIndex: "index" }),
-    ...mapActions(useCoverFilenamesStore, {
-      coverFilenamesIndex: "index",
-    }),
-    ...mapActions(useImageTypesStore, { imageTypesIndex: "index" }),
-    ...mapActions(useLocationsStore, { locationsIndex: "index" }),
-    ...mapActions(useRescansStore, {
-      rescansIndex: "index",
-      start: "start",
-      startAll: "startAll",
-    }),
-    async loadData() {
-      let pendingResults = [];
-      if (this.isModerator) {
-        pendingResults.push(this.rescansIndex());
-        pendingResults.push(this.codecsIndex());
-        pendingResults.push(this.codecConversionsIndex());
-        pendingResults.push(this.coverFilenamesIndex());
-        pendingResults.push(this.imageTypesIndex());
-        pendingResults.push(this.locationsIndex());
-      }
-      await Promise.all(pendingResults);
-    },
-  },
-};
+useHead({ title: i18n.global.t("librarySettings") });
+
+const codecsStore = useCodecsStore();
+const codecConversionsStore = useCodecConversionsStore();
+const coverFilenamesStore = useCoverFilenamesStore();
+const imageTypesStore = useImageTypesStore();
+const locationsStore = useLocationsStore();
+const rescansStore = useRescansStore();
+
+const { isModerator } = storeToRefs(useAuthStore());
+const {
+  allRescans: rescans,
+  combinedRescans,
+  lastClick,
+} = storeToRefs(rescansStore);
+const { locations } = storeToRefs(locationsStore);
+
+const rescanRunning = computed(
+  () =>
+    combinedRescans.value.running ||
+    lastClick.value > new Date(combinedRescans.value.finished_at),
+);
+
+async function loadData(): Promise<void> {
+  const pendingResults = [];
+  if (isModerator.value) {
+    pendingResults.push(codecsStore.index());
+    pendingResults.push(codecConversionsStore.index());
+    pendingResults.push(coverFilenamesStore.index());
+    pendingResults.push(imageTypesStore.index());
+    pendingResults.push(locationsStore.index());
+    pendingResults.push(rescansStore.index());
+  }
+  await Promise.all(pendingResults);
+}
+
+loadData();
+
+async function start(id: number): Promise<void> {
+  await rescansStore.start(id);
+}
+
+async function startAll(): Promise<void> {
+  await rescansStore.startAll();
+}
 </script>
 
 <style lang="scss" scoped>

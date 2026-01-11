@@ -5,21 +5,12 @@
   </div>
 </template>
 
-<script>
-import { mapState } from "pinia";
+<script setup lang="ts">
+import { storeToRefs } from "pinia";
 import LocationForm from "./LocationForm.vue";
-import { useAuthStore } from "../store/auth";
-import { useLocationsStore } from "../store/locations";
+import { useAuthStore } from "@/store/auth";
+import { useLocationsStore } from "@/store/locations";
 
-export default {
-  name: "EditLocations",
-  components: { LocationForm },
-  data() {
-    return {};
-  },
-  computed: {
-    ...mapState(useLocationsStore, { locations: "allLocations" }),
-    ...mapState(useAuthStore, ["isModerator"]),
-  },
-};
+const { allLocations: locations } = storeToRefs(useLocationsStore());
+const { isModerator } = storeToRefs(useAuthStore());
 </script>

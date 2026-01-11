@@ -8,22 +8,20 @@
   </VContainer>
 </template>
 
-<script>
-import UserForm from "../../components/UserForm.vue";
-import { useUsersStore } from "../../store/users";
-import { mapState } from "pinia";
+<script setup lang="ts">
+import { computed } from "vue";
+import { useHead } from "@unhead/vue";
+import UserForm from "@/components/UserForm.vue";
+import { useUsersStore } from "@/store/users";
+import i18n from "@/i18n";
 
-export default {
-  name: "EditUser",
-  components: { UserForm },
-  head() {
-    return { title: this.$t("page-titles.edit", { obj: this.user.name }) };
-  },
-  computed: {
-    ...mapState(useUsersStore, ["users"]),
-    user: function () {
-      return this.users[this.$route.params.id];
-    },
-  },
-};
+const props = defineProps<{ id: string }>();
+
+const usersStore = useUsersStore();
+const user = computed(() => usersStore.users[props.id]);
+const title = computed(() =>
+  i18n.global.t("page-titles.edit", { obj: user.value?.name }),
+);
+
+useHead({ title });
 </script>

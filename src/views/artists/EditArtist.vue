@@ -4,22 +4,21 @@
   </VContainer>
 </template>
 
-<script>
-import { mapState } from "pinia";
-import ArtistForm from "../../components/ArtistForm.vue";
-import { useArtistsStore } from "../../store/artists";
+<script setup lang="ts">
+import { computed } from "vue";
+import { useHead } from "@unhead/vue";
+import ArtistForm from "@/components/ArtistForm.vue";
+import { useArtistsStore } from "@/store/artists";
+import i18n from "@/i18n";
 
-export default {
-  name: "EditArtist",
-  components: { ArtistForm },
-  head() {
-    return { title: this.$t("page-titles.edit", { obj: this.artist?.name }) };
-  },
-  computed: {
-    ...mapState(useArtistsStore, ["artists"]),
-    artist: function () {
-      return this.artists[this.$route.params.id];
-    },
-  },
-};
+const props = defineProps<{ id: string }>();
+
+const artistsStore = useArtistsStore();
+const artist = computed(() => {
+  return artistsStore.artists[props.id];
+});
+const title = computed(() => {
+  return i18n.global.t("page-titles.edit", { obj: artist.value?.name ?? "" });
+});
+useHead({ title });
 </script>

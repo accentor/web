@@ -4,22 +4,20 @@
   </VContainer>
 </template>
 
-<script>
-import { mapState } from "pinia";
-import PlaylistForm from "../../components/PlaylistForm.vue";
-import { usePlaylistsStore } from "../../store/playlists";
+<script setup lang="ts">
+import { computed } from "vue";
+import { useHead } from "@unhead/vue";
+import PlaylistForm from "@/components/PlaylistForm.vue";
+import { usePlaylistsStore } from "@/store/playlists";
+import i18n from "@/i18n";
 
-export default {
-  name: "EditPlaylist",
-  components: { PlaylistForm },
-  head() {
-    return { title: this.$t("page-titles.edit", { obj: this.playlist.name }) };
-  },
-  computed: {
-    ...mapState(usePlaylistsStore, ["playlists"]),
-    playlist: function () {
-      return this.playlists[this.$route.params.id];
-    },
-  },
-};
+const playlistsStore = usePlaylistsStore();
+
+const props = defineProps<{ id: string }>();
+const playlist = computed(() => playlistsStore.playlists[props.id]);
+const title = computed(() =>
+  i18n.global.t("page-titles.edit", { obj: playlist.value?.name ?? "" }),
+);
+
+useHead({ title });
 </script>
