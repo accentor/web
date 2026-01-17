@@ -1090,11 +1090,11 @@
       };
     }
     {
-      name = "eslint_plugin_prettier___eslint_plugin_prettier_5.5.4.tgz";
+      name = "eslint_plugin_prettier___eslint_plugin_prettier_5.5.5.tgz";
       path = fetchurl {
-        name = "eslint_plugin_prettier___eslint_plugin_prettier_5.5.4.tgz";
-        url  = "https://registry.yarnpkg.com/eslint-plugin-prettier/-/eslint-plugin-prettier-5.5.4.tgz";
-        sha512 = "swNtI95SToIz05YINMA6Ox5R057IMAmWZ26GqPxusAp1TZzj+IdY9tXNWWD3vkF/wEqydCONcwjTFpxybBqZsg==";
+        name = "eslint_plugin_prettier___eslint_plugin_prettier_5.5.5.tgz";
+        url  = "https://registry.yarnpkg.com/eslint-plugin-prettier/-/eslint-plugin-prettier-5.5.5.tgz";
+        sha512 = "hscXkbqUZ2sPithAuLm5MXL+Wph+U7wHngPBv9OMWwlP8iaflyxpjTYZkmdgB4/vPIhemRlBEoLrH7UC1n7aUw==";
       };
     }
     {
@@ -1842,11 +1842,11 @@
       };
     }
     {
-      name = "prettier_linter_helpers___prettier_linter_helpers_1.0.0.tgz";
+      name = "prettier_linter_helpers___prettier_linter_helpers_1.0.1.tgz";
       path = fetchurl {
-        name = "prettier_linter_helpers___prettier_linter_helpers_1.0.0.tgz";
-        url  = "https://registry.yarnpkg.com/prettier-linter-helpers/-/prettier-linter-helpers-1.0.0.tgz";
-        sha512 = "GbK2cP9nraSSUF9N2XwUwqfzlAFlMNYYl+ShE/V+H8a9uNl/oUqB1w2EL54Jh0OlyRSd8RfWYJ3coVS4TROP2w==";
+        name = "prettier_linter_helpers___prettier_linter_helpers_1.0.1.tgz";
+        url  = "https://registry.yarnpkg.com/prettier-linter-helpers/-/prettier-linter-helpers-1.0.1.tgz";
+        sha512 = "SxToR7P8Y2lWmv/kTzVLC1t/GDI2WGjMwNhLLE9qtH8Q13C+aEmuRlzDst4Up4s0Wc8sF2M+J57iB3cMLqftfg==";
       };
     }
     {
@@ -2042,11 +2042,11 @@
       };
     }
     {
-      name = "synckit___synckit_0.11.11.tgz";
+      name = "synckit___synckit_0.11.12.tgz";
       path = fetchurl {
-        name = "synckit___synckit_0.11.11.tgz";
-        url  = "https://registry.yarnpkg.com/synckit/-/synckit-0.11.11.tgz";
-        sha512 = "MeQTA1r0litLUf0Rp/iisCaL8761lKAZHaimlbGK4j0HysC4PLfqygQj9srcs0m2RdtDYnF8UuYyKpbjHYp7Jw==";
+        name = "synckit___synckit_0.11.12.tgz";
+        url  = "https://registry.yarnpkg.com/synckit/-/synckit-0.11.12.tgz";
+        sha512 = "Bh7QjT8/SuKUIfObSXNHNSK6WHo6J1tHCqJsuaFDP7gP0fkzSfTxI8y85JrppZ0h8l0maIgc2tfuZQ6/t3GtnQ==";
       };
     }
     {
