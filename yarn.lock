@@ -7,10 +7,10 @@
   resolved "https://registry.yarnpkg.com/@aashutoshrathi/word-wrap/-/word-wrap-1.2.6.tgz#bd9154aec9983f77b3a034ecaa015c2e4201f6cf"
   integrity sha512-1Yjs2SvM8TflER/OD3cOjhWWOZb58A2t7wpE2S9XfBYTiIl+XFhQG2bjy4Pu1I+EAlCNUzRDYDdFwFYUKvXcIA==
 
-"@accentor/api-client-js@^0.23.4":
-  version "0.23.4"
-  resolved "https://registry.yarnpkg.com/@accentor/api-client-js/-/api-client-js-0.23.4.tgz#81d0ede52e5e7737cee5dfb8d1c5f82475ca7036"
-  integrity sha512-IUJgcODZSktlERjQ+9R9RXMOrnjapMgp3mJ+Mf5OuhuhzJ/2Uay5kKZNn5Xl/Y0Yq9J/YUGMP9O3Xoy5KOtNfg==
+"@accentor/api-client-js@^0.23.5":
+  version "0.23.5"
+  resolved "https://registry.yarnpkg.com/@accentor/api-client-js/-/api-client-js-0.23.5.tgz#a75b683c38a33ab8eef8fed19bffe82c0a9bf941"
+  integrity sha512-6zHfTENpM2qGcP6x4DIzXDf1SBfU4/z4TDsC9w0qeKw2VamMfQppr7+yVWEZjRFr7VzrEbWPGJAk8BakQlhQDQ==
   dependencies:
     fetch-retry "^6.0.0"
 
