@@ -9,7 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@accentor/api-client-js": "^0.23.4",
+    "@accentor/api-client-js": "^0.23.5",
     "@mdi/font": "^7.4.47",
     "@mdi/svg": "^7.4.47",
     "@vueuse/core": "^11.3.0",
