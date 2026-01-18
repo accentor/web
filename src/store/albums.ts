@@ -81,7 +81,7 @@ export const useAlbumsStore = defineStore("albums", () => {
       if (i >= 0) {
         album.album_artists.splice(i, 1);
       }
-      newAlbums[album.id] = album;
+      newAlbums[`${album.id}`] = album;
     }
     setItems(newAlbums);
   }
@@ -93,7 +93,7 @@ export const useAlbumsStore = defineStore("albums", () => {
       if (i >= 0) {
         album.album_artists[i]!.artist_id = newID;
       }
-      newAlbums[album.id] = album;
+      newAlbums[`${album.id}`] = album;
     }
     setItems(newAlbums);
   }
@@ -105,7 +105,7 @@ export const useAlbumsStore = defineStore("albums", () => {
       if (i >= 0) {
         album.album_labels.splice(i, 1);
       }
-      newAlbums[album.id] = album;
+      newAlbums[`${album.id}`] = album;
     }
     setItems(newAlbums);
   }
@@ -121,7 +121,7 @@ export const useAlbumsStore = defineStore("albums", () => {
           album.album_labels[i]!.label_id = newID;
         }
       }
-      newAlbums[album.id] = album;
+      newAlbums[`${album.id}`] = album;
     }
     setItems(newAlbums);
   }
