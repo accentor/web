@@ -12,13 +12,14 @@
             {{ track.review_comment }}
           </VAlert>
           <VForm v-if="loaded" v-model="isValid" @submit.prevent="submit">
-            <VTextField
+            <VNumberInput
               v-model="newTrack.number"
-              type="number"
               :label="I18n.t('music.track.number')"
               :rules="rules.number"
-              min="0"
-              step="1"
+              :min="0"
+              :step="1"
+              inset
+              control-variant="stacked"
             />
             <VTextField
               v-model="newTrack.title"

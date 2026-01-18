@@ -98,11 +98,12 @@
                   </VCheckbox>
                 </VCol>
                 <VCol cols="12" sm="6">
-                  <VTextField
+                  <VNumberInput
                     v-if="number.enabled"
                     v-model="number.amount"
+                    control-variant="stacked"
                     :label="I18n.t('common.amount')"
-                    type="number"
+                    inset
                     step="1"
                     :hide-details="true"
                   />
