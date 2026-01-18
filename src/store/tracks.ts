@@ -110,7 +110,7 @@ export const useTracksStore = defineStore("tracks", () => {
       if (`${track.album_id}` === `${oldID}`) {
         track.album_id = newID;
       }
-      newTracks[track.id] = track;
+      newTracks[`${track.id}`] = track;
     }
     setItems(newTracks);
   }
@@ -123,7 +123,7 @@ export const useTracksStore = defineStore("tracks", () => {
           (ta) => `${ta.artist_id}` !== `${oldID}`,
         );
       }
-      newTracks[track.id] = track;
+      newTracks[`${track.id}`] = track;
     }
     setItems(newTracks);
   }
@@ -138,6 +138,7 @@ export const useTracksStore = defineStore("tracks", () => {
           }
         });
       }
+      newTracks[`${track.id}`] = track;
     }
     setItems(newTracks);
   }
@@ -149,7 +150,7 @@ export const useTracksStore = defineStore("tracks", () => {
       if (i >= 0) {
         track.genre_ids.splice(i, 1);
       }
-      newTracks[track.id] = track;
+      newTracks[`${track.id}`] = track;
     }
     setItems(newTracks);
   }
@@ -164,7 +165,7 @@ export const useTracksStore = defineStore("tracks", () => {
           track.genre_ids.push(newID);
         }
       }
-      newTracks[track.id] = track;
+      newTracks[`${track.id}`] = track;
     }
   }
 
