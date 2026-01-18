@@ -1,60 +1,61 @@
 <template>
   <div class="mb-4">
     <label for="image" class="text-subtitle-1">
-      {{ $tc("common.images", 1) }}
+      {{ I18n.t("common.images", 1) }}
     </label>
     <input
-      @change="handleSelect"
-      class="d-none"
       ref="picker"
+      class="d-none"
       type="file"
       accept="image/*"
       name="image"
+      @change="handleSelect"
     />
     <VRow>
       <VCol
         class="flex-column flex-grow-0"
-        @dragover.prevent="/* just here to prevent file from opening */"
+        @dragover.prevent="() => {}"
         @drop.prevent="handleDrop"
       >
         <VImg
+          v-if="modelValue && modelValue.data"
           :src="previewSrc"
           height="200"
           width="200"
-          contain
-          v-if="value && value.data"
+          cover
         />
         <VImg
+          v-else-if="modelValue === null && currentImg"
           :src="currentImg"
           height="200"
           width="200"
-          contain
-          v-else-if="value === null && currentImg"
+          cover
         />
         <VImg
+          v-else
           :src="placeholder"
           :aspect-ratio="1"
-          class="grey lighten-3"
+          class="bg-grey-lighten-3"
           height="200"
           width="200"
-          contain
-          v-else
+          cover
         />
       </VCol>
       <VCol class="flex-column d-flex flex-grow-0 justify-center">
         <VBtn
-          @click="passthrough"
-          @dragover.prevent="/* just here to prevent file from opening */"
-          @drop.prevent="handleDrop"
           color="primary"
           class="ma-2"
-          dark
+          @click="passthrough"
+          @dragover.prevent="() => {}"
+          @drop.prevent="handleDrop"
         >
-          <VIcon left>mdi-upload</VIcon>
-          {{ hasImage ? $t("common.replace") : $t("common.choose-image") }}
+          <VIcon start>mdi-upload</VIcon>
+          {{
+            hasImage ? I18n.t("common.replace") : I18n.t("common.choose-image")
+          }}
         </VBtn>
-        <VBtn @click.stop="clear" class="ma-2" elevation="0" v-if="hasImage">
-          <VIcon left>mdi-close</VIcon>
+        <VBtn v-if="hasImage" class="ma-2" elevation="0" @click.stop="clear">
+          <VIcon start>mdi-close</VIcon>
           clear
         </VBtn>
       </VCol>
@@ -62,79 +63,77 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: "ImagePicker",
-  props: {
-    value: {
-      type: Object,
-      required: false,
-      default: () => {
-        return { filename: null, mimetype: null, data: null };
-      },
-    },
-    currentImg: {
-      type: String,
-      required: false,
-      default: null,
-    },
-    placeholder: {
-      type: String,
-      required: true,
-    },
-  },
-  computed: {
-    previewSrc() {
-      return (
-        this.value && `data:${this.value.mimetype};base64, ${this.value.data}`
-      );
-    },
-    hasImage() {
-      return (
-        (this.value === null && this.currentImg) ||
-        (this.value && this.value.data !== null)
-      );
-    },
-  },
-  methods: {
-    handleDrop(event) {
-      if (
-        event.dataTransfer.files.length === 1 &&
-        /^image.*/.test(event.dataTransfer.files[0].type)
-      ) {
-        this.interpret(event.dataTransfer.files[0]);
-      }
-    },
-    handleSelect(event) {
-      const file = event.target.files[0];
-      if (file) {
-        this.interpret(file);
-      }
-    },
-    interpret(file) {
-      const fileReader = new FileReader();
-      fileReader.onload = (ev) => {
-        this.$emit("input", {
-          filename: file.name,
-          mimetype: file.type,
-          data: ev.target.result.replace(
-            /^data:[a-zA-Z0-9!#$%^&\\*_\-+{}|'.`~]+\/[a-zA-Z0-9!#$%^&\\*_\-+{}|'.`~]+;base64,/,
-            "",
-          ),
-        });
-      };
-      fileReader.readAsDataURL(file);
-    },
-    clear() {
-      this.$emit("input", {
-        filename: null,
-        mimetype: null,
-        data: null,
-      });
-    },
-    passthrough() {
-      this.$refs.picker.click();
-    },
-  },
-};
+<script setup lang="ts">
+import { computed, useTemplateRef } from "vue";
+import { useVModel } from "@vueuse/core";
+import type { ImageParams } from "@accentor/api-client-js";
+import { useI18n } from "vue-i18n";
+
+const I18n = useI18n();
+
+interface Props {
+  modelValue: ImageParams | null;
+  currentImg?: string;
+  placeholder: string;
+}
+
+const props = defineProps<Props>();
+const emit = defineEmits<{ "update:modelValue": [ImageParams | null] }>();
+
+const modelValue = useVModel(props, "modelValue", emit);
+
+const previewSrc = computed<string | undefined>(() => {
+  if (modelValue.value) {
+    return `data:${modelValue.value.mimetype};base64, ${modelValue.value.data}`;
+  }
+  return undefined;
+});
+
+const hasImage = computed<boolean>(() => {
+  if (modelValue.value) {
+    return Boolean(modelValue.value.data);
+  } else {
+    return Boolean(props.currentImg);
+  }
+});
+
+function interpret(file: File): void {
+  const fileReader = new FileReader();
+  fileReader.onload = (): void => {
+    modelValue.value = {
+      filename: file.name,
+      mimetype: file.type,
+      data: (fileReader.result! as string).replace(
+        /^data:[a-zA-Z0-9!#$%^&\\*_\-+{}|'.`~]+\/[a-zA-Z0-9!#$%^&\\*_\-+{}|'.`~]+;base64,/,
+        "",
+      ),
+    };
+  };
+  fileReader.readAsDataURL(file);
+}
+
+function handleDrop(event: DragEvent): void {
+  if (
+    event.dataTransfer?.files?.length === 1 &&
+    /^image.*/.test(event.dataTransfer.files[0]?.type || "")
+  ) {
+    interpret(event.dataTransfer.files[0]!);
+  }
+}
+
+const picker = useTemplateRef<HTMLInputElement>("picker");
+function handleSelect(): void {
+  const file = picker.value!.files![0];
+  if (file) {
+    interpret(file);
+  }
+}
+
+function clear(): void {
+  modelValue.value = { data: null };
+}
+
+function passthrough(): void {
+  picker.value!.click();
+}
 </script>

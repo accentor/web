@@ -1,53 +1,65 @@
 <template>
-  <VContainer fluid v-if="album">
+  <VContainer v-if="album" fluid>
     <VRow>
       <VCol
+        v-if="album.image500 && !imageUnavailable"
         lg="3"
         md="4"
         sm="6"
-        v-if="album.image500 && !imageUnavailable"
         cols="12"
       >
-        <VImg :src="album.image500" class="elevation-3" />
+        <VImg
+          :src="album.image500"
+          class="elevation-3"
+          @error="setImageUnavailable"
+        />
       </VCol>
       <VCol
+        v-else-if="album.image && !imageUnavailable"
         lg="3"
         md="4"
         sm="6"
-        v-else-if="album.image && !imageUnavailable"
         cols="12"
       >
-        <VImg :src="album.image" class="elevation-3" />
+        <VImg
+          :src="album.image"
+          class="elevation-3"
+          @error="setImageUnavailable"
+        />
       </VCol>
       <VCol lg="9" md="8" sm="6" cols="12">
         <div>
           <div class="text-h4">
             {{ album.title }}
-            <span v-if="album.edition_description !== null" class="grey--text">
+            <span v-if="album.edition_description !== null" class="text-grey">
               ({{ album.edition_description }})
             </span>
           </div>
           <AlbumArtists :album="album" />
-          <div class="grey--text" v-if="album.edition === null">
+          <div v-if="album.edition === null" class="text-grey">
             {{ album.release }}
           </div>
-          <div class="grey--text" v-else>
-            <div>{{ album.release }} ({{ $t("music.album.original") }})</div>
-            <div>{{ album.edition }} ({{ $t("music.album.edition") }})</div>
+          <div v-else class="text-grey">
+            <div>
+              {{ album.release }} ({{ I18n.t("music.album.original") }})
+            </div>
+            <div>{{ album.edition }} ({{ I18n.t("music.album.edition") }})</div>
           </div>
           <div
-            class="grey--text"
             v-for="al of album_labels"
             :key="`${al.label_id} ${al.catalogue_number}`"
+            class="text-grey"
           >
             <RouterLink :to="{ name: 'label', params: { id: al.label_id } }">
-              {{ labels[al.label_id].name }}
+              {{ labels[al.label_id]?.name }}
             </RouterLink>
             -
-            {{ al.catalogue_number || $t("music.label.catalogue-number-none") }}
+            {{
+              al.catalogue_number || I18n.t("music.label.catalogue-number-none")
+            }}
           </div>
-          <div class="grey--text mt-4 mb-4" v-if="playlists.length">
-            {{ $tc("music.album.in-playlists", playlists.length) }}
+          <div v-if="playlists.length" class="text-grey mt-4 mb-4">
+            {{ I18n.t("music.album.in-playlists", playlists.length) }}
             <ul>
               <li v-for="playlist in playlists" :key="playlist.id">
                 <RouterLink
@@ -59,7 +71,7 @@
             </ul>
           </div>
           <div>
-            <AlbumActions :album="album" class="actions--wide" />
+            <AlbumActions :album="album" />
           </div>
         </div>
       </VCol>
@@ -72,85 +84,69 @@
   </VContainer>
 </template>
 
-<script>
-import { mapState, mapActions } from "pinia";
-import AlbumActions from "../../components/AlbumActions.vue";
-import TracksTable from "../../components/TracksTable.vue";
-import AlbumArtists from "../../components/AlbumArtists.vue";
+<script setup lang="ts">
+import { computed, onMounted, ref } from "vue";
+import { useRouter } from "vue-router";
+import { storeToRefs } from "pinia";
+import { useHead } from "@unhead/vue";
+import AlbumActions from "@/components/AlbumActions.vue";
+import TracksTable from "@/components/TracksTable.vue";
+import AlbumArtists from "@/components/AlbumArtists.vue";
 import { PlaysScope, TracksScope } from "@accentor/api-client-js";
-import { usePlaylistsStore } from "../../store/playlists";
-import { useLabelsStore } from "../../store/labels";
-import { useAlbumsStore } from "../../store/albums";
-import { useTracksStore } from "../../store/tracks";
-import { usePlaysStore } from "../../store/plays";
+import { usePlaylistsStore } from "@/store/playlists";
+import { useLabelsStore } from "@/store/labels";
+import { useAlbumsStore } from "@/store/albums";
+import { useTracksStore } from "@/store/tracks";
+import { usePlaysStore } from "@/store/plays";
+import { useI18n } from "vue-i18n";
 
-export default {
-  name: "Album",
-  components: { AlbumArtists, TracksTable, AlbumActions },
-  metaInfo() {
-    return { title: this.album?.title };
-  },
-  props: {
-    id: {
-      type: [String, Number],
-      required: true,
-    },
-  },
-  data() {
-    return {
-      imageUnavailable: false,
-    };
-  },
-  watch: {
-    id: {
-      handler: "fetchContent",
-      immediate: true,
-    },
-  },
-  computed: {
-    ...mapState(useAlbumsStore, ["albums"]),
-    ...mapState(useLabelsStore, ["labels"]),
-    ...mapState(usePlaylistsStore, { storePlaylists: "albumPlaylists" }),
-    tracks: function () {
-      return useTracksStore().tracksFilterByAlbum(this.$route.params.id);
-    },
-    album: function () {
-      return this.albums[this.$route.params.id];
-    },
-    album_labels: function () {
-      return this.album.album_labels.filter(
-        (al) => `${al.label_id}` in this.labels,
-      );
-    },
-    playlists: function () {
-      return this.storePlaylists.filter((p) =>
-        p.item_ids.includes(this.album.id),
-      );
-    },
-  },
-  methods: {
-    ...mapActions(useAlbumsStore, ["read"]),
-    ...mapActions(usePlaysStore, { indexPlays: "index" }),
-    ...mapActions(useTracksStore, { indexTracks: "index" }),
-    async fetchContent(newValue, oldValue) {
-      // After loading the content, the router will change the id from a string to a number
-      // but we don't actually want to load the content twice
-      if (newValue == oldValue) {
-        return;
-      }
+const I18n = useI18n();
+const albumsStore = useAlbumsStore();
+const labelsStore = useLabelsStore();
+const playlistsStore = usePlaylistsStore();
+const playsStore = usePlaysStore();
+const tracksStore = useTracksStore();
+const router = useRouter();
 
-      const album = this.read(this.id);
-      const plays = this.indexPlays(new PlaysScope().album(this.id));
-      const tracks = this.indexTracks(new TracksScope().album(this.id));
-      await Promise.all([album, plays, tracks]);
-      // If the album is undefined after loading, we assume that it doesn't exist.
-      if (this.album === undefined) {
-        this.$router.go(-1);
-      }
-    },
-    setImageUnavailable() {
-      this.imageUnavailable = true;
-    },
-  },
-};
+const props = defineProps<{ id: string }>();
+
+const imageUnavailable = ref(false);
+function setImageUnavailable(): void {
+  imageUnavailable.value = true;
+}
+
+const album = computed(() => albumsStore.albums[props.id]);
+const albumTitle = computed(() => album.value?.title ?? "");
+useHead({ title: albumTitle });
+
+const { labels } = storeToRefs(labelsStore);
+const tracks = computed(() =>
+  album.value ? tracksStore.tracksFilterByAlbum(album.value.id) : [],
+);
+const album_labels = computed(
+  () =>
+    album.value?.album_labels?.filter(
+      (al) => `${al.label_id}` in labels.value,
+    ) || [],
+);
+const playlists = computed(() =>
+  album.value
+    ? playlistsStore.albumPlaylists.filter((p) =>
+        p.item_ids.includes(album.value!.id),
+      )
+    : [],
+);
+
+onMounted(fetchContent);
+
+async function fetchContent(): Promise<void> {
+  const albumPromise = albumsStore.read(parseInt(props.id));
+  const playsPromise = playsStore.index(new PlaysScope().album(props.id));
+  const tracksPromise = tracksStore.index(new TracksScope().album(props.id));
+  await Promise.all([albumPromise, playsPromise, tracksPromise]);
+
+  if (album.value === undefined) {
+    router.go(-1);
+  }
+}
 </script>

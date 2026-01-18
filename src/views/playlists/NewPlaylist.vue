@@ -4,14 +4,11 @@
   </VContainer>
 </template>
 
-<script>
-import PlaylistForm from "../../components/PlaylistForm.vue";
+<script setup lang="ts">
+import { useHead } from "@unhead/vue";
+import PlaylistForm from "@/components/PlaylistForm.vue";
+import { useI18n } from "vue-i18n";
 
-export default {
-  name: "NewPlaylist",
-  metaInfo() {
-    return { title: this.$t("music.playlist.new") };
-  },
-  components: { PlaylistForm },
-};
+const I18n = useI18n();
+useHead({ title: I18n.t("music.playlist.new") });
 </script>

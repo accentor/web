@@ -1,29 +1,29 @@
 <template>
-  <VContainer class="fill-height" fluid v-if="user">
+  <VContainer v-if="user" class="fill-height" fluid>
     <VRow no-gutters align="center" justify="center">
       <VCol md="4" sm="8" cols="12">
-        <UserForm :user="user" :showPermissions="true" />
+        <UserForm :user="user" :show-permissions="true" />
       </VCol>
     </VRow>
   </VContainer>
 </template>
 
-<script>
-import UserForm from "../../components/UserForm.vue";
-import { useUsersStore } from "../../store/users";
-import { mapState } from "pinia";
+<script setup lang="ts">
+import { computed } from "vue";
+import { useHead } from "@unhead/vue";
+import UserForm from "@/components/UserForm.vue";
+import { useUsersStore } from "@/store/users";
+import { useI18n } from "vue-i18n";
 
-export default {
-  name: "EditUser",
-  metaInfo() {
-    return { title: this.$t("page-titles.edit", { obj: this.user.name }) };
-  },
-  components: { UserForm },
-  computed: {
-    ...mapState(useUsersStore, ["users"]),
-    user: function () {
-      return this.users[this.$route.params.id];
-    },
-  },
-};
+const I18n = useI18n();
+
+const props = defineProps<{ id: string }>();
+
+const usersStore = useUsersStore();
+const user = computed(() => usersStore.users[props.id]);
+const title = computed(() =>
+  I18n.t("page-titles.edit", { obj: user.value?.name }),
+);
+
+useHead({ title });
 </script>

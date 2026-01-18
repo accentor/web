@@ -3,94 +3,100 @@
     <VCol lg="6" sm="8" cols="12" @change.once="isDirty = true">
       <VAlert
         v-if="artist"
-        :value="artist.review_comment !== null"
+        :model-value="artist.review_comment !== null"
         type="warning"
         icon="mdi-flag"
+        class="mb-4"
       >
         {{ artist.review_comment }}
       </VAlert>
       <VForm v-model="isValid" @submit.prevent="submit">
         <VTextField
-          :label="$t('common.name')"
           v-model="newArtist.name"
-          :rules="[(v) => !!v || $t('errors.artists.name-blank')]"
+          :label="I18n.t('common.name')"
+          :rules="[(v) => !!v || I18n.t('errors.artists.name-blank')]"
           required
         />
         <ImagePicker
           v-model="newArtist.image"
-          :currentImg="artist && artist.image250"
+          :current-img="(artist && artist.image250) ?? undefined"
           :placeholder="artistSvgUrl"
         />
         <VCheckbox
           v-if="artist && artist.review_comment !== null"
-          v-model="clear_review_comment"
-          :label="$tc('music.flag.clear', 1)"
+          v-model="clearReviewComment"
+          :label="I18n.t('music.flag.clear', 1)"
         />
         <VBtn :disabled="!isValid" color="primary" class="ma-2" type="submit">
-          {{ this.artist ? $t("music.artist.update") : $t("music.artist.add") }}
+          {{
+            artist ? I18n.t("music.artist.update") : I18n.t("music.artist.add")
+          }}
         </VBtn>
       </VForm>
     </VCol>
   </VRow>
 </template>
 
-<script>
-import { mapActions } from "pinia";
+<script setup lang="ts">
+import { onMounted, ref } from "vue";
+import { useRoute, useRouter } from "vue-router";
+import type {
+  Artist,
+  ArtistParams,
+  ImageParams,
+} from "@accentor/api-client-js";
+import artistSvgUrl from "@mdi/svg/svg/account-music.svg" with { type: "url" };
 import ImagePicker from "./ImagePicker.vue";
-import { useArtistsStore } from "../store/artists";
-import artistSvgUrl from "@mdi/svg/svg/account-music.svg";
+import { useArtistsStore } from "@/store/artists";
+import { useI18n } from "vue-i18n";
 
-export default {
-  name: "ArtistForm",
-  components: { ImagePicker },
-  props: { artist: { type: Object, default: null } },
-  data() {
-    return {
-      newArtist: {
-        name: "",
-        image: null,
-        review_comment: null,
-      },
-      clear_review_comment: true,
-      isDirty: false,
-      isValid: true,
-      artistSvgUrl,
-    };
-  },
-  async created() {
-    if (this.artist) {
-      await this.read(this.artist.id);
-      this.fillValues();
-    }
-  },
-  watch: {
-    artist: function () {
-      if (this.artist && !this.isDirty) {
-        this.fillValues();
-      }
-    },
-  },
-  methods: {
-    ...mapActions(useArtistsStore, ["create", "read", "update"]),
-    fillValues() {
-      this.newArtist.name = this.artist.name;
-      this.newArtist.review_comment = this.artist.review_comment;
-    },
-    async submit() {
-      this.newArtist.review_comment = this.clear_review_comment
-        ? null
-        : this.newArtist.review_comment;
-      let pendingResult = null;
-      if (this.artist) {
-        pendingResult = this.update(this.artist.id, this.newArtist);
-      } else {
-        pendingResult = this.create(this.newArtist);
-      }
-      const succeeded = await pendingResult;
-      if (succeeded) {
-        this.$router.push(this.$route.query.redirect || { name: "artists" });
-      }
-    },
-  },
-};
+const I18n = useI18n();
+const route = useRoute();
+const router = useRouter();
+const artistsStore = useArtistsStore();
+const props = defineProps<{ artist?: Artist }>();
+const clearReviewComment = ref(true);
+const isDirty = ref(false);
+const isValid = ref(true);
+const newArtist = ref({
+  name: "",
+  image: null as ImageParams | null,
+  review_comment: undefined as string | undefined,
+});
+
+onMounted(async () => {
+  if (props.artist) {
+    await artistsStore.read(props.artist.id);
+    fillValues();
+  }
+});
+
+function fillValues(): void {
+  if (props.artist) {
+    newArtist.value.name = props.artist.name;
+    newArtist.value.review_comment = props.artist.review_comment ?? undefined;
+  }
+}
+
+async function submit(): Promise<void> {
+  const transformed: ArtistParams["artist"] = {
+    name: newArtist.value.name,
+    image: newArtist.value.image ?? undefined,
+    review_comment: clearReviewComment.value
+      ? null
+      : newArtist.value.review_comment,
+  };
+  let pendingResult;
+  if (props.artist) {
+    pendingResult = artistsStore.update(props.artist.id, transformed);
+  } else {
+    pendingResult = artistsStore.create(transformed);
+  }
+  const succeeded = await pendingResult;
+  if (succeeded) {
+    await router.push(
+      (route.query.redirect as string | undefined) || { name: "artists" },
+    );
+  }
+}
 </script>

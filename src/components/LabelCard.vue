@@ -4,19 +4,14 @@
       {{ label.name }}
     </VCardTitle>
     <VCardActions>
-      <LabelActions :label="label" class="actions--sm-wide" />
+      <LabelActions :label="label" />
     </VCardActions>
   </VCard>
 </template>
 
-<script>
+<script setup lang="ts">
+import type { Label } from "@accentor/api-client-js";
 import LabelActions from "./LabelActions.vue";
 
-export default {
-  name: "LabelCard",
-  components: { LabelActions },
-  props: {
-    label: { type: Object, required: true },
-  },
-};
+defineProps<{ label: Label & { loaded: Date } }>();
 </script>

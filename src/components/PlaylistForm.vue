@@ -5,26 +5,26 @@
         <VRow no-gutters align="center" justify="center">
           <VCol md="6" sm="8" cols="12" @change.once="isDirty = true">
             <VTextField
-              :label="$t('common.name')"
               v-model="newPlaylist.name"
-              :rules="[(v) => !!v || $t('errors.playlists.name-blank')]"
+              :label="I18n.t('common.name')"
+              :rules="[(v) => !!v || I18n.t('errors.playlists.name-blank')]"
               required
             />
             <VTextarea
-              :label="$t('common.description')"
-              rows="3"
               v-model="newPlaylist.description"
+              :label="I18n.t('common.description')"
+              rows="3"
             />
             <VAutocomplete
-              :items="playlistTypes"
-              :label="$t('music.playlist.playlist_type')"
               v-model="newPlaylist.playlist_type"
+              :items="playlistTypes"
+              :label="I18n.t('music.playlist.playlist_type')"
               :disabled="hasItems"
             />
             <VAutocomplete
-              :items="accessOptions"
-              :label="$t('music.playlist.access')"
               v-model="newPlaylist.access"
+              :items="accessOptions"
+              :label="I18n.t('music.playlist.access')"
             />
             <VBtn
               :disabled="!isValid"
@@ -33,18 +33,18 @@
               type="submit"
             >
               {{
-                this.playlist
-                  ? $t("music.playlist.update")
-                  : $t("music.playlist.create")
+                playlist
+                  ? I18n.t("music.playlist.update")
+                  : I18n.t("music.playlist.create")
               }}
             </VBtn>
           </VCol>
         </VRow>
         <VRow
+          v-if="newPlaylist.item_ids.length"
           no-gutters
           align="center"
           justify="center"
-          v-if="newPlaylist.item_ids.length"
         >
           <VCol
             md="9"
@@ -56,9 +56,9 @@
             "
           >
             <h4 class="text-h6 mt-6 ml-4">
-              {{ $tc("music.playlist.items", 2) }}
+              {{ I18n.t("music.playlist.items", 2) }}
             </h4>
-            <VSimpleTable>
+            <VTable>
               <thead>
                 <tr>
                   <th style="width: 1px" class="text-center">Sort</th>
@@ -67,41 +67,37 @@
                 </tr>
               </thead>
               <Draggable
-                tag="tbody"
                 v-model="newPlaylist.item_ids"
-                handle="[data-draggable=handle]"
+                :item-key="(id: number) => id"
+                tag="tbody"
+                handle=".handle"
               >
-                <tr
-                  v-for="(item_id, index) of newPlaylist.item_ids"
-                  :key="item_id"
-                >
-                  <td class="text-no-wrap">
-                    <VBtn small icon text class="" data-draggable="handle">
-                      <VIcon>mdi-drag-horizontal-variant</VIcon>
-                    </VBtn>
-                    {{ index + 1 }}
-                  </td>
-                  <td class="play-queue__cell">
-                    {{
-                      newPlaylist.playlist_type === "artist"
-                        ? items[item_id].name
-                        : items[item_id].title
-                    }}
-                  </td>
-                  <td class="text-right">
-                    <VBtn
-                      small
-                      icon
-                      text
-                      class="ma-2 red--text"
-                      @click="() => removeItem(index)"
-                    >
-                      <VIcon>mdi-close</VIcon>
-                    </VBtn>
-                  </td>
-                </tr>
+                <template #item="{ element: itemId, index }">
+                  <tr>
+                    <td class="text-no-wrap">
+                      <VBtn size="small" icon variant="text" class="handle">
+                        <VIcon>mdi-drag-horizontal-variant</VIcon>
+                      </VBtn>
+                      {{ index + 1 }}
+                    </td>
+                    <td class="play-queue__cell">
+                      {{ textForItemId(itemId) }}
+                    </td>
+                    <td class="text-right">
+                      <VBtn
+                        size="small"
+                        icon
+                        variant="text"
+                        class="ma-2 text-red"
+                        @click="() => removeItem(index)"
+                      >
+                        <VIcon>mdi-close</VIcon>
+                      </VBtn>
+                    </td>
+                  </tr>
+                </template>
               </Draggable>
-            </VSimpleTable>
+            </VTable>
           </VCol>
         </VRow>
       </VForm>
@@ -109,139 +105,141 @@
   </VRow>
 </template>
 
-<script>
-import { mapActions, mapState } from "pinia";
+<script setup lang="ts">
 import Draggable from "vuedraggable";
-import { usePlaylistsStore } from "../store/playlists";
-import { useArtistsStore } from "../store/artists";
-import { useAlbumsStore } from "../store/albums";
-import { useTracksStore } from "../store/tracks";
+import { usePlaylistsStore } from "@/store/playlists";
+import { useArtistsStore } from "@/store/artists";
+import { useAlbumsStore } from "@/store/albums";
+import { useTracksStore } from "@/store/tracks";
+import {
+  type Playlist,
+  type PlaylistAccess,
+  type PlaylistType,
+} from "@accentor/api-client-js";
+import { computed, onMounted, ref } from "vue";
+import { useRoute, useRouter } from "vue-router";
+import { useI18n } from "vue-i18n";
 
-export default {
-  name: "PlaylistForm",
-  components: { Draggable },
-  props: { playlist: { type: Object, default: null } },
-  data() {
-    return {
-      newPlaylist: {
-        name: "",
-        description: "",
-        access: "shared",
-        playlist_type: null,
-        item_ids: [],
-      },
-      playlistTypes: [
-        {
-          value: "track",
-          text: this.$t("music.playlist.playlist_types.track"),
-        },
-        {
-          value: "album",
-          text: this.$t("music.playlist.playlist_types.album"),
-        },
-        {
-          value: "artist",
-          text: this.$t("music.playlist.playlist_types.artist"),
-        },
-      ],
-      accessOptions: [
-        {
-          value: "shared",
-          text: this.$t("music.playlist.access_options.shared"),
-        },
-        {
-          value: "personal",
-          text: this.$t("music.playlist.access_options.personal"),
-        },
-        {
-          value: "secret",
-          text: this.$t("music.playlist.access_options.secret"),
-        },
-      ],
-      headers: [
-        {
-          text: "#",
-          value: "index",
-        },
-        {
-          text: this.$t("music.title"),
-          value: "title",
-        },
-        {
-          text: "remove",
-          value: "remove",
-        },
-      ],
-      isDirty: false,
-      itemsDirty: false,
-      isValid: true,
-    };
+const I18n = useI18n();
+const albumsStore = useAlbumsStore();
+const artistsStore = useArtistsStore();
+const playlistsStore = usePlaylistsStore();
+const tracksStore = useTracksStore();
+const route = useRoute();
+const router = useRouter();
+
+const props = withDefaults(defineProps<{ playlist?: Playlist | null }>(), {
+  playlist: null,
+});
+
+const newPlaylist = ref({
+  name: "",
+  description: "" as string,
+  access: "shared" as PlaylistAccess,
+  playlist_type: "track" as PlaylistType,
+  item_ids: [] as number[],
+});
+const isDirty = ref(false);
+const itemsDirty = ref(false);
+const isValid = ref(true);
+
+const hasItems = computed(() => newPlaylist.value.item_ids.length > 0);
+
+function textForItemId(itemId: number): string {
+  switch (props.playlist?.playlist_type) {
+    case "album":
+      return albumsStore.albums[`${itemId}`]?.title ?? "";
+    case "artist":
+      return artistsStore.artists[`${itemId}`]?.name ?? "";
+    case "track":
+      return tracksStore.tracks[`${itemId}`]?.title ?? "";
+  }
+  return "";
+}
+
+const mainPropName = computed(() => {
+  switch (newPlaylist.value.playlist_type) {
+    case "artist":
+      return I18n.t("common.name");
+    case "album":
+    case "track":
+      return I18n.t("music.title");
+  }
+  return "";
+});
+
+const playlistTypes = [
+  {
+    value: "track",
+    title: I18n.t("music.playlist.playlist_types.track"),
   },
-  async created() {
-    if (this.playlist) {
-      await this.read(this.$route.params.id);
-      this.fillValues();
+  {
+    value: "album",
+    title: I18n.t("music.playlist.playlist_types.album"),
+  },
+  {
+    value: "artist",
+    title: I18n.t("music.playlist.playlist_types.artist"),
+  },
+];
+const accessOptions = [
+  {
+    value: "shared",
+    title: I18n.t("music.playlist.access_options.shared"),
+  },
+  {
+    value: "personal",
+    title: I18n.t("music.playlist.access_options.personal"),
+  },
+  {
+    value: "secret",
+    title: I18n.t("music.playlist.access_options.secret"),
+  },
+];
+
+onMounted(async () => {
+  if (props.playlist) {
+    await playlistsStore.read(props.playlist.id);
+    fillValues();
+  }
+});
+
+function fillValues(): void {
+  if (!props.playlist) {
+    return;
+  }
+  newPlaylist.value.name = props.playlist.name;
+  newPlaylist.value.description = props.playlist.description ?? "";
+  newPlaylist.value.access = props.playlist.access;
+  newPlaylist.value.playlist_type = props.playlist.playlist_type;
+  newPlaylist.value.item_ids = [...props.playlist.item_ids];
+}
+
+function removeItem(index: number): void {
+  isDirty.value = true;
+  itemsDirty.value = true;
+  newPlaylist.value.item_ids.splice(index, 1);
+}
+
+async function submit(): Promise<void> {
+  let pendingResult;
+  if (props.playlist) {
+    const toSubmit: Omit<typeof newPlaylist.value, "item_ids"> & {
+      item_ids?: number[];
+    } = { ...newPlaylist.value };
+    if (!itemsDirty.value) {
+      delete toSubmit.item_ids;
     }
-  },
-  watch: {
-    playlist: function () {
-      if (this.playlist && !this.isDirty) {
-        this.fillValues();
-      }
-    },
-  },
-  computed: {
-    ...mapState(useAlbumsStore, ["albums"]),
-    ...mapState(useArtistsStore, ["artists"]),
-    ...mapState(useTracksStore, ["tracks"]),
-    hasItems() {
-      return this.newPlaylist.item_ids.length > 0;
-    },
-    items() {
-      return this[`${this.newPlaylist.playlist_type}s`];
-    },
-    mainPropName() {
-      return {
-        artist: this.$t("common.name"),
-        album: this.$t("music.title"),
-        track: this.$t("music.title"),
-      }[this.newPlaylist.playlist_type];
-    },
-  },
-  methods: {
-    ...mapActions(usePlaylistsStore, ["create", "read", "update"]),
-    fillValues() {
-      this.newPlaylist.name = this.playlist.name;
-      this.newPlaylist.description = this.playlist.description;
-      this.newPlaylist.access = this.playlist.access;
-      this.newPlaylist.playlist_type = this.playlist.playlist_type;
-      this.newPlaylist.item_ids = [...this.playlist.item_ids];
-    },
-    removeItem(index) {
-      this.isDirty = true;
-      this.itemsDirty = true;
-      this.newPlaylist.item_ids.splice(index, 1);
-    },
-    async submit() {
-      let pendingResult = null;
-      if (this.playlist) {
-        // Remove the `item_ids` from the update if it hasn't changed
-        const newPlaylist = { ...this.newPlaylist };
-        if (!this.itemsDirty) {
-          delete newPlaylist.item_ids;
-        }
 
-        pendingResult = this.update(this.playlist.id, newPlaylist);
-      } else {
-        pendingResult = this.create(this.newPlaylist);
-      }
-      const succeeded = await pendingResult;
-      if (succeeded) {
-        this.$router.push(this.$route.query.redirect || { name: "playlists" });
-      }
-    },
-  },
-};
+    pendingResult = playlistsStore.update(props.playlist.id, toSubmit);
+  } else {
+    pendingResult = playlistsStore.create(newPlaylist.value);
+  }
+  const succeeded = await pendingResult;
+  if (succeeded) {
+    await router.push(
+      (route.query.redirect as string | undefined) || { name: "playlists" },
+    );
+  }
+}
 </script>
-
-<style></style>

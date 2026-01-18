@@ -1,22 +1,16 @@
 <template>
   <VContainer fluid>
-    <VDataIterator
-      :footer-props="{
-        disableItemsPerPage: true,
-        itemsPerPageOptions: [12],
-        showFirstLastPage: true,
-      }"
-      :items="filteredItems"
-      :items-per-page="12"
-      :page.sync="pagination.page"
+    <ArtistsRow
       v-if="artists.length > 0"
+      :artists="filteredArtists"
+      :items-per-page="12"
     >
-      <template v-slot:header>
-        <VRow class="mb-2" align="baseline" justify="end">
+      <template #header>
+        <VRow class="mb-2" align="center" justify="end">
           <VCol lg="4" md="6" sm="8" xl="2" cols="12">
             <VTextField
-              :label="$t('common.search')"
               v-model="search"
+              :label="I18n.t('common.search')"
               hide-details
               prepend-inner-icon="mdi-magnify"
               single-line
@@ -28,58 +22,40 @@
             class="ma-2"
             color="success"
           >
-            <VIcon left>mdi-plus</VIcon>
-            {{ $t("music.artist.new") }}
+            <VIcon start>mdi-plus</VIcon>
+            {{ I18n.t("music.artist.new") }}
           </VBtn>
         </VRow>
       </template>
-      <template v-slot:default="props">
-        <VRow>
-          <VCol
-            v-for="item in props.items"
-            :key="item.id"
-            cols="6"
-            sm="6"
-            md="4"
-            lg="3"
-            xl="2"
-          >
-            <ArtistCard :artist="item" />
-          </VCol>
-        </VRow>
-      </template>
-    </VDataIterator>
+    </ArtistsRow>
   </VContainer>
 </template>
 
-<script>
-import ArtistCard from "../../components/ArtistCard.vue";
-import Paginated from "../../mixins/Paginated";
-import Searchable from "../../mixins/Searchable";
-import { useAuthStore } from "../../store/auth";
-import { mapState } from "pinia";
-import { useArtistsStore } from "../../store/artists";
+<script setup lang="ts">
+import { useHead } from "@unhead/vue";
+import { computed } from "vue";
+import { storeToRefs } from "pinia";
+import { useAuthStore } from "@/store/auth";
+import { useArtistsStore } from "@/store/artists";
+import ArtistsRow from "@/components/ArtistsRow.vue";
+import { useSearch } from "@/composables/search";
+import { useI18n } from "vue-i18n";
 
-export default {
-  name: "Artists",
-  components: { ArtistCard },
-  metaInfo() {
-    return { title: this.$tc("music.artists", 2) };
-  },
-  mixins: [Paginated, Searchable],
-  computed: {
-    ...mapState(useAuthStore, ["isModerator"]),
-    ...mapState(useArtistsStore, { artists: "artistsByName" }),
-    filteredItems() {
-      return this.artists.filter(
-        (item) =>
-          !this.search ||
-          item.name
-            .toLocaleLowerCase()
-            .indexOf(this.search.toLocaleLowerCase()) >= 0 ||
-          item.normalized_name.indexOf(this.search.toLocaleLowerCase()) >= 0,
-      );
-    },
-  },
-};
+const I18n = useI18n();
+useHead({ title: I18n.t("music.artists", 2) });
+
+const { isModerator } = storeToRefs(useAuthStore());
+
+const { search } = useSearch();
+const { artistsByName: artists } = storeToRefs(useArtistsStore());
+const filteredArtists = computed(() => {
+  return artists.value.filter((item) => {
+    const lookup = search.value.toLowerCase();
+    return (
+      !lookup ||
+      item.name.toLowerCase().indexOf(lookup) >= 0 ||
+      item.normalized_name.indexOf(lookup) >= 0
+    );
+  });
+});
 </script>

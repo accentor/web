@@ -1,126 +1,132 @@
 <template>
   <span>
-    <VTooltip bottom :disabled="tracksEmpty.length > 0">
-      <template v-slot:activator="{ on }">
-        <span v-on="on">
+    <VTooltip location="bottom" :disabled="tracksEmpty.length > 0">
+      <template #activator="{ props }">
+        <span v-bind="props">
           <VBtn
             :to="{ name: 'tracks-without-audio' }"
             :disabled="tracksEmpty.length === 0"
             color="info"
-            class="ma-2 white--text"
+            class="ma-2 text-white"
           >
-            <VIcon left>mdi-alert-octagon</VIcon>
-            {{ $t("library.overview-tracks-without-audio") }}
+            <VIcon start>mdi-alert-octagon</VIcon>
+            {{ I18n.t("library.overview-tracks-without-audio") }}
           </VBtn>
         </span>
       </template>
-      <span>{{ $t("library.no-tracks-without-audio") }}</span>
+      <span>{{ I18n.t("library.no-tracks-without-audio") }}</span>
     </VTooltip>
     <VBtn
-      @click="destroyEmptyArtists"
-      color="danger"
-      class="ma-2 white--text"
+      color="error"
+      class="ma-2 text-white"
       :disabled="artistsDisabled"
+      @click="destroyEmptyArtists"
     >
-      <VIcon left>
+      <VIcon start>
         {{ artistsDisabled ? "mdi-refresh mdi-spin" : "mdi-alert-octagon" }}
       </VIcon>
-      {{ $t("library.delete-empty-artists") }}
+      {{ I18n.t("library.delete-empty-artists") }}
     </VBtn>
     <VBtn
-      @click="destroyEmptyAlbums"
-      color="danger"
-      class="ma-2 white--text"
+      color="error"
+      class="ma-2 text-white"
       :disabled="albumsDisabled"
+      @click="destroyEmptyAlbums"
     >
-      <VIcon left>
+      <VIcon start>
         {{ albumsDisabled ? "mdi-refresh mdi-spin" : "mdi-alert-octagon" }}
       </VIcon>
-      {{ $t("library.delete-empty-albums") }}
+      {{ I18n.t("library.delete-empty-albums") }}
     </VBtn>
     <VBtn
-      @click="destroyEmptyGenres"
-      color="danger"
-      class="ma-2 white--text"
+      color="error"
+      class="ma-2 text-white"
       :disabled="genresDisabled"
+      @click="destroyEmptyGenres"
     >
-      <VIcon left>
+      <VIcon start>
         {{ genresDisabled ? "mdi-refresh mdi-spin" : "mdi-alert-octagon" }}
       </VIcon>
-      {{ $t("library.delete-empty-genres") }}
+      {{ I18n.t("library.delete-empty-genres") }}
     </VBtn>
     <VBtn
-      @click="destroyEmptyLabels"
-      color="danger"
-      class="ma-2 white--text"
+      color="error"
+      class="ma-2 text-white"
       :disabled="labelsDisabled"
+      @click="destroyEmptyLabels"
     >
-      <VIcon left>
+      <VIcon start>
         {{ labelsDisabled ? "mdi-refresh mdi-spin" : "mdi-alert-octagon" }}
       </VIcon>
-      {{ $t("library.delete-empty-labels") }}
+      {{ I18n.t("library.delete-empty-labels") }}
     </VBtn>
   </span>
 </template>
 
-<script>
-import { mapActions, mapState } from "pinia";
-import { useLabelsStore } from "../store/labels";
-import { useGenresStore } from "../store/genres";
-import { useArtistsStore } from "../store/artists";
-import { useAlbumsStore } from "../store/albums";
-import { useTracksStore } from "../store/tracks";
+<script setup lang="ts">
+import { ref } from "vue";
+import { storeToRefs } from "pinia";
+import { useLabelsStore } from "@/store/labels";
+import { useGenresStore } from "@/store/genres";
+import { useArtistsStore } from "@/store/artists";
+import { useAlbumsStore } from "@/store/albums";
+import { useTracksStore } from "@/store/tracks";
+import { useI18n } from "vue-i18n";
 
-export default {
-  name: "MaintenanceActions",
-  data() {
-    return {
-      albumsDisabled: false,
-      artistsDisabled: false,
-      labelsDisabled: false,
-      genresDisabled: false,
-    };
-  },
-  computed: {
-    ...mapState(useTracksStore, ["tracksEmpty"]),
-  },
-  methods: {
-    ...mapActions(useAlbumsStore, { destroyAlbums: "destroyEmpty" }),
-    ...mapActions(useArtistsStore, { destroyArtists: "destroyEmpty" }),
-    ...mapActions(useLabelsStore, { destroyLabels: "destroyEmpty" }),
-    ...mapActions(useGenresStore, { destroyGenres: "destroyEmpty" }),
-    destroyEmptyArtists: function () {
-      if (confirm(this.$t("common.are-you-sure"))) {
-        this.artistsDisabled = true;
-        this.destroyArtists().finally(() => {
-          this.artistsDisabled = false;
-        });
-      }
-    },
-    destroyEmptyAlbums: function () {
-      if (confirm(this.$t("common.are-you-sure"))) {
-        this.albumsDisabled = true;
-        this.destroyAlbums().finally(() => {
-          this.albumsDisabled = false;
-        });
-      }
-    },
-    destroyEmptyGenres: function () {
-      if (confirm(this.$t("common.are-you-sure"))) {
-        this.genresDisabled = true;
-        this.destroyGenres().finally(() => {
-          this.genresDisabled = false;
-        });
-      }
-    },
-    destroyEmptyLabels: function () {
-      if (confirm(this.$t("common.are-you-sure"))) {
-        this.labelsDisabled = true;
-        this.destroyLabels().finally(() => {
-          this.labelsDisabled = false;
-        });
-      }
-    },
-  },
-};
+const I18n = useI18n();
+const albumsStore = useAlbumsStore();
+const artistsStore = useArtistsStore();
+const labelsStore = useLabelsStore();
+const genresStore = useGenresStore();
+
+const albumsDisabled = ref(false);
+const artistsDisabled = ref(false);
+const labelsDisabled = ref(false);
+const genresDisabled = ref(false);
+
+const { tracksEmpty } = storeToRefs(useTracksStore());
+
+async function destroyEmptyAlbums(): Promise<void> {
+  if (confirm(I18n.t("common.are-you-sure"))) {
+    albumsDisabled.value = true;
+    try {
+      await albumsStore.destroyEmpty();
+    } finally {
+      albumsDisabled.value = false;
+    }
+  }
+}
+
+async function destroyEmptyArtists(): Promise<void> {
+  if (confirm(I18n.t("common.are-you-sure"))) {
+    artistsDisabled.value = true;
+    try {
+      await artistsStore.destroyEmpty();
+    } finally {
+      artistsDisabled.value = false;
+    }
+  }
+}
+
+async function destroyEmptyGenres(): Promise<void> {
+  if (confirm(I18n.t("common.are-you-sure"))) {
+    genresDisabled.value = true;
+    try {
+      await genresStore.destroyEmpty();
+    } finally {
+      genresDisabled.value = false;
+    }
+  }
+}
+
+async function destroyEmptyLabels(): Promise<void> {
+  if (confirm(I18n.t("common.are-you-sure"))) {
+    labelsDisabled.value = true;
+    try {
+      await labelsStore.destroyEmpty();
+    } finally {
+      labelsDisabled.value = false;
+    }
+  }
+}
 </script>

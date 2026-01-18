@@ -1,86 +1,92 @@
 <template>
   <VContainer fluid>
     <VDataIterator
-      :footer-props="{
-        disableItemsPerPage: true,
-        itemsPerPageOptions: [numberOfItems],
-        showFirstLastPage: true,
-      }"
-      :items="filteredItems"
-      :items-per-page="numberOfItems"
-      :page.sync="pagination.page"
       v-if="labels.length > 0"
+      v-model:page="page"
+      :items="filteredLabels"
+      :items-per-page="numberOfItems"
     >
-      <template v-slot:header>
-        <VRow class="mb-2" justify="end">
+      <template #header>
+        <VRow class="mb-2" justify="end" align="center">
           <VCol lg="4" md="6" sm="8" xl="2" cols="12">
             <VTextField
-              :label="$t('common.search')"
+              v-if="labels.length > numberOfItems"
+              v-model="search"
+              :label="I18n.t('common.search')"
               hide-details
               prepend-inner-icon="mdi-magnify"
               single-line
-              v-if="labels.length > numberOfItems"
-              v-model="search"
             />
           </VCol>
         </VRow>
       </template>
-      <template v-slot:default="props">
+      <template #default="props">
         <VRow>
           <VCol
-            :key="item.id"
+            v-for="item in props.items"
+            :key="item.raw.id"
             lg="3"
             md="4"
             sm="6"
-            v-for="item in props.items"
             xl="2"
             cols="6"
           >
-            <LabelCard :label="item" />
+            <LabelCard :label="item.raw" />
           </VCol>
+        </VRow>
+      </template>
+      <template #footer="{ pageCount }">
+        <VRow class="mt-2" justify="center">
+          <VPagination
+            v-model="page"
+            density="compact"
+            :length="pageCount"
+            total-visible="5"
+          />
         </VRow>
       </template>
     </VDataIterator>
   </VContainer>
 </template>
 
-<script>
-import { mapState } from "pinia";
-import LabelCard from "../../components/LabelCard.vue";
-import Paginated from "../../mixins/Paginated";
-import Searchable from "../../mixins/Searchable";
-import { useLabelsStore } from "../../store/labels";
+<script setup lang="ts">
+import { computed } from "vue";
+import { useDisplay } from "vuetify/framework";
+import { storeToRefs } from "pinia";
+import { useHead } from "@unhead/vue";
+import LabelCard from "@/components/LabelCard.vue";
+import { useLabelsStore } from "@/store/labels";
+import { usePagination } from "@/composables/pagination";
+import { useSearch } from "@/composables/search";
+import { useI18n } from "vue-i18n";
 
-export default {
-  name: "Labels",
-  metaInfo() {
-    return { title: this.$tc("music.labels", 2) };
-  },
-  components: { LabelCard },
-  mixins: [Paginated, Searchable],
-  computed: {
-    ...mapState(useLabelsStore, { labels: "labelsByName" }),
-    filteredItems() {
-      return this.labels.filter(
-        (item) =>
-          !this.search ||
-          item.name
-            .toLocaleLowerCase()
-            .indexOf(this.search.toLocaleLowerCase()) >= 0 ||
-          item.normalized_name.indexOf(this.search.toLocaleLowerCase()) >= 0,
-      );
-    },
-    numberOfItems() {
-      if (this.$vuetify.breakpoint.name === "xl") {
-        return 30;
-      } else if (this.$vuetify.breakpoint.name === "lg") {
-        return 20;
-      } else if (this.$vuetify.breakpoint.name === "md") {
-        return 15;
-      } else {
-        return 12;
-      }
-    },
-  },
-};
+const { labelsByName: labels } = storeToRefs(useLabelsStore());
+const { page } = usePagination();
+const { search } = useSearch();
+
+const I18n = useI18n();
+useHead({ title: I18n.t("music.labels", 2) });
+
+const filteredLabels = computed(() => {
+  const lookup = search.value.toLowerCase();
+  return labels.value.filter(
+    (item) =>
+      !lookup ||
+      item.name.toLowerCase().indexOf(lookup) >= 0 ||
+      item.normalized_name.indexOf(lookup) >= 0,
+  );
+});
+
+const display = useDisplay();
+const numberOfItems = computed(() => {
+  if (display.xlAndUp) {
+    return 30;
+  } else if (display.lg) {
+    return 20;
+  } else if (display.md) {
+    return 15;
+  } else {
+    return 12;
+  }
+});
 </script>

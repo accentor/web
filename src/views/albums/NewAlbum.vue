@@ -4,14 +4,11 @@
   </VContainer>
 </template>
 
-<script>
-import AlbumForm from "../../components/AlbumForm.vue";
+<script setup lang="ts">
+import AlbumForm from "@/components/AlbumForm.vue";
+import { useHead } from "@unhead/vue";
+import { useI18n } from "vue-i18n";
 
-export default {
-  name: "NewAlbum",
-  metaInfo() {
-    return { title: this.$t("music.album.new") };
-  },
-  components: { AlbumForm },
-};
+const I18n = useI18n();
+useHead({ title: I18n.t("music.album.new") });
 </script>

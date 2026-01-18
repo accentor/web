@@ -11,7 +11,7 @@
           stroke="currentColor"
           stroke-width="30"
           :stroke-dasharray="circumference"
-          class="grey--text text--lighten-2"
+          class="text-grey-lighten-2"
         ></circle>
         <circle
           cx="125"
@@ -19,90 +19,72 @@
           r="100"
           fill="transparent"
           stroke="currentColor"
-          class="primary--text"
+          class="text-primary"
           stroke-width="30"
           :stroke-dasharray="circumference"
           :stroke-dashoffset="strokeDashOffset"
           transform="rotate(-90, 125, 125)"
         ></circle>
-        <text x="130" y="125" text-anchor="middle" class="text-h6">
-          {{ Math.round(animatedPercentage * 1000) / 10.0 }}%
+        <text x="130" y="125" text-anchor="middle" class="text-h6 percentage">
+          {{ Math.round(data.animatedPercentage * 1000) / 10.0 }}%
         </text>
       </svg>
     </div>
   </VCard>
 </template>
 
-<script>
+<script setup lang="ts">
 import { gsap } from "gsap";
+import type { PlayStat, Track } from "@accentor/api-client-js";
+import { computed, ref, watch } from "vue";
 
-export default {
-  name: "PercentagePlayedCard",
-  props: {
-    playStats: {
-      type: Array,
-      required: true,
-    },
-    tracks: {
-      type: Array,
-      required: true,
-    },
-    title: {
-      type: String,
-      required: true,
-    },
-    useTrackLength: {
-      type: Boolean,
-      default: false,
-    },
-  },
-  data() {
-    return {
-      animatedPercentage: 0,
-    };
-  },
-  computed: {
-    playedTracksInPeriod() {
-      return this.playStats.map((p) => p.track_id);
-    },
-    playedTracksLength() {
-      return this.playedTracksInPeriod.reduce((acc, cur) => {
-        return acc + (this.tracks.find((t) => t.id === cur)?.length || 0);
-      }, 0);
-    },
-    totalTracksLength() {
-      return this.tracks.reduce((acc, cur) => {
-        return acc + cur.length;
-      }, 0);
-    },
-    circumference() {
-      // 2πr
-      return 2 * Math.PI * 100;
-    },
-    percentage() {
-      if (!this.tracks.length) {
-        return 0;
-      }
+interface Props {
+  playStats: PlayStat[];
+  tracks: Track[];
+  title: string;
+  useTrackLength?: boolean;
+}
 
-      const playsCount = this.useTrackLength
-        ? this.playedTracksLength
-        : this.playedTracksInPeriod.length;
-      const tracksCount = this.useTrackLength
-        ? this.totalTracksLength
-        : this.tracks.length;
-      return (1.0 * playsCount) / tracksCount;
-    },
-    strokeDashOffset() {
-      const strokeDiff = this.animatedPercentage * this.circumference;
-      return this.circumference - strokeDiff;
-    },
-  },
-  watch: {
-    percentage(newValue) {
-      gsap.to(this.$data, { duration: 0.8, animatedPercentage: newValue });
-    },
-  },
-};
+const circumference = 2 * Math.PI * 100;
+const props = withDefaults(defineProps<Props>(), { useTrackLength: false });
+const data = ref({ animatedPercentage: 0 });
+const playedTracksInPeriod = computed(() =>
+  props.playStats.map((p) => p.track_id),
+);
+const playedTracksLength = computed(() =>
+  playedTracksInPeriod.value.reduce(
+    (acc, cur) => acc + (props.tracks.find((t) => t.id === cur)?.length ?? 0),
+    0,
+  ),
+);
+const totalTracksLength = computed(() =>
+  props.tracks.reduce((acc, cur) => acc + (cur.length ?? 0), 0),
+);
+const percentage = computed(() => {
+  if (!props.tracks.length) {
+    return 0;
+  }
+
+  const playsCount = props.useTrackLength
+    ? playedTracksLength.value
+    : playedTracksInPeriod.value.length;
+  const tracksCount = props.useTrackLength
+    ? totalTracksLength.value
+    : props.tracks.length;
+  return playsCount / tracksCount;
+});
+const strokeDashOffset = computed(() => {
+  const strokeDiff = data.value.animatedPercentage * circumference;
+  return circumference - strokeDiff;
+});
+
+watch(percentage, (newValue) =>
+  gsap.to(data.value, { duration: 0.8, animatedPercentage: newValue }),
+);
 </script>
 
-<style></style>
+<style>
+.percentage {
+  fill: rgba(var(--v-theme-on-surface), var(--v-high-emphasis-opacity));
+}
+</style>
