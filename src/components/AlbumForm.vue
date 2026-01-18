@@ -29,7 +29,7 @@
           <VCard>
             <VCardText>
               <VDatePicker
-                v-model="originalModalModel"
+                v-model="originalDate"
                 scrollable
                 :first-day-of-week="1"
               >
@@ -78,7 +78,7 @@
           <VCard>
             <VCardText>
               <VDatePicker
-                v-model="editionModalModel"
+                v-model="editionDate"
                 scrollable
                 :first-day-of-week="1"
               >
@@ -275,14 +275,14 @@ const isDirty = ref<boolean>(false);
 const isValid = ref<boolean>(true);
 
 const originalModal = ref<boolean>(false);
-const originalModalModel = ref<Date>(new Date());
+const originalDate = ref<Date>(new Date());
 
 const editionModal = ref<boolean>(false);
-const editionModalModel = ref<Date>(new Date());
+const editionDate = ref<Date>(new Date());
 
 const newAlbum = ref({
   title: "",
-  release: dateAdapter.toISO(originalModalModel.value).substring(0, 10),
+  release: dateAdapter.toISO(originalDate.value).substring(0, 10),
   edition: null as string | null,
   edition_description: null as string | null,
   image: null as ImageParams | null,
@@ -352,8 +352,8 @@ function fillValues(): void {
     catalogue_number: al.catalogue_number || "",
   }));
 
-  originalModalModel.value = dateAdapter.parseISO(props.album.release) as Date;
-  editionModalModel.value = dateAdapter.parseISO(
+  originalDate.value = dateAdapter.parseISO(props.album.release) as Date;
+  editionDate.value = dateAdapter.parseISO(
     props.album.edition || dateAdapter.toISO(new Date()).substring(0, 10),
   ) as Date;
   editionInformation.value =
@@ -391,14 +391,14 @@ function moveArtist(index: number, direction: number): void {
 
 function saveEditionRelease(): void {
   newAlbum.value.edition = dateAdapter
-    .toISO(editionModalModel.value)
+    .toISO(editionDate.value)
     .substring(0, 10);
   editionModal.value = false;
 }
 
 function saveOriginalRelease(): void {
   newAlbum.value.release = dateAdapter
-    .toISO(originalModalModel.value)
+    .toISO(originalDate.value)
     .substring(0, 10);
   originalModal.value = false;
 }
