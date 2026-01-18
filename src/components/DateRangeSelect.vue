@@ -99,7 +99,7 @@ const period = computed(() => {
       break;
     case "customRange": {
       const range = [...customRange.value].sort(
-        (d1, d2) => d2.getTime() - d1.getTime(),
+        (d1, d2) => d1.getTime() - d2.getTime(),
       );
       if (range.length) {
         start = range[0]!;
