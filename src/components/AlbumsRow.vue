@@ -46,9 +46,10 @@ import AlbumCard from "@/components/AlbumCard.vue";
 import type { Album } from "@accentor/api-client-js";
 import { usePagination } from "@/composables/pagination";
 import { useSlots } from "vue";
+import type { Loaded } from "@/store/base.ts";
 
 interface Props {
-  albums: (Album & { loaded: Date })[];
+  albums: Loaded<Album>[];
   savePagination?: boolean;
   itemsPerPage?: number;
 }

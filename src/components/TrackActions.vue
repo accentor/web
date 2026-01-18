@@ -209,6 +209,7 @@ import { usePlayerStore } from "@/store/player";
 import { useErrorsStore } from "@/store/errors";
 import { useI18n } from "vue-i18n";
 import { useRoute } from "vue-router";
+import type { Loaded } from "@/store/base.ts";
 
 const I18n = useI18n();
 const route = useRoute();
@@ -222,7 +223,7 @@ const { isModerator } = storeToRefs(authStore);
 const { locations } = storeToRefs(locationsStore);
 
 interface Props {
-  track: Track & { loaded: Date };
+  track: Loaded<Track>;
 }
 
 const props = defineProps<Props>();

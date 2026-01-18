@@ -12,6 +12,7 @@
 <script setup lang="ts">
 import type { Label } from "@accentor/api-client-js";
 import LabelActions from "./LabelActions.vue";
+import type { Loaded } from "@/store/base.ts";
 
-defineProps<{ label: Label & { loaded: Date } }>();
+defineProps<{ label: Loaded<Label> }>();
 </script>

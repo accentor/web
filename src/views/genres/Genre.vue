@@ -27,17 +27,18 @@ import GenreActions from "@/components/GenreActions.vue";
 import TracksTable from "@/components/TracksTable.vue";
 import { useGenresStore } from "@/store/genres";
 import { useTracksStore } from "@/store/tracks";
+import type { Loaded } from "@/store/base.ts";
 
 const router = useRouter();
 const props = defineProps<{ id: string }>();
 const tracksStore = useTracksStore();
 const genresStore = useGenresStore();
 
-const genre = computed<(Genre & { loaded: Date }) | undefined>(
+const genre = computed<Loaded<Genre> | undefined>(
   () => genresStore.genres[props.id],
 );
 const genreName = computed(() => genre.value?.name || "");
-const tracks = computed<(Track & { loaded: Date })[]>(() =>
+const tracks = computed<Loaded<Track>[]>(() =>
   genre.value ? tracksStore.tracksFilterByGenre(genre.value.id) : [],
 );
 useHead({ title: genreName });

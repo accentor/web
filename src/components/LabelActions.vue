@@ -60,11 +60,12 @@ import type { Label } from "@accentor/api-client-js";
 import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRoute } from "vue-router";
+import type { Loaded } from "@/store/base.ts";
 
 const I18n = useI18n();
 const route = useRoute();
 const labelsStore = useLabelsStore();
-const props = defineProps<{ label: Label & { loaded: Date } }>();
+const props = defineProps<{ label: Loaded<Label> }>();
 const { isModerator } = storeToRefs(useAuthStore());
 
 const waitingForReload = computed(

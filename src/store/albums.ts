@@ -16,6 +16,7 @@ import {
   destroyEmpty as baseDestroyEmpty,
   merge as baseMerge,
   type ModelItemsType,
+  type Loaded,
 } from "@/store/base";
 import { useUtilityStore } from "@/store/utility";
 import { useTracksStore } from "@/store/tracks";
@@ -62,13 +63,13 @@ export const useAlbumsStore = defineStore("albums", () => {
       .sort(compareAlbumsByReleaseFirst(true));
   });
 
-  function albumsFilterByArtist(id: number): (Album & { loaded: Date })[] {
+  function albumsFilterByArtist(id: number): Loaded<Album>[] {
     const aaFilter = (a: Album): boolean =>
       a.album_artists.filter((aa) => `${aa.artist_id}` === `${id}`).length > 0;
     return allAlbums.value.filter(aaFilter).sort(compareAlbumsByReleaseFirst());
   }
 
-  function albumsFilterByLabel(id: number): (Album & { loaded: Date })[] {
+  function albumsFilterByLabel(id: number): Loaded<Album>[] {
     const alFilter = (a: Album): boolean =>
       a.album_labels.filter((l) => `${l.label_id}` === `${id}`).length > 0;
     return allAlbums.value.filter(alFilter).sort(compareAlbumsByReleaseFirst());

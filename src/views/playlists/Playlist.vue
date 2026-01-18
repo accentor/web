@@ -57,6 +57,7 @@ import { useTracksStore } from "@/store/tracks";
 import type { Album, Artist, Track } from "@accentor/api-client-js";
 import ArtistsRow from "@/components/ArtistsRow.vue";
 import { useI18n } from "vue-i18n";
+import type { Loaded } from "@/store/base.ts";
 
 const I18n = useI18n();
 const albumsStore = useAlbumsStore();
@@ -70,21 +71,21 @@ const title = computed(() => playlist.value?.name);
 
 useHead({ title });
 
-const tracks = computed<(Track & { loaded: Date })[]>(() => {
+const tracks = computed<Loaded<Track>[]>(() => {
   if (playlist.value?.playlist_type === "track") {
     return playlist.value.item_ids.map((id) => tracksStore.tracks[`${id}`]!);
   }
   return [];
 });
 
-const albums = computed<(Album & { loaded: Date })[]>(() => {
+const albums = computed<Loaded<Album>[]>(() => {
   if (playlist.value?.playlist_type === "album") {
     return playlist.value.item_ids.map((id) => albumsStore.albums[`${id}`]!);
   }
   return [];
 });
 
-const artists = computed<(Artist & { loaded: Date })[]>(() => {
+const artists = computed<Loaded<Artist>[]>(() => {
   if (playlist.value?.playlist_type === "artist") {
     return playlist.value.item_ids.map((id) => artistsStore.artists[`${id}`]!);
   }

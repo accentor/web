@@ -114,6 +114,7 @@ import { useTracksStore } from "@/store/tracks";
 import { usePlayerStore } from "@/store/player";
 import { useErrorsStore } from "@/store/errors";
 import { useI18n } from "vue-i18n";
+import type { Loaded } from "@/store/base.ts";
 
 const I18n = useI18n();
 const route = useRoute();
@@ -125,7 +126,7 @@ const playerStore = usePlayerStore();
 const tracksStore = useTracksStore();
 
 interface Props {
-  album: Album & { loaded: Date };
+  album: Loaded<Album>;
 }
 const props = defineProps<Props>();
 

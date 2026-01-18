@@ -41,9 +41,10 @@ import type { Artist } from "@accentor/api-client-js";
 import ArtistCard from "@/components/ArtistCard.vue";
 import { usePagination } from "@/composables/pagination";
 import { useSlots } from "vue";
+import type { Loaded } from "@/store/base.ts";
 
 interface Props {
-  artists: (Artist & { loaded: Date })[];
+  artists: Loaded<Artist>[];
   savePagination?: boolean;
   itemsPerPage?: number;
 }

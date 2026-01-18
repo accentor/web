@@ -60,11 +60,12 @@ import type { Genre } from "@accentor/api-client-js";
 import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRoute } from "vue-router";
+import type { Loaded } from "@/store/base.ts";
 
 const I18n = useI18n();
 const route = useRoute();
 const genresStore = useGenresStore();
-const props = defineProps<{ genre: Genre & { loaded: Date } }>();
+const props = defineProps<{ genre: Loaded<Genre> }>();
 const { isModerator } = storeToRefs(useAuthStore());
 const waitingForReload = computed(
   () => genresStore.startLoading > props.genre.loaded,

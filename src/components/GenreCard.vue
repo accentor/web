@@ -12,6 +12,7 @@
 <script setup lang="ts">
 import type { Genre } from "@accentor/api-client-js";
 import GenreActions from "./GenreActions.vue";
+import type { Loaded } from "@/store/base.ts";
 
-defineProps<{ genre: Genre & { loaded: Date } }>();
+defineProps<{ genre: Loaded<Genre> }>();
 </script>

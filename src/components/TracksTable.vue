@@ -101,12 +101,13 @@ import { useTracksStore } from "@/store/tracks";
 import { usePagination } from "@/composables/pagination";
 import { compareStrings, compareTracks, formatLength } from "@/util";
 import { useI18n } from "vue-i18n";
+import type { Loaded } from "@/store/base.ts";
 
 const I18n = useI18n();
 const tracksStore = useTracksStore();
 
 interface Props {
-  tracks?: (Track & { loaded: Date })[];
+  tracks?: Loaded<Track>[];
   savePagination?: boolean;
   saveSort?: boolean;
   showActions?: boolean;

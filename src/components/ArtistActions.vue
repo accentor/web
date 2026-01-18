@@ -75,6 +75,7 @@ import { useAuthStore } from "@/store/auth";
 import { useArtistsStore } from "@/store/artists";
 import { useI18n } from "vue-i18n";
 import { useRoute } from "vue-router";
+import type { Loaded } from "@/store/base.ts";
 
 const I18n = useI18n();
 const route = useRoute();
@@ -82,7 +83,7 @@ const authStore = useAuthStore();
 const artistsStore = useArtistsStore();
 
 interface Props {
-  artist: Artist & { loaded: Date };
+  artist: Loaded<Artist>;
   extended?: boolean;
 }
 

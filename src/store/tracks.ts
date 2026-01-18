@@ -10,6 +10,7 @@ import { defineStore } from "pinia";
 import {
   destroy as baseDestroy,
   index as baseIndex,
+  type Loaded,
   merge as baseMerge,
   type ModelItemsType,
   read as baseRead,
@@ -37,10 +38,9 @@ export const useTracksStore = defineStore("tracks", () => {
     setStartLoading,
   } = useBaseModelStore<Track>("tracks.tracks");
   const allTracks = computed(() => Object.values(tracks.value));
-  const tracksByAlbumAndNumber: ComputedRef<(Track & { loaded: Date })[]> =
-    computed(() =>
-      [...allTracks.value].sort(compareTracks(albumsStore.albums)),
-    );
+  const tracksByAlbumAndNumber: ComputedRef<Loaded<Track>[]> = computed(() =>
+    [...allTracks.value].sort(compareTracks(albumsStore.albums)),
+  );
   const tracksEmpty = computed(() =>
     tracksByAlbumAndNumber.value.filter((t: Track) => t.length === null),
   );
@@ -50,7 +50,7 @@ export const useTracksStore = defineStore("tracks", () => {
     ),
   );
   const tracksBinnedByAlbum = computed(() => {
-    const result: Record<string, (Track & { loaded: Date })[]> = {};
+    const result: Record<string, Loaded<Track>[]> = {};
     for (const track of allTracks.value) {
       if (!(`${track.album_id}` in result)) {
         result[`${track.album_id}`] = [];
@@ -60,7 +60,7 @@ export const useTracksStore = defineStore("tracks", () => {
     return result;
   });
   const tracksBinnedByGenre = computed(() => {
-    const result: Record<string, (Track & { loaded: Date })[]> = {};
+    const result: Record<string, Loaded<Track>[]> = {};
     for (const track of allTracks.value) {
       for (const genreId of track.genre_ids) {
         if (!(`${genreId}` in result)) {
@@ -72,7 +72,7 @@ export const useTracksStore = defineStore("tracks", () => {
     return result;
   });
   const tracksBinnedByArtist = computed(() => {
-    const result: Record<string, (Track & { loaded: Date })[]> = {};
+    const result: Record<string, Loaded<Track>[]> = {};
     for (const track of allTracks.value) {
       for (const ta of track.track_artists) {
         if (!(`${ta.artist_id}` in result)) {
@@ -86,19 +86,19 @@ export const useTracksStore = defineStore("tracks", () => {
     return result;
   });
 
-  function tracksFilterByAlbum(id: number): (Track & { loaded: Date })[] {
+  function tracksFilterByAlbum(id: number): Loaded<Track>[] {
     return [...(tracksBinnedByAlbum.value[`${id}`] || [])].sort(
       (t1, t2) => t1.number - t2.number,
     );
   }
 
-  function tracksFilterByGenre(id: number): (Track & { loaded: Date })[] {
+  function tracksFilterByGenre(id: number): Loaded<Track>[] {
     return (tracksBinnedByGenre.value[`${id}`] || []).sort(
       compareTracks(albumsStore.albums),
     );
   }
 
-  function tracksFilterByArtist(id: number): (Track & { loaded: Date })[] {
+  function tracksFilterByArtist(id: number): Loaded<Track>[] {
     return (tracksBinnedByArtist.value[`${id}`] || []).sort(
       compareTracks(albumsStore.albums),
     );

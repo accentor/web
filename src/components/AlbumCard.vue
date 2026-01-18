@@ -48,11 +48,12 @@ import AlbumActions from "./AlbumActions.vue";
 import AlbumArtists from "./AlbumArtists.vue";
 import albumSvgUrl from "@mdi/svg/svg/album.svg" with { type: "url" };
 import { useI18n } from "vue-i18n";
+import type { Loaded } from "@/store/base.ts";
 
 const I18n = useI18n();
 
 interface Props {
-  album: Album & { loaded: Date };
+  album: Loaded<Album>;
   labelForCatNr?: Label;
 }
 const props = defineProps<Props>();

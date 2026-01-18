@@ -93,6 +93,7 @@ import type { Playlist } from "@accentor/api-client-js";
 import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRoute } from "vue-router";
+import type { Loaded } from "@/store/base.ts";
 
 const I18n = useI18n();
 const route = useRoute();
@@ -101,7 +102,7 @@ const errorStore = useErrorsStore();
 const playerStore = usePlayerStore();
 const playlistsStore = usePlaylistsStore();
 
-const props = defineProps<{ playlist: Playlist & { loaded: Date } }>();
+const props = defineProps<{ playlist: Loaded<Playlist> }>();
 const isAllowedToEdit = computed(
   () =>
     props.playlist.access === "shared" ||

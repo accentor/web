@@ -34,9 +34,10 @@ import { ref } from "vue";
 import type { Artist } from "@accentor/api-client-js";
 import ArtistActions from "./ArtistActions.vue";
 import artistSvgUrl from "@mdi/svg/svg/account-music.svg" with { type: "url" };
+import type { Loaded } from "@/store/base.ts";
 
 interface Props {
-  artist: Artist & { loaded: Date };
+  artist: Loaded<Artist>;
 }
 
 defineProps<Props>();

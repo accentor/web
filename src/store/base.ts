@@ -13,7 +13,8 @@ const RawObjectSerializer = {
     Promise.resolve(markRaw(value as unknown as T)),
 };
 
-export type ModelItemsType<T> = Record<string, T & { loaded: Date }>;
+export type Loaded<T> = T & { loaded: Date };
+export type ModelItemsType<T> = Record<string, Loaded<T>>;
 
 export function useBaseModelStore<T extends { id: number }>(
   localStorageKey: string,
