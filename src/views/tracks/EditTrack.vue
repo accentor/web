@@ -38,7 +38,7 @@
                 <VListItem v-bind="listItemProps">
                   <template #append>
                     <span class="text-grey pl-2 text-body-2">
-                      {{ item.raw.id }}
+                      {{ item.value }}
                     </span>
                   </template>
                 </VListItem>

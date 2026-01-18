@@ -104,7 +104,7 @@
                     control-variant="stacked"
                     :label="I18n.t('common.amount')"
                     inset
-                    step="1"
+                    :step="1"
                     :hide-details="true"
                   />
                 </VCol>
@@ -170,11 +170,14 @@
                     :rules="rules.album"
                     return-object
                   >
-                    <template #item="{ item }">
-                      {{ item.title }}
-                      <span class="text-grey pl-2 ml-auto text-body-2">
-                        {{ item.value }}
-                      </span>
+                    <template #item="{ item, props: listItemProps }">
+                      <VListItem v-bind="listItemProps">
+                        <template #append>
+                          <span class="text-grey pl-2 text-body-2">
+                            {{ item.value }}
+                          </span>
+                        </template>
+                      </VListItem>
                     </template>
                   </VAutocomplete>
                 </VCol>
