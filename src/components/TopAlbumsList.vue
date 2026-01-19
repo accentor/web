@@ -126,7 +126,7 @@ const listData = computed(() =>
   [...topAlbums.value].map((tt) => {
     const album = albumsStore.albums[tt[0]];
     const albumArtists = [...(album?.album_artists || [])]
-      .sort((a1, a2) => a2.order - a1.order)
+      .sort((a1, a2) => a1.order - a2.order)
       .reduce((acc, a) => {
         return `${acc}${a.name}${a.separator ?? ""}`;
       }, "");
