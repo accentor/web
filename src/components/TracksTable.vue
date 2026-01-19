@@ -109,7 +109,6 @@ const tracksStore = useTracksStore();
 interface Props {
   tracks?: Loaded<Track>[];
   savePagination?: boolean;
-  saveSort?: boolean;
   showActions?: boolean;
   showAlbum?: boolean;
   showMassEdit?: boolean;
@@ -121,7 +120,6 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), {
   tracks: () => [],
   savePagination: true,
-  saveSort: true,
   showActions: true,
   showAlbum: true,
   showMassEdit: true,
@@ -282,7 +280,7 @@ const headers = computed(() => {
   return result;
 });
 
-const { page } = usePagination();
+const { page } = usePagination(props.savePagination);
 
 const { search } = useSearch();
 const filteredItems = computed(() => {
