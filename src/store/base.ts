@@ -178,7 +178,7 @@ export function create<T extends { id: number }, TParams, TFullParams>(
   errorsStore: ErrorsStore,
   setItem: (id: number, item: T) => void,
   wrap: (newItem: TParams) => TFullParams,
-) {
+): (newItem: TParams) => Promise<number | false> {
   return async function (newItem: TParams): Promise<number | false> {
     try {
       const result = await apiModule.create(authStore.apiToken!, wrap(newItem));
@@ -197,7 +197,7 @@ export function read<T>(
   errorsStore: ErrorsStore,
   restored: Promise<unknown>,
   setItem: (id: number, item: T) => void,
-) {
+): (id: number) => Promise<boolean> {
   return async function (id: number): Promise<boolean> {
     try {
       const result = await apiModule.read(authStore.apiToken!, id);
@@ -223,7 +223,7 @@ export function update<T, TParams, TFullParams>(
   errorsStore: ErrorsStore,
   setItem: (id: number, item: T) => void,
   wrap: (newItem: Partial<TParams>) => UpdateParams<TFullParams>,
-) {
+): (id: number, updatedItem: Partial<TParams>) => Promise<boolean> {
   return async function (
     id: number,
     updatedItem: Partial<TParams>,
@@ -249,7 +249,7 @@ export function destroy(
   errorsStore: ErrorsStore,
   removeItem: (id: number) => void,
   extraDestroyOperations?: (id: number) => void,
-) {
+): (id: number) => Promise<boolean> {
   return async function (id: number): Promise<boolean> {
     try {
       await apiModule.destroy(authStore.apiToken!, id);
@@ -268,7 +268,7 @@ export function destroyEmpty(
   authStore: AuthStore,
   errorsStore: ErrorsStore,
   index: () => Promise<boolean>,
-) {
+): () => Promise<boolean> {
   return async function (): Promise<boolean> {
     try {
       await apiModule.destroyEmpty(authStore.apiToken!);
@@ -290,7 +290,7 @@ export function merge<T>(
   errorsStore: ErrorsStore,
   removeItem: (id: number) => void,
   extraMergeOperations?: (newId: number, oldId: number) => void,
-) {
+): (newId: number, oldId: number) => Promise<boolean> {
   return async function (newId: number, oldId: number): Promise<boolean> {
     try {
       await apiModule.merge(authStore.apiToken!, newId, oldId);

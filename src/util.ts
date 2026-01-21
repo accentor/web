@@ -41,7 +41,9 @@ function compareAlbumEditions(a1: Album, a2: Album): number {
     : order;
 }
 
-export function compareTracks(albums: Record<string, Album>) {
+export function compareTracks(
+  albums: Record<string, Album>,
+): (t1: Track, t2: Track) => number {
   return function (t1: Track, t2: Track): number {
     const a1 = albums[t1.album_id];
     const a2 = albums[t2.album_id];
@@ -64,7 +66,9 @@ export function compareAlbumsByTitleFirst(a1: Album, a2: Album): number {
   return order === 0 ? a2.id - a1.id : order;
 }
 
-export function compareAlbumsByReleaseFirst(newestFirst = false) {
+export function compareAlbumsByReleaseFirst(
+  newestFirst = false,
+): (a1: Album, a2: Album) => number {
   return function (a1: Album, a2: Album): number {
     let order = compareStrings(a1.release, a2.release);
     if (newestFirst) {

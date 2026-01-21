@@ -132,13 +132,16 @@ const filteredTracks = computed(() => {
   return tracksStore.allTracks;
 });
 
-function filterPlaysByTracks(tracks: Track[]) {
+function filterPlaysByTracks(tracks: Track[]): (play: Play) => boolean {
   return function (play: Play): boolean {
     return tracks.some((t) => t.id === play.track_id);
   };
 }
 
-function filterPlaysByPeriod(startDate: Date, endDate: Date) {
+function filterPlaysByPeriod(
+  startDate: Date,
+  endDate: Date,
+): (play: Play) => boolean {
   return function (play: Play): boolean {
     const playedAt = new Date(play.played_at);
     return playedAt > startDate && playedAt < endDate;

@@ -162,7 +162,9 @@ function compareTracksByArtist(t1: Track, t2: Track): number {
   return order;
 }
 
-function compareTracksByGenre(genres: Record<string, Genre>) {
+function compareTracksByGenre(
+  genres: Record<string, Genre>,
+): (t1: Track, t2: Track) => number {
   return function (t1: Track, t2: Track): number {
     // tracks without genres get sorted last
     if (t1.genre_ids.length === 0 && t2.genre_ids.length === 0) {

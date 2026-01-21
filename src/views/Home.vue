@@ -130,7 +130,7 @@ function randomSort<T extends { id: number }>(items: T[]): T[] {
 
 function compareByRecentlyPlayed(
   stats: Record<string, { last_played_at: Date }>,
-) {
+): (i1: { id: number }, i2: { id: number }) => number {
   return function (i1: { id: number }, i2: { id: number }): number {
     return (
       (stats[`${i2.id}`]?.last_played_at || new Date(0)).getTime() -
