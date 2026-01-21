@@ -147,7 +147,7 @@ watch(
             );
           } while (dateAdapter.isBefore(newRange[newRange.length - 1], end));
           customRange.value = newRange;
-          emitSelection();
+          void emitSelection();
         }
       }
     }
@@ -166,7 +166,7 @@ watch(
       | "customRange",
   ) => {
     if (newValue !== "customRange") {
-      emitSelection();
+      void emitSelection();
     } else {
       showCustomRangeModal.value = true;
     }
@@ -174,7 +174,7 @@ watch(
   { immediate: true },
 );
 
-function emitSelection(): void {
+async function emitSelection(): Promise<void> {
   emit("input", period.value);
   showCustomRangeModal.value = false;
   // We only want to set a new query when the selection bubbles up
@@ -187,7 +187,7 @@ function emitSelection(): void {
       : selectedPreset.value;
 
   if (newPeriod !== route.query.period) {
-    router.push({
+    await router.push({
       query: {
         ...route.query,
         period: newPeriod,

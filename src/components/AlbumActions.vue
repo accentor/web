@@ -140,9 +140,9 @@ const waitingForReload = computed(
   () => startLoading.value > props.album.loaded,
 );
 
-function deleteAlbum(): void {
+async function deleteAlbum(): Promise<void> {
   if (confirm(I18n.t("common.are-you-sure"))) {
-    albumsStore.destroy(props.album.id);
+    await albumsStore.destroy(props.album.id);
   }
 }
 

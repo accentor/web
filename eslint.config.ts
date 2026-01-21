@@ -38,12 +38,13 @@ export default defineConfigWithVueTs(
       "no-invalid-this": "error",
       "require-await": "error",
       "vue/multi-word-component-names": "off",
-      "@typescript-eslint/no-non-null-assertion": "off",
       "@typescript-eslint/explicit-function-return-type": [
         "error",
         { allowHigherOrderFunctions: false },
       ],
       "@typescript-eslint/explicit-module-boundary-types": "error",
+      "@typescript-eslint/no-floating-promises": "error",
+      "@typescript-eslint/no-non-null-assertion": "off",
     },
     languageOptions: {
       sourceType: "module",

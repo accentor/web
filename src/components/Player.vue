@@ -312,7 +312,7 @@ watch(playlistTracks, () => {
 
 onMounted(() => {
   audio.value!.addEventListener("ended", () => {
-    playsStore.create(currentTrack.value!.id);
+    void playsStore.create(currentTrack.value!.id);
     playerStore.trackEnded();
   });
 });

@@ -174,9 +174,9 @@ const playStatsScope = computed(() => {
 });
 
 watch(playStatsScope, loadPlayStats);
-watch(useTrackLength, () => {
+watch(useTrackLength, async () => {
   if (useTrackLength.value.toString() !== route.query.useTrackLength) {
-    router.replace({
+    await router.replace({
       query: {
         ...route.query,
         useTrackLength: useTrackLength.value.toString(),

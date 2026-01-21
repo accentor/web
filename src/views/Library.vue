@@ -189,7 +189,7 @@ async function loadData(): Promise<void> {
   await Promise.all(pendingResults);
 }
 
-loadData();
+void loadData();
 
 async function start(id: number): Promise<void> {
   await rescansStore.start(id);
