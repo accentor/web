@@ -23,7 +23,7 @@
       </VRow>
     </template>
     <template #footer="{ pageCount }">
-      <VRow class="mt-2" justify="center">
+      <VRow class="mt-2" justify="end">
         <VPagination
           v-if="artists.length > 0"
           v-model="page"

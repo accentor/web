@@ -31,14 +31,14 @@
       </template>
       <template #bottom>
         <VDivider />
-        <div class="text-center py-2">
+        <VRow class="ma-2" justify="end">
           <VPagination
             v-model="page"
             density="compact"
             :length="pageCount"
             total-visible="5"
           />
-        </div>
+        </VRow>
       </template>
       <template #item.number="{ item, value }">
         <span v-if="currentTrack !== null && item.id === currentTrack.id">
