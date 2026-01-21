@@ -109,7 +109,11 @@ import ArtistsRow from "@/components/ArtistsRow.vue";
 import { useHead } from "@unhead/vue";
 import { computed } from "vue";
 import { useDisplay } from "vuetify/framework";
-import { compareAlbumsByReleaseFirst, compareStrings } from "@/util";
+import {
+  compareAlbumsByReleaseFirst,
+  compareByRecentlyPlayed,
+  compareStrings,
+} from "@/util";
 import { useI18n } from "vue-i18n";
 
 const albumsStore = useAlbumsStore();
@@ -126,17 +130,6 @@ function randomSort<T extends { id: number }>(items: T[]): T[] {
   return [...items].sort(
     (i1, i2) => Math.sin(i2.id + randomSeed) - Math.sin(i1.id + randomSeed),
   );
-}
-
-function compareByRecentlyPlayed(
-  stats: Record<string, { last_played_at: Date }>,
-): (i1: { id: number }, i2: { id: number }) => number {
-  return function (i1: { id: number }, i2: { id: number }): number {
-    return (
-      (stats[`${i2.id}`]?.last_played_at || new Date(0)).getTime() -
-      (stats[`${i1.id}`]?.last_played_at || new Date(0)).getTime()
-    );
-  };
 }
 
 const { allAlbums: albums, albumsOnThisDay } = storeToRefs(albumsStore);

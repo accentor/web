@@ -94,12 +94,18 @@ import { useGenresStore } from "@/store/genres";
 import { useAlbumsStore } from "@/store/albums";
 import { usePlaysStore } from "@/store/plays";
 import { usePlayerStore } from "@/store/player";
-import type { Genre, Track } from "@accentor/api-client-js";
+import type { Track } from "@accentor/api-client-js";
 import { computed, ref, watch } from "vue";
 import { useSearch } from "@/composables/search";
 import { useTracksStore } from "@/store/tracks";
 import { usePagination } from "@/composables/pagination";
-import { compareStrings, compareTracks, formatLength } from "@/util";
+import {
+  compareStrings,
+  compareTracks,
+  formatLength,
+  compareTracksByGenre,
+  compareTracksByArtist,
+} from "@/util";
 import { useI18n } from "vue-i18n";
 import type { Loaded } from "@/store/base.ts";
 
@@ -130,81 +136,6 @@ const props = withDefaults(defineProps<Props>(), {
 const showSelect = computed(() => props.singleSelect || props.showMassEdit);
 
 const emit = defineEmits<{ selected: [number] }>();
-
-function compareTracksByArtist(t1: Track, t2: Track): number {
-  // tracks without artists get sorted last
-  if (t1.track_artists.length === 0 && t2.track_artists.length === 0) {
-    return 0;
-  } else if (t1.track_artists.length === 0) {
-    return 1;
-  } else if (t2.track_artists.length === 0) {
-    return -1;
-  }
-
-  let order = 0;
-  let index = 0;
-  while (order === 0) {
-    const a1 = t1.track_artists[index];
-    const a2 = t2.track_artists[index];
-
-    // If tracks share the same artists, but one track has one or more extra artist(s),
-    // we sort the track with more artists last
-    if (!a1 && !a2) {
-      return 0;
-    } else if (!a1) {
-      return -1;
-    } else if (!a2) {
-      return 1;
-    }
-    order = compareStrings(a1.name, a2.name);
-    index++;
-  }
-  return order;
-}
-
-function compareTracksByGenre(
-  genres: Record<string, Genre>,
-): (t1: Track, t2: Track) => number {
-  return function (t1: Track, t2: Track): number {
-    // tracks without genres get sorted last
-    if (t1.genre_ids.length === 0 && t2.genre_ids.length === 0) {
-      return 0;
-    } else if (t1.genre_ids.length === 0) {
-      return 1;
-    } else if (t2.genre_ids.length === 0) {
-      return -1;
-    }
-
-    // we map the genres for each track and sort by name
-    const t1_genres = t1.genre_ids
-      .map((g) => genres[`${g}`]?.normalized_name ?? "")
-      .sort((g1, g2) => compareStrings(g1, g2));
-    const t2_genres = t2.genre_ids
-      .map((g) => genres[`${g}`]?.normalized_name ?? "")
-      .sort((g1, g2) => compareStrings(g1, g2));
-
-    // We loop over the sorted genres until we find a difference to sort by
-    let index = 0;
-    let order = 0;
-    while (order === 0) {
-      const g1 = t1_genres[index];
-      const g2 = t2_genres[index];
-
-      // If tracks share the same genres, but one track has one or more extra genre(s),
-      // we sort the track with more genres last
-      if (!g1 && !g2) {
-        return 0;
-      } else if (!g1) {
-        return -1;
-      } else if (!g2) {
-        return 1;
-      }
-      order = compareStrings(g1, g2);
-      index++;
-    }
-    return order;
-  };
-}
 
 const headers = computed(() => {
   const result = [
