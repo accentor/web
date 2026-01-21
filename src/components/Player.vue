@@ -69,7 +69,6 @@
           :disabled="!playlistTracks.length || current === -1"
           class="controls__button controls__button--sm-and-up"
           icon
-          size="small"
           variant="text"
           @click="prevTrack"
         >
@@ -92,7 +91,6 @@
           "
           class="controls__button controls__button--sm-and-up"
           icon
-          size="small"
           variant="text"
           @click="nextTrack"
         >
