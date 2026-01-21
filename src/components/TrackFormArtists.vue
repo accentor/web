@@ -8,12 +8,8 @@
       <VRow no-gutters>
         <VCol class="flex-column flex-grow-0">
           <div
-            :ref="index"
-            tabindex="0"
-            :data-index="index"
             class="d-flex justify-space-between fill-height flex-column py-2"
             @keyup.delete="removeArtist(index)"
-            @keyup="(event) => handleKeyUp(event.key, index)"
           >
             <VBtn
               icon
@@ -21,7 +17,6 @@
               variant="text"
               class="ma-2"
               :disabled="index === 0"
-              tabindex="-1"
               @click="moveArtist(index, -1)"
             >
               <VIcon size="x-large">mdi-menu-up</VIcon>
@@ -31,7 +26,6 @@
               icon
               variant="text"
               class="ma-2 drag-handle"
-              tabindex="-1"
               :disabled="trackArtists.length === 1"
             >
               <VIcon size="x-large">mdi-drag-horizontal-variant</VIcon>
@@ -42,7 +36,6 @@
               variant="text"
               class="ma-2"
               :disabled="index === trackArtists.length - 1"
-              tabindex="-1"
               @click="moveArtist(index, 1)"
             >
               <VIcon size="x-large">mdi-menu-down</VIcon>
@@ -52,7 +45,6 @@
               size="small"
               variant="text"
               class="ma-2"
-              tabindex="-1"
               @click="removeArtist(index)"
             >
               <VIcon size="x-large">mdi-close</VIcon>
@@ -198,21 +190,5 @@ function moveArtist(index: number, direction: 1 | -1): void {
     0,
     trackArtists.value.splice(index, 1)[0]!,
   );
-}
-
-function handleKeyUp(key: string, index: number): void {
-  let direction: 1 | -1 | undefined;
-  if (key === "ArrowDown" || key === "d") {
-    direction = 1;
-  } else if (key === "ArrowUp" || key === "u") {
-    direction = -1;
-  }
-  if (
-    direction &&
-    index + direction >= 0 &&
-    index + direction < trackArtists.value.length
-  ) {
-    moveArtist(index, direction);
-  }
 }
 </script>
