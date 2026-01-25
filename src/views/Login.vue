@@ -59,7 +59,7 @@ const password = ref("");
 
 useHead({ title: I18n.t("common.login") });
 
-async function redirect(): void {
+async function redirect(): Promise<void> {
   const path = (route.query.redirect || "/app/") as string;
   await router.push({ path });
 }
