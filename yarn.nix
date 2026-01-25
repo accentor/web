@@ -2,11 +2,11 @@
   offline_cache = linkFarm "offline" packages;
   packages = [
     {
-      name = "_accentor_api_client_js___api_client_js_0.23.5.tgz";
+      name = "_accentor_api_client_js___api_client_js_0.23.6.tgz";
       path = fetchurl {
-        name = "_accentor_api_client_js___api_client_js_0.23.5.tgz";
-        url  = "https://registry.yarnpkg.com/@accentor/api-client-js/-/api-client-js-0.23.5.tgz";
-        sha512 = "6zHfTENpM2qGcP6x4DIzXDf1SBfU4/z4TDsC9w0qeKw2VamMfQppr7+yVWEZjRFr7VzrEbWPGJAk8BakQlhQDQ==";
+        name = "_accentor_api_client_js___api_client_js_0.23.6.tgz";
+        url  = "https://registry.yarnpkg.com/@accentor/api-client-js/-/api-client-js-0.23.6.tgz";
+        sha512 = "JfudDg9llwLGS3ORKUSMcKKIlGediIVmxvJpLt58kNxvfHYI5PNFDwxNylzXqsmd7Yo+mqaL/CpwHt7Al4m2hg==";
       };
     }
     {
