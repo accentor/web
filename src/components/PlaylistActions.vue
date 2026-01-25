@@ -1,168 +1,164 @@
 <template>
-  <span class="actions">
-    <VTooltip bottom :disabled="playableTracks.length !== 0">
-      <template v-slot:activator="{ on }">
-        <span v-on="on">
-          <VBtn
-            @click.stop.prevent="startTracks"
-            :disabled="playableTracks.length === 0"
-            color="primary"
-            class="actions__button"
-            text
-            icon
-            small
-          >
-            <VIcon>mdi-play</VIcon>
-          </VBtn>
-        </span>
-      </template>
-      <span>{{ $t("music.playlist.no-tracks-to-play") }}</span>
-    </VTooltip>
-    <VTooltip bottom :disabled="playableTracks.length !== 0">
-      <template v-slot:activator="{ on }">
-        <span v-on="on">
-          <VBtn
-            @click.stop.prevent="addTracks"
-            :disabled="playableTracks.length === 0"
-            color="success"
-            class="actions__button"
-            text
-            icon
-            small
-            v-on="on"
-          >
-            <VIcon>mdi-plus</VIcon>
-          </VBtn>
-        </span>
-      </template>
-      <span>{{ $t("music.playlist.no-tracks-to-add") }}</span>
-    </VTooltip>
-    <VTooltip bottom :disabled="!waitingForReload" v-if="isAllowedToEdit">
-      <template v-slot:activator="{ on }">
-        <span v-on="on">
-          <VBtn
-            :to="{
-              name: 'edit-playlist',
-              params: { id: playlist.id },
-              query: { redirect: $route.fullPath },
-            }"
-            :disabled="waitingForReload"
-            color="edit"
-            class="actions__button"
-            text
-            icon
-            small
-          >
-            <VIcon>mdi-pencil</VIcon>
-          </VBtn>
-        </span>
-      </template>
-      <span>{{ $t("common.disabled-while-loading") }}</span>
-    </VTooltip>
-    <VTooltip bottom :disabled="!waitingForReload" v-if="isAllowedToEdit">
-      <template v-slot:activator="{ on }">
-        <span v-on="on">
-          <VBtn
-            @click.stop.prevent="deletePlaylist"
-            :disabled="waitingForReload"
-            color="danger"
-            class="actions__button mr-0"
-            href="#"
-            text
-            icon
-            small
-          >
-            <VIcon>mdi-delete</VIcon>
-          </VBtn>
-        </span>
-      </template>
-      <span>{{ $t("common.disabled-while-loading") }}</span>
-    </VTooltip>
-  </span>
+  <VTooltip location="bottom" :disabled="playableTracks.length !== 0">
+    <template #activator="{ props: tooltipProps }">
+      <span v-bind="tooltipProps">
+        <VBtn
+          :disabled="playableTracks.length === 0"
+          color="primary"
+          variant="text"
+          icon
+          size="small"
+          @click.stop.prevent="startTracks"
+        >
+          <VIcon size="x-large">mdi-play</VIcon>
+        </VBtn>
+      </span>
+    </template>
+    <span>{{ I18n.t("music.playlist.no-tracks-to-play") }}</span>
+  </VTooltip>
+  <VTooltip location="bottom" :disabled="playableTracks.length !== 0">
+    <template #activator="{ props: tooltipProps }">
+      <span v-bind="tooltipProps">
+        <VBtn
+          :disabled="playableTracks.length === 0"
+          color="success"
+          variant="text"
+          icon
+          size="small"
+          @click.stop.prevent="addTracks"
+        >
+          <VIcon size="x-large">mdi-plus</VIcon>
+        </VBtn>
+      </span>
+    </template>
+    <span>{{ I18n.t("music.playlist.no-tracks-to-add") }}</span>
+  </VTooltip>
+  <VTooltip
+    v-if="isAllowedToEdit"
+    location="bottom"
+    :disabled="!waitingForReload"
+  >
+    <template #activator="{ props: tooltipProps }">
+      <span v-bind="tooltipProps">
+        <VBtn
+          :to="{
+            name: 'edit-playlist',
+            params: { id: playlist.id },
+            query: { redirect: route.fullPath },
+          }"
+          :disabled="waitingForReload"
+          color="warning"
+          variant="text"
+          icon
+          size="small"
+        >
+          <VIcon size="x-large">mdi-pencil</VIcon>
+        </VBtn>
+      </span>
+    </template>
+    <span>{{ I18n.t("common.disabled-while-loading") }}</span>
+  </VTooltip>
+  <VTooltip
+    v-if="isAllowedToEdit"
+    location="bottom"
+    :disabled="!waitingForReload"
+  >
+    <template #activator="{ props: tooltipProps }">
+      <span v-bind="tooltipProps">
+        <VBtn
+          :disabled="waitingForReload"
+          color="error"
+          class="mr-0"
+          href="#"
+          variant="text"
+          icon
+          size="small"
+          @click.stop.prevent="deletePlaylist"
+        >
+          <VIcon size="x-large">mdi-delete</VIcon>
+        </VBtn>
+      </span>
+    </template>
+    <span>{{ I18n.t("common.disabled-while-loading") }}</span>
+  </VTooltip>
 </template>
 
-<script>
-import { mapActions, mapState } from "pinia";
-import { useAuthStore } from "../store/auth";
-import { usePlaylistsStore } from "../store/playlists";
-import { useTracksStore } from "../store/tracks";
-import { useErrorsStore } from "../store/errors";
-import { usePlayerStore } from "../store/player";
+<script setup lang="ts">
+import { useAuthStore } from "@/store/auth";
+import { usePlaylistsStore } from "@/store/playlists";
+import { useTracksStore } from "@/store/tracks";
+import { useErrorsStore } from "@/store/errors";
+import { usePlayerStore } from "@/store/player";
+import type { Playlist } from "@accentor/api-client-js";
+import { computed } from "vue";
+import { useI18n } from "vue-i18n";
+import { useRoute } from "vue-router";
+import type { Loaded } from "@/store/base.ts";
 
-export default {
-  name: "PlaylistActions",
-  components: {},
-  props: {
-    playlist: {
-      type: Object,
-      required: true,
-    },
-  },
-  computed: {
-    ...mapState(useAuthStore, ["currentUser"]),
-    ...mapState(usePlaylistsStore, ["startLoading"]),
-    ...mapState(useTracksStore, ["tracks"]),
-    waitingForReload() {
-      return this.startLoading > this.playlist.loaded;
-    },
-    isAllowedToEdit() {
-      return (
-        this.playlist.access === "shared" ||
-        this.playlist.user_id === this.currentUser.id
-      );
-    },
-    playlistTracks() {
-      const tracksStore = useTracksStore();
-      switch (this.playlist.playlist_type) {
-        case "album":
-          return this.playlist.item_ids
-            .map((album_id) => tracksStore.tracksFilterByAlbum(album_id))
-            .flat();
-        case "artist":
-          return this.playlist.item_ids
-            .map((artist_id) => tracksStore.tracksFilterByArtist(artist_id))
-            .flat();
-        case "track":
-          return this.playlist.item_ids.map((id) => this.tracks[id]);
-        default:
-          return [];
-      }
-    },
-    playableTracks() {
-      return this.playlistTracks
-        .filter((track) => track.length !== null)
-        .map((obj) => obj.id);
-    },
-  },
-  methods: {
-    ...mapActions(useErrorsStore, ["addError"]),
-    ...mapActions(usePlayerStore, ["playTracks", "addTracks"]),
-    ...mapActions(usePlaylistsStore, ["destroy", "update"]),
-    deletePlaylist: function () {
-      if (confirm(this.$t("common.are-you-sure"))) {
-        this.destroy(this.playlist.id);
-      }
-    },
-    startTracks: function () {
-      if (this.playableTracks.length > 0) {
-        this.playTracks(this.playableTracks);
-        if (this.playableTracks.length !== this.playlistTracks.length) {
-          this.addError({ playlist: ["player.not-all-tracks-added"] });
-        }
-      } else {
-        this.addError({ playlist: ["player.no-tracks-added"] });
-      }
-    },
-    addTracks: function () {
-      if (this.playableTracks.length > 0) {
-        this.addTracks(this.playableTracks);
-        if (this.playableTracks.length !== this.playlistTracks.length) {
-          this.addError({ playlist: ["player.not-all-tracks-added"] });
-        }
-      } else {
-        this.addError({ playlist: ["player.no-tracks-added"] });
-      }
-    },
-  },
-};
+const I18n = useI18n();
+const route = useRoute();
+const authStore = useAuthStore();
+const errorStore = useErrorsStore();
+const playerStore = usePlayerStore();
+const playlistsStore = usePlaylistsStore();
+
+const props = defineProps<{ playlist: Loaded<Playlist> }>();
+const isAllowedToEdit = computed(
+  () =>
+    props.playlist.access === "shared" ||
+    props.playlist.user_id === authStore.currentUser?.id,
+);
+const waitingForReload = computed(
+  () => playlistsStore.startLoading > props.playlist.loaded,
+);
+
+const playlistTracks = computed(() => {
+  const tracksStore = useTracksStore();
+  switch (props.playlist.playlist_type) {
+    case "album":
+      return props.playlist.item_ids
+        .map((album_id) => tracksStore.tracksFilterByAlbum(album_id))
+        .flat();
+    case "artist":
+      return props.playlist.item_ids
+        .map((artist_id) => tracksStore.tracksFilterByArtist(artist_id))
+        .flat();
+    case "track":
+      return props.playlist.item_ids.map((id) => tracksStore.tracks[`${id}`]!);
+    default:
+      return [];
+  }
+});
+
+const playableTracks = computed(() =>
+  playlistTracks.value.filter((t) => t.length !== null).map((t) => t.id),
+);
+
+async function deletePlaylist(): Promise<void> {
+  if (confirm(I18n.t("common.are-you-sure"))) {
+    await playlistsStore.destroy(props.playlist.id);
+  }
+}
+
+function startTracks(): void {
+  if (playlistTracks.value.length > 0) {
+    playerStore.playTracks(playableTracks.value);
+    if (playableTracks.value.length !== playlistTracks.value.length) {
+      errorStore.addError({ playlist: ["player.not-all-tracks-added"] });
+    }
+  } else {
+    errorStore.addError({ playlist: ["player.no-tracks-added"] });
+  }
+}
+
+function addTracks(): void {
+  if (playlistTracks.value.length > 0) {
+    playerStore.addTracks(playableTracks.value);
+    if (playableTracks.value.length !== playlistTracks.value.length) {
+      errorStore.addError({ playlist: ["player.not-all-tracks-added"] });
+    }
+  } else {
+    errorStore.addError({ playlist: ["player.no-tracks-added"] });
+  }
+}
 </script>

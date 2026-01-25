@@ -1,332 +1,171 @@
 <template>
   <div>
     <VContainer fluid>
-      <VDataIterator
-        :footer-props="{
-          disableItemsPerPage: true,
-          itemsPerPageOptions: [numberOfItems],
-        }"
-        :items="albums"
-        :custom-sort="releaseSort"
+      <AlbumsRow
+        :albums="releaseAlbums"
         :items-per-page="numberOfItems"
+        :save-pagination="false"
       >
-        <template v-slot:header>
-          <h2 class="text-h4">{{ $t("home.recently-released") }}</h2>
+        <template #header>
+          <h2 class="text-h4">{{ I18n.t("home.recently-released") }}</h2>
         </template>
-        <template v-slot:default="props">
-          <VRow class="my-0">
-            <VCol
-              v-for="item in props.items"
-              :key="item.id"
-              lg="3"
-              md="4"
-              sm="6"
-              xl="2"
-              cols="6"
-            >
-              <AlbumCard :album="item" />
-            </VCol>
-          </VRow>
-        </template>
-      </VDataIterator>
+      </AlbumsRow>
     </VContainer>
     <VContainer fluid>
-      <VDataIterator
-        :footer-props="{
-          disableItemsPerPage: true,
-          itemsPerPageOptions: [numberOfItems],
-        }"
-        :items="albums"
-        :custom-sort="createdSort"
+      <AlbumsRow
+        :albums="addedAlbums"
         :items-per-page="numberOfItems"
+        :save-pagination="false"
       >
-        <template v-slot:header>
-          <h2 class="text-h4">
-            {{ $t("home.recently-added-albums") }}
-          </h2>
+        <template #header>
+          <h2 class="text-h4">{{ I18n.t("home.recently-added-albums") }}</h2>
         </template>
-        <template v-slot:default="props">
-          <VRow class="my-0">
-            <VCol
-              v-for="item in props.items"
-              :key="item.id"
-              lg="3"
-              md="4"
-              sm="6"
-              xl="2"
-              cols="6"
-            >
-              <AlbumCard :album="item" />
-            </VCol>
-          </VRow>
-        </template>
-      </VDataIterator>
+      </AlbumsRow>
     </VContainer>
     <VContainer fluid>
-      <VDataIterator
-        :footer-props="{
-          disableItemsPerPage: true,
-          itemsPerPageOptions: [numberOfItems],
-        }"
-        :items="artists"
-        :custom-sort="createdSort"
+      <ArtistsRow
+        :artists="addedArtists"
         :items-per-page="numberOfItems"
+        :save-pagination="false"
       >
-        <template v-slot:header>
-          <h2 class="text-h4">
-            {{ $t("home.recently-added-artists") }}
-          </h2>
+        <template #header>
+          <h2 class="text-h4">{{ I18n.t("home.recently-added-artists") }}</h2>
         </template>
-        <template v-slot:default="props">
-          <VRow class="my-0">
-            <VCol
-              v-for="item in props.items"
-              :key="item.id"
-              lg="3"
-              md="4"
-              sm="6"
-              xl="2"
-              cols="6"
-            >
-              <ArtistCard :artist="item" />
-            </VCol>
-          </VRow>
-        </template>
-      </VDataIterator>
+      </ArtistsRow>
     </VContainer>
     <VContainer fluid>
-      <VDataIterator
-        :footer-props="{
-          disableItemsPerPage: true,
-          itemsPerPageOptions: [numberOfItems],
-        }"
-        :items="albumsOnThisDay"
-        :custom-sort="releaseSort"
+      <AlbumsRow
+        :albums="albumsOnThisDay"
         :items-per-page="numberOfItems"
+        :save-pagination="false"
       >
-        <template v-slot:header>
-          <h2 class="text-h4">{{ $t("home.on-this-day") }}</h2>
+        <template #header>
+          <h2 class="text-h4">{{ I18n.t("home.on-this-day") }}</h2>
         </template>
-        <template v-slot:no-data>
-          <v-alert :value="true" color="info" icon="mdi-information" dark>
-            {{ $t("home.on-this-day-empty") }}
-          </v-alert>
+        <template #no-data>
+          <VAlert :model-value="true" color="info" icon="mdi-information">
+            {{ I18n.t("home.on-this-day-empty") }}
+          </VAlert>
         </template>
-        <template v-slot:default="props">
-          <VRow class="my-0">
-            <VCol
-              v-for="item in props.items"
-              :key="item.id"
-              lg="3"
-              md="4"
-              sm="6"
-              xl="2"
-              cols="6"
-            >
-              <AlbumCard :album="item" />
-            </VCol>
-          </VRow>
-        </template>
-      </VDataIterator>
+      </AlbumsRow>
     </VContainer>
 
     <VContainer fluid>
-      <VDataIterator
-        :footer-props="{
-          disableItemsPerPage: true,
-          itemsPerPageOptions: [numberOfItems],
-        }"
-        :items="randomAlbums"
+      <AlbumsRow
+        :albums="randomAlbums"
         :items-per-page="numberOfItems"
+        :save-pagination="false"
       >
-        <template v-slot:header>
-          <h2 class="text-h4">
-            {{ $t("home.random-albums") }}
-          </h2>
+        <template #header>
+          <h2 class="text-h4">{{ I18n.t("home.random-albums") }}</h2>
         </template>
-        <template v-slot:default="props">
-          <VRow class="my-0">
-            <VCol
-              v-for="item in props.items"
-              :key="item.id"
-              lg="3"
-              md="4"
-              sm="6"
-              xl="2"
-              cols="6"
-            >
-              <AlbumCard :album="item" />
-            </VCol>
-          </VRow>
-        </template>
-      </VDataIterator>
+      </AlbumsRow>
     </VContainer>
     <VContainer fluid>
-      <VDataIterator
-        :footer-props="{
-          disableItemsPerPage: true,
-          itemsPerPageOptions: [numberOfItems],
-        }"
-        :items="randomArtists"
+      <ArtistsRow
+        :artists="randomArtists"
         :items-per-page="numberOfItems"
+        :save-pagination="false"
       >
-        <template v-slot:header>
+        <template #header>
           <h2 class="text-h4">
-            {{ $t("home.random-artists") }}
+            {{ I18n.t("home.random-artists") }}
           </h2>
         </template>
-        <template v-slot:default="props">
-          <VRow class="my-0">
-            <VCol
-              v-for="item in props.items"
-              :key="item.id"
-              lg="3"
-              md="4"
-              sm="6"
-              xl="2"
-              cols="6"
-            >
-              <ArtistCard :artist="item" />
-            </VCol>
-          </VRow>
-        </template>
-      </VDataIterator>
+      </ArtistsRow>
     </VContainer>
     <VContainer fluid>
-      <VDataIterator
-        :footer-props="{
-          disableItemsPerPage: true,
-          itemsPerPageOptions: [numberOfItems],
-        }"
-        :items="albums"
-        :custom-sort="recentlyPlayedAlbumsSort"
+      <AlbumsRow
+        :albums="recentAlbums"
         :items-per-page="numberOfItems"
+        :save-pagination="false"
       >
-        <template v-slot:header>
-          <h2 class="text-h4">
-            {{ $t("home.recently-played-albums") }}
-          </h2>
+        <template #header>
+          <h2 class="text-h4">{{ I18n.t("home.recently-played-albums") }}</h2>
         </template>
-        <template v-slot:default="props">
-          <VRow class="my-0">
-            <VCol
-              v-for="item in props.items"
-              :key="item.id"
-              lg="3"
-              md="4"
-              sm="6"
-              xl="2"
-              cols="6"
-            >
-              <AlbumCard :album="item" />
-            </VCol>
-          </VRow>
-        </template>
-      </VDataIterator>
+      </AlbumsRow>
     </VContainer>
     <VContainer fluid>
-      <VDataIterator
-        :footer-props="{
-          disableItemsPerPage: true,
-          itemsPerPageOptions: [numberOfItems],
-        }"
-        :items="artists"
-        :custom-sort="recentlyPlayedArtistsSort"
+      <ArtistsRow
+        :artists="recentArtists"
         :items-per-page="numberOfItems"
+        :save-pagination="false"
       >
-        <template v-slot:header>
-          <h2 class="text-h4">
-            {{ $t("home.recently-played-artists") }}
-          </h2>
+        <template #header>
+          <h2 class="text-h4">{{ I18n.t("home.recently-played-artists") }}</h2>
         </template>
-        <template v-slot:default="props">
-          <VRow class="my-0">
-            <VCol
-              v-for="item in props.items"
-              :key="item.id"
-              lg="3"
-              md="4"
-              sm="6"
-              xl="2"
-              cols="6"
-            >
-              <ArtistCard :artist="item" />
-            </VCol>
-          </VRow>
-        </template>
-      </VDataIterator>
+      </ArtistsRow>
     </VContainer>
   </div>
 </template>
 
-<script>
-import AlbumCard from "../components/AlbumCard.vue";
-import ArtistCard from "../components/ArtistCard.vue";
+<script setup lang="ts">
+import { storeToRefs } from "pinia";
+import { useArtistsStore } from "@/store/artists";
+import { useAlbumsStore } from "@/store/albums";
+import { usePlaysStore } from "@/store/plays";
+import AlbumsRow from "@/components/AlbumsRow.vue";
+import ArtistsRow from "@/components/ArtistsRow.vue";
+import { useHead } from "@unhead/vue";
+import { computed } from "vue";
+import { useDisplay } from "vuetify/framework";
 import {
   compareAlbumsByReleaseFirst,
   compareByRecentlyPlayed,
   compareStrings,
-} from "../comparators";
-import { mapState } from "pinia";
-import { useArtistsStore } from "../store/artists";
-import { useAlbumsStore } from "../store/albums";
-import { usePlaysStore } from "../store/plays";
+} from "@/util";
+import { useI18n } from "vue-i18n";
+
+const albumsStore = useAlbumsStore();
+const artistsStore = useArtistsStore();
+const playsStore = usePlaysStore();
 
 const RANDOM_SEED_MAX = 10000;
+const randomSeed = Math.round(Math.random() * RANDOM_SEED_MAX);
 
-export default {
-  name: "Home",
-  components: { AlbumCard, ArtistCard },
-  metaInfo() {
-    return { title: this.$t("common.home") };
-  },
-  methods: {
-    releaseSort(items) {
-      return [...items].sort(compareAlbumsByReleaseFirst(true));
-    },
-    createdSort(items) {
-      return [...items].sort((a1, a2) => {
-        return compareStrings(a2.created_at, a1.created_at);
-      });
-    },
-    recentlyPlayedAlbumsSort(albums) {
-      return [...albums].sort(compareByRecentlyPlayed(this.playStatsByAlbum));
-    },
-    recentlyPlayedArtistsSort(artists) {
-      return [...artists].sort(compareByRecentlyPlayed(this.playStatsByArtist));
-    },
-    randomSort(items) {
-      return [...items].sort(
-        (i1, i2) =>
-          Math.sin(i2.id + this.randomSeed) - Math.sin(i1.id + this.randomSeed),
-      );
-    },
-  },
-  computed: {
-    ...mapState(useAlbumsStore, {
-      albums: "allAlbums",
-      albumsOnThisDay: "albumsOnThisDay",
-    }),
-    ...mapState(useArtistsStore, { artists: "allArtists" }),
-    ...mapState(usePlaysStore, ["playStatsByAlbum", "playStatsByArtist"]),
-    randomSeed() {
-      return Math.round(Math.random() * RANDOM_SEED_MAX);
-    },
-    randomAlbums() {
-      return this.randomSort(this.albums);
-    },
-    randomArtists() {
-      return this.randomSort(this.artists);
-    },
-    numberOfItems() {
-      if (this.$vuetify.breakpoint.name === "xl") {
-        return 6;
-      } else if (this.$vuetify.breakpoint.name === "md") {
-        return 3;
-      } else {
-        return 4;
-      }
-    },
-  },
-};
+const I18n = useI18n();
+useHead({ title: I18n.t("common.home") });
+
+function randomSort<T extends { id: number }>(items: T[]): T[] {
+  return [...items].sort(
+    (i1, i2) => Math.sin(i2.id + randomSeed) - Math.sin(i1.id + randomSeed),
+  );
+}
+
+const { allAlbums: albums, albumsOnThisDay } = storeToRefs(albumsStore);
+const { allArtists: artists } = storeToRefs(artistsStore);
+const { playStatsByAlbum, playStatsByArtist } = storeToRefs(playsStore);
+
+const addedAlbums = computed(() =>
+  [...albums.value].sort((a1, a2) =>
+    compareStrings(a2.created_at, a1.created_at),
+  ),
+);
+const randomAlbums = computed(() => randomSort(albums.value));
+const releaseAlbums = computed(() =>
+  [...albums.value].sort(compareAlbumsByReleaseFirst(true)),
+);
+const recentAlbums = computed(() =>
+  [...albums.value].sort(compareByRecentlyPlayed(playStatsByAlbum.value)),
+);
+const addedArtists = computed(() =>
+  [...artists.value].sort((a1, a2) =>
+    compareStrings(a2.created_at, a1.created_at),
+  ),
+);
+const recentArtists = computed(() =>
+  [...artists.value].sort(compareByRecentlyPlayed(playStatsByArtist.value)),
+);
+const randomArtists = computed(() => randomSort(artists.value));
+
+const display = useDisplay();
+const numberOfItems = computed(() => {
+  if (display.xlAndUp.value) {
+    return 6;
+  } else if (display.md.value) {
+    return 3;
+  } else {
+    return 4;
+  }
+});
 </script>

@@ -1,88 +1,80 @@
 <template>
-  <span v-if="isModerator" class="actions">
-    <VTooltip bottom :disabled="!waitingForReload">
-      <template v-slot:activator="{ on }">
-        <span v-on="on">
+  <template v-if="isModerator">
+    <VTooltip location="bottom" :disabled="!waitingForReload">
+      <template #activator="{ props: tooltipProps }">
+        <span v-bind="tooltipProps">
           <VBtn
             :to="{
               name: 'edit-label',
               params: { id: label.id },
-              query: { redirect: $route.fullPath },
+              query: { redirect: route.fullPath },
             }"
             :disabled="waitingForReload"
-            color="edit"
-            class="actions__button"
-            text
+            color="warning"
+            variant="text"
             icon
-            small
+            size="small"
           >
-            <VIcon>mdi-pencil</VIcon>
+            <VIcon size="x-large">mdi-pencil</VIcon>
           </VBtn>
         </span>
       </template>
-      <span>{{ $t("common.disabled-while-loading") }}</span>
+      <span>{{ I18n.t("common.disabled-while-loading") }}</span>
     </VTooltip>
-    <VTooltip bottom :disabled="!waitingForReload">
-      <template v-slot:activator="{ on }">
-        <span v-on="on">
+    <VTooltip location="bottom" :disabled="!waitingForReload">
+      <template #activator="{ props: tooltipProps }">
+        <span v-bind="tooltipProps">
           <LabelMergeDialog :label="label" :disabled="waitingForReload" />
         </span>
       </template>
-      <span>{{ $t("common.disabled-while-loading") }}</span>
+      <span>{{ I18n.t("common.disabled-while-loading") }}</span>
     </VTooltip>
-    <VTooltip bottom :disabled="!waitingForReload">
-      <template v-slot:activator="{ on }">
-        <span v-on="on">
+    <VTooltip location="bottom" :disabled="!waitingForReload">
+      <template #activator="{ props: tooltipProps }">
+        <span v-bind="tooltipProps">
           <VBtn
-            @click.stop.prevent="deleteLabel"
             :disabled="waitingForReload"
-            color="danger"
-            class="mr-0 actions__button"
+            color="error"
+            class="mr-0"
             href="#"
-            text
+            variant="text"
             icon
-            small
+            size="small"
+            @click.stop.prevent="deleteLabel"
           >
-            <VIcon>mdi-delete</VIcon>
+            <VIcon size="x-large">mdi-delete</VIcon>
           </VBtn>
         </span>
       </template>
-      <span>{{ $t("common.disabled-while-loading") }}</span>
+      <span>{{ I18n.t("common.disabled-while-loading") }}</span>
     </VTooltip>
-  </span>
+  </template>
 </template>
 
-<script>
-import { mapActions, mapState } from "pinia";
+<script setup lang="ts">
+import { storeToRefs } from "pinia";
 import LabelMergeDialog from "./LabelMergeDialog.vue";
-import { useAuthStore } from "../store/auth";
-import { useLabelsStore } from "../store/labels";
+import { useAuthStore } from "@/store/auth";
+import { useLabelsStore } from "@/store/labels";
+import type { Label } from "@accentor/api-client-js";
+import { computed } from "vue";
+import { useI18n } from "vue-i18n";
+import { useRoute } from "vue-router";
+import type { Loaded } from "@/store/base.ts";
 
-export default {
-  name: "LabelActions",
-  components: {
-    LabelMergeDialog,
-  },
-  props: {
-    label: {
-      type: Object,
-      required: true,
-    },
-  },
-  computed: {
-    ...mapState(useAuthStore, ["isModerator"]),
-    ...mapState(useLabelsStore, ["startLoading"]),
-    waitingForReload() {
-      return this.startLoading > this.label.loaded;
-    },
-  },
-  methods: {
-    ...mapActions(useLabelsStore, ["destroy"]),
-    deleteLabel: function () {
-      if (confirm(this.$t("common.are-you-sure"))) {
-        this.destroy(this.label.id);
-      }
-    },
-  },
-};
+const I18n = useI18n();
+const route = useRoute();
+const labelsStore = useLabelsStore();
+const props = defineProps<{ label: Loaded<Label> }>();
+const { isModerator } = storeToRefs(useAuthStore());
+
+const waitingForReload = computed(
+  () => labelsStore.startLoading > props.label.loaded,
+);
+
+async function deleteLabel(): Promise<void> {
+  if (confirm(I18n.t("common.are-you-sure"))) {
+    await labelsStore.destroy(props.label.id);
+  }
+}
 </script>

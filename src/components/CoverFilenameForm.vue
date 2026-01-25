@@ -1,89 +1,75 @@
 <template>
-  <VForm v-model="isValid" ref="form" lazy-validation>
+  <VForm ref="form" v-model="isValid">
     <VRow>
       <VCol cols="5">
         <VTextField
           v-model="newCoverFilename.filename"
-          :label="$t('library.filename')"
+          :label="I18n.t('library.filename')"
           :disabled="coverFilename !== null"
           required
-          :rules="[(v) => !!v || $t('errors.cover_filename.filename-blank')]"
+          :rules="[
+            (v) => !!v || I18n.t('errors.cover_filename.filename-blank'),
+          ]"
         />
       </VCol>
       <VCol cols="2" sm="1">
         <VBtn
+          v-if="!coverFilename"
           :disabled="!isValid"
           icon
-          outlined
+          variant="outlined"
           color="success"
           class="ma-2"
           @click="saveCoverFilename"
-          v-if="!coverFilename"
         >
           <VIcon color="success">mdi-plus</VIcon>
         </VBtn>
         <VBtn
-          icon
-          outlined
           v-if="coverFilename"
-          color="danger"
+          icon
+          variant="outlined"
+          color="error"
           class="ma-2"
           @click="deleteCoverFilename"
         >
-          <VIcon color="danger">mdi-delete</VIcon>
+          <VIcon color="error">mdi-delete</VIcon>
         </VBtn>
       </VCol>
     </VRow>
   </VForm>
 </template>
 
-<script>
-import { useCoverFilenamesStore } from "../store/cover_filenames";
-import { mapActions } from "pinia";
+<script setup lang="ts">
+import { useCoverFilenamesStore } from "@/store/cover_filenames";
+import type { CoverFilename } from "@accentor/api-client-js";
+import { onMounted, ref, useTemplateRef } from "vue";
+import { useI18n } from "vue-i18n";
 
-export default {
-  name: "CoverFilenameForm",
-  props: { coverFilename: { default: null, type: Object } },
-  data() {
-    return {
-      newCoverFilename: {
-        filename: "",
-      },
-      isValid: true,
-    };
-  },
-  created() {
-    this.$nextTick(() => {
-      if (this.coverFilename) {
-        this.fillValues();
-      }
-    });
-  },
-  watch: {
-    album: function () {
-      if (this.coverFilename) {
-        this.fillValues();
-      }
-    },
-  },
-  methods: {
-    fillValues() {
-      this.newCoverFilename.filename = this.coverFilename.filename;
-    },
-    ...mapActions(useCoverFilenamesStore, ["destroy", "create"]),
-    async saveCoverFilename() {
-      if (this.$refs.form.validate()) {
-        const id = await this.create(this.newCoverFilename);
-        if (id) {
-          this.newCoverFilename.filename = "";
-        }
-      }
-    },
-    deleteCoverFilename() {
-      if (confirm(this.$t("common.are-you-sure"))) {
-        this.destroy(this.coverFilename.id);
-      }
-    },
-  },
-};
+const I18n = useI18n();
+const coverFilenamesStore = useCoverFilenamesStore();
+const props = defineProps<{ coverFilename?: CoverFilename }>();
+const newCoverFilename = ref({ filename: "" });
+const isValid = ref(true);
+
+onMounted(() => {
+  if (props.coverFilename) {
+    newCoverFilename.value.filename = props.coverFilename.filename;
+  }
+});
+
+const form = useTemplateRef("form");
+async function saveCoverFilename(): Promise<void> {
+  if ((await form.value!.validate()).valid) {
+    const id = await coverFilenamesStore.create(newCoverFilename.value);
+    if (id) {
+      newCoverFilename.value.filename = "";
+    }
+  }
+}
+
+async function deleteCoverFilename(): Promise<void> {
+  if (confirm(I18n.t("common.are-you-sure"))) {
+    await coverFilenamesStore.destroy(props.coverFilename!.id);
+  }
+}
 </script>

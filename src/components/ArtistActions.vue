@@ -1,111 +1,106 @@
 <template>
-  <span class="actions">
-    <VBtn
-      :to="{
-        name: 'stats',
-        query: { artist_id: artist.id },
-      }"
-      color="primary"
-      class="actions__button"
-      text
-      icon
-      small
-      v-if="extended"
-    >
-      <VIcon>mdi-chart-bar</VIcon>
-    </VBtn>
-    <AddToPlaylist :item="artist" type="artist" />
-    <EditReviewComment :item="artist" :update="flag" />
-    <VTooltip bottom :disabled="!waitingForReload" v-if="isModerator">
-      <template v-slot:activator="{ on }">
-        <span v-on="on">
-          <VBtn
-            :to="{
-              name: 'edit-artist',
-              params: { id: artist.id },
-              query: { redirect: $route.fullPath },
-            }"
-            :disabled="waitingForReload"
-            color="edit"
-            class="actions__button"
-            text
-            icon
-            small
-          >
-            <VIcon>mdi-pencil</VIcon>
-          </VBtn>
-        </span>
-      </template>
-      <span>{{ $t("common.disabled-while-loading") }}</span>
-    </VTooltip>
-    <VTooltip bottom :disabled="!waitingForReload" v-if="isModerator">
-      <template v-slot:activator="{ on }">
-        <span v-on="on">
-          <ArtistMergeDialog :artist="artist" :disabled="waitingForReload" />
-        </span>
-      </template>
-      <span>{{ $t("common.disabled-while-loading") }}</span>
-    </VTooltip>
-    <VTooltip bottom :disabled="!waitingForReload" v-if="isModerator">
-      <template v-slot:activator="{ on }">
-        <span v-on="on">
-          <VBtn
-            @click.stop.prevent="deleteArtist"
-            :disabled="waitingForReload"
-            color="danger"
-            class="actions__button mr-0"
-            href="#"
-            text
-            icon
-            small
-          >
-            <VIcon>mdi-delete</VIcon>
-          </VBtn>
-        </span>
-      </template>
-      <span>{{ $t("common.disabled-while-loading") }}</span>
-    </VTooltip>
-  </span>
+  <VBtn
+    v-if="extended"
+    :to="{
+      name: 'stats',
+      query: { artist_id: artist.id },
+    }"
+    color="primary"
+    variant="text"
+    icon
+    size="small"
+  >
+    <VIcon size="x-large">mdi-chart-bar</VIcon>
+  </VBtn>
+  <AddToPlaylist :item="artist" type="artist" />
+  <EditReviewComment :item="artist" :update="flag" />
+  <VTooltip v-if="isModerator" location="bottom" :disabled="!waitingForReload">
+    <template #activator="{ props: tooltipProps }">
+      <span v-bind="tooltipProps">
+        <VBtn
+          :to="{
+            name: 'edit-artist',
+            params: { id: artist.id },
+            query: { redirect: route.fullPath },
+          }"
+          :disabled="waitingForReload"
+          color="warning"
+          variant="text"
+          icon
+          size="small"
+        >
+          <VIcon size="x-large">mdi-pencil</VIcon>
+        </VBtn>
+      </span>
+    </template>
+    <span>{{ I18n.t("common.disabled-while-loading") }}</span>
+  </VTooltip>
+  <VTooltip v-if="isModerator" location="bottom" :disabled="!waitingForReload">
+    <template #activator="{ props: tooltipProps }">
+      <span v-bind="tooltipProps">
+        <ArtistMergeDialog :artist="artist" :disabled="waitingForReload" />
+      </span>
+    </template>
+    <span>{{ I18n.t("common.disabled-while-loading") }}</span>
+  </VTooltip>
+  <VTooltip v-if="isModerator" location="bottom" :disabled="!waitingForReload">
+    <template #activator="{ props: tooltipProps }">
+      <span v-bind="tooltipProps">
+        <VBtn
+          :disabled="waitingForReload"
+          color="error"
+          class="mr-0"
+          href="#"
+          variant="text"
+          icon
+          size="small"
+          @click.stop.prevent="deleteArtist"
+        >
+          <VIcon size="x-large">mdi-delete</VIcon>
+        </VBtn>
+      </span>
+    </template>
+    <span>{{ I18n.t("common.disabled-while-loading") }}</span>
+  </VTooltip>
 </template>
 
-<script>
-import { mapActions, mapState } from "pinia";
+<script setup lang="ts">
+import { storeToRefs } from "pinia";
+import { computed } from "vue";
+import type { Artist } from "@accentor/api-client-js";
 import EditReviewComment from "./EditReviewComment.vue";
 import ArtistMergeDialog from "./ArtistMergeDialog.vue";
 import AddToPlaylist from "./AddToPlaylist.vue";
-import { useAuthStore } from "../store/auth";
-import { useArtistsStore } from "../store/artists";
+import { useAuthStore } from "@/store/auth";
+import { useArtistsStore } from "@/store/artists";
+import { useI18n } from "vue-i18n";
+import { useRoute } from "vue-router";
+import type { Loaded } from "@/store/base.ts";
 
-export default {
-  name: "ArtistActions",
-  components: { AddToPlaylist, ArtistMergeDialog, EditReviewComment },
-  props: {
-    artist: {
-      type: Object,
-      required: true,
-    },
-    extended: {
-      type: Boolean,
-      default: false,
-    },
-  },
-  computed: {
-    ...mapState(useAuthStore, ["isModerator"]),
-    ...mapState(useArtistsStore, ["startLoading"]),
-    waitingForReload() {
-      return this.startLoading > this.artist.loaded;
-    },
-  },
-  methods: {
-    ...mapActions(useArtistsStore, ["destroy", "update"]),
-    deleteArtist: function () {
-      if (confirm(this.$t("common.are-you-sure"))) {
-        this.destroy(this.artist.id);
-      }
-    },
-    flag(id, reviewComment) {
-      return this.update(id, { review_comment: reviewComment });
-    },
-  },
-};
+const I18n = useI18n();
+const route = useRoute();
+const authStore = useAuthStore();
+const artistsStore = useArtistsStore();
+
+interface Props {
+  artist: Loaded<Artist>;
+  extended?: boolean;
+}
+
+const props = defineProps<Props>();
+
+const { isModerator } = storeToRefs(authStore);
+const waitingForReload = computed(
+  () => artistsStore.startLoading > props.artist.loaded,
+);
+
+async function deleteArtist(): Promise<void> {
+  if (confirm(I18n.t("common.are-you-sure"))) {
+    await artistsStore.destroy(props.artist.id);
+  }
+}
+
+async function flag(id: number, reviewComment: string): Promise<boolean> {
+  return await artistsStore.update(id, { review_comment: reviewComment });
+}
 </script>

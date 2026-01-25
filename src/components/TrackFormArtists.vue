@@ -1,208 +1,194 @@
 <template>
-  <Draggable :list="this.trackArtists" handle=".drag-handle">
-    <VRow :key="index" v-for="(item, index) of trackArtists" no-gutters>
-      <VCol class="flex-column flex-grow-0">
-        <div
-          tabindex="0"
-          :data-index="index"
-          @keyup.delete="removeArtist(index)"
-          @keyup="handleKeyUp($event.key, index)"
-          :ref="index"
-          class="d-flex justify-space-between fill-height flex-column py-2"
-        >
-          <VBtn
-            @click="moveArtist(index, -1)"
-            icon
-            small
-            class="ma-2"
-            :disabled="index === 0"
-            tabindex="-1"
+  <Draggable
+    v-model="trackArtists"
+    :item-key="getItemKey"
+    handle=".drag-handle"
+  >
+    <template #item="{ element: item, index }">
+      <VRow no-gutters>
+        <VCol class="flex-column flex-grow-0">
+          <div
+            class="d-flex justify-space-between fill-height flex-column py-2"
+            @keyup.delete="removeArtist(index)"
           >
-            <VIcon>mdi-menu-up</VIcon>
-          </VBtn>
-          <VBtn
-            small
-            icon
-            text
-            class="ma-2 drag-handle"
-            tabindex="-1"
-            :disabled="trackArtists.length === 1"
-          >
-            <VIcon>mdi-drag-horizontal-variant</VIcon>
-          </VBtn>
-          <VBtn
-            @click="moveArtist(index, 1)"
-            icon
-            small
-            class="ma-2"
-            :disabled="index === trackArtists.length - 1"
-            tabindex="-1"
-          >
-            <VIcon>mdi-menu-down</VIcon>
-          </VBtn>
-          <VBtn
-            @click="removeArtist(index)"
-            icon
-            small
-            class="ma-2"
-            tabindex="-1"
-          >
-            <VIcon>mdi-close</VIcon>
-          </VBtn>
-        </div>
-      </VCol>
-      <VCol>
-        <VCombobox
-          :items="sortedArtists"
-          :filter="filterName"
-          item-text="name"
-          item-value="id"
-          :label="$tc('music.artists', 2)"
-          :rules="rules"
-          return-object
-          v-model="item.artist_id"
-        />
-        <VTextField :label="$t('common.name')" v-model="item.name" />
-        <VRow>
-          <VCol>
-            <VAutocomplete
-              :items="roles"
-              :label="$t('music.artist.role')"
-              v-model="item.role"
-              class="flex-grow-2"
-            />
-          </VCol>
-          <VCol class="flex-grow-0 flex-shrink-0">
-            <VCheckbox
-              v-model="item.hidden"
-              color="red"
-              class="white-space-nowrap"
+            <VBtn
+              icon
+              size="small"
+              variant="text"
+              class="ma-2"
+              :disabled="index === 0"
+              @click="moveArtist(index, -1)"
             >
-              <template v-slot:label>
-                {{ $t("music.artist.hide.label") }}
-                <VTooltip bottom>
-                  <template v-slot:activator="{ on, attrs }">
-                    <VIcon class="ml-2" :small="true" v-bind="attrs" v-on="on">
-                      mdi-information
-                    </VIcon>
-                  </template>
-                  <span>{{ $t("music.artist.hide.explanation") }}</span>
-                </VTooltip>
-              </template>
-            </VCheckbox>
-          </VCol>
-        </VRow>
-        <VDivider light v-if="index !== trackArtists.length - 1" />
-      </VCol>
-    </VRow>
+              <VIcon size="x-large">mdi-menu-up</VIcon>
+            </VBtn>
+            <VBtn
+              size="small"
+              icon
+              variant="text"
+              class="ma-2 drag-handle"
+              :disabled="trackArtists.length === 1"
+            >
+              <VIcon size="x-large">mdi-drag-horizontal-variant</VIcon>
+            </VBtn>
+            <VBtn
+              icon
+              size="small"
+              variant="text"
+              class="ma-2"
+              :disabled="index === trackArtists.length - 1"
+              @click="moveArtist(index, 1)"
+            >
+              <VIcon size="x-large">mdi-menu-down</VIcon>
+            </VBtn>
+            <VBtn
+              icon
+              size="small"
+              variant="text"
+              class="ma-2"
+              @click="removeArtist(index)"
+            >
+              <VIcon size="x-large">mdi-close</VIcon>
+            </VBtn>
+          </div>
+        </VCol>
+        <VCol>
+          <VCombobox
+            v-model="item.artist_id"
+            :items="sortedArtists"
+            :custom-filter="filterName"
+            item-title="name"
+            item-value="id"
+            :label="I18n.t('music.artists', 2)"
+            :rules="rules"
+            return-object
+          />
+          <VTextField v-model="item.name" :label="I18n.t('common.name')" />
+          <VRow>
+            <VCol>
+              <VAutocomplete
+                v-model="item.role"
+                :items="roles"
+                :label="I18n.t('music.artist.role')"
+              />
+            </VCol>
+            <VCol class="flex-shrink-1">
+              <VCheckbox v-model="item.hidden" color="red">
+                <template #label>
+                  <span class="no-break-word white-space-nowrap">
+                    {{ I18n.t("music.artist.hide.label") }}
+                  </span>
+                  <VTooltip location="bottom">
+                    <template #activator="{ props: tooltipProps }">
+                      <VIcon class="ml-2" size="small" v-bind="tooltipProps">
+                        mdi-information
+                      </VIcon>
+                    </template>
+                    <span>{{ I18n.t("music.artist.hide.explanation") }}</span>
+                  </VTooltip>
+                </template>
+              </VCheckbox>
+            </VCol>
+          </VRow>
+          <VDivider v-if="index !== trackArtists.length - 1" light />
+        </VCol>
+      </VRow>
+    </template>
   </Draggable>
 </template>
 
-<script>
-import { mapState } from "pinia";
+<script setup lang="ts">
+import { storeToRefs } from "pinia";
 import Draggable from "vuedraggable";
-import { useArtistsStore } from "../store/artists";
+import { useArtistsStore } from "@/store/artists";
+import { useVModel } from "@vueuse/core";
+import { computed } from "vue";
+import type { Artist, TrackArtistRole } from "@accentor/api-client-js";
+import type { InternalItem } from "vuetify/framework";
+import { useI18n } from "vue-i18n";
 
-export default {
-  name: "TrackFormArtists",
-  components: {
-    Draggable,
+const I18n = useI18n();
+
+interface ModelType {
+  artist_id: Artist | string | null;
+  name: string;
+  role: TrackArtistRole;
+}
+
+interface Props {
+  modelValue: ModelType[];
+}
+
+const props = defineProps<Props>();
+const emit = defineEmits<{ "update:modelValue": [ModelType[]] }>();
+const trackArtists = useVModel(props, "modelValue", emit);
+const { artistsByName: sortedArtists } = storeToRefs(useArtistsStore());
+
+const roles = [
+  {
+    value: "main",
+    title: I18n.t("music.artist.roles.main"),
   },
-  data() {
-    return {
-      roles: [
-        {
-          value: "main",
-          text: this.$t("music.artist.roles.main"),
-        },
-        {
-          value: "performer",
-          text: this.$t("music.artist.roles.performer"),
-        },
-        {
-          value: "composer",
-          text: this.$t("music.artist.roles.composer"),
-        },
-        {
-          value: "conductor",
-          text: this.$t("music.artist.roles.conductor"),
-        },
-        {
-          value: "remixer",
-          text: this.$t("music.artist.roles.remixer"),
-        },
-        {
-          value: "producer",
-          text: this.$t("music.artist.roles.producer"),
-        },
-        {
-          value: "arranger",
-          text: this.$t("music.artist.roles.arranger"),
-        },
-      ],
-      trackArtists: [],
-    };
+  {
+    value: "performer",
+    title: I18n.t("music.artist.roles.performer"),
   },
-  props: {
-    value: {
-      type: Array,
-      required: true,
-    },
+  {
+    value: "composer",
+    title: I18n.t("music.artist.roles.composer"),
   },
-  watch: {
-    trackArtists(newValue) {
-      this.$emit("update:value", newValue);
-    },
-    value: {
-      handler() {
-        this.trackArtists = this.value;
-      },
-      immediate: true,
-    },
+  {
+    value: "conductor",
+    title: I18n.t("music.artist.roles.conductor"),
   },
-  computed: {
-    ...mapState(useArtistsStore, { sortedArtists: "artistsByName" }),
-    rules() {
-      const artistValidation = (v) =>
-        !!v || this.$t("errors.artists.artist-blank");
-      return [artistValidation];
-    },
+  {
+    value: "remixer",
+    title: I18n.t("music.artist.roles.remixer"),
   },
-  methods: {
-    filterName(item, queryText) {
-      const search = queryText.toLowerCase();
-      return (
-        item.name.toLowerCase().indexOf(search) > -1 ||
-        item.normalized_name.indexOf(search) > -1
-      );
-    },
-    removeArtist(index) {
-      this.trackArtists.splice(index, 1);
-    },
-    moveArtist(index, direction) {
-      this.trackArtists.splice(
-        index + direction,
-        0,
-        this.trackArtists.splice(index, 1)[0],
-      );
-    },
-    handleKeyUp(key, index) {
-      let direction;
-      if (key === "ArrowDown" || key === "d") {
-        direction = 1;
-      } else if (key === "ArrowUp" || key === "u") {
-        direction = -1;
-      }
-      if (
-        typeof direction !== "undefined" &&
-        index + direction >= 0 &&
-        index + direction < this.trackArtists.length
-      ) {
-        this.moveArtist(index, direction);
-        // Due to the way Vue updates the DOM, we have to manually focus on the current trackArtist in its new place
-        this.$refs[index + direction][0].focus();
-      }
-    },
+  {
+    value: "producer",
+    title: I18n.t("music.artist.roles.producer"),
   },
-};
+  {
+    value: "arranger",
+    title: I18n.t("music.artist.roles.arranger"),
+  },
+];
+
+const rules = computed(() => {
+  const artistValidation = (v: string): true | string =>
+    !!v || I18n.t("errors.artists.artist-blank");
+  return [artistValidation];
+});
+
+function filterName(
+  _value: string,
+  queryText: string,
+  item?: InternalItem<Artist>,
+): boolean {
+  if (!item) {
+    return false;
+  }
+
+  const search = queryText.toLowerCase();
+  return (
+    item.raw.name.toLowerCase().indexOf(search) >= 0 ||
+    item.raw.normalized_name.indexOf(search) >= 0
+  );
+}
+
+function getItemKey(item: ModelType): number {
+  return trackArtists.value.indexOf(item);
+}
+
+function removeArtist(index: number): void {
+  trackArtists.value.splice(index, 1);
+}
+
+function moveArtist(index: number, direction: 1 | -1): void {
+  trackArtists.value.splice(
+    index + direction,
+    0,
+    trackArtists.value.splice(index, 1)[0]!,
+  );
+}
 </script>

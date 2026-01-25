@@ -1,25 +1,24 @@
 <template>
-  <VContainer class="fill-height" fluid v-if="playlist">
+  <VContainer v-if="playlist" class="fill-height" fluid>
     <PlaylistForm :playlist="playlist" />
   </VContainer>
 </template>
 
-<script>
-import { mapState } from "pinia";
-import PlaylistForm from "../../components/PlaylistForm.vue";
-import { usePlaylistsStore } from "../../store/playlists";
+<script setup lang="ts">
+import { computed } from "vue";
+import { useHead } from "@unhead/vue";
+import PlaylistForm from "@/components/PlaylistForm.vue";
+import { usePlaylistsStore } from "@/store/playlists";
+import { useI18n } from "vue-i18n";
 
-export default {
-  name: "EditPlaylist",
-  metaInfo() {
-    return { title: this.$t("page-titles.edit", { obj: this.playlist.name }) };
-  },
-  components: { PlaylistForm },
-  computed: {
-    ...mapState(usePlaylistsStore, ["playlists"]),
-    playlist: function () {
-      return this.playlists[this.$route.params.id];
-    },
-  },
-};
+const I18n = useI18n();
+const playlistsStore = usePlaylistsStore();
+
+const props = defineProps<{ id: string }>();
+const playlist = computed(() => playlistsStore.playlists[props.id]);
+const title = computed(() =>
+  I18n.t("page-titles.edit", { obj: playlist.value?.name ?? "" }),
+);
+
+useHead({ title });
 </script>

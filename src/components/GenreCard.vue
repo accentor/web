@@ -4,19 +4,15 @@
       {{ genre.name }}
     </VCardTitle>
     <VCardActions>
-      <GenreActions :genre="genre" class="actions--sm-wide" />
+      <GenreActions :genre="genre" />
     </VCardActions>
   </VCard>
 </template>
 
-<script>
+<script setup lang="ts">
+import type { Genre } from "@accentor/api-client-js";
 import GenreActions from "./GenreActions.vue";
+import type { Loaded } from "@/store/base.ts";
 
-export default {
-  name: "GenreCard",
-  components: { GenreActions },
-  props: {
-    genre: { type: Object, required: true },
-  },
-};
+defineProps<{ genre: Loaded<Genre> }>();
 </script>

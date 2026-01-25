@@ -1,12 +1,12 @@
 <template>
-  <VContainer fluid v-if="genre">
+  <VContainer v-if="genre" fluid>
     <VRow>
       <VCol cols="12">
         <div>
           <h2 class="text-h4">{{ genre.name }}</h2>
         </div>
         <div>
-          <GenreActions :genre="genre" class="actions--wide" />
+          <GenreActions :genre="genre" />
         </div>
       </VCol>
     </VRow>
@@ -18,61 +18,40 @@
   </VContainer>
 </template>
 
-<script>
-import { mapState, mapActions } from "pinia";
+<script setup lang="ts">
+import { computed, onMounted } from "vue";
+import { useHead } from "@unhead/vue";
+import { useRouter } from "vue-router";
+import { type Genre, type Track, TracksScope } from "@accentor/api-client-js";
 import GenreActions from "@/components/GenreActions.vue";
 import TracksTable from "@/components/TracksTable.vue";
-import { TracksScope } from "@accentor/api-client-js";
-import { useAuthStore } from "../../store/auth";
-import { useGenresStore } from "../../store/genres";
-import { useTracksStore } from "../../store/tracks";
+import { useGenresStore } from "@/store/genres";
+import { useTracksStore } from "@/store/tracks";
+import type { Loaded } from "@/store/base.ts";
 
-export default {
-  name: "Genre",
-  components: { GenreActions, TracksTable },
-  metaInfo() {
-    return { title: this.genre?.name };
-  },
-  props: {
-    id: {
-      type: [String, Number],
-      required: true,
-    },
-  },
-  watch: {
-    id: {
-      handler: "fetchContent",
-      immediate: true,
-    },
-  },
-  computed: {
-    ...mapState(useAuthStore, ["isModerator"]),
-    ...mapState(useGenresStore, ["genres"]),
-    tracks: function () {
-      return useTracksStore().tracksFilterByGenre(this.$route.params.id);
-    },
-    genre: function () {
-      return this.genres[this.$route.params.id];
-    },
-  },
-  methods: {
-    ...mapActions(useGenresStore, ["read"]),
-    ...mapActions(useTracksStore, { indexTracks: "index" }),
-    async fetchContent(newValue, oldValue) {
-      // After loading the content, the router will change the id from a string to a number
-      // but we don't actually want to load the content twice
-      if (newValue == oldValue) {
-        return;
-      }
+const router = useRouter();
+const props = defineProps<{ id: string }>();
+const tracksStore = useTracksStore();
+const genresStore = useGenresStore();
 
-      const genre = this.read(this.id);
-      const tracks = this.indexTracks(new TracksScope().genre(this.id));
-      await Promise.all([genre, tracks]);
-      // If the genre is undefined after loading, we assume that it doesn't exist.
-      if (this.genre === undefined) {
-        this.$router.go(-1);
-      }
-    },
-  },
-};
+const genre = computed<Loaded<Genre> | undefined>(
+  () => genresStore.genres[props.id],
+);
+const genreName = computed(() => genre.value?.name || "");
+const tracks = computed<Loaded<Track>[]>(() =>
+  genre.value ? tracksStore.tracksFilterByGenre(genre.value.id) : [],
+);
+useHead({ title: genreName });
+
+async function fetchContent(): Promise<void> {
+  const genrePromise = genresStore.read(parseInt(props.id));
+  const tracksPromise = tracksStore.index(new TracksScope().genre(props.id));
+  await Promise.all([genrePromise, tracksPromise]);
+
+  if (!genre.value) {
+    router.go(-1);
+  }
+}
+
+onMounted(fetchContent);
 </script>

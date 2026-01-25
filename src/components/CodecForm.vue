@@ -1,10 +1,10 @@
 <template>
-  <VForm v-model="isValid" ref="form" lazy-validation>
+  <VForm ref="form" v-model="isValid">
     <VRow>
       <VCol cols="6">
         <VTextField
           v-model="newCodec.extension"
-          :label="$t('library.extension')"
+          :label="I18n.t('library.extension')"
           :disabled="codec !== null"
           required
           :rules="rules.ext"
@@ -13,15 +13,15 @@
       <VCol cols="5">
         <VTextField
           v-model="newCodec.mimetype"
-          :label="$t('library.mime-type')"
-          :rules="[(v) => !!v || $t('errors.codec.mime-blank')]"
+          :label="I18n.t('library.mime-type')"
+          :rules="[(v) => !!v || I18n.t('errors.codec.mime-blank')]"
         />
       </VCol>
       <VCol cols="2" sm="1">
         <VBtn
           :disabled="!isValid"
           icon
-          outlined
+          variant="outlined"
           :color="(codec && 'info') || 'success'"
           class="ma-2"
           @click="saveCodec"
@@ -31,91 +31,75 @@
           </VIcon>
         </VBtn>
         <VBtn
-          icon
-          outlined
           v-if="codec"
-          color="danger"
+          icon
+          variant="outlined"
+          color="error"
           class="ma-2"
           @click="deleteCodec"
         >
-          <VIcon color="danger">mdi-delete</VIcon>
+          <VIcon color="error">mdi-delete</VIcon>
         </VBtn>
       </VCol>
     </VRow>
   </VForm>
 </template>
 
-<script>
-import { mapActions, mapState } from "pinia";
-import { useCodecsStore } from "../store/codecs";
+<script setup lang="ts">
+import { computed, onMounted, ref, useTemplateRef } from "vue";
+import type { Codec } from "@accentor/api-client-js";
+import { useCodecsStore } from "@/store/codecs";
+import { useI18n } from "vue-i18n";
 
-export default {
-  name: "CodecForm",
-  props: { codec: { default: null, type: Object } },
-  data() {
-    return {
-      newCodec: {
-        mimetype: "",
-        extension: "",
-      },
-      isValid: true,
-    };
-  },
-  created() {
-    this.$nextTick(() => {
-      if (this.codec) {
-        this.fillValues();
-      }
+const I18n = useI18n();
+const codecsStore = useCodecsStore();
+
+const props = defineProps<{ codec?: Codec }>();
+const newCodec = ref({
+  mimetype: "",
+  extension: "",
+});
+const isValid = ref(true);
+const rules = computed(() => {
+  const result = {
+    ext: [
+      (v: string): true | string => !!v || I18n.t("errors.codec.ext-blank"),
+    ],
+  };
+  if (!props.codec) {
+    result.ext.push((v) => {
+      const double = codecsStore.allCodecs.some((c) => c.extension === v);
+      return !double || I18n.t("errors.codec.ext-taken");
     });
-  },
-  watch: {
-    album: function () {
-      if (this.codec) {
-        this.fillValues();
-      }
-    },
-  },
-  computed: {
-    ...mapState(useCodecsStore, { codecs: "allCodecs" }),
-    rules() {
-      const rules = {
-        ext: [(v) => !!v || this.$t("errors.codec.ext-blank")],
-      };
-      if (this.codec === null) {
-        const extTaken = (v) => {
-          const double = this.codecs.some((cc) => cc.extension === v);
-          return !double || this.$t("errors.codec.ext-taken");
-        };
-        rules.ext.push(extTaken);
-      }
+  }
+  return result;
+});
 
-      return rules;
-    },
-  },
-  methods: {
-    ...mapActions(useCodecsStore, ["destroy", "update", "create"]),
-    fillValues() {
-      this.newCodec.extension = this.codec.extension;
-      this.newCodec.mimetype = this.codec.mimetype;
-    },
-    async saveCodec() {
-      if (this.$refs.form.validate()) {
-        if (this.codec === null) {
-          const id = await this.create(this.newCodec);
-          if (id) {
-            this.newCodec.extension = "";
-            this.newCodec.mimetype = "";
-          }
-        } else {
-          this.update(this.codec.id, this.newCodec);
-        }
+onMounted(() => {
+  if (props.codec) {
+    newCodec.value.mimetype = props.codec.mimetype;
+    newCodec.value.extension = props.codec.extension;
+  }
+});
+
+const form = useTemplateRef("form");
+async function saveCodec(): Promise<void> {
+  if ((await form.value!.validate()).valid) {
+    if (!props.codec) {
+      const id = await codecsStore.create(newCodec.value);
+      if (id) {
+        newCodec.value.extension = "";
+        newCodec.value.mimetype = "";
       }
-    },
-    deleteCodec() {
-      if (confirm(this.$t("common.are-you-sure"))) {
-        this.destroy(this.codec.id);
-      }
-    },
-  },
-};
+    } else {
+      await codecsStore.update(props.codec.id, newCodec.value);
+    }
+  }
+}
+
+async function deleteCodec(): Promise<void> {
+  if (confirm(I18n.t("common.are-you-sure"))) {
+    await codecsStore.destroy(props.codec!.id);
+  }
+}
 </script>

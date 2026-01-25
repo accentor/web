@@ -1,56 +1,64 @@
 <template>
-  <div class="player" v-click-outside="clickOutside">
+  <div v-click-outside="clickOutside" class="player">
     <GlobalEvents
-      :filter="(event) => !['INPUT', 'TEXTAREA'].includes(event.target.tagName)"
+      :filter="
+        (event) =>
+          !['INPUT', 'TEXTAREA'].includes((event.target as HTMLElement).tagName)
+      "
       @keydown.space.prevent="togglePlaying"
     />
     <audio ref="audio" @error="onAudioError" />
-    <div class="play-queue" v-if="open">
+    <div v-if="open" class="play-queue">
       <table class="play-queue__table">
         <Draggable
+          :model-value="playlistTracks"
           tag="tbody"
-          @end="({ newIndex, oldIndex }) => updatePlaylist(newIndex, oldIndex)"
-          handle="[data-draggable=handle]"
+          handle=".handle"
+          item-key="id"
+          @end="updatePlaylist"
         >
-          <tr v-for="(track, index) of playlistTracks" :key="track.id">
-            <td class="play-queue__cell play-queue__cell--icon">
-              <VBtn small icon text class="ma-2" data-draggable="handle">
-                <VIcon>mdi-drag-horizontal-variant</VIcon>
-              </VBtn>
-            </td>
-            <td class="play-queue__cell play-queue__cell--icon-small">
-              <VIcon v-if="index === current">mdi-volume-high</VIcon>
-            </td>
-            <td class="pl-3 play-queue__cell">
-              <a @click.stop.prevent="setCurrent(index)">{{ track.title }}</a>
-            </td>
-            <td class="play-queue__cell">
-              <RouterLink
-                :to="{ name: 'album', params: { id: track.album_id } }"
-                >{{ albums[track.album_id].title }}</RouterLink
-              >
-            </td>
-            <td class="play-queue__cell text-right">
-              {{ track.length | length }}
-            </td>
-            <td class="play-queue__cell">
-              <TrackArtists :track="track" />
-            </td>
-            <td class="play-queue__cell">
-              {{ albums[track.album_id].release }}
-            </td>
-            <td class="play-queue__cell play-queue__cell--icon">
-              <VBtn
-                small
-                icon
-                text
-                class="ma-2"
-                @click.stop.prevent="removeIndex(index)"
-              >
-                <VIcon>mdi-close</VIcon>
-              </VBtn>
-            </td>
-          </tr>
+          <template #item="{ element: track, index }">
+            <tr>
+              <td class="play-queue__cell play-queue__cell--icon">
+                <VBtn size="small" icon variant="text" class="ma-2 handle">
+                  <VIcon size="x-large">mdi-drag-horizontal-variant</VIcon>
+                </VBtn>
+              </td>
+              <td class="play-queue__cell play-queue__cell--icon-small">
+                <VIcon v-if="index === current">mdi-volume-high</VIcon>
+              </td>
+              <td class="pl-3 play-queue__cell">
+                <a @click.stop.prevent="setCurrent(index)">{{ track.title }}</a>
+              </td>
+              <td class="play-queue__cell">
+                <RouterLink
+                  :to="{ name: 'album', params: { id: track.album_id } }"
+                >
+                  {{ albums[track.album_id]?.title }}
+                </RouterLink>
+              </td>
+              <td class="play-queue__cell text-right">
+                {{ formatLength(track.length) }}
+              </td>
+              <td class="play-queue__cell">
+                <TrackArtists :track="track" />
+              </td>
+              <td class="play-queue__cell">
+                {{ albums[track.album_id]?.release }}
+              </td>
+              <td class="play-queue__cell play-queue__cell--icon">
+                <VBtn
+                  size="small"
+                  icon
+                  variant="text"
+                  class="ma-2"
+                  @click.stop.prevent="removeIndex(index)"
+                >
+                  <VIcon size="x-large">mdi-close</VIcon>
+                </VBtn>
+              </td>
+            </tr>
+          </template>
         </Draggable>
       </table>
     </div>
@@ -58,24 +66,24 @@
     <VRow class="controls" align="center">
       <div class="controls__left">
         <VBtn
-          @click="prevTrack"
           :disabled="!playlistTracks.length || current === -1"
           class="controls__button controls__button--sm-and-up"
           icon
-          small
+          variant="text"
+          @click="prevTrack"
         >
           <VIcon>mdi-skip-previous</VIcon>
         </VBtn>
         <VBtn
-          @click="togglePlaying()"
           :disabled="!playlistTracks.length"
           icon
+          variant="text"
           class="controls__button"
+          @click="togglePlaying"
         >
-          <VIcon large>{{ playing ? "mdi-pause" : "mdi-play" }}</VIcon>
+          <VIcon size="large">{{ playing ? "mdi-pause" : "mdi-play" }}</VIcon>
         </VBtn>
         <VBtn
-          @click="nextTrack"
           :disabled="
             !playlistTracks.length ||
             current === playlistTracks.length - 1 ||
@@ -83,7 +91,8 @@
           "
           class="controls__button controls__button--sm-and-up"
           icon
-          small
+          variant="text"
+          @click="nextTrack"
         >
           <VIcon>mdi-skip-next</VIcon>
         </VBtn>
@@ -92,43 +101,45 @@
         <VSlider
           class="controls__time-slider"
           :always-dirty="!!currentTrack"
-          :max="currentTrack ? currentTrack.length : 1"
+          :max="currentTrack?.length ?? 1"
           :disabled="!currentTrack || currentTrack.length === null"
-          :value="seekTime"
-          v-on:input="seek"
+          :model-value="seekTime"
+          :step="1"
           hide-details
+          @update:model-value="seek"
         />
         <span class="controls__time-display">
-          {{ seekTime | length }} /
-          {{ currentTrack ? currentTrack.length : 0 | length }}
+          {{ formatLength(seekTime) }} /
+          {{ formatLength(currentTrack?.length ?? 0) }}
         </span>
       </div>
       <div class="controls__right">
         <VBtn
           :color="repeatModeColor"
-          @click="nextRepeatMode"
-          text
+          variant="text"
           icon
           class="controls__button"
+          @click="nextRepeatMode"
         >
           <VIcon>{{ repeatModeIcon }}</VIcon>
         </VBtn>
-        <VBtn @click="shuffle" icon class="controls__button">
+        <VBtn icon variant="text" class="controls__button" @click="shuffle">
           <VIcon>mdi-shuffle</VIcon>
         </VBtn>
         <VSlider
+          v-model="volume"
           :readonly="muted"
           :prepend-icon="audioIcon"
           hide-details
-          v-model="volume"
           class="controls__volume-slider"
-          v-on:click:prepend="muted = !muted"
+          @click:prepend="muted = !muted"
         />
         <VBtn
-          @click="open = !open"
           icon
-          :disabled="this.playlistTracks.length === 0"
+          variant="text"
+          :disabled="playlistTracks.length === 0"
           class="controls__button"
+          @click="open = !open"
         >
           <VIcon>{{ open ? "mdi-chevron-down" : "mdi-chevron-up" }}</VIcon>
         </VBtn>
@@ -137,230 +148,256 @@
   </div>
 </template>
 
-<script>
-import { mapState, mapActions } from "pinia";
+<script setup lang="ts">
+import {
+  computed,
+  onBeforeUnmount,
+  onMounted,
+  ref,
+  useTemplateRef,
+  watch,
+} from "vue";
+import { storeToRefs } from "pinia";
 import Draggable from "vuedraggable";
-import GlobalEvents from "vue-global-events";
+import { GlobalEvents } from "vue-global-events";
 import TrackArtists from "./TrackArtists.vue";
-import { useArtistsStore } from "../store/artists";
-import { useAlbumsStore } from "../store/albums";
-import { usePlaysStore } from "../store/plays";
-import { usePlayerStore } from "../store/player";
-import { useErrorsStore } from "../store/errors";
+import { useAlbumsStore } from "@/store/albums";
+import { usePlaysStore } from "@/store/plays";
+import { usePlayerStore } from "@/store/player";
+import { type ApiError, useErrorsStore } from "@/store/errors";
+import { formatLength } from "@/util";
 
-export default {
-  name: "Player",
-  components: { Draggable, GlobalEvents, TrackArtists },
-  data() {
-    return {
-      open: false,
-      volume: 100,
-      muted: false,
-      intervalId: 0,
-      tries: 0,
-    };
-  },
-  created() {
-    this.intervalId = setInterval(this.checkTime, 100);
-    this.$nextTick(() =>
-      this.$refs.audio.addEventListener("ended", () => {
-        this.createPlay(this.currentTrack.id);
-        this.trackEnded();
-      }),
-    );
-    if ("mediaSession" in navigator) {
-      navigator.mediaSession.setActionHandler("previoustrack", () => {
-        this.prevTrack();
-      });
-      navigator.mediaSession.setActionHandler("nexttrack", () => {
-        this.nextTrack();
-      });
-      navigator.mediaSession.setActionHandler("play", () => {
-        this.setPlaying(true);
-      });
-      navigator.mediaSession.setActionHandler("pause", () => {
-        this.setPlaying(false);
-      });
+const albumsStore = useAlbumsStore();
+const errorsStore = useErrorsStore();
+const playerStore = usePlayerStore();
+const playsStore = usePlaysStore();
+
+const volume = ref(100);
+const muted = ref(false);
+const intervalId = setInterval(checkTime, 100);
+const tries = ref(0);
+const audio = useTemplateRef("audio");
+const {
+  current,
+  currentTrack,
+  currentTrackURL,
+  doSeek,
+  playing,
+  playlistTracks,
+  seekTime,
+} = storeToRefs(playerStore);
+const { albums } = storeToRefs(albumsStore);
+
+const open = ref(false);
+function clickOutside(): void {
+  open.value = false;
+}
+
+const repeatModeIcon = computed(() => {
+  switch (playerStore.repeatMode) {
+    case "single":
+      return "mdi-repeat-once";
+    case "off":
+    case "all":
+    default:
+      return "mdi-repeat";
+  }
+});
+
+const repeatModeColor = computed(() => {
+  switch (playerStore.repeatMode) {
+    case "single":
+    case "all":
+      return "info";
+    case "off":
+    default:
+      return undefined;
+  }
+});
+
+const audioIcon = computed(() => {
+  if (muted.value) {
+    return "mdi-volume-off";
+  } else if (volume.value < 33) {
+    return "mdi-volume-low";
+  } else if (volume.value < 66) {
+    return "mdi-volume-medium";
+  }
+  return "mdi-volume-high";
+});
+
+watch(currentTrackURL, async () => {
+  tries.value = 0;
+  if (!currentTrackURL.value || !audio.value) {
+    return;
+  }
+
+  audio.value.src = currentTrackURL.value;
+  if (playing.value) {
+    try {
+      await audio.value.play();
+      if ("mediaSession" in navigator) {
+        const track = currentTrack.value!;
+        const album = albumsStore.albums[track.album_id]!;
+        navigator.mediaSession.metadata = new MediaMetadata({
+          title: track.title,
+          artist: [...track.track_artists]
+            .sort((a1, a2) => a2.order - a1.order)
+            .map((a) => a.name)
+            .join(" / "),
+          album: album.title,
+          artwork: [
+            {
+              src: album.image100 ?? "",
+              sizes: "100x100",
+              type: album.image_type ?? undefined,
+            },
+            {
+              src: album.image250 ?? "",
+              sizes: "250x250",
+              type: album.image_type ?? undefined,
+            },
+            {
+              src: album.image500 ?? "",
+              sizes: "500x500",
+              type: album.image_type ?? undefined,
+            },
+          ],
+        });
+      }
+    } catch (error) {
+      errorsStore.addError(error as ApiError);
     }
-  },
-  beforeDestroy() {
-    clearInterval(this.intervalId);
-    this.setPlaying(false);
-  },
-  watch: {
-    async currentTrackURL() {
-      this.tries = 0;
-      if (this.currentTrackURL === null) {
-        return;
-      }
+  }
+});
 
-      this.$refs.audio.src = this.currentTrackURL;
-      if (this.playing) {
-        try {
-          await this.$refs.audio.play();
-          if ("mediaSession" in navigator) {
-            navigator.mediaSession.metadata = new window.MediaMetadata({
-              title: this.currentTrack.title,
-              artist: [...this.currentTrack.track_artists]
-                .sort((a1, a2) => a1.order - a2.order)
-                .map((a) => a.name)
-                .join(" / "),
-              album: this.albums[this.currentTrack.album_id].title,
-              artwork: [
-                {
-                  src: this.albums[this.currentTrack.album_id].image100,
-                  sizes: "100x100",
-                  type: this.albums[this.currentTrack.album_id].image_type,
-                },
-                {
-                  src: this.albums[this.currentTrack.album_id].image250,
-                  sizes: "250x250",
-                  type: this.albums[this.currentTrack.album_id].image_type,
-                },
-                {
-                  src: this.albums[this.currentTrack.album_id].image500,
-                  sizes: "500x500",
-                  type: this.albums[this.currentTrack.album_id].image_type,
-                },
-              ],
-            });
-          }
-        } catch (error) {
-          this.addError(error);
-        }
+watch(volume, () => (audio.value!.volume = volume.value / 100));
+watch(muted, () => (audio.value!.muted = muted.value));
+watch(doSeek, () => {
+  if (doSeek.value) {
+    playerStore.setDoSeek();
+    if (Number.isFinite(seekTime.value)) {
+      audio.value!.currentTime = seekTime.value;
+      if (playing.value) {
+        audio.value!.play();
       }
-    },
-    volume() {
-      this.$refs.audio.volume = this.volume / 100;
-    },
-    muted() {
-      this.$refs.audio.muted = this.muted;
-    },
-    doSeek() {
-      if (this.doSeek) {
-        usePlayerStore().setDoSeek();
-        if (Number.isFinite(this.seekTime)) {
-          this.$refs.audio.currentTime = this.seekTime;
-          if (this.playing) {
-            this.$refs.audio.play();
-          }
-        }
+    }
+  }
+});
+watch(playing, async () => {
+  if (playing.value) {
+    try {
+      await audio.value!.play();
+      if ("mediaSession" in navigator) {
+        navigator.mediaSession.playbackState = "playing";
       }
-    },
-    async playing() {
-      if (this.playing) {
-        try {
-          await this.$refs.audio.play();
-          if ("mediaSession" in navigator) {
-            navigator.mediaSession.playbackState = "playing";
-          }
-        } catch (error) {
-          this.commit("addError", error);
-        }
-      } else {
-        await this.$refs.audio.pause();
-        if ("mediaSession" in navigator) {
-          navigator.mediaSession.playbackState = "paused";
-        }
-      }
-    },
-    playlistTracks() {
-      if (this.playlistTracks.length === 0) {
-        this.open = false;
-      }
-    },
-  },
-  computed: {
-    ...mapState(useAlbumsStore, ["albums"]),
-    ...mapState(useArtistsStore, ["artists"]),
-    ...mapState(usePlayerStore, [
-      "playing",
-      "seekTime",
-      "doSeek",
-      "current",
-      "repeatMode",
-      "playlistTracks",
-      "currentTrack",
-      "currentTrackURL",
-    ]),
-    repeatModeIcon() {
-      switch (this.repeatMode) {
-        case "off":
-        case "all":
-          return "mdi-repeat";
-        case "single":
-          return "mdi-repeat-once";
-        default:
-          return "mdi-repeat";
-      }
-    },
-    repeatModeColor() {
-      switch (this.repeatMode) {
-        case "off":
-          return undefined;
-        case "all":
-        case "single":
-          return "info";
-        default:
-          return undefined;
-      }
-    },
-    audioIcon() {
-      if (this.muted) {
-        return "mdi-volume-off";
-      } else if (this.volume < 33) {
-        return "mdi-volume-low";
-      } else if (this.volume < 66) {
-        return "mdi-volume-medium";
-      }
-      return "mdi-volume-high";
-    },
-  },
-  methods: {
-    ...mapActions(useErrorsStore, ["addError"]),
-    ...mapActions(usePlaysStore, { createPlay: "create" }),
-    ...mapActions(usePlayerStore, [
-      "togglePlaying",
-      "setSeekTime",
-      "seek",
-      "setPlaying",
-      "setCurrent",
-      "removeIndex",
-      "nextTrack",
-      "prevTrack",
-      "trackEnded",
-      "nextRepeatMode",
-      "shuffle",
-      "updatePlaylist",
-    ]),
-    checkTime() {
-      const time = Math.floor(this.$refs.audio.currentTime);
-      if (this.currentTrack && time !== this.seekTime) {
-        this.setSeekTime(time);
-      }
-    },
-    onAudioError(event) {
-      if (!this.playing || event.srcElement.networkState !== 3) {
-        return null;
-      }
+    } catch (error) {
+      errorsStore.addError(error as ApiError);
+    }
+  } else {
+    audio.value!.pause();
+    if ("mediaSession" in navigator) {
+      navigator.mediaSession.playbackState = "paused";
+    }
+  }
+});
 
-      if (this.tries >= 2) {
-        this.nextTrack();
-        this.addError({ playlist: ["player.track-skipped"] });
-      } else {
-        this.tries += 1;
-        setTimeout(() => this.$refs.audio.play(), this.tries * 500);
-      }
-    },
-    clickOutside() {
-      this.open = false;
-    },
-  },
-};
+watch(playlistTracks, () => {
+  if (playlistTracks.value.length === 0) {
+    open.value = false;
+  }
+});
+
+onMounted(() => {
+  audio.value!.addEventListener("ended", () => {
+    void playsStore.create(currentTrack.value!.id);
+    playerStore.trackEnded();
+  });
+});
+
+if ("mediaSession" in navigator) {
+  navigator.mediaSession.setActionHandler("previoustrack", prevTrack);
+  navigator.mediaSession.setActionHandler("nexttrack", nextTrack);
+  navigator.mediaSession.setActionHandler("play", () =>
+    playerStore.setPlaying(true),
+  );
+  navigator.mediaSession.setActionHandler("pause", () =>
+    playerStore.setPlaying(false),
+  );
+}
+
+onBeforeUnmount(() => {
+  clearInterval(intervalId);
+  playerStore.setPlaying(false);
+});
+
+function checkTime(): void {
+  const time = Math.floor(audio.value!.currentTime);
+  if (currentTrack.value && time != seekTime.value) {
+    playerStore.setSeekTime(time);
+  }
+}
+
+function onAudioError(): void {
+  if (!playing.value || audio.value!.networkState !== 3) {
+    return;
+  }
+
+  if (tries.value >= 2) {
+    nextTrack();
+    errorsStore.addError({ playlist: ["player.track-skipped"] });
+  } else {
+    tries.value += 1;
+    setTimeout(() => audio.value!.play(), tries.value * 500);
+  }
+}
+
+function prevTrack(): void {
+  playerStore.prevTrack();
+}
+
+function nextTrack(): void {
+  playerStore.nextTrack();
+}
+
+function togglePlaying(): void {
+  playerStore.togglePlaying();
+}
+
+function updatePlaylist({
+  newIndex,
+  oldIndex,
+}: {
+  newIndex: number;
+  oldIndex: number;
+}): void {
+  playerStore.updatePlaylist(newIndex, oldIndex);
+}
+
+function setCurrent(index: number): void {
+  playerStore.setCurrent(index);
+}
+
+function removeIndex(index: number): void {
+  playerStore.removeIndex(index);
+}
+
+function seek(newTime: number): void {
+  playerStore.seek(newTime);
+}
+
+function nextRepeatMode(): void {
+  playerStore.nextRepeatMode();
+}
+
+function shuffle(): void {
+  playerStore.shuffle();
+}
 </script>
 
 <style lang="scss" scoped>
-@import "vuetify/src/styles/styles.sass";
+@use "sass:map";
+@use "vuetify/settings";
 
 .player {
   width: 100%;
@@ -380,7 +417,7 @@ export default {
     padding-left: 10px;
     padding-right: 10px;
     margin-right: auto;
-    @media (min-width: map-get($grid-breakpoints, "md")) {
+    @media #{map.get(settings.$display-breakpoints, "md-and-up")} {
       padding-right: 20px;
     }
   }
@@ -388,13 +425,13 @@ export default {
   &__button {
     margin: 4px;
 
-    @media (min-width: map-get($grid-breakpoints, "md")) {
+    @media #{map.get(settings.$display-breakpoints, "md-and-up")} {
       margin: 8px;
     }
 
     &--sm-and-up {
       display: none;
-      @media (min-width: map-get($grid-breakpoints, "sm")) {
+      @media #{map.get(settings.$display-breakpoints, "sm-and-up")} {
         display: unset;
       }
     }
@@ -408,17 +445,13 @@ export default {
   }
 
   &__time-slider {
-    display: none;
-    flex-grow: 1;
-    flex-shrink: 1;
-    flex-basis: 0%;
     padding-right: 10px;
 
-    @media (min-width: map-get($grid-breakpoints, "sm")) {
-      display: inline-flex;
+    @media #{map.get(settings.$display-breakpoints, "xs")} {
+      display: none;
     }
 
-    @media (min-width: map-get($grid-breakpoints, "md")) {
+    @media #{map.get(settings.$display-breakpoints, "md-and-up")} {
       padding-right: 20px;
     }
   }
@@ -427,7 +460,7 @@ export default {
     min-width: 6rem;
     flex-grow: 0;
 
-    @media (min-width: map-get($grid-breakpoints, "md")) {
+    @media #{map.get(settings.$display-breakpoints, "md-and-up")} {
       width: 9rem;
     }
   }
@@ -441,21 +474,21 @@ export default {
     margin-left: auto;
     padding-left: 10px;
     padding-right: 10px;
-    @media (min-width: map-get($grid-breakpoints, "md")) {
+    @media #{map.get(settings.$display-breakpoints, "md-and-up")} {
       padding-left: 20px;
     }
   }
 
   &__volume-slider {
-    display: none;
     margin: 4px;
     min-width: 50px;
     max-width: 250px;
-    @media (min-width: map-get($grid-breakpoints, "sm")) {
-      display: flex;
+
+    @media #{map.get(settings.$display-breakpoints, "xs")} {
+      display: none;
     }
 
-    @media (min-width: map-get($grid-breakpoints, "md")) {
+    @media #{map.get(settings.$display-breakpoints, "md-and-up")} {
       margin: 8px;
       min-width: 100px;
     }

@@ -1,25 +1,23 @@
 <template>
-  <VContainer class="fill-height" fluid v-if="artist">
+  <VContainer v-if="artist" class="fill-height" fluid>
     <ArtistForm :artist="artist" />
   </VContainer>
 </template>
 
-<script>
-import { mapState } from "pinia";
-import ArtistForm from "../../components/ArtistForm.vue";
-import { useArtistsStore } from "../../store/artists";
+<script setup lang="ts">
+import { computed } from "vue";
+import { useHead } from "@unhead/vue";
+import ArtistForm from "@/components/ArtistForm.vue";
+import { useArtistsStore } from "@/store/artists";
+import { useI18n } from "vue-i18n";
 
-export default {
-  name: "EditArtist",
-  components: { ArtistForm },
-  metaInfo() {
-    return { title: this.$t("page-titles.edit", { obj: this.artist?.name }) };
-  },
-  computed: {
-    ...mapState(useArtistsStore, ["artists"]),
-    artist: function () {
-      return this.artists[this.$route.params.id];
-    },
-  },
-};
+const I18n = useI18n();
+const props = defineProps<{ id: string }>();
+
+const artistsStore = useArtistsStore();
+const artist = computed(() => artistsStore.artists[props.id]);
+const title = computed(() =>
+  I18n.t("page-titles.edit", { obj: artist.value?.name ?? "" }),
+);
+useHead({ title });
 </script>

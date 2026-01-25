@@ -1,21 +1,28 @@
 <template>
   <VCard :to="{ name: 'album', params: { id: album.id } }">
     <VImg
+      v-if="album.image500 && !imageUnavailable"
+      cover
       :aspect-ratio="1"
       :src="album.image500"
-      v-if="album.image500 && !imageUnavailable"
       @error="setImageUnavailable"
     />
     <VImg
+      v-else-if="album.image && !imageUnavailable"
+      cover
       :aspect-ratio="1"
       :src="album.image"
-      v-else-if="album.image && !imageUnavailable"
       @error="setImageUnavailable"
     />
-    <VImg :aspect-ratio="1" :src="albumSvgUrl" v-else class="grey lighten-3" />
-    <VCardTitle class="pb-0 d-block text-truncate" :title="full_title">
+    <VImg
+      v-else
+      :aspect-ratio="1"
+      :src="albumSvgUrl"
+      class="bg-grey-lighten-3"
+    />
+    <VCardTitle class="pb-0 d-block text-truncate" :title="fullTitle">
       {{ album.title }}&nbsp;
-      <span v-if="album.edition_description !== null" class="grey--text">
+      <span v-if="album.edition_description !== null" class="text-grey">
         ({{ album.edition_description }})
       </span>
     </VCardTitle>
@@ -23,62 +30,54 @@
       <AlbumArtists :album="album" :truncate="true" />
     </VCardText>
     <VCardText>
-      <div class="grey--text">{{ album.release }}</div>
-      <div v-if="labelForCatNr" class="grey--text">
-        {{ catalogueNumber || $t("music.label.catalogue-number-none") }}
+      <div class="text-grey">{{ album.release }}</div>
+      <div v-if="labelForCatNr" class="text-grey">
+        {{ catalogueNumber || I18n.t("music.label.catalogue-number-none") }}
       </div>
     </VCardText>
     <VCardActions>
-      <AlbumActions :album="album" class="actions--sm-wide" />
+      <AlbumActions :album="album" />
     </VCardActions>
   </VCard>
 </template>
-<script>
+
+<script setup lang="ts">
+import type { Album, Label } from "@accentor/api-client-js";
+import { computed, ref } from "vue";
 import AlbumActions from "./AlbumActions.vue";
 import AlbumArtists from "./AlbumArtists.vue";
-import albumSvgUrl from "@mdi/svg/svg/album.svg";
+import albumSvgUrl from "@mdi/svg/svg/album.svg" with { type: "url" };
+import { useI18n } from "vue-i18n";
+import type { Loaded } from "@/store/base.ts";
 
-export default {
-  name: "AlbumCard",
-  components: { AlbumArtists, AlbumActions },
-  props: {
-    album: {
-      type: Object,
-      required: true,
-    },
-    labelForCatNr: {
-      type: Object,
-      required: false,
-    },
-  },
-  data() {
-    return {
-      imageUnavailable: false,
-      albumSvgUrl,
-    };
-  },
-  computed: {
-    catalogueNumber() {
-      if (this.labelForCatNr) {
-        return this.album.album_labels.find(
-          (al) => al.label_id === this.labelForCatNr.id,
-        ).catalogue_number;
-      } else {
-        return undefined;
-      }
-    },
-    full_title() {
-      let full_title = this.album.title;
-      if (this.album.edition_description) {
-        full_title += ` ${this.album.edition_description}`;
-      }
-      return full_title;
-    },
-  },
-  methods: {
-    setImageUnavailable() {
-      this.imageUnavailable = true;
-    },
-  },
-};
+const I18n = useI18n();
+
+interface Props {
+  album: Loaded<Album>;
+  labelForCatNr?: Label;
+}
+const props = defineProps<Props>();
+
+const imageUnavailable = ref<boolean>(false);
+const catalogueNumber = computed<string | undefined>(() => {
+  if (props.labelForCatNr) {
+    const albumLabel = props.album.album_labels.find(
+      (al) => al.label_id === props.labelForCatNr!.id,
+    );
+    return albumLabel?.catalogue_number ?? undefined;
+  }
+  return undefined;
+});
+
+const fullTitle = computed<string>(() => {
+  let result = props.album.title;
+  if (props.album.edition_description) {
+    result += ` ${props.album.edition_description}`;
+  }
+  return result;
+});
+
+function setImageUnavailable(): void {
+  imageUnavailable.value = true;
+}
 </script>

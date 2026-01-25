@@ -6,29 +6,29 @@
           <VCard class="elevation-12">
             <VToolbar color="primary" dark>
               <VToolbarTitle>
-                {{ $t("common.login") }}
+                {{ I18n.t("common.login") }}
               </VToolbarTitle>
             </VToolbar>
             <VCardText>
               <VForm @submit.prevent="submit">
                 <Errors />
                 <VTextField
-                  :label="$t('users.name')"
-                  :placeholder="$t('users.name')"
+                  v-model="name"
+                  :label="I18n.t('users.name')"
+                  :placeholder="I18n.t('users.name')"
                   prepend-icon="mdi-account"
                   autocomplete="username"
-                  v-model="name"
                 />
                 <VTextField
-                  :label="$t('users.password')"
-                  :placeholder="$t('users.password')"
+                  v-model="password"
+                  :label="I18n.t('users.password')"
+                  :placeholder="I18n.t('users.password')"
                   prepend-icon="mdi-key"
                   type="password"
                   autocomplete="current-password"
-                  v-model="password"
                 />
                 <VBtn color="primary" class="ma-2" type="submit">
-                  {{ $t("common.login") }}
+                  {{ I18n.t("common.login") }}
                 </VBtn>
               </VForm>
             </VCardText>
@@ -39,42 +39,39 @@
   </VMain>
 </template>
 
-<script>
-import Errors from "../components/Errors.vue";
-import { mapActions } from "pinia";
-import { useErrorsStore } from "../store/errors";
-import { useAuthStore } from "../store/auth";
+<script setup lang="ts">
+import { ref } from "vue";
+import { useRoute, useRouter } from "vue-router";
+import { useHead } from "@unhead/vue";
+import Errors from "@/components/Errors.vue";
+import { useErrorsStore } from "@/store/errors";
+import { useAuthStore } from "@/store/auth";
+import { useI18n } from "vue-i18n";
 
-export default {
-  name: "login",
-  components: { Errors },
-  metaInfo() {
-    return { title: this.$t("common.login") };
-  },
-  data: function () {
-    return {
-      name: "",
-      password: "",
-      error: {},
-    };
-  },
-  methods: {
-    ...mapActions(useAuthStore, ["login"]),
-    ...mapActions(useErrorsStore, ["clearErrors"]),
-    async submit() {
-      this.clearErrors();
-      const succeeded = await this.login({
-        name: this.name,
-        password: this.password,
-      });
-      if (succeeded) {
-        this.redirect();
-      }
-    },
-    redirect: function () {
-      const path = this.$route.query.redirect || "/app/";
-      this.$router.push({ path });
-    },
-  },
-};
+const I18n = useI18n();
+const route = useRoute();
+const router = useRouter();
+const authStore = useAuthStore();
+const errorsStore = useErrorsStore();
+
+const name = ref("");
+const password = ref("");
+
+useHead({ title: I18n.t("common.login") });
+
+async function redirect(): Promise<void> {
+  const path = (route.query.redirect || "/app/") as string;
+  await router.push({ path });
+}
+
+async function submit(): Promise<void> {
+  errorsStore.clearErrors();
+  const succeeded = await authStore.login({
+    name: name.value,
+    password: password.value,
+  });
+  if (succeeded) {
+    await redirect();
+  }
+}
 </script>

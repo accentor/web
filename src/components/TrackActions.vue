@@ -1,117 +1,108 @@
 <template>
   <span class="text-no-wrap actions">
-    <VTooltip bottom :disabled="track.length !== null">
-      <template v-slot:activator="{ on }">
-        <span v-on="on">
+    <VTooltip location="bottom" :disabled="track.length !== null">
+      <template #activator="{ props: tooltipProps }">
+        <span v-bind="tooltipProps">
           <VBtn
-            @click="startTrack"
             :disabled="track.length === null"
             color="primary"
-            class="actions__button"
-            text
+            variant="text"
             icon
-            small
+            size="small"
+            @click="startTrack"
           >
-            <VIcon>mdi-play</VIcon>
+            <VIcon size="x-large">mdi-play</VIcon>
           </VBtn>
         </span>
       </template>
-      <span>{{ $t("music.track.empty") }}</span>
+      <span>{{ I18n.t("music.track.empty") }}</span>
     </VTooltip>
-    <VTooltip bottom :disabled="track.length !== null">
-      <template v-slot:activator="{ on }">
-        <span v-on="on">
+    <VTooltip location="bottom" :disabled="track.length !== null">
+      <template #activator="{ props: tooltipProps }">
+        <span v-bind="tooltipProps">
           <VBtn
-            @click="addTrack"
             :disabled="track.length === null"
             color="success"
-            class="actions__button"
-            text
+            variant="text"
             icon
-            small
+            size="small"
+            @click="addTrack"
           >
-            <VIcon>mdi-plus</VIcon>
+            <VIcon size="x-large">mdi-plus</VIcon>
           </VBtn>
         </span>
       </template>
-      <span>{{ $t("music.track.empty") }}</span>
+      <span>{{ I18n.t("music.track.empty") }}</span>
     </VTooltip>
     <AddToPlaylist :item="track" type="track" />
     <EditReviewComment :item="track" :update="flag" />
     <VMenu>
-      <template v-slot:activator="{ on, attrs }">
-        <VBtn class="actions__button mr-0" small icon v-bind="attrs" v-on="on">
-          <VIcon>mdi-dots-vertical</VIcon>
+      <template #activator="{ props: menuProps }">
+        <VBtn class="mr-0" size="small" icon variant="text" v-bind="menuProps">
+          <VIcon size="x-large">mdi-dots-vertical</VIcon>
         </VBtn>
       </template>
-      <VList dense>
-        <VMenu open-on-hover offset-x left v-if="track.length && isModerator">
-          <template v-slot:activator="{ on }">
-            <VListItem v-on="on">
-              <VListItemIcon v-on="on">
+      <VList density="compact">
+        <VMenu v-if="track.length && isModerator" open-on-hover location="left">
+          <template #activator="{ props: innerMenuProps }">
+            <VListItem v-bind="innerMenuProps">
+              <template #prepend>
                 <VIcon color="info">mdi-file-music</VIcon>
-              </VListItemIcon>
-              <VListItemContent>
-                <VListItemTitle>
-                  {{ $t("music.track.file") }}
-                </VListItemTitle>
-              </VListItemContent>
+              </template>
+
+              <VListItemTitle>
+                {{ I18n.t("music.track.file") }}
+              </VListItemTitle>
             </VListItem>
           </template>
-          <VList dense>
+          <VList density="compact">
             <VListItem v-if="Object.keys(locations).length > 1">
-              <VListItemContent>
-                <VListItemTitle> {{ $t("library.location") }}: </VListItemTitle>
-                <VListItemSubtitle>
-                  {{ locations[track.location_id].path }}
-                </VListItemSubtitle>
-              </VListItemContent>
+              <VListItemTitle>
+                {{ I18n.t("library.location") }}:
+              </VListItemTitle>
+              <VListItemSubtitle>
+                {{ locations[`${track.location_id}`]?.path }}
+              </VListItemSubtitle>
             </VListItem>
             <VListItem>
-              <VListItemContent>
-                <VListItemTitle> {{ $t("library.filename") }}: </VListItemTitle>
-                <VListItemSubtitle>
-                  {{ track.filename }}
-                </VListItemSubtitle>
-              </VListItemContent>
+              <VListItemTitle>
+                {{ I18n.t("library.filename") }}:
+              </VListItemTitle>
+              <VListItemSubtitle>
+                {{ track.filename }}
+              </VListItemSubtitle>
             </VListItem>
             <VListItem>
-              <VListItemContent>
-                <VListItemTitle>
-                  {{ $t("music.track.bitrate") }}:
-                </VListItemTitle>
-                <VListItemSubtitle>
-                  {{ track.bitrate }}
-                </VListItemSubtitle>
-              </VListItemContent>
+              <VListItemTitle>
+                {{ I18n.t("music.track.bitrate") }}:
+              </VListItemTitle>
+              <VListItemSubtitle>
+                {{ track.bitrate }}
+              </VListItemSubtitle>
             </VListItem>
             <VListItem v-if="track.hasOwnProperty('sample_rate')">
-              <VListItemContent>
-                <VListItemTitle>
-                  {{ $t("music.track.sample_rate") }}:
-                </VListItemTitle>
-                <VListItemSubtitle>
-                  {{ track.sample_rate }}
-                </VListItemSubtitle>
-              </VListItemContent>
+              <VListItemTitle>
+                {{ I18n.t("music.track.sample_rate") }}:
+              </VListItemTitle>
+              <VListItemSubtitle>
+                {{ track.sample_rate }}
+              </VListItemSubtitle>
             </VListItem>
             <VListItem v-if="track.hasOwnProperty('bit_depth')">
-              <VListItemContent>
-                <VListItemTitle>
-                  {{ $t("music.track.bit_depth") }}:
-                </VListItemTitle>
-                <VListItemSubtitle>
-                  {{ track.bit_depth }}
-                </VListItemSubtitle>
-              </VListItemContent>
+              <VListItemTitle>
+                {{ I18n.t("music.track.bit_depth") }}:
+              </VListItemTitle>
+              <VListItemSubtitle>
+                {{ track.bit_depth }}
+              </VListItemSubtitle>
             </VListItem>
             <VListItem>
-              <VListItemContent>
-                <VListItemTitle> {{ $t("common.added-on") }}: </VListItemTitle>
-                <VListItemSubtitle>
-                  {{ $d(new Date(track.created_at), "long") }}
-                </VListItemSubtitle>
-              </VListItemContent>
+              <VListItemTitle>
+                {{ I18n.t("common.added-on") }}:
+              </VListItemTitle>
+              <VListItemSubtitle>
+                {{ I18n.d(new Date(track.created_at), "long") }}
+              </VListItemSubtitle>
             </VListItem>
           </VList>
         </VMenu>
@@ -121,142 +112,157 @@
           download
           target="_blank"
         >
-          <VListItemIcon>
+          <template #prepend>
             <VIcon color="info">mdi-download</VIcon>
-          </VListItemIcon>
-          <VListItemContent>
-            <VListItemTitle>{{ $t("music.track.download") }}</VListItemTitle>
-          </VListItemContent>
+          </template>
+
+          <VListItemTitle>{{ I18n.t("music.track.download") }}</VListItemTitle>
         </VListItem>
-        <VTooltip bottom :disabled="!waitingForReload" v-if="isModerator">
-          <template v-slot:activator="{ on }">
+        <VTooltip
+          v-if="isModerator"
+          location="bottom"
+          :disabled="!waitingForReload"
+        >
+          <template #activator="{ props: tooltipProps }">
             <VListItem
               :to="{
                 name: 'edit-track',
                 params: { id: track.id },
-                query: { redirect: $route.fullPath },
+                query: { redirect: route.fullPath },
               }"
               :disabled="waitingForReload"
-              v-on="on"
+              v-bind="tooltipProps"
             >
-              <VListItemIcon>
-                <VIcon color="edit">mdi-pencil</VIcon>
-              </VListItemIcon>
-              <VListItemContent>
-                <VListItemTitle>{{ $t("music.track.edit") }}</VListItemTitle>
-              </VListItemContent>
+              <template #prepend>
+                <VIcon color="warning">mdi-pencil</VIcon>
+              </template>
+
+              <VListItemTitle>{{ I18n.t("music.track.edit") }}</VListItemTitle>
             </VListItem>
           </template>
-          <span>{{ $t("common.disabled-while-loading") }}</span>
+          <span>{{ I18n.t("common.disabled-while-loading") }}</span>
         </VTooltip>
-        <VTooltip bottom :disabled="!waitingForReload" v-if="isModerator">
-          <template v-slot:activator="{ on }">
+        <VTooltip
+          v-if="isModerator"
+          location="bottom"
+          :disabled="!waitingForReload"
+        >
+          <template #activator="{ props: tooltipProps }">
             <VListItem
               :to="{
                 name: 'merge-track',
-                params: { id: track.id },
-                query: { redirect: $route.fullPath },
+                params: { id: `${track.id}` },
+                query: { redirect: route.fullPath },
               }"
               :disabled="waitingForReload"
-              v-on="on"
+              v-bind="tooltipProps"
             >
-              <VListItemIcon>
-                <VIcon color="edit">mdi-merge</VIcon>
-              </VListItemIcon>
-              <VListItemContent>
-                <VListItemTitle>
-                  {{ $t("music.track.merge.merge") }}
-                </VListItemTitle>
-              </VListItemContent>
+              <template #prepend>
+                <VIcon color="warning">mdi-merge</VIcon>
+              </template>
+
+              <VListItemTitle>
+                {{ I18n.t("music.track.merge.merge") }}
+              </VListItemTitle>
             </VListItem>
           </template>
-          <span>{{ $t("common.disabled-while-loading") }}</span>
+          <span>{{ I18n.t("common.disabled-while-loading") }}</span>
         </VTooltip>
-        <VTooltip bottom :disabled="!waitingForReload" v-if="isModerator">
-          <template v-slot:activator="{ on }">
+        <VTooltip
+          v-if="isModerator"
+          location="bottom"
+          :disabled="!waitingForReload"
+        >
+          <template #activator="{ props: tooltipProps }">
             <VListItem
-              @click.stop.prevent="deleteTrack"
               :disabled="waitingForReload"
-              v-on="on"
+              v-bind="tooltipProps"
+              @click.stop.prevent="deleteTrack"
             >
-              <VListItemIcon>
-                <VIcon color="danger">mdi-delete</VIcon>
-              </VListItemIcon>
-              <VListItemContent>
-                <VListItemTitle>{{ $t("music.track.delete") }}</VListItemTitle>
-              </VListItemContent>
+              <template #prepend>
+                <VIcon color="error">mdi-delete</VIcon>
+              </template>
+
+              <VListItemTitle>{{
+                I18n.t("music.track.delete")
+              }}</VListItemTitle>
             </VListItem>
           </template>
-          <span>{{ $t("common.disabled-while-loading") }}</span>
+          <span>{{ I18n.t("common.disabled-while-loading") }}</span>
         </VTooltip>
       </VList>
     </VMenu>
   </span>
 </template>
 
-<script>
-import { mapActions, mapState } from "pinia";
-import { baseURL } from "../api";
+<script setup lang="ts">
+import { computed } from "vue";
+import { storeToRefs } from "pinia";
+import type { Track } from "@accentor/api-client-js";
+import { baseURL } from "@/api";
 import EditReviewComment from "./EditReviewComment.vue";
 import AddToPlaylist from "./AddToPlaylist.vue";
-import { useAuthStore } from "../store/auth";
-import { useCodecsStore } from "../store/codecs";
-import { useLocationsStore } from "../store/locations";
-import { useTracksStore } from "../store/tracks";
-import { usePlayerStore } from "../store/player";
-import { useErrorsStore } from "../store/errors";
+import { useAuthStore } from "@/store/auth";
+import { useLocationsStore } from "@/store/locations";
+import { useTracksStore } from "@/store/tracks";
+import { usePlayerStore } from "@/store/player";
+import { useErrorsStore } from "@/store/errors";
+import { useI18n } from "vue-i18n";
+import { useRoute } from "vue-router";
+import type { Loaded } from "@/store/base.ts";
 
-export default {
-  name: "TrackActions",
-  components: { AddToPlaylist, EditReviewComment },
-  props: {
-    track: { type: Object, required: true },
-  },
-  computed: {
-    ...mapState(useAuthStore, ["isModerator", "apiToken"]),
-    ...mapState(useTracksStore, ["startLoading"]),
-    ...mapState(useCodecsStore, ["codecs"]),
-    ...mapState(useLocationsStore, ["locations"]),
-    waitingForReload() {
-      return this.startLoading > this.track.loaded;
-    },
-    downloadURL() {
-      return `${baseURL}/tracks/${this.track.id}/download?token=${this.apiToken}`;
-    },
-  },
-  methods: {
-    ...mapActions(useErrorsStore, ["addError"]),
-    ...mapActions(usePlayerStore, {
-      playTrack: "playTrack",
-      addTrackToPlayer: "addTrack",
-    }),
-    ...mapActions(useTracksStore, ["destroy", "update"]),
-    deleteTrack: function () {
-      let message = this.$t("common.are-you-sure");
-      if (this.track.length) {
-        message += ` ${this.$t("music.track.delete-file-explanation")}`;
-      }
-      if (confirm(message)) {
-        this.destroy(this.track.id);
-      }
-    },
-    startTrack: function () {
-      if (this.track.length !== null) {
-        this.playTrack(this.track.id);
-      } else {
-        this.addError({ playlist: ["player.no-tracks-added"] });
-      }
-    },
-    addTrack: function () {
-      if (this.track.length !== null) {
-        this.addTrackToPlayer(this.track.id);
-      } else {
-        this.addError({ playlist: ["player.no-tracks-added"] });
-      }
-    },
-    flag(id, reviewComment) {
-      return this.update(id, { review_comment: reviewComment });
-    },
-  },
-};
+const I18n = useI18n();
+const route = useRoute();
+const authStore = useAuthStore();
+const errorsStore = useErrorsStore();
+const locationsStore = useLocationsStore();
+const playerStore = usePlayerStore();
+const tracksStore = useTracksStore();
+
+const { isModerator } = storeToRefs(authStore);
+const { locations } = storeToRefs(locationsStore);
+
+interface Props {
+  track: Loaded<Track>;
+}
+
+const props = defineProps<Props>();
+
+const waitingForReload = computed(
+  () => tracksStore.startLoading > props.track.loaded,
+);
+const downloadURL = computed(
+  () =>
+    `${baseURL}/tracks/${props.track.id}/download?token=${authStore.apiToken}`,
+);
+
+async function deleteTrack(): Promise<void> {
+  let message = I18n.t("common.are-you-sure");
+  if (props.track.length) {
+    message += ` ${I18n.t("music.track.delete-file-explanation")}`;
+  }
+  if (confirm(message)) {
+    await tracksStore.destroy(props.track.id);
+  }
+}
+
+function startTrack(): void {
+  if (props.track.length !== null) {
+    playerStore.playTrack(props.track.id);
+  } else {
+    errorsStore.addError({ playlist: ["player.no-tracks-added"] });
+  }
+}
+
+function addTrack(): void {
+  if (props.track.length !== null) {
+    playerStore.addTrack(props.track.id);
+  } else {
+    errorsStore.addError({ playlist: ["player.no-tracks-added"] });
+  }
+}
+
+async function flag(id: number, reviewComment: string): Promise<boolean> {
+  return await tracksStore.update(id, { review_comment: reviewComment });
+}
 </script>

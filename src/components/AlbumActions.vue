@@ -1,178 +1,176 @@
 <template>
-  <span class="actions">
-    <VTooltip bottom :disabled="playableTracks.length !== 0">
-      <template v-slot:activator="{ on }">
-        <span v-on="on">
-          <VBtn
-            @click.stop.prevent="startTracks"
-            :disabled="playableTracks.length === 0"
-            color="primary"
-            class="actions__button"
-            text
-            icon
-            small
-          >
-            <VIcon>mdi-play</VIcon>
-          </VBtn>
-        </span>
-      </template>
-      <span>{{ $t("music.album.no-tracks-to-play") }}</span>
-    </VTooltip>
-    <VTooltip bottom :disabled="playableTracks.length !== 0">
-      <template v-slot:activator="{ on }">
-        <span v-on="on">
-          <VBtn
-            @click.stop.prevent="addTracks"
-            :disabled="playableTracks.length === 0"
-            color="success"
-            class="actions__button"
-            text
-            icon
-            small
-            v-on="on"
-          >
-            <VIcon>mdi-plus</VIcon>
-          </VBtn>
-        </span>
-      </template>
-      <span>{{ $t("music.album.no-tracks-to-add") }}</span>
-    </VTooltip>
-    <AddToPlaylist :item="album" type="album" />
-    <EditReviewComment :item="album" :update="flag" />
-    <VMenu v-if="isModerator">
-      <template v-slot:activator="{ on, attrs }">
+  <VTooltip location="bottom" :disabled="playableTracks.length !== 0">
+    <template #activator="{ props: tooltipProps }">
+      <span v-bind="tooltipProps">
         <VBtn
-          class="actions__button mr-0"
-          small
+          :disabled="playableTracks.length === 0"
+          color="primary"
+          variant="text"
           icon
-          v-bind="attrs"
-          v-on="on"
-          @click.stop.prevent
+          size="small"
+          @click.stop.prevent="startTracks"
         >
-          <VIcon>mdi-dots-vertical</VIcon>
+          <VIcon size="x-large">mdi-play</VIcon>
         </VBtn>
-      </template>
-      <VList dense>
-        <VTooltip bottom :disabled="!waitingForReload">
-          <template v-slot:activator="{ on }">
-            <VListItem
-              :to="{
-                name: 'edit-album',
-                params: { id: album.id },
-                query: { redirect: $route.fullPath },
-              }"
-              :disabled="waitingForReload"
-              v-on="on"
-            >
-              <VListItemIcon>
-                <VIcon color="edit">mdi-pencil</VIcon>
-              </VListItemIcon>
-              <VListItemContent>
-                <VListItemTitle>{{ $t("music.album.edit") }}</VListItemTitle>
-              </VListItemContent>
-            </VListItem>
-          </template>
-          <span>{{ $t("common.disabled-while-loading") }}</span>
-        </VTooltip>
-        <VTooltip bottom :disabled="!waitingForReload">
-          <template v-slot:activator="{ on }">
-            <span v-on="on">
-              <AlbumMergeDialog :album="album" :disabled="waitingForReload" />
-            </span>
-          </template>
-          <span>{{ $t("common.disabled-while-loading") }}</span>
-        </VTooltip>
-        <VTooltip bottom :disabled="!waitingForReload" v-if="isModerator">
-          <template v-slot:activator="{ on }">
-            <VListItem
-              @click.stop.prevent="deleteAlbum"
-              :disabled="waitingForReload"
-              v-on="on"
-            >
-              <VListItemIcon>
-                <VIcon color="danger">mdi-delete</VIcon>
-              </VListItemIcon>
-              <VListItemContent>
-                <VListItemTitle>{{ $t("music.album.delete") }}</VListItemTitle>
-              </VListItemContent>
-            </VListItem>
-          </template>
-          <span>{{ $t("common.disabled-while-loading") }}</span>
-        </VTooltip>
-      </VList>
-    </VMenu>
-  </span>
+      </span>
+    </template>
+    <span>{{ I18n.t("music.album.no-tracks-to-play") }}</span>
+  </VTooltip>
+  <VTooltip location="bottom" :disabled="playableTracks.length !== 0">
+    <template #activator="{ props: tooltipProps }">
+      <span v-bind="tooltipProps">
+        <VBtn
+          :disabled="playableTracks.length === 0"
+          color="success"
+          variant="text"
+          icon
+          size="small"
+          @click.stop.prevent="addTracks"
+        >
+          <VIcon size="x-large">mdi-plus</VIcon>
+        </VBtn>
+      </span>
+    </template>
+    <span>{{ I18n.t("music.album.no-tracks-to-add") }}</span>
+  </VTooltip>
+  <AddToPlaylist :item="album" type="album" />
+  <EditReviewComment :item="album" :update="flag" />
+  <VMenu v-if="isModerator" eager>
+    <template #activator="{ props: menuProps }">
+      <VBtn
+        class="mr-0"
+        size="small"
+        icon
+        variant="text"
+        v-bind="menuProps"
+        @click.stop.prevent
+      >
+        <VIcon size="x-large">mdi-dots-vertical</VIcon>
+      </VBtn>
+    </template>
+    <VList density="compact">
+      <VTooltip location="bottom" :disabled="!waitingForReload">
+        <template #activator="{ props: tooltipProps }">
+          <VListItem
+            :to="{
+              name: 'edit-album',
+              params: { id: album.id },
+              query: { redirect: route.fullPath },
+            }"
+            :disabled="waitingForReload"
+            v-bind="tooltipProps"
+          >
+            <template #prepend>
+              <VIcon color="warning">mdi-pencil</VIcon>
+            </template>
+
+            <VListItemTitle>{{ I18n.t("music.album.edit") }}</VListItemTitle>
+          </VListItem>
+        </template>
+        <span>{{ I18n.t("common.disabled-while-loading") }}</span>
+      </VTooltip>
+      <VTooltip location="bottom" :disabled="!waitingForReload">
+        <template #activator="{ props: tooltipProps }">
+          <span v-bind="tooltipProps">
+            <AlbumMergeDialog :album="album" :disabled="waitingForReload" />
+          </span>
+        </template>
+        <span>{{ I18n.t("common.disabled-while-loading") }}</span>
+      </VTooltip>
+      <VTooltip
+        v-if="isModerator"
+        location="bottom"
+        :disabled="!waitingForReload"
+      >
+        <template #activator="{ props: tooltipProps }">
+          <VListItem
+            :disabled="waitingForReload"
+            v-bind="tooltipProps"
+            @click.stop.prevent="deleteAlbum"
+          >
+            <template #prepend>
+              <VIcon color="error">mdi-delete</VIcon>
+            </template>
+
+            <VListItemTitle>{{ I18n.t("music.album.delete") }}</VListItemTitle>
+          </VListItem>
+        </template>
+        <span>{{ I18n.t("common.disabled-while-loading") }}</span>
+      </VTooltip>
+    </VList>
+  </VMenu>
 </template>
-<script>
-import { mapState, mapActions } from "pinia";
+<script setup lang="ts">
+import { storeToRefs } from "pinia";
+import { useRoute } from "vue-router";
+import { computed } from "vue";
+import type { Album } from "@accentor/api-client-js";
 import EditReviewComment from "./EditReviewComment.vue";
 import AddToPlaylist from "./AddToPlaylist.vue";
 import AlbumMergeDialog from "./AlbumMergeDialog.vue";
-import { useAuthStore } from "../store/auth";
-import { useAlbumsStore } from "../store/albums";
-import { useTracksStore } from "../store/tracks";
-import { usePlayerStore } from "../store/player";
-import { useErrorsStore } from "../store/errors";
+import { useAuthStore } from "@/store/auth";
+import { useAlbumsStore } from "@/store/albums";
+import { useTracksStore } from "@/store/tracks";
+import { usePlayerStore } from "@/store/player";
+import { useErrorsStore } from "@/store/errors";
+import { useI18n } from "vue-i18n";
+import type { Loaded } from "@/store/base.ts";
 
-export default {
-  name: "AlbumActions",
-  components: { AddToPlaylist, AlbumMergeDialog, EditReviewComment },
-  props: {
-    album: {
-      type: Object,
-      required: true,
-    },
-  },
-  computed: {
-    ...mapState(useAuthStore, ["isModerator"]),
-    ...mapState(useAlbumsStore, ["startLoading"]),
-    tracks() {
-      return useTracksStore().tracksFilterByAlbum(this.album.id);
-    },
-    playableTracks() {
-      return this.tracks
-        .filter((track) => track.length !== null)
-        .map((obj) => obj.id);
-    },
-    waitingForReload() {
-      return this.startLoading > this.album.loaded;
-    },
-  },
-  methods: {
-    ...mapActions(useAlbumsStore, ["destroy", "update"]),
-    ...mapActions(usePlayerStore, {
-      playTracks: "playTracks",
-      addTracksToPlayer: "addTracks",
-    }),
-    ...mapActions(useErrorsStore, ["addError"]),
-    deleteAlbum: function () {
-      if (confirm(this.$t("common.are-you-sure"))) {
-        this.destroy(this.album.id);
-      }
-    },
-    startTracks: function () {
-      if (this.playableTracks.length > 0) {
-        this.playTracks(this.playableTracks);
-        if (this.playableTracks.length !== this.tracks.length) {
-          this.addError({ playlist: ["player.not-all-tracks-added"] });
-        }
-      } else {
-        this.addError({ playlist: ["player.no-tracks-added"] });
-      }
-    },
-    addTracks: function () {
-      if (this.playableTracks.length > 0) {
-        this.addTracksToPlayer(this.playableTracks);
-        if (this.playableTracks.length !== this.tracks.length) {
-          this.addError({ playlist: ["player.not-all-tracks-added"] });
-        }
-      } else {
-        this.addError({ playlist: ["player.no-tracks-added"] });
-      }
-    },
-    flag(id, reviewComment) {
-      return this.update(id, { review_comment: reviewComment });
-    },
-  },
-};
+const I18n = useI18n();
+const route = useRoute();
+
+const authStore = useAuthStore();
+const albumsStore = useAlbumsStore();
+const errorsStore = useErrorsStore();
+const playerStore = usePlayerStore();
+const tracksStore = useTracksStore();
+
+interface Props {
+  album: Loaded<Album>;
+}
+const props = defineProps<Props>();
+
+const { isModerator } = storeToRefs(authStore);
+const { startLoading } = storeToRefs(albumsStore);
+const tracks = computed(() => tracksStore.tracksFilterByAlbum(props.album.id));
+const playableTracks = computed(() =>
+  tracks.value.filter((t) => t.length !== null).map((t) => t.id),
+);
+const waitingForReload = computed(
+  () => startLoading.value > props.album.loaded,
+);
+
+async function deleteAlbum(): Promise<void> {
+  if (confirm(I18n.t("common.are-you-sure"))) {
+    await albumsStore.destroy(props.album.id);
+  }
+}
+
+function startTracks(): void {
+  if (playableTracks.value.length > 0) {
+    playerStore.playTracks(playableTracks.value);
+    if (playableTracks.value.length !== tracks.value.length) {
+      errorsStore.addError({ playlist: ["player.not-all-tracks-added"] });
+    }
+  } else {
+    errorsStore.addError({ playlist: ["player.no-tracks-added"] });
+  }
+}
+
+function addTracks(): void {
+  if (playableTracks.value.length > 0) {
+    playerStore.addTracks(playableTracks.value);
+    if (playableTracks.value.length !== tracks.value.length) {
+      errorsStore.addError({ playlist: ["player.not-all-tracks-added"] });
+    }
+  } else {
+    errorsStore.addError({ playlist: ["player.no-tracks-added"] });
+  }
+}
+
+async function flag(id: number, reviewComment: string): Promise<boolean> {
+  return await albumsStore.update(id, {
+    review_comment: reviewComment,
+  });
+}
 </script>

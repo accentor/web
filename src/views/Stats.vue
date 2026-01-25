@@ -8,7 +8,7 @@
       <VCol class="d-flex justify-end">
         <VSwitch
           v-model="useTrackLength"
-          :label="$t('stats.useTrackLength')"
+          :label="I18n.t('stats.useTrackLength')"
           class="mr-4"
         />
         <DateRangeSelect @input="(e) => (period = e)" />
@@ -16,51 +16,60 @@
     </VRow>
     <div class="stats">
       <PlayCountCard
-        :playStats="playStats"
+        :play-stats="playStats"
         title=""
         class="stats__play-count"
       />
       <TopTracksList
         class="stats__top-tracks"
-        :playStats="playStats"
+        :play-stats="playStats"
         :use-track-length="useTrackLength"
-        :title="$t('stats.topTracks')"
+        :title="I18n.t('stats.topTracks')"
       />
       <PercentagePlayedCard
         class="stats__percentage-played"
-        :playStats="playStats"
+        :play-stats="playStats"
         :use-track-length="useTrackLength"
         :tracks="filteredTracks"
         :title="
-          artist_id
-            ? $t('stats.percentageArtistPlayed', { artist: artistName })
-            : $t('stats.percentageLibraryPlayed')
+          artistId
+            ? I18n.t('stats.percentageArtistPlayed', { artist: artistName })
+            : I18n.t('stats.percentageLibraryPlayed')
         "
       />
       <TopAlbumsList
         class="stats__top-albums"
-        :playStats="playStats"
+        :play-stats="playStats"
         :use-track-length="useTrackLength"
-        :title="$t('stats.topAlbums')"
+        :title="I18n.t('stats.topAlbums')"
       />
       <TopArtistsList
         class="stats__top-artists"
-        :playStats="playStats"
+        :play-stats="playStats"
         :use-track-length="useTrackLength"
-        :title="$t('stats.topArtists')"
+        :title="I18n.t('stats.topArtists')"
       />
       <PlaysPunchcard
         class="stats__punchcard"
         :plays="filteredPlays"
         :use-track-length="useTrackLength"
-        :title="$t('stats.punchcard')"
+        :title="I18n.t('stats.punchcard')"
       />
     </div>
   </VContainer>
 </template>
 
-<script>
-import { mapActions, mapState } from "pinia";
+<script setup lang="ts">
+import { computed, ref, watch } from "vue";
+import { storeToRefs } from "pinia";
+import { useRoute, useRouter } from "vue-router";
+import { useHead } from "@unhead/vue";
+import {
+  type Play,
+  PlaysScope,
+  type PlayStat,
+  type Track,
+} from "@accentor/api-client-js";
 import DateRangeSelect from "@/components/DateRangeSelect.vue";
 import PercentagePlayedCard from "@/components/PercentagePlayedCard.vue";
 import PlayCountCard from "@/components/PlayCountCard.vue";
@@ -68,131 +77,136 @@ import PlaysPunchcard from "@/components/PlaysPunchcard.vue";
 import TopArtistsList from "@/components/TopArtistsList.vue";
 import TopTracksList from "@/components/TopTracksList.vue";
 import TopAlbumsList from "@/components/TopAlbumsList.vue";
-import { filterPlaysByPeriod, filterPlaysByTracks } from "@/filters";
-import $api from "../api";
-import { PlaysScope } from "@accentor/api-client-js";
-import { useArtistsStore } from "../store/artists";
-import { useTracksStore } from "../store/tracks";
-import { usePlaysStore } from "../store/plays";
-import { useAuthStore } from "../store/auth";
+import { useArtistsStore } from "@/store/artists";
+import { useTracksStore } from "@/store/tracks";
+import { usePlaysStore } from "@/store/plays";
+import { useAuthStore } from "@/store/auth";
+import api from "@/api";
+import { useI18n } from "vue-i18n";
 
-export default {
-  name: "Stats",
-  metaInfo() {
-    return { title: this.pageTitle };
-  },
-  components: {
-    DateRangeSelect,
-    PercentagePlayedCard,
-    PlayCountCard,
-    PlaysPunchcard,
-    TopAlbumsList,
-    TopArtistsList,
-    TopTracksList,
-  },
-  data() {
-    return {
-      period: {
-        start: null,
-        end: null,
+const I18n = useI18n();
+const route = useRoute();
+const router = useRouter();
+const authStore = useAuthStore();
+const playsStore = usePlaysStore();
+const tracksStore = useTracksStore();
+
+const props = defineProps<{ artistId?: string }>();
+
+const period = ref({
+  start: null as Date | null,
+  end: null as Date | null,
+});
+const useTrackLength = ref(false);
+const playStats = ref<PlayStat[]>([]);
+
+const { artists } = storeToRefs(useArtistsStore());
+const artistName = computed(() => {
+  if (props.artistId) {
+    return artists.value[props.artistId]?.name;
+  }
+  return undefined;
+});
+const pageTitle = computed(() => {
+  if (artistName.value) {
+    return I18n.t("common.stats-for-artist", {
+      artist: artistName.value,
+    });
+  } else {
+    return I18n.t("common.stats");
+  }
+});
+useHead({ title: pageTitle });
+
+const pageSubtitle = computed(() => {
+  if (period.value.start && period.value.end) {
+    return `${period.value.start.toLocaleDateString()} - ${period.value.end.toLocaleDateString()}`;
+  }
+  return "";
+});
+
+const filteredTracks = computed(() => {
+  if (props.artistId) {
+    return tracksStore.tracksFilterByArtist(parseInt(props.artistId));
+  }
+  return tracksStore.allTracks;
+});
+
+function filterPlaysByTracks(tracks: Track[]): (play: Play) => boolean {
+  return function (play: Play): boolean {
+    return tracks.some((t) => t.id === play.track_id);
+  };
+}
+
+function filterPlaysByPeriod(
+  startDate: Date,
+  endDate: Date,
+): (play: Play) => boolean {
+  return function (play: Play): boolean {
+    const playedAt = new Date(play.played_at);
+    return playedAt > startDate && playedAt < endDate;
+  };
+}
+
+const filteredPlays = computed(() => {
+  let plays = playsStore.allPlays.filter(
+    filterPlaysByPeriod(
+      period.value.start || new Date(0),
+      period.value.end || new Date(),
+    ),
+  );
+  if (props.artistId) {
+    plays = plays.filter(filterPlaysByTracks(filteredTracks.value));
+  }
+  return plays;
+});
+
+const playStatsScope = computed(() => {
+  const scope = new PlaysScope();
+  if (period.value.start && period.value.end) {
+    scope.playedAfter(period.value.start);
+    scope.playedBefore(period.value.end);
+  }
+  if (props.artistId) {
+    scope.artist(props.artistId);
+  }
+  return scope;
+});
+
+watch(playStatsScope, loadPlayStats);
+watch(useTrackLength, async () => {
+  if (useTrackLength.value.toString() !== route.query.useTrackLength) {
+    await router.replace({
+      query: {
+        ...route.query,
+        useTrackLength: useTrackLength.value.toString(),
       },
-      useTrackLength: false,
-      playStats: [],
-    };
-  },
-  props: {
-    artist_id: {
-      type: Number,
-      default: null,
-    },
-  },
-  computed: {
-    ...mapState(usePlaysStore, { plays: "allPlays" }),
-    ...mapState(useArtistsStore, ["artists"]),
-    artistName() {
-      return this.artist_id && this.artists[this.artist_id]?.name;
-    },
-    pageTitle() {
-      return this.artistName
-        ? this.$t("common.stats-for-artist", { artist: this.artistName })
-        : this.$t("common.stats");
-    },
-    pageSubtitle() {
-      if (this.period.start && this.period.end) {
-        return `${this.period.start.toLocaleDateString()} - ${this.period.end.toLocaleDateString()}`;
-      }
-      return "";
-    },
-    filteredPlays() {
-      let plays = this.plays.filter(
-        filterPlaysByPeriod(this.period.start, this.period.end),
-      );
-      if (this.artist_id) {
-        plays = plays.filter(filterPlaysByTracks(this.filteredTracks));
-      }
-      return plays;
-    },
-    filteredTracks() {
-      const tracksStore = useTracksStore();
-      if (this.artist_id) {
-        return tracksStore.tracksFilterByArtist(this.artist_id);
-      }
-      return tracksStore.allTracks;
-    },
-    playStatsScope() {
-      const scope = new PlaysScope();
-      if (this.period.start && this.period.end) {
-        scope.playedAfter(this.period.start);
-        scope.playedBefore(this.period.end);
-      }
-      if (this.artist_id) {
-        scope.artist(this.artist_id);
-      }
-      return scope;
-    },
-  },
-  methods: {
-    ...mapActions(usePlaysStore, { reloadPlays: "index" }),
-    async loadPlayStats() {
-      const gen = $api.plays.stats(
-        useAuthStore().apiToken,
-        this.playStatsScope,
-      );
-      let done = false;
-      let results = [];
-      while (!done) {
-        let value = [];
-        ({ value, done } = await gen.next());
-        results.push(...value);
-      }
-      this.playStats = results;
-    },
-  },
-  watch: {
-    playStatsScope() {
-      this.loadPlayStats();
-    },
-    useTrackLength() {
-      if (this.useTrackLength.toString() !== this.$route.query.useTrackLength) {
-        this.$router.replace({
-          query: {
-            ...this.$route.query,
-            useTrackLength: this.useTrackLength,
-          },
-        });
-      }
-    },
-    "$route.query.useTrackLength": {
-      handler() {
-        this.useTrackLength = this.$route.query.useTrackLength === "true";
-      },
-      immediate: true,
-    },
-  },
-};
+    });
+  }
+});
+watch(
+  () => route.query.useTrackLength,
+  () => (useTrackLength.value = route.query.useTrackLength === "true"),
+  { immediate: true },
+);
+
+async function loadPlayStats(): Promise<void> {
+  const gen = api.plays.stats(authStore.apiToken!, playStatsScope.value);
+  let done: boolean | undefined = false;
+  const results = [];
+  while (!done) {
+    let value = [];
+    ({ value, done } = await gen.next());
+    results.push(...value);
+  }
+  playStats.value = results;
+}
 </script>
 
 <style lang="scss" scoped>
+@use "sass:map";
+@use "vuetify/settings";
+
 .stats {
   display: grid;
   grid-auto-columns: 1fr;
@@ -205,7 +219,7 @@ export default {
     "topArtists"
     "punchcard";
 
-  @media (min-width: map-get($grid-breakpoints, "sm")) {
+  @media #{map.get(settings.$display-breakpoints, "sm-and-up")} {
     grid-template-areas:
       "topTracks topTracks"
       "playCount percentagePlayed"
@@ -214,7 +228,7 @@ export default {
       "punchcard punchcard";
   }
 
-  @media (min-width: map-get($grid-breakpoints, "md")) {
+  @media #{map.get(settings.$display-breakpoints, "md-and-up")} {
     grid-template-areas:
       "topTracks topTracks topTracks topTracks playCount playCount"
       "topTracks topTracks topTracks topTracks percentagePlayed percentagePlayed"

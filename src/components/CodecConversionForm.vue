@@ -1,10 +1,10 @@
 <template>
-  <VForm v-model="isValid" ref="form" lazy-validation>
+  <VForm ref="form" v-model="isValid">
     <VRow>
       <VCol cols="3">
         <VTextField
           v-model="newCodecConversion.name"
-          :label="$t('common.name')"
+          :label="I18n.t('common.name')"
           required
           :rules="rules.name"
         />
@@ -12,26 +12,26 @@
       <VCol cols="5">
         <VTextField
           v-model="newCodecConversion.ffmpeg_params"
-          :label="$t('library.ffmpeg-para')"
+          :label="I18n.t('library.ffmpeg-para')"
           required
-          :rules="[(v) => !!v || $t('errors.codecconv.ffmepg-blank')]"
+          :rules="[(v) => !!v || I18n.t('errors.codecconv.ffmepg-blank')]"
         />
       </VCol>
       <VCol cols="3">
         <VAutocomplete
-          :items="codecs"
-          :label="$t('library.resulting-codec')"
           v-model="newCodecConversion.resulting_codec_id"
+          :items="codecs"
+          :label="I18n.t('library.resulting-codec')"
           item-value="id"
-          item-text="extension"
+          item-title="extension"
           required
-          :rules="[(v) => !!v || $t('errors.codecconv.result-blank')]"
+          :rules="[(v) => !!v || I18n.t('errors.codecconv.result-blank')]"
         />
       </VCol>
       <VCol cols="2" sm="1">
         <VBtn
           icon
-          outlined
+          variant="outlined"
           :disabled="!isValid"
           :color="(codecConversion && 'info') || 'success'"
           class="ma-2"
@@ -42,100 +42,85 @@
           </VIcon>
         </VBtn>
         <VBtn
-          icon
-          outlined
           v-if="codecConversion"
-          color="danger"
+          icon
+          variant="outlined"
+          color="error"
           class="ma-2"
           @click="deleteCodecConversion"
         >
-          <VIcon color="danger">mdi-delete</VIcon>
+          <VIcon color="error">mdi-delete</VIcon>
         </VBtn>
       </VCol>
     </VRow>
   </VForm>
 </template>
 
-<script>
-import { mapActions, mapState } from "pinia";
+<script setup lang="ts">
+import { storeToRefs } from "pinia";
+import type { CodecConversion } from "@accentor/api-client-js";
 import { useCodecConversionsStore } from "@/store/codec_conversions";
-import { useCodecsStore } from "../store/codecs";
+import { useCodecsStore } from "@/store/codecs";
+import { computed, onMounted, ref, useTemplateRef } from "vue";
+import { useI18n } from "vue-i18n";
 
-export default {
-  name: "CodecConversionForm",
-  props: { codecConversion: { default: null, type: Object } },
-  data() {
-    return {
-      newCodecConversion: {
-        name: "",
-        ffmpeg_params: "",
-        resulting_codec_id: null,
-      },
-      isValid: true,
+const I18n = useI18n();
+const codecConversionsStore = useCodecConversionsStore();
+const props = defineProps<{ codecConversion?: CodecConversion }>();
+const newCodecConversion = ref({
+  name: "",
+  ffmpeg_params: "",
+  resulting_codec_id: null as number | null,
+});
+const isValid = ref(true);
+
+const { allCodecs: codecs } = storeToRefs(useCodecsStore());
+const rules = computed(() => ({
+  name: [
+    (v: string): true | string => !!v || I18n.t("errors.codecconv.name-blank"),
+    (v: string): true | string => {
+      const double = codecConversionsStore.allCodecConversions.some(
+        (cc) => cc.name === v && cc.id !== props.codecConversion?.id,
+      );
+      return !double || I18n.t("errors.codecconv.name-taken");
+    },
+  ],
+}));
+
+onMounted(() => {
+  if (props.codecConversion) {
+    newCodecConversion.value.name = props.codecConversion.name;
+    newCodecConversion.value.ffmpeg_params =
+      props.codecConversion.ffmpeg_params;
+    newCodecConversion.value.resulting_codec_id =
+      props.codecConversion.resulting_codec_id;
+  }
+});
+
+const form = useTemplateRef("form");
+async function saveCodecConversion(): Promise<void> {
+  if ((await form.value!.validate()).valid) {
+    const transformed = {
+      ...newCodecConversion.value,
+      resulting_codec_id: newCodecConversion.value.resulting_codec_id!,
     };
-  },
-  created() {
-    this.$nextTick(() => {
-      if (this.codecConversion) {
-        this.fillValues();
-      }
-    });
-  },
-  watch: {
-    album: function () {
-      if (this.codecConversion) {
-        this.fillValues();
-      }
-    },
-  },
-  computed: {
-    ...mapState(useCodecsStore, { codecs: "allCodecs" }),
-    ...mapState(useCodecConversionsStore, {
-      codecConversions: "allCodecConversions",
-    }),
-    rules() {
-      const rules = {
-        name: [(v) => !!v || this.$t("errors.codecconv.name-blank")],
-      };
 
-      const nameTaken = (v) => {
-        const double = this.codecConversions.some(
-          (cc) => cc.name === v && cc.id !== this.codecConversion?.id,
-        );
-        return !double || this.$t("errors.codecconv.name-taken");
-      };
-      rules.name.push(nameTaken);
-      return rules;
-    },
-  },
-  methods: {
-    fillValues() {
-      this.newCodecConversion.name = this.codecConversion.name;
-      this.newCodecConversion.ffmpeg_params =
-        this.codecConversion.ffmpeg_params;
-      this.newCodecConversion.resulting_codec_id =
-        this.codecConversion.resulting_codec_id;
-    },
-    ...mapActions(useCodecConversionsStore, ["destroy", "update", "create"]),
-    async saveCodecConversion() {
-      if (this.$refs.form.validate()) {
-        if (this.codecConversion === null) {
-          const id = await this.create(this.newCodecConversion);
-          if (id) {
-            this.newCodecConversion.name = "";
-            this.newCodecConversion.ffmpeg_params = "";
-            this.newCodecConversion.resulting_codec_id = null;
-          }
-        } else {
-          await this.update(this.codecConversion.id, this.newCodecConversion);
-        }
+    if (!props.codecConversion) {
+      const id = await codecConversionsStore.create(transformed);
+      if (id) {
+        newCodecConversion.value.name = "";
+        newCodecConversion.value.ffmpeg_params = "";
+        newCodecConversion.value.resulting_codec_id = null;
       }
-    },
-    deleteCodecConversion() {
-      if (confirm(this.$t("common.are-you-sure"))) {
-        this.destroy(this.codecConversion.id);
-      }
-    },
-  },
-};
+    } else {
+      await codecConversionsStore.update(props.codecConversion.id, transformed);
+    }
+  }
+}
+
+async function deleteCodecConversion(): Promise<void> {
+  if (confirm(I18n.t("common.are-you-sure"))) {
+    await codecConversionsStore.destroy(props.codecConversion!.id);
+  }
+}
 </script>

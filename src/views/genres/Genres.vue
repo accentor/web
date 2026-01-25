@@ -1,74 +1,77 @@
 <template>
   <VContainer fluid>
     <VDataIterator
-      :footer-props="{
-        disableItemsPerPage: true,
-        itemsPerPageOptions: [12],
-        showFirstLastPage: true,
-      }"
-      :items="filteredItems"
-      :items-per-page="12"
-      :page.sync="pagination.page"
       v-if="genres.length > 0"
+      v-model:page="page"
+      :items="filteredGenres"
+      :items-per-page="12"
     >
-      <template v-slot:header>
-        <VRow class="mb-2" justify="end" align="baseline">
+      <template #header>
+        <VRow class="mb-2" justify="end" align="center">
           <VCol cols="12" sm="8" md="6" lg="4" xl="2">
             <VTextField
               v-model="search"
               prepend-inner-icon="mdi-magnify"
-              :label="$t('common.search')"
+              :label="I18n.t('common.search')"
               single-line
               hide-details
             />
           </VCol>
         </VRow>
       </template>
-      <template v-slot:default="props">
+      <template #default="props">
         <VRow>
           <VCol
             v-for="item in props.items"
-            :key="item.name"
+            :key="item.raw.name"
             lg="3"
             md="4"
             sm="6"
             xl="2"
             cols="6"
           >
-            <GenreCard :genre="item" />
+            <GenreCard :genre="item.raw" />
           </VCol>
+        </VRow>
+      </template>
+      <template #footer="{ pageCount }">
+        <VRow class="mt-2" justify="center">
+          <VPagination
+            v-model="page"
+            density="compact"
+            :length="pageCount"
+            total-visible="5"
+          />
         </VRow>
       </template>
     </VDataIterator>
   </VContainer>
 </template>
 
-<script>
-import Paginated from "../../mixins/Paginated";
-import GenreCard from "../../components/GenreCard.vue";
-import Searchable from "../../mixins/Searchable";
-import { mapState } from "pinia";
-import { useGenresStore } from "../../store/genres";
+<script setup lang="ts">
+import GenreCard from "@/components/GenreCard.vue";
+import { storeToRefs } from "pinia";
+import { useGenresStore } from "@/store/genres";
+import { usePagination } from "@/composables/pagination";
+import { useSearch } from "@/composables/search";
+import { useHead } from "@unhead/vue";
+import { computed } from "vue";
+import { useI18n } from "vue-i18n";
 
-export default {
-  name: "Genres",
-  metaInfo() {
-    return { title: this.$tc("music.genres", 2) };
-  },
-  components: { GenreCard },
-  mixins: [Paginated, Searchable],
-  computed: {
-    ...mapState(useGenresStore, { genres: "genresByName" }),
-    filteredItems() {
-      return this.genres.filter(
-        (item) =>
-          !this.search ||
-          item.name
-            .toLocaleLowerCase()
-            .indexOf(this.search.toLocaleLowerCase()) >= 0 ||
-          item.normalized_name.indexOf(this.search.toLocaleLowerCase()) >= 0,
-      );
-    },
-  },
-};
+const { page } = usePagination();
+const { search } = useSearch();
+
+const I18n = useI18n();
+useHead({ title: I18n.t("music.genres", 2) });
+
+const { genresByName: genres } = storeToRefs(useGenresStore());
+const filteredGenres = computed(() => {
+  const lookup = search.value.toLowerCase();
+  return genres.value.filter(
+    (item) =>
+      !lookup ||
+      item.name.toLowerCase().indexOf(lookup) >= 0 ||
+      item.normalized_name.indexOf(lookup) >= 0,
+  );
+});
 </script>

@@ -1,40 +1,42 @@
 <template>
-  <VContainer fluid v-if="isModerator">
+  <VContainer v-if="isModerator" fluid>
     <VRow class="mb-2">
-      <h2 class="text-h5">{{ $t("library.maintenance") }}</h2>
+      <h2 class="text-h5">{{ I18n.t("library.maintenance") }}</h2>
     </VRow>
     <VRow class="mb-4">
       <MaintenanceActions />
     </VRow>
     <VRow class="mb-2">
-      <h2 class="text-h5">{{ $t("library.rescan") }}</h2>
+      <h2 class="text-h5">{{ I18n.t("library.rescan") }}</h2>
     </VRow>
     <VRow v-if="combinedRescans" class="mb-2">
-      <div class="button-group ma-2">
+      <VBtnGroup density="compact">
         <VBtn
-          @click="startAll"
           :disabled="rescans.length === 0 || rescanRunning"
           color="success"
-          class="button-group__button"
-          depressed
+          variant="flat"
+          @click="startAll"
         >
-          <VIcon left class="white--text">
+          <VIcon start class="text-white">
             mdi-refresh
             {{ rescanRunning ? "mdi-spin" : "" }}
           </VIcon>
-          {{ $t("library.start-scan") }}
+          {{ I18n.t("library.start-scan") }}
         </VBtn>
-        <VMenu offset-y bottom left close-on-click v-if="rescans.length > 1">
-          <template v-slot:activator="{ on, attrs }">
+        <VMenu
+          v-if="rescans.length > 1"
+          location="bottom left"
+          :persistent="false"
+        >
+          <template #activator="{ props }">
             <VBtn
               color="success"
-              depressed
-              v-bind="attrs"
-              v-on="on"
+              variant="flat"
+              v-bind="props"
               min-width="0"
-              class="button-group__button px-2"
+              class="px-2"
             >
-              <VIcon class="white--text">mdi-menu-down</VIcon>
+              <VIcon class="text-white">mdi-menu-down</VIcon>
             </VBtn>
           </template>
           <VList>
@@ -44,35 +46,35 @@
               @click="start(rescan.id)"
             >
               <VListItemTitle :disabled="rescan.running">
-                Rescan {{ locations[rescan.location_id].path }}
+                Rescan {{ locations[rescan.location_id]?.path }}
               </VListItemTitle>
             </VListItem>
           </VList>
         </VMenu>
-      </div>
+      </VBtnGroup>
     </VRow>
-    <VRow class="flex-column mb-4" v-if="combinedRescans">
+    <VRow v-if="combinedRescans" class="flex-column mb-4">
       <div>
-        <strong>{{ $t("library.finished-at") }}: </strong>
+        <strong>{{ I18n.t("library.finished-at") }}: </strong>
         {{
           rescanRunning
-            ? $t("library.currently-running")
-            : $d(new Date(combinedRescans.finished_at), "long")
+            ? I18n.t("library.currently-running")
+            : I18n.d(new Date(combinedRescans.finished_at), "long")
         }}
       </div>
       <div>
-        <strong>{{ $t("library.processed") }}: </strong>
+        <strong>{{ I18n.t("library.processed") }}: </strong>
         {{ combinedRescans.processed }}
       </div>
       <div v-if="combinedRescans.warning_text">
         <div>
-          <h3 class="text-h6">{{ $t("library.warnings") }}</h3>
+          <h3 class="text-h6">{{ I18n.t("library.warnings") }}</h3>
         </div>
         <pre class="text-body-2">{{ combinedRescans.warning_text }}</pre>
       </div>
       <div v-if="combinedRescans.error_text">
         <div>
-          <h3 class="text-h6">{{ $t("library.errors") }}</h3>
+          <h3 class="text-h6">{{ I18n.t("library.errors") }}</h3>
         </div>
         <pre class="text-body-2">{{ combinedRescans.error_text }}</pre>
       </div>
@@ -83,11 +85,11 @@
           !combinedRescans.warning_text
         "
       >
-        <h3 class="text-h6">{{ $t("library.no-errors-warnings") }}</h3>
+        <h3 class="text-h6">{{ I18n.t("library.no-errors-warnings") }}</h3>
       </div>
     </VRow>
     <VRow class="mb-2">
-      <h2 class="text-h5">{{ $t("library.codecs") }}</h2>
+      <h2 class="text-h5">{{ I18n.t("library.codecs") }}</h2>
     </VRow>
     <VRow>
       <VCol cols="12">
@@ -95,7 +97,7 @@
       </VCol>
     </VRow>
     <VRow class="mb-2">
-      <h2 class="text-h5">{{ $t("library.codec-conversions") }}</h2>
+      <h2 class="text-h5">{{ I18n.t("library.codec-conversions") }}</h2>
     </VRow>
     <VRow>
       <VCol cols="12">
@@ -103,7 +105,7 @@
       </VCol>
     </VRow>
     <VRow class="mb-2">
-      <h2 class="text-h5">{{ $t("library.cover-filenames") }}</h2>
+      <h2 class="text-h5">{{ I18n.t("library.cover-filenames") }}</h2>
     </VRow>
     <VRow>
       <VCol cols="12">
@@ -112,7 +114,7 @@
     </VRow>
     <VRow class="mb-2">
       <h2 class="text-h5">
-        {{ $t("library.image-types") }}
+        {{ I18n.t("library.image-types") }}
       </h2>
     </VRow>
     <VRow class="mb-2">
@@ -121,7 +123,7 @@
       </VCol>
     </VRow>
     <VRow class="mb-2">
-      <h2 class="text-h5">{{ $t("library.locations") }}</h2>
+      <h2 class="text-h5">{{ I18n.t("library.locations") }}</h2>
     </VRow>
     <VRow>
       <VCol cols="12">
@@ -131,82 +133,71 @@
   </VContainer>
 </template>
 
-<script>
-import { mapState, mapActions } from "pinia";
-import EditCodecs from "../components/EditCodecs.vue";
-import EditCodecConversions from "../components/EditCodecConversions.vue";
-import EditCoverFilenames from "../components/EditCoverFilenames.vue";
-import EditImageTypes from "../components/EditImageTypes.vue";
-import EditLocations from "../components/EditLocations.vue";
-import MaintenanceActions from "../components/MaintenanceActions.vue";
-import { useAuthStore } from "../store/auth";
-import { useCodecConversionsStore } from "../store/codec_conversions";
-import { useCodecsStore } from "../store/codecs";
-import { useCoverFilenamesStore } from "../store/cover_filenames";
-import { useImageTypesStore } from "../store/image_types";
-import { useLocationsStore } from "../store/locations";
-import { useRescansStore } from "../store/rescan";
+<script setup lang="ts">
+import { computed } from "vue";
+import { storeToRefs } from "pinia";
+import { useHead } from "@unhead/vue";
+import EditCodecs from "@/components/EditCodecs.vue";
+import EditCodecConversions from "@/components/EditCodecConversions.vue";
+import EditCoverFilenames from "@/components/EditCoverFilenames.vue";
+import EditImageTypes from "@/components/EditImageTypes.vue";
+import EditLocations from "@/components/EditLocations.vue";
+import MaintenanceActions from "@/components/MaintenanceActions.vue";
+import { useAuthStore } from "@/store/auth";
+import { useCodecConversionsStore } from "@/store/codec_conversions";
+import { useCodecsStore } from "@/store/codecs";
+import { useCoverFilenamesStore } from "@/store/cover_filenames";
+import { useImageTypesStore } from "@/store/image_types";
+import { useLocationsStore } from "@/store/locations";
+import { useRescansStore } from "@/store/rescan";
+import { useI18n } from "vue-i18n";
 
-export default {
-  name: "Library",
-  components: {
-    EditCodecs,
-    EditCodecConversions,
-    EditCoverFilenames,
-    EditImageTypes,
-    EditLocations,
-    MaintenanceActions,
-  },
-  metaInfo() {
-    return { title: this.$t("librarySettings") };
-  },
-  created() {
-    this.loadData();
-  },
-  computed: {
-    ...mapState(useAuthStore, ["isModerator"]),
-    ...mapState(useRescansStore, {
-      rescans: "allRescans",
-      combinedRescans: "combinedRescans",
-      lastClick: "lastClick",
-    }),
-    ...mapState(useLocationsStore, ["locations"]),
-    rescanRunning() {
-      return this.combinedRescans.running ||
-        this.lastClick > new Date(this.combinedRescans.finished_at)
-        ? true
-        : false;
-    },
-  },
-  methods: {
-    ...mapActions(useCodecConversionsStore, {
-      codecConversionsIndex: "index",
-    }),
-    ...mapActions(useCodecsStore, { codecsIndex: "index" }),
-    ...mapActions(useCoverFilenamesStore, {
-      coverFilenamesIndex: "index",
-    }),
-    ...mapActions(useImageTypesStore, { imageTypesIndex: "index" }),
-    ...mapActions(useLocationsStore, { locationsIndex: "index" }),
-    ...mapActions(useRescansStore, {
-      rescansIndex: "index",
-      start: "start",
-      startAll: "startAll",
-    }),
-    async loadData() {
-      let pendingResults = [];
-      if (this.isModerator) {
-        pendingResults.push(this.rescansIndex());
-        pendingResults.push(this.codecsIndex());
-        pendingResults.push(this.codecConversionsIndex());
-        pendingResults.push(this.coverFilenamesIndex());
-        pendingResults.push(this.imageTypesIndex());
-        pendingResults.push(this.locationsIndex());
-      }
-      await Promise.all(pendingResults);
-    },
-  },
-};
+const I18n = useI18n();
+useHead({ title: I18n.t("librarySettings") });
+
+const codecsStore = useCodecsStore();
+const codecConversionsStore = useCodecConversionsStore();
+const coverFilenamesStore = useCoverFilenamesStore();
+const imageTypesStore = useImageTypesStore();
+const locationsStore = useLocationsStore();
+const rescansStore = useRescansStore();
+
+const { isModerator } = storeToRefs(useAuthStore());
+const {
+  allRescans: rescans,
+  combinedRescans,
+  lastClick,
+} = storeToRefs(rescansStore);
+const { locations } = storeToRefs(locationsStore);
+
+const rescanRunning = computed(
+  () =>
+    combinedRescans.value.running ||
+    lastClick.value > new Date(combinedRescans.value.finished_at),
+);
+
+async function loadData(): Promise<void> {
+  const pendingResults = [];
+  if (isModerator.value) {
+    pendingResults.push(codecsStore.index());
+    pendingResults.push(codecConversionsStore.index());
+    pendingResults.push(coverFilenamesStore.index());
+    pendingResults.push(imageTypesStore.index());
+    pendingResults.push(locationsStore.index());
+    pendingResults.push(rescansStore.index());
+  }
+  await Promise.all(pendingResults);
+}
+
+void loadData();
+
+async function start(id: number): Promise<void> {
+  await rescansStore.start(id);
+}
+
+async function startAll(): Promise<void> {
+  await rescansStore.startAll();
+}
 </script>
 
 <style lang="scss" scoped>

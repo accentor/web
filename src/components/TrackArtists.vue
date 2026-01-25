@@ -1,65 +1,60 @@
 <template>
-  <div v-if="track_artists.length !== 0">
-    <VMenu open-on-hover offset-y>
-      <template v-slot:activator="{ on }">
-        <div v-on="on">
+  <div v-if="trackArtists.length !== 0">
+    <VMenu open-on-hover>
+      <template #activator="{ props: menuProps }">
+        <div v-bind="menuProps">
           {{
-            track_artists
+            trackArtists
               .filter((a) => !a.hidden)
               .map((a) => a.name)
               .join(" / ")
           }}
         </div>
       </template>
-      <VList dense>
+      <VList density="compact">
         <VListItem
-          v-for="ta of track_artists"
+          v-for="ta of trackArtists"
           :key="`${ta.artist_id} ${ta.name} ${ta.role}`"
         >
-          <VListItemContent>
-            <span>
-              <RouterLink
-                :to="{ name: 'artist', params: { id: ta.artist_id } }"
-                >{{ artist_name(ta) }}</RouterLink
-              >
-              ({{ $t(`music.artist.roles.${ta.role}`) }})
-              <span v-if="ta.name !== artist_name(ta)">
-                {{ $t("common.as") }} {{ ta.name }}
-              </span>
+          <span>
+            <RouterLink :to="{ name: 'artist', params: { id: ta.artist_id } }">
+              {{ ta.artist_name }}
+            </RouterLink>
+            ({{ I18n.t(`music.artist.roles.${ta.role}`) }})
+            <span v-if="ta.name !== ta.artist_name">
+              {{ I18n.t("common.as") }} {{ ta.name }}
             </span>
-          </VListItemContent>
+          </span>
         </VListItem>
       </VList>
     </VMenu>
   </div>
 </template>
 
-<script>
-import { mapState } from "pinia";
-import { useArtistsStore } from "../store/artists";
+<script setup lang="ts">
+import { computed } from "vue";
+import { storeToRefs } from "pinia";
+import type { TrackArtist } from "@accentor/api-client-js";
+import { useArtistsStore } from "@/store/artists";
+import { useI18n } from "vue-i18n";
 
-export default {
-  name: "TrackArtists",
-  props: {
-    track: {
-      type: Object,
-      required: true,
-    },
-  },
-  computed: {
-    ...mapState(useArtistsStore, ["artists"]),
-    track_artists() {
-      return [...this.track.track_artists].sort(
-        (a1, a2) => a1.order - a2.order,
-      );
-    },
-  },
-  methods: {
-    artist_name(ta) {
-      return this.artists !== undefined && `${ta.artist_id}` in this.artists
-        ? this.artists[ta.artist_id].name
-        : ta.name;
-    },
-  },
-};
+const I18n = useI18n();
+
+interface Props {
+  track: {
+    track_artists: TrackArtist[];
+  };
+}
+
+const props = defineProps<Props>();
+const { artists } = storeToRefs(useArtistsStore());
+
+const trackArtists = computed(() => {
+  return [...props.track.track_artists]
+    .sort((a1, a2) => a1.order - a2.order)
+    .map((ta) => ({
+      ...ta,
+      artist_name: artists.value[`${ta.artist_id}`]?.name ?? ta.name,
+    }));
+});
 </script>

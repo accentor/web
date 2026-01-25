@@ -1,88 +1,78 @@
 <template>
   <span v-if="isModerator">
-    <VTooltip bottom :disabled="!waitingForReload">
-      <template v-slot:activator="{ on }">
-        <span v-on="on">
+    <VTooltip location="bottom" :disabled="!waitingForReload">
+      <template #activator="{ props: tooltipProps }">
+        <span v-bind="tooltipProps">
           <VBtn
             :to="{
               name: 'edit-genre',
               params: { id: genre.id },
-              query: { redirect: $route.fullPath },
+              query: { redirect: route.fullPath },
             }"
             :disabled="waitingForReload"
-            color="edit"
-            class="actions__button"
-            text
+            color="warning"
+            variant="text"
             icon
-            small
+            size="small"
           >
-            <VIcon>mdi-pencil</VIcon>
+            <VIcon size="x-large">mdi-pencil</VIcon>
           </VBtn>
         </span>
       </template>
-      <span>{{ $t("common.disabled-while-loading") }}</span>
+      <span>{{ I18n.t("common.disabled-while-loading") }}</span>
     </VTooltip>
-    <VTooltip bottom :disabled="!waitingForReload">
-      <template v-slot:activator="{ on }">
-        <span v-on="on">
+    <VTooltip location="bottom" :disabled="!waitingForReload">
+      <template #activator="{ props: tooltipProps }">
+        <span v-bind="tooltipProps">
           <GenreMergeDialog :genre="genre" :disabled="waitingForReload" />
         </span>
       </template>
-      <span>{{ $t("common.disabled-while-loading") }}</span>
+      <span>{{ I18n.t("common.disabled-while-loading") }}</span>
     </VTooltip>
-    <VTooltip bottom :disabled="!waitingForReload">
-      <template v-slot:activator="{ on }">
-        <span v-on="on">
+    <VTooltip location="bottom" :disabled="!waitingForReload">
+      <template #activator="{ props: tooltipProps }">
+        <span v-bind="tooltipProps">
           <VBtn
-            @click.stop.prevent="deleteGenre"
             :disabled="waitingForReload"
-            color="danger"
-            class="actions__button mr-0"
+            color="error"
+            class="mr-0"
             href="#"
-            text
+            variant="text"
             icon
-            small
+            size="small"
+            @click.stop.prevent="deleteGenre"
           >
-            <VIcon>mdi-delete</VIcon>
+            <VIcon size="x-large">mdi-delete</VIcon>
           </VBtn>
         </span>
       </template>
-      <span>{{ $t("common.disabled-while-loading") }}</span>
+      <span>{{ I18n.t("common.disabled-while-loading") }}</span>
     </VTooltip>
   </span>
 </template>
 
-<script>
-import { mapActions, mapState } from "pinia";
+<script setup lang="ts">
+import { storeToRefs } from "pinia";
 import GenreMergeDialog from "./GenreMergeDialog.vue";
-import { useAuthStore } from "../store/auth";
-import { useGenresStore } from "../store/genres";
+import { useAuthStore } from "@/store/auth";
+import { useGenresStore } from "@/store/genres";
+import type { Genre } from "@accentor/api-client-js";
+import { computed } from "vue";
+import { useI18n } from "vue-i18n";
+import { useRoute } from "vue-router";
+import type { Loaded } from "@/store/base.ts";
 
-export default {
-  name: "GenreActions",
-  components: {
-    GenreMergeDialog,
-  },
-  props: {
-    genre: {
-      type: Object,
-      required: true,
-    },
-  },
-  computed: {
-    ...mapState(useAuthStore, ["isModerator"]),
-    ...mapState(useGenresStore, ["startLoading"]),
-    waitingForReload() {
-      return this.startLoading > this.genre.loaded;
-    },
-  },
-  methods: {
-    ...mapActions(useGenresStore, ["destroy", "merge"]),
-    deleteGenre: function () {
-      if (confirm(this.$t("common.are-you-sure"))) {
-        this.destroy(this.genre.id);
-      }
-    },
-  },
-};
+const I18n = useI18n();
+const route = useRoute();
+const genresStore = useGenresStore();
+const props = defineProps<{ genre: Loaded<Genre> }>();
+const { isModerator } = storeToRefs(useAuthStore());
+const waitingForReload = computed(
+  () => genresStore.startLoading > props.genre.loaded,
+);
+async function deleteGenre(): Promise<void> {
+  if (confirm(I18n.t("common.are-you-sure"))) {
+    await genresStore.destroy(props.genre.id);
+  }
+}
 </script>

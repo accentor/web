@@ -2,29 +2,21 @@
   <VContainer class="fill-height" fluid>
     <VRow no-gutters>
       <VCol>
-        <TracksTable
-          :tracks="tracks"
-          :show-search="true"
-          :show-mass-edit="false"
-        />
+        <TracksTable :tracks="tracks" show-search :show-mass-edit="false" />
       </VCol>
     </VRow>
   </VContainer>
 </template>
 
-<script>
-import { mapState } from "pinia";
-import TracksTable from "../../components/TracksTable.vue";
-import { useTracksStore } from "../../store/tracks";
+<script setup lang="ts">
+import { storeToRefs } from "pinia";
+import { useHead } from "@unhead/vue";
+import TracksTable from "@/components/TracksTable.vue";
+import { useTracksStore } from "@/store/tracks";
+import { useI18n } from "vue-i18n";
 
-export default {
-  name: "Tracks",
-  components: { TracksTable },
-  metaInfo() {
-    return { title: this.$tc("music.tracks", 2) };
-  },
-  computed: {
-    ...mapState(useTracksStore, { tracks: "tracksByAlbumAndNumber" }),
-  },
-};
+const I18n = useI18n();
+useHead({ title: I18n.t("music.tracks", 2) });
+
+const { tracksByAlbumAndNumber: tracks } = storeToRefs(useTracksStore());
 </script>

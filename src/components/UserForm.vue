@@ -1,146 +1,150 @@
 <template>
   <div @change="isDirty = true">
-    <VForm v-model="isValid" ref="userForm" @submit.prevent="submit">
+    <VForm ref="userForm" v-model="isValid" @submit.prevent="submit">
       <VTextField
-        :label="$t('common.name')"
         v-model="newUser.name"
+        :label="I18n.t('common.name')"
         autocomplete="username"
         required
-        :rules="[(v) => !!v || $t('errors.user.name-blank')]"
+        :rules="[(v) => !!v || I18n.t('errors.user.name-blank')]"
       />
       <VTextField
         v-if="user === currentUser"
-        :label="$t('users.current-password')"
+        v-model="newUser.current_password"
+        :label="I18n.t('users.current-password')"
         type="password"
         autocomplete="current-password"
-        v-model="newUser.current_password"
         :rules="rules.current"
       />
       <VTextField
-        :label="$t('users.password')"
+        v-model="newUser.password"
+        :label="I18n.t('users.password')"
         type="password"
         autocomplete="new-password"
-        v-model="newUser.password"
         :rules="rules.password"
       />
       <VTextField
-        :label="$t('users.confirm-password')"
+        v-model="newUser.password_confirmation"
+        :label="I18n.t('users.confirm-password')"
         type="password"
         autocomplete="new-password"
-        v-model="newUser.password_confirmation"
         :rules="rules.confirmation"
       />
       <VSelect
         v-if="showPermissions"
-        :items="permissionOptions"
-        :label="$t('users.permissions')"
         v-model="newUser.permission"
+        :items="permissionOptions"
+        :label="I18n.t('users.permissions')"
       />
       <VBtn color="primary" class="ma-2" type="submit">
-        {{ this.user ? $t("users.update") : $t("users.create") }}
+        {{ user ? I18n.t("users.update") : I18n.t("users.create") }}
       </VBtn>
     </VForm>
   </div>
 </template>
 
-<script>
-import { useAuthStore } from "../store/auth";
-import { mapActions, mapState } from "pinia";
-import { useUsersStore } from "../store/users";
+<script setup lang="ts">
+import { computed, onMounted, ref, useTemplateRef } from "vue";
+import { storeToRefs } from "pinia";
+import type { VForm } from "vuetify/components";
+import type { User } from "@accentor/api-client-js";
+import { UserPermission } from "@accentor/api-client-js";
+import { useAuthStore } from "@/store/auth";
+import { useUsersStore } from "@/store/users";
+import { useRoute, useRouter } from "vue-router";
+import { useI18n } from "vue-i18n";
 
-export default {
-  name: "UserForm",
-  props: {
-    user: { type: Object, default: null },
-    redirectFallback: { type: String, default: "users" },
-    showPermissions: { type: Boolean, default: false },
-  },
-  data() {
-    return {
-      newUser: {
-        current_password: "",
-        name: "",
-        password: "",
-        password_confirmation: "",
-        permission: "",
-      },
-      permissionOptions: [
-        { text: this.$t("users.permission.admin"), value: "admin" },
-        { text: this.$t("users.permission.moderator"), value: "moderator" },
-        { text: this.$t("users.permission.user"), value: "user" },
-      ],
-      isDirty: false,
-      isValid: true,
-    };
-  },
-  created() {
-    this.$nextTick(() => {
-      if (this.user) {
-        this.fillValues();
-      }
-    });
-  },
-  watch: {
-    user: function () {
-      if (this.user && !this.isDirty) {
-        this.fillValues();
-      }
-    },
-  },
-  computed: {
-    ...mapState(useAuthStore, ["currentUser"]),
-    rules() {
-      const rules = {
-        confirmation: [],
-        current: [],
-        password: [],
-      };
-      if (this.newUser.password) {
-        const confirmationBlank = (v) =>
-          !!v || this.$t("errors.user.password-confirmation-blank");
-        rules.confirmation.push(confirmationBlank);
+const I18n = useI18n();
+const router = useRouter();
+const route = useRoute();
 
-        const confirmationMatch = (v) =>
-          (!!v && v) === this.newUser.password ||
-          this.$t("errors.user.password-confirmation");
-        rules.confirmation.push(confirmationMatch);
+interface Props {
+  user?: User | undefined;
+  redirectFallback?: string;
+  showPermissions?: boolean;
+}
 
-        const currentBlank = (v) =>
-          !!v || this.$t("errors.user.current-password-blank");
-        rules.current.push(currentBlank);
-      }
+const props = withDefaults(defineProps<Props>(), {
+  user: undefined,
+  redirectFallback: "users",
+  showPermissions: false,
+});
 
-      if (this.newUser.current_password || this.newUser.password_confirmation) {
-        const passwordBlank = (v) =>
-          !!v || this.$t("errors.user.password-blank");
-        rules.password.push(passwordBlank);
-      }
-      return rules;
-    },
-  },
-  methods: {
-    ...mapActions(useUsersStore, ["create", "update"]),
-    fillValues() {
-      this.newUser.name = this.user.name;
-      this.newUser.permission = this.user.permission;
-    },
-    async submit() {
-      this.$refs.userForm.validate();
-      if (this.isValid) {
-        let pendingResult = null;
-        if (this.user) {
-          pendingResult = this.update(this.user.id, this.newUser);
-        } else {
-          pendingResult = this.create(this.newUser);
-        }
-        const succeeded = await pendingResult;
-        if (succeeded) {
-          this.$router.push(
-            this.$route.query.redirect || { name: this.redirectFallback },
-          );
-        }
-      }
-    },
-  },
-};
+const usersStore = useUsersStore();
+const { currentUser } = storeToRefs(useAuthStore());
+
+const permissionOptions = computed(() => [
+  { title: I18n.t("users.permission.admin"), value: "admin" },
+  { title: I18n.t("users.permission.moderator"), value: "moderator" },
+  { title: I18n.t("users.permission.user"), value: "user" },
+]);
+
+const isDirty = ref(false);
+const isValid = ref(true);
+
+const newUser = ref({
+  current_password: "",
+  name: "",
+  password: "",
+  password_confirmation: "",
+  permission: "" as UserPermission,
+});
+
+onMounted(() => {
+  if (props.user) {
+    newUser.value.name = props.user.name;
+    newUser.value.permission = props.user.permission;
+  }
+});
+
+const userForm = useTemplateRef("userForm");
+
+async function submit(): Promise<void> {
+  userForm.value?.validate();
+  if (isValid.value) {
+    let pendingResult;
+    if (props.user) {
+      pendingResult = usersStore.update(props.user.id, newUser.value);
+    } else {
+      pendingResult = usersStore.create(newUser.value);
+    }
+    const succeeded = await pendingResult;
+    if (succeeded) {
+      await router.push(
+        (route.query.redirect as string | undefined) || {
+          name: props.redirectFallback,
+        },
+      );
+    }
+  }
+}
+
+const rules = computed(() => {
+  const rules = {
+    confirmation: [] as ((v: string) => true | string)[],
+    current: [] as ((v: string) => true | string)[],
+    password: [] as ((v: string) => true | string)[],
+  };
+
+  if (newUser.value.password) {
+    const confirmationBlank = (v: string): true | string =>
+      !!v || I18n.t("errors.user.password-confirmation-blank");
+    const confirmationMatch = (v: string): true | string =>
+      (!!v && v) === newUser.value.password ||
+      I18n.t("errors.user.password-confirmation");
+    rules.confirmation.push(confirmationBlank, confirmationMatch);
+
+    const currentBlank = (v: string): true | string =>
+      !!v || I18n.t("errors.user.current-password-blank");
+    rules.current.push(currentBlank);
+  }
+
+  if (newUser.value.current_password || newUser.value.password_confirmation) {
+    const passwordBlank = (v: string): true | string =>
+      !!v || I18n.t("errors.user.password-blank");
+    rules.password.push(passwordBlank);
+  }
+
+  return rules;
+});
 </script>

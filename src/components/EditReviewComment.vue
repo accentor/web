@@ -1,28 +1,27 @@
 <template>
   <VBtn
-    color="flag"
-    class="actions__button"
-    text
+    color="error"
+    variant="text"
     icon
-    small
+    size="small"
     @click.stop.prevent="show = true"
   >
-    <VIcon>mdi-flag</VIcon>
+    <VIcon size="x-large">mdi-flag</VIcon>
     <VDialog v-model="show" max-width="600px">
       <VCard>
         <VCardTitle class="text-h5">
-          {{ $t("music.flag.for-review") }}
+          {{ I18n.t("music.flag.for-review") }}
         </VCardTitle>
         <VCardText>
           <VTextField
-            :label="$t('music.flag.comment')"
             v-model="newReviewComment"
+            :label="I18n.t('music.flag.comment')"
           />
         </VCardText>
         <VCardActions>
           <VRow justify="end" class="my-0">
             <VBtn color="primary" class="ma-2" type="submit" @click="flag">
-              {{ $t("music.flag.for-review") }}
+              {{ I18n.t("music.flag.for-review") }}
             </VBtn>
           </VRow>
         </VCardActions>
@@ -30,35 +29,26 @@
     </VDialog>
   </VBtn>
 </template>
-<script>
-export default {
-  name: "EditReviewComment",
-  data() {
-    return {
-      show: false,
-      newReviewComment: "",
-    };
-  },
-  props: {
-    update: {
-      type: Function,
-      required: true,
-    },
-    item: {
-      type: Object,
-      required: true,
-    },
-  },
-  created() {
-    this.newReviewComment = this.item.review_comment;
-  },
-  methods: {
-    async flag() {
-      const succeeded = await this.update(this.item.id, this.newReviewComment);
-      if (succeeded) {
-        this.show = false;
-      }
-    },
-  },
-};
+
+<script setup lang="ts">
+import { ref } from "vue";
+import { useI18n } from "vue-i18n";
+
+const I18n = useI18n();
+
+interface Props {
+  item: { id: number; review_comment: string | null };
+  update: (id: number, newReviewComment: string) => Promise<boolean>;
+}
+const props = defineProps<Props>();
+
+const show = ref<boolean>(false);
+const newReviewComment = ref<string>(props.item.review_comment || "");
+
+async function flag(): Promise<void> {
+  const succeeded = await props.update(props.item.id, newReviewComment.value);
+  if (succeeded) {
+    show.value = false;
+  }
+}
 </script>
