@@ -16,7 +16,7 @@ export default defineConfigWithVueTs(
     name: "app/files-to-lint",
     files: ["**/*.{vue,ts}"],
   },
-  globalIgnores(["**/dist/**"]),
+  globalIgnores(["**/dist/**", "eslint.config.ts"]),
   eslint.configs.recommended,
   {
     files: ["**/*.vue"],

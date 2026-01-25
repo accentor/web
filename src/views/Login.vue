@@ -71,7 +71,7 @@ async function submit(): Promise<void> {
     password: password.value,
   });
   if (succeeded) {
-    redirect();
+    await redirect();
   }
 }
 </script>

@@ -1,6 +1,6 @@
 {
   "extends": "@vue/tsconfig/tsconfig.dom.json",
-  "include": ["env.d.ts", "src/**/*.ts", "src/**/*.vue", "eslint.config.ts", "vite.config.ts"],
+  "include": ["env.d.ts", "src/**/*.ts", "src/**/*.vue", "vite.config.ts"],
   "compilerOptions": {
     "composite": true,
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.tsbuildinfo",
@@ -12,6 +12,6 @@
     },
     "types": ["vite/client"],
     "allowJs": true,
-    "checkJs": false,
+    "checkJs": false
   }
 }
