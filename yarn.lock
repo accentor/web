@@ -2574,10 +2574,10 @@ vuedraggable@^4.1.0:
   dependencies:
     sortablejs "1.14.0"
 
-vuetify@^3.11.5:
-  version "3.11.7"
-  resolved "https://registry.yarnpkg.com/vuetify/-/vuetify-3.11.7.tgz#c91ba1949e16e9390b78835f7bd7ead586834e5d"
-  integrity sha512-3nK1mKTXQRbU4QXukV4WIbs5YZgMK19flHpFq3pU+6Fpa5YLB8RyyK1BLWAW8JmhSVcaqVUcB/EJ3oJ8g3XNCw==
+vuetify@^3.11.8:
+  version "3.11.8"
+  resolved "https://registry.yarnpkg.com/vuetify/-/vuetify-3.11.8.tgz#8d7dc3615c924a8e10e42f4652002b476d5d790e"
+  integrity sha512-4iKnntOnLFFklygZjzlVfcHrtLO8+iK4HOhiia6HP2U8v82x+ngaSCgm+epvPrGyCMfCpfuEttqD2qElrr1axw==
 
 which@^2.0.1:
   version "2.0.2"
