@@ -1434,11 +1434,11 @@
       };
     }
     {
-      name = "autoprefixer___autoprefixer_10.4.23.tgz";
+      name = "autoprefixer___autoprefixer_10.4.24.tgz";
       path = fetchurl {
-        name = "autoprefixer___autoprefixer_10.4.23.tgz";
-        url  = "https://registry.yarnpkg.com/autoprefixer/-/autoprefixer-10.4.23.tgz";
-        sha512 = "YYTXSFulfwytnjAPlw8QHncHJmlvFKtczb8InXaAx9Q0LbfDnfEYDE55omerIJKihhmU61Ft+cAOSzQVaBUmeA==";
+        name = "autoprefixer___autoprefixer_10.4.24.tgz";
+        url  = "https://registry.yarnpkg.com/autoprefixer/-/autoprefixer-10.4.24.tgz";
+        sha512 = "uHZg7N9ULTVbutaIsDRoUkoS8/h3bdsmVJYZ5l3wv8Cp/6UIIoRDm90hZ+BwxUj/hGBEzLxdHNSKuFpn8WOyZw==";
       };
     }
     {
