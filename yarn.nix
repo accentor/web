@@ -2954,11 +2954,11 @@
       };
     }
     {
-      name = "unplugin___unplugin_2.3.11.tgz";
+      name = "unplugin___unplugin_3.0.0.tgz";
       path = fetchurl {
-        name = "unplugin___unplugin_2.3.11.tgz";
-        url  = "https://registry.yarnpkg.com/unplugin/-/unplugin-2.3.11.tgz";
-        sha512 = "5uKD0nqiYVzlmCRs01Fhs2BdkEgBS3SAVP6ndrBsuK42iC2+JHyxM05Rm9G8+5mkmRtzMZGY8Ct5+mliZxU/Ww==";
+        name = "unplugin___unplugin_3.0.0.tgz";
+        url  = "https://registry.yarnpkg.com/unplugin/-/unplugin-3.0.0.tgz";
+        sha512 = "0Mqk3AT2TZCXWKdcoaufeXNukv2mTrEZExeXlHIOZXdqYoHHr4n51pymnwV8x2BOVxwXbK2HLlI7usrqMpycdg==";
       };
     }
     {
@@ -3082,11 +3082,11 @@
       };
     }
     {
-      name = "vue_router___vue_router_5.0.1.tgz";
+      name = "vue_router___vue_router_5.0.2.tgz";
       path = fetchurl {
-        name = "vue_router___vue_router_5.0.1.tgz";
-        url  = "https://registry.yarnpkg.com/vue-router/-/vue-router-5.0.1.tgz";
-        sha512 = "t+lFugGXMdaq8lbn+vXG4j2H9UlsP205Tszz1wcDk9FyxqItBzcdJQ06IhpkQ2mHOfiTOHZeBshkskzPzHJkCw==";
+        name = "vue_router___vue_router_5.0.2.tgz";
+        url  = "https://registry.yarnpkg.com/vue-router/-/vue-router-5.0.2.tgz";
+        sha512 = "YFhwaE5c5JcJpNB1arpkl4/GnO32wiUWRB+OEj1T0DlDxEZoOfbltl2xEwktNU/9o1sGcGburIXSpbLpPFe/6w==";
       };
     }
     {
