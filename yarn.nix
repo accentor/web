@@ -514,6 +514,14 @@
       };
     }
     {
+      name = "_eslint_js___js_10.0.1.tgz";
+      path = fetchurl {
+        name = "_eslint_js___js_10.0.1.tgz";
+        url  = "https://registry.yarnpkg.com/@eslint/js/-/js-10.0.1.tgz";
+        sha512 = "zeR9k5pd4gxjZ0abRoIaxdc7I3nDktoXZk2qOv9gCNWx3mVwEn32VRhyLaRsDiJjTs0xq/T8mfPtyuXu7GWBcA==";
+      };
+    }
+    {
       name = "_eslint_object_schema___object_schema_2.1.7.tgz";
       path = fetchurl {
         name = "_eslint_object_schema___object_schema_2.1.7.tgz";
