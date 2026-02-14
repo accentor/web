@@ -1026,11 +1026,11 @@
       };
     }
     {
-      name = "_types_node___node_22.19.7.tgz";
+      name = "_types_node___node_25.2.3.tgz";
       path = fetchurl {
-        name = "_types_node___node_22.19.7.tgz";
-        url  = "https://registry.yarnpkg.com/@types/node/-/node-22.19.7.tgz";
-        sha512 = "MciR4AKGHWl7xwxkBa6xUGxQJ4VBOmPTF7sL+iGzuahOFaO0jHCsuEfS80pan1ef4gWId1oWOweIhrDEYLuaOw==";
+        name = "_types_node___node_25.2.3.tgz";
+        url  = "https://registry.yarnpkg.com/@types/node/-/node-25.2.3.tgz";
+        sha512 = "m0jEgYlYz+mDJZ2+F4v8D1AyQb+QzsNqRuI7xg1VQX/KlKS0qT9r1Mo16yo5F/MtifXFgaofIFsdFMox2SxIbQ==";
       };
     }
     {
@@ -2930,11 +2930,11 @@
       };
     }
     {
-      name = "undici_types___undici_types_6.21.0.tgz";
+      name = "undici_types___undici_types_7.16.0.tgz";
       path = fetchurl {
-        name = "undici_types___undici_types_6.21.0.tgz";
-        url  = "https://registry.yarnpkg.com/undici-types/-/undici-types-6.21.0.tgz";
-        sha512 = "iwDZqg0QAGrg9Rav5H4n0M64c3mkR59cJ6wQp+7C4nI0gsmExaedaYLNO44eT4AtBBwjbTiGPMlt2Md0T9H9JQ==";
+        name = "undici_types___undici_types_7.16.0.tgz";
+        url  = "https://registry.yarnpkg.com/undici-types/-/undici-types-7.16.0.tgz";
+        sha512 = "Zz+aZWSj8LE6zoxD+xrjh4VfkIG8Ya6LvYkZqtUQGJPZjYl53ypCaUwWqo7eI0x66KBGeRo+mlBEkMSeSZ38Nw==";
       };
     }
     {
