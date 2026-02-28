@@ -1130,11 +1130,11 @@
       };
     }
     {
-      name = "_unhead_vue___vue_2.1.4.tgz";
+      name = "_unhead_vue___vue_2.1.9.tgz";
       path = fetchurl {
-        name = "_unhead_vue___vue_2.1.4.tgz";
-        url  = "https://registry.yarnpkg.com/@unhead/vue/-/vue-2.1.4.tgz";
-        sha512 = "MFvywgkHMt/AqbhmKOqRuzvuHBTcmmmnUa7Wm/Sg11leXAeRShv2PcmY7IiYdeeJqBMCm1jwhcs6201jj6ggZg==";
+        name = "_unhead_vue___vue_2.1.9.tgz";
+        url  = "https://registry.yarnpkg.com/@unhead/vue/-/vue-2.1.9.tgz";
+        sha512 = "7SqqDEn5zFID1PnEdjLCLa/kOhoAlzol0JdYfVr2Ejek+H4ON4s8iyExv2QQ8bReMosbXQ/Bw41j2CF1NUuGSA==";
       };
     }
     {
@@ -2970,11 +2970,11 @@
       };
     }
     {
-      name = "unhead___unhead_2.1.4.tgz";
+      name = "unhead___unhead_2.1.9.tgz";
       path = fetchurl {
-        name = "unhead___unhead_2.1.4.tgz";
-        url  = "https://registry.yarnpkg.com/unhead/-/unhead-2.1.4.tgz";
-        sha512 = "+5091sJqtNNmgfQ07zJOgUnMIMKzVKAWjeMlSrTdSGPB6JSozhpjUKuMfWEoLxlMAfhIvgOU8Me0XJvmMA/0fA==";
+        name = "unhead___unhead_2.1.9.tgz";
+        url  = "https://registry.yarnpkg.com/unhead/-/unhead-2.1.9.tgz";
+        sha512 = "4GvP6YeJQzo9J3g9fFZUJOH6jacUp5JgJ0/zC8eZrt8Dwompg9SuOSfrYbZaEzsfMPgQc4fsEjMoY9WzGPOChg==";
       };
     }
     {
