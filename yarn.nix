@@ -1474,11 +1474,11 @@
       };
     }
     {
-      name = "autoprefixer___autoprefixer_10.4.24.tgz";
+      name = "autoprefixer___autoprefixer_10.4.27.tgz";
       path = fetchurl {
-        name = "autoprefixer___autoprefixer_10.4.24.tgz";
-        url  = "https://registry.yarnpkg.com/autoprefixer/-/autoprefixer-10.4.24.tgz";
-        sha512 = "uHZg7N9ULTVbutaIsDRoUkoS8/h3bdsmVJYZ5l3wv8Cp/6UIIoRDm90hZ+BwxUj/hGBEzLxdHNSKuFpn8WOyZw==";
+        name = "autoprefixer___autoprefixer_10.4.27.tgz";
+        url  = "https://registry.yarnpkg.com/autoprefixer/-/autoprefixer-10.4.27.tgz";
+        sha512 = "NP9APE+tO+LuJGn7/9+cohklunJsXWiaWEfV3si4Gi/XHDwVNgkwr1J3RQYFIvPy76GmJ9/bW8vyoU1LcxwKHA==";
       };
     }
     {
@@ -1562,11 +1562,11 @@
       };
     }
     {
-      name = "caniuse_lite___caniuse_lite_1.0.30001766.tgz";
+      name = "caniuse_lite___caniuse_lite_1.0.30001774.tgz";
       path = fetchurl {
-        name = "caniuse_lite___caniuse_lite_1.0.30001766.tgz";
-        url  = "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001766.tgz";
-        sha512 = "4C0lfJ0/YPjJQHagaE9x2Elb69CIqEPZeG0anQt9SIvIoOH4a4uaRl73IavyO+0qZh6MDLH//DrXThEYKHkmYA==";
+        name = "caniuse_lite___caniuse_lite_1.0.30001774.tgz";
+        url  = "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001774.tgz";
+        sha512 = "DDdwPGz99nmIEv216hKSgLD+D4ikHQHjBC/seF98N9CPqRX4M5mSxT9eTV6oyisnJcuzxtZy4n17yKKQYmYQOA==";
       };
     }
     {
