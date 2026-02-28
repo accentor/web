@@ -34,4 +34,8 @@ a {
 .white-space-nowrap {
   white-space: nowrap;
 }
+
+.list-none {
+  list-style: none;
+}
 </style>

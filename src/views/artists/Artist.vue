@@ -33,7 +33,7 @@
         </div>
         <div v-if="playlists.length" class="text-grey mt-4 mb-4">
           {{ I18n.t("music.artist.in-playlists", playlists.length) }}
-          <ul>
+          <ul class="list-none">
             <li v-for="playlist in playlists" :key="playlist.id">
               <RouterLink
                 :to="{ name: 'playlist', params: { id: playlist.id } }"
