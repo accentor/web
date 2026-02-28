@@ -14,7 +14,7 @@
     "@accentor/api-client-js": "^0.23.6",
     "@mdi/font": "^7.4.47",
     "@mdi/svg": "^7.4.47",
-    "@unhead/vue": "^2.1.4",
+    "@unhead/vue": "^2.1.9",
     "@vueuse/core": "^14.2.1",
     "fetch-retry": "^6.0.0",
     "gsap": "^3.14.2",
