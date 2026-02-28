@@ -36,12 +36,9 @@
                     :disabled="innerItem.raw.disabled"
                     v-bind="listItemProps"
                   >
-                    {{ innerItem.raw.name }}
-                    <span v-if="innerItem.raw.disabled">
-                      &nbsp;({{
-                        I18n.t("music.playlist.item-already-present")
-                      }})
-                    </span>
+                    <template v-if="innerItem.raw.disabled" #append>
+                      ({{ I18n.t("music.playlist.item-already-present") }})
+                    </template>
                   </VListItem>
                 </template>
               </VCombobox>
