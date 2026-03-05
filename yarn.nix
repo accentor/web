@@ -2138,11 +2138,11 @@
       };
     }
     {
-      name = "immutable___immutable_5.1.4.tgz";
+      name = "immutable___immutable_5.1.5.tgz";
       path = fetchurl {
-        name = "immutable___immutable_5.1.4.tgz";
-        url  = "https://registry.yarnpkg.com/immutable/-/immutable-5.1.4.tgz";
-        sha512 = "p6u1bG3YSnINT5RQmx/yRZBpenIl30kVxkTLDyHLIMk0gict704Q9n+thfDI7lTRm9vXdDYutVzXhzcThxTnXA==";
+        name = "immutable___immutable_5.1.5.tgz";
+        url  = "https://registry.yarnpkg.com/immutable/-/immutable-5.1.5.tgz";
+        sha512 = "t7xcm2siw+hlUM68I+UEOK+z84RzmN59as9DZ7P1l0994DKUWV7UXBMQZVxaoMSRQ+PBZbHCOoBt7a2wxOMt+A==";
       };
     }
     {
