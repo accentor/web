@@ -1362,11 +1362,11 @@
       };
     }
     {
-      name = "_vue_tsconfig___tsconfig_0.8.1.tgz";
+      name = "_vue_tsconfig___tsconfig_0.9.0.tgz";
       path = fetchurl {
-        name = "_vue_tsconfig___tsconfig_0.8.1.tgz";
-        url  = "https://registry.yarnpkg.com/@vue/tsconfig/-/tsconfig-0.8.1.tgz";
-        sha512 = "aK7feIWPXFSUhsCP9PFqPyFOcz4ENkb8hZ2pneL6m2UjCkccvaOhC/5KCKluuBufvp2KzkbdA2W2pk20vLzu3g==";
+        name = "_vue_tsconfig___tsconfig_0.9.0.tgz";
+        url  = "https://registry.yarnpkg.com/@vue/tsconfig/-/tsconfig-0.9.0.tgz";
+        sha512 = "RP+v9Cpbsk1ZVXltCHHkYBr7+624x6gcijJXVjIcsYk7JXqvIpRtMwU2ARLvWDhmy9ffdFYxhsfJnPztADBohQ==";
       };
     }
     {
