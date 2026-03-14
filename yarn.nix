@@ -1146,11 +1146,11 @@
       };
     }
     {
-      name = "_vitejs_plugin_vue___plugin_vue_6.0.4.tgz";
+      name = "_vitejs_plugin_vue___plugin_vue_6.0.5.tgz";
       path = fetchurl {
-        name = "_vitejs_plugin_vue___plugin_vue_6.0.4.tgz";
-        url  = "https://registry.yarnpkg.com/@vitejs/plugin-vue/-/plugin-vue-6.0.4.tgz";
-        sha512 = "uM5iXipgYIn13UUQCZNdWkYk+sysBeA97d5mHsAoAt1u/wpN3+zxOmsVJWosuzX+IMGRzeYUNytztrYznboIkQ==";
+        name = "_vitejs_plugin_vue___plugin_vue_6.0.5.tgz";
+        url  = "https://registry.yarnpkg.com/@vitejs/plugin-vue/-/plugin-vue-6.0.5.tgz";
+        sha512 = "bL3AxKuQySfk1iGcBsQnoRVexTPJq0Z/ixFVM8OhVJAP6ZXXXLtM7NFKWhLl30Kg7uTBqIaPXbh+nuQCuBDedg==";
       };
     }
     {
