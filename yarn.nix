@@ -2026,11 +2026,11 @@
       };
     }
     {
-      name = "flatted___flatted_3.3.3.tgz";
+      name = "flatted___flatted_3.4.2.tgz";
       path = fetchurl {
-        name = "flatted___flatted_3.3.3.tgz";
-        url  = "https://registry.yarnpkg.com/flatted/-/flatted-3.3.3.tgz";
-        sha512 = "GX+ysw4PBCz0PzosHDepZGANEuFCMLrnRTiEy9McGjmkCQYwRq4A/X786G/fjM/+OjsWSU1ZrY5qyARZmO/uwg==";
+        name = "flatted___flatted_3.4.2.tgz";
+        url  = "https://registry.yarnpkg.com/flatted/-/flatted-3.4.2.tgz";
+        sha512 = "PjDse7RzhcPkIJwy5t7KPWQSZ9cAbzQXcafsetQoD7sOJRQlGikNbx7yZp2OotDnJyrDcbyRq3Ttb18iYOqkxA==";
       };
     }
     {
