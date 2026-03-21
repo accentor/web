@@ -41,7 +41,7 @@
           cover
         />
       </VCol>
-      <VCol class="flex-column d-flex flex-grow-0 justify-center">
+      <VCol class="d-flex flex-grow-0 justify-center">
         <VBtn
           color="primary"
           class="ma-2"

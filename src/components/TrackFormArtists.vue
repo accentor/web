@@ -6,7 +6,7 @@
   >
     <template #item="{ element: item, index }">
       <VRow no-gutters>
-        <VCol class="flex-column flex-grow-0">
+        <VCol class="flex-grow-0">
           <div
             class="d-flex justify-space-between fill-height flex-column py-2"
             @keyup.delete="removeArtist(index)"

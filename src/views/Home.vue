@@ -7,7 +7,9 @@
         :save-pagination="false"
       >
         <template #header>
-          <h2 class="text-h4">{{ I18n.t("home.recently-released") }}</h2>
+          <h2 class="text-headline-large">
+            {{ I18n.t("home.recently-released") }}
+          </h2>
         </template>
       </AlbumsRow>
     </VContainer>
@@ -18,7 +20,9 @@
         :save-pagination="false"
       >
         <template #header>
-          <h2 class="text-h4">{{ I18n.t("home.recently-added-albums") }}</h2>
+          <h2 class="text-headline-large">
+            {{ I18n.t("home.recently-added-albums") }}
+          </h2>
         </template>
       </AlbumsRow>
     </VContainer>
@@ -29,7 +33,9 @@
         :save-pagination="false"
       >
         <template #header>
-          <h2 class="text-h4">{{ I18n.t("home.recently-added-artists") }}</h2>
+          <h2 class="text-headline-large">
+            {{ I18n.t("home.recently-added-artists") }}
+          </h2>
         </template>
       </ArtistsRow>
     </VContainer>
@@ -40,7 +46,7 @@
         :save-pagination="false"
       >
         <template #header>
-          <h2 class="text-h4">{{ I18n.t("home.on-this-day") }}</h2>
+          <h2 class="text-headline-large">{{ I18n.t("home.on-this-day") }}</h2>
         </template>
         <template #no-data>
           <VAlert :model-value="true" color="info" icon="mdi-information">
@@ -57,7 +63,9 @@
         :save-pagination="false"
       >
         <template #header>
-          <h2 class="text-h4">{{ I18n.t("home.random-albums") }}</h2>
+          <h2 class="text-headline-large">
+            {{ I18n.t("home.random-albums") }}
+          </h2>
         </template>
       </AlbumsRow>
     </VContainer>
@@ -68,7 +76,7 @@
         :save-pagination="false"
       >
         <template #header>
-          <h2 class="text-h4">
+          <h2 class="text-headline-large">
             {{ I18n.t("home.random-artists") }}
           </h2>
         </template>
@@ -81,7 +89,9 @@
         :save-pagination="false"
       >
         <template #header>
-          <h2 class="text-h4">{{ I18n.t("home.recently-played-albums") }}</h2>
+          <h2 class="text-headline-large">
+            {{ I18n.t("home.recently-played-albums") }}
+          </h2>
         </template>
       </AlbumsRow>
     </VContainer>
@@ -92,7 +102,9 @@
         :save-pagination="false"
       >
         <template #header>
-          <h2 class="text-h4">{{ I18n.t("home.recently-played-artists") }}</h2>
+          <h2 class="text-headline-large">
+            {{ I18n.t("home.recently-played-artists") }}
+          </h2>
         </template>
       </ArtistsRow>
     </VContainer>

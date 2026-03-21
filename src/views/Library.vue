@@ -1,13 +1,13 @@
 <template>
   <VContainer v-if="isModerator" fluid>
     <VRow class="mb-2">
-      <h2 class="text-h5">{{ I18n.t("library.maintenance") }}</h2>
+      <h2 class="text-headline-medium">{{ I18n.t("library.maintenance") }}</h2>
     </VRow>
     <VRow class="mb-4">
       <MaintenanceActions />
     </VRow>
     <VRow class="mb-2">
-      <h2 class="text-h5">{{ I18n.t("library.rescan") }}</h2>
+      <h2 class="text-headline-medium">{{ I18n.t("library.rescan") }}</h2>
     </VRow>
     <VRow v-if="combinedRescans" class="mb-2">
       <VBtnGroup density="compact">
@@ -53,7 +53,7 @@
         </VMenu>
       </VBtnGroup>
     </VRow>
-    <VRow v-if="combinedRescans" class="flex-column mb-4">
+    <VCol v-if="combinedRescans">
       <div>
         <strong>{{ I18n.t("library.finished-at") }}: </strong>
         {{
@@ -68,13 +68,13 @@
       </div>
       <div v-if="combinedRescans.warning_text">
         <div>
-          <h3 class="text-h6">{{ I18n.t("library.warnings") }}</h3>
+          <h3 class="text-headline-small">{{ I18n.t("library.warnings") }}</h3>
         </div>
         <pre class="text-body-2">{{ combinedRescans.warning_text }}</pre>
       </div>
       <div v-if="combinedRescans.error_text">
         <div>
-          <h3 class="text-h6">{{ I18n.t("library.errors") }}</h3>
+          <h3 class="text-headline-small">{{ I18n.t("library.errors") }}</h3>
         </div>
         <pre class="text-body-2">{{ combinedRescans.error_text }}</pre>
       </div>
@@ -85,11 +85,13 @@
           !combinedRescans.warning_text
         "
       >
-        <h3 class="text-h6">{{ I18n.t("library.no-errors-warnings") }}</h3>
+        <h3 class="text-headline-small">
+          {{ I18n.t("library.no-errors-warnings") }}
+        </h3>
       </div>
-    </VRow>
+    </VCol>
     <VRow class="mb-2">
-      <h2 class="text-h5">{{ I18n.t("library.codecs") }}</h2>
+      <h2 class="text-headline-medium">{{ I18n.t("library.codecs") }}</h2>
     </VRow>
     <VRow>
       <VCol cols="12">
@@ -97,7 +99,9 @@
       </VCol>
     </VRow>
     <VRow class="mb-2">
-      <h2 class="text-h5">{{ I18n.t("library.codec-conversions") }}</h2>
+      <h2 class="text-headline-medium">
+        {{ I18n.t("library.codec-conversions") }}
+      </h2>
     </VRow>
     <VRow>
       <VCol cols="12">
@@ -105,7 +109,9 @@
       </VCol>
     </VRow>
     <VRow class="mb-2">
-      <h2 class="text-h5">{{ I18n.t("library.cover-filenames") }}</h2>
+      <h2 class="text-headline-medium">
+        {{ I18n.t("library.cover-filenames") }}
+      </h2>
     </VRow>
     <VRow>
       <VCol cols="12">
@@ -113,7 +119,7 @@
       </VCol>
     </VRow>
     <VRow class="mb-2">
-      <h2 class="text-h5">
+      <h2 class="text-headline-medium">
         {{ I18n.t("library.image-types") }}
       </h2>
     </VRow>
@@ -123,7 +129,7 @@
       </VCol>
     </VRow>
     <VRow class="mb-2">
-      <h2 class="text-h5">{{ I18n.t("library.locations") }}</h2>
+      <h2 class="text-headline-medium">{{ I18n.t("library.locations") }}</h2>
     </VRow>
     <VRow>
       <VCol cols="12">

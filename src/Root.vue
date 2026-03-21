@@ -17,9 +17,29 @@ useHead({ title: "Main" });
 
 <style lang="scss">
 // Additional resets
-a {
-  text-decoration: none;
-  color: rgb(var(--v-theme-primary));
+@layer vuetify-core.reset {
+  a {
+    text-decoration: none;
+    color: rgb(var(--v-theme-primary));
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin: 0;
+  }
+
+  ul,
+  ol,
+  figure,
+  details,
+  summary {
+    padding: 0;
+    margin: 0;
+  }
 }
 
 // Additional utility classes

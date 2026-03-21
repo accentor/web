@@ -2,7 +2,7 @@
   <VContainer v-if="user" fluid>
     <VRow>
       <VCol>
-        <div class="text-h4">{{ user.name }}</div>
+        <div class="text-headline-large">{{ user.name }}</div>
         <span class="text-grey">
           {{ user.permission }}
         </span>

@@ -122,7 +122,7 @@
           :key="`artist-${index}`"
           no-gutters
         >
-          <VCol class="flex-column flex-grow-0">
+          <VCol class="flex-grow-0">
             <VBtn
               icon
               size="small"
@@ -153,7 +153,7 @@
               <VIcon size="x-large">mdi-close</VIcon>
             </VBtn>
           </VCol>
-          <VCol class="flex-column">
+          <VCol>
             <VCombobox
               v-model="item.artist_id"
               :items="sortedArtists"
@@ -186,7 +186,7 @@
           >
             <VIcon size="x-large">mdi-close</VIcon>
           </VBtn>
-          <VCol class="flex-column">
+          <VCol>
             <VCombobox
               v-model="item.label_id"
               :items="sortedLabels"

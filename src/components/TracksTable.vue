@@ -2,7 +2,7 @@
   <div>
     <VRow class="mb-2" justify="end" align="baseline">
       <VCol v-if="title !== null" cols="12" md="6" lg="8" xl="10">
-        <h2 class="text-h4">{{ title }}</h2>
+        <h2 class="text-headline-large">{{ title }}</h2>
       </VCol>
       <VCol v-if="showSearch" cols="12" sm="8" md="6" lg="4" xl="2">
         <VTextField

@@ -7,22 +7,22 @@
         :save-pagination="false"
       >
         <template #header>
-          <h2 class="text-h4">{{ I18n.t("music.artists", 2) }}</h2>
+          <h2 class="text-headline-large">{{ I18n.t("music.artists", 2) }}</h2>
         </template>
       </ArtistsRow>
     </VContainer>
     <VContainer fluid>
       <AlbumsRow :albums="albums" :items-per-page="6" :save-pagination="false">
         <template #header>
-          <h2 class="text-h4">{{ I18n.t("music.albums", 2) }}</h2>
+          <h2 class="text-headline-large">{{ I18n.t("music.albums", 2) }}</h2>
         </template>
       </AlbumsRow>
     </VContainer>
     <VContainer class="fill-height" fluid>
-      <VRow class="flex-column">
+      <VCol>
         <VRow>
           <VCol>
-            <h2 class="text-h4">{{ I18n.t("music.tracks", 2) }}</h2>
+            <h2 class="text-headline-large">{{ I18n.t("music.tracks", 2) }}</h2>
           </VCol>
         </VRow>
         <VRow>
@@ -35,7 +35,7 @@
             />
           </VCol>
         </VRow>
-      </VRow>
+      </VCol>
     </VContainer>
   </div>
 </template>

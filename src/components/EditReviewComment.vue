@@ -9,7 +9,7 @@
     <VIcon size="x-large">mdi-flag</VIcon>
     <VDialog v-model="show" max-width="600px">
       <VCard>
-        <VCardTitle class="text-h5">
+        <VCardTitle class="text-headline-medium">
           {{ I18n.t("music.flag.for-review") }}
         </VCardTitle>
         <VCardText>
