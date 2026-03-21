@@ -5,7 +5,7 @@
         <VTextField
           v-model="newCodec.extension"
           :label="I18n.t('library.extension')"
-          :disabled="codec !== null"
+          :disabled="codec"
           required
           :rules="rules.ext"
         />

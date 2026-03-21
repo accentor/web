@@ -1,141 +1,131 @@
 <template>
   <VContainer v-if="isModerator" fluid>
-    <VRow class="mb-2">
+    <VCol>
       <h2 class="text-headline-medium">{{ I18n.t("library.maintenance") }}</h2>
-    </VRow>
-    <VRow class="mb-4">
       <MaintenanceActions />
-    </VRow>
-    <VRow class="mb-2">
-      <h2 class="text-headline-medium">{{ I18n.t("library.rescan") }}</h2>
-    </VRow>
-    <VRow v-if="combinedRescans" class="mb-2">
-      <VBtnGroup density="compact">
-        <VBtn
-          :disabled="rescans.length === 0 || rescanRunning"
-          color="success"
-          variant="flat"
-          @click="startAll"
-        >
-          <VIcon start class="text-white">
-            mdi-refresh
-            {{ rescanRunning ? "mdi-spin" : "" }}
-          </VIcon>
-          {{ I18n.t("library.start-scan") }}
-        </VBtn>
-        <VMenu
-          v-if="rescans.length > 1"
-          location="bottom left"
-          :persistent="false"
-        >
-          <template #activator="{ props }">
-            <VBtn
-              color="success"
-              variant="flat"
-              v-bind="props"
-              min-width="0"
-              class="px-2"
-            >
-              <VIcon class="text-white">mdi-menu-down</VIcon>
-            </VBtn>
-          </template>
-          <VList>
-            <VListItem
-              v-for="(rescan, index) in rescans"
-              :key="index"
-              @click="start(rescan.id)"
-            >
-              <VListItemTitle :disabled="rescan.running">
-                Rescan {{ locations[rescan.location_id]?.path }}
-              </VListItemTitle>
-            </VListItem>
-          </VList>
-        </VMenu>
-      </VBtnGroup>
-    </VRow>
-    <VCol v-if="combinedRescans">
-      <div>
-        <strong>{{ I18n.t("library.finished-at") }}: </strong>
-        {{
-          rescanRunning
-            ? I18n.t("library.currently-running")
-            : I18n.d(new Date(combinedRescans.finished_at), "long")
-        }}
-      </div>
-      <div>
-        <strong>{{ I18n.t("library.processed") }}: </strong>
-        {{ combinedRescans.processed }}
-      </div>
-      <div v-if="combinedRescans.warning_text">
-        <div>
-          <h3 class="text-headline-small">{{ I18n.t("library.warnings") }}</h3>
-        </div>
-        <pre class="text-body-2">{{ combinedRescans.warning_text }}</pre>
-      </div>
-      <div v-if="combinedRescans.error_text">
-        <div>
-          <h3 class="text-headline-small">{{ I18n.t("library.errors") }}</h3>
-        </div>
-        <pre class="text-body-2">{{ combinedRescans.error_text }}</pre>
-      </div>
-      <div
-        v-if="
-          !rescanRunning &&
-          !combinedRescans.error_text &&
-          !combinedRescans.warning_text
-        "
-      >
-        <h3 class="text-headline-small">
-          {{ I18n.t("library.no-errors-warnings") }}
-        </h3>
-      </div>
     </VCol>
-    <VRow class="mb-2">
+    <VCol>
+      <h2 class="text-headline-medium">{{ I18n.t("library.rescan") }}</h2>
+      <VRow v-if="combinedRescans">
+        <VBtnGroup density="compact">
+          <VBtn
+            :disabled="rescans.length === 0 || rescanRunning"
+            color="success"
+            variant="flat"
+            @click="startAll"
+          >
+            <VIcon start class="text-white">
+              mdi-refresh
+              {{ rescanRunning ? "mdi-spin" : "" }}
+            </VIcon>
+            {{ I18n.t("library.start-scan") }}
+          </VBtn>
+          <VMenu
+            v-if="rescans.length > 1"
+            location="bottom left"
+            :persistent="false"
+          >
+            <template #activator="{ props }">
+              <VBtn
+                color="success"
+                variant="flat"
+                v-bind="props"
+                min-width="0"
+                class="px-2"
+              >
+                <VIcon class="text-white">mdi-menu-down</VIcon>
+              </VBtn>
+            </template>
+            <VList>
+              <VListItem
+                v-for="(rescan, index) in rescans"
+                :key="index"
+                @click="start(rescan.id)"
+              >
+                <VListItemTitle :disabled="rescan.running">
+                  Rescan {{ locations[rescan.location_id]?.path }}
+                </VListItemTitle>
+              </VListItem>
+            </VList>
+          </VMenu>
+        </VBtnGroup>
+      </VRow>
+      <VCol v-if="combinedRescans">
+        <div>
+          <strong>{{ I18n.t("library.finished-at") }}: </strong>
+          {{
+            rescanRunning
+              ? I18n.t("library.currently-running")
+              : I18n.d(new Date(combinedRescans.finished_at), "long")
+          }}
+        </div>
+        <div>
+          <strong>{{ I18n.t("library.processed") }}: </strong>
+          {{ combinedRescans.processed }}
+        </div>
+        <div v-if="combinedRescans.warning_text">
+          <div>
+            <h3 class="text-headline-small">
+              {{ I18n.t("library.warnings") }}
+            </h3>
+          </div>
+          <pre class="text-body-2">{{ combinedRescans.warning_text }}</pre>
+        </div>
+        <div v-if="combinedRescans.error_text">
+          <div>
+            <h3 class="text-headline-small">{{ I18n.t("library.errors") }}</h3>
+          </div>
+          <pre class="text-body-2">{{ combinedRescans.error_text }}</pre>
+        </div>
+        <div
+          v-if="
+            !rescanRunning &&
+            !combinedRescans.error_text &&
+            !combinedRescans.warning_text
+          "
+        >
+          <h3 class="text-headline-small">
+            {{ I18n.t("library.no-errors-warnings") }}
+          </h3>
+        </div>
+      </VCol>
+    </VCol>
+    <VCol>
       <h2 class="text-headline-medium">{{ I18n.t("library.codecs") }}</h2>
-    </VRow>
-    <VRow>
       <VCol cols="12">
         <EditCodecs />
       </VCol>
-    </VRow>
-    <VRow class="mb-2">
+    </VCol>
+    <VCol>
       <h2 class="text-headline-medium">
         {{ I18n.t("library.codec-conversions") }}
       </h2>
-    </VRow>
-    <VRow>
       <VCol cols="12">
         <EditCodecConversions />
       </VCol>
-    </VRow>
-    <VRow class="mb-2">
+    </VCol>
+    <VCol>
       <h2 class="text-headline-medium">
         {{ I18n.t("library.cover-filenames") }}
       </h2>
-    </VRow>
-    <VRow>
       <VCol cols="12">
         <EditCoverFilenames />
       </VCol>
-    </VRow>
-    <VRow class="mb-2">
+    </VCol>
+    <VCol>
       <h2 class="text-headline-medium">
         {{ I18n.t("library.image-types") }}
       </h2>
-    </VRow>
-    <VRow class="mb-2">
       <VCol cols="12">
         <EditImageTypes />
       </VCol>
-    </VRow>
-    <VRow class="mb-2">
+    </VCol>
+    <VCol>
       <h2 class="text-headline-medium">{{ I18n.t("library.locations") }}</h2>
-    </VRow>
-    <VRow>
       <VCol cols="12">
         <EditLocations />
       </VCol>
-    </VRow>
+    </VCol>
   </VContainer>
 </template>
 

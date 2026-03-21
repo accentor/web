@@ -5,7 +5,7 @@
         <VTextField
           v-model="newLocation.path"
           :label="I18n.t('library.path')"
-          :disabled="location !== null"
+          :disabled="location"
           required
           :rules="rules.path"
         />
