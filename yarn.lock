@@ -1556,10 +1556,10 @@ eslint-plugin-vue@^10.8.0:
     semver "^7.6.3"
     xml-name-validator "^4.0.0"
 
-eslint-plugin-vuetify@^2.7.0:
-  version "2.7.0"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-vuetify/-/eslint-plugin-vuetify-2.7.0.tgz#ab0ea4f8a5ef292d5cf1f604669989f056f8a839"
-  integrity sha512-6yl3W/FM6F81KG3c69fGoPWCkdoMG0ZPGhoF3uq2pjOWoQFdNo0jR+/s2016NCxuKWqaVfo5zWVUIGUupamhwA==
+eslint-plugin-vuetify@^2.7.2:
+  version "2.7.2"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-vuetify/-/eslint-plugin-vuetify-2.7.2.tgz#f2af38000eb58ce85a0988cdcc30ba2e35fe1360"
+  integrity sha512-c8uKnb4DFJFBaqGTKT9Yv6SDhe+cVAQpRpey7nRlpXgXfHpMEe8u6yg5DEhn+Diam0bY05nEe3+T/t/d+cEinQ==
   dependencies:
     eslint-plugin-vue "^10.8.0"
     requireindex "^1.2.0"

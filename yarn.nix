@@ -1810,11 +1810,11 @@
       };
     }
     {
-      name = "eslint_plugin_vuetify___eslint_plugin_vuetify_2.7.0.tgz";
+      name = "eslint_plugin_vuetify___eslint_plugin_vuetify_2.7.2.tgz";
       path = fetchurl {
-        name = "eslint_plugin_vuetify___eslint_plugin_vuetify_2.7.0.tgz";
-        url  = "https://registry.yarnpkg.com/eslint-plugin-vuetify/-/eslint-plugin-vuetify-2.7.0.tgz";
-        sha512 = "6yl3W/FM6F81KG3c69fGoPWCkdoMG0ZPGhoF3uq2pjOWoQFdNo0jR+/s2016NCxuKWqaVfo5zWVUIGUupamhwA==";
+        name = "eslint_plugin_vuetify___eslint_plugin_vuetify_2.7.2.tgz";
+        url  = "https://registry.yarnpkg.com/eslint-plugin-vuetify/-/eslint-plugin-vuetify-2.7.2.tgz";
+        sha512 = "c8uKnb4DFJFBaqGTKT9Yv6SDhe+cVAQpRpey7nRlpXgXfHpMEe8u6yg5DEhn+Diam0bY05nEe3+T/t/d+cEinQ==";
       };
     }
     {
