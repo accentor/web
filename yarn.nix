@@ -3122,11 +3122,11 @@
       };
     }
     {
-      name = "vue_router___vue_router_5.0.3.tgz";
+      name = "vue_router___vue_router_5.0.4.tgz";
       path = fetchurl {
-        name = "vue_router___vue_router_5.0.3.tgz";
-        url  = "https://registry.yarnpkg.com/vue-router/-/vue-router-5.0.3.tgz";
-        sha512 = "nG1c7aAFac7NYj8Hluo68WyWfc41xkEjaR0ViLHCa3oDvTQ/nIuLJlXJX1NUPw/DXzx/8+OKMng045HHQKQKWw==";
+        name = "vue_router___vue_router_5.0.4.tgz";
+        url  = "https://registry.yarnpkg.com/vue-router/-/vue-router-5.0.4.tgz";
+        sha512 = "lCqDLCI2+fKVRl2OzXuzdSWmxXFLQRxQbmHugnRpTMyYiT+hNaycV0faqG5FBHDXoYrZ6MQcX87BvbY8mQ20Bg==";
       };
     }
     {
