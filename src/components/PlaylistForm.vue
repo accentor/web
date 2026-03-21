@@ -55,7 +55,7 @@
               itemsDirty = true;
             "
           >
-            <h4 class="text-h6 mt-6 ml-4">
+            <h4 class="text-headline-small mt-6 ml-4">
               {{ I18n.t("music.playlist.items", 2) }}
             </h4>
             <VTable>

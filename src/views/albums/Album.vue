@@ -29,7 +29,7 @@
       </VCol>
       <VCol lg="9" md="8" sm="6" cols="12">
         <div>
-          <div class="text-h4">
+          <div class="text-headline-large">
             {{ album.title }}
             <span v-if="album.edition_description !== null" class="text-grey">
               ({{ album.edition_description }})

@@ -30,14 +30,16 @@ app.use(head);
 app.mixin(VueHeadMixin);
 app.use(
   createVuetify({
+    defaults: {
+      VBtn: {
+        class: "text-uppercase",
+      },
+    },
     locale: {
       adapter: createVueI18nAdapter({
         i18n,
         useI18n,
       }),
-    },
-    theme: {
-      defaultTheme: "system",
     },
   }),
 );

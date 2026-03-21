@@ -5,7 +5,7 @@
         <VTextField
           v-model="newImageType.extension"
           :label="I18n.t('library.extension')"
-          :disabled="imageType !== null"
+          :disabled="!!imageType"
           required
           :rules="rules.ext"
         />

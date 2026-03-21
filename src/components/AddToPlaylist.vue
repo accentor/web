@@ -14,7 +14,7 @@
     </template>
     <VCard>
       <VCardTitle>
-        <span class="text-h5">
+        <span class="text-headline-medium">
           {{ I18n.t("music.playlist.add-item", { obj: cardTitleName }) }}
         </span>
       </VCardTitle>
@@ -33,10 +33,10 @@
               >
                 <template #item="{ item: innerItem, props: listItemProps }">
                   <VListItem
-                    :disabled="innerItem.raw.disabled"
+                    :disabled="innerItem.disabled"
                     v-bind="listItemProps"
                   >
-                    <template v-if="innerItem.raw.disabled" #append>
+                    <template v-if="innerItem.disabled" #append>
                       ({{ I18n.t("music.playlist.item-already-present") }})
                     </template>
                   </VListItem>

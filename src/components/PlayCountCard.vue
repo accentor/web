@@ -1,9 +1,9 @@
 <template>
   <VCard class="px-2 py-4">
-    <div class="text-center mb-4 text-h6 font-weight-regular">
+    <div class="text-center mb-4 text-headline-small font-weight-regular">
       {{ I18n.t("stats.count.playCount.before") }}
       <span
-        class="text-h4 d-block"
+        class="text-headline-large d-block"
         :class="
           data.animatedCount ? 'text-primary' : 'text-grey text--darken-1'
         "
@@ -12,11 +12,11 @@
       </span>
       {{ I18n.t("stats.count.playCount.after") }}
     </div>
-    <div class="text-center text-h6 font-weight-regular">
+    <div class="text-center text-headline-small font-weight-regular">
       {{ I18n.t("stats.count.playTime.before") }}
       <div class="play-time text-grey-darken-3">
         <span
-          class="text-h4 d-block text-right"
+          class="text-headline-large d-block text-right"
           :class="
             data.animatedTime.days
               ? 'text-primary text--darken-1'
@@ -34,7 +34,7 @@
           }}
         </span>
         <span
-          class="text-h4 d-block text-right"
+          class="text-headline-large d-block text-right"
           :class="
             data.animatedTime.days + data.animatedTime.hours
               ? 'text-primary text--darken-1'
@@ -52,7 +52,7 @@
           }}
         </span>
         <span
-          class="text-h4 d-block text-right"
+          class="text-headline-large d-block text-right"
           :class="
             data.animatedTime.days +
             data.animatedTime.hours +

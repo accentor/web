@@ -11,7 +11,7 @@
     </template>
     <VCard>
       <VCardTitle>
-        <span class="text-h5">
+        <span class="text-headline-medium">
           {{ I18n.t("music.album.merge-into", { obj: album.title }) }}
         </span>
       </VCardTitle>
@@ -31,7 +31,7 @@
                   <VListItem v-bind="listItemProps">
                     <template #append>
                       <span class="text-grey pl-2 text-body-2">
-                        {{ item.value }}
+                        {{ item.id }}
                       </span>
                     </template>
                   </VListItem>

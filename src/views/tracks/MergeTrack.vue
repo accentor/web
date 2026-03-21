@@ -3,7 +3,7 @@
     <VContainer v-if="track" class="fill-height">
       <VRow>
         <VCol lg="9" md="8" sm="6" cols="12">
-          <div class="text-h4">
+          <div class="text-headline-large">
             {{ I18n.t("music.track.merge.title", { obj: track.title }) }}
           </div>
           <div class="text-grey">

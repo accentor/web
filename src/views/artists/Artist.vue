@@ -29,7 +29,7 @@
       </VCol>
       <VCol lg="9" md="8" sm="6" cols="12">
         <div>
-          <h2 class="text-h4">{{ artist.name }}</h2>
+          <h2 class="text-headline-large">{{ artist.name }}</h2>
         </div>
         <div v-if="playlists.length" class="text-grey mt-4 mb-4">
           {{ I18n.t("music.artist.in-playlists", playlists.length) }}

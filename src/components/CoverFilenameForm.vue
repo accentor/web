@@ -5,7 +5,7 @@
         <VTextField
           v-model="newCoverFilename.filename"
           :label="I18n.t('library.filename')"
-          :disabled="coverFilename !== null"
+          :disabled="!!coverFilename"
           required
           :rules="[
             (v) => !!v || I18n.t('errors.cover_filename.filename-blank'),
