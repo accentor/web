@@ -1266,11 +1266,11 @@
       };
     }
     {
-      name = "_vue_devtools_core___devtools_core_8.1.0.tgz";
+      name = "_vue_devtools_core___devtools_core_8.1.1.tgz";
       path = fetchurl {
-        name = "_vue_devtools_core___devtools_core_8.1.0.tgz";
-        url  = "https://registry.yarnpkg.com/@vue/devtools-core/-/devtools-core-8.1.0.tgz";
-        sha512 = "LvD1VgDpoHmYL00IgKRLKktF6SsPAb0yaV8wB8q2jRwsAWvqhS8+vsMLEGKNs7uoKyymXhT92dhxgf/wir6YGQ==";
+        name = "_vue_devtools_core___devtools_core_8.1.1.tgz";
+        url  = "https://registry.yarnpkg.com/@vue/devtools-core/-/devtools-core-8.1.1.tgz";
+        sha512 = "bCCsSABp1/ot4j8xJEycM6Mtt2wbuucfByr6hMgjbYhrtlscOJypZKvy8f1FyWLYrLTchB5Qz216Lm92wfbq0A==";
       };
     }
     {
@@ -1282,11 +1282,11 @@
       };
     }
     {
-      name = "_vue_devtools_kit___devtools_kit_8.1.0.tgz";
+      name = "_vue_devtools_kit___devtools_kit_8.1.1.tgz";
       path = fetchurl {
-        name = "_vue_devtools_kit___devtools_kit_8.1.0.tgz";
-        url  = "https://registry.yarnpkg.com/@vue/devtools-kit/-/devtools-kit-8.1.0.tgz";
-        sha512 = "/NZlS4WtGIB54DA/z10gzk+n/V7zaqSzYZOVlg2CfdnpIKdB61bd7JDIMxf/zrtX41zod8E2/bbEBoW/d7x70Q==";
+        name = "_vue_devtools_kit___devtools_kit_8.1.1.tgz";
+        url  = "https://registry.yarnpkg.com/@vue/devtools-kit/-/devtools-kit-8.1.1.tgz";
+        sha512 = "gVBaBv++i+adg4JpH71k9ppl4soyR7Y2McEqO5YNgv0BI1kMZ7BDX5gnwkZ5COYgiCyhejZG+yGNrBAjj6Coqg==";
       };
     }
     {
@@ -1298,11 +1298,11 @@
       };
     }
     {
-      name = "_vue_devtools_shared___devtools_shared_8.1.0.tgz";
+      name = "_vue_devtools_shared___devtools_shared_8.1.1.tgz";
       path = fetchurl {
-        name = "_vue_devtools_shared___devtools_shared_8.1.0.tgz";
-        url  = "https://registry.yarnpkg.com/@vue/devtools-shared/-/devtools-shared-8.1.0.tgz";
-        sha512 = "h8uCb4Qs8UT8VdTT5yjY6tOJ//qH7EpxToixR0xqejR55t5OdISIg7AJ7eBkhBs8iu1qG5gY3QQNN1DF1EelAA==";
+        name = "_vue_devtools_shared___devtools_shared_8.1.1.tgz";
+        url  = "https://registry.yarnpkg.com/@vue/devtools-shared/-/devtools-shared-8.1.1.tgz";
+        sha512 = "+h4ttmJYl/txpxHKaoZcaKpC+pvckgLzIDiSQlaQ7kKthKh8KuwoLW2D8hPJEnqKzXOvu15UHEoGyngAXCz0EQ==";
       };
     }
     {
@@ -3058,11 +3058,11 @@
       };
     }
     {
-      name = "vite_plugin_vue_devtools___vite_plugin_vue_devtools_8.1.0.tgz";
+      name = "vite_plugin_vue_devtools___vite_plugin_vue_devtools_8.1.1.tgz";
       path = fetchurl {
-        name = "vite_plugin_vue_devtools___vite_plugin_vue_devtools_8.1.0.tgz";
-        url  = "https://registry.yarnpkg.com/vite-plugin-vue-devtools/-/vite-plugin-vue-devtools-8.1.0.tgz";
-        sha512 = "4AvNRePfni3+PqOunACmAImC6SJVpUv6f7/g4oakyre9hYdEMrvDYlNmTZQsJPzVLMcGzn1FvSEqJ/n4HQ9cDg==";
+        name = "vite_plugin_vue_devtools___vite_plugin_vue_devtools_8.1.1.tgz";
+        url  = "https://registry.yarnpkg.com/vite-plugin-vue-devtools/-/vite-plugin-vue-devtools-8.1.1.tgz";
+        sha512 = "9qTpOmZ2vHpvlI9hdVXAQ1Ry4I8GcBArU7aPi0qfIaV7fQIXy0L1nb6X4mFY2Gw0dYshHuLbIl0Ulb572SCjsQ==";
       };
     }
     {
