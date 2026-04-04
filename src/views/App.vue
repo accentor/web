@@ -115,7 +115,7 @@
     </VNavigationDrawer>
 
     <VMain>
-      <VContainer>
+      <VContainer fluid>
         <Errors />
         <VRow no-gutters>
           <VCol cols="12">
