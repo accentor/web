@@ -2,7 +2,7 @@
   <VContainer>
     <VRow>
       <VCol>
-        <h1 class="text-headline-large">{{ pageTitle }}</h1>
+        <h1 class="text-headline-large my-0">{{ pageTitle }}</h1>
         <p class="text-subtitle-1">{{ pageSubtitle }}</p>
       </VCol>
       <VCol class="d-flex justify-end">

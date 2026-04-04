@@ -3,7 +3,7 @@
     <VRow class="mb-2" justify="space-between" align="baseline">
       <VCol cols="12" sm="4" md="6" lg="8" xl="10">
         <div>
-          <h2 class="text-headline-large">{{ playlist.name }}</h2>
+          <h1 class="text-headline-large my-0">{{ playlist.name }}</h1>
           <p class="text-grey mb-1">
             {{ users[playlist.user_id]?.name }} &bull;
             {{ I18n.t(`music.playlist.access_options.${playlist.access}`) }}
