@@ -29,12 +29,12 @@
       </VCol>
       <VCol lg="9" md="8" sm="6" cols="12">
         <div>
-          <div class="text-headline-large">
+          <h1 class="text-headline-large my-0">
             {{ album.title }}
             <span v-if="album.edition_description !== null" class="text-grey">
               ({{ album.edition_description }})
             </span>
-          </div>
+          </h1>
           <AlbumArtists :album="album" />
           <div v-if="album.edition === null" class="text-grey">
             {{ album.release }}
