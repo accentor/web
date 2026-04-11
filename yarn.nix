@@ -2682,11 +2682,11 @@
       };
     }
     {
-      name = "prettier___prettier_3.8.1.tgz";
+      name = "prettier___prettier_3.8.2.tgz";
       path = fetchurl {
-        name = "prettier___prettier_3.8.1.tgz";
-        url  = "https://registry.yarnpkg.com/prettier/-/prettier-3.8.1.tgz";
-        sha512 = "UOnG6LftzbdaHZcKoPFtOcCKztrQ57WkHDeRD9t/PTQtmT0NHSeWWepj6pS0z/N7+08BHFDQVUrfmfMRcZwbMg==";
+        name = "prettier___prettier_3.8.2.tgz";
+        url  = "https://registry.yarnpkg.com/prettier/-/prettier-3.8.2.tgz";
+        sha512 = "8c3mgTe0ASwWAJK+78dpviD+A8EqhndQPUBpNUIPt6+xWlIigCwfN01lWr9MAede4uqXGTEKeQWTvzb3vjia0Q==";
       };
     }
     {
