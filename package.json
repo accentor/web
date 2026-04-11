@@ -44,7 +44,7 @@
     "eslint-plugin-vuetify": "^2.7.2",
     "globals": "^17.4.0",
     "jiti": "^2.6.1",
-    "prettier": "^3.8.1",
+    "prettier": "^3.8.2",
     "sass": "^1.99.0",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.58.0",
