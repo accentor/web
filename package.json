@@ -46,7 +46,7 @@
     "jiti": "^2.6.1",
     "prettier": "^3.8.2",
     "sass": "^1.99.0",
-    "typescript": "^5.9.3",
+    "typescript": "^6.0.2",
     "typescript-eslint": "^8.58.1",
     "vite": "7.3.2",
     "vite-plugin-vue-devtools": "^8.1.1",
