@@ -802,11 +802,11 @@
       };
     }
     {
-      name = "_rolldown_pluginutils___pluginutils_1.0.0_rc.2.tgz";
+      name = "_rolldown_pluginutils___pluginutils_1.0.0_rc.13.tgz";
       path = fetchurl {
-        name = "_rolldown_pluginutils___pluginutils_1.0.0_rc.2.tgz";
-        url  = "https://registry.yarnpkg.com/@rolldown/pluginutils/-/pluginutils-1.0.0-rc.2.tgz";
-        sha512 = "izyXV/v+cHiRfozX62W9htOAvwMo4/bXKDrQ+vom1L1qRuexPock/7VZDAhnpHCLNejd3NJ6hiab+tO0D44Rgw==";
+        name = "_rolldown_pluginutils___pluginutils_1.0.0_rc.13.tgz";
+        url  = "https://registry.yarnpkg.com/@rolldown/pluginutils/-/pluginutils-1.0.0-rc.13.tgz";
+        sha512 = "3ngTAv6F/Py35BsYbeeLeecvhMKdsKm4AoOETVhAA+Qc8nrA2I0kF7oa93mE9qnIurngOSpMnQ0x2nQY2FPviA==";
       };
     }
     {
@@ -1146,11 +1146,11 @@
       };
     }
     {
-      name = "_vitejs_plugin_vue___plugin_vue_6.0.5.tgz";
+      name = "_vitejs_plugin_vue___plugin_vue_6.0.6.tgz";
       path = fetchurl {
-        name = "_vitejs_plugin_vue___plugin_vue_6.0.5.tgz";
-        url  = "https://registry.yarnpkg.com/@vitejs/plugin-vue/-/plugin-vue-6.0.5.tgz";
-        sha512 = "bL3AxKuQySfk1iGcBsQnoRVexTPJq0Z/ixFVM8OhVJAP6ZXXXLtM7NFKWhLl30Kg7uTBqIaPXbh+nuQCuBDedg==";
+        name = "_vitejs_plugin_vue___plugin_vue_6.0.6.tgz";
+        url  = "https://registry.yarnpkg.com/@vitejs/plugin-vue/-/plugin-vue-6.0.6.tgz";
+        sha512 = "u9HHgfrq3AjXlysn0eINFnWQOJQLO9WN6VprZ8FXl7A2bYisv3Hui9Ij+7QZ41F/WYWarHjwBbXtD7dKg3uxbg==";
       };
     }
     {
