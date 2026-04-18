@@ -2082,11 +2082,11 @@
       };
     }
     {
-      name = "globals___globals_17.4.0.tgz";
+      name = "globals___globals_17.5.0.tgz";
       path = fetchurl {
-        name = "globals___globals_17.4.0.tgz";
-        url  = "https://registry.yarnpkg.com/globals/-/globals-17.4.0.tgz";
-        sha512 = "hjrNztw/VajQwOLsMNT1cbJiH2muO3OROCHnbehc8eY5JyD2gqz4AcMHPqgaOR59DjgUjYAYLeH699g/eWi2jw==";
+        name = "globals___globals_17.5.0.tgz";
+        url  = "https://registry.yarnpkg.com/globals/-/globals-17.5.0.tgz";
+        sha512 = "qoV+HK2yFl/366t2/Cb3+xxPUo5BuMynomoDmiaZBIdbs+0pYbjfZU+twLhGKp4uCZ/+NbtpVepH5bGCxRyy2g==";
       };
     }
     {
