@@ -4,8 +4,6 @@
   "compilerOptions": {
     "composite": true,
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.tsbuildinfo",
-
-    "baseUrl": ".",
     "lib": ["ES2024", "DOM", "DOM.Iterable"],
     "paths": {
       "@/*": ["./src/*"]
