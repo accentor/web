@@ -706,14 +706,6 @@
       };
     }
     {
-      name = "_oxc_parser_binding_android_arm_eabi___binding_android_arm_eabi_0.125.0.tgz";
-      path = fetchurl {
-        name = "_oxc_parser_binding_android_arm_eabi___binding_android_arm_eabi_0.125.0.tgz";
-        url  = "https://registry.yarnpkg.com/@oxc-parser/binding-android-arm-eabi/-/binding-android-arm-eabi-0.125.0.tgz";
-        sha512 = "YfHwPEH8c5XNOlffaAqhsChNOBgmJ7rEgVbxSwAr65KDR0wbpZUBkrSaCClYL4urf0LmwyULrahHMvFAyk/dwA==";
-      };
-    }
-    {
       name = "_oxc_parser_binding_android_arm_eabi___binding_android_arm_eabi_0.126.0.tgz";
       path = fetchurl {
         name = "_oxc_parser_binding_android_arm_eabi___binding_android_arm_eabi_0.126.0.tgz";
@@ -722,11 +714,11 @@
       };
     }
     {
-      name = "_oxc_parser_binding_android_arm64___binding_android_arm64_0.125.0.tgz";
+      name = "_oxc_parser_binding_android_arm_eabi___binding_android_arm_eabi_0.127.0.tgz";
       path = fetchurl {
-        name = "_oxc_parser_binding_android_arm64___binding_android_arm64_0.125.0.tgz";
-        url  = "https://registry.yarnpkg.com/@oxc-parser/binding-android-arm64/-/binding-android-arm64-0.125.0.tgz";
-        sha512 = "rh72O8ackqp0HC+3W38oCTkCFmOpXrHRrbP+4xrX8O1UmCWcyb5pIbA/+0ATPGVVl9NcHt/CgqI8rBuw4Y9kMg==";
+        name = "_oxc_parser_binding_android_arm_eabi___binding_android_arm_eabi_0.127.0.tgz";
+        url  = "https://registry.yarnpkg.com/@oxc-parser/binding-android-arm-eabi/-/binding-android-arm-eabi-0.127.0.tgz";
+        sha512 = "0LC7ye4hvqbIKxAzThzvswgHLFu2AURKzYLeSVvLdu2TBOYWQDmHnTqPLeA597BcUCxiLqLsS4CJ5uoI5WYWCQ==";
       };
     }
     {
@@ -738,11 +730,11 @@
       };
     }
     {
-      name = "_oxc_parser_binding_darwin_arm64___binding_darwin_arm64_0.125.0.tgz";
+      name = "_oxc_parser_binding_android_arm64___binding_android_arm64_0.127.0.tgz";
       path = fetchurl {
-        name = "_oxc_parser_binding_darwin_arm64___binding_darwin_arm64_0.125.0.tgz";
-        url  = "https://registry.yarnpkg.com/@oxc-parser/binding-darwin-arm64/-/binding-darwin-arm64-0.125.0.tgz";
-        sha512 = "14Q74TMQA/eO0N5dz5Tel25qma9vVJEpmrmqXnx0R7jMXhqFxkSSy40NOtCQijWUfeD5ho5+NuXDl5WSxyifJQ==";
+        name = "_oxc_parser_binding_android_arm64___binding_android_arm64_0.127.0.tgz";
+        url  = "https://registry.yarnpkg.com/@oxc-parser/binding-android-arm64/-/binding-android-arm64-0.127.0.tgz";
+        sha512 = "b5jtVTH6AU5CJXHNdj7Jj9IEiR9yVjjnwHzPJhGyHGPdcsZSzBCkS9GBbV33niRMvKthDwQRFRJfI4a+k4PvYg==";
       };
     }
     {
@@ -754,11 +746,11 @@
       };
     }
     {
-      name = "_oxc_parser_binding_darwin_x64___binding_darwin_x64_0.125.0.tgz";
+      name = "_oxc_parser_binding_darwin_arm64___binding_darwin_arm64_0.127.0.tgz";
       path = fetchurl {
-        name = "_oxc_parser_binding_darwin_x64___binding_darwin_x64_0.125.0.tgz";
-        url  = "https://registry.yarnpkg.com/@oxc-parser/binding-darwin-x64/-/binding-darwin-x64-0.125.0.tgz";
-        sha512 = "qWQDphAaIS6qXeuYcWm4jta8qFZpjjim2WxiPwZmHi77COS8i0Jct8tBcNIOZ/JaVh+hCL2it228m2Lr9GOL6A==";
+        name = "_oxc_parser_binding_darwin_arm64___binding_darwin_arm64_0.127.0.tgz";
+        url  = "https://registry.yarnpkg.com/@oxc-parser/binding-darwin-arm64/-/binding-darwin-arm64-0.127.0.tgz";
+        sha512 = "obCE8B7ISKkJidjlhv9xRGJPOSDG2Yu6PRga9Ruaz35uintHxbp1Ki/Yc71wx4rj3Edrm0a1kzG1TAwit0wFpg==";
       };
     }
     {
@@ -770,11 +762,11 @@
       };
     }
     {
-      name = "_oxc_parser_binding_freebsd_x64___binding_freebsd_x64_0.125.0.tgz";
+      name = "_oxc_parser_binding_darwin_x64___binding_darwin_x64_0.127.0.tgz";
       path = fetchurl {
-        name = "_oxc_parser_binding_freebsd_x64___binding_freebsd_x64_0.125.0.tgz";
-        url  = "https://registry.yarnpkg.com/@oxc-parser/binding-freebsd-x64/-/binding-freebsd-x64-0.125.0.tgz";
-        sha512 = "PTATC/j2MvDP8lejoCC7PFWNoYV2NsVzzM0WgBqZDFAkFdKsW0wfbQWochfY3fHNUN1QhZNetrd/K4Pdo6cIHQ==";
+        name = "_oxc_parser_binding_darwin_x64___binding_darwin_x64_0.127.0.tgz";
+        url  = "https://registry.yarnpkg.com/@oxc-parser/binding-darwin-x64/-/binding-darwin-x64-0.127.0.tgz";
+        sha512 = "JL6Xb5IwPQT8rUzlpsX7E+AgfcdNklXNPFp8pjCQQ5MQOQo5rtEB2ui+3Hgg9Sn7Y9Egj6YOLLiHhLpdAe12Aw==";
       };
     }
     {
@@ -786,11 +778,11 @@
       };
     }
     {
-      name = "_oxc_parser_binding_linux_arm_gnueabihf___binding_linux_arm_gnueabihf_0.125.0.tgz";
+      name = "_oxc_parser_binding_freebsd_x64___binding_freebsd_x64_0.127.0.tgz";
       path = fetchurl {
-        name = "_oxc_parser_binding_linux_arm_gnueabihf___binding_linux_arm_gnueabihf_0.125.0.tgz";
-        url  = "https://registry.yarnpkg.com/@oxc-parser/binding-linux-arm-gnueabihf/-/binding-linux-arm-gnueabihf-0.125.0.tgz";
-        sha512 = "Colj5agHBAMKZrkyPcCEelfKuh8sNi1lWpJf1TiEeEmbREQ6I2ytG+ccfdDaiUV7Z0Vw5FyJbnqEPgHo8kF3RQ==";
+        name = "_oxc_parser_binding_freebsd_x64___binding_freebsd_x64_0.127.0.tgz";
+        url  = "https://registry.yarnpkg.com/@oxc-parser/binding-freebsd-x64/-/binding-freebsd-x64-0.127.0.tgz";
+        sha512 = "SDQ/3MQFw58fqQz3Z1PhSKFF3JoCF4gmlNjziDm8X02tTahCw0qJbd7FGPDKw1i4VTBZene9JPyC3mHtSvi+wA==";
       };
     }
     {
@@ -802,11 +794,11 @@
       };
     }
     {
-      name = "_oxc_parser_binding_linux_arm_musleabihf___binding_linux_arm_musleabihf_0.125.0.tgz";
+      name = "_oxc_parser_binding_linux_arm_gnueabihf___binding_linux_arm_gnueabihf_0.127.0.tgz";
       path = fetchurl {
-        name = "_oxc_parser_binding_linux_arm_musleabihf___binding_linux_arm_musleabihf_0.125.0.tgz";
-        url  = "https://registry.yarnpkg.com/@oxc-parser/binding-linux-arm-musleabihf/-/binding-linux-arm-musleabihf-0.125.0.tgz";
-        sha512 = "BxQ8o082+/qtjAFK6WUV+/bi0y3M0RPvPQNm8JSY7/7LfhbWq6NykgZiGayrtauO1nowpmGlnpJXXMp9q0oT1A==";
+        name = "_oxc_parser_binding_linux_arm_gnueabihf___binding_linux_arm_gnueabihf_0.127.0.tgz";
+        url  = "https://registry.yarnpkg.com/@oxc-parser/binding-linux-arm-gnueabihf/-/binding-linux-arm-gnueabihf-0.127.0.tgz";
+        sha512 = "Av+D1MIqzV0YMGPT9we2SIZaMKD7Cxs4CvXSx/yxaWHewZjYEjScpOf5igc8IILASViw4WTnjlwUdI1KzVtDHQ==";
       };
     }
     {
@@ -818,11 +810,11 @@
       };
     }
     {
-      name = "_oxc_parser_binding_linux_arm64_gnu___binding_linux_arm64_gnu_0.125.0.tgz";
+      name = "_oxc_parser_binding_linux_arm_musleabihf___binding_linux_arm_musleabihf_0.127.0.tgz";
       path = fetchurl {
-        name = "_oxc_parser_binding_linux_arm64_gnu___binding_linux_arm64_gnu_0.125.0.tgz";
-        url  = "https://registry.yarnpkg.com/@oxc-parser/binding-linux-arm64-gnu/-/binding-linux-arm64-gnu-0.125.0.tgz";
-        sha512 = "qR0dOth+4whygUwoNnfews8jMC78gjhIBfcy9AFzvxoh7PFGdferRp3KV/4kkeaVk2kOS/5grlAeJevpA+/Pfg==";
+        name = "_oxc_parser_binding_linux_arm_musleabihf___binding_linux_arm_musleabihf_0.127.0.tgz";
+        url  = "https://registry.yarnpkg.com/@oxc-parser/binding-linux-arm-musleabihf/-/binding-linux-arm-musleabihf-0.127.0.tgz";
+        sha512 = "Cs2fdJ8cPpFdeebj6p4dag8A4+56hPvZ0AhQQzlaLswGz1tz7bXt1nETLeorrM9+AMcWFFkqxcXwDGfTVidY8g==";
       };
     }
     {
@@ -834,11 +826,11 @@
       };
     }
     {
-      name = "_oxc_parser_binding_linux_arm64_musl___binding_linux_arm64_musl_0.125.0.tgz";
+      name = "_oxc_parser_binding_linux_arm64_gnu___binding_linux_arm64_gnu_0.127.0.tgz";
       path = fetchurl {
-        name = "_oxc_parser_binding_linux_arm64_musl___binding_linux_arm64_musl_0.125.0.tgz";
-        url  = "https://registry.yarnpkg.com/@oxc-parser/binding-linux-arm64-musl/-/binding-linux-arm64-musl-0.125.0.tgz";
-        sha512 = "eIXyzpA12/+maKjMSsXdHfpzwQcoRfzokT+/ZhVEo6u/9RcXQrZZmZ70MmmJqwVcLez6U4ScjB/eiYlsEs7p0g==";
+        name = "_oxc_parser_binding_linux_arm64_gnu___binding_linux_arm64_gnu_0.127.0.tgz";
+        url  = "https://registry.yarnpkg.com/@oxc-parser/binding-linux-arm64-gnu/-/binding-linux-arm64-gnu-0.127.0.tgz";
+        sha512 = "qdOfTcT6SY8gsJrrV92uyEUyjqMGPpIB5JZUG6QN5dukYd+7/j0kX6MwK1DgQj39jtUYixxPiaRUiEN1+0CXgQ==";
       };
     }
     {
@@ -850,11 +842,11 @@
       };
     }
     {
-      name = "_oxc_parser_binding_linux_ppc64_gnu___binding_linux_ppc64_gnu_0.125.0.tgz";
+      name = "_oxc_parser_binding_linux_arm64_musl___binding_linux_arm64_musl_0.127.0.tgz";
       path = fetchurl {
-        name = "_oxc_parser_binding_linux_ppc64_gnu___binding_linux_ppc64_gnu_0.125.0.tgz";
-        url  = "https://registry.yarnpkg.com/@oxc-parser/binding-linux-ppc64-gnu/-/binding-linux-ppc64-gnu-0.125.0.tgz";
-        sha512 = "w7ir5OuqSJUKLadmsSAWwTNso/ZGem2bPT/1LSU7l+ecmKPyegIvU+wzY0ADhZ/t/goaedqyp24SDRxyLxO9zg==";
+        name = "_oxc_parser_binding_linux_arm64_musl___binding_linux_arm64_musl_0.127.0.tgz";
+        url  = "https://registry.yarnpkg.com/@oxc-parser/binding-linux-arm64-musl/-/binding-linux-arm64-musl-0.127.0.tgz";
+        sha512 = "EoTCZneNFU/P2qrpEM+RHmQwt+CvDkyGESG6qhr7KaegXLZwePfbrkCDfAk8/rhxbDUVGsZILX+2tqPzFtoFWA==";
       };
     }
     {
@@ -866,11 +858,11 @@
       };
     }
     {
-      name = "_oxc_parser_binding_linux_riscv64_gnu___binding_linux_riscv64_gnu_0.125.0.tgz";
+      name = "_oxc_parser_binding_linux_ppc64_gnu___binding_linux_ppc64_gnu_0.127.0.tgz";
       path = fetchurl {
-        name = "_oxc_parser_binding_linux_riscv64_gnu___binding_linux_riscv64_gnu_0.125.0.tgz";
-        url  = "https://registry.yarnpkg.com/@oxc-parser/binding-linux-riscv64-gnu/-/binding-linux-riscv64-gnu-0.125.0.tgz";
-        sha512 = "2KPTfWorcW8RNE8aEMHKbPSjHDBjFVYqg8nSLRBp7pe7VBqHsmkO9jpK8YmaYA5d5GcUy+J++5O4EgxkrQBEtw==";
+        name = "_oxc_parser_binding_linux_ppc64_gnu___binding_linux_ppc64_gnu_0.127.0.tgz";
+        url  = "https://registry.yarnpkg.com/@oxc-parser/binding-linux-ppc64-gnu/-/binding-linux-ppc64-gnu-0.127.0.tgz";
+        sha512 = "zALjmZYgxFLHjXeudcDF0xFGNydTAtkAeXAr2EuC17ywCyFxcmQra4w0BMde0Yi/re4Bi4iwEoEXtYN7l6eBLQ==";
       };
     }
     {
@@ -882,11 +874,11 @@
       };
     }
     {
-      name = "_oxc_parser_binding_linux_riscv64_musl___binding_linux_riscv64_musl_0.125.0.tgz";
+      name = "_oxc_parser_binding_linux_riscv64_gnu___binding_linux_riscv64_gnu_0.127.0.tgz";
       path = fetchurl {
-        name = "_oxc_parser_binding_linux_riscv64_musl___binding_linux_riscv64_musl_0.125.0.tgz";
-        url  = "https://registry.yarnpkg.com/@oxc-parser/binding-linux-riscv64-musl/-/binding-linux-riscv64-musl-0.125.0.tgz";
-        sha512 = "Vsl8dmQdKtDsQiDPHP5VFjXOuVGcZQcziYMkU/yPnlaKHMqoX/q+bxt7K+BwResi9Cc8pnZ6oYGTgPcjAtt5QQ==";
+        name = "_oxc_parser_binding_linux_riscv64_gnu___binding_linux_riscv64_gnu_0.127.0.tgz";
+        url  = "https://registry.yarnpkg.com/@oxc-parser/binding-linux-riscv64-gnu/-/binding-linux-riscv64-gnu-0.127.0.tgz";
+        sha512 = "fPP8M6zQLS7Jz7o9d5ArUSuAuSK3e+WCYVrCpdzeCOejidtZExJ9tjhDrAd3HEPqARBCPmdpqxESPFqy44vkBQ==";
       };
     }
     {
@@ -898,11 +890,11 @@
       };
     }
     {
-      name = "_oxc_parser_binding_linux_s390x_gnu___binding_linux_s390x_gnu_0.125.0.tgz";
+      name = "_oxc_parser_binding_linux_riscv64_musl___binding_linux_riscv64_musl_0.127.0.tgz";
       path = fetchurl {
-        name = "_oxc_parser_binding_linux_s390x_gnu___binding_linux_s390x_gnu_0.125.0.tgz";
-        url  = "https://registry.yarnpkg.com/@oxc-parser/binding-linux-s390x-gnu/-/binding-linux-s390x-gnu-0.125.0.tgz";
-        sha512 = "HwY5kuM818r/kHdHG2TZqzqxyF7fz90prPg85R/2VmgRWk8cMyGZo+8BNZDQAMJ6aGSTRvn2sdGXv3sZ5bsUWw==";
+        name = "_oxc_parser_binding_linux_riscv64_musl___binding_linux_riscv64_musl_0.127.0.tgz";
+        url  = "https://registry.yarnpkg.com/@oxc-parser/binding-linux-riscv64-musl/-/binding-linux-riscv64-musl-0.127.0.tgz";
+        sha512 = "7IcC4Ao02oGpfnjt+X/oF4U2mllo2qoSkw5xxiXNKL9MCTsTiAC6616beOuehdxGcnz1bRoPC1RQ2f1GQDdN+g==";
       };
     }
     {
@@ -914,11 +906,11 @@
       };
     }
     {
-      name = "_oxc_parser_binding_linux_x64_gnu___binding_linux_x64_gnu_0.125.0.tgz";
+      name = "_oxc_parser_binding_linux_s390x_gnu___binding_linux_s390x_gnu_0.127.0.tgz";
       path = fetchurl {
-        name = "_oxc_parser_binding_linux_x64_gnu___binding_linux_x64_gnu_0.125.0.tgz";
-        url  = "https://registry.yarnpkg.com/@oxc-parser/binding-linux-x64-gnu/-/binding-linux-x64-gnu-0.125.0.tgz";
-        sha512 = "o7k6+xAI2pIkjBsCqM0elI4q+qY/3TexH6cpIlGm+nJze1tvx7QEHCKdiy6wnRacFvUYmySEZ5hWFBc9MbxrIA==";
+        name = "_oxc_parser_binding_linux_s390x_gnu___binding_linux_s390x_gnu_0.127.0.tgz";
+        url  = "https://registry.yarnpkg.com/@oxc-parser/binding-linux-s390x-gnu/-/binding-linux-s390x-gnu-0.127.0.tgz";
+        sha512 = "pbXIhiNFHoqWeqDNLiJ9JkpHz1IM9k4DXa66x+1GTWMG7iLxtkXgE53iiuKSXwmk3zIYmaPVfBvgcAhS583K4Q==";
       };
     }
     {
@@ -930,11 +922,11 @@
       };
     }
     {
-      name = "_oxc_parser_binding_linux_x64_musl___binding_linux_x64_musl_0.125.0.tgz";
+      name = "_oxc_parser_binding_linux_x64_gnu___binding_linux_x64_gnu_0.127.0.tgz";
       path = fetchurl {
-        name = "_oxc_parser_binding_linux_x64_musl___binding_linux_x64_musl_0.125.0.tgz";
-        url  = "https://registry.yarnpkg.com/@oxc-parser/binding-linux-x64-musl/-/binding-linux-x64-musl-0.125.0.tgz";
-        sha512 = "vksRynFD6vytE1sDZCaeIk6y6rCsq0a18T4kcXbfGHBq2q/qSyDogWLk3A3S3hl/ikNfse7yrEwAuQ8ldIJeAg==";
+        name = "_oxc_parser_binding_linux_x64_gnu___binding_linux_x64_gnu_0.127.0.tgz";
+        url  = "https://registry.yarnpkg.com/@oxc-parser/binding-linux-x64-gnu/-/binding-linux-x64-gnu-0.127.0.tgz";
+        sha512 = "MYCguB9RvBvlSd6gbuNI7QwiLoCCAlGnlRJFPrzLI6U1/9wkC/WK6LtBAUln55H1Ctqw45PWmqrobKoMhsYQzQ==";
       };
     }
     {
@@ -946,11 +938,11 @@
       };
     }
     {
-      name = "_oxc_parser_binding_openharmony_arm64___binding_openharmony_arm64_0.125.0.tgz";
+      name = "_oxc_parser_binding_linux_x64_musl___binding_linux_x64_musl_0.127.0.tgz";
       path = fetchurl {
-        name = "_oxc_parser_binding_openharmony_arm64___binding_openharmony_arm64_0.125.0.tgz";
-        url  = "https://registry.yarnpkg.com/@oxc-parser/binding-openharmony-arm64/-/binding-openharmony-arm64-0.125.0.tgz";
-        sha512 = "AAtg4pnKvrKsay2ldZZRY98ALFBOgbyy3Gyxo658z6aecM0Zr5mI9BOHRCchSVKUHqMqmjhCA4wIdZvz02VrAw==";
+        name = "_oxc_parser_binding_linux_x64_musl___binding_linux_x64_musl_0.127.0.tgz";
+        url  = "https://registry.yarnpkg.com/@oxc-parser/binding-linux-x64-musl/-/binding-linux-x64-musl-0.127.0.tgz";
+        sha512 = "5eY0B/bxf1xIUxb4NOTvOI3KWtBQfPWYyKAzgcrCt0mDibSZygVpO1Pz8bkeiSZ5Jj9+M09dkggG3H8I5d0Uyg==";
       };
     }
     {
@@ -962,11 +954,11 @@
       };
     }
     {
-      name = "_oxc_parser_binding_wasm32_wasi___binding_wasm32_wasi_0.125.0.tgz";
+      name = "_oxc_parser_binding_openharmony_arm64___binding_openharmony_arm64_0.127.0.tgz";
       path = fetchurl {
-        name = "_oxc_parser_binding_wasm32_wasi___binding_wasm32_wasi_0.125.0.tgz";
-        url  = "https://registry.yarnpkg.com/@oxc-parser/binding-wasm32-wasi/-/binding-wasm32-wasi-0.125.0.tgz";
-        sha512 = "FkIQFrwlBXoFsazb9NQpQPP4YI9sWWXUOLkIPYlQb+hPwr+VY6d0B7l26yMBR2ktf2h3qyAMOW6Pd+mX9rtOJg==";
+        name = "_oxc_parser_binding_openharmony_arm64___binding_openharmony_arm64_0.127.0.tgz";
+        url  = "https://registry.yarnpkg.com/@oxc-parser/binding-openharmony-arm64/-/binding-openharmony-arm64-0.127.0.tgz";
+        sha512 = "Gld0ajrFTUXNtdw20fVBuTQx66FA75nIVg+//pPfR3sXkuABB4mTBhl3r9JNzrJpgW//qiwxf0nWXUWGJSL3UQ==";
       };
     }
     {
@@ -978,11 +970,11 @@
       };
     }
     {
-      name = "_oxc_parser_binding_win32_arm64_msvc___binding_win32_arm64_msvc_0.125.0.tgz";
+      name = "_oxc_parser_binding_wasm32_wasi___binding_wasm32_wasi_0.127.0.tgz";
       path = fetchurl {
-        name = "_oxc_parser_binding_win32_arm64_msvc___binding_win32_arm64_msvc_0.125.0.tgz";
-        url  = "https://registry.yarnpkg.com/@oxc-parser/binding-win32-arm64-msvc/-/binding-win32-arm64-msvc-0.125.0.tgz";
-        sha512 = "bi4RY9oktNm3kQ3qRCJgBKtwqSg+mtnt5W9l33rdiTyiXlL8a1LQQy1x7aym/ArHDE+19kSWSr2YDd2ExxzbfQ==";
+        name = "_oxc_parser_binding_wasm32_wasi___binding_wasm32_wasi_0.127.0.tgz";
+        url  = "https://registry.yarnpkg.com/@oxc-parser/binding-wasm32-wasi/-/binding-wasm32-wasi-0.127.0.tgz";
+        sha512 = "T6KVD7rhLzFlwGRXMnxUFfkCZD8FHnb968wVXW1mXzgRFc5RNXOBY2mPPDZ77x5Ln76ltLMgtPg0cOkU1NSrEQ==";
       };
     }
     {
@@ -994,11 +986,11 @@
       };
     }
     {
-      name = "_oxc_parser_binding_win32_ia32_msvc___binding_win32_ia32_msvc_0.125.0.tgz";
+      name = "_oxc_parser_binding_win32_arm64_msvc___binding_win32_arm64_msvc_0.127.0.tgz";
       path = fetchurl {
-        name = "_oxc_parser_binding_win32_ia32_msvc___binding_win32_ia32_msvc_0.125.0.tgz";
-        url  = "https://registry.yarnpkg.com/@oxc-parser/binding-win32-ia32-msvc/-/binding-win32-ia32-msvc-0.125.0.tgz";
-        sha512 = "ZhvL2vK+9rzjk1US2d2u6NeI1/jtkzsm//ilFac+Kn3klTpJJlKNZwF23CUiAu+B3rdQUbPItm/BHlL6f/5uPA==";
+        name = "_oxc_parser_binding_win32_arm64_msvc___binding_win32_arm64_msvc_0.127.0.tgz";
+        url  = "https://registry.yarnpkg.com/@oxc-parser/binding-win32-arm64-msvc/-/binding-win32-arm64-msvc-0.127.0.tgz";
+        sha512 = "Ujvw4X+LD1CCGULcsQcvb4YNVoBGqt+JHgNNzGGaCImELiZLk477ifUH53gIbE7EKd933NdTi25JWEr9K2HwXw==";
       };
     }
     {
@@ -1010,11 +1002,11 @@
       };
     }
     {
-      name = "_oxc_parser_binding_win32_x64_msvc___binding_win32_x64_msvc_0.125.0.tgz";
+      name = "_oxc_parser_binding_win32_ia32_msvc___binding_win32_ia32_msvc_0.127.0.tgz";
       path = fetchurl {
-        name = "_oxc_parser_binding_win32_x64_msvc___binding_win32_x64_msvc_0.125.0.tgz";
-        url  = "https://registry.yarnpkg.com/@oxc-parser/binding-win32-x64-msvc/-/binding-win32-x64-msvc-0.125.0.tgz";
-        sha512 = "P4ywUSCYIg44Y82wF3e0ns1BV1dNn+ZhfjNDwm0FTPtBKXedOCRPrvmjXn7Qb+IDGGHAA68lmDLCjGxuKUwXPw==";
+        name = "_oxc_parser_binding_win32_ia32_msvc___binding_win32_ia32_msvc_0.127.0.tgz";
+        url  = "https://registry.yarnpkg.com/@oxc-parser/binding-win32-ia32-msvc/-/binding-win32-ia32-msvc-0.127.0.tgz";
+        sha512 = "0cwxKO7KHQQQfo4Uf4B2SQrhgm+cJaP9OvFFhx52Tkg4bezsacu83GB2/In5bC415Ueeym+kXdnge/57rbSfTw==";
       };
     }
     {
@@ -1026,11 +1018,11 @@
       };
     }
     {
-      name = "_oxc_project_types___types_0.125.0.tgz";
+      name = "_oxc_parser_binding_win32_x64_msvc___binding_win32_x64_msvc_0.127.0.tgz";
       path = fetchurl {
-        name = "_oxc_project_types___types_0.125.0.tgz";
-        url  = "https://registry.yarnpkg.com/@oxc-project/types/-/types-0.125.0.tgz";
-        sha512 = "s9RKLJbRR+3kEFB3mmJVPWah3cZUAl0Jzmthx6Pb/QXnlNkRwTP75tK4uVahp/ifiiTmNYMXI1+NnGP1rNurXg==";
+        name = "_oxc_parser_binding_win32_x64_msvc___binding_win32_x64_msvc_0.127.0.tgz";
+        url  = "https://registry.yarnpkg.com/@oxc-parser/binding-win32-x64-msvc/-/binding-win32-x64-msvc-0.127.0.tgz";
+        sha512 = "rOrnSQSCbhI2kowr9XxE7m9a8oQXnBHjnS6j95LxxAnEZ0+Fz20WlRXG4ondQb+ejjt2KOsa65sE6++L6kUd+w==";
       };
     }
     {
@@ -1039,6 +1031,14 @@
         name = "_oxc_project_types___types_0.126.0.tgz";
         url  = "https://registry.yarnpkg.com/@oxc-project/types/-/types-0.126.0.tgz";
         sha512 = "oGfVtjAgwQVVpfBrbtk4e1XDyWHRFta6BS3GWVzrF8xYBT2VGQAk39yJS/wFSMrZqoiCU4oghT3Ch0HaHGIHcQ==";
+      };
+    }
+    {
+      name = "_oxc_project_types___types_0.127.0.tgz";
+      path = fetchurl {
+        name = "_oxc_project_types___types_0.127.0.tgz";
+        url  = "https://registry.yarnpkg.com/@oxc-project/types/-/types-0.127.0.tgz";
+        sha512 = "aIYXQBo4lCbO4z0R3FHeucQHpF46l2LbMdxRvqvuRuW2OxdnSkcng5B8+K12spgLDj93rtN3+J2Vac/TIO+ciQ==";
       };
     }
     {
@@ -1514,35 +1514,35 @@
       };
     }
     {
-      name = "_unhead_bundler___bundler_3.0.4.tgz";
+      name = "_unhead_bundler___bundler_3.0.5.tgz";
       path = fetchurl {
-        name = "_unhead_bundler___bundler_3.0.4.tgz";
-        url  = "https://registry.yarnpkg.com/@unhead/bundler/-/bundler-3.0.4.tgz";
-        sha512 = "Ho8dKVM5RM5rUk3pxRz9NdWZR0jO/RkPrc0r40msYhkxWrTyWK0qEfd9U9aFa+LQEsvJiQSnzcnSWzJIKHb0YQ==";
+        name = "_unhead_bundler___bundler_3.0.5.tgz";
+        url  = "https://registry.yarnpkg.com/@unhead/bundler/-/bundler-3.0.5.tgz";
+        sha512 = "NByETf7g0PQ3msif6HAgtkDGpjfjJfWfJwB4m2fHgW6+BpXRqQQxCscLi3UILhZ06XZVVxx5oCUA8SGfGE7j8A==";
       };
     }
     {
-      name = "_unhead_vue___vue_3.0.4.tgz";
+      name = "_unhead_vue___vue_3.0.5.tgz";
       path = fetchurl {
-        name = "_unhead_vue___vue_3.0.4.tgz";
-        url  = "https://registry.yarnpkg.com/@unhead/vue/-/vue-3.0.4.tgz";
-        sha512 = "yEY1glvytRCVpjzN1OB7WGEJyfsL5VoqfWnnDPLIXG2fRRWPikad0bOwRLRVl98VTQmoFzxIkdMknzt4iJQojA==";
+        name = "_unhead_vue___vue_3.0.5.tgz";
+        url  = "https://registry.yarnpkg.com/@unhead/vue/-/vue-3.0.5.tgz";
+        sha512 = "D1vWYcrNaQL8vTK8Wu7VVx0PArk+SCjePzGQ5meeiwVYlwP1krIGj8VMDAo4TlaJCu2vhVZwy+AiHTfyuVY27w==";
       };
     }
     {
-      name = "_vitejs_devtools_kit___devtools_kit_0.1.14.tgz";
+      name = "_vitejs_devtools_kit___devtools_kit_0.1.15.tgz";
       path = fetchurl {
-        name = "_vitejs_devtools_kit___devtools_kit_0.1.14.tgz";
-        url  = "https://registry.yarnpkg.com/@vitejs/devtools-kit/-/devtools-kit-0.1.14.tgz";
-        sha512 = "XvDzZaBigEO2c4EdT9hVRYKqEWU4zW37ao2DmD2W69/nrp+pwVdRNE/tu8fXKnvhCQtoqkI5g3H3Df1VYCUTfA==";
+        name = "_vitejs_devtools_kit___devtools_kit_0.1.15.tgz";
+        url  = "https://registry.yarnpkg.com/@vitejs/devtools-kit/-/devtools-kit-0.1.15.tgz";
+        sha512 = "6OCgoAW7HeJFMpxiNqIZLoBtG+jGTwXBwNgmxPi2KT77nCFUUvnDHrXSOZ8ErmQ7WdrDPLnUeBq/TWyi9xdAyA==";
       };
     }
     {
-      name = "_vitejs_devtools_rpc___devtools_rpc_0.1.14.tgz";
+      name = "_vitejs_devtools_rpc___devtools_rpc_0.1.15.tgz";
       path = fetchurl {
-        name = "_vitejs_devtools_rpc___devtools_rpc_0.1.14.tgz";
-        url  = "https://registry.yarnpkg.com/@vitejs/devtools-rpc/-/devtools-rpc-0.1.14.tgz";
-        sha512 = "xRxH/tmIXN/IegUebu53pkLb4rA87qwiBkgx7dtj2BmtzLXg88EiG/VtW5PThJh0AcvU6B8vCT/9+2QRQMKmzA==";
+        name = "_vitejs_devtools_rpc___devtools_rpc_0.1.15.tgz";
+        url  = "https://registry.yarnpkg.com/@vitejs/devtools-rpc/-/devtools-rpc-0.1.15.tgz";
+        sha512 = "pHDz3bcK0dlpLzI2ve2Xwnnx6iSASRMuEFJDbe64LAZJPVCBW/Pb0IeEpodI58O9xVpB0EBZykZftz8/oTeVtQ==";
       };
     }
     {
@@ -2970,19 +2970,19 @@
       };
     }
     {
-      name = "oxc_parser___oxc_parser_0.125.0.tgz";
-      path = fetchurl {
-        name = "oxc_parser___oxc_parser_0.125.0.tgz";
-        url  = "https://registry.yarnpkg.com/oxc-parser/-/oxc-parser-0.125.0.tgz";
-        sha512 = "6M0gEDDVMGGy+Ckg/mlLh4PL87sfKRMlkQJTVTxdcEREwDa4usWjM9n4jC6Jxa5+nc3YlZTecUs4hHjoTVWKaw==";
-      };
-    }
-    {
       name = "oxc_parser___oxc_parser_0.126.0.tgz";
       path = fetchurl {
         name = "oxc_parser___oxc_parser_0.126.0.tgz";
         url  = "https://registry.yarnpkg.com/oxc-parser/-/oxc-parser-0.126.0.tgz";
         sha512 = "FktCvLby/mOHyuijZt22+nOt10dS24gGUZE3XwIbUg7Kf4+rer3/5T7RgwzazlNuVsCjPloZ3p8E+4ONT3A8Kw==";
+      };
+    }
+    {
+      name = "oxc_parser___oxc_parser_0.127.0.tgz";
+      path = fetchurl {
+        name = "oxc_parser___oxc_parser_0.127.0.tgz";
+        url  = "https://registry.yarnpkg.com/oxc-parser/-/oxc-parser-0.127.0.tgz";
+        sha512 = "bkgD4qHlN7WxLdX8bLXdaU54TtQtAIg/ZBAfm0aje/mo3MRDo3P0hZSgr4U7O3xfX+fQmR5AP04JS/TGcZLcFA==";
       };
     }
     {
@@ -3490,11 +3490,11 @@
       };
     }
     {
-      name = "unhead___unhead_3.0.4.tgz";
+      name = "unhead___unhead_3.0.5.tgz";
       path = fetchurl {
-        name = "unhead___unhead_3.0.4.tgz";
-        url  = "https://registry.yarnpkg.com/unhead/-/unhead-3.0.4.tgz";
-        sha512 = "ZHMn6826G9MT7T/+t/IZDa5H42HSP2VYfFmKiGWN+f+2LPar/mTXK7WHj2tDc5WJLOg+GVL5u2OdSEz/CHjP6g==";
+        name = "unhead___unhead_3.0.5.tgz";
+        url  = "https://registry.yarnpkg.com/unhead/-/unhead-3.0.5.tgz";
+        sha512 = "CJldelG14jlsUYq4S6e4RevzcuGRnsyelZ4WrPWcbivHn4COtT7ECTbvY5TVrpUVC+VQH506LRHWyflgC6w+qA==";
       };
     }
     {
