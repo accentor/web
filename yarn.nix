@@ -3138,11 +3138,11 @@
       };
     }
     {
-      name = "postcss___postcss_8.5.6.tgz";
+      name = "postcss___postcss_8.5.10.tgz";
       path = fetchurl {
-        name = "postcss___postcss_8.5.6.tgz";
-        url  = "https://registry.yarnpkg.com/postcss/-/postcss-8.5.6.tgz";
-        sha512 = "3Ybi1tAuwAP9s0r1UQ2J4n5Y0G05bJkpUIO0/bI9MhwmD70S5aTWbXGBwxHrelT+XM1k6dM0pk+SwNkpTRN7Pg==";
+        name = "postcss___postcss_8.5.10.tgz";
+        url  = "https://registry.yarnpkg.com/postcss/-/postcss-8.5.10.tgz";
+        sha512 = "pMMHxBOZKFU6HgAZ4eyGnwXF/EvPGGqUr0MnZ5+99485wwW41kW91A4LOGxSHhgugZmSChL5AlElNdwlNgcnLQ==";
       };
     }
     {
