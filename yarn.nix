@@ -2874,14 +2874,6 @@
       };
     }
     {
-      name = "mlly___mlly_1.8.0.tgz";
-      path = fetchurl {
-        name = "mlly___mlly_1.8.0.tgz";
-        url  = "https://registry.yarnpkg.com/mlly/-/mlly-1.8.0.tgz";
-        sha512 = "l8D9ODSRWLe2KHJSifWGwBqpTZXIXTeo8mlKjY+E2HAakaTeNpqAyBZ8GSqLzHgw4XmHmC8whvpjJNMbFZN7/g==";
-      };
-    }
-    {
       name = "mrmime___mrmime_2.0.1.tgz";
       path = fetchurl {
         name = "mrmime___mrmime_2.0.1.tgz";
@@ -3650,11 +3642,11 @@
       };
     }
     {
-      name = "vue_router___vue_router_5.0.4.tgz";
+      name = "vue_router___vue_router_5.0.6.tgz";
       path = fetchurl {
-        name = "vue_router___vue_router_5.0.4.tgz";
-        url  = "https://registry.yarnpkg.com/vue-router/-/vue-router-5.0.4.tgz";
-        sha512 = "lCqDLCI2+fKVRl2OzXuzdSWmxXFLQRxQbmHugnRpTMyYiT+hNaycV0faqG5FBHDXoYrZ6MQcX87BvbY8mQ20Bg==";
+        name = "vue_router___vue_router_5.0.6.tgz";
+        url  = "https://registry.yarnpkg.com/vue-router/-/vue-router-5.0.6.tgz";
+        sha512 = "9+kmUTGbKMyW9Asoy98IXXYIzrTMT7JDAdpDDeEkorHvybpUvBI2wsrSM5jFOXrFydpzRFJ9vAh+80DN2PGu9w==";
       };
     }
     {
