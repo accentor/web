@@ -1722,11 +1722,11 @@
       };
     }
     {
-      name = "_vue_language_core___language_core_3.2.6.tgz";
+      name = "_vue_language_core___language_core_3.2.7.tgz";
       path = fetchurl {
-        name = "_vue_language_core___language_core_3.2.6.tgz";
-        url  = "https://registry.yarnpkg.com/@vue/language-core/-/language-core-3.2.6.tgz";
-        sha512 = "xYYYX3/aVup576tP/23sEUpgiEnujrENaoNRbaozC1/MA9I6EGFQRJb4xrt/MmUCAGlxTKL2RmT8JLTPqagCkg==";
+        name = "_vue_language_core___language_core_3.2.7.tgz";
+        url  = "https://registry.yarnpkg.com/@vue/language-core/-/language-core-3.2.7.tgz";
+        sha512 = "Gn4q/tRxbpVGLEuARQ43p3YELlNAFgRUVCgW9U5Cr+5q4vfD2bWDWpl3ABbJMXUt5xlE1dF8dkigg2aUq7JYYw==";
       };
     }
     {
@@ -3098,6 +3098,14 @@
       };
     }
     {
+      name = "picomatch___picomatch_4.0.4.tgz";
+      path = fetchurl {
+        name = "picomatch___picomatch_4.0.4.tgz";
+        url  = "https://registry.yarnpkg.com/picomatch/-/picomatch-4.0.4.tgz";
+        sha512 = "QP88BAKvMam/3NxH6vj2o21R6MjxZUAd6nlwAS/pnGvN9IVLocLHxGYIzFhg6fUQ+5th6P4dv4eW9jX3DSIj7A==";
+      };
+    }
+    {
       name = "pinia___pinia_3.0.4.tgz";
       path = fetchurl {
         name = "pinia___pinia_3.0.4.tgz";
@@ -3658,11 +3666,11 @@
       };
     }
     {
-      name = "vue_tsc___vue_tsc_3.2.6.tgz";
+      name = "vue_tsc___vue_tsc_3.2.7.tgz";
       path = fetchurl {
-        name = "vue_tsc___vue_tsc_3.2.6.tgz";
-        url  = "https://registry.yarnpkg.com/vue-tsc/-/vue-tsc-3.2.6.tgz";
-        sha512 = "gYW/kWI0XrwGzd0PKc7tVB/qpdeAkIZLNZb10/InizkQjHjnT8weZ/vBarZoj4kHKbUTZT/bAVgoOr8x4NsQ/Q==";
+        name = "vue_tsc___vue_tsc_3.2.7.tgz";
+        url  = "https://registry.yarnpkg.com/vue-tsc/-/vue-tsc-3.2.7.tgz";
+        sha512 = "zc1tL3HoQni1zGTGrwBVRQb7rGP5SWdu/m4rGB6JcnAC5MT5LFZIxF7Y+EJEnt4hGF23d60rXH7gRjHGb5KQQQ==";
       };
     }
     {
