@@ -19,8 +19,8 @@ jobs:
         with:
           github_access_token: ${{ secrets.GITHUB_TOKEN }}
           nix_path: nixpkgs=https://github.com/NixOS/nixpkgs/archive/refs/heads/nixos-unstable.tar.gz
-      - name: Run yarn2nix
-        run: nix-shell -p yarn2nix --run "yarn2nix > yarn.nix"
+      - name: Run prefetch-yarn-deps
+        run: nix develop --command hash-yarn-lock
       - uses: stefanzweifel/git-auto-commit-action@v7.1.0
         with:
-          commit_message: "Update yarn.nix"
+          commit_message: "Update yarn.lock.hash"
