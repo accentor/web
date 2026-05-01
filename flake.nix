@@ -20,13 +20,6 @@
         pkgs = import nixpkgs { inherit system; overlays = [ devshell.overlays.default ]; };
         pname = "accentor-web";
         version = "0.34.0";
-        deps = pkgs.mkYarnModules {
-          inherit version;
-          pname = "${pname}-modules";
-          packageJSON = ./package.json;
-          yarnLock = ./yarn.lock;
-          yarnNix = ./yarn.nix;
-        };
       in
       {
         packages = rec {
@@ -34,22 +27,21 @@
           accentor-web = pkgs.stdenv.mkDerivation (finalAttrs: {
             inherit pname version;
             src = pkgs.lib.cleanSourceWith { filter = name: type: !(builtins.elem name [ ".github" "flake.lock" "flake.nix" ]); src = ./.; name = "${pname}-${version}-source"; };
+            yarnOfflineCache = pkgs.fetchYarnDeps {
+              yarnLock = ./yarn.lock;
+              hash = builtins.readFile ./yarn.lock.hash;
+            };
 
-            nativeBuildInputs = [ (pkgs.yarn.override { nodejs = pkgs.nodejs_22; }) ];
-
-            configurePhase = ''
-              cp -r ${deps}/node_modules/ .
-            '';
-
-            buildPhase = ''
-              yarn run build
-            '';
+            nativeBuildInputs = [
+              pkgs.yarnConfigHook
+              pkgs.yarnBuildHook
+              pkgs.yarnInstallHook
+              pkgs.nodejs_22
+            ];
 
             installPhase = ''
               cp -r dist $out
             '';
-
-            distPhase = "true";
           });
         };
 
@@ -59,8 +51,16 @@
             name = "Accentor Web";
             packages = with pkgs; [
               nixpkgs-fmt
-              yarn2nix
+              prefetch-yarn-deps
               (yarn.override { nodejs = nodejs_22; })
+            ];
+            commands = [
+              {
+                name = "hash-yarn-lock";
+                category = "[general commands]";
+                help = "Update nix hash of yarn.lock";
+                command = "nix-hash --type sha256 --to-sri $(prefetch-yarn-deps 2>/dev/null) > yarn.lock.hash";
+              }
             ];
           };
         };
