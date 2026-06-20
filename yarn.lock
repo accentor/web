@@ -1435,13 +1435,13 @@
   dependencies:
     "@vue/devtools-kit" "^8.0.6"
 
-"@vue/devtools-core@^8.1.2":
-  version "8.1.2"
-  resolved "https://registry.yarnpkg.com/@vue/devtools-core/-/devtools-core-8.1.2.tgz#38085870862cc4c7751759696d208e3ee382926a"
-  integrity sha512-ZGGyaSBP4/+bN2Nd9ZHNYAVDRIzMw1rv2RyXWtyZlo6mQal+IDmTvKY4V+DjAEBhaXt30mHmsgYp1yXJ/2tIWg==
+"@vue/devtools-core@^8.1.3":
+  version "8.1.3"
+  resolved "https://registry.yarnpkg.com/@vue/devtools-core/-/devtools-core-8.1.3.tgz#2148e3fd0049c4f69e439d46acc8f583cdd7f3c5"
+  integrity sha512-xezkv5/CPH/o5C8PE2Len9MnTJMsctYYQbKbbUiNOJpKd+fRHj27nKDb/sbtYI8NSQduegeQhCJGKRgAiOV6Uw==
   dependencies:
-    "@vue/devtools-kit" "^8.1.2"
-    "@vue/devtools-shared" "^8.1.2"
+    "@vue/devtools-kit" "^8.1.3"
+    "@vue/devtools-shared" "^8.1.3"
 
 "@vue/devtools-kit@^7.7.9":
   version "7.7.9"
@@ -1456,12 +1456,12 @@
     speakingurl "^14.0.1"
     superjson "^2.2.2"
 
-"@vue/devtools-kit@^8.0.6", "@vue/devtools-kit@^8.1.2":
-  version "8.1.2"
-  resolved "https://registry.yarnpkg.com/@vue/devtools-kit/-/devtools-kit-8.1.2.tgz#ff70ebdc39c894e5c7840154c541737fc8e1dc33"
-  integrity sha512-f75/upc+GCyjXErpgPGz4582ujS0L/adAltGy+tqXMGUJpgAcfGr6CxnnhpZY8BHuMYt6KpbF8uaFrrQG66rGQ==
+"@vue/devtools-kit@^8.0.6", "@vue/devtools-kit@^8.1.3":
+  version "8.1.3"
+  resolved "https://registry.yarnpkg.com/@vue/devtools-kit/-/devtools-kit-8.1.3.tgz#8e597ce34995feb3e6055d09f75bc1e5c4020f65"
+  integrity sha512-cRn7GXiCQkMYU2Z3h3pM4YO/ndbx9FY1yLDAqIqPLcmIq4H6zAOJHein6tvZU3AfPwgrodqLiPBEF+YQaS8AxA==
   dependencies:
-    "@vue/devtools-shared" "^8.1.2"
+    "@vue/devtools-shared" "^8.1.3"
     birpc "^2.6.1"
     hookable "^5.5.3"
     perfect-debounce "^2.0.0"
@@ -1473,10 +1473,10 @@
   dependencies:
     rfdc "^1.4.1"
 
-"@vue/devtools-shared@^8.1.2":
-  version "8.1.2"
-  resolved "https://registry.yarnpkg.com/@vue/devtools-shared/-/devtools-shared-8.1.2.tgz#1399660db04b7426a873b5985a548a6a7397fddd"
-  integrity sha512-X9RyVFYAdkBe4IUf5v48TxBF/6QPmF8CmWrDAjXzfUHrgQ/HGfTC1A6TqgXqZ03ye66l3AD51BAGD69IvKM9sw==
+"@vue/devtools-shared@^8.1.3":
+  version "8.1.3"
+  resolved "https://registry.yarnpkg.com/@vue/devtools-shared/-/devtools-shared-8.1.3.tgz#cfd120013cc7a4845f4aa0c73e66cdc224794e00"
+  integrity sha512-CM3uIPL+v+lrJUk33+pxspYo0MhuMWlCvf7zC9fybifvCPyM2jUbYRPwoYEJgYbwRqPikm5HozbUhp60MF2QuA==
 
 "@vue/eslint-config-prettier@^10.2.0":
   version "10.2.0"
@@ -2952,14 +2952,14 @@ vite-plugin-inspect@^11.3.3:
     unplugin-utils "^0.3.0"
     vite-dev-rpc "^1.1.0"
 
-vite-plugin-vue-devtools@^8.1.2:
-  version "8.1.2"
-  resolved "https://registry.yarnpkg.com/vite-plugin-vue-devtools/-/vite-plugin-vue-devtools-8.1.2.tgz#1b6deaa93b8bb607f9b561c2e766754faf90607c"
-  integrity sha512-gt5h1CNryR9Hy0tvhSbqY3j0F7aj0pGxBxWLa1lXSiZVkhdWDf0vbCOZyjh8ivFGE6FDHTGy3zkcZGlMZdVHig==
+vite-plugin-vue-devtools@^8.1.3:
+  version "8.1.3"
+  resolved "https://registry.yarnpkg.com/vite-plugin-vue-devtools/-/vite-plugin-vue-devtools-8.1.3.tgz#53effec1a5973604cc5011e91d3aa338b0a54c95"
+  integrity sha512-KBTUhbTXvY+GsCdShnCHG4WdijEV74KIDxhF8erfSs5g5mS13g/cPRUf4mLpD10qr5FqHYosNt0j6rP5kpiS1Q==
   dependencies:
-    "@vue/devtools-core" "^8.1.2"
-    "@vue/devtools-kit" "^8.1.2"
-    "@vue/devtools-shared" "^8.1.2"
+    "@vue/devtools-core" "^8.1.3"
+    "@vue/devtools-kit" "^8.1.3"
+    "@vue/devtools-shared" "^8.1.3"
     sirv "^3.0.2"
     vite-plugin-inspect "^11.3.3"
     vite-plugin-vue-inspector "^6.0.0"
