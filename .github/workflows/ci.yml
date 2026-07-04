@@ -34,7 +34,6 @@ jobs:
         with:
           name: accentor
           authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
-          skipPush: true
       - run: nix build -L --no-link .#accentor-web
   lint:
     runs-on: ubuntu-latest
