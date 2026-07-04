@@ -24,25 +24,20 @@
       {
         packages = rec {
           default = accentor-web;
-          accentor-web = pkgs.stdenv.mkDerivation (finalAttrs: {
+          accentor-web = pkgs.buildNpmPackage {
             inherit pname version;
             src = pkgs.lib.cleanSourceWith { filter = name: type: !(builtins.elem name [ ".github" "flake.lock" "flake.nix" ]); src = ./.; name = "${pname}-${version}-source"; };
-            yarnOfflineCache = pkgs.fetchYarnDeps {
-              yarnLock = ./yarn.lock;
-              hash = builtins.readFile ./yarn.lock.hash;
-            };
 
-            nativeBuildInputs = [
-              pkgs.yarnConfigHook
-              pkgs.yarnBuildHook
-              pkgs.yarnInstallHook
-              pkgs.nodejs_22
-            ];
+            npmConfigHook = pkgs.importNpmLock.npmConfigHook;
+            npmDeps = pkgs.importNpmLock {
+              npmRoot = ./.;
+            };
+            npmFlags = [ "--legacy-peer-deps" ];
 
             installPhase = ''
               cp -r dist $out
             '';
-          });
+          };
         };
 
         devShells = rec {
@@ -51,17 +46,9 @@
             name = "Accentor Web";
             packages = with pkgs; [
               nixpkgs-fmt
-              prefetch-yarn-deps
-              (yarn.override { nodejs = nodejs_22; })
+              nodejs_22
             ];
-            commands = [
-              {
-                name = "hash-yarn-lock";
-                category = "[general commands]";
-                help = "Update nix hash of yarn.lock";
-                command = "nix-hash --type sha256 --to-sri $(prefetch-yarn-deps 2>/dev/null) > yarn.lock.hash";
-              }
-            ];
+            commands = [];
           };
         };
       }
