@@ -32,7 +32,7 @@
             npmDeps = pkgs.importNpmLock {
               npmRoot = ./.;
             };
-            npmFlags = [ "--legacy-peer-deps" ];
+            # npmFlags = [ "--legacy-peer-deps" ];
 
             installPhase = ''
               cp -r dist $out
