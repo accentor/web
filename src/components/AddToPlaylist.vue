@@ -88,7 +88,8 @@ const cardTitleName = computed(() => {
 });
 
 const dialog: Ref<boolean> = ref(false);
-const selectedPlaylist: Ref<Playlist | null> = ref(null);
+const selectedPlaylist: Ref<(Playlist & { disabled: boolean }) | null> =
+  ref(null);
 
 const playlistOptions: ComputedRef<(Playlist & { disabled: boolean })[]> =
   computed(() =>

@@ -254,6 +254,7 @@ import type {
   Label,
 } from "@accentor/api-client-js";
 import ImagePicker from "./ImagePicker.vue";
+import type { Loaded } from "@/store/base";
 import { useLabelsStore } from "@/store/labels";
 import { useArtistsStore } from "@/store/artists";
 import { useAlbumsStore } from "@/store/albums";
@@ -289,14 +290,14 @@ const newAlbum = ref({
   review_comment: null as string | null,
   album_artists: [
     {
-      artist_id: null as Artist | string | null,
+      artist_id: null as Loaded<Artist> | string | null,
       name: "",
       separator: "",
       order: 0,
     },
   ],
   album_labels: [
-    { label_id: null as Label | string | null, catalogue_number: "" },
+    { label_id: null as Loaded<Label> | string | null, catalogue_number: "" },
   ],
 });
 
