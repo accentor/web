@@ -52,6 +52,6 @@
     "vite-plugin-vue-devtools": "^8.1.4",
     "vite-plugin-vuetify": "^2.1.2",
     "vue-eslint-parser": "^10.4.1",
-    "vue-tsc": "^3.3.5"
+    "vue-tsc": "^3.3.6"
   }
 }
