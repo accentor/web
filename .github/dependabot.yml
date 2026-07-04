@@ -7,7 +7,7 @@ updates:
     day: saturday
     time: "08:00"
     timezone: Europe/Brussels
-  open-pull-requests-limit: 10
+  open-pull-requests-limit: 99
   groups:
     eslint:
       patterns:
@@ -31,4 +31,12 @@ updates:
     day: saturday
     time: "08:00"
     timezone: Europe/Brussels
-  open-pull-requests-limit: 10
+  open-pull-requests-limit: 99
+- package-ecosystem: nix
+  directory: "/"
+  schedule:
+    interval: weekly
+    day: saturday
+    time: "08:00"
+    timezone: Europe/Brussels
+  open-pull-requests-limit: 99
