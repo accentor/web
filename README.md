@@ -29,13 +29,13 @@ Once you have the API running, you have two options for the frontend.
 The project can be deployed to a static site hoster like Netlify.
 You only need the following three things:
 * An environment variable for `VITE_API_URL` pointing to the domain of your api.
-* Build command: `yarn build`.
+* Build command: `npm run build`.
 * Output directory: `dist/`.
 
 ### Deploy on the same domain as the API
 
 To deploy on the same domain as the API, build the frontend using
-`yarn build`. The result in `dist` should be the root for your web
+`npm run build`. The result in `dist` should be the root for your web
 server. Make sure to proxy requests to `/api/*` and `/rails/*` to your
 API server. `/index.html` should be served instead of a 404 to make
 sure the navigation in the SPA works correctly.
@@ -43,8 +43,8 @@ sure the navigation in the SPA works correctly.
 ## Local development
 
 To run and develop locally:
-1. Install all dependencies with `yarn install`.
-2. Compile with hot-reloads using `yarn run serve`.
+1. Install all dependencies with `npm ci`.
+2. Compile with hot-reloads using `npm run serve`.
 
 You will also need an API to interact with. For this you can
 * [Run the API locally](https://github.com/accentor/api) (Recommended)

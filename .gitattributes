@@ -2,5 +2,4 @@
 
 # Mark the lockfiles as having been generated.
 flake.lock linguist-generated
-yarn.lock linguist-generated
-yarn.lock.hash linguist-generated
+package-lock.json linguist-generated
