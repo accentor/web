@@ -1299,27 +1299,27 @@
     "@typescript-eslint/types" "8.62.1"
     eslint-visitor-keys "^5.0.0"
 
-"@unhead/bundler@3.1.6":
-  version "3.1.6"
-  resolved "https://registry.yarnpkg.com/@unhead/bundler/-/bundler-3.1.6.tgz#a17410cf179c8d7117917a58fc47708d499e608a"
-  integrity sha512-JHSABL4fy2jMpIi5Y3Gy3eAq5bgkgix8dXM9/NsZDTMBgvIlnyzlgamH1foNeVJk5QJQBZ2AUapYAnHsvDsH7A==
+"@unhead/bundler@3.1.7":
+  version "3.1.7"
+  resolved "https://registry.yarnpkg.com/@unhead/bundler/-/bundler-3.1.7.tgz#2d0b74eecf67394711fcf0d843e2adea2e403423"
+  integrity sha512-yJPDwKZ3NOSmzB1a4ea5MEbeaXBq9EvOcGnav46SsPnslE7jq7QKkx42UQzxJk0q6yFPGdCZbFae2IO1HTtLPA==
   dependencies:
     "@vitejs/devtools-kit" "^0.3.3"
     magic-string "^0.30.21"
     oxc-parser "^0.137.0"
     oxc-walker "^1.0.0"
     ufo "^1.6.4"
-    unplugin "^3.0.0"
+    unplugin "^3.2.0"
 
-"@unhead/vue@^3.1.6":
-  version "3.1.6"
-  resolved "https://registry.yarnpkg.com/@unhead/vue/-/vue-3.1.6.tgz#5e1b9132df8016a33130ab17c213a1d413920583"
-  integrity sha512-0UygrH5VlaFzktOwLjEaLmMGC/lVIwibgPW2ypv++163T1RCA9V9p1o2cuFxiQXhn/bBUbDRrgOXGFBfsiu+PQ==
+"@unhead/vue@^3.1.7":
+  version "3.1.7"
+  resolved "https://registry.yarnpkg.com/@unhead/vue/-/vue-3.1.7.tgz#6dc23d9013382aba59bcfb8770f3d0443860f203"
+  integrity sha512-UK/hy7RT9qB4TBsUfRwXGUi5p3J6O6MtA/971emkKC3G+YpezaF7cPdxJOG9o+mFtqLIjkKd+QjRg8SiJLmBGg==
   dependencies:
-    "@unhead/bundler" "3.1.6"
+    "@unhead/bundler" "3.1.7"
     hookable "^6.1.1"
-    unhead "3.1.6"
-    unplugin "^3.0.0"
+    unhead "3.1.7"
+    unplugin "^3.2.0"
 
 "@valibot/to-json-schema@^1.7.0":
   version "1.7.0"
@@ -2914,13 +2914,13 @@ undici-types@~6.21.0:
   resolved "https://registry.yarnpkg.com/undici-types/-/undici-types-6.21.0.tgz#691d00af3909be93a7faa13be61b3a5b50ef12cb"
   integrity sha512-iwDZqg0QAGrg9Rav5H4n0M64c3mkR59cJ6wQp+7C4nI0gsmExaedaYLNO44eT4AtBBwjbTiGPMlt2Md0T9H9JQ==
 
-unhead@3.1.6:
-  version "3.1.6"
-  resolved "https://registry.yarnpkg.com/unhead/-/unhead-3.1.6.tgz#7e326c6175b424804f926edd9dd324554303407c"
-  integrity sha512-hjHJeCAdzQOLsBTgq+9QC2srXgSk37jcZobZT5WulzereMBnE26bdsodJCotYNrPzauo6nyXscfU8BQ5pFjXlw==
+unhead@3.1.7:
+  version "3.1.7"
+  resolved "https://registry.yarnpkg.com/unhead/-/unhead-3.1.7.tgz#d6d1cd59f144ec47e9d6303b1263fa2ea8ee6d4d"
+  integrity sha512-Db1M8yQmxdzhQFMmlZ6cr/ZlpGPRabTMDPBE4GGBv69TYUNP6jV8z54H8PTU08gMsWXVtqPBs9VwCldjrqknGw==
   dependencies:
     hookable "^6.1.1"
-    unplugin "^3.0.0"
+    unplugin "^3.2.0"
 
 unplugin-utils@^0.3.0, unplugin-utils@^0.3.1:
   version "0.3.1"
@@ -2930,13 +2930,13 @@ unplugin-utils@^0.3.0, unplugin-utils@^0.3.1:
     pathe "^2.0.3"
     picomatch "^4.0.3"
 
-unplugin@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/unplugin/-/unplugin-3.0.0.tgz#01e40c474bf74d363744f4cb262569d26dd9bb43"
-  integrity sha512-0Mqk3AT2TZCXWKdcoaufeXNukv2mTrEZExeXlHIOZXdqYoHHr4n51pymnwV8x2BOVxwXbK2HLlI7usrqMpycdg==
+unplugin@^3.0.0, unplugin@^3.2.0:
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/unplugin/-/unplugin-3.3.0.tgz#18de476b6130a6cde94db87f70ac32b97757f3c9"
+  integrity sha512-qa66K+crbfyE6JK10GjvbJeRrOsuC/JpbnHctfyp/i4oBTxWOzJfRZyDiOk1PtErMFRu8JhsU/wPvOdBNWe5Rg==
   dependencies:
     "@jridgewell/remapping" "^2.3.5"
-    picomatch "^4.0.3"
+    picomatch "^4.0.4"
     webpack-virtual-modules "^0.6.2"
 
 upath@^2.0.1:
