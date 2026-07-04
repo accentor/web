@@ -24,7 +24,7 @@
       {
         packages = rec {
           default = accentor-web;
-          accentor-web = pkgs.buildNpmPackage {
+          accentor-web = (pkgs.buildNpmPackage.override { nodejs = pkgs.nodejs_24; }) {
             inherit pname version;
             src = pkgs.lib.cleanSourceWith { filter = name: type: !(builtins.elem name [ ".github" "flake.lock" "flake.nix" ]); src = ./.; name = "${pname}-${version}-source"; };
 
