@@ -97,6 +97,7 @@
 <script setup lang="ts">
 import { storeToRefs } from "pinia";
 import TrackFormArtists from "@/components/TrackFormArtists.vue";
+import type { Loaded } from "@/store/base";
 import { useGenresStore } from "@/store/genres";
 import { useArtistsStore } from "@/store/artists";
 import { useAlbumsStore } from "@/store/albums";
@@ -132,7 +133,7 @@ const newTrack = ref({
   track_artists: [] as (Omit<TrackArtistParams, "artist_id"> & {
     artist_id: Artist | string | null;
   })[],
-  genre_ids: [] as (Genre | string)[],
+  genre_ids: [] as (Loaded<Genre> | string)[],
 });
 
 const clear_review_comment = ref(true);

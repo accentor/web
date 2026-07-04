@@ -65,6 +65,7 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
 import type { InternalItem } from "vuetify/framework";
+import type { Loaded } from "@/store/base";
 import { useAuthStore } from "@/store/auth";
 import { useArtistsStore } from "@/store/artists";
 import type { Artist } from "@accentor/api-client-js";
@@ -77,7 +78,7 @@ const artistsStore = useArtistsStore();
 
 const props = defineProps<{ disabled: boolean; artist: Artist }>();
 
-const mergeArtist = ref<Artist | null>(null);
+const mergeArtist = ref<Loaded<Artist> | null>(null);
 const mergeModal = ref<boolean>(false);
 
 const { isModerator } = storeToRefs(authStore);

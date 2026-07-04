@@ -64,6 +64,7 @@
 
 <script setup lang="ts">
 import { storeToRefs } from "pinia";
+import type { Loaded } from "@/store/base";
 import { useAuthStore } from "@/store/auth";
 import { useLabelsStore } from "@/store/labels";
 import type { Label } from "@accentor/api-client-js";
@@ -74,7 +75,7 @@ import { useI18n } from "vue-i18n";
 const I18n = useI18n();
 const labelsStore = useLabelsStore();
 const props = defineProps<{ disabled: boolean; label: Label }>();
-const mergeLabel = ref<Label | null>(null);
+const mergeLabel = ref<Loaded<Label> | null>(null);
 const mergeModal = ref(false);
 const { isModerator } = storeToRefs(useAuthStore());
 

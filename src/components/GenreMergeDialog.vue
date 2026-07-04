@@ -67,6 +67,7 @@ import { computed, ref } from "vue";
 import type { InternalItem } from "vuetify/framework";
 import { storeToRefs } from "pinia";
 import type { Genre } from "@accentor/api-client-js";
+import type { Loaded } from "@/store/base";
 import { useAuthStore } from "@/store/auth";
 import { useGenresStore } from "@/store/genres";
 import { useI18n } from "vue-i18n";
@@ -74,7 +75,7 @@ import { useI18n } from "vue-i18n";
 const I18n = useI18n();
 const genresStore = useGenresStore();
 const props = defineProps<{ disabled: boolean; genre: Genre }>();
-const mergeGenre = ref<Genre | null>(null);
+const mergeGenre = ref<Loaded<Genre> | null>(null);
 const mergeModal = ref(false);
 const { isModerator } = storeToRefs(useAuthStore());
 const sortedGenres = computed(() =>

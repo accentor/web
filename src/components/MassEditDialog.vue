@@ -289,6 +289,7 @@
 import { storeToRefs } from "pinia";
 import Errors from "./Errors.vue";
 import TrackFormArtists from "./TrackFormArtists.vue";
+import type { Loaded } from "@/store/base";
 import { useGenresStore } from "@/store/genres";
 import { useArtistsStore } from "@/store/artists";
 import { useAlbumsStore } from "@/store/albums";
@@ -339,9 +340,9 @@ const changeArtists = ref({
 const changeGenres = ref({
   enabled: false,
   replace: false,
-  genres: [] as (Genre | string)[],
+  genres: [] as (Loaded<Genre> | string)[],
 });
-const album = ref({ enabled: false, album: null as Album | null });
+const album = ref({ enabled: false, album: null as Loaded<Album> | null });
 const number = ref({ enabled: false, amount: 0 });
 const clearReviewComments = ref(false);
 const showReviewComments = ref(false);
