@@ -159,11 +159,7 @@ watch(
   selectedPreset,
   (
     newValue:
-      | "last7Days"
-      | "lastMonth"
-      | "thisYear"
-      | "allTime"
-      | "customRange",
+      "last7Days" | "lastMonth" | "thisYear" | "allTime" | "customRange",
   ) => {
     if (newValue !== "customRange") {
       void emitSelection();
