@@ -24,15 +24,12 @@
       {
         packages = rec {
           default = accentor-web;
-          accentor-web = pkgs.buildNpmPackage {
+          accentor-web = (pkgs.buildNpmPackage.override { nodejs = pkgs.nodejs_24; }) {
             inherit pname version;
             src = pkgs.lib.cleanSourceWith { filter = name: type: !(builtins.elem name [ ".github" "flake.lock" "flake.nix" ]); src = ./.; name = "${pname}-${version}-source"; };
 
             npmConfigHook = pkgs.importNpmLock.npmConfigHook;
-            npmDeps = pkgs.importNpmLock {
-              npmRoot = ./.;
-            };
-            # npmFlags = [ "--legacy-peer-deps" ];
+            npmDeps = pkgs.importNpmLock { npmRoot = ./.; };
 
             installPhase = ''
               cp -r dist $out
@@ -46,7 +43,7 @@
             name = "Accentor Web";
             packages = with pkgs; [
               nixpkgs-fmt
-              nodejs_22
+              nodejs_24
             ];
             commands = [];
           };
