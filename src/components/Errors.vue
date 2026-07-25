@@ -59,7 +59,7 @@ const I18n = useI18n();
 const errorsStore = useErrorsStore();
 const { errors } = storeToRefs(errorsStore);
 
-function errorOfType(error: Error, ...types): boolean {
+function errorOfType(error: Error, ...types: Error[]): boolean {
   return types.some((constructor) => error instanceof constructor);
 }
 
