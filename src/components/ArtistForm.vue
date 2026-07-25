@@ -14,7 +14,7 @@
         <VTextField
           v-model="newArtist.name"
           :label="I18n.t('common.name')"
-          :rules="[(v) => !!v || I18n.t('errors.artists.name-blank')]"
+          :rules="[(v) => !!v || I18n.t('errors.models.artist.name.blank')]"
           required
         />
         <ImagePicker

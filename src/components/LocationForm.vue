@@ -52,13 +52,13 @@ const isValid = ref(true);
 const rules = computed(() => {
   const result = {
     path: [
-      (v: string): true | string => !!v || I18n.t("errors.location.path-blank"),
+      (v: string): true | string => !!v || I18n.t("errors.models.location.path.blank"),
     ] as ((v: string) => true | string)[],
   };
   if (!props.location) {
     result.path.push((v: string): true | string => {
       const double = locationsStore.allLocations.some((l) => l.path === v);
-      return !double || I18n.t("errors.location.path-taken");
+      return !double || I18n.t("errors.models.location.path.taken");
     });
   }
   return result;

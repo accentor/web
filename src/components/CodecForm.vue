@@ -7,14 +7,14 @@
           :label="I18n.t('library.extension')"
           :disabled="!!codec"
           required
-          :rules="rules.ext"
+          :rules="rules.extension"
         />
       </VCol>
       <VCol cols="5">
         <VTextField
           v-model="newCodec.mimetype"
           :label="I18n.t('library.mime-type')"
-          :rules="[(v) => !!v || I18n.t('errors.codec.mime-blank')]"
+          :rules="[(v) => !!v || I18n.t('errors.models.codec.mime.blank')]"
         />
       </VCol>
       <VCol cols="2" sm="1">
@@ -62,14 +62,14 @@ const newCodec = ref({
 const isValid = ref(true);
 const rules = computed(() => {
   const result = {
-    ext: [
-      (v: string): true | string => !!v || I18n.t("errors.codec.ext-blank"),
+    extension: [
+      (v: string): true | string => !!v || I18n.t("errors.models.codec.extension.blank"),
     ],
   };
   if (!props.codec) {
-    result.ext.push((v) => {
+    result.extension.push((v) => {
       const double = codecsStore.allCodecs.some((c) => c.extension === v);
-      return !double || I18n.t("errors.codec.ext-taken");
+      return !double || I18n.t("errors.models.codec.extension.taken");
     });
   }
   return result;

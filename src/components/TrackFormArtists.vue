@@ -156,7 +156,7 @@ const roles = [
 
 const rules = computed(() => {
   const artistValidation = (v: string): true | string =>
-    !!v || I18n.t("errors.artists.artist-blank");
+    !!v || I18n.t("errors.models.track_artist.artist.blank");
   return [artistValidation];
 });
 
