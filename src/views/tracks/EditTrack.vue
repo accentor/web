@@ -24,7 +24,7 @@
             <VTextField
               v-model="newTrack.title"
               :label="I18n.t('music.title')"
-              :rules="[(v) => !!v || I18n.t('errors.tracks.title-blank')]"
+              :rules="[(v) => !!v || I18n.t('errors.models.track.title.blank')]"
             />
             <VAutocomplete
               v-model="newTrack.album_id"
@@ -155,9 +155,10 @@ const rules = computed(() => {
   const rules = {
     number: [
       (v: number | null): true | string =>
-        v !== null || I18n.t("errors.tracks.number-blank"),
+        v !== null || I18n.t("errors.models.tracks.number.blank"),
       (v: number | null): true | string =>
-        Number(v) % 1 === 0 || I18n.t("errors.tracks.number-whole"),
+        Number(v) % 1 === 0 ||
+        I18n.t("errors.models.track.number.not_an_integer"),
     ],
     genre: [] as ((v: (Genre | string)[]) => string | true)[],
   };
@@ -171,11 +172,9 @@ const rules = computed(() => {
             g.name === newGenre || g.normalized_name === newGenre.toLowerCase(),
         );
         if (double) {
-          valid = I18n.t("errors.genre.name-taken-obj", {
-            obj: newGenre,
-          });
+          valid = I18n.t("errors.models.genre.name.taken");
         } else if (!newGenre.trim().length) {
-          valid = I18n.t("errors.genre.name-blank");
+          valid = I18n.t("errors.models.genre.name.blank");
         }
       }
     });

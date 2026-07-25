@@ -8,7 +8,7 @@
           :disabled="!!coverFilename"
           required
           :rules="[
-            (v) => !!v || I18n.t('errors.cover_filename.filename-blank'),
+            (v) => !!v || I18n.t('errors.cover_filename.filename.blank'),
           ]"
         />
       </VCol>

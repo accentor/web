@@ -7,7 +7,7 @@
           :label="I18n.t('library.extension')"
           :disabled="!!imageType"
           required
-          :rules="rules.ext"
+          :rules="rules.extension"
         />
       </VCol>
       <VCol cols="5">
@@ -15,7 +15,7 @@
           v-model="newImageType.mimetype"
           :label="I18n.t('library.mime-type')"
           required
-          :rules="[(v) => !!v || I18n.t('errors.image.mime-blank')]"
+          :rules="[(v) => !!v || I18n.t('errors.models.image_type.mime.blank')]"
         />
       </VCol>
       <VCol cols="2" sm="1">
@@ -62,16 +62,17 @@ const newImageType = ref({
 const isValid = ref(true);
 const rules = computed(() => {
   const result = {
-    ext: [
-      (v: string): true | string => !!v || I18n.t("errors.image.ext-blank"),
+    extension: [
+      (v: string): true | string =>
+        !!v || I18n.t("errors.models.image_type.extension.blank"),
     ],
   };
   if (!props.imageType) {
-    result.ext.push((v: string): true | string => {
+    result.extension.push((v: string): true | string => {
       const double = imageTypesStore.allImageTypes.some(
         (it) => it.extension === v,
       );
-      return !double || I18n.t("errors.image.ext-taken");
+      return !double || I18n.t("errors.models.image_type.extension.taken");
     });
   }
 
