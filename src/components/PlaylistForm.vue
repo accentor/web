@@ -7,7 +7,9 @@
             <VTextField
               v-model="newPlaylist.name"
               :label="I18n.t('common.name')"
-              :rules="[(v) => !!v || I18n.t('errors.models.playlist.name.blank')]"
+              :rules="[
+                (v) => !!v || I18n.t('errors.models.playlist.name.blank'),
+              ]"
               required
             />
             <VTextarea

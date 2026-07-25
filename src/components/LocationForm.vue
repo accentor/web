@@ -52,7 +52,8 @@ const isValid = ref(true);
 const rules = computed(() => {
   const result = {
     path: [
-      (v: string): true | string => !!v || I18n.t("errors.models.location.path.blank"),
+      (v: string): true | string =>
+        !!v || I18n.t("errors.models.location.path.blank"),
     ] as ((v: string) => true | string)[],
   };
   if (!props.location) {
