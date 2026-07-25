@@ -6,7 +6,7 @@
           <VTextField
             v-model="newGenre.name"
             :label="I18n.t('common.name')"
-            :rules="[(v) => !!v || I18n.t('errors.genre.name-blank')]"
+            :rules="[(v) => !!v || I18n.t('errors.models.genre.name.blank')]"
             required
           />
           <VBtn :disabled="!isValid" color="primary" class="ma-2" type="submit">

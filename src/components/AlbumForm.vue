@@ -14,7 +14,7 @@
         <VTextField
           v-model="newAlbum.title"
           :label="I18n.t('music.title')"
-          :rules="[(v) => !!v || I18n.t('errors.albums.title-blank')]"
+          :rules="[(v) => !!v || I18n.t('errors.models.album.title.blank')]"
           required
         />
         <VDialog v-model="originalModal" persistent max-width="380">
