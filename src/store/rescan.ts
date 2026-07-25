@@ -1,7 +1,7 @@
 import { computed, type ComputedRef, type Ref, markRaw, ref } from "vue";
 import { delay } from "@/util";
 import api from "@/api";
-import { type ApiError, useErrorsStore } from "./errors";
+import { useErrorsStore } from "./errors";
 import { useAuthStore } from "./auth";
 import { defineStore } from "pinia";
 import { fetchAll, type ModelItemsType } from "@/store/base";
@@ -102,7 +102,7 @@ export const useRescansStore = defineStore("rescans", () => {
       );
       return true;
     } catch (error) {
-      errorsStore.addError(error as ApiError);
+      errorsStore.addError(error as Error);
       return false;
     } finally {
       loading.value = false;
@@ -126,7 +126,7 @@ export const useRescansStore = defineStore("rescans", () => {
       );
       return true;
     } catch (error) {
-      errorsStore.addError(error as ApiError);
+      errorsStore.addError(error as Error);
       return false;
     } finally {
       loading.value = false;
@@ -140,7 +140,7 @@ export const useRescansStore = defineStore("rescans", () => {
       setTimeout(() => index(), 2500);
       return true;
     } catch (error) {
-      errorsStore.addError(error as ApiError);
+      errorsStore.addError(error as Error);
       return false;
     }
   }
@@ -154,7 +154,7 @@ export const useRescansStore = defineStore("rescans", () => {
       setTimeout(() => show(id), 1000);
       return true;
     } catch (error) {
-      errorsStore.addError(error as ApiError);
+      errorsStore.addError(error as Error);
       return false;
     }
   }

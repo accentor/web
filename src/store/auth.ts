@@ -1,7 +1,7 @@
 import { computed, type ComputedRef, type Ref, watch } from "vue";
 import { defineStore } from "pinia";
 import api from "@/api";
-import { type ApiError, useErrorsStore } from "@/store/errors";
+import { useErrorsStore } from "@/store/errors";
 import { useUsersStore } from "@/store/users";
 import router from "@/router";
 import { StorageSerializers, useLocalStorage } from "@vueuse/core";
@@ -39,7 +39,7 @@ export const useAuthStore = defineStore("auth", () => {
       _id.value = result.id;
       return true;
     } catch (error) {
-      errorsStore.addError(error as ApiError);
+      errorsStore.addError(error as Error);
       return false;
     }
   }
@@ -56,7 +56,7 @@ export const useAuthStore = defineStore("auth", () => {
       clearAuthData();
       return true;
     } catch (error) {
-      errorsStore.addError(error as ApiError);
+      errorsStore.addError(error as Error);
       return false;
     }
   }
