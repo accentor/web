@@ -137,12 +137,17 @@
       "location": {
         "path": {
           "blank": "Please fill in a path.",
-          "taken": "This path is already in use."
+          "taken": "This path is already in use.",
+          "is_subdirectory": "This path is a subdirectory of another path",
+          "is_parent": "This path is the parent of another path"
         }
       },
       "playlist": {
         "name": { "blank": "Please fill in a name" },
         "items": { "taken": "The item you tried to add is already present in this playlist" }
+      },
+      "playlist_item": {
+        "item": { "type_mismatch": "This type of item does not match the playlist type" }
       },
       "track_artist": {
         "artist": { "blank": "Please fill in an artist." },
