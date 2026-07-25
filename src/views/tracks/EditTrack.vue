@@ -157,7 +157,8 @@ const rules = computed(() => {
       (v: number | string): true | string =>
         !!v || I18n.t("errors.models.tracks.number.blank"),
       (v: number | string): true | string =>
-        Number(v) % 1 === 0 || I18n.t("errors.models.track.number.not_an_integer"),
+        Number(v) % 1 === 0 ||
+        I18n.t("errors.models.track.number.not_an_integer"),
     ],
     genre: [] as ((v: (Genre | string)[]) => string | true)[],
   };

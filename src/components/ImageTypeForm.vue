@@ -63,7 +63,8 @@ const isValid = ref(true);
 const rules = computed(() => {
   const result = {
     extension: [
-      (v: string): true | string => !!v || I18n.t("errors.models.image_type.extension.blank"),
+      (v: string): true | string =>
+        !!v || I18n.t("errors.models.image_type.extension.blank"),
     ],
   };
   if (!props.imageType) {
