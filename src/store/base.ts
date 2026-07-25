@@ -3,7 +3,7 @@ import { useStorageAsync } from "@vueuse/core";
 import localForage from "localforage";
 import type { AuthStore } from "@/store/auth";
 import type { ApiToken, Scope, UpdateParams } from "@accentor/api-client-js";
-import type { ApiError, ErrorsStore } from "@/store/errors";
+import type { ErrorsStore } from "@/store/errors";
 
 // The types here are not correct, but useStorageAsync wants us to convert to a string,
 // which we don't actually want to do, since indexeddb can just store the objects.
@@ -164,7 +164,7 @@ export function index<T, TScope extends Scope | never>(
       await fetchAll(generator, addItems, setStartLoading, removeOld, scope);
       return true;
     } catch (error) {
-      errorsStore.addError(error as ApiError);
+      errorsStore.addError(error as Error);
       return false;
     }
   };
@@ -185,7 +185,7 @@ export function create<T extends { id: number }, TParams, TFullParams>(
       setItem(result.id, result);
       return result.id;
     } catch (error) {
-      errorsStore.addError(error as ApiError);
+      errorsStore.addError(error as Error);
       return false;
     }
   };
@@ -205,7 +205,7 @@ export function read<T>(
       setItem(id, result);
       return true;
     } catch (error) {
-      errorsStore.addError(error as ApiError);
+      errorsStore.addError(error as Error);
       return false;
     }
   };
@@ -237,7 +237,7 @@ export function update<T, TParams, TFullParams>(
       setItem(id, result);
       return true;
     } catch (error) {
-      errorsStore.addError(error as ApiError);
+      errorsStore.addError(error as Error);
       return false;
     }
   };
@@ -257,7 +257,7 @@ export function destroy(
       removeItem(id);
       return true;
     } catch (error) {
-      errorsStore.addError(error as ApiError);
+      errorsStore.addError(error as Error);
       return false;
     }
   };
@@ -275,7 +275,7 @@ export function destroyEmpty(
       await index();
       return true;
     } catch (error) {
-      errorsStore.addError(error as ApiError);
+      errorsStore.addError(error as Error);
       return false;
     }
   };
@@ -299,7 +299,7 @@ export function merge<T>(
       removeItem(oldId);
       return true;
     } catch (error) {
-      errorsStore.addError(error as ApiError);
+      errorsStore.addError(error as Error);
       return false;
     }
   };
