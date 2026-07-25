@@ -210,6 +210,7 @@ import { useErrorsStore } from "@/store/errors";
 import { useI18n } from "vue-i18n";
 import { useRoute } from "vue-router";
 import type { Loaded } from "@/store/base.ts";
+import { PlayerError } from "@/errors";
 
 const I18n = useI18n();
 const route = useRoute();
@@ -250,7 +251,7 @@ function startTrack(): void {
   if (props.track.length !== null) {
     playerStore.playTrack(props.track.id);
   } else {
-    errorsStore.addError({ playlist: ["player.no-tracks-added"] });
+    errorsStore.addError(new PlayerError("player.no-tracks-added"));
   }
 }
 
@@ -258,7 +259,7 @@ function addTrack(): void {
   if (props.track.length !== null) {
     playerStore.addTrack(props.track.id);
   } else {
-    errorsStore.addError({ playlist: ["player.no-tracks-added"] });
+    errorsStore.addError(new PlayerError("player.no-tracks-added"));
   }
 }
 
