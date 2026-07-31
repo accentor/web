@@ -164,8 +164,9 @@ import TrackArtists from "./TrackArtists.vue";
 import { useAlbumsStore } from "@/store/albums";
 import { usePlaysStore } from "@/store/plays";
 import { usePlayerStore } from "@/store/player";
-import { type ApiError, useErrorsStore } from "@/store/errors";
+import { useErrorsStore } from "@/store/errors";
 import { formatLength } from "@/util";
+import { PlayerError } from "@/errors";
 
 const albumsStore = useAlbumsStore();
 const errorsStore = useErrorsStore();
@@ -266,7 +267,7 @@ watch(currentTrackURL, async () => {
         });
       }
     } catch (error) {
-      errorsStore.addError(error as ApiError);
+      errorsStore.addError(error as Error);
     }
   }
 });
@@ -292,7 +293,7 @@ watch(playing, async () => {
         navigator.mediaSession.playbackState = "playing";
       }
     } catch (error) {
-      errorsStore.addError(error as ApiError);
+      errorsStore.addError(error as Error);
     }
   } else {
     audio.value!.pause();
@@ -345,7 +346,7 @@ function onAudioError(): void {
 
   if (tries.value >= 2) {
     nextTrack();
-    errorsStore.addError({ playlist: ["player.track-skipped"] });
+    errorsStore.addError(new PlayerError("player.track-skipped"));
   } else {
     tries.value += 1;
     setTimeout(() => audio.value!.play(), tries.value * 500);

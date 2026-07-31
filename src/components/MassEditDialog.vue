@@ -374,11 +374,9 @@ const rules = computed(() => {
             g.name === newGenre || g.normalized_name === newGenre.toLowerCase(),
         );
         if (double) {
-          valid = I18n.t("errors.genre.name-taken-obj", {
-            obj: newGenre,
-          });
+          valid = I18n.t("errors.models.genre.name.taken");
         } else if (!newGenre.trim().length) {
-          valid = I18n.t("errors.genre.name-blank");
+          valid = I18n.t("errors.models.genre.name.blank");
         }
       }
     });
@@ -391,7 +389,7 @@ const rules = computed(() => {
   if (album.value.enabled) {
     result.album.push(
       (v: Album | undefined): true | string =>
-        !!v || I18n.t("errors.albums.album-blank"),
+        !!v || I18n.t("errors.models.track.album.blank"),
     );
   }
 

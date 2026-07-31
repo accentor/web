@@ -94,6 +94,7 @@ import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRoute } from "vue-router";
 import type { Loaded } from "@/store/base.ts";
+import { PlayerError } from "@/errors";
 
 const I18n = useI18n();
 const route = useRoute();
@@ -144,10 +145,10 @@ function startTracks(): void {
   if (playlistTracks.value.length > 0) {
     playerStore.playTracks(playableTracks.value);
     if (playableTracks.value.length !== playlistTracks.value.length) {
-      errorStore.addError({ playlist: ["player.not-all-tracks-added"] });
+      errorStore.addError(new PlayerError("player.not-all-tracks-added"));
     }
   } else {
-    errorStore.addError({ playlist: ["player.no-tracks-added"] });
+    errorStore.addError(new PlayerError("player.no-tracks-added"));
   }
 }
 
@@ -155,10 +156,10 @@ function addTracks(): void {
   if (playlistTracks.value.length > 0) {
     playerStore.addTracks(playableTracks.value);
     if (playableTracks.value.length !== playlistTracks.value.length) {
-      errorStore.addError({ playlist: ["player.not-all-tracks-added"] });
+      errorStore.addError(new PlayerError("player.not-all-tracks-added"));
     }
   } else {
-    errorStore.addError({ playlist: ["player.no-tracks-added"] });
+    errorStore.addError(new PlayerError("player.no-tracks-added"));
   }
 }
 </script>

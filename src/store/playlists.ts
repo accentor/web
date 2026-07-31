@@ -9,7 +9,7 @@ import {
   update as baseUpdate,
   useBaseModelStore,
 } from "./base";
-import { type ApiError, useErrorsStore } from "@/store/errors";
+import { useErrorsStore } from "@/store/errors";
 import { useAuthStore } from "@/store/auth";
 import type {
   Playlist,
@@ -98,7 +98,7 @@ export const usePlaylistsStore = defineStore("playlists", () => {
       });
       return await read(id);
     } catch (error) {
-      errorsStore.addError(error as ApiError);
+      errorsStore.addError(error as Error);
       return false;
     }
   }
