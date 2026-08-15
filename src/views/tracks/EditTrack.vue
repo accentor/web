@@ -154,9 +154,9 @@ const { albumsByTitle: sortedAlbums } = storeToRefs(albumsStore);
 const rules = computed(() => {
   const rules = {
     number: [
-      (v: number | string): true | string =>
-        !!v || I18n.t("errors.tracks.number-blank"),
-      (v: number | string): true | string =>
+      (v: number | null): true | string =>
+        v !== null || I18n.t("errors.tracks.number-blank"),
+      (v: number | null): true | string =>
         Number(v) % 1 === 0 || I18n.t("errors.tracks.number-whole"),
     ],
     genre: [] as ((v: (Genre | string)[]) => string | true)[],
