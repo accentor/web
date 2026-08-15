@@ -50,126 +50,161 @@
     }
   },
   "errors": {
-    "album_artists": "Album artiesten",
-    "albums": {
-      "album-blank": "Selecteer een album.",
-      "not-found": "Dit album kon niet gevonden worden.",
-      "title-blank": "Vul aub een albumtitel in."
+    "types": {
+      "UnauthorizedError": "Je bent niet de juiste rechten om dit te doen",
+      "ForbiddenError": "Verboden",
+      "NotFoundError": "Niet gevonden",
+      "UnprocessableContentError": "Kan niet worden opgeslagen",
+      "UnknownError": "Onbekend probleem",
+      "UnexpectedError": "Onverwacht probleem",
+      "PlayerError": "Speler"
     },
-    "aa": {
-      "albums-overlap": "Deze twee artisten delen een aantal albums. Los die op voor je de artiesten samenvoegt.",
-      "name-blank": "Vul aub een naam in.",
-      "order-blank": "Artiesten moeten een volgorde hebben."
+    "models": {
+      "auth_token": {
+        "base": {
+          "wrong_credentials": "Gebruikersnaam en wachtwoord komen niet overeen."
+        }
+      },
+      "album": {
+        "title": {
+          "blank": "Gelieve een album titel in te vullen."
+        },
+        "base": {
+          "not_found": "Dit album kon niet gevonden worden."
+        }
+      },
+      "album_artist": {
+        "name": { "blank": "Gelieve een naam voor de artiest in te vullen." },
+        "order": { "blank": "Gelieve de artisten een volgorde te geven" },
+        "separator": {
+          "blank": "Albumartiesten (buiten de laatste) moeten een afscheider hebben.",
+          "present": "De laatste albumartiest mag geen afscheider hebben."
+        }
+      },
+      "album_label": {
+        "cat": { "blank": "Gelieve een catalogus nummer in te vullen." }
+      },
+      "artist": {
+        "name": { "blank": "Gelieve de naam van de artist in te vullen." },
+        "base": { "not-found": "Deze artiest kon niet gevonden worden." },
+        "album_artists": {
+          "albums_overlap": "Deze twee artiesten hebben een overlap in albums. Gelieve dit eerst op te lossen voor de artiesten samen te voegen."
+        },
+        "track_artist": {
+          "tracks_overlap": "TDeze twee artiesten hebben een overlap in nummers. Gelieve dit eerst op te lossen voor de artiesten samen te voegen"
+        }
+      },
+      "codec": {
+        "mime": { "blank": "Gelieve een MIMEtype in te vullen." },
+        "extension": {
+          "blank": "Gelieve een extensie in te vullen.",
+          "taken": "Deze extensie bestaat al."
+        }
+      },
+      "codec_conversion": {
+        "name": {
+          "blank": "Gelieve de naam van de codec in te vullen",
+          "taken": "Er bestaat al een codec met deze naam."
+        },
+        "ffmepg": { "blank": "Gelieve de FFmpeg parameters in te vullen." },
+        "result": { "blank": "Gelieve een uiteindelijke codec in te vullen." }
+      },
+      "cover_filename": {
+        "filename": { "blank": "Gelieve een bestandnaam van de cover in te vullen." }
+      },
+      "genre": {
+        "name": {
+          "blank": "Gelieve een naam voor het genre in te vullen.",
+          "taken": "Er bestaat al een genre met deze naam."
+        },
+        "base": {
+          "not-found": "Dit genre kon niet gevonden worden."
+        }
+      },
+      "image_type": {
+        "mime": { "blank": "Gelieve een MIMEtype in te vullen." },
+        "extension": {
+          "blank": "Gelieve een extensie in te vullen.",
+          "taken": "Deze extensie bestaat al."
+        }
+      },
+      "label": {
+        "name": { "blank": "Gelieve een naam voor het label in te vullen." },
+        "base": {
+          "not-found": "Dit label kon niet gevonden worden."
+        }
+      },
+      "location": {
+        "path": {
+          "blank": "Gelieve een pad in te vullen.",
+          "taken": "Er bestaat al een locatie met dit pad",
+          "is_subdirectory": "Dit pad is een submap van een ander pad",
+          "is_parent": "Dit pad is een bovenliggende map van een ander pad"
+        }
+      },
+      "playlist": {
+        "name": { "blank": "Gelieve een naam in te vullen." },
+        "items": {
+          "taken": "Het item dat je probeerde toevoegen zit al in deze afspeellijst"
+        }
+      },
+      "playlist_item": {
+        "item": {
+          "type_mismatch": "Dit item is niet het juiste type voor deze afspeellijst"
+        }
+      },
+      "track_artist": {
+        "artist": { "blank": "Gelieve een artiest in te vullen." },
+        "name": {
+          "blank": "Gelieve een naam voor de artiest in te vullen.",
+          "taken": "Deze naam is al in gebruik"
+        },
+        "order": { "blank": "Gelieve de artiesten een volgorde te geven." },
+        "role": { "blank": "Gelieve een de rol van de artist in te vullen." },
+        "track": { "blank": "Je kan geen nummerartiest aanmaken zonder nummer." }
+      },
+      "track": {
+        "album": {
+          "blank": "Gelieve een album te selecteren"
+        },
+        "base": {
+          "not-found": "Dit nummer kon niet gevonden worden."
+        },
+        "number": {
+          "blank": "Gelieve een tracknummer in te vullen",
+          "not_an_integer": "Gelieve een geheel getal in te vullen"
+        },
+        "title": { "blank": "Gelieve de titel van het nummer in te vullen." }
+      },
+      "user": {
+        "name": {
+          "blank": "Gelieve een gebruikersnaam in te vullen.",
+          "taken": "Er bestaat al een gebruiker met deze gebruikersnaam"
+        },
+        "password": { "blank": "Gelieve een wachtwoord in te vullen." },
+        "current_password": {
+          "blank": "Gelieve je huidig wachtwooord in te geven.",
+          "incorrect": "Je huidige wachtwoord klopt niet."
+        },
+        "password_confirmation": {
+          "blank": "Gelieve je wachtwoord te bevestiging.",
+          "confirmation": "De wachtwoorden komen niet overeen."
+        },
+        "permission": { "blank": "Gelieve de gebruiker een rol te geven." }
+      }
     },
-    "aa-separator": "Album artiesten (buiten de laatste) moeten een scheidingsteken hebben.",
-    "aa-last-no-separator": "De laatste album artiest moet geen scheidingsteken hebben.",
-    "al": {
-      "cat-blank": "Vul een catalogus nummer in."
+    "api": {
+      "unexpected": "{status} {error} - {exception}",
+      "unknown": "{message}. Bekijk de console van de browser voor details"
     },
-    "artist": "Artiest",
-    "artists": {
-      "artist-blank": "Selecteer een artiest.",
-      "name-blank": "Vul een artiestennaam in.",
-      "not-found": "Deze artiest kon niet gevonden worden."
+    "internal": {
+      "unknown": "{message}. Bekijk de console van de browser voor details"
     },
-    "base": "Base",
-    "catalogue_number": "Catalogus nummer",
-    "codec": {
-      "mime-blank": "Vul een MIMEtype in.",
-      "ext-blank": "Vul een extensie in.",
-      "ext-taken": "Deze extensie wordt al gebruikt."
-    },
-    "codecconv": {
-      "name-blank": "Vul een codecnaam in.",
-      "name-taken": "Een codec met deze naam bestaat al.",
-      "ffmepg-blank": "Vul de FFmpeg parameters in.",
-      "result-blank": "Vul een uiteindelijke codec in."
-    },
-    "cover_filename": {
-      "filename-blank": "Vul een cover bestandsnaam in."
-    },
-    "current_password": "Huidig wachtwoord",
-    "error": "Error",
-    "exception": "Uitzondering",
-    "extension": "Extensie",
-    "ffmpeg": "FFmpeg parameters",
-    "genre": {
-      "name-blank": "Vul een naam voor het genre in.",
-      "name-taken": "Een genre met deze naam bestaat reeds.",
-      "name-taken-obj": "Er bestaat al een genre met naam {obj}."
-    },
-    "genres": {
-      "not-found": "Dit genre kon niet gevonden worden."
-    },
-    "image": {
-      "mime-blank": "Vul een MIMEtype in.",
-      "ext-blank": "Vul een extensie in.",
-      "ext-taken": "Deze extensie wordt al gebruikt."
-    },
-    "items": "Afspeellijst items",
-    "item-ids-contains-double": "Het item dat je probeerde toevoegen, is al eerder toegevoegd.",
-    "label": {
-      "name-blank": "Vul een naam voor het label in."
-    },
-    "labels": {
-      "not-found": "Dit label kon niet gevonden worden."
-    },
-    "location": {
-      "path-blank": "Vul een pad in.",
-      "path-taken": "Dit pad wordt reeds gebruikt."
-    },
-    "mimetype": "MIME type",
-    "name": "Naam",
-    "not-authorized": "Je hebt geen toestemming om dit te doen",
-    "not_found": "Niet gevonden",
-    "number": "Tracknummer",
-    "order": "Ordening",
-    "password": "Wachtwoord",
-    "password_confirmation": "Bevestiging wachtwoord",
-    "path": "Pad",
+
     "player": {
-      "no-tracks-added": "Er zijn geen nummers toegevoegd aan de afspeellijst.",
-      "not-all-tracks-added": "Niet alle nummers zijn toegevoegd aan de afspeellijst.",
-      "track-skipped": "Een nummer kon niet geladen worden en is overgeslagen."
-    },
-    "playlist": "Playlist",
-    "playlists": {
-      "name-blank": "Vul een naam in voor deze playlist."
-    },
-    "permission": "Permissie",
-    "resulting_codec": "Uiteindelijke codec",
-    "role": "Rol",
-    "status": "Status",
-    "ta": {
-      "artist-blank": "Vul een artiest in voor dit nummer.",
-      "name-blank": "Vul een naam voor de artiest in.",
-      "name-taken": "Deze naam wordt reeds gebruikt.",
-      "order-blank": "Zet de artiesten in een volgorde.",
-      "role-blank": "Geef de artiest een rol.",
-      "track-blank": "Je kan geen artiest creëren zonder naar een nummer te verwijzen.",
-      "tracks-overlap": "Deze twee artiesten delen een aantal nummers. Los die op voor je de artiesten samenvoegt."
-    },
-    "title": "Titel",
-    "track": "Nummer",
-    "track_artists": "Nummer artiesten",
-    "tracks": {
-      "not-found": "Dit nummer kon niet gevonden worden.",
-      "number-blank": "Vul een tracknummer in.",
-      "number-whole": "Vul een geheel getal in.",
-      "title-blank": "Vul een titel voor het nummer in."
-    },
-    "traces": "Sporen",
-    "unauthorized": "Onbevoegd",
-    "user": {
-      "current-password-blank": "Vul je huidige wachtwoord in.",
-      "current-password-incorrect": "Je huidige wachtwoord was fout.",
-      "name": "Gebruikersnaam",
-      "name-blank": "Vul een gebruikersnaam in.",
-      "password-blank": "Vul een wachtwoord in.",
-      "password-confirmation": "Bevestiging komt niet overeen met wachtwoord.",
-      "password-confirmation-blank": "Bevestig je wachtwoord.",
-      "permission-blank": "Selecteer een permissie voor de gebruiker.",
-      "wrong-credentials": "De gebruikersnaam en het wachtwoord komen niet overeen."
+      "no-tracks-added": "Er zijn geen nummers toegevoegd aan de afspeellijst",
+      "not-all-tracks-added": "Niet alle nummers konden aan de afspeellijst worden toegevoegd",
+      "track-skipped": "Een nummer kon niet worden afgespeeld en werd overgeslagen."
     }
   },
   "home": {
