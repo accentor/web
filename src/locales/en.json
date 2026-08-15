@@ -187,7 +187,8 @@
           "incorrect": "Your current password was incorrect."
         },
         "password_confirmation": {
-          "blank": "Please confirmation your password."
+          "blank": "Please confirmation your password.",
+          "confirmation": "Does not match the password you entered"
         },
         "permission": { "blank": "Please give the user a permission." }
       }

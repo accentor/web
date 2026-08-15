@@ -131,7 +131,7 @@ const rules = computed(() => {
       !!v || I18n.t("errors.models.user.password_confirmation.blank");
     const confirmationMatch = (v: string): true | string =>
       (!!v && v) === newUser.value.password ||
-      I18n.t("errors.user.password_confirmation");
+      I18n.t("errors.user.password_confirmation.confirmation");
     rules.confirmation.push(confirmationBlank, confirmationMatch);
 
     const currentBlank = (v: string): true | string =>
