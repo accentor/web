@@ -61,7 +61,7 @@
     },
     "models": {
       "auth_token": {
-                "base": {
+        "base": {
           "wrong_credentials": "Username and password don't match."
         }
       },
@@ -144,10 +144,14 @@
       },
       "playlist": {
         "name": { "blank": "Please fill in a name" },
-        "items": { "taken": "The item you tried to add is already present in this playlist" }
+        "items": {
+          "taken": "The item you tried to add is already present in this playlist"
+        }
       },
       "playlist_item": {
-        "item": { "type_mismatch": "This type of item does not match the playlist type" }
+        "item": {
+          "type_mismatch": "This type of item does not match the playlist type"
+        }
       },
       "track_artist": {
         "artist": { "blank": "Please fill in an artist." },

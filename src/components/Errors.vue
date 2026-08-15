@@ -6,8 +6,8 @@
     @update:model-value="clearErrors"
   >
     <div v-for="(error, index) in errors" :key="index">
-      <strong>{{ I18n.t(`errors.types.${error.name}`, error.name) }}:</strong
-      >&nbsp;
+      <strong>{{ I18n.t(`errors.types.${error.name}`, error.name) }}:</strong>
+      &nbsp;
       <ul v-if="errorOfType(error, NotFoundError, UnprocessableContentError)">
         <li v-for="(detail, innerIndex) in error.details" :key="innerIndex">
           {{
