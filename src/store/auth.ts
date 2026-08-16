@@ -5,7 +5,11 @@ import { useErrorsStore } from "@/store/errors";
 import { useUsersStore } from "@/store/users";
 import router from "@/router";
 import { StorageSerializers, useLocalStorage } from "@vueuse/core";
-import type { AuthTokenParams, User } from "@accentor/api-client-js";
+import {
+  NotFoundError,
+  type AuthTokenParams,
+  type User,
+} from "@accentor/api-client-js";
 
 export type AuthStore = ReturnType<typeof useAuthStore>;
 
@@ -56,6 +60,12 @@ export const useAuthStore = defineStore("auth", () => {
       clearAuthData();
       return true;
     } catch (error) {
+      // If we can't find the auth token in the API it was already deleted,
+      // so the result is what the user wanted
+      if (error instanceof NotFoundError) {
+        clearAuthData();
+        return true;
+      }
       errorsStore.addError(error as Error);
       return false;
     }
