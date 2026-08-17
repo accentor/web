@@ -8,7 +8,7 @@
     <div v-for="(error, index) in errors" :key="index">
       <strong>{{ I18n.t(`errors.types.${error.name}`, error.name) }}:</strong>
       &nbsp;
-      <ul v-if="errorOfType(error, NotFoundError, UnprocessableContentError)">
+      <ul v-if="error instanceof UnprocessableContentError">
         <li v-for="(detail, innerIndex) in error.details" :key="innerIndex">
           {{
             I18n.t(
@@ -17,22 +17,24 @@
           }}
         </li>
       </ul>
-      <ul v-if="errorOfType(error, UnauthorizedError, ForbiddenError)">
+      <ul
+        v-if="
+          error instanceof UnauthorizedError ||
+          error instanceof ForbiddenError ||
+          error instanceof NotFoundError
+        "
+      >
         <li v-for="(detail, innerIndex) in error.details" :key="innerIndex">
-          {{
-            I18n.t(
-              `errors.models.${detail.model}.${detail.attribute || "base"}.${detail.type}`,
-            )
-          }}
+          {{ I18n.t(`errors.models.${detail.model}.base.${detail.type}`) }}
         </li>
       </ul>
-      <span v-else-if="errorOfType(error, UnexpectedError)">
+      <span v-else-if="error instanceof UnexpectedError">
         {{ I18n.t("errors.api.unexpected", error.details) }}
       </span>
-      <span v-else-if="errorOfType(error, UnknownError)">
+      <span v-else-if="error instanceof UnknownError">
         {{ I18n.t("errors.api.unknown", { message: error.message }) }}
       </span>
-      <span v-else-if="errorOfType(error, PlayerError)">
+      <span v-else-if="error instanceof PlayerError">
         {{ I18n.t(`errors.player.${error.message}`) }}
       </span>
       <span v-else>
@@ -58,10 +60,6 @@ import { PlayerError } from "@/errors";
 const I18n = useI18n();
 const errorsStore = useErrorsStore();
 const { errors } = storeToRefs(errorsStore);
-
-function errorOfType(error: Error, ...types: Error[]): boolean {
-  return types.some((constructor) => error instanceof constructor);
-}
 
 function clearErrors(): void {
   errorsStore.clearErrors();
