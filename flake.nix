@@ -19,7 +19,7 @@
       let
         pkgs = import nixpkgs { inherit system; overlays = [ devshell.overlays.default ]; };
         pname = "accentor-web";
-        version = "0.34.0";
+        version = "0.35.0";
       in
       {
         packages = rec {
