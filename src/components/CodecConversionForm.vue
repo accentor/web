@@ -14,7 +14,9 @@
           v-model="newCodecConversion.ffmpeg_params"
           :label="I18n.t('library.ffmpeg-para')"
           required
-          :rules="[(v) => !!v || I18n.t('errors.codecconv.ffmepg-blank')]"
+          :rules="[
+            (v) => !!v || I18n.t('errors.models.codec_conversion.ffmepg.blank'),
+          ]"
         />
       </VCol>
       <VCol cols="3">
@@ -25,7 +27,9 @@
           item-value="id"
           item-title="extension"
           required
-          :rules="[(v) => !!v || I18n.t('errors.codecconv.result-blank')]"
+          :rules="[
+            (v) => !!v || I18n.t('errors.models.codec_conversion.result.blank'),
+          ]"
         />
       </VCol>
       <VCol cols="2" sm="1">
@@ -77,12 +81,13 @@ const isValid = ref(true);
 const { allCodecs: codecs } = storeToRefs(useCodecsStore());
 const rules = computed(() => ({
   name: [
-    (v: string): true | string => !!v || I18n.t("errors.codecconv.name-blank"),
+    (v: string): true | string =>
+      !!v || I18n.t("errors.models.codec_conversion.name.blank"),
     (v: string): true | string => {
       const double = codecConversionsStore.allCodecConversions.some(
         (cc) => cc.name === v && cc.id !== props.codecConversion?.id,
       );
-      return !double || I18n.t("errors.codecconv.name-taken");
+      return !double || I18n.t("errors.models.codec_conversion.name.taken");
     },
   ],
 }));

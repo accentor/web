@@ -6,12 +6,36 @@
     @update:model-value="clearErrors"
   >
     <div v-for="(error, index) in errors" :key="index">
-      <div v-for="(value, key) in error" :key="key">
-        <div v-for="(e, innerIndex) in value" :key="innerIndex">
-          <strong>{{ I18n.t(`errors.${key}`) }}:</strong>
-          {{ I18n.t(`errors.${e}`) }}
-        </div>
-      </div>
+      <strong>{{ I18n.t(`errors.types.${error.name}`, error.name) }}:</strong>
+      &nbsp;
+      <ul
+        v-if="
+          error instanceof UnauthorizedError ||
+          error instanceof ForbiddenError ||
+          error instanceof NotFoundError ||
+          error instanceof UnprocessableContentError
+        "
+      >
+        <li v-for="(detail, innerIndex) in error.details" :key="innerIndex">
+          {{
+            I18n.t(
+              `errors.models.${detail.model}.${"attribute" in detail ? detail.attribute : "base"}.${detail.type}`,
+            )
+          }}
+        </li>
+      </ul>
+      <span v-else-if="error instanceof UnexpectedError">
+        {{ I18n.t("errors.api.unexpected", error.details) }}
+      </span>
+      <span v-else-if="error instanceof UnknownError">
+        {{ I18n.t("errors.api.unknown", { message: error.message }) }}
+      </span>
+      <span v-else-if="error instanceof PlayerError">
+        {{ I18n.t(`errors.player.${error.message}`) }}
+      </span>
+      <span v-else>
+        {{ I18n.t("errors.internal.unknown", { message: error.message }) }}
+      </span>
     </div>
   </VAlert>
 </template>
@@ -19,6 +43,15 @@
 import { storeToRefs } from "pinia";
 import { useErrorsStore } from "@/store/errors";
 import { useI18n } from "vue-i18n";
+import {
+  UnauthorizedError,
+  ForbiddenError,
+  NotFoundError,
+  UnprocessableContentError,
+  UnexpectedError,
+  UnknownError,
+} from "@accentor/api-client-js";
+import { PlayerError } from "@/errors";
 
 const I18n = useI18n();
 const errorsStore = useErrorsStore();

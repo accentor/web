@@ -6,7 +6,7 @@
         :label="I18n.t('common.name')"
         autocomplete="username"
         required
-        :rules="[(v) => !!v || I18n.t('errors.user.name-blank')]"
+        :rules="[(v) => !!v || I18n.t('errors.models.user.name.blank')]"
       />
       <VTextField
         v-if="user === currentUser"
@@ -128,20 +128,20 @@ const rules = computed(() => {
 
   if (newUser.value.password) {
     const confirmationBlank = (v: string): true | string =>
-      !!v || I18n.t("errors.user.password-confirmation-blank");
+      !!v || I18n.t("errors.models.user.password_confirmation.blank");
     const confirmationMatch = (v: string): true | string =>
       (!!v && v) === newUser.value.password ||
-      I18n.t("errors.user.password-confirmation");
+      I18n.t("errors.user.password_confirmation.confirmation");
     rules.confirmation.push(confirmationBlank, confirmationMatch);
 
     const currentBlank = (v: string): true | string =>
-      !!v || I18n.t("errors.user.current-password-blank");
+      !!v || I18n.t("errors.models.user.current_password.blank");
     rules.current.push(currentBlank);
   }
 
   if (newUser.value.current_password || newUser.value.password_confirmation) {
     const passwordBlank = (v: string): true | string =>
-      !!v || I18n.t("errors.user.password-blank");
+      !!v || I18n.t("errors.models.user.password.blank");
     rules.password.push(passwordBlank);
   }
 
