@@ -2,52 +2,31 @@
   description = "Accentor Web";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    flake-utils = {
-      url = "github:numtide/flake-utils";
-      inputs.systems.follows = "systems";
-    };
     devshell = {
       url = "github:numtide/devshell";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    systems.url = "github:nix-systems/default";
+    nixpkgs.url = "https://channels.nixos.org/nixos-unstable/nixexprs.tar.zst";
   };
 
-  outputs = { self, nixpkgs, devshell, flake-utils, ... }:
-    flake-utils.lib.eachDefaultSystem (system:
-      let
-        pkgs = import nixpkgs { inherit system; overlays = [ devshell.overlays.default ]; };
-        pname = "accentor-web";
-        version = "0.35.0";
-      in
-      {
-        packages = rec {
-          default = accentor-web;
-          accentor-web = (pkgs.buildNpmPackage.override { nodejs = pkgs.nodejs_24; }) {
-            inherit pname version;
-            src = pkgs.lib.cleanSourceWith { filter = name: type: !(builtins.elem name [ ".github" "flake.lock" "flake.nix" ]); src = ./.; name = "${pname}-${version}-source"; };
-
-            npmConfigHook = pkgs.importNpmLock.npmConfigHook;
-            npmDeps = pkgs.importNpmLock { npmRoot = ./.; };
-
-            installPhase = ''
-              cp -r dist $out
-            '';
-          };
-        };
-
-        devShells = rec {
-          default = accentor-web;
-          accentor-web = pkgs.devshell.mkShell {
-            name = "Accentor Web";
-            packages = with pkgs; [
-              nixpkgs-fmt
-              nodejs_24
-            ];
-            commands = [];
-          };
-        };
-      }
-    );
+  outputs = inputs:
+    {
+      packages = builtins.mapAttrs
+        (system: pkgs: {
+          accentor-web = pkgs.callPackage ./default.nix { };
+          default = inputs.self.packages.${system}.accentor-web;
+        })
+        inputs.nixpkgs.legacyPackages;
+      devShells = builtins.mapAttrs
+        (system: pkgs':
+          let
+            pkgs = pkgs'.extend inputs.devshell.overlays.default;
+          in
+          {
+            accentor-web = pkgs.callPackage ./shell.nix { };
+            default = inputs.self.devShells.${system}.accentor-web;
+          }
+        )
+        inputs.nixpkgs.legacyPackages;
+    };
 }
