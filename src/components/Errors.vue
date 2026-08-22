@@ -8,24 +8,20 @@
     <div v-for="(error, index) in errors" :key="index">
       <strong>{{ I18n.t(`errors.types.${error.name}`, error.name) }}:</strong>
       &nbsp;
-      <ul v-if="error instanceof UnprocessableContentError">
-        <li v-for="(detail, innerIndex) in error.details" :key="innerIndex">
-          {{
-            I18n.t(
-              `errors.models.${detail.model}.${detail.attribute || "base"}.${detail.type}`,
-            )
-          }}
-        </li>
-      </ul>
       <ul
         v-if="
           error instanceof UnauthorizedError ||
           error instanceof ForbiddenError ||
-          error instanceof NotFoundError
+          error instanceof NotFoundError ||
+          error instanceof UnprocessableContentError
         "
       >
         <li v-for="(detail, innerIndex) in error.details" :key="innerIndex">
-          {{ I18n.t(`errors.models.${detail.model}.base.${detail.type}`) }}
+          {{
+            I18n.t(
+              `errors.models.${detail.model}.${"attribute" in detail ? detail.attribute : "base"}.${detail.type}`,
+            )
+          }}
         </li>
       </ul>
       <span v-else-if="error instanceof UnexpectedError">
