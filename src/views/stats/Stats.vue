@@ -14,48 +14,17 @@
         <DateRangeSelect @input="(e) => (period = e)" />
       </VCol>
     </VRow>
-    <div class="stats">
-      <PlayCountCard
-        :play-stats="playStats"
-        title=""
-        class="stats__play-count"
-      />
-      <TopTracksList
-        class="stats__top-tracks"
-        :play-stats="playStats"
-        :use-track-length="useTrackLength"
-        :title="I18n.t('stats.topTracks')"
-      />
-      <PercentagePlayedCard
-        class="stats__percentage-played"
+    <VIcon v-if="loading" size="x-large">mdi-refresh mdi-spin</VIcon>
+    <RouterView v-else v-slot="{ Component }">
+      <component
+        :is="Component"
         :play-stats="playStats"
         :use-track-length="useTrackLength"
         :tracks="filteredTracks"
-        :title="
-          artistId
-            ? I18n.t('stats.percentageArtistPlayed', { artist: artistName })
-            : I18n.t('stats.percentageLibraryPlayed')
-        "
-      />
-      <TopAlbumsList
-        class="stats__top-albums"
-        :play-stats="playStats"
-        :use-track-length="useTrackLength"
-        :title="I18n.t('stats.topAlbums')"
-      />
-      <TopArtistsList
-        class="stats__top-artists"
-        :play-stats="playStats"
-        :use-track-length="useTrackLength"
-        :title="I18n.t('stats.topArtists')"
-      />
-      <PlaysPunchcard
-        class="stats__punchcard"
         :plays="filteredPlays"
-        :use-track-length="useTrackLength"
-        :title="I18n.t('stats.punchcard')"
+        :artist-name="artistName"
       />
-    </div>
+    </RouterView>
   </VContainer>
 </template>
 
@@ -71,12 +40,6 @@ import {
   type Track,
 } from "@accentor/api-client-js";
 import DateRangeSelect from "@/components/DateRangeSelect.vue";
-import PercentagePlayedCard from "@/components/PercentagePlayedCard.vue";
-import PlayCountCard from "@/components/PlayCountCard.vue";
-import PlaysPunchcard from "@/components/PlaysPunchcard.vue";
-import TopArtistsList from "@/components/TopArtistsList.vue";
-import TopTracksList from "@/components/TopTracksList.vue";
-import TopAlbumsList from "@/components/TopAlbumsList.vue";
 import { useArtistsStore } from "@/store/artists";
 import { useTracksStore } from "@/store/tracks";
 import { usePlaysStore } from "@/store/plays";
@@ -98,6 +61,7 @@ const period = ref({
   end: null as Date | null,
 });
 const useTrackLength = ref(false);
+const loading = ref(false);
 const playStats = ref<PlayStat[]>([]);
 
 const { artists } = storeToRefs(useArtistsStore());
@@ -105,7 +69,7 @@ const artistName = computed(() => {
   if (props.artistId) {
     return artists.value[props.artistId]?.name;
   }
-  return undefined;
+  return null;
 });
 const pageTitle = computed(() => {
   if (artistName.value) {
@@ -191,6 +155,7 @@ watch(
 );
 
 async function loadPlayStats(): Promise<void> {
+  loading.value = true;
   const gen = api.plays.stats(authStore.apiToken!, playStatsScope.value);
   let done: boolean | undefined = false;
   const results = [];
@@ -200,64 +165,6 @@ async function loadPlayStats(): Promise<void> {
     results.push(...value);
   }
   playStats.value = results;
+  loading.value = false;
 }
 </script>
-
-<style lang="scss" scoped>
-@use "sass:map";
-@use "vuetify/settings";
-
-.stats {
-  display: grid;
-  grid-auto-columns: 1fr;
-  gap: 1rem;
-  grid-template-areas:
-    "playCount"
-    "topTracks"
-    "percentagePlayed"
-    "topAlbums"
-    "topArtists"
-    "punchcard";
-
-  @media #{map.get(settings.$display-breakpoints, "sm-and-up")} {
-    grid-template-areas:
-      "topTracks topTracks"
-      "playCount percentagePlayed"
-      "topAlbums topAlbums"
-      "topArtists topArtists"
-      "punchcard punchcard";
-  }
-
-  @media #{map.get(settings.$display-breakpoints, "md-and-up")} {
-    grid-template-areas:
-      "topTracks topTracks topTracks topTracks playCount playCount"
-      "topTracks topTracks topTracks topTracks percentagePlayed percentagePlayed"
-      "topAlbums topAlbums topAlbums topArtists topArtists topArtists"
-      "punchcard punchcard punchcard punchcard punchcard punchcard";
-  }
-
-  &__percentage-played {
-    grid-area: percentagePlayed;
-  }
-
-  &__play-count {
-    grid-area: playCount;
-  }
-
-  &__top-tracks {
-    grid-area: topTracks;
-  }
-
-  &__top-albums {
-    grid-area: topAlbums;
-  }
-
-  &__top-artists {
-    grid-area: topArtists;
-  }
-
-  &__punchcard {
-    grid-area: punchcard;
-  }
-}
-</style>
