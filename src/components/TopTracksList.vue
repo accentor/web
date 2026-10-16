@@ -1,5 +1,5 @@
 <template>
-  <VCard class="pa-2">
+  <VCard class="pa-2" :to="{ name: 'tracks-stats', query: route.query }">
     <VCardTitle> {{ title }}</VCardTitle>
     <TopList :list-data="listData" :show-length="useTrackLength" />
   </VCard>
@@ -10,7 +10,9 @@ import { computed } from "vue";
 import type { PlayStat } from "@accentor/api-client-js";
 import TopList from "@/components/TopList.vue";
 import { useTracksStore } from "@/store/tracks";
+import { useRoute } from "vue-router";
 
+const route = useRoute();
 const tracksStore = useTracksStore();
 
 interface Props {

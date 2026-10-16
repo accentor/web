@@ -29,6 +29,7 @@ import EditPlaylist from "@/views/playlists/EditPlaylist.vue";
 import Settings from "@/views/settings/Settings.vue";
 import Stats from "@/views/stats/Stats.vue";
 import StatsOverview from "@/views/stats/Overview.vue";
+import StatsTracks from "@/views/stats/Tracks.vue";
 import Tracks from "@/views/tracks/Tracks.vue";
 import TracksWithoutAudio from "@/views/tracks/TracksWithoutAudio.vue";
 import EditTrack from "@/views/tracks/EditTrack.vue";
@@ -174,6 +175,7 @@ const router = createRouter({
           }),
           children: [
             { path: "", name: "stats", component: StatsOverview },
+            { path: "tracks", name: "tracks-stats", component: StatsTracks },
           ],
         },
         {

@@ -1,11 +1,15 @@
 <template>
   <ol class="top-list">
-    <li v-for="(item, index) in listData" :key="index" class="top-item">
+    <li
+      v-for="(item, index) in dataSlice"
+      :key="`${index}-${page}`"
+      class="top-item"
+    >
       <VImg v-if="item.image" :src="item.image" class="top-item__cover" />
       <div class="top-item__stat">
         <span class="top-item__text">
           <span class="top-item__position font-weight-medium">
-            {{ index + 1 }}.
+            {{ index + 1 + (page - 1) * ITEMS_PER_PAGE }}.
           </span>
           <span class="top-item__name">
             {{ item.label }}
@@ -14,7 +18,7 @@
         <div class="top-item__bg-wrapper">
           <div
             class="top-item__bg bg-primary"
-            :style="{ width: `${animatedWidths[index]}%` }"
+            :style="{ '--width': `${widths[index]}%` }"
           >
             <span
               v-if="widths[index]! > 10 && showLength"
@@ -36,14 +40,14 @@
           <span
             v-if="widths[index]! <= 10 && showLength"
             class="top-item__count top-item__count--backup font-weight-medium text-primary"
-            :style="{ 'margin-left': `${animatedWidths[index]}%` }"
+            :style="{ 'margin-left': `${widths[index]}%` }"
           >
             {{ formatLength(item.count) }}
           </span>
           <span
             v-else-if="widths[index]! <= 10"
             class="top-item__count top-item__count--backup font-weight-medium text-primary"
-            :style="{ 'margin-left': `${animatedWidths[index]}%` }"
+            :style="{ 'margin-left': `${widths[index]}%` }"
           >
             {{
               Number.isInteger(item.count) ? item.count : item.count.toFixed(2)
@@ -53,24 +57,48 @@
       </div>
     </li>
   </ol>
+  <VPagination
+    v-if="paginate"
+    v-model="page"
+    density="compact"
+    :length="Math.ceil(listData.length / ITEMS_PER_PAGE)"
+    total-visible="5"
+  />
 </template>
 
 <script setup lang="ts">
-import { computed, ref, watch } from "vue";
+import { computed } from "vue";
 import { formatLength } from "@/util";
+import { usePagination } from "@/composables/pagination";
+
+const ITEMS_PER_PAGE = 50;
+
+const { page } = usePagination();
 
 interface Props {
   listData: { label: string; count: number; image?: string }[];
   showLength?: boolean;
+  paginate?: boolean;
 }
 
-const props = withDefaults(defineProps<Props>(), { showLength: false });
-const animatedWidths = ref(Array(10).fill(0));
+const props = withDefaults(defineProps<Props>(), {
+  showLength: false,
+  paginate: false,
+});
+
+const dataSlice = computed(() =>
+  props.paginate
+    ? props.listData.slice(
+        ITEMS_PER_PAGE * (page.value - 1),
+        ITEMS_PER_PAGE * page.value,
+      )
+    : props.listData,
+);
+
 const widths = computed(() => {
   const max = props.listData[0]?.count ?? 1;
-  return props.listData.map((i) => (i.count * 100.0) / max);
+  return dataSlice.value.map((i) => (i.count * 100.0) / max);
 });
-watch(widths, () => setTimeout(() => (animatedWidths.value = widths.value), 0));
 </script>
 
 <style lang="scss" scoped>
@@ -103,6 +131,7 @@ watch(widths, () => setTimeout(() => (animatedWidths.value = widths.value), 0));
   }
 
   &__bg {
+    width: var(--width, 0%);
     height: 100%;
     border-radius: 0.5rem;
     transition-property: width;
@@ -112,6 +141,10 @@ watch(widths, () => setTimeout(() => (animatedWidths.value = widths.value), 0));
     z-index: 1;
     position: relative;
     overflow: hidden;
+
+    @starting-style {
+      width: 0%;
+    }
   }
 
   &__text {
