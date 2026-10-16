@@ -238,19 +238,19 @@ const router = createRouter({
   }) as RouterScrollBehavior,
 });
 
-router.beforeEach((to, from, next) => {
+router.beforeEach((to) => {
   const authStore = useAuthStore();
   const onLogin = to.matched.some((record) => record.meta.authOptional);
 
   if (onLogin && authStore.loggedIn) {
-    next({ name: "home" });
+    return { name: "home" };
   } else if (onLogin || authStore.loggedIn) {
-    next();
+    return;
   } else {
-    next({
+    return {
       name: "login",
       query: { redirect: to.fullPath },
-    });
+    };
   }
 });
 
