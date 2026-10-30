@@ -17,94 +17,25 @@
           :rules="[(v) => !!v || I18n.t('errors.models.album.title.blank')]"
           required
         />
-        <VDialog v-model="originalModal" persistent max-width="380">
-          <template #activator="{ props: dialogProps }">
-            <VTextField
-              v-model="newAlbum.release"
-              :label="I18n.t('music.album.release')"
-              readonly
-              v-bind="dialogProps"
-            ></VTextField>
-          </template>
-          <VCard>
-            <VCardText>
-              <VDatePicker
-                v-model="originalDate"
-                scrollable
-                :first-day-of-week="1"
-              >
-              </VDatePicker>
-            </VCardText>
-            <VCardActions>
-              <VSpacer></VSpacer>
-              <VBtn
-                variant="text"
-                color="primary"
-                class="ma-2"
-                @click="originalModal = false"
-              >
-                {{ I18n.t("common.cancel") }}
-              </VBtn>
-              <VBtn
-                variant="text"
-                color="primary"
-                class="ma-2"
-                @click="saveOriginalRelease"
-              >
-                {{ I18n.t("common.ok") }}
-              </VBtn>
-            </VCardActions>
-          </VCard>
-        </VDialog>
+        <VDateInput
+          v-model="originalDate"
+          :label="I18n.t('music.album.release')"
+          input-format="yyyy-mm-dd"
+          :first-day-of-week="1"
+          prepend-icon=""
+        />
         <VCheckbox
           v-model="editionInformation"
           :label="I18n.t('music.album.edition-information')"
         />
-        <VDialog
+        <VDateInput
           v-if="editionInformation"
-          v-model="editionModal"
-          persistent
-          max-width="380"
-        >
-          <template #activator="{ props: dialogProps }">
-            <VTextField
-              v-model="newAlbum.edition"
-              :label="I18n.t('music.album.edition')"
-              readonly
-              clearable
-              v-bind="dialogProps"
-            ></VTextField>
-          </template>
-          <VCard>
-            <VCardText>
-              <VDatePicker
-                v-model="editionDate"
-                scrollable
-                :first-day-of-week="1"
-              >
-              </VDatePicker>
-            </VCardText>
-            <VCardActions>
-              <VSpacer></VSpacer>
-              <VBtn
-                variant="text"
-                color="primary"
-                class="ma-2"
-                @click="editionModal = false"
-              >
-                {{ I18n.t("common.cancel") }}
-              </VBtn>
-              <VBtn
-                variant="text"
-                color="primary"
-                class="ma-2"
-                @click="saveEditionRelease"
-              >
-                {{ I18n.t("common.ok") }}
-              </VBtn>
-            </VCardActions>
-          </VCard>
-        </VDialog>
+          v-model="editionDate"
+          :label="I18n.t('music.album.edition')"
+          input-format="yyyy-mm-dd"
+          :first-day-of-week="1"
+          prepend-icon=""
+        />
         <VTextField
           v-if="editionInformation"
           v-model="newAlbum.edition_description"
@@ -240,7 +171,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
+import { onMounted, ref, watch } from "vue";
 import { storeToRefs } from "pinia";
 import { useRoute, useRouter } from "vue-router";
 import { useDate } from "vuetify";
@@ -275,10 +206,7 @@ const props = defineProps<{ album?: Album }>();
 const isDirty = ref<boolean>(false);
 const isValid = ref<boolean>(true);
 
-const originalModal = ref<boolean>(false);
 const originalDate = ref<Date>(new Date());
-
-const editionModal = ref<boolean>(false);
 const editionDate = ref<Date>(new Date());
 
 const newAlbum = ref({
@@ -390,19 +318,20 @@ function moveArtist(index: number, direction: number): void {
   );
 }
 
-function saveEditionRelease(): void {
-  newAlbum.value.edition = dateAdapter
-    .toISO(editionDate.value)
-    .substring(0, 10);
-  editionModal.value = false;
-}
-
-function saveOriginalRelease(): void {
-  newAlbum.value.release = dateAdapter
-    .toISO(originalDate.value)
-    .substring(0, 10);
-  originalModal.value = false;
-}
+watch(
+  originalDate,
+  () =>
+    (newAlbum.value.release = dateAdapter
+      .toISO(originalDate.value)
+      .substring(0, 10)),
+);
+watch(
+  editionDate,
+  () =>
+    (newAlbum.value.edition = dateAdapter
+      .toISO(editionDate.value)
+      .substring(0, 10)),
+);
 
 async function submit(): Promise<void> {
   const transformed: AlbumParams["album"] = {
