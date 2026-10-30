@@ -71,7 +71,7 @@ const period = ref({
   end: null as Date | null,
 });
 const useTrackLength = ref(false);
-const loadingProgress = ref(null);
+const loadingProgress = ref<number | null>(null);
 const playStats = ref<PlayStat[]>([]);
 
 const { artists } = storeToRefs(useArtistsStore());
@@ -165,14 +165,17 @@ watch(
 );
 
 async function loadPlayStats(): Promise<void> {
-  loadingProgress.value = 0;
   const gen = api.plays.stats(authStore.apiToken!, playStatsScope.value);
   let done: boolean | undefined = false;
   const results = [];
   while (!done) {
     let value = [];
     ({ value, done } = await gen.next());
-    loadingProgress.value = Math.round(gen.progress * 100);
+    // We want to avoid short flashes of the progress element. If there are only a small amount of pageSubtitle
+    // to fetch, we just don't show a progress indicator.
+    if (gen.totalPages > 3) {
+      loadingProgress.value = Math.round(gen.progress * 100);
+    }
     results.push(...value);
   }
   playStats.value = results;
