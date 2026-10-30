@@ -14,7 +14,17 @@
         <DateRangeSelect @input="(e) => (period = e)" />
       </VCol>
     </VRow>
-    <VIcon v-if="loading" size="x-large">mdi-refresh mdi-spin</VIcon>
+    <div v-if="loadingProgress !== null" class="progress">
+      <VProgressCircular
+        color="primary"
+        :model-value="loadingProgress"
+        :size="150"
+        :width="20"
+        variant="split"
+      >
+        <template #default> {{ loadingProgress }}% </template>
+      </VProgressCircular>
+    </div>
     <RouterView v-else v-slot="{ Component }">
       <component
         :is="Component"
@@ -61,7 +71,7 @@ const period = ref({
   end: null as Date | null,
 });
 const useTrackLength = ref(false);
-const loading = ref(false);
+const loadingProgress = ref(null);
 const playStats = ref<PlayStat[]>([]);
 
 const { artists } = storeToRefs(useArtistsStore());
@@ -155,16 +165,25 @@ watch(
 );
 
 async function loadPlayStats(): Promise<void> {
-  loading.value = true;
+  loadingProgress.value = 0;
   const gen = api.plays.stats(authStore.apiToken!, playStatsScope.value);
   let done: boolean | undefined = false;
   const results = [];
   while (!done) {
     let value = [];
     ({ value, done } = await gen.next());
+    loadingProgress.value = Math.round(gen.progress * 100);
     results.push(...value);
   }
   playStats.value = results;
-  loading.value = false;
+  loadingProgress.value = null;
 }
 </script>
+
+<style>
+.progress {
+  display: flex;
+  justify-content: center;
+  margin-block: 24px;
+}
+</style>
