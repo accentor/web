@@ -2,7 +2,12 @@ import { computed, type ComputedRef, markRaw, type Ref, ref } from "vue";
 import { useStorageAsync } from "@vueuse/core";
 import localForage from "localforage";
 import type { AuthStore } from "@/store/auth";
-import type { ApiToken, Scope, UpdateParams } from "@accentor/api-client-js";
+import type {
+  ApiToken,
+  Scope,
+  UpdateParams,
+  IndexGenerator,
+} from "@accentor/api-client-js";
 import type { ErrorsStore } from "@/store/errors";
 
 // The types here are not correct, but useStorageAsync wants us to convert to a string,
@@ -115,7 +120,7 @@ export function useBaseModelStore<T extends { id: number }>(
 }
 
 export async function fetchAll<T>(
-  generator: AsyncGenerator<T[], T[], void>,
+  generator: IndexGenerator<T, Scope>,
   add: (items: T[]) => void,
   setStartLoading: () => void,
   removeOld: () => void,
@@ -144,10 +149,7 @@ export async function fetchAll<T>(
 
 export function index<T, TScope extends Scope | never>(
   apiModule: {
-    index: (
-      apiToken: ApiToken,
-      scope?: TScope,
-    ) => AsyncGenerator<T[], T[], void>;
+    index: (apiToken: ApiToken, scope?: TScope) => IndexGenerator<T, TScope>;
   },
   authStore: AuthStore,
   errorsStore: ErrorsStore,
