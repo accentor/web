@@ -2,7 +2,7 @@
   <VCard class="pa-2">
     <VCardTitle> {{ I18n.t("stats.topTracks") }}</VCardTitle>
     <TopList
-      :list-data="listData"
+      :list-data="topTracks"
       :show-length="useTrackLength"
       :paginate="true"
     />
@@ -15,6 +15,7 @@ import TopList from "@/components/TopList.vue";
 import { type Play, type PlayStat, type Track } from "@accentor/api-client-js";
 import { useI18n } from "vue-i18n";
 import { useTracksStore } from "@/store/tracks";
+import { buildTopTracks } from "@/util";
 
 const I18n = useI18n();
 const tracksStore = useTracksStore();
@@ -32,18 +33,6 @@ const useProp = computed(() =>
 );
 
 const topTracks = computed(() =>
-  [...playStats].sort((t1, t2) => t2[useProp.value] - t1[useProp.value]),
-);
-const listData = computed(() =>
-  [...topTracks.value].map((tt) => {
-    const track = tracksStore.tracks[tt.track_id];
-    const trackArtists = (track?.track_artists || [])
-      .filter((a) => !a.hidden)
-      .sort((a1, a2) => a1.order - a2.order)
-      .map((a) => a.name)
-      .join(" / ");
-    const label = `${trackArtists} - ${track?.title}`;
-    return { count: tt[useProp.value], label };
-  }),
+  buildTopTracks(playStats, tracksStore.tracks, { sortBy: useProp.value }),
 );
 </script>
