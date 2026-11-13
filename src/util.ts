@@ -1,4 +1,5 @@
-import type { Album, Genre, Track } from "@accentor/api-client-js";
+import type { Album, Genre, PlayStat, Track } from "@accentor/api-client-js";
+import type { ModelItemsType } from "./store/base";
 
 export function delay(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -167,4 +168,27 @@ export function compareByRecentlyPlayed(
       (stats[`${i1.id}`]?.last_played_at || new Date(0)).getTime()
     );
   };
+}
+
+export function buildTopTracks(
+  playStats: PlayStat[],
+  tracks: ModelItemsType<Track>,
+  {
+    sortBy = "total_length",
+    limit,
+  }: { sortBy: "total_length" | "count"; limit?: number | undefined },
+): { count: number; label: string }[] {
+  return [...playStats]
+    .sort((t1, t2) => t2[sortBy] - t1[sortBy])
+    .slice(0, limit)
+    .map((tt) => {
+      const track = tracks[tt.track_id];
+      const trackArtists = (track?.track_artists || [])
+        .filter((a) => !a.hidden)
+        .sort((a1, a2) => a1.order - a2.order)
+        .map((a) => a.name)
+        .join(" / ");
+      const label = `${trackArtists} - ${track?.title}`;
+      return { count: tt[sortBy], label };
+    });
 }
