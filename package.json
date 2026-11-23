@@ -23,7 +23,7 @@
     "roboto-fontface": "^0.10.0",
     "vue": "^3.5.45",
     "vue-global-events": "^3.0.1",
-    "vue-i18n": "^11.4.22",
+    "vue-i18n": "^11.4.23",
     "vue-router": "^5.5.1",
     "vuedraggable": "^4.1.0",
     "vuetify": "^4.3.4"
